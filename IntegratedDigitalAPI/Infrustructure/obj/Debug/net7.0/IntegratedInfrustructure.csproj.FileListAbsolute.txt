@@ -1,0 +1,14 @@
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\Infrustructure\bin\Debug\net7.0\IntegratedInfrustructure.deps.json
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\Infrustructure\bin\Debug\net7.0\IntegratedInfrustructure.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\Infrustructure\bin\Debug\net7.0\IntegratedInfrustructure.pdb
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\Infrustructure\obj\Debug\net7.0\IntegratedInfrustructure.csproj.AssemblyReference.cache
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\Infrustructure\obj\Debug\net7.0\IntegratedInfrustructure.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\Infrustructure\obj\Debug\net7.0\IntegratedInfrustructure.AssemblyInfoInputs.cache
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\Infrustructure\obj\Debug\net7.0\IntegratedInfrustructure.AssemblyInfo.cs
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\Infrustructure\obj\Debug\net7.0\IntegratedInfrustructure.csproj.CoreCompileInputs.cache
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\Infrustructure\obj\Debug\net7.0\IntegratedInfrustructure.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\Infrustructure\obj\Debug\net7.0\refint\IntegratedInfrustructure.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\Infrustructure\obj\Debug\net7.0\IntegratedInfrustructure.pdb
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\Infrustructure\obj\Debug\net7.0\ref\IntegratedInfrustructure.dll
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\Infrustructure\bin\Debug\net7.0\IntegratedInfrustructure.runtimeconfig.json
+D:\Projects\Ethiopian Midwives\Application\IntegratedDigitalAPI\Infrustructure\obj\Debug\net7.0\IntegratedInfrustructure.genruntimeconfig.cache
