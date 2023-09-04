@@ -37,6 +37,12 @@ namespace IntegratedDigitalAPI.Controllers.HRM
         {
             return Ok(await _employeeService.GetEmployeeHistory(employeeId));
         }
+        [HttpGet("getEmployeeFamily")]
+        [ProducesResponseType(typeof(EmployeeFamilyGetDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetEmployeeFamily(Guid employeeId)
+        {
+            return Ok(await _employeeService.GetEmployeeFamily(employeeId));
+        }
 
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
@@ -85,6 +91,49 @@ namespace IntegratedDigitalAPI.Controllers.HRM
             if (ModelState.IsValid)
             {
                 return Ok(await _employeeService.deleteEmployeeHistory(employeeHistoryId));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+
+
+        [HttpPost("addEmployeeFamily")]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> AddEmployeeFamily(EmployeeFamilyPostDto employeeFamily)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _employeeService.AddEmployeeFamily(employeeFamily));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost("updateEmployeeFamily")]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> updateEmployeeFamily(EmployeeFamilyGetDto employeeFamily)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _employeeService.UpdateEmployeeFamily(employeeFamily));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+        [HttpDelete("deleteEmployeeFamily")]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> deleteEmployeeFamily(Guid employeeFamilyId)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _employeeService.deleteEmployeeFamily(employeeFamilyId));
             }
             else
             {

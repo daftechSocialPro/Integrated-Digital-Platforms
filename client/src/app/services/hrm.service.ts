@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 import { DepartmentGetDto, DepartmentPostDto } from '../model/HRM/IDepartmentDto';
 import { ResponseMessage } from '../model/ResponseMessage.Model';
 import { PositionGetDto, PositionPostDto } from '../model/HRM/IPositionDto';
-import { EmployeeGetDto, EmployeeHistoryDto, EmployeeHistoryPostDto, EmployeePostDto } from '../model/HRM/IEmployeeDto';
+import { EmployeeFamilyGetDto, EmployeeFamilyPostDto, EmployeeGetDto, EmployeeHistoryDto, EmployeeHistoryPostDto, EmployeePostDto } from '../model/HRM/IEmployeeDto';
 import { SelectList } from '../model/common';
 
 export interface toastPayload {
@@ -82,6 +82,24 @@ export class HrmService {
     deleteEmployeeHistory (employeeId : string){
         return this.http.delete<ResponseMessage>(this.baseUrl +"/Employee/deleteEmployeeHistory?employeeHistoryId="+employeeId)
     }
+
+
+    getEmployeeFamily (employeeId:string){
+        return this.http.get<EmployeeFamilyGetDto[]>(this.baseUrl+"/Employee/getEmployeeFamily?employeeId="+ employeeId)
+    }
+
+    addEmployeeFamily(employeeFamilyPost: EmployeeFamilyPostDto) {
+        
+        return this.http.post<ResponseMessage>(this.baseUrl + "/Employee/addEmployeeFamily", employeeFamilyPost)
+    }
+    updateEmployeeFamily(employeeFamilyPost: EmployeeFamilyGetDto) {
+        return this.http.post<ResponseMessage>(this.baseUrl + "/Employee/updateEmployeeFamily", employeeFamilyPost)
+    }
+
+    deleteEmployeeFamily (employeeId : string){
+        return this.http.delete<ResponseMessage>(this.baseUrl +"/Employee/deleteEmployeeFamily?employeeFamilyId="+employeeId)
+    }
+
 
     
     

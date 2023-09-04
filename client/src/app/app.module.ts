@@ -69,6 +69,9 @@ import { UpdateEmploymentHistoryComponent } from './pages/human-resource/employe
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/api';
 import { ToastModule} from 'primeng/toast';
+import { EmployeeFamilyComponent } from './pages/human-resource/employee-managment/employee-detail/employee-family/employee-family.component';
+import { AddEmployeeFamilyComponent } from './pages/human-resource/employee-managment/employee-detail/employee-family/add-employee-family/add-employee-family.component';
+import { UpdateEmployeeFamilyComponent } from './pages/human-resource/employee-managment/employee-detail/employee-family/update-employee-family/update-employee-family.component';
 
 @NgModule({
   declarations: [
@@ -123,6 +126,10 @@ import { ToastModule} from 'primeng/toast';
     EmploymentHistoryComponent,
      AddEmploymentHistoryComponent,
      UpdateEmploymentHistoryComponent,
+     EmployeeFamilyComponent,
+     AddEmployeeFamilyComponent,
+     UpdateEmployeeFamilyComponent,
+   
      
   ],
   imports: [

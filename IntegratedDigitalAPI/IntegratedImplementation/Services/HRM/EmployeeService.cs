@@ -174,7 +174,7 @@ namespace IntegratedImplementation.Services.HRM
                
 
                 await _dbContext.SaveChangesAsync();
-                return new ResponseMessage { Message = "Successfully Deleted", Success = true };
+                return new ResponseMessage { Message = "Successfully Updated", Success = true };
             }
             return new ResponseMessage { Success = false, Message = "Unable To Find Employee History" };
         }
@@ -195,5 +195,86 @@ namespace IntegratedImplementation.Services.HRM
         }
 
 
+
+        public async Task<List<EmployeeFamilyGetDto>> GetEmployeeFamily(Guid employeeId)
+        {
+            var employeeFamilies = await _dbContext.EmployeeFamilies.Where(x => x.EmployeeId == employeeId).AsNoTracking()
+                                .ProjectTo<EmployeeFamilyGetDto>(_mapper.ConfigurationProvider)
+                                .ToListAsync();
+            return employeeFamilies;
+        }
+        public async Task<ResponseMessage> AddEmployeeFamily(EmployeeFamilyPostDto addEmployeeFamily)
+        {
+
+
+            EmployeeFamily employeeFamily = new EmployeeFamily()
+            {
+                Id = Guid.NewGuid(),
+                CreatedById = addEmployeeFamily.CreatedById,
+                CreatedDate = DateTime.Now,
+                EmployeeId = addEmployeeFamily.EmployeeId,
+                FullName = addEmployeeFamily.FullName,
+                Gender = Enum.Parse<Gender>(addEmployeeFamily.Gender),
+                FamilyRelation = Enum.Parse<FamilyRelation>(addEmployeeFamily.FamilyRelation),
+                BirthDate = addEmployeeFamily.BirthDate,
+                Remark = addEmployeeFamily.Remark,
+
+
+            };
+            await _dbContext.EmployeeFamilies.AddAsync(employeeFamily);
+            await _dbContext.SaveChangesAsync();
+
+            return new ResponseMessage
+            {
+
+                Message = "Added Successfully",
+                Success = true
+            };
+
+        }
+
+
+        public async Task<ResponseMessage> UpdateEmployeeFamily(EmployeeFamilyGetDto updateEmployeeFamily)
+        {
+            var currentEmployeeFamily = await _dbContext.EmployeeFamilies.FirstOrDefaultAsync(x => x.Id.Equals(updateEmployeeFamily.Id));
+
+            if (currentEmployeeFamily != null)
+            {
+
+                currentEmployeeFamily.FullName = updateEmployeeFamily.FullName;
+                currentEmployeeFamily.Gender = Enum.Parse<Gender>( updateEmployeeFamily.Gender);
+                currentEmployeeFamily.FamilyRelation =Enum.Parse<FamilyRelation>( updateEmployeeFamily.FamilyRelation);
+                currentEmployeeFamily.BirthDate = updateEmployeeFamily.BirthDate;
+                currentEmployeeFamily.Remark = updateEmployeeFamily.Remark;
+
+
+                await _dbContext.SaveChangesAsync();
+                return new ResponseMessage { Message = "Successfully Updated Employee Family", Success = true };
+            }
+            return new ResponseMessage { Success = false, Message = "Unable To Find Employee Family" };
+        }
+
+        public async Task<ResponseMessage> deleteEmployeeFamily(Guid employeeFamilyId)
+        {
+
+            var currentEmployeeFamily = await _dbContext.EmployeeFamilies.FindAsync(employeeFamilyId);
+
+            if (currentEmployeeFamily != null)
+            {
+
+                _dbContext.Remove(currentEmployeeFamily);
+                await _dbContext.SaveChangesAsync();
+                return new ResponseMessage { Message = "Successfully Deleted Employee Family", Success = true };
+            }
+            return new ResponseMessage { Success = false, Message = "Unable To Find Employee Family" };
+        }
+
+
     }
+
+
+
+
+
+
 }

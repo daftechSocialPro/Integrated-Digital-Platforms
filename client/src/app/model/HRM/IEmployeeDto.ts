@@ -86,3 +86,33 @@ export interface EmployeeHistoryPostDto {
 }
 
 
+
+export interface EmployeeFamilyGetDto {
+
+     id : string;
+     fullName:string; 
+     gender : string;  
+     familyRelation : string ; 
+     birthDate : Date;
+     remark : string;
+     
+    
+}
+
+export interface EmployeeFamilyPostDto {
+
+    
+     fullName : string;
+     gender : string;
+     familyRelation : string ; 
+     birthDate : Date;
+     remark : string;
+     createdById : string;
+     employeeId :string;
+
+}
+
+
+
+
+

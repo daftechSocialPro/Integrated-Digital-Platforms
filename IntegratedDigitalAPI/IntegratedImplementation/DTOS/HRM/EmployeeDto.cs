@@ -11,16 +11,16 @@ namespace IntegratedImplementation.DTOS.HRM
 {
     public record EmployeePostDto
     {
-        
+
         public string FirstName { get; set; } = null!;
         public string MiddleName { get; set; } = null!;
         public string LastName { get; set; } = null!;
         public string Gender { get; set; } = null!;
 
         public string Email { get; set; } = null!;
-        public Guid RegionId { get; set; } 
+        public Guid RegionId { get; set; }
 
-        public string Woreda { get; set; } = null!; 
+        public string Woreda { get; set; } = null!;
         public string PhoneNumber { get; set; } = null!;
         public DateTime BirthDate { get; set; }
         public string MaritalStatus { get; set; } = null!;
@@ -35,9 +35,9 @@ namespace IntegratedImplementation.DTOS.HRM
         public string? PensionCode { get; set; } = null!;
         public string? TinNumber { get; set; } = null!;
         public string? BankAccountNo { get; set; } = null!;
-        public Guid DepartmentId { get; set; } 
+        public Guid DepartmentId { get; set; }
         public Guid PositionId { get; set; }
-        public int ContractDays { get; set; } = 0; 
+        public int ContractDays { get; set; } = 0;
         public string CreatedById { get; set; } = null!;
 
 
@@ -47,8 +47,8 @@ namespace IntegratedImplementation.DTOS.HRM
     {
         public Guid Id { get; set; }
         public string EmployeeCode { get; set; } = null!;
-        public string EmployeeName { get; set; } = null!;     
-        
+        public string EmployeeName { get; set; } = null!;
+
         public string PhoneNumber { get; set; } = null!;
 
         public string Email { get; set; } = null!;
@@ -57,7 +57,7 @@ namespace IntegratedImplementation.DTOS.HRM
         public string Nationality { get; set; } = null!;
         public string RegionName { get; set; } = null!;
 
-        public string Woreda { get; set;} = null!;
+        public string Woreda { get; set; } = null!;
 
 
         public string Gender { get; set; } = null!;
@@ -109,6 +109,34 @@ namespace IntegratedImplementation.DTOS.HRM
         public Guid EmployeeId { get; set; }
         public string CreatedById { get; set; } = null!;
 
+
+    }
+
+    public record EmployeeFamilyPostDto
+    {
+
+
+        public Guid EmployeeId { get; set; }
+        public string FullName { get; set; } = null!;
+        public string Gender { get; set; }
+        public string FamilyRelation { get; set; }
+        public DateTime BirthDate { get; set; }
+        public string? Remark { get; set; }
+        public string CreatedById { get; set; } = null!;
+
+    }
+
+    public record EmployeeFamilyGetDto
+    {
+
+        public Guid Id { get; set; }
+        public Guid EmployeeId { get; set; }
+        public string FullName { get; set; } = null!;
+        public string Gender { get; set; } = null!;
+        public string FamilyRelation { get; set; } = null!;
+        public DateTime BirthDate { get; set; }
+        public string? Remark { get; set; }
+       
 
     }
 }

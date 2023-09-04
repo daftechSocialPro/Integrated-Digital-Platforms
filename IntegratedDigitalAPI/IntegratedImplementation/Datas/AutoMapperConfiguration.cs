@@ -31,7 +31,9 @@ namespace IntegratedImplementation.Datas
                .ForMember(a => a.DepartmentName, e => e.MapFrom(mfg => mfg.Department.DepartmentName))
                .ForMember(a => a.PositionName, e => e.MapFrom(mfg => mfg.Position.PositionName));
 
-
+            CreateMap<EmployeeFamily, EmployeeFamilyGetDto>()
+             .ForMember(a => a.Gender, e => e.MapFrom(mfg => mfg.Gender.ToString()))
+             .ForMember(a => a.FamilyRelation, e => e.MapFrom(mfg => mfg.FamilyRelation.ToString()));
 
 
         }

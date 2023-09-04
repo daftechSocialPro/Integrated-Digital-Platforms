@@ -22,5 +22,11 @@ namespace IntegratedImplementation.Interfaces.HRM
         Task<ResponseMessage> UpdateEmployeeHistory(EmployeeHistoryPostDto updateEmployeeHistory);
         Task<ResponseMessage> deleteEmployeeHistory(Guid employeeHistoryId);
 
+        Task<List<EmployeeFamilyGetDto>> GetEmployeeFamily(Guid employeeId);
+
+        Task<ResponseMessage> AddEmployeeFamily(EmployeeFamilyPostDto addEmployeeFamily);
+        Task<ResponseMessage> UpdateEmployeeFamily(EmployeeFamilyGetDto updateEmployeeFamily);
+        Task<ResponseMessage> deleteEmployeeFamily(Guid employeeFamilyId);
+
     }
 }
