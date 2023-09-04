@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -19,5 +20,6 @@ namespace IntegratedInfrustructure.Model.Authentication
     {
         public int RoleCategoryId { get; set; }
         public virtual RoleCategory RoleCategory { get; set; } = null!;
+
     }
 }

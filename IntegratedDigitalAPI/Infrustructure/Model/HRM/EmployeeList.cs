@@ -1,6 +1,8 @@
 ﻿using IntegratedInfrustructure.Model.Authentication;
+using IntegratedInfrustructure.Model.Configuration;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -11,13 +13,25 @@ namespace IntegratedInfrustructure.Model.HRM
 {
     public class EmployeeList : WithIdModel
     {
+
+        public EmployeeList() {
+
+
+            EmployeeDetail = new HashSet<EmploymentDetail>();
+        
+        }
         public string EmployeeCode { get; set; } = null!;
         public string FirstName { get; set; } = null!;
         public string MiddleName { get; set; } = null!;
         public string LastName { get; set; } = null!;
-        public string AmharicFirstName { get; set; } = null!;
-        public string AmharicMiddleName { get; set; } = null!;
-        public string AmharicLastName { get; set; } = null!;
+        public string PhoneNumber { get; set; } = null!;
+        public string Email { get; set; } = null!;
+
+        public Guid RegionId { get; set; } = Guid.Parse("18eef146-fc48-4074-94e7-e5dd4a3be642");
+        public virtual Region Region { get; set; } = null!;
+
+        public string Woreda { get; set; } = null!;
+
         public Gender Gender { get; set; }
         public DateTime BirthDate { get; set; }
         public MaritalStatus MaritalStatus { get; set; }
@@ -32,5 +46,10 @@ namespace IntegratedInfrustructure.Model.HRM
         public string? PensionCode { get; set; } = null!;
         public string? TinNumber { get; set; } = null!;
         public string? BankAccountNo { get; set; } = null!;
+
+
+        [InverseProperty(nameof(EmploymentDetail.Employee))]
+        public ICollection<EmploymentDetail> EmployeeDetail { get; set; }
+
     }
 }
