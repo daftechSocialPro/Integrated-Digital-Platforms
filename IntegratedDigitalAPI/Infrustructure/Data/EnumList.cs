@@ -60,5 +60,50 @@ namespace IntegratedInfrustructure.Data
             EMPLOYEEPREFIX
         }
 
+        public enum ApplicantStatus
+        {
+            APPLIED,
+            SEEN,
+            PROGRESS,
+            INTERVIEW,
+            REJECTED,
+            HIRED,
+            BLACKLISTED
+        }
+
+        public enum VacancyType
+        {
+            INTERNAL,
+            EXTERNAL,
+            BOTH
+        }
+
+        public enum LeaveCategory
+        {
+            ANNUAL,
+            UNPAID,
+            OTHER
+        }
+        public enum LeaveRequestStatus
+        {
+            PENDING,
+            APPROVED,
+            REJECTED
+        }
+
+        public enum FamilyRelation
+        {
+           PARENT,
+           SPOUSE,
+           CHILD
+        }
+        public enum GeneralHrmSetting
+        {
+            PROBATIONPERIOD,
+            ANNUALLEAVESTARTMONTH,
+            PERFORMANCESTARTDATE,
+            PERFORMANCEENDDATE,
+        }
+
     }
 }

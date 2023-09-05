@@ -1,4 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Implementation.Interfaces.Authentication;
+using Implementation.Services.Authentication;
+using IntegratedImplementation.Interfaces.Configuration;
+using IntegratedImplementation.Interfaces.HRM;
+using IntegratedImplementation.Services.Configuration;
+using IntegratedImplementation.Services.HRM;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +17,17 @@ namespace IntegratedImplementation.Datas
     {
         public static IServiceCollection AddCoreBusiness(this IServiceCollection services)
         {
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
+            //hrm services 
+            services.AddScoped<IDepartmentService, DepartmentService>();
+            services.AddScoped<IPositionService, PositionService>();
+            services.AddScoped<IGeneralConfigService, GeneralConfigService>();
+            services.AddScoped<IEmployeeService, EmployeeService>();
 
-           
+            // configuration
+
+            services.AddScoped<IRegionService, RegionService>();
+            services.AddScoped<ICountryService, CountryService>();
             return services;
         }
     }

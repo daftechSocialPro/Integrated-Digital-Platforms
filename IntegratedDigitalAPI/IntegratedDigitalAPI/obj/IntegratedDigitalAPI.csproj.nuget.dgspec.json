@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Projects\\Ethiopian Midwives\\Application\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedDigitalAPI\\IntegratedDigitalAPI.csproj": {}
+    "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedDigitalAPI\\IntegratedDigitalAPI.csproj": {}
   },
   "projects": {
-    "D:\\Projects\\Ethiopian Midwives\\Application\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\Infrustructure\\IntegratedInfrustructure.csproj": {
+    "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\Infrustructure\\IntegratedInfrustructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\Ethiopian Midwives\\Application\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\Infrustructure\\IntegratedInfrustructure.csproj",
+        "projectUniqueName": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\Infrustructure\\IntegratedInfrustructure.csproj",
         "projectName": "IntegratedInfrustructure",
-        "projectPath": "D:\\Projects\\Ethiopian Midwives\\Application\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\Infrustructure\\IntegratedInfrustructure.csproj",
-        "packagesPath": "C:\\Users\\Hermi\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\Ethiopian Midwives\\Application\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\Infrustructure\\obj\\",
+        "projectPath": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\Infrustructure\\IntegratedInfrustructure.csproj",
+        "packagesPath": "C:\\Users\\Hp\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\Infrustructure\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Hermi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Hp\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,8 +22,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {},
-          "https://pkgs.dev.azure.com/NGDevelopment/a226e2c0-a0e2-44b7-9585-284d14e9df54/_packaging/nglibrepo/nuget/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net7.0": {
@@ -82,21 +81,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\Projects\\Ethiopian Midwives\\Application\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedDigitalAPI\\IntegratedDigitalAPI.csproj": {
+    "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedDigitalAPI\\IntegratedDigitalAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\Ethiopian Midwives\\Application\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedDigitalAPI\\IntegratedDigitalAPI.csproj",
+        "projectUniqueName": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedDigitalAPI\\IntegratedDigitalAPI.csproj",
         "projectName": "IntegratedDigitalAPI",
-        "projectPath": "D:\\Projects\\Ethiopian Midwives\\Application\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedDigitalAPI\\IntegratedDigitalAPI.csproj",
-        "packagesPath": "C:\\Users\\Hermi\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\Ethiopian Midwives\\Application\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedDigitalAPI\\obj\\",
+        "projectPath": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedDigitalAPI\\IntegratedDigitalAPI.csproj",
+        "packagesPath": "C:\\Users\\Hp\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedDigitalAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Hermi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Hp\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -104,18 +103,17 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {},
-          "https://pkgs.dev.azure.com/NGDevelopment/a226e2c0-a0e2-44b7-9585-284d14e9df54/_packaging/nglibrepo/nuget/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "D:\\Projects\\Ethiopian Midwives\\Application\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\Infrustructure\\IntegratedInfrustructure.csproj": {
-                "projectPath": "D:\\Projects\\Ethiopian Midwives\\Application\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\Infrustructure\\IntegratedInfrustructure.csproj"
+              "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\Infrustructure\\IntegratedInfrustructure.csproj": {
+                "projectPath": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\Infrustructure\\IntegratedInfrustructure.csproj"
               },
-              "D:\\Projects\\Ethiopian Midwives\\Application\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedImplementation\\IntegratedImplementation.csproj": {
-                "projectPath": "D:\\Projects\\Ethiopian Midwives\\Application\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedImplementation\\IntegratedImplementation.csproj"
+              "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedImplementation\\IntegratedImplementation.csproj": {
+                "projectPath": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedImplementation\\IntegratedImplementation.csproj"
               }
             }
           }
@@ -208,21 +206,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\Projects\\Ethiopian Midwives\\Application\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedImplementation\\IntegratedImplementation.csproj": {
+    "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedImplementation\\IntegratedImplementation.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\Ethiopian Midwives\\Application\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedImplementation\\IntegratedImplementation.csproj",
+        "projectUniqueName": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedImplementation\\IntegratedImplementation.csproj",
         "projectName": "IntegratedImplementation",
-        "projectPath": "D:\\Projects\\Ethiopian Midwives\\Application\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedImplementation\\IntegratedImplementation.csproj",
-        "packagesPath": "C:\\Users\\Hermi\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\Ethiopian Midwives\\Application\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedImplementation\\obj\\",
+        "projectPath": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedImplementation\\IntegratedImplementation.csproj",
+        "packagesPath": "C:\\Users\\Hp\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedImplementation\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Hermi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Hp\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -230,13 +228,16 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {},
-          "https://pkgs.dev.azure.com/NGDevelopment/a226e2c0-a0e2-44b7-9585-284d14e9df54/_packaging/nglibrepo/nuget/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\Infrustructure\\IntegratedInfrustructure.csproj": {
+                "projectPath": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\Infrustructure\\IntegratedInfrustructure.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -252,6 +253,10 @@
             "AutoMapper": {
               "target": "Package",
               "version": "[12.0.1, )"
+            },
+            "Microsoft.AspNetCore.Identity": {
+              "target": "Package",
+              "version": "[2.2.0, )"
             },
             "Microsoft.Extensions.DependencyInjection.Abstractions": {
               "target": "Package",
@@ -274,7 +279,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }
