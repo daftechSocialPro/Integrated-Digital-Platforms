@@ -1,4 +1,5 @@
-﻿using IntegratedInfrustructure.Model.HRM;
+﻿using IntegratedInfrustructure.Model.Configuration;
+using IntegratedInfrustructure.Model.HRM;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -139,4 +140,45 @@ namespace IntegratedImplementation.DTOS.HRM
        
 
     }
+
+
+    public record EmployeeEducationPostDto
+    {
+
+        public Guid Id { get; set; }
+        public Guid EmployeeId { get; set; }
+     
+        public Guid EducationalLevelId { get; set; }
+       
+        public Guid EducationalFieldId { get; set; }
+        public string Institution { get; set; } = null!;
+        public DateTime FromDate { get; set; }
+        public DateTime? ToDate { get; set; }
+
+        public string? Remark { get; set; }
+
+        public string CreatedById { get; set; } = null!;
+    }
+
+    public record EmployeeEducationGetDto
+    {
+
+        public Guid Id { get; set; }
+        public Guid EmployeeId { get; set; }
+
+        public string EducationalLevel { get; set; } = null!;
+        public string EducationalField { get; set; } = null!;
+        public string Institution { get; set; } = null!;
+        public DateTime FromDate { get; set; }
+        public DateTime? ToDate { get; set; }
+
+        public string? Remark { get; set; }
+    }
+
+
+
+
+
+
+
 }

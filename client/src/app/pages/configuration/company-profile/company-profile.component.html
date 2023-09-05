@@ -1,0 +1,80 @@
+<section class="section">
+    <div class="row">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Company Profile</h5>
+
+
+                <form [formGroup]="CompanyProfileForm" (ngSubmit)="companyProfile==null?submit():update()">
+                    <div class="card">
+                        <div class="card-body p-5">
+
+                            <div class="row">
+                                <div class="col-lg-4">
+
+                                    <img [src]="getImage2()" alt="Profile" style="width: 100%;">
+                                    <input #file (change)="onUpload($event)" type="file" style="display: none;"
+                                        accept="image/*" />
+                                    <div class="pt-2">
+                                        <a (click)="file.click()" style="width: 100%;" class="btn btn-primary btn-sm"
+                                            title="Upload new profile image">
+                                            <i class="bi bi-upload"></i> Upload Image
+                                        </a>
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-8 " style="padding:40px">
+
+
+                                    <div class="row mb-3">
+                                        <label for="companyName" class="col-sm-4 col-form-label">Company Name</label>
+                                        <div class="col-sm-8"> <input type="text" id="companyName"
+                                                formControlName="companyName" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="phoneNumber" class="col-sm-4 col-form-label">Phone Number
+                                        </label>
+                                        <div class="col-sm-8"> <input type="text" formControlName="phoneNumber"
+                                                class="form-control"></div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="email" class="col-sm-4 col-form-label">Email</label>
+                                        <div class="col-sm-8"> <input id="email" formControlName="email" type="text"
+                                                class="form-control"></div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="address" class="col-sm-4 col-form-label">Address</label>
+                                        <div class="col-sm-8"> <textarea id="address" formControlName="address"
+                                                class="form-control" style="height: 50px"></textarea></div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="description" class="col-sm-4 col-form-label">Description</label>
+                                        <div class="col-sm-8"><textarea id="description" formControlName="description"
+                                                class="form-control" style="height: 100px"></textarea></div>
+                                    </div>
+                                    <hr />
+                                    <div class="row mb-3">
+                                        <div class="col-sm-12 text-end">
+                                            <button type="submit" class="btn btn-primary ">
+                                                {{companyProfile!=null? "Update":"Save"}}
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </form>
+
+
+            </div>
+        </div>
+
+
+    </div>
+</section>

@@ -98,7 +98,6 @@ namespace IntegratedImplementation.Services.HRM
                 Success = true
             };
         }
-
         public async Task<List<EmployeeGetDto>> GetEmployees()
         {
             var employeeList = await _dbContext.Employees.AsNoTracking()
@@ -106,7 +105,6 @@ namespace IntegratedImplementation.Services.HRM
                                     .ToListAsync();
             return employeeList;
         }
-
         public async Task<EmployeeGetDto> GetEmployee(Guid employeeId)
         {
             var employee = await _dbContext.Employees
@@ -120,6 +118,7 @@ namespace IntegratedImplementation.Services.HRM
             return employee;
         }
 
+        //history
         public async Task<List<EmployeeHistoryDto>> GetEmployeeHistory(Guid employeeId)
         {
             var employeeHistories = await _dbContext.EmploymentDetails.Where(x=>x.EmployeeId == employeeId).Include(x=>x.Department).Include(x=>x.Position).AsNoTracking()
@@ -127,7 +126,6 @@ namespace IntegratedImplementation.Services.HRM
                                 .ToListAsync();
             return employeeHistories;
         }
-
         public async Task<ResponseMessage> AddEmployeeHistory(EmployeeHistoryPostDto addEmployeeHistory)
         {
 
@@ -157,8 +155,6 @@ namespace IntegratedImplementation.Services.HRM
             };
 
         }
-
-
        public async Task<ResponseMessage> UpdateEmployeeHistory(EmployeeHistoryPostDto updateEmployeeHistory)
         {
             var currentEmployeeHistory = await _dbContext.EmploymentDetails.FirstOrDefaultAsync(x => x.Id.Equals(updateEmployeeHistory.Id));
@@ -178,7 +174,6 @@ namespace IntegratedImplementation.Services.HRM
             }
             return new ResponseMessage { Success = false, Message = "Unable To Find Employee History" };
         }
-
         public async Task<ResponseMessage> deleteEmployeeHistory(Guid employeeHistoryId)
         {
 
@@ -195,6 +190,7 @@ namespace IntegratedImplementation.Services.HRM
         }
 
 
+        //Family
 
         public async Task<List<EmployeeFamilyGetDto>> GetEmployeeFamily(Guid employeeId)
         {
@@ -232,8 +228,6 @@ namespace IntegratedImplementation.Services.HRM
             };
 
         }
-
-
         public async Task<ResponseMessage> UpdateEmployeeFamily(EmployeeFamilyGetDto updateEmployeeFamily)
         {
             var currentEmployeeFamily = await _dbContext.EmployeeFamilies.FirstOrDefaultAsync(x => x.Id.Equals(updateEmployeeFamily.Id));
@@ -253,7 +247,6 @@ namespace IntegratedImplementation.Services.HRM
             }
             return new ResponseMessage { Success = false, Message = "Unable To Find Employee Family" };
         }
-
         public async Task<ResponseMessage> deleteEmployeeFamily(Guid employeeFamilyId)
         {
 
@@ -269,6 +262,76 @@ namespace IntegratedImplementation.Services.HRM
             return new ResponseMessage { Success = false, Message = "Unable To Find Employee Family" };
         }
 
+
+        // Education
+
+        public async Task<List<EmployeeEducationGetDto>> GetEmployeeEducation(Guid employeeId)
+        {
+            var employeeFamilies = await _dbContext.EmployeeEducations.Where(x => x.EmployeeId == employeeId).AsNoTracking()
+                                .ProjectTo<EmployeeEducationGetDto>(_mapper.ConfigurationProvider)
+                                .ToListAsync();
+            return employeeFamilies;
+        }
+        public async Task<ResponseMessage> AddEmployeeEducation(EmployeeEducationPostDto addEmployeeEducation)
+        {
+
+
+            EmployeeEducation employeeEducation = new EmployeeEducation()
+            {
+                Id = Guid.NewGuid(),
+                CreatedById = addEmployeeEducation.CreatedById,
+                CreatedDate = DateTime.Now,
+                EmployeeId = addEmployeeEducation.EmployeeId,
+                EducationalLevelId = addEmployeeEducation.EducationalLevelId,
+                EducationalFieldId = addEmployeeEducation.EducationalFieldId,
+                FromDate = addEmployeeEducation.FromDate,
+                ToDate = addEmployeeEducation.ToDate,
+                Remark = addEmployeeEducation.Remark,
+                Institution = addEmployeeEducation.Institution
+            };
+            await _dbContext.EmployeeEducations.AddAsync(employeeEducation);
+            await _dbContext.SaveChangesAsync();
+
+            return new ResponseMessage
+            {
+
+                Message = "Employee Education Added Successfully",
+                Success = true
+            };
+
+        }
+        public async Task<ResponseMessage> UpdateEmployeeEducation(EmployeeEducationPostDto updateEmployeeEducation)
+        {
+            var currentEmployeeEducation = await _dbContext.EmployeeEducations.FirstOrDefaultAsync(x => x.Id.Equals(updateEmployeeEducation.Id));
+
+            if (currentEmployeeEducation != null)
+            {
+
+                currentEmployeeEducation.EducationalLevelId = updateEmployeeEducation.EducationalLevelId;
+                currentEmployeeEducation.EducationalFieldId = updateEmployeeEducation.EducationalFieldId;
+                currentEmployeeEducation.FromDate = updateEmployeeEducation.FromDate;
+                currentEmployeeEducation.ToDate = updateEmployeeEducation.ToDate;
+                currentEmployeeEducation.Remark = updateEmployeeEducation.Remark;
+                currentEmployeeEducation.Institution = updateEmployeeEducation.Institution;
+                await _dbContext.SaveChangesAsync();
+                return new ResponseMessage { Message = "Successfully Updated Employee Education", Success = true };
+            }
+            return new ResponseMessage { Success = false, Message = "Unable To Find Employee Education" };
+        }
+        public async Task<ResponseMessage> deleteEmployeeEducation(Guid employeeEducationId)
+        {
+
+            var currentEmployeeEducation = await _dbContext.EmployeeEducations.FindAsync(employeeEducationId);
+
+            if (currentEmployeeEducation != null)
+            {
+
+                _dbContext.Remove(currentEmployeeEducation);
+                await _dbContext.SaveChangesAsync();
+                return new ResponseMessage { Message = "Successfully Deleted Employee Education", Success = true };
+            }
+            return new ResponseMessage { Success = false, Message = "Unable To Find Employee Education" };
+        }
 
     }
 

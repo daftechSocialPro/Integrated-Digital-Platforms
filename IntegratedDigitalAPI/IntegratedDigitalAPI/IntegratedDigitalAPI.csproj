@@ -31,4 +31,8 @@
     <ProjectReference Include="..\IntegratedImplementation\IntegratedImplementation.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\CompanyProfile\" />
+  </ItemGroup>
+
 </Project>

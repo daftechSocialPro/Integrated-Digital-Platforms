@@ -110,9 +110,36 @@ export interface EmployeeFamilyPostDto {
      createdById : string;
      employeeId :string;
 
-}
+}  
 
+     export interface EmployeeEducationGetDto {
 
+          id : string;
+          educationalLevel : string;
+          educationalField : string;
+          institution : string ; 
+          fromDate : Date;
+          toDate : Date;
+          remark : string;          
+          employeeId :string;
+         
+     }
+     
+     export interface EmployeeEducationPostDto {
+     
+          id? : string;
+          educationalLevelId : string;
+          educationalFieldId : string;
+          institution : string ; 
+          fromDate : Date;
+          toDate : Date;
+          remark : string;
+          createdById : string;
+          employeeId ?:string;
+     
+     }
+
+  
 
 
 

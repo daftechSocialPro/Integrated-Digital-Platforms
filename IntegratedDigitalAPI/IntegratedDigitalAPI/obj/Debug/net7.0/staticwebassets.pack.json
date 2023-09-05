@@ -1,6 +1,14 @@
 {
   "Files": [
     {
+      "Id": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedDigitalAPI\\wwwroot\\CompanyProfile\\23325be4-303b-4b9e-b6d4-20605661e6de.jpg",
+      "PackagePath": "staticwebassets\\CompanyProfile\\23325be4-303b-4b9e-b6d4-20605661e6de.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedDigitalAPI\\wwwroot\\CompanyProfile\\23325be4-303b-4b9e-b6d4-20605661e6de.png",
+      "PackagePath": "staticwebassets\\CompanyProfile\\23325be4-303b-4b9e-b6d4-20605661e6de.png"
+    },
+    {
       "Id": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedDigitalAPI\\wwwroot\\Employee\\07dc479d-2e76-4bf2-b8c1-a4b485bc7ebb.Jpeg",
       "PackagePath": "staticwebassets\\Employee\\07dc479d-2e76-4bf2-b8c1-a4b485bc7ebb.Jpeg"
     },

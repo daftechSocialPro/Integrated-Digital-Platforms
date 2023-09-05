@@ -23,9 +23,10 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<IPositionService, PositionService>();
             services.AddScoped<IGeneralConfigService, GeneralConfigService>();
             services.AddScoped<IEmployeeService, EmployeeService>();
+           
 
             // configuration
-
+            services.AddScoped<ICompanyProfileService, CompanyProfileService>();
             services.AddScoped<IRegionService, RegionService>();
             services.AddScoped<ICountryService, CountryService>();
             return services;

@@ -72,7 +72,17 @@ import { ToastModule} from 'primeng/toast';
 import { EmployeeFamilyComponent } from './pages/human-resource/employee-managment/employee-detail/employee-family/employee-family.component';
 import { AddEmployeeFamilyComponent } from './pages/human-resource/employee-managment/employee-detail/employee-family/add-employee-family/add-employee-family.component';
 import { UpdateEmployeeFamilyComponent } from './pages/human-resource/employee-managment/employee-detail/employee-family/update-employee-family/update-employee-family.component';
-
+import { EmployeeEducationComponent } from './pages/human-resource/employee-managment/employee-detail/employee-education/employee-education.component';
+import { AddEmployeeEducationComponent } from './pages/human-resource/employee-managment/employee-detail/employee-education/add-employee-education/add-employee-education.component';
+import { UpdateEmployeeEducationComponent } from './pages/human-resource/employee-managment/employee-detail/employee-education/update-employee-education/update-employee-education.component';
+import { CompanyProfileComponent } from './pages/configuration/company-profile/company-profile.component';
+import { ConfigurationComponent } from './pages/configuration/configuration/configuration.component';
+import { CommonComponent } from './pages/configuration/common/common.component';
+import { AddressComponent } from './pages/configuration/address/address.component';
+import {TabViewModule} from 'primeng/tabview';
+import { CountryComponent } from './pages/configuration/common/country/country.component';
+import { RegionComponent } from './pages/configuration/common/region/region.component';
+import { ZoneComponent } from './pages/configuration/common/zone/zone.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -129,6 +139,16 @@ import { UpdateEmployeeFamilyComponent } from './pages/human-resource/employee-m
      EmployeeFamilyComponent,
      AddEmployeeFamilyComponent,
      UpdateEmployeeFamilyComponent,
+     EmployeeEducationComponent,
+     AddEmployeeEducationComponent,
+     UpdateEmployeeEducationComponent,
+     CompanyProfileComponent,
+     ConfigurationComponent,
+     CommonComponent,
+     AddressComponent,
+     CountryComponent,
+     RegionComponent,
+     ZoneComponent,
    
      
   ],
@@ -145,6 +165,7 @@ import { UpdateEmployeeFamilyComponent } from './pages/human-resource/employee-m
     StepsModule,
     ConfirmDialogModule,
     ToastModule,
+    TabViewModule,
     
     ToastrModule.forRoot({
       preventDuplicates: true,

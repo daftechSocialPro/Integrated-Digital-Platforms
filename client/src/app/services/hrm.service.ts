@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 import { DepartmentGetDto, DepartmentPostDto } from '../model/HRM/IDepartmentDto';
 import { ResponseMessage } from '../model/ResponseMessage.Model';
 import { PositionGetDto, PositionPostDto } from '../model/HRM/IPositionDto';
-import { EmployeeFamilyGetDto, EmployeeFamilyPostDto, EmployeeGetDto, EmployeeHistoryDto, EmployeeHistoryPostDto, EmployeePostDto } from '../model/HRM/IEmployeeDto';
+import { EmployeeEducationGetDto, EmployeeEducationPostDto, EmployeeFamilyGetDto, EmployeeFamilyPostDto, EmployeeGetDto, EmployeeHistoryDto, EmployeeHistoryPostDto, EmployeePostDto } from '../model/HRM/IEmployeeDto';
 import { SelectList } from '../model/common';
 
 export interface toastPayload {
@@ -68,6 +68,7 @@ export class HrmService {
         return this.http.get<EmployeeGetDto>(this.baseUrl + "/Employee/getEmployee?employeeId="+ employeeId)
        
     }
+    // employee History 
     getEmployeeHistory (employeeId:string){
         return this.http.get<EmployeeHistoryDto[]>(this.baseUrl+"/Employee/getEmployeeHistory?employeeId="+ employeeId)
     }
@@ -83,7 +84,7 @@ export class HrmService {
         return this.http.delete<ResponseMessage>(this.baseUrl +"/Employee/deleteEmployeeHistory?employeeHistoryId="+employeeId)
     }
 
-
+//employee Family
     getEmployeeFamily (employeeId:string){
         return this.http.get<EmployeeFamilyGetDto[]>(this.baseUrl+"/Employee/getEmployeeFamily?employeeId="+ employeeId)
     }
@@ -100,7 +101,23 @@ export class HrmService {
         return this.http.delete<ResponseMessage>(this.baseUrl +"/Employee/deleteEmployeeFamily?employeeFamilyId="+employeeId)
     }
 
+    // employee Education
 
+    getEmployeeEducation (employeeId:string){
+        return this.http.get<EmployeeEducationGetDto[]>(this.baseUrl+"/Employee/getEmployeeEducation?employeeId="+ employeeId)
+    }
+
+    addEmployeeEducation(employeeEducationPost: EmployeeEducationPostDto) {
+        
+        return this.http.post<ResponseMessage>(this.baseUrl + "/Employee/addEmployeeEducation", employeeEducationPost)
+    }
+    updateEmployeeEducation(employeeEducationPost: EmployeeEducationPostDto) {
+        return this.http.post<ResponseMessage>(this.baseUrl + "/Employee/updateEmployeeEducation", employeeEducationPost)
+    }
+
+    deleteEmployeeEducation (employeeId : string){
+        return this.http.delete<ResponseMessage>(this.baseUrl +"/Employee/deleteEmployeeEducation?employeeEducationId="+employeeId)
+    }
     
     
 

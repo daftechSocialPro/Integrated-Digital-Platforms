@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using static IntegratedInfrustructure.Data.EnumList;
 
 using IntegratedInfrustructure.Data;
+using IntegratedInfrustructure.Model.Configuration;
+using IntegratedImplementation.DTOS.Configuration;
 
 namespace IntegratedImplementation.Datas
 {
@@ -34,6 +36,15 @@ namespace IntegratedImplementation.Datas
             CreateMap<EmployeeFamily, EmployeeFamilyGetDto>()
              .ForMember(a => a.Gender, e => e.MapFrom(mfg => mfg.Gender.ToString()))
              .ForMember(a => a.FamilyRelation, e => e.MapFrom(mfg => mfg.FamilyRelation.ToString()));
+
+
+            CreateMap<EmployeeEducation, EmployeeEducationGetDto>()
+           .ForMember(a => a.EducationalField, e => e.MapFrom(mfg => mfg.EducationalField.EducationalFieldName))
+           .ForMember(a => a.EducationalLevel, e => e.MapFrom(mfg => mfg.EducationalLevel.EducationalLevelName));
+
+            CreateMap<CompanyProfile, CompanyProfileGetDto>();
+            
+
 
 
         }
