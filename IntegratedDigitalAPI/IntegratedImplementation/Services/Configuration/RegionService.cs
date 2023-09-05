@@ -62,11 +62,12 @@ namespace IntegratedImplementation.Services.Configuration
 
         public async Task<List<RegionGetDto>> GetRegionList()
         {
-            var RegionList = await _dbContext.Regions.AsNoTracking().Select(x => new RegionGetDto
+            var RegionList = await _dbContext.Regions.Include(x=>x.Country).AsNoTracking().Select(x => new RegionGetDto
             {
                 Id = x.Id,
                 RegionName = x.RegionName,
                 CountryName = x.Country.CountryName,
+                CountryId = x.CountryId
                 
             }).ToListAsync();
 

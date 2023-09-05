@@ -29,7 +29,7 @@ namespace IntegratedImplementation.DTOS.Configuration
         public Guid? Id { get; set; }
         public string RegionName { get; set; } = null!;
         public Guid CountryId { get; set; }
-        public string CreatedById { get; set; } = null!;
+        public string? CreatedById { get; set; } 
 
     }
 
@@ -37,7 +37,8 @@ namespace IntegratedImplementation.DTOS.Configuration
     {
         public Guid Id { get; set; }
         public string RegionName { get; set; } = null!;
-        public string CountryName { get; set; } = null!;
+        public string? CountryName { get; set; }
+        public Guid CountryId { get; set; }
 
     }
     public class ZonePostDto

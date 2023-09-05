@@ -80,9 +80,13 @@ import { ConfigurationComponent } from './pages/configuration/configuration/conf
 import { CommonComponent } from './pages/configuration/common/common.component';
 import { AddressComponent } from './pages/configuration/address/address.component';
 import {TabViewModule} from 'primeng/tabview';
-import { CountryComponent } from './pages/configuration/common/country/country.component';
-import { RegionComponent } from './pages/configuration/common/region/region.component';
-import { ZoneComponent } from './pages/configuration/common/zone/zone.component'
+import { CountryComponent } from './pages/configuration/address/country/country.component';
+import { RegionComponent } from './pages/configuration/address/region/region.component';
+import { ZoneComponent } from './pages/configuration/address/zone/zone.component';
+import { AddCountryComponent } from './pages/configuration/address/country/add-country/add-country.component';
+import { UpdateCountryComponent } from './pages/configuration/address/country/update-country/update-country.component';
+import { AddRegionComponent } from './pages/configuration/address/region/add-region/add-region.component';
+import { UpdateRegionComponent } from './pages/configuration/address/region/update-region/update-region.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -149,6 +153,10 @@ import { ZoneComponent } from './pages/configuration/common/zone/zone.component'
      CountryComponent,
      RegionComponent,
      ZoneComponent,
+     AddCountryComponent,
+     UpdateCountryComponent,
+     AddRegionComponent,
+     UpdateRegionComponent,
    
      
   ],

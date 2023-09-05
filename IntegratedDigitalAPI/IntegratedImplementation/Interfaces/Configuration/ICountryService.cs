@@ -14,6 +14,6 @@ namespace IntegratedImplementation.Interfaces.Configuration
         Task<List<SelectListDto>> GetCountryDropdownList();
         Task<ResponseMessage> AddCountry(CountryPostDto countryPost);
         Task<List<CountryGetDto>> GetCountryList();
-        Task<ResponseMessage> UpdateCountry(CountryPostDto countryPost);
+        Task<ResponseMessage> UpdateCountry(CountryGetDto countryPost);
     }
 }

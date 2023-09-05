@@ -1,4 +1,6 @@
-﻿using IntegratedImplementation.DTOS.Configuration;
+﻿using Implementation.Helper;
+using IntegratedImplementation.DTOS.Configuration;
+using IntegratedImplementation.DTOS.HRM;
 using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedImplementation.Interfaces.HRM;
 using IntegratedImplementation.Services.HRM;
@@ -26,6 +28,43 @@ namespace IntegratedDigitalAPI.Controllers.Configuration
         public async Task<IActionResult> GetCountryDropdown()
         {
             return Ok(await _CountryService.GetCountryDropdownList());
+        }
+
+
+        [HttpGet]
+        [ProducesResponseType(typeof(CountryGetDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetCountryList()
+        {
+            return Ok(await _CountryService.GetCountryList());
+        }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> AddCountry( CountryPostDto CountryDto)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _CountryService.AddCountry(CountryDto));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+
+        [HttpPut]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> UpdateCountry(CountryGetDto CountryDto)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _CountryService.UpdateCountry(CountryDto));
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
 

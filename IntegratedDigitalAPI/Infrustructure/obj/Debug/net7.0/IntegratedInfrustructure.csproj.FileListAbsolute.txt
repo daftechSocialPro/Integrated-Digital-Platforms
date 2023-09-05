@@ -26,3 +26,17 @@ C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\
 C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\Infrustructure\obj\Debug\net7.0\IntegratedInfrustructure.pdb
 C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\Infrustructure\obj\Debug\net7.0\IntegratedInfrustructure.genruntimeconfig.cache
 C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\Infrustructure\obj\Debug\net7.0\ref\IntegratedInfrustructure.dll
+C:\Users\KIRUB\Desktop\clones\Integrated-Digital-Platforms\IntegratedDigitalAPI\Infrustructure\bin\Debug\net7.0\IntegratedInfrustructure.deps.json
+C:\Users\KIRUB\Desktop\clones\Integrated-Digital-Platforms\IntegratedDigitalAPI\Infrustructure\bin\Debug\net7.0\IntegratedInfrustructure.runtimeconfig.json
+C:\Users\KIRUB\Desktop\clones\Integrated-Digital-Platforms\IntegratedDigitalAPI\Infrustructure\bin\Debug\net7.0\IntegratedInfrustructure.dll
+C:\Users\KIRUB\Desktop\clones\Integrated-Digital-Platforms\IntegratedDigitalAPI\Infrustructure\bin\Debug\net7.0\IntegratedInfrustructure.pdb
+C:\Users\KIRUB\Desktop\clones\Integrated-Digital-Platforms\IntegratedDigitalAPI\Infrustructure\obj\Debug\net7.0\IntegratedInfrustructure.csproj.AssemblyReference.cache
+C:\Users\KIRUB\Desktop\clones\Integrated-Digital-Platforms\IntegratedDigitalAPI\Infrustructure\obj\Debug\net7.0\IntegratedInfrustructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\KIRUB\Desktop\clones\Integrated-Digital-Platforms\IntegratedDigitalAPI\Infrustructure\obj\Debug\net7.0\IntegratedInfrustructure.AssemblyInfoInputs.cache
+C:\Users\KIRUB\Desktop\clones\Integrated-Digital-Platforms\IntegratedDigitalAPI\Infrustructure\obj\Debug\net7.0\IntegratedInfrustructure.AssemblyInfo.cs
+C:\Users\KIRUB\Desktop\clones\Integrated-Digital-Platforms\IntegratedDigitalAPI\Infrustructure\obj\Debug\net7.0\IntegratedInfrustructure.csproj.CoreCompileInputs.cache
+C:\Users\KIRUB\Desktop\clones\Integrated-Digital-Platforms\IntegratedDigitalAPI\Infrustructure\obj\Debug\net7.0\IntegratedInfrustructure.dll
+C:\Users\KIRUB\Desktop\clones\Integrated-Digital-Platforms\IntegratedDigitalAPI\Infrustructure\obj\Debug\net7.0\refint\IntegratedInfrustructure.dll
+C:\Users\KIRUB\Desktop\clones\Integrated-Digital-Platforms\IntegratedDigitalAPI\Infrustructure\obj\Debug\net7.0\IntegratedInfrustructure.pdb
+C:\Users\KIRUB\Desktop\clones\Integrated-Digital-Platforms\IntegratedDigitalAPI\Infrustructure\obj\Debug\net7.0\IntegratedInfrustructure.genruntimeconfig.cache
+C:\Users\KIRUB\Desktop\clones\Integrated-Digital-Platforms\IntegratedDigitalAPI\Infrustructure\obj\Debug\net7.0\ref\IntegratedInfrustructure.dll

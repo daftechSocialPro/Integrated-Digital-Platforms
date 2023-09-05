@@ -72,7 +72,7 @@ namespace IntegratedImplementation.Services.Configuration
             return countryList;
         }
 
-        public async Task<ResponseMessage> UpdateCountry (CountryPostDto countryPost)
+        public async Task<ResponseMessage> UpdateCountry (CountryGetDto countryPost)
         {
             var currentCountry = await _dbContext.Countries.FirstOrDefaultAsync(x => x.Id== countryPost.Id);
 
@@ -80,7 +80,7 @@ namespace IntegratedImplementation.Services.Configuration
             {
                 currentCountry.CountryName = countryPost.CountryName;
                 currentCountry.CountryCode = countryPost.CountryCode;
-                currentCountry.Nationality = currentCountry.Nationality;
+                currentCountry.Nationality = countryPost.Nationality;
                 await _dbContext.SaveChangesAsync();
                 return new ResponseMessage { Data = currentCountry, Success = true, Message = "Updated Successfully" };
             }

@@ -129,11 +129,11 @@ export class CompanyProfileComponent implements OnInit {
   update() {
 
 
-    if (this.imagePath === null) {
+    // if (this.imagePath === null) {
 
-      this.messageService.add({ severity: 'error', summary: 'Upload Error .', detail: 'Image File not Selected' });
-      return;
-    }
+    //   this.messageService.add({ severity: 'error', summary: 'Upload Error .', detail: 'Image File not Selected' });
+    //   return;
+    // }
 
 
     if (this.CompanyProfileForm.valid) {

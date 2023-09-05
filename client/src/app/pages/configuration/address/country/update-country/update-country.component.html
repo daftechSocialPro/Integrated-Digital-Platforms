@@ -1,0 +1,48 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Update Country</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Country Detail</h5>
+            <div class="row">
+                <div class="col-lg-12">
+                    <form class="" [formGroup]="CountryForm" (ngSubmit)="submit()">
+                        <div class="modal-body">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="countryName" placeholder="countryName"
+                                            formControlName="countryName">
+                                        <label for="countryName">Country Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="countryCode" placeholder="countryCode"
+                                            formControlName="countryCode">
+                                        <label for="countryCode">Country Code</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="nationality" placeholder="nationality"
+                                            formControlName="nationality">
+                                        <label for="nationality">Nationality</label>
+                                    </div>
+                                </div>                                                      
+                            </div>
+                        </div>
+                        <div class="modal-footer"> <button type="button" class="btn btn-secondary"
+                            (click)="closeModal()">Close</button>
+                        <button type="button" type="submit"  [disabled]="!CountryForm.valid"
+                            class="btn btn-primary">Update</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -65,7 +65,7 @@ namespace IntegratedImplementation.Services.Configuration
             {
                 Id = x.Id,
                 ZoneName = x.ZoneName,
-                CountryName = x.Country.CountryName,
+                RegionName = x.Region.RegionName,
 
             }).ToListAsync();
 
@@ -79,7 +79,7 @@ namespace IntegratedImplementation.Services.Configuration
             if (currentZone != null)
             {
                 currentZone.ZoneName = ZonePost.ZoneName;
-                currentZone.CountryId = ZonePost.CountryId;
+                currentZone.RegionId = ZonePost.RegionId;
 
                 await _dbContext.SaveChangesAsync();
                 return new ResponseMessage { Data = currentZone, Success = true, Message = "Updated Successfully" };
