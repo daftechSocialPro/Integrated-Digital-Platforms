@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "4F0S/hA7jhCcKlC4XCI4Hgxtm40DiyfuQ0aSBqYICt6szt2Ovb2so/dCw90Z0U2rTrqyFtaJ0VIUcJA0SnOJMw==",
+  "dgSpecHash": "hSU1baMTJmWCqR6vLNsbAbQM4NtbHwafBGbYBDLlAq8q8meSQ3L6afdQsIIeAuZJYJhFCGu649kpDcTcNHzpjw==",
   "success": true,
-  "projectFilePath": "D:\\Projects\\Ethiopian Midwives\\Application\\IntegratedDigitalAPI\\IntegratedDigitalAPI\\IntegratedDigitalAPI.csproj",
+  "projectFilePath": "D:\\Projects\\Ethiopian Midwives\\Application\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedDigitalAPI\\IntegratedDigitalAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Hermi\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\Hermi\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

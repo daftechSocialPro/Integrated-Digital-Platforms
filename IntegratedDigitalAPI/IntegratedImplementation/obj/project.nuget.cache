@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "q5jd4+et0wKspLyKhvQGDdoP08IB1VPabuEZ8RTGNwAL8MM2zuZffECjkA2RqYFUv0PXi0jKEbwkDCDr3mo8uw==",
+  "dgSpecHash": "9afK+hNfm+4QGI0+9cu2Vv69iIJAXQbDGOxAJKHIyVy+Hb9oBWO7wZr8ILpA4iUXRQjB11aO+HFO/WNhGdtZlA==",
   "success": true,
-  "projectFilePath": "D:\\Projects\\Ethiopian Midwives\\Application\\IntegratedDigitalAPI\\IntegratedImplementation\\IntegratedImplementation.csproj",
+  "projectFilePath": "D:\\Projects\\Ethiopian Midwives\\Application\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedImplementation\\IntegratedImplementation.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Hermi\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\Hermi\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",

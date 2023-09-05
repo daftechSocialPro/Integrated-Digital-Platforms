@@ -4810,11 +4810,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Projects\\Ethiopian Midwives\\Application\\IntegratedDigitalAPI\\IntegratedDigitalAPI\\IntegratedDigitalAPI.csproj",
+      "projectUniqueName": "D:\\Projects\\Ethiopian Midwives\\Application\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedDigitalAPI\\IntegratedDigitalAPI.csproj",
       "projectName": "IntegratedDigitalAPI",
-      "projectPath": "D:\\Projects\\Ethiopian Midwives\\Application\\IntegratedDigitalAPI\\IntegratedDigitalAPI\\IntegratedDigitalAPI.csproj",
+      "projectPath": "D:\\Projects\\Ethiopian Midwives\\Application\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedDigitalAPI\\IntegratedDigitalAPI.csproj",
       "packagesPath": "C:\\Users\\Hermi\\.nuget\\packages\\",
-      "outputPath": "D:\\Projects\\Ethiopian Midwives\\Application\\IntegratedDigitalAPI\\IntegratedDigitalAPI\\obj\\",
+      "outputPath": "D:\\Projects\\Ethiopian Midwives\\Application\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedDigitalAPI\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Hermi\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -4832,11 +4832,11 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "D:\\Projects\\Ethiopian Midwives\\Application\\IntegratedDigitalAPI\\Infrustructure\\IntegratedInfrustructure.csproj": {
-              "projectPath": "D:\\Projects\\Ethiopian Midwives\\Application\\IntegratedDigitalAPI\\Infrustructure\\IntegratedInfrustructure.csproj"
+            "D:\\Projects\\Ethiopian Midwives\\Application\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\Infrustructure\\IntegratedInfrustructure.csproj": {
+              "projectPath": "D:\\Projects\\Ethiopian Midwives\\Application\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\Infrustructure\\IntegratedInfrustructure.csproj"
             },
-            "D:\\Projects\\Ethiopian Midwives\\Application\\IntegratedDigitalAPI\\IntegratedImplementation\\IntegratedImplementation.csproj": {
-              "projectPath": "D:\\Projects\\Ethiopian Midwives\\Application\\IntegratedDigitalAPI\\IntegratedImplementation\\IntegratedImplementation.csproj"
+            "D:\\Projects\\Ethiopian Midwives\\Application\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedImplementation\\IntegratedImplementation.csproj": {
+              "projectPath": "D:\\Projects\\Ethiopian Midwives\\Application\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedImplementation\\IntegratedImplementation.csproj"
             }
           }
         }

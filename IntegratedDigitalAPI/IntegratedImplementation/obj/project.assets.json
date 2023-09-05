@@ -172,11 +172,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Projects\\Ethiopian Midwives\\Application\\IntegratedDigitalAPI\\IntegratedImplementation\\IntegratedImplementation.csproj",
+      "projectUniqueName": "D:\\Projects\\Ethiopian Midwives\\Application\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedImplementation\\IntegratedImplementation.csproj",
       "projectName": "IntegratedImplementation",
-      "projectPath": "D:\\Projects\\Ethiopian Midwives\\Application\\IntegratedDigitalAPI\\IntegratedImplementation\\IntegratedImplementation.csproj",
+      "projectPath": "D:\\Projects\\Ethiopian Midwives\\Application\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedImplementation\\IntegratedImplementation.csproj",
       "packagesPath": "C:\\Users\\Hermi\\.nuget\\packages\\",
-      "outputPath": "D:\\Projects\\Ethiopian Midwives\\Application\\IntegratedDigitalAPI\\IntegratedImplementation\\obj\\",
+      "outputPath": "D:\\Projects\\Ethiopian Midwives\\Application\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedImplementation\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Hermi\\AppData\\Roaming\\NuGet\\NuGet.Config",
