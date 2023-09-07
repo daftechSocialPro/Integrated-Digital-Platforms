@@ -29,6 +29,9 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<ICompanyProfileService, CompanyProfileService>();
             services.AddScoped<IRegionService, RegionService>();
             services.AddScoped<ICountryService, CountryService>();
+            services.AddScoped<IZoneService, ZoneService>();
+            services.AddScoped<IEducationalLevelService, EducationalLevelService>();
+            services.AddScoped<IEducationalFieldService, EducationalFieldService>();
             return services;
         }
     }

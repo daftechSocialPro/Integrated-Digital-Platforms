@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { CountryGetDto } from 'src/app/model/configuration/IcountryDto';
+import { CountryGetDto } from 'src/app/model/configuration/IAddressDto';
 import { ConfigurationService } from 'src/app/services/configuration.service';
 import { HrmService } from 'src/app/services/hrm.service';
 import { AddCountryComponent } from '../../address/country/add-country/add-country.component';

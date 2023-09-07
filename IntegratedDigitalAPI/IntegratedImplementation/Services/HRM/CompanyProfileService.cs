@@ -92,7 +92,12 @@ namespace IntegratedImplementation.Services.HRM
                 currentCompanyProfile.Description = updateCompanyProfile.Description;
                 currentCompanyProfile.PhoneNumber = updateCompanyProfile.PhoneNumber;
                 currentCompanyProfile.Email = updateCompanyProfile.Email;
-                currentCompanyProfile.Logo = path;
+
+                if (path != "")
+                {
+                    currentCompanyProfile.Logo = path;
+                }
+                
                 currentCompanyProfile.Address = updateCompanyProfile.Address;
                 ;
                 await _dbContext.SaveChangesAsync();

@@ -27,6 +27,7 @@ export class AddEmployeeComponent implements OnInit {
   positions!: SelectList[];
   countries !: SelectList[];
   regions!: SelectList[];
+  zones ! : SelectList[];
 
   fileGH! : File;
 
@@ -59,7 +60,7 @@ export class AddEmployeeComponent implements OnInit {
       tinNumber: [null],
       bankAccountNo: [null],
       woreda: [null, Validators.required],
-      regionId: [null, Validators.required]
+      zoneId: [null, Validators.required]
 
 
     })
@@ -91,18 +92,23 @@ export class AddEmployeeComponent implements OnInit {
     })
   }
 
+  getZones (regionId:string){
+    this.configurationService.getZonesDropdown(regionId).subscribe({
+      next: (res) => {
+        this.zones = res
+      }
+    })
+  }
+
 
   getDepartments() {
     this.hrmService.getDepartmentsDropdown().subscribe({
       next: (res) => {
         this.departments = res
 
-
       }
     })
   }
-
-
 
 
 
@@ -158,7 +164,7 @@ export class AddEmployeeComponent implements OnInit {
         bankAccountNo: this.EmployeeForm.value.bankAccountNo.toString(),
         departmentId: this.EmployeeForm.value.departmentId,
         positionId: this.EmployeeForm.value.positionId,
-        regionId: this.EmployeeForm.value.regionId,
+        zoneId: this.EmployeeForm.value.zoneId,
         woreda: this.EmployeeForm.value.woreda,
         imagePath: this.fileGH,
         createdById: this.user.userId,

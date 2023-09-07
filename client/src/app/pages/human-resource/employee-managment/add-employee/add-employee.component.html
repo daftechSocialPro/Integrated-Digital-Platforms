@@ -186,7 +186,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-floating mb-3">
                                     <select class="form-select" id="Departments" formControlName="departmentId"
                                         aria-label="State">
@@ -198,7 +198,7 @@
                                     <label for="Departments">Departments</label>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-floating mb-3">
                                     <select class="form-select" id="positionId" formControlName="positionId"
                                         aria-label="State">
@@ -225,13 +225,25 @@
                             </div>
                             <div class="col-md-2">
                                 <div class="form-floating mb-3">
-                                    <select class="form-select" id="regionId" formControlName="regionId"
+                                    <select class="form-select" (change)="getZones(region.value)" #region id="regionId" 
                                         aria-label="State">
                                         <option></option>
                                         <option *ngFor="let region of regions" [value]="region.id">{{
                                             region.name }}</option>
                                     </select>
                                     <label for="countryId">Region</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="zoneId" formControlName="zoneId"
+                                        aria-label="State">
+                                        <option></option>
+                                        <option *ngFor="let zone of zones" [value]="zone.id">{{
+                                            zone.name }}</option>
+                                    </select>
+                                    <label for="zoneId"> Zone</label>
                                 </div>
                             </div>
 

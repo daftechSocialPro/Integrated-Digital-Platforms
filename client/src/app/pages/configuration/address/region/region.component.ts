@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { RegionGetDto } from 'src/app/model/configuration/IcountryDto';
+import { RegionGetDto } from 'src/app/model/configuration/IAddressDto';
 
 import { ConfigurationService } from 'src/app/services/configuration.service';
 import { AddRegionComponent } from './add-region/add-region.component';

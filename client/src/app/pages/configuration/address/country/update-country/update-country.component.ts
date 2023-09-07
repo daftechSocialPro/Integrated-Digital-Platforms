@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
-import { CountryGetDto, CountryPostDto } from 'src/app/model/configuration/IcountryDto';
+import { CountryGetDto, CountryPostDto } from 'src/app/model/configuration/IAddressDto';
 import { ConfigurationService } from 'src/app/services/configuration.service';
 
 import { HrmService } from 'src/app/services/hrm.service';

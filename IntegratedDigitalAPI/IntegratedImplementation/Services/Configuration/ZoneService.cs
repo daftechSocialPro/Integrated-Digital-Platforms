@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using System.Text;
 using System.Threading.Tasks;
 using static IntegratedInfrustructure.Data.EnumList;
@@ -29,6 +30,7 @@ namespace IntegratedImplementation.Services.Configuration
             {
                 Id = x.Id,
                 Name = x.ZoneName,
+                
             }).ToListAsync();
 
             return ZoneList;
@@ -38,24 +40,36 @@ namespace IntegratedImplementation.Services.Configuration
 
         public async Task<ResponseMessage> AddZone(ZonePostDto zonePost)
         {
-            Zone zone = new Zone
+            try
             {
-                Id = Guid.NewGuid(),
-                ZoneName = zonePost.ZoneName,
-                RegionId = zonePost.RegionId,
-                CreatedById = zonePost.CreatedById,
-                Rowstatus = RowStatus.ACTIVE
-            };
+                 Zone zone = new Zone
+                {
+                    Id = Guid.NewGuid(),
+                    ZoneName = zonePost.ZoneName,
+                    RegionId = zonePost.RegionId,
+                    CreatedById = zonePost.CreatedById,
+                    Rowstatus = RowStatus.ACTIVE
+                };
 
-            await _dbContext.Zones.AddAsync(zone);
-            await _dbContext.SaveChangesAsync();
+                await _dbContext.Zones.AddAsync(zone);
+                await _dbContext.SaveChangesAsync();
 
-            return new ResponseMessage
+                return new ResponseMessage
+                {
+                    Data = zone,
+                    Message = "Added Successfully",
+                    Success = true
+                };
+            }
+            catch (Exception ex)
             {
-                Data = zone,
-                Message = "Added Successfully",
-                Success = true
-            };
+                return new ResponseMessage
+                {
+                    
+                    Message = ex.InnerException.Message,
+                    Success = false
+                };
+            }
         }
 
 
@@ -66,6 +80,10 @@ namespace IntegratedImplementation.Services.Configuration
                 Id = x.Id,
                 ZoneName = x.ZoneName,
                 RegionName = x.Region.RegionName,
+                CountryName = x.Region.Country.CountryName,
+                RegionId = x.RegionId,
+                CountryId = x.Region.CountryId
+                
 
             }).ToListAsync();
 
@@ -74,17 +92,30 @@ namespace IntegratedImplementation.Services.Configuration
 
         public async Task<ResponseMessage> UpdateZone(ZonePostDto ZonePost)
         {
-            var currentZone = await _dbContext.Zones.FirstOrDefaultAsync(x => x.Id == ZonePost.Id);
 
-            if (currentZone != null)
+            try
             {
-                currentZone.ZoneName = ZonePost.ZoneName;
-                currentZone.RegionId = ZonePost.RegionId;
+                var currentZone = await _dbContext.Zones.FirstOrDefaultAsync(x => x.Id == ZonePost.Id);
 
-                await _dbContext.SaveChangesAsync();
-                return new ResponseMessage { Data = currentZone, Success = true, Message = "Updated Successfully" };
+                if (currentZone != null)
+                {
+                    currentZone.ZoneName = ZonePost.ZoneName;
+                    currentZone.RegionId = ZonePost.RegionId;
+
+                    await _dbContext.SaveChangesAsync();
+                    return new ResponseMessage { Data = currentZone, Success = true, Message = "Updated Successfully" };
+                }
+                return new ResponseMessage { Success = false, Message = "Unable To Find Zone" };
             }
-            return new ResponseMessage { Success = false, Message = "Unable To Find Zone" };
+            catch (Exception ex)
+            {
+                return new ResponseMessage
+                {
+
+                    Message = ex.InnerException.Message,
+                    Success = false
+                };
+            }
         }
     }
 }

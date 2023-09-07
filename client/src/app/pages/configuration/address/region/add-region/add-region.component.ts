@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
 import { SelectList } from 'src/app/model/common';
-import { RegionPostDto } from 'src/app/model/configuration/IcountryDto';
+import { RegionPostDto } from 'src/app/model/configuration/IAddressDto';
 
 import { UserView } from 'src/app/model/user';
 import { ConfigurationService } from 'src/app/services/configuration.service';

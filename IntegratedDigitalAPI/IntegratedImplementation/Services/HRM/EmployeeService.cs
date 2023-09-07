@@ -53,7 +53,7 @@ namespace IntegratedImplementation.Services.HRM
                 EmployeeCode = code,
                 Woreda = addEmployee.Woreda,
                 Email = addEmployee.Email,
-                RegionId = addEmployee.RegionId,
+                ZoneId = addEmployee.ZoneId,
                 EmploymentStatus = Enum.Parse<EmploymentStatus>(addEmployee.EmploymentStatus),
                 EmploymentType = Enum.Parse<EmploymentType>(addEmployee.EmploymentType),
                 FirstName = addEmployee.FirstName,
@@ -107,10 +107,7 @@ namespace IntegratedImplementation.Services.HRM
         }
         public async Task<EmployeeGetDto> GetEmployee(Guid employeeId)
         {
-            var employee = await _dbContext.Employees
-                .Include(x=>x.Region.Country)
-                .Include(x=>x.EmployeeDetail).ThenInclude(x=>x.Department)
-                .Include(x => x.EmployeeDetail).ThenInclude(x => x.Position)
+            var employee = await _dbContext.Employees       
                 .Where(x=>x.Id == employeeId)
                 .AsNoTracking()
                 .ProjectTo<EmployeeGetDto>(_mapper.ConfigurationProvider).FirstAsync();

@@ -31,6 +31,25 @@ export interface RegionGetDto{
     countryId:string
     
 }
+export interface ZonePostDto{
+
+    id?:string,
+    regionId:string,
+    zoneName:string,     
+    createdById?:string
+
+}
+
+export interface ZoneGetDto{
+
+    id:string,
+    zoneName : string, 
+    regionName:string,
+    countryId:string
+    countryName :string,
+    regionId:string
+    
+}
 
   
 

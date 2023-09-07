@@ -3,10 +3,11 @@ import { Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { IndividualConfig, ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
-import { SelectList } from '../model/common';
+import { GeneralCodeDto, SelectList } from '../model/common';
 import { CompanyProfileGetDto, CompanyProfilePostDto } from '../model/configuration/ICompanyProfileDto';
-import { CountryGetDto, CountryPostDto, RegionGetDto, RegionPostDto } from '../model/configuration/IcountryDto';
+import { CountryGetDto, CountryPostDto, RegionGetDto, RegionPostDto, ZoneGetDto, ZonePostDto } from '../model/configuration/IAddressDto';
 import { ResponseMessage } from '../model/ResponseMessage.Model';
+import { EducationalFieldGetDto, EducationalFieldPostDto, EducationalLevelGetDto, EducationalLevelPostDto } from '../model/configuration/ICommonDto';
 
 export interface toastPayload {
   message: string;
@@ -60,6 +61,23 @@ export class ConfigurationService {
 
     return this.http.put<ResponseMessage>(this.baseUrl + "/Region", RegionPostDto)
   }
+  //zone 
+  getZonesDropdown(regionId: string) {
+    return this.http.get<SelectList[]>(this.baseUrl + "/Zone/getZoneDropdown?regionId=" + regionId)
+  }
+  getZones() {
+
+    return this.http.get<ZoneGetDto[]>(this.baseUrl + "/Zone")
+  }
+
+  addZone(ZonePostDto: ZonePostDto) {
+
+    return this.http.post<ResponseMessage>(this.baseUrl + "/Zone", ZonePostDto)
+  }
+  updateZone(ZonePostDto: ZonePostDto) {
+
+    return this.http.put<ResponseMessage>(this.baseUrl + "/Zone", ZonePostDto)
+  }
 
   //companyProfile
   getCompanyProfile() {
@@ -70,6 +88,44 @@ export class ConfigurationService {
   }
   UpdateCompanyProfile(companyProfile: FormData) {
     return this.http.put<ResponseMessage>(this.baseUrl + "/CompanyProfile", companyProfile)
+  }
+
+  //educational fields 
+
+  getEducationaslFields() {
+
+    return this.http.get<EducationalFieldGetDto[]>(this.baseUrl + "/EducationalField")
+  }
+
+  addEducationalField(EducationalFieldPostDto: EducationalFieldPostDto) {
+
+    return this.http.post<ResponseMessage>(this.baseUrl + "/EducationalField", EducationalFieldPostDto)
+  }
+  updateEducationalField(EducationalFieldPostDto: EducationalFieldGetDto) {
+
+    return this.http.put<ResponseMessage>(this.baseUrl + "/EducationalField", EducationalFieldPostDto)
+  }
+
+  // educational level
+  getEducationaslLevels() {
+
+    return this.http.get<EducationalLevelGetDto[]>(this.baseUrl + "/EducationalLevel")
+  }
+
+  addEducationalLevel(EducationalLevelPostDto: EducationalLevelPostDto) {
+
+    return this.http.post<ResponseMessage>(this.baseUrl + "/EducationalLevel", EducationalLevelPostDto)
+  }
+  updateEducationalLevel(EducationalLevelPostDto: EducationalLevelGetDto) {
+
+    return this.http.put<ResponseMessage>(this.baseUrl + "/EducationalLevel", EducationalLevelPostDto)
+  }
+
+  // generalcode s
+
+  getGeneralCodes() {
+
+    return this.http.get<GeneralCodeDto[]>(this.baseUrl + "/GeneralCodes")
   }
 
 }

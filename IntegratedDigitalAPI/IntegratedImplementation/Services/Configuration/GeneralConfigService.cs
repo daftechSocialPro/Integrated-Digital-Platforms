@@ -1,4 +1,8 @@
-﻿using IntegratedImplementation.Interfaces.Configuration;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using IntegratedImplementation.DTOS.Configuration;
+using IntegratedImplementation.DTOS.HRM;
+using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedInfrustructure.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -14,10 +18,12 @@ namespace IntegratedImplementation.Services.Configuration
     public class GeneralConfigService :IGeneralConfigService
     {
         private readonly ApplicationDbContext _dbContext;
+        private readonly IMapper _mapper;
 
-        public GeneralConfigService(ApplicationDbContext dbContext)
+        public GeneralConfigService(ApplicationDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
 
         public async Task<string> GenerateCode(EnumList.GeneralCodeType GeneralCodeType)
@@ -73,5 +79,16 @@ namespace IntegratedImplementation.Services.Configuration
 
             return "";
         }
+
+
+        public async Task<List<GeneralCodeDto>> GetGeneralCodes()
+        {
+            var generalCodeList = await _dbContext.GeneralCodes.AsNoTracking()
+                                  .ProjectTo<GeneralCodeDto>(_mapper.ConfigurationProvider)
+                                  .ToListAsync();
+            return generalCodeList;
+        }
+
+
     }
 }

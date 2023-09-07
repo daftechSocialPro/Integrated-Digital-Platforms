@@ -19,7 +19,7 @@ namespace IntegratedImplementation.DTOS.HRM
         public string Gender { get; set; } = null!;
 
         public string Email { get; set; } = null!;
-        public Guid RegionId { get; set; }
+        public Guid ZoneId { get; set; }
 
         public string Woreda { get; set; } = null!;
         public string PhoneNumber { get; set; } = null!;
@@ -49,7 +49,6 @@ namespace IntegratedImplementation.DTOS.HRM
         public Guid Id { get; set; }
         public string EmployeeCode { get; set; } = null!;
         public string EmployeeName { get; set; } = null!;
-
         public string PhoneNumber { get; set; } = null!;
 
         public string Email { get; set; } = null!;
@@ -58,8 +57,8 @@ namespace IntegratedImplementation.DTOS.HRM
         public string Nationality { get; set; } = null!;
         public string RegionName { get; set; } = null!;
 
+        public string ZoneName { get; set; } = null!;
         public string Woreda { get; set; } = null!;
-
 
         public string Gender { get; set; } = null!;
         public string BirthDate { get; set; } = null!;

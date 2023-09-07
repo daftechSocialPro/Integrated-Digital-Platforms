@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
-import { CountryPostDto } from 'src/app/model/configuration/IcountryDto';
+import { CountryPostDto } from 'src/app/model/configuration/IAddressDto';
 import { UserView } from 'src/app/model/user';
 import { CommonService } from 'src/app/services/common.service';
 import { ConfigurationService } from 'src/app/services/configuration.service';

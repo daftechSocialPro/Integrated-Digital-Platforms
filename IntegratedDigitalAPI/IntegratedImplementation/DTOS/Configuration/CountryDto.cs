@@ -46,12 +46,14 @@ namespace IntegratedImplementation.DTOS.Configuration
         public Guid? Id { get; set; }
         public string ZoneName { get; set; } = null!;
         public Guid RegionId { get; set; }
-        public string CreatedById { get; set; } = null!;
+        public string? CreatedById { get; set; } = null!;
     }
 
     public record ZoneGetDto
     {
         public Guid Id { get; set; }
+        public Guid RegionId {get;set;  }
+        public Guid CountryId { get; set; }
         public string CountryName { get; set; } = null!;
         public string RegionName { get; set; } = null!;
         public string ZoneName { get; set; } = null!;

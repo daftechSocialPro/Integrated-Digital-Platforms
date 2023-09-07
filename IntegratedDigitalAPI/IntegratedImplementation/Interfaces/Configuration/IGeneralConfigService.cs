@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IntegratedImplementation.DTOS.Configuration;
 using static IntegratedInfrustructure.Data.EnumList;
 
 namespace IntegratedImplementation.Interfaces.Configuration
@@ -13,5 +14,7 @@ namespace IntegratedImplementation.Interfaces.Configuration
         Task<string> GenerateCode(GeneralCodeType GeneralCodeType);
         Task<string> UploadFiles(IFormFile formFile, string Name, string FolderName);
         Task<string> GetFiles(string path);
+         
+        Task<List<GeneralCodeDto>> GetGeneralCodes ();
     }
 }

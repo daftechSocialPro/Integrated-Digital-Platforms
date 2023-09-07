@@ -24,7 +24,7 @@ export interface EmployeePostDto
      contractDays ? : Number 
      createdById : string;
      email : string;   
-     regionId : string;
+     zoneId : string;
      woreda:string;
 
 }
@@ -55,6 +55,7 @@ export interface EmployeeGetDto
      postionName : string;
      nationality : string;
      regionName : string;
+     zoneName : string 
      woreda:string;
 
 

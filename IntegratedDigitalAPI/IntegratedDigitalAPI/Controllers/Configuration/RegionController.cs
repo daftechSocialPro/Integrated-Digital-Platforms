@@ -23,9 +23,9 @@ namespace IntegratedDigitalAPI.Controllers.Configuration
         [HttpGet("getRegionDropdown")]
         [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
 
-        public async Task<IActionResult> GetRegionDropdown(Guid RegionId)
+        public async Task<IActionResult> GetRegionDropdown(Guid CountryId)
         {
-            return Ok(await _RegionService.GetRegionDropdownList(RegionId));
+            return Ok(await _RegionService.GetRegionDropdownList(CountryId));
         }
 
 
