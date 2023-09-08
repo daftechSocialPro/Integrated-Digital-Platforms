@@ -97,7 +97,9 @@ import { AddEdcuationalLevelComponent } from './pages/configuration/common/educa
 import { UpdateEdcuationalLevelComponent } from './pages/configuration/common/educational-level/update-edcuational-level/update-edcuational-level.component';
 import { GeneralCodesComponent } from './pages/configuration/common/general-codes/general-codes.component';
 import { LeaveTypeComponent } from './pages/human-resource/hrm-configuration/leave-type/leave-type.component';
-import { UpdateEmployeeComponent } from './pages/human-resource/employee-managment/update-employee/update-employee.component'
+import { UpdateEmployeeComponent } from './pages/human-resource/employee-managment/update-employee/update-employee.component';
+import { AddLeaveTypeComponent } from './pages/human-resource/hrm-configuration/leave-type/add-leave-type/add-leave-type.component';
+import { UpdateLeaveTypeComponent } from './pages/human-resource/hrm-configuration/leave-type/update-leave-type/update-leave-type.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -179,6 +181,8 @@ import { UpdateEmployeeComponent } from './pages/human-resource/employee-managme
      GeneralCodesComponent,
      LeaveTypeComponent,
      UpdateEmployeeComponent,
+     AddLeaveTypeComponent,
+     UpdateLeaveTypeComponent,
    
      
   ],

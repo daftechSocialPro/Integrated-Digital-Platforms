@@ -8,6 +8,7 @@ import { ResponseMessage } from '../model/ResponseMessage.Model';
 import { PositionGetDto, PositionPostDto } from '../model/HRM/IPositionDto';
 import { EmployeeEducationGetDto, EmployeeEducationPostDto, EmployeeFamilyGetDto, EmployeeFamilyPostDto, EmployeeGetDto, EmployeeHistoryDto, EmployeeHistoryPostDto, EmployeePostDto } from '../model/HRM/IEmployeeDto';
 import { SelectList } from '../model/common';
+import { LeaveTypeGetDto, LeaveTypePostDto } from '../model/HRM/ILeaveDto';
 
 export interface toastPayload {
     message: string;
@@ -45,7 +46,7 @@ export class HrmService {
         return this.http.get<PositionGetDto[]>(this.baseUrl + "/Position")
     }
     getPositionsDropdown(){
-        return this.http.get<SelectList[]>(this.baseUrl + "/Position/getPositionDropdown")
+        return this.http.get<SelectList[]>(this.baseUrl + "/Position/GetPositionDropdown")
     }
     addPosition(positionPost: PositionPostDto) {
         return this.http.post<ResponseMessage>(this.baseUrl + "/Position", positionPost)
@@ -54,69 +55,88 @@ export class HrmService {
 
         return this.http.put<ResponseMessage>(this.baseUrl + "/Position", positionUpdate)
     }
+    // Leave type 
+    //departments
+
+    getLeaveTypes() {
+        return this.http.get<LeaveTypeGetDto[]>(this.baseUrl + "/LeaveType/GetLeaveTypeList")
+    }
+    getLeaveTypesDropdown(){
+        return this.http.get<SelectList[]>(this.baseUrl + "/LeaveType/GetLeaveTypeDropDownList")
+    }
+    addLeaveType(LeaveTypePost: LeaveTypePostDto) {
+        return this.http.post<ResponseMessage>(this.baseUrl + "/LeaveType/AddLeaveType", LeaveTypePost)
+    }
+    updateLeaveType(LeaveTypeUpdate: LeaveTypeGetDto) {
+        return this.http.put<ResponseMessage>(this.baseUrl + "/LeaveType/UpdateLeaveType", LeaveTypeUpdate)
+    }
 
     // employees 
 
     getEmployees() {
-        return this.http.get<EmployeeGetDto[]>(this.baseUrl + "/Employee")
+        return this.http.get<EmployeeGetDto[]>(this.baseUrl + "/Employee/GetEmployees")
     }
     addEmployee(employeePost: FormData) {
         console.log(employeePost)
-        return this.http.post<ResponseMessage>(this.baseUrl + "/Employee", employeePost)
+        return this.http.post<ResponseMessage>(this.baseUrl + "/Employee/AddEmployee", employeePost)
+    }
+    updateEmployee(employeePost: FormData) {
+        console.log(employeePost)
+        return this.http.put<ResponseMessage>(this.baseUrl + "/Employee/UpdateEmployee", employeePost)
     }
     getEmployee(employeeId : string){
-        return this.http.get<EmployeeGetDto>(this.baseUrl + "/Employee/getEmployee?employeeId="+ employeeId)
+        return this.http.get<EmployeeGetDto>(this.baseUrl + "/Employee/GetEmployee?employeeId="+ employeeId)
        
     }
     // employee History 
     getEmployeeHistory (employeeId:string){
-        return this.http.get<EmployeeHistoryDto[]>(this.baseUrl+"/Employee/getEmployeeHistory?employeeId="+ employeeId)
+        return this.http.get<EmployeeHistoryDto[]>(this.baseUrl+"/Employee/GetEmployeeHistory?employeeId="+ employeeId)
     }
 
     addEmployeeHistory(employeeHistoryPost: EmployeeHistoryPostDto) {
-        return this.http.post<ResponseMessage>(this.baseUrl + "/Employee/addEmployeeHistory", employeeHistoryPost)
+        return this.http.post<ResponseMessage>(this.baseUrl + "/Employee/AddEmployeeHistory", employeeHistoryPost)
     }
     updateEmployeeHistory(employeeHistoryPost: EmployeeHistoryPostDto) {
-        return this.http.post<ResponseMessage>(this.baseUrl + "/Employee/updateEmployeeHistory", employeeHistoryPost)
+        return this.http.post<ResponseMessage>(this.baseUrl + "/Employee/UpdateEmployeeHistory", employeeHistoryPost)
     }
 
     deleteEmployeeHistory (employeeId : string){
-        return this.http.delete<ResponseMessage>(this.baseUrl +"/Employee/deleteEmployeeHistory?employeeHistoryId="+employeeId)
+        return this.http.delete<ResponseMessage>(this.baseUrl +"/Employee/DeleteEmployeeHistory?employeeHistoryId="+employeeId)
     }
 
 //employee Family
     getEmployeeFamily (employeeId:string){
-        return this.http.get<EmployeeFamilyGetDto[]>(this.baseUrl+"/Employee/getEmployeeFamily?employeeId="+ employeeId)
+        return this.http.get<EmployeeFamilyGetDto[]>(this.baseUrl+"/Employee/GetEmployeeFamily?employeeId="+ employeeId)
     }
 
     addEmployeeFamily(employeeFamilyPost: EmployeeFamilyPostDto) {
         
-        return this.http.post<ResponseMessage>(this.baseUrl + "/Employee/addEmployeeFamily", employeeFamilyPost)
+        return this.http.post<ResponseMessage>(this.baseUrl + "/Employee/AddEmployeeFamily", employeeFamilyPost)
     }
     updateEmployeeFamily(employeeFamilyPost: EmployeeFamilyGetDto) {
-        return this.http.post<ResponseMessage>(this.baseUrl + "/Employee/updateEmployeeFamily", employeeFamilyPost)
+        return this.http.post<ResponseMessage>(this.baseUrl + "/Employee/UpdateEmployeeFamily", employeeFamilyPost)
     }
 
     deleteEmployeeFamily (employeeId : string){
-        return this.http.delete<ResponseMessage>(this.baseUrl +"/Employee/deleteEmployeeFamily?employeeFamilyId="+employeeId)
+        return this.http.delete<ResponseMessage>(this.baseUrl +"/Employee/DeleteEmployeeFamily?employeeFamilyId="+employeeId)
     }
 
     // employee Education
 
     getEmployeeEducation (employeeId:string){
-        return this.http.get<EmployeeEducationGetDto[]>(this.baseUrl+"/Employee/getEmployeeEducation?employeeId="+ employeeId)
+        return this.http.get<EmployeeEducationGetDto[]>(this.baseUrl+"/Employee/GetEmployeeEducation?employeeId="+ employeeId)
     }
 
     addEmployeeEducation(employeeEducationPost: EmployeeEducationPostDto) {
         
-        return this.http.post<ResponseMessage>(this.baseUrl + "/Employee/addEmployeeEducation", employeeEducationPost)
+        return this.http.post<ResponseMessage>(this.baseUrl + "/Employee/AddEmployeeEducation", employeeEducationPost)
     }
     updateEmployeeEducation(employeeEducationPost: EmployeeEducationPostDto) {
-        return this.http.post<ResponseMessage>(this.baseUrl + "/Employee/updateEmployeeEducation", employeeEducationPost)
+        return this.http.post<ResponseMessage>(this.baseUrl + "/Employee/UpdateEmployeeEducation", employeeEducationPost)
     }
 
     deleteEmployeeEducation (employeeId : string){
-        return this.http.delete<ResponseMessage>(this.baseUrl +"/Employee/deleteEmployeeEducation?employeeEducationId="+employeeId)
+        return this.http.delete<ResponseMessage>(this.baseUrl +"/Employee/DeleteEmployeeEducation?employeeEducationId="+employeeId)
     }
     
     

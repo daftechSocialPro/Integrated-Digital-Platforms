@@ -16,7 +16,7 @@
                             style="width: 100%;">
                         <input #file (change)="onUpload($event)" type="file" style="display: none;" accept="image/*" />
                         <div class="pt-2">
-                            <a (click)="file.click()" style="width: 100%;" class="btn btn-primary btn-sm"
+                            <a (click)="file.click()" style="width: 100%;" class="btn btn-outline-primary btn-sm"
                                 title="Upload new profile image">
                                 <i class="bi bi-upload"></i> Upload Image
                             </a>
@@ -71,7 +71,7 @@
                             </div>
 
                             <div class="col-md-3">
-                                <div class="form-floating"> <input type="datetime-local" class="form-control" id="BirthDate"
+                                <div class="form-floating"> <input type="date" class="form-control" id="BirthDate"
                                         placeholder="BirthDate" required formControlName="birthDate">
                                     <label for="BirthDate"> Birth Date</label>
                                 </div>
@@ -127,7 +127,7 @@
                               
                           
                             <div class="col-md-3">
-                                <div class="form-floating"> <input type= "datetime-local" class="form-control" id="EmploymentDate"
+                                <div class="form-floating"> <input type= "date" class="form-control" id="EmploymentDate"
                                         placeholder="EmploymentDate" required formControlName="employmentDate">
                                     <label for="EmploymentDate"> Employment Date</label>
                                 </div>
@@ -238,10 +238,10 @@
 
 
 
-                <div class="modal-footer"> <button type="button" class="btn btn-secondary"
+                <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
                         (click)="closeModal()">Close</button> <button type="button" type="submit"
-                        [disabled]="!EmployeeForm.valid" class="btn btn-primary">Save
-                        changes</button></div>
+                        [disabled]="!EmployeeForm.valid" class="btn btn-outline-warning">Update
+                        </button></div>
             </form>
 
         </div>

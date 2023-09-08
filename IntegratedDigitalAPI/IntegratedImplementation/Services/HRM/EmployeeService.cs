@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -97,6 +98,97 @@ namespace IntegratedImplementation.Services.HRM
                 Message = "Added Successfully",
                 Success = true
             };
+        }
+
+
+        public async Task<ResponseMessage> UpdateEmployee(EmployeePostDto addEmployee)
+        {
+
+            try
+            {
+
+                var path = "";
+
+                var employee = _dbContext.Employees.Find(addEmployee.Id);
+
+
+                if (addEmployee.ImagePath != null)
+                    path = _generalConfig.UploadFiles(addEmployee.ImagePath, employee.Id.ToString(), "Employee").Result.ToString();
+
+                if (employee!= null)
+                {
+
+
+                    employee.FirstName = addEmployee.FirstName;
+                    employee.MiddleName = addEmployee.MiddleName;
+                    employee.LastName = addEmployee.LastName;
+                    employee.PhoneNumber = addEmployee.PhoneNumber;
+                    employee.Email = addEmployee.Email;
+                    if (addEmployee.Gender != null)
+                    {
+                        employee.Gender = Enum.Parse<Gender>( addEmployee.Gender);
+                    }
+                    if (addEmployee.MaritalStatus != null)
+                    {
+                        employee.MaritalStatus = Enum.Parse<MaritalStatus>(addEmployee.MaritalStatus);
+                    }
+                    if (addEmployee.EmploymentType != null)
+                    {
+                        employee.EmploymentType = Enum.Parse<EmploymentType>(addEmployee.EmploymentType);
+                    }
+                    if (addEmployee.EmploymentStatus != null)
+                    {
+                        employee.EmploymentStatus = Enum.Parse<EmploymentStatus>(addEmployee.EmploymentStatus);
+                    }
+                    if (addEmployee.PaymentType != null)
+                    {
+                        employee.PaymentType = Enum.Parse<PaymentType>(addEmployee.PaymentType);
+                    }
+
+                    if (path != "")
+                    {
+                        employee.ImagePath = path;
+                    }
+                    employee.EmploymentDate = addEmployee.EmploymentDate;
+                    employee.ContractEndDate = addEmployee.ContractEndDate;
+                    employee.PensionCode = addEmployee.PensionCode;
+                    employee.TinNumber = addEmployee.TinNumber;
+                    employee.BankAccountNo = addEmployee.BankAccountNo;
+                    employee.BirthDate = employee.BirthDate;
+
+                   await _dbContext.SaveChangesAsync();
+
+                    return new ResponseMessage
+                    {
+                      
+                        Message = "Employee Updated Successfully ",
+                        Success = true
+                    };
+                }
+
+                else
+                {
+                    return new ResponseMessage
+                    {
+
+                        Message = "Employee Not Found !!",
+                        Success = true
+                    };
+                }
+
+            }
+            catch(Exception ex )
+            {
+                return new ResponseMessage
+                {
+
+                    Message = ex.InnerException.Message,
+                    Success = true
+                };
+
+            }
+
+
         }
         public async Task<List<EmployeeGetDto>> GetEmployees()
         {

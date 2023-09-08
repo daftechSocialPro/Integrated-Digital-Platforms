@@ -5452,19 +5452,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Hp\\.nuget\\packages\\": {}
+    "C:\\Users\\KIRUB\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedDigitalAPI\\IntegratedDigitalAPI.csproj",
+      "projectUniqueName": "C:\\Users\\KIRUB\\Desktop\\clones\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedDigitalAPI\\IntegratedDigitalAPI.csproj",
       "projectName": "IntegratedDigitalAPI",
-      "projectPath": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedDigitalAPI\\IntegratedDigitalAPI.csproj",
-      "packagesPath": "C:\\Users\\Hp\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedDigitalAPI\\obj\\",
+      "projectPath": "C:\\Users\\KIRUB\\Desktop\\clones\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedDigitalAPI\\IntegratedDigitalAPI.csproj",
+      "packagesPath": "C:\\Users\\KIRUB\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\KIRUB\\Desktop\\clones\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedDigitalAPI\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Hp\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\KIRUB\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -5478,11 +5478,11 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\Infrustructure\\IntegratedInfrustructure.csproj": {
-              "projectPath": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\Infrustructure\\IntegratedInfrustructure.csproj"
+            "C:\\Users\\KIRUB\\Desktop\\clones\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\Infrustructure\\IntegratedInfrustructure.csproj": {
+              "projectPath": "C:\\Users\\KIRUB\\Desktop\\clones\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\Infrustructure\\IntegratedInfrustructure.csproj"
             },
-            "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedImplementation\\IntegratedImplementation.csproj": {
-              "projectPath": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedImplementation\\IntegratedImplementation.csproj"
+            "C:\\Users\\KIRUB\\Desktop\\clones\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedImplementation\\IntegratedImplementation.csproj": {
+              "projectPath": "C:\\Users\\KIRUB\\Desktop\\clones\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\IntegratedImplementation\\IntegratedImplementation.csproj"
             }
           }
         }
@@ -5575,7 +5575,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
       }
     }
   }

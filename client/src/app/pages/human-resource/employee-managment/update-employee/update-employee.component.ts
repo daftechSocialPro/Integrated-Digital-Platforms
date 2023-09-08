@@ -44,6 +44,8 @@ export class UpdateEmployeeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    console.log(this.selectedEmployee.birthDate)
     this.user = this.userService.getCurrentUser();
 
     this.getCountries();
@@ -55,11 +57,11 @@ export class UpdateEmployeeComponent implements OnInit {
       email: [this.selectedEmployee.email, Validators.required],
       phoneNumber: [this.selectedEmployee.phoneNumber, Validators.required],
       gender: [this.selectedEmployee.gender, Validators.required],
-      birthDate: [this.selectedEmployee.birthDate, Validators.required],
+      birthDate: [this.selectedEmployee.birthDate.toString().split(' ')[0], Validators.required],
       maritalStatus: [this.selectedEmployee.maritalStatus, Validators.required],
       employmentType: [this.selectedEmployee.employmentType, Validators.required],
       paymentType: [this.selectedEmployee.paymentType, Validators.required],
-      employmentDate: [this.selectedEmployee.employmentDate, Validators.required],
+      employmentDate: [this.selectedEmployee.employmentDate.toString().split(' ')[0], Validators.required],
       employmentStatus: [this.selectedEmployee.employmentStatus, Validators.required],
       contractEndDate: [this.selectedEmployee.contractEndDate],
       pensionCode: [this.selectedEmployee.pensionCode],
@@ -120,11 +122,7 @@ export class UpdateEmployeeComponent implements OnInit {
   submit() {
 
     
-    if (this.imagePath === null) {
-     
-      this.messageService.add({ severity: 'error', summary: 'Upload Error .', detail:'Image File not Selected' });         
-      return;
-    }
+
 
     
     if (this.EmployeeForm.valid) {
@@ -169,12 +167,12 @@ export class UpdateEmployeeComponent implements OnInit {
       formData.append('imagePath', this.fileGH);
   
 
-      this.hrmService.addEmployee(formData).subscribe(
+      this.hrmService.updateEmployee(formData).subscribe(
         {
           next:(res)=>{
             if (res.success){
               this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });              
-            
+           
               this.closeModal();
             }
             else {

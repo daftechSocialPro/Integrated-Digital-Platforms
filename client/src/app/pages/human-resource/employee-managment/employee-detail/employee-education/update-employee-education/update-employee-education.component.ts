@@ -16,13 +16,15 @@ import { UserService } from 'src/app/services/user.service';
 export class UpdateEmployeeEducationComponent  implements OnInit {
 
  
-  @Input() employeeEducation! :EmployeeEducationPostDto
+  @Input() employeeEducation! :EmployeeEducationGetDto
  
   EducationForm !: FormGroup;
   departments!: SelectList[];
   positions!: SelectList[];
   user ! : UserView
   ngOnInit(): void {
+
+    console.log(this.employeeEducation)
     this.user = this.userService.getCurrentUser()
    
     this.EducationForm.controls['educationalLevelId'].setValue(this.employeeEducation.educationalLevelId)

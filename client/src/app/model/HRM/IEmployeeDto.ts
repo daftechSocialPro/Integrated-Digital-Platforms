@@ -123,6 +123,8 @@ export interface EmployeeFamilyPostDto {
 
           id : string;
           educationalLevel : string;
+          educationalLevelId ?: string;
+          educationalFieldId ?: string;
           educationalField : string;
           institution : string ; 
           fromDate : Date;

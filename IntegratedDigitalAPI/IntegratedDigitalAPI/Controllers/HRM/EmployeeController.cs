@@ -7,7 +7,7 @@ using System.Net;
 
 namespace IntegratedDigitalAPI.Controllers.HRM
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class EmployeeController : ControllerBase
     {
@@ -24,15 +24,29 @@ namespace IntegratedDigitalAPI.Controllers.HRM
         {
             return Ok(await _employeeService.GetEmployees());
         }
-        [HttpGet("getEmployee")]
+        [HttpGet]
         [ProducesResponseType(typeof(EmployeeGetDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetEmployee(Guid employeeId)
         {
             return Ok(await _employeeService.GetEmployee(employeeId));
         }
 
-       
-     
+
+        [HttpPut]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> UpdateEmployee([FromForm] EmployeePostDto employee)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _employeeService.UpdateEmployee(employee));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+
 
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
@@ -50,14 +64,14 @@ namespace IntegratedDigitalAPI.Controllers.HRM
 
         //history
 
-        [HttpGet("getEmployeeHistory")]
+        [HttpGet]
         [ProducesResponseType(typeof(EmployeeHistoryDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetEmployeeHistory(Guid employeeId)
         {
             return Ok(await _employeeService.GetEmployeeHistory(employeeId));
         }
 
-        [HttpPost("addEmployeeHistory")]
+        [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> AddEmployeeHistory(EmployeeHistoryPostDto employeeHistory)
         {
@@ -70,9 +84,9 @@ namespace IntegratedDigitalAPI.Controllers.HRM
                 return BadRequest();
             }
         }
-        [HttpPost("updateEmployeeHistory")]
+        [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> updateEmployeeHistory(EmployeeHistoryPostDto employeeHistory)
+        public async Task<IActionResult> UpdateEmployeeHistory(EmployeeHistoryPostDto employeeHistory)
         {
             if (ModelState.IsValid)
             {
@@ -83,9 +97,9 @@ namespace IntegratedDigitalAPI.Controllers.HRM
                 return BadRequest();
             }
         }
-        [HttpDelete("deleteEmployeeHistory")]
+        [HttpDelete]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> deleteEmployeeHistory(Guid employeeHistoryId)
+        public async Task<IActionResult> DeleteEmployeeHistory(Guid employeeHistoryId)
         {
             if (ModelState.IsValid)
             {
@@ -99,14 +113,14 @@ namespace IntegratedDigitalAPI.Controllers.HRM
 
         //family 
 
-        [HttpGet("getEmployeeFamily")]
+        [HttpGet]
         [ProducesResponseType(typeof(EmployeeFamilyGetDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetEmployeeFamily(Guid employeeId)
         {
             return Ok(await _employeeService.GetEmployeeFamily(employeeId));
         }
 
-        [HttpPost("addEmployeeFamily")]
+        [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> AddEmployeeFamily(EmployeeFamilyPostDto employeeFamily)
         {
@@ -120,9 +134,9 @@ namespace IntegratedDigitalAPI.Controllers.HRM
             }
         }
 
-        [HttpPost("updateEmployeeFamily")]
+        [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> updateEmployeeFamily(EmployeeFamilyGetDto employeeFamily)
+        public async Task<IActionResult> UpdateEmployeeFamily(EmployeeFamilyGetDto employeeFamily)
         {
             if (ModelState.IsValid)
             {
@@ -133,9 +147,9 @@ namespace IntegratedDigitalAPI.Controllers.HRM
                 return BadRequest();
             }
         }
-        [HttpDelete("deleteEmployeeFamily")]
+        [HttpDelete]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> deleteEmployeeFamily(Guid employeeFamilyId)
+        public async Task<IActionResult> DeleteEmployeeFamily(Guid employeeFamilyId)
         {
             if (ModelState.IsValid)
             {
@@ -150,14 +164,14 @@ namespace IntegratedDigitalAPI.Controllers.HRM
         //Education 
 
 
-        [HttpGet("getEmployeeEducation")]
+        [HttpGet]
         [ProducesResponseType(typeof(EmployeeEducationGetDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetEmployeeEducation(Guid employeeId)
         {
             return Ok(await _employeeService.GetEmployeeEducation(employeeId));
         }
 
-        [HttpPost("addEmployeeEducation")]
+        [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> AddEmployeeEducation(EmployeeEducationPostDto employeeEducation)
         {
@@ -171,9 +185,9 @@ namespace IntegratedDigitalAPI.Controllers.HRM
             }
         }
 
-        [HttpPost("updateEmployeeEducation")]
+        [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> updateEmployeeEducation(EmployeeEducationPostDto employeeEducation)
+        public async Task<IActionResult> UpdateEmployeeEducation(EmployeeEducationPostDto employeeEducation)
         {
             if (ModelState.IsValid)
             {
@@ -184,9 +198,9 @@ namespace IntegratedDigitalAPI.Controllers.HRM
                 return BadRequest();
             }
         }
-        [HttpDelete("deleteEmployeeEducation")]
+        [HttpDelete]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> deleteEmployeeEducation(Guid employeeEducationId)
+        public async Task<IActionResult> DeleteEmployeeEducation(Guid employeeEducationId)
         {
             if (ModelState.IsValid)
             {

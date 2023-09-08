@@ -54,6 +54,11 @@ export class EmployeeDetailComponent implements OnInit {
     let modalRef = this.modalService.open(UpdateEmployeeComponent, { size: 'xl', backdrop: 'static' })
     modalRef.componentInstance.selectedEmployee = selectedEmployee
 
+    modalRef.result.then (()=>{
+
+      this.getEmployee()
+    })
+
   }
 
 

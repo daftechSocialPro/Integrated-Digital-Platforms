@@ -13,6 +13,8 @@ namespace IntegratedImplementation.DTOS.HRM
     public record EmployeePostDto
     {
 
+        public Guid ? Id { get; set; }
+
         public string FirstName { get; set; } = null!;
         public string MiddleName { get; set; } = null!;
         public string LastName { get; set; } = null!;
@@ -49,9 +51,7 @@ namespace IntegratedImplementation.DTOS.HRM
         public Guid Id { get; set; }
         public string EmployeeCode { get; set; } = null!;
         public string EmployeeName { get; set; } = null!;
-
         public string FirstName { get; set; } = null!;
-
         public string MiddleName { get;set; } = null!;
         public string LastName { get; set; } = null!;
         public string PhoneNumber { get; set; } = null!;
@@ -180,6 +180,10 @@ namespace IntegratedImplementation.DTOS.HRM
         public Guid EmployeeId { get; set; }
 
         public string EducationalLevel { get; set; } = null!;
+
+        public Guid? EducationalLevelId { get; set; }
+
+        public Guid ? EducationalFieldId { get; set; }
         public string EducationalField { get; set; } = null!;
         public string Institution { get; set; } = null!;
         public DateTime FromDate { get; set; }

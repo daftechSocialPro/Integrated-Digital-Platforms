@@ -23,6 +23,7 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<IPositionService, PositionService>();
             services.AddScoped<IGeneralConfigService, GeneralConfigService>();
             services.AddScoped<IEmployeeService, EmployeeService>();
+            services.AddScoped<ILeaveTypeService, LeaveTypeService>();
            
 
             // configuration
