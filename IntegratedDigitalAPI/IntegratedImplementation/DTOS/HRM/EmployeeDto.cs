@@ -49,15 +49,29 @@ namespace IntegratedImplementation.DTOS.HRM
         public Guid Id { get; set; }
         public string EmployeeCode { get; set; } = null!;
         public string EmployeeName { get; set; } = null!;
+
+        public string FirstName { get; set; } = null!;
+
+        public string MiddleName { get;set; } = null!;
+        public string LastName { get; set; } = null!;
         public string PhoneNumber { get; set; } = null!;
 
         public string Email { get; set; } = null!;
         public string DepartmentName { get; set; } = null!;
+
+      
         public string PostionName { get; set; } = null!;
+
+
         public string Nationality { get; set; } = null!;
+
+        public Guid CountryId { get; set; }
         public string RegionName { get; set; } = null!;
 
+        public Guid RegionId { get; set; }
+
         public string ZoneName { get; set; } = null!;
+        public Guid ZoneId { get; set; }
         public string Woreda { get; set; } = null!;
 
         public string Gender { get; set; } = null!;

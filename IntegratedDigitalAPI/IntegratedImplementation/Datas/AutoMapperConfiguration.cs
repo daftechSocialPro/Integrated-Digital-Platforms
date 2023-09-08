@@ -28,7 +28,9 @@ namespace IntegratedImplementation.Datas
                 .ForMember(a => a.Nationality, e => e.MapFrom(mfg => mfg.Zone.Region.Country.Nationality))
                 .ForMember(a => a.DepartmentName, e => e.MapFrom(mfg => mfg.EmployeeDetail.FirstOrDefault(x => x.Rowstatus == RowStatus.ACTIVE)!.Department.DepartmentName))
                 .ForMember(a => a.PostionName, e => e.MapFrom(mfg => mfg.EmployeeDetail.FirstOrDefault(x => x.Rowstatus == RowStatus.ACTIVE)!.Position.PositionName))
-                .ForMember(a => a.EmploymentStatus, e => e.MapFrom(mfg => mfg.EmploymentStatus.ToString()));
+                .ForMember(a => a.EmploymentStatus, e => e.MapFrom(mfg => mfg.EmploymentStatus.ToString()))
+                .ForMember(a => a.CountryId, e => e.MapFrom(mfg => mfg.Zone.Region.CountryId))
+                .ForMember(a => a.RegionId, e => e.MapFrom(mfg => mfg.Zone.RegionId));
 
             CreateMap<EmploymentDetail, EmployeeHistoryDto>()
                 .ForMember(a => a.DepartmentName, e => e.MapFrom(mfg => mfg.Department.DepartmentName))
@@ -47,8 +49,6 @@ namespace IntegratedImplementation.Datas
 
             CreateMap<GeneralCodes, GeneralCodeDto>()
                 .ForMember(a=>a.GeneralCode , e => e.MapFrom(mfg =>mfg.GeneralCodeType.ToString()));
-
-
 
 
         }

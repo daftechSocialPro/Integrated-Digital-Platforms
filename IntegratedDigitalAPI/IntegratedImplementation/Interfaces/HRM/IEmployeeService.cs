@@ -14,11 +14,13 @@ namespace IntegratedImplementation.Interfaces.HRM
 
         Task<List<EmployeeGetDto>> GetEmployees();
         Task<ResponseMessage> AddEmployee(EmployeePostDto addEmployee);
+        Task<ResponseMessage> UpdateEmployee(EmployeePostDto addEmployee);
         Task<EmployeeGetDto> GetEmployee(Guid employeeId);
 
         //history
         Task<List<EmployeeHistoryDto>> GetEmployeeHistory(Guid employeeId);
         Task<ResponseMessage> AddEmployeeHistory(EmployeeHistoryPostDto addEmployeeHistory);
+
         Task<ResponseMessage> UpdateEmployeeHistory(EmployeeHistoryPostDto updateEmployeeHistory);
         Task<ResponseMessage> deleteEmployeeHistory(Guid employeeHistoryId);
 

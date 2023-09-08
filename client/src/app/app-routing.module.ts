@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 import { AuthGuard } from './auth/auth.guard';
-import { EmployeeComponent } from './pages/human-resource/employee/employee.component';
+
 import { PagesLoginComponent } from './auth/pages-login/pages-login.component';
 import { HrmConfigurationComponent } from './pages/human-resource/hrm-configuration/hrm-configuration/hrm-configuration.component';
 import { EmployeeManagmentComponent } from './pages/human-resource/employee-managment/employee-managment.component';

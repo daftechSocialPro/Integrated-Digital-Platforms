@@ -41,7 +41,7 @@ import { PagesBlankComponent } from './pages/pages-blank/pages-blank.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthHeaderIneterceptor } from './http-interceptors/auth-header-interceptor';
 import { SpinnerComponent } from './components/spinner/spinner.component';
-import { EmployeeComponent } from './pages/human-resource/employee/employee.component';
+
 import { ToastrModule } from 'ngx-toastr';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PagesLoginComponent } from './auth/pages-login/pages-login.component';
@@ -79,7 +79,7 @@ import { CompanyProfileComponent } from './pages/configuration/company-profile/c
 import { ConfigurationComponent } from './pages/configuration/configuration/configuration.component';
 import { CommonComponent } from './pages/configuration/common/common.component';
 import { AddressComponent } from './pages/configuration/address/address.component';
-import {TabViewModule} from 'primeng/tabview';
+import { TabViewModule} from 'primeng/tabview';
 import { CountryComponent } from './pages/configuration/address/country/country.component';
 import { RegionComponent } from './pages/configuration/address/region/region.component';
 import { ZoneComponent } from './pages/configuration/address/zone/zone.component';
@@ -95,7 +95,9 @@ import { AddEdcuationalFieldComponent } from './pages/configuration/common/educa
 import { UpdateEductionalFieldComponent } from './pages/configuration/common/educational-field/update-eductional-field/update-eductional-field.component';
 import { AddEdcuationalLevelComponent } from './pages/configuration/common/educational-level/add-edcuational-level/add-edcuational-level.component';
 import { UpdateEdcuationalLevelComponent } from './pages/configuration/common/educational-level/update-edcuational-level/update-edcuational-level.component';
-import { GeneralCodesComponent } from './pages/configuration/common/general-codes/general-codes.component'
+import { GeneralCodesComponent } from './pages/configuration/common/general-codes/general-codes.component';
+import { LeaveTypeComponent } from './pages/human-resource/hrm-configuration/leave-type/leave-type.component';
+import { UpdateEmployeeComponent } from './pages/human-resource/employee-managment/update-employee/update-employee.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -134,7 +136,7 @@ import { GeneralCodesComponent } from './pages/configuration/common/general-code
     PagesLoginComponent,
     PagesError404Component,
     PagesBlankComponent,
-    EmployeeComponent,
+
     HrmConfigurationComponent,
     DepartmentComponent,
     AddDepartmentComponent,
@@ -175,6 +177,8 @@ import { GeneralCodesComponent } from './pages/configuration/common/general-code
      AddEdcuationalLevelComponent,
      UpdateEdcuationalLevelComponent,
      GeneralCodesComponent,
+     LeaveTypeComponent,
+     UpdateEmployeeComponent,
    
      
   ],

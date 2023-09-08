@@ -1,6 +1,6 @@
 export interface EmployeePostDto
-{
-   
+{   
+     id?: string 
      firstName : string;
      middleName : string;
      lastName : string;
@@ -19,8 +19,8 @@ export interface EmployeePostDto
      tinNumber? : string;
      bankAccountNo? : string;
      phoneNumber:string;
-     departmentId : string;
-     positionId : string;
+     departmentId? : string;
+     positionId ?: string;
      contractDays ? : Number 
      createdById : string;
      email : string;   
@@ -34,7 +34,10 @@ export interface EmployeeGetDto
 {
      id :string;
      employeeCode : string;
-     employeeName : string;        
+     employeeName : string;      
+     firstName : string;
+     middleName : string;
+     lastName : string;       
      gender : string;
      birthDate : Date
      maritalStatus : string;
@@ -53,8 +56,11 @@ export interface EmployeeGetDto
      email : string;
      departmentName : string;
      postionName : string;
+     countryId: string 
      nationality : string;
+     regionId : string  ; 
      regionName : string;
+     zoneId :string ; 
      zoneName : string 
      woreda:string;
 
