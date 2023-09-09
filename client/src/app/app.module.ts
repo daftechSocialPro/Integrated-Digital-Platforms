@@ -72,6 +72,8 @@ import { ToastModule} from 'primeng/toast';
 import { EmployeeFamilyComponent } from './pages/human-resource/employee-managment/employee-detail/employee-family/employee-family.component';
 import { AddEmployeeFamilyComponent } from './pages/human-resource/employee-managment/employee-detail/employee-family/add-employee-family/add-employee-family.component';
 import { UpdateEmployeeFamilyComponent } from './pages/human-resource/employee-managment/employee-detail/employee-family/update-employee-family/update-employee-family.component';
+import { VacancyListComponent } from './pages/human-resource/vacancy-management/vacancy-list/vacancy-list.component';
+import { AddVacancyComponent } from './pages/human-resource/vacancy-management/vacancy-list/add-vacancy/add-vacancy.component';
 
 @NgModule({
   declarations: [
@@ -129,6 +131,8 @@ import { UpdateEmployeeFamilyComponent } from './pages/human-resource/employee-m
      EmployeeFamilyComponent,
      AddEmployeeFamilyComponent,
      UpdateEmployeeFamilyComponent,
+     VacancyListComponent,
+     AddVacancyComponent,
    
      
   ],

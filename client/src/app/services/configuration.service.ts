@@ -31,4 +31,6 @@ export class ConfigurationService {
   getRegionsDropdown(countryId : string ){
     return this.http.get<SelectList[]>(this.baseUrl + "/Region/getRegionDropdown?countryId="+countryId)
 }
+
+
 }

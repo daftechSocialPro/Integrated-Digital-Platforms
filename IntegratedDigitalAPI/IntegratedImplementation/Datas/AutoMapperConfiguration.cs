@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using static IntegratedInfrustructure.Data.EnumList;
 
 using IntegratedInfrustructure.Data;
+using IntegratedInfrustructure.Model.Vacancy;
+using IntegratedImplementation.DTOS.Vacancy;
 
 namespace IntegratedImplementation.Datas
 {
@@ -35,6 +37,13 @@ namespace IntegratedImplementation.Datas
              .ForMember(a => a.Gender, e => e.MapFrom(mfg => mfg.Gender.ToString()))
              .ForMember(a => a.FamilyRelation, e => e.MapFrom(mfg => mfg.FamilyRelation.ToString()));
 
+            CreateMap<VacancyList, VacancyListDto>()
+                .ForMember(x => x.EducationalLevel, e => e.MapFrom(mfg => mfg.EducationalLevel.EducationalLevelName))
+                .ForMember(x => x.EducationalField, e => e.MapFrom(mfg => mfg.EducationalField.EducationalFieldName))
+                .ForMember(x => x.Position, e => e.MapFrom(mfg => mfg.Position.PositionName))
+                .ForMember(x => x.Department, e => e.MapFrom(mfg => mfg.Department.DepartmentName))
+                .ForMember(x => x.EmploymentType, e => e.MapFrom(mfg => mfg.EmploymentType.ToString()))
+                .ForMember(x => x.VacancyType, e => e.MapFrom(mfg => mfg.VacancyType.ToString()));
 
         }
     }

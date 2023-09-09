@@ -18,7 +18,7 @@ namespace IntegratedInfrustructure.Model.Vacancy
         public string LastName { get; set; } = null!;
         public string Photo { get; set; } = null!;
 
-        public virtual Vacancy Vacancy { get; set; } = null!;
+        public virtual VacancyList Vacancy { get; set; } = null!;
         public Guid VacancyId { get; set; }
 
         public ApplicantStatus ApplicantStatus { get; set; }

@@ -10,7 +10,7 @@ using static IntegratedInfrustructure.Data.EnumList;
 
 namespace IntegratedInfrustructure.Model.Vacancy
 {
-    public class Vacancy : WithIdModel
+    public class VacancyList : WithIdModel
     {
         public string VacancyName { get; set; } = null!;
 

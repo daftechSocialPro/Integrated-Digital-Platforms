@@ -10,10 +10,10 @@ export class AppComponent {
   constructor(private elementRef: ElementRef,  public  _router: Router) { }
 
   ngOnInit() {
-
     var s = document.createElement("script");
     s.type = "text/javascript";
     s.src = "../assets/js/main.js";
     this.elementRef.nativeElement.appendChild(s);
   }
+  
 }
