@@ -27,8 +27,8 @@ namespace IntegratedInfrustructure.Model.HRM
         public string PhoneNumber { get; set; } = null!;
         public string Email { get; set; } = null!;
 
-        public Guid RegionId { get; set; } = Guid.Parse("18eef146-fc48-4074-94e7-e5dd4a3be642");
-        public virtual Region Region { get; set; } = null!;
+        public Guid ZoneId { get; set; } 
+        public virtual Zone Zone { get; set; } = null!;
 
         public string Woreda { get; set; } = null!;
 

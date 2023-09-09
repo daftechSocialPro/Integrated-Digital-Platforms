@@ -23,11 +23,16 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<IPositionService, PositionService>();
             services.AddScoped<IGeneralConfigService, GeneralConfigService>();
             services.AddScoped<IEmployeeService, EmployeeService>();
+            services.AddScoped<ILeaveTypeService, LeaveTypeService>();
+           
 
             // configuration
-
+            services.AddScoped<ICompanyProfileService, CompanyProfileService>();
             services.AddScoped<IRegionService, RegionService>();
             services.AddScoped<ICountryService, CountryService>();
+            services.AddScoped<IZoneService, ZoneService>();
+            services.AddScoped<IEducationalLevelService, EducationalLevelService>();
+            services.AddScoped<IEducationalFieldService, EducationalFieldService>();
             return services;
         }
     }

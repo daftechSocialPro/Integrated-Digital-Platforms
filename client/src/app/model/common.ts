@@ -5,7 +5,7 @@ export interface SelectList {
 
     id: string;
     name: string;
-   
+
 }
 
 export interface ProgramBudgetYear {
@@ -36,9 +36,16 @@ export interface BudgetYearwithoutId {
     Year: Number;
     FromDate: Date;
     ToDate: Date;
-    Remark: String; 
+    Remark: String;
     CreatedBy: String
 
 }
 
+export interface GeneralCodeDto {
 
+    generalCode: string
+    initialName: string
+    pad: number
+    currentNumber: number
+
+}

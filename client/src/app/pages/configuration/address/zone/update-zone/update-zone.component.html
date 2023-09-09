@@ -1,0 +1,56 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Update Zone</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Zone Detail</h5>
+            <div class="row">
+                <div class="col-lg-12">
+                    <form class="" [formGroup]="ZoneForm" (ngSubmit)="submit()">
+                        <div class="modal-body">
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" id="countryId" formControlName="countryId"  #country (change)="getRegionsSelectList(country.value)"
+                                            aria-label="State">
+                                            <option></option>
+                                            <option *ngFor="let item of Countries" [value]="item.id">{{item.name}}
+                                            </option>
+                                        </select>
+                                        <label for="countryId">Country</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" id="regionId" formControlName="regionId"
+                                            aria-label="State">
+                                            <option></option>
+                                            <option *ngFor="let item of Regions" [value]="item.id">{{item.name}}
+                                            </option>
+                                        </select>
+                                        <label for="regionId">Regions</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="ZoneName" placeholder="ZoneName"
+                                            formControlName="zoneName">
+                                        <label for="ZoneName">Zone Name</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
+                                (click)="closeModal()">Close</button>
+                            <button type="button" type="submit" [disabled]="!ZoneForm.valid"
+                                class="btn btn-outline-warning">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -17,7 +17,7 @@ namespace IntegratedInfrustructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.9")
+                .HasAnnotation("ProductVersion", "7.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -143,6 +143,9 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -661,9 +664,6 @@ namespace IntegratedInfrustructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("RegionId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("Rowstatus")
                         .HasColumnType("int");
 
@@ -677,11 +677,14 @@ namespace IntegratedInfrustructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("ZoneId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CreatedById");
 
-                    b.HasIndex("RegionId");
+                    b.HasIndex("ZoneId");
 
                     b.ToTable("Employees");
                 });
@@ -1495,15 +1498,15 @@ namespace IntegratedInfrustructure.Migrations
                         .WithMany()
                         .HasForeignKey("CreatedById");
 
-                    b.HasOne("IntegratedInfrustructure.Model.Configuration.Region", "Region")
+                    b.HasOne("IntegratedInfrustructure.Model.Configuration.Zone", "Zone")
                         .WithMany()
-                        .HasForeignKey("RegionId")
+                        .HasForeignKey("ZoneId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("CreatedBy");
 
-                    b.Navigation("Region");
+                    b.Navigation("Zone");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeWorkExperiance", b =>

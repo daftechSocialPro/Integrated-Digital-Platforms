@@ -41,7 +41,7 @@ import { PagesBlankComponent } from './pages/pages-blank/pages-blank.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthHeaderIneterceptor } from './http-interceptors/auth-header-interceptor';
 import { SpinnerComponent } from './components/spinner/spinner.component';
-import { EmployeeComponent } from './pages/human-resource/employee/employee.component';
+
 import { ToastrModule } from 'ngx-toastr';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PagesLoginComponent } from './auth/pages-login/pages-login.component';
@@ -75,6 +75,34 @@ import { UpdateEmployeeFamilyComponent } from './pages/human-resource/employee-m
 import { VacancyListComponent } from './pages/human-resource/vacancy-management/vacancy-list/vacancy-list.component';
 import { AddVacancyComponent } from './pages/human-resource/vacancy-management/vacancy-list/add-vacancy/add-vacancy.component';
 
+import { EmployeeEducationComponent } from './pages/human-resource/employee-managment/employee-detail/employee-education/employee-education.component';
+import { AddEmployeeEducationComponent } from './pages/human-resource/employee-managment/employee-detail/employee-education/add-employee-education/add-employee-education.component';
+import { UpdateEmployeeEducationComponent } from './pages/human-resource/employee-managment/employee-detail/employee-education/update-employee-education/update-employee-education.component';
+import { CompanyProfileComponent } from './pages/configuration/company-profile/company-profile.component';
+import { ConfigurationComponent } from './pages/configuration/configuration/configuration.component';
+import { CommonComponent } from './pages/configuration/common/common.component';
+import { AddressComponent } from './pages/configuration/address/address.component';
+import { TabViewModule} from 'primeng/tabview';
+import { CountryComponent } from './pages/configuration/address/country/country.component';
+import { RegionComponent } from './pages/configuration/address/region/region.component';
+import { ZoneComponent } from './pages/configuration/address/zone/zone.component';
+import { AddCountryComponent } from './pages/configuration/address/country/add-country/add-country.component';
+import { UpdateCountryComponent } from './pages/configuration/address/country/update-country/update-country.component';
+import { AddRegionComponent } from './pages/configuration/address/region/add-region/add-region.component';
+import { UpdateRegionComponent } from './pages/configuration/address/region/update-region/update-region.component';
+import { AddZoneComponent } from './pages/configuration/address/zone/add-zone/add-zone.component';
+import { UpdateZoneComponent } from './pages/configuration/address/zone/update-zone/update-zone.component';
+import { EducationalFieldComponent } from './pages/configuration/common/educational-field/educational-field.component';
+import { EducationalLevelComponent } from './pages/configuration/common/educational-level/educational-level.component';
+import { AddEdcuationalFieldComponent } from './pages/configuration/common/educational-field/add-edcuational-field/add-edcuational-field.component';
+import { UpdateEductionalFieldComponent } from './pages/configuration/common/educational-field/update-eductional-field/update-eductional-field.component';
+import { AddEdcuationalLevelComponent } from './pages/configuration/common/educational-level/add-edcuational-level/add-edcuational-level.component';
+import { UpdateEdcuationalLevelComponent } from './pages/configuration/common/educational-level/update-edcuational-level/update-edcuational-level.component';
+import { GeneralCodesComponent } from './pages/configuration/common/general-codes/general-codes.component';
+import { LeaveTypeComponent } from './pages/human-resource/hrm-configuration/leave-type/leave-type.component';
+import { UpdateEmployeeComponent } from './pages/human-resource/employee-managment/update-employee/update-employee.component';
+import { AddLeaveTypeComponent } from './pages/human-resource/hrm-configuration/leave-type/add-leave-type/add-leave-type.component';
+import { UpdateLeaveTypeComponent } from './pages/human-resource/hrm-configuration/leave-type/update-leave-type/update-leave-type.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -113,7 +141,7 @@ import { AddVacancyComponent } from './pages/human-resource/vacancy-management/v
     PagesLoginComponent,
     PagesError404Component,
     PagesBlankComponent,
-    EmployeeComponent,
+
     HrmConfigurationComponent,
     DepartmentComponent,
     AddDepartmentComponent,
@@ -133,6 +161,33 @@ import { AddVacancyComponent } from './pages/human-resource/vacancy-management/v
      UpdateEmployeeFamilyComponent,
      VacancyListComponent,
      AddVacancyComponent,
+     EmployeeEducationComponent,
+     AddEmployeeEducationComponent,
+     UpdateEmployeeEducationComponent,
+     CompanyProfileComponent,
+     ConfigurationComponent,
+     CommonComponent,
+     AddressComponent,
+     CountryComponent,
+     RegionComponent,
+     ZoneComponent,
+     AddCountryComponent,
+     UpdateCountryComponent,
+     AddRegionComponent,
+     UpdateRegionComponent,
+     AddZoneComponent,
+     UpdateZoneComponent,
+     EducationalFieldComponent,
+     EducationalLevelComponent,
+     AddEdcuationalFieldComponent,
+     UpdateEductionalFieldComponent,
+     AddEdcuationalLevelComponent,
+     UpdateEdcuationalLevelComponent,
+     GeneralCodesComponent,
+     LeaveTypeComponent,
+     UpdateEmployeeComponent,
+     AddLeaveTypeComponent,
+     UpdateLeaveTypeComponent,
    
      
   ],
@@ -149,6 +204,7 @@ import { AddVacancyComponent } from './pages/human-resource/vacancy-management/v
     StepsModule,
     ConfirmDialogModule,
     ToastModule,
+    TabViewModule,
     
     ToastrModule.forRoot({
       preventDuplicates: true,

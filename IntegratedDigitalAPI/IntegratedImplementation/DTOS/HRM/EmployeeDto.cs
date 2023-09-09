@@ -1,4 +1,5 @@
-﻿using IntegratedInfrustructure.Model.HRM;
+﻿using IntegratedInfrustructure.Model.Configuration;
+using IntegratedInfrustructure.Model.HRM;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -12,13 +13,15 @@ namespace IntegratedImplementation.DTOS.HRM
     public record EmployeePostDto
     {
 
+        public Guid ? Id { get; set; }
+
         public string FirstName { get; set; } = null!;
         public string MiddleName { get; set; } = null!;
         public string LastName { get; set; } = null!;
         public string Gender { get; set; } = null!;
 
         public string Email { get; set; } = null!;
-        public Guid RegionId { get; set; }
+        public Guid ZoneId { get; set; }
 
         public string Woreda { get; set; } = null!;
         public string PhoneNumber { get; set; } = null!;
@@ -48,17 +51,28 @@ namespace IntegratedImplementation.DTOS.HRM
         public Guid Id { get; set; }
         public string EmployeeCode { get; set; } = null!;
         public string EmployeeName { get; set; } = null!;
-
+        public string FirstName { get; set; } = null!;
+        public string MiddleName { get;set; } = null!;
+        public string LastName { get; set; } = null!;
         public string PhoneNumber { get; set; } = null!;
 
         public string Email { get; set; } = null!;
         public string DepartmentName { get; set; } = null!;
+
+      
         public string PostionName { get; set; } = null!;
+
+
         public string Nationality { get; set; } = null!;
+
+        public Guid CountryId { get; set; }
         public string RegionName { get; set; } = null!;
 
-        public string Woreda { get; set; } = null!;
+        public Guid RegionId { get; set; }
 
+        public string ZoneName { get; set; } = null!;
+        public Guid ZoneId { get; set; }
+        public string Woreda { get; set; } = null!;
 
         public string Gender { get; set; } = null!;
         public string BirthDate { get; set; } = null!;
@@ -139,4 +153,49 @@ namespace IntegratedImplementation.DTOS.HRM
        
 
     }
+
+
+    public record EmployeeEducationPostDto
+    {
+
+        public Guid Id { get; set; }
+        public Guid EmployeeId { get; set; }
+     
+        public Guid EducationalLevelId { get; set; }
+       
+        public Guid EducationalFieldId { get; set; }
+        public string Institution { get; set; } = null!;
+        public DateTime FromDate { get; set; }
+        public DateTime? ToDate { get; set; }
+
+        public string? Remark { get; set; }
+
+        public string CreatedById { get; set; } = null!;
+    }
+
+    public record EmployeeEducationGetDto
+    {
+
+        public Guid Id { get; set; }
+        public Guid EmployeeId { get; set; }
+
+        public string EducationalLevel { get; set; } = null!;
+
+        public Guid? EducationalLevelId { get; set; }
+
+        public Guid ? EducationalFieldId { get; set; }
+        public string EducationalField { get; set; } = null!;
+        public string Institution { get; set; } = null!;
+        public DateTime FromDate { get; set; }
+        public DateTime? ToDate { get; set; }
+
+        public string? Remark { get; set; }
+    }
+
+
+
+
+
+
+
 }

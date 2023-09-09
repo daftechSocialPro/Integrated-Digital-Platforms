@@ -15,7 +15,7 @@ export class EmployeeFamilyComponent implements OnInit {
 
 
   @Input() employeeId!: string;
-  histories : any 
+  families : any 
   position: string = 'center';
 
   ngOnInit(): void {
@@ -31,7 +31,7 @@ export class EmployeeFamilyComponent implements OnInit {
   getEmployeeFamily(){
     this.hrmService.getEmployeeFamily(this.employeeId).subscribe({
       next:(res)=>{
-        this.histories = res 
+        this.families = res 
       }
     })
   }

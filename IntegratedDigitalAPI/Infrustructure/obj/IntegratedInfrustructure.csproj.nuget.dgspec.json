@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
     "D:\\Projects\\Ethiopian Midwives\\Application\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\Infrustructure\\IntegratedInfrustructure.csproj": {}
   },
   "projects": {
@@ -15,6 +16,22 @@
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Hermi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+=======
+    "C:\\Users\\KIRUB\\Desktop\\clones\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\Infrustructure\\IntegratedInfrustructure.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\KIRUB\\Desktop\\clones\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\Infrustructure\\IntegratedInfrustructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\KIRUB\\Desktop\\clones\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\Infrustructure\\IntegratedInfrustructure.csproj",
+        "projectName": "IntegratedInfrustructure",
+        "projectPath": "C:\\Users\\KIRUB\\Desktop\\clones\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\Infrustructure\\IntegratedInfrustructure.csproj",
+        "packagesPath": "C:\\Users\\KIRUB\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\KIRUB\\Desktop\\clones\\Integrated-Digital-Platforms\\IntegratedDigitalAPI\\Infrustructure\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\KIRUB\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> 3f9f6872278de2b8d79a23c218404562d3cfea9f
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -47,7 +64,7 @@
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[7.0.9, )"
+              "version": "[7.0.10, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
@@ -82,7 +99,11 @@
               "privateAssets": "all"
             }
           },
+<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+=======
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+>>>>>>> 3f9f6872278de2b8d79a23c218404562d3cfea9f
         }
       }
     }

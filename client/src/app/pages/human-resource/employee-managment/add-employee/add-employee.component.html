@@ -16,7 +16,7 @@
                             style="width: 100%;">
                         <input #file (change)="onUpload($event)" type="file" style="display: none;" accept="image/*" />
                         <div class="pt-2">
-                            <a (click)="file.click()" style="width: 100%;" class="btn btn-primary btn-sm"
+                            <a (click)="file.click()" style="width: 100%;" class="btn btn-outline-primary btn-sm"
                                 title="Upload new profile image">
                                 <i class="bi bi-upload"></i> Upload Image
                             </a>
@@ -120,7 +120,7 @@
                             </div>
                             <div class="col-md-3" *ngIf="employmentType.value==='CONTRAT'">
                                 <div class="form-floating"> <input type="date" class="form-control" id="ContractEndDate"
-                                        placeholder="ContractEndDate" required formControlName="contractEndDate">
+                                        placeholder="ContractEndDate"  formControlName="contractEndDate">
                                     <label for="ContractEndDate"> Contract End Date </label>
                                 </div>
                             </div>
@@ -186,7 +186,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-floating mb-3">
                                     <select class="form-select" id="Departments" formControlName="departmentId"
                                         aria-label="State">
@@ -198,7 +198,7 @@
                                     <label for="Departments">Departments</label>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-floating mb-3">
                                     <select class="form-select" id="positionId" formControlName="positionId"
                                         aria-label="State">
@@ -225,13 +225,25 @@
                             </div>
                             <div class="col-md-2">
                                 <div class="form-floating mb-3">
-                                    <select class="form-select" id="regionId" formControlName="regionId"
+                                    <select class="form-select" (change)="getZones(region.value)" #region id="regionId" 
                                         aria-label="State">
                                         <option></option>
                                         <option *ngFor="let region of regions" [value]="region.id">{{
                                             region.name }}</option>
                                     </select>
                                     <label for="countryId">Region</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="zoneId" formControlName="zoneId"
+                                        aria-label="State">
+                                        <option></option>
+                                        <option *ngFor="let zone of zones" [value]="zone.id">{{
+                                            zone.name }}</option>
+                                    </select>
+                                    <label for="zoneId"> Zone</label>
                                 </div>
                             </div>
 
@@ -250,9 +262,9 @@
 
 
 
-                <div class="modal-footer"> <button type="button" class="btn btn-secondary"
+                <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
                         (click)="closeModal()">Close</button> <button type="button" type="submit"
-                        [disabled]="!EmployeeForm.valid" class="btn btn-primary">Save
+                        [disabled]="!EmployeeForm.valid" class="btn btn-outline-primary">Save
                         changes</button></div>
             </form>
 

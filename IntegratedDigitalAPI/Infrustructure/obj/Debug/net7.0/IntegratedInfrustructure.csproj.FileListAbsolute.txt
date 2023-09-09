@@ -26,6 +26,7 @@ C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\
 C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\Infrustructure\obj\Debug\net7.0\IntegratedInfrustructure.pdb
 C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\Infrustructure\obj\Debug\net7.0\IntegratedInfrustructure.genruntimeconfig.cache
 C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\IntegratedDigitalAPI\Infrustructure\obj\Debug\net7.0\ref\IntegratedInfrustructure.dll
+<<<<<<< HEAD
 D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\IntegratedDigitalAPI\Infrustructure\obj\Debug\net7.0\IntegratedInfrustructure.csproj.AssemblyReference.cache
 D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\IntegratedDigitalAPI\Infrustructure\obj\Debug\net7.0\IntegratedInfrustructure.GeneratedMSBuildEditorConfig.editorconfig
 D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\IntegratedDigitalAPI\Infrustructure\obj\Debug\net7.0\IntegratedInfrustructure.AssemblyInfoInputs.cache
@@ -40,3 +41,19 @@ D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\Integrat
 D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\IntegratedDigitalAPI\Infrustructure\bin\Debug\net7.0\IntegratedInfrustructure.pdb
 D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\IntegratedDigitalAPI\Infrustructure\obj\Debug\net7.0\IntegratedInfrustructure.genruntimeconfig.cache
 D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\IntegratedDigitalAPI\Infrustructure\obj\Debug\net7.0\ref\IntegratedInfrustructure.dll
+=======
+C:\Users\KIRUB\Desktop\clones\Integrated-Digital-Platforms\IntegratedDigitalAPI\Infrustructure\bin\Debug\net7.0\IntegratedInfrustructure.deps.json
+C:\Users\KIRUB\Desktop\clones\Integrated-Digital-Platforms\IntegratedDigitalAPI\Infrustructure\bin\Debug\net7.0\IntegratedInfrustructure.runtimeconfig.json
+C:\Users\KIRUB\Desktop\clones\Integrated-Digital-Platforms\IntegratedDigitalAPI\Infrustructure\bin\Debug\net7.0\IntegratedInfrustructure.dll
+C:\Users\KIRUB\Desktop\clones\Integrated-Digital-Platforms\IntegratedDigitalAPI\Infrustructure\bin\Debug\net7.0\IntegratedInfrustructure.pdb
+C:\Users\KIRUB\Desktop\clones\Integrated-Digital-Platforms\IntegratedDigitalAPI\Infrustructure\obj\Debug\net7.0\IntegratedInfrustructure.csproj.AssemblyReference.cache
+C:\Users\KIRUB\Desktop\clones\Integrated-Digital-Platforms\IntegratedDigitalAPI\Infrustructure\obj\Debug\net7.0\IntegratedInfrustructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\KIRUB\Desktop\clones\Integrated-Digital-Platforms\IntegratedDigitalAPI\Infrustructure\obj\Debug\net7.0\IntegratedInfrustructure.AssemblyInfoInputs.cache
+C:\Users\KIRUB\Desktop\clones\Integrated-Digital-Platforms\IntegratedDigitalAPI\Infrustructure\obj\Debug\net7.0\IntegratedInfrustructure.AssemblyInfo.cs
+C:\Users\KIRUB\Desktop\clones\Integrated-Digital-Platforms\IntegratedDigitalAPI\Infrustructure\obj\Debug\net7.0\IntegratedInfrustructure.csproj.CoreCompileInputs.cache
+C:\Users\KIRUB\Desktop\clones\Integrated-Digital-Platforms\IntegratedDigitalAPI\Infrustructure\obj\Debug\net7.0\IntegratedInfrustructure.dll
+C:\Users\KIRUB\Desktop\clones\Integrated-Digital-Platforms\IntegratedDigitalAPI\Infrustructure\obj\Debug\net7.0\refint\IntegratedInfrustructure.dll
+C:\Users\KIRUB\Desktop\clones\Integrated-Digital-Platforms\IntegratedDigitalAPI\Infrustructure\obj\Debug\net7.0\IntegratedInfrustructure.pdb
+C:\Users\KIRUB\Desktop\clones\Integrated-Digital-Platforms\IntegratedDigitalAPI\Infrustructure\obj\Debug\net7.0\IntegratedInfrustructure.genruntimeconfig.cache
+C:\Users\KIRUB\Desktop\clones\Integrated-Digital-Platforms\IntegratedDigitalAPI\Infrustructure\obj\Debug\net7.0\ref\IntegratedInfrustructure.dll
+>>>>>>> 3f9f6872278de2b8d79a23c218404562d3cfea9f
