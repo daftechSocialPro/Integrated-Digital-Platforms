@@ -1,5 +1,6 @@
 ﻿using IntegratedInfrustructure.Model.Configuration;
 using IntegratedInfrustructure.Model.HRM;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -50,4 +51,20 @@ namespace IntegratedImplementation.DTOS.Vacancy
         [Required]
         public Guid Id { get; set; }
     }
+
+    public class AddVacancyDocumentDto
+    {
+        public Guid VacancyId { get; set; }
+        public string CreatedById { get; set; } = null!;
+        public string DocuemntName { get; set; } = null!;
+        public IFormFile DocumentPath { get; set; } = null!;
+    }
+
+    public class VacancyDocumentsDto
+    {
+        public Guid Id { get; set; }
+        public string DocuemntName { get; set; } = null!;
+        public string DocumentPath { get; set; } = null!;
+    }
+
 }

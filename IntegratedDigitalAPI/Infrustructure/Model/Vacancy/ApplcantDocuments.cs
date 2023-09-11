@@ -13,7 +13,6 @@ namespace IntegratedInfrustructure.Model.Vacancy
         public virtual Applicant Applicant { get; set; } = null!;
         public Guid ApplicantId { get; set; }
         public string DocumentPath { get; set; } = null!;
-
         public Guid VacancyDocumentId { get; set; }
         public virtual VacancyDocuments VacancyDocument { get; set; } = null!;
     }

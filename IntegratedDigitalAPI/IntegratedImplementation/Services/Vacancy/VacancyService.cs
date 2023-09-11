@@ -5,6 +5,7 @@ using IntegratedImplementation.DTOS.Configuration;
 using IntegratedImplementation.DTOS.HRM;
 using IntegratedImplementation.DTOS.Vacancy;
 using IntegratedImplementation.Helper;
+using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedImplementation.Interfaces.Vacancy;
 using IntegratedInfrustructure.Data;
 using IntegratedInfrustructure.Model.Configuration;
@@ -26,12 +27,14 @@ namespace IntegratedImplementation.Services.Vacancy
     public class VacancyService : IVacancyService
     {
         private readonly ApplicationDbContext _dbContext;
+        private readonly IGeneralConfigService _generalConfig;
         private readonly IMapper _mapper;
 
-        public VacancyService(ApplicationDbContext dbContext, IMapper mapper)
+        public VacancyService(ApplicationDbContext dbContext, IMapper mapper, IGeneralConfigService generalConfig)
         {
             _dbContext = dbContext;
             _mapper = mapper;
+            _generalConfig = generalConfig;
         }
 
         public async Task<List<VacancyListDto>> GetVacancyList()
@@ -55,6 +58,17 @@ namespace IntegratedImplementation.Services.Vacancy
             }
 
             return new UpdateVacancyDto();
+        }
+
+        public async Task<VacancyListDto> GetVacancyDetail(Guid vacancyId)
+        {
+            var currentVacancy = await _dbContext.VacancyLists.ProjectTo<VacancyListDto>(_mapper.ConfigurationProvider)
+                         .FirstOrDefaultAsync(x => x.Id == vacancyId);
+            if (currentVacancy != null)
+            {
+                return currentVacancy;
+            }
+            return new VacancyListDto();
         }
 
         public async Task<ResponseMessage> AddVacancy(AddVacancyDto addVacancy)
@@ -113,6 +127,59 @@ namespace IntegratedImplementation.Services.Vacancy
 
         }
 
+        public async Task<ResponseMessage> ApproveVacancy(Guid vacancyId)
+        {
+            var currentVacancy = await _dbContext.VacancyLists.FirstOrDefaultAsync(x => x.Id.Equals(vacancyId) && !x.IsApproved);
+            if (currentVacancy != null)
+            {
+                currentVacancy.IsApproved = true;
+                await _dbContext.SaveChangesAsync();
+                return new ResponseMessage { Success = false, Message = "Approved Successfully", Data = currentVacancy };
+            }
+            return new ResponseMessage { Success = false, Message = "Could not find Vacancy" };
+        }
+
+
+        public async Task<List<VacancyDocumentsDto>> GetVacancyDocuments(Guid vacancyId)
+        {
+            var currentDocument = await _dbContext.VacancyDocuments.Where(x => x.VacancyId.Equals(vacancyId))
+                                        .Select(x => new VacancyDocumentsDto
+                                        {
+                                            Id = x.Id,
+                                            DocuemntName = x.DocuemntName,
+                                            DocumentPath = x.DocumentPath
+                                        }).ToListAsync();
+            return currentDocument;
+        }
+
+        public async Task<ResponseMessage> AddVacancyDocument(AddVacancyDocumentDto addVacancyDocument)
+        {
+            var Vacancy = await _dbContext.VacancyLists.FirstOrDefaultAsync(x => x.Id == addVacancyDocument.VacancyId);
+            if (Vacancy == null)
+                return new ResponseMessage { Success = false, Message = "Vacancy Not found" };
+
+            var path = "";
+            var Id = Guid.NewGuid();
+            if (addVacancyDocument.DocumentPath != null)
+                path = _generalConfig.UploadFiles(addVacancyDocument.DocumentPath, Id.ToString(), "Employee").Result.ToString();
+
+
+            VacancyDocuments documents = new VacancyDocuments()
+            {
+                Id = Id,
+                CreatedById = addVacancyDocument.CreatedById,
+                CreatedDate = DateTime.Now,
+                DocuemntName = addVacancyDocument.DocuemntName,
+                DocumentPath = path,
+                Rowstatus = RowStatus.ACTIVE,
+                VacancyId = addVacancyDocument.VacancyId
+            };
+
+            await _dbContext.VacancyDocuments.AddAsync(documents);
+            await _dbContext.SaveChangesAsync();
+
+            return new ResponseMessage { Success = true, Message = "Added Succesfully", Data = documents };
+        }
 
         public IQueryable<VacancyList> ApplyVacancyFilter(IQueryable<VacancyList> query, List<FilterCriteria> filterCriteria,int pageNumber, int pageSize)
         {
@@ -144,6 +211,6 @@ namespace IntegratedImplementation.Services.Vacancy
             return query;
         }
 
-        
+     
     }
 }

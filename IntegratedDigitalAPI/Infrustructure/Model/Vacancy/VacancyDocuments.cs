@@ -11,6 +11,7 @@ namespace IntegratedInfrustructure.Model.Vacancy
     {
 
         public string DocuemntName { get; set; } = null!;
+        public string DocumentPath { get; set; } = null!;
         public virtual VacancyList Vacancy { get; set; } = null!;
         public Guid VacancyId { get; set; }
     }

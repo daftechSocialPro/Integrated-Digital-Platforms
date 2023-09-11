@@ -30,6 +30,13 @@ namespace IntegratedDigitalAPI.Controllers.Vacancy
             return Ok(await _vacancyService.GetVacancyList());
         }
 
+        [HttpGet]
+        [ProducesResponseType(typeof(VacancyListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetVacancyDetail(Guid vacancyId)
+        {
+            return Ok(await _vacancyService.GetVacancyDetail(vacancyId));
+        }
+
 
         [HttpGet]
         [ProducesResponseType(typeof(UpdateVacancyDto), (int)HttpStatusCode.OK)]
@@ -66,5 +73,42 @@ namespace IntegratedDigitalAPI.Controllers.Vacancy
                 return BadRequest();
             }
         }
+
+        [HttpPut]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> ApproveVacancy(Guid vacancyId)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _vacancyService.ApproveVacancy(vacancyId));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(VacancyListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetVacancyDocuments(Guid vacancyId)
+        {
+            return Ok(await _vacancyService.GetVacancyDocuments(vacancyId));
+        }
+
+
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> AddVacancyDocument([FromBody] AddVacancyDocumentDto addVacancyDocument)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _vacancyService.AddVacancyDocument(addVacancyDocument));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
     }
 }

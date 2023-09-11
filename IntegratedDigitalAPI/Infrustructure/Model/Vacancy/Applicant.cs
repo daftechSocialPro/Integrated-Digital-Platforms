@@ -11,31 +11,22 @@ namespace IntegratedInfrustructure.Model.Vacancy
 {
     public class Applicant
     {
-
         public Guid Id { get; set; }
         public string FirstName { get; set; } = null!;
         public string MiddleName { get; set; } = null!;
         public string LastName { get; set; } = null!;
         public string Photo { get; set; } = null!;
-
         public virtual VacancyList Vacancy { get; set; } = null!;
         public Guid VacancyId { get; set; }
-
         public ApplicantStatus ApplicantStatus { get; set; }
         public string Email { get; set; } = null!;
-
         public string PhoneNumber { get; set; } = null!;
         public Gender Gender { get; set; }
-
         public Guid NationalityId { get; set; }
         public virtual Country Nationality { get; set; } = null!;
-
         public DateTime BirthDate { get; set; }
-
         public string Woreda { get; set; } = null!;
-
         public virtual Zone Zone { get; set; } = null!;
         public Guid ZoneId { get; set; }
-
     }
 }
