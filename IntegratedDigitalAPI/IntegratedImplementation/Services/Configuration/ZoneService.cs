@@ -24,19 +24,7 @@ namespace IntegratedImplementation.Services.Configuration
             _dbContext = dbContext;
         }
 
-        public async Task<List<SelectListDto>> GetZoneDropdownList(Guid regionID)
-        {
-            var ZoneList = await _dbContext.Zones.Where(x => x.RegionId == regionID).AsNoTracking().Select(x => new SelectListDto
-            {
-                Id = x.Id,
-                Name = x.ZoneName,
-                
-            }).ToListAsync();
-
-            return ZoneList;
-        }
-
-
+       
 
         public async Task<ResponseMessage> AddZone(ZonePostDto zonePost)
         {

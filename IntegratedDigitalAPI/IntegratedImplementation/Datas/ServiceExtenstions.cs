@@ -2,8 +2,10 @@
 using Implementation.Services.Authentication;
 using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedImplementation.Interfaces.HRM;
+using IntegratedImplementation.Interfaces.Vacancy;
 using IntegratedImplementation.Services.Configuration;
 using IntegratedImplementation.Services.HRM;
+using IntegratedImplementation.Services.Vacancy;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -24,7 +26,10 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<IGeneralConfigService, GeneralConfigService>();
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<ILeaveTypeService, LeaveTypeService>();
-           
+
+            #region Vacancy
+            services.AddScoped<IVacancyService, VacancyService>();
+            #endregion
 
             // configuration
             services.AddScoped<ICompanyProfileService, CompanyProfileService>();
@@ -33,6 +38,7 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<IZoneService, ZoneService>();
             services.AddScoped<IEducationalLevelService, EducationalLevelService>();
             services.AddScoped<IEducationalFieldService, EducationalFieldService>();
+            services.AddScoped<IDropDownService, DropDownService>();
             return services;
         }
     }

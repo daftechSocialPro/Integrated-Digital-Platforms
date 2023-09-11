@@ -103,6 +103,8 @@ import { LeaveTypeComponent } from './pages/human-resource/hrm-configuration/lea
 import { UpdateEmployeeComponent } from './pages/human-resource/employee-managment/update-employee/update-employee.component';
 import { AddLeaveTypeComponent } from './pages/human-resource/hrm-configuration/leave-type/add-leave-type/add-leave-type.component';
 import { UpdateLeaveTypeComponent } from './pages/human-resource/hrm-configuration/leave-type/update-leave-type/update-leave-type.component'
+import { DropdownModule } from 'primeng/dropdown';
+import { CalendarModule } from 'primeng/calendar';
 @NgModule({
   declarations: [
     AppComponent,
@@ -205,6 +207,8 @@ import { UpdateLeaveTypeComponent } from './pages/human-resource/hrm-configurati
     ConfirmDialogModule,
     ToastModule,
     TabViewModule,
+    DropdownModule,
+    CalendarModule,
     
     ToastrModule.forRoot({
       preventDuplicates: true,

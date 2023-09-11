@@ -6,7 +6,7 @@ import { MessageService } from 'primeng/api';
 import { EmployeeHistoryDto, EmployeeHistoryPostDto } from 'src/app/model/HRM/IEmployeeDto';
 import { SelectList } from 'src/app/model/common';
 import { UserView } from 'src/app/model/user';
-import { toastPayload, CommonService } from 'src/app/services/common.service';
+import { DropDownService } from 'src/app/services/dropDown.service';
 import { HrmService } from 'src/app/services/hrm.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -40,8 +40,8 @@ export class UpdateEmploymentHistoryComponent implements OnInit {
     private hrmService: HrmService,
     private formBuilder: FormBuilder,
     private userService : UserService,
-    private messageService : MessageService
-    ) {
+    private messageService : MessageService,
+    private  dropService: DropDownService) {
 
       this.HistoryForm = this.formBuilder.group({        
        
@@ -54,7 +54,7 @@ export class UpdateEmploymentHistoryComponent implements OnInit {
      }
 
   getDepartments() {
-    this.hrmService.getDepartmentsDropdown().subscribe({
+    this.dropService.getDepartmentsDropdown().subscribe({
       next: (res) => {
         this.departments = res
       }
@@ -62,7 +62,7 @@ export class UpdateEmploymentHistoryComponent implements OnInit {
   }
 
   getPositions() {
-    this.hrmService.getPositionsDropdown().subscribe({
+    this.dropService.getPositionsDropdown().subscribe({
       next: (res) => {
         this.positions = res
       }

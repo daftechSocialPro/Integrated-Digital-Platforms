@@ -6,6 +6,7 @@ import { SelectList } from 'src/app/model/common';
 import { ZonePostDto } from 'src/app/model/configuration/IAddressDto';
 import { UserView } from 'src/app/model/user';
 import { ConfigurationService } from 'src/app/services/configuration.service';
+import { DropDownService } from 'src/app/services/dropDown.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -31,7 +32,8 @@ export class AddZoneComponent implements OnInit {
     private formBuilder: FormBuilder,
     private configService: ConfigurationService,
     private userService: UserService,
-    private messageService: MessageService) {
+    private messageService: MessageService,
+    private dropService: DropDownService) {
 
     this.ZoneForm = this.formBuilder.group({
       zoneName: ['', Validators.required],
@@ -43,7 +45,7 @@ export class AddZoneComponent implements OnInit {
 
   getCountriesSelectList(){
 
-    this.configService.getContriesDropdown().subscribe({
+    this.dropService.getContriesDropdown().subscribe({
       next:(res)=>{
         this.Countries = res 
 
@@ -56,7 +58,7 @@ export class AddZoneComponent implements OnInit {
 
   getRegionsSelectList (countryId : string ){
 
-    this.configService.getRegionsDropdown(countryId).subscribe({
+    this.dropService.getRegionsDropdown(countryId).subscribe({
       next:(res)=>{
         this.Regions = res 
       },error:(err)=>{

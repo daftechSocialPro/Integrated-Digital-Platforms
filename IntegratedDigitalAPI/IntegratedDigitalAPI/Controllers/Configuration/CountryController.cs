@@ -22,15 +22,6 @@ namespace IntegratedDigitalAPI.Controllers.Configuration
             _CountryService = CountryService;
         }
 
-        [HttpGet("getCountryDropdown")]
-        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
-
-        public async Task<IActionResult> GetCountryDropdown()
-        {
-            return Ok(await _CountryService.GetCountryDropdownList());
-        }
-
-
         [HttpGet]
         [ProducesResponseType(typeof(CountryGetDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetCountryList()

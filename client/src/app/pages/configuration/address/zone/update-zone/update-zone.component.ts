@@ -5,6 +5,7 @@ import { MessageService } from 'primeng/api';
 import { SelectList } from 'src/app/model/common';
 import { ZoneGetDto, ZonePostDto } from 'src/app/model/configuration/IAddressDto';
 import { ConfigurationService } from 'src/app/services/configuration.service';
+import { DropDownService } from 'src/app/services/dropDown.service';
 
 @Component({
   selector: 'app-update-zone',
@@ -34,7 +35,9 @@ export class UpdateZoneComponent implements OnInit {
     private activeModal: NgbActiveModal,
     private formBuilder: FormBuilder,
     private configService: ConfigurationService,
-    private messageService: MessageService) {
+    private messageService: MessageService,
+    private dropService: DropDownService
+    ) {
 
   }
 
@@ -43,7 +46,7 @@ export class UpdateZoneComponent implements OnInit {
   }
   getCountriesSelectList() {
 
-    this.configService.getContriesDropdown().subscribe({
+    this.dropService.getContriesDropdown().subscribe({
       next: (res) => {
         this.Countries = res
 
@@ -56,7 +59,7 @@ export class UpdateZoneComponent implements OnInit {
   }
   getRegionsSelectList(countryId: string) {
 
-    this.configService.getRegionsDropdown(countryId).subscribe({
+    this.dropService.getRegionsDropdown(countryId).subscribe({
       next: (res) => {
         this.Regions = res
       }, error: (err) => {

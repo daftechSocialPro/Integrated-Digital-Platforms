@@ -24,16 +24,6 @@ namespace IntegratedImplementation.Services.Configuration
             _dbContext = dbContext;
         }
 
-        public async Task<List<SelectListDto>> GetCountryDropdownList()
-        {
-            var countryList = await _dbContext.Countries.AsNoTracking().Select(x => new SelectListDto
-            {
-                Id = x.Id,
-                Name = x.CountryName,
-            }).ToListAsync();
-
-            return countryList;
-        }
 
         public async Task<ResponseMessage> AddCountry(CountryPostDto countryPost)
         {

@@ -27,13 +27,6 @@ namespace IntegratedDigitalAPI.Controllers.HRM
             return Ok(await _departmentService.GetDepartmentList());
         }
 
-        [HttpGet("getDepartmentDropdown")]
-        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
-
-        public async Task<IActionResult> GetDepartmentDropDownList()
-        {
-            return Ok(await _departmentService.GetDepartmentDropdownList());
-        }
 
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]

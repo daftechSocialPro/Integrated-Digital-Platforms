@@ -78,16 +78,7 @@ namespace IntegratedImplementation.Services.HRM
             return LeaveTypeList;
         }
 
-        public async Task<List<SelectListDto>> GetLeaveTypeDropdownList()
-        {
-            var LeaveTypeList = await _dbContext.LeaveTypes.AsNoTracking().Select(x => new SelectListDto
-            {
-                Id = x.Id,
-                Name = x.Name,
-            }).ToListAsync();
-
-            return LeaveTypeList;
-        }
+     
 
 
         public async Task<ResponseMessage> UpdateLeaveType(LeaveTypeGetDto LeaveType)

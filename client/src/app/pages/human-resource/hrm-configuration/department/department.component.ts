@@ -46,16 +46,11 @@ export class DepartmentComponent implements OnInit {
   }
 
   updateDepartment (department :DepartmentGetDto){
-
-
     let modalRef = this.modalService.open(UpdateDepartmentComponent,{size:'lg',backdrop:'static'})
     modalRef.componentInstance.department = department
-
     modalRef.result.then(()=>{
-
       this.getDepartments()
-    })
-
+    });
   }
 
 

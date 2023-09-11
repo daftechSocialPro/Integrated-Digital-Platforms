@@ -10,8 +10,6 @@ namespace IntegratedImplementation.Interfaces.Configuration
 {
     public interface IRegionService
     {
-        Task<List<SelectListDto>> GetRegionDropdownList(Guid countryId);
-
         Task<ResponseMessage> AddRegion(RegionPostDto RegionPost);
         Task<List<RegionGetDto>> GetRegionList();
         Task<ResponseMessage> UpdateRegion(RegionPostDto RegionPost);

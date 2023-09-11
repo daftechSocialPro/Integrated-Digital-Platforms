@@ -10,8 +10,6 @@ namespace IntegratedImplementation.Interfaces.Configuration
 {
     public interface ICountryService
     {
-
-        Task<List<SelectListDto>> GetCountryDropdownList();
         Task<ResponseMessage> AddCountry(CountryPostDto countryPost);
         Task<List<CountryGetDto>> GetCountryList();
         Task<ResponseMessage> UpdateCountry(CountryGetDto countryPost);

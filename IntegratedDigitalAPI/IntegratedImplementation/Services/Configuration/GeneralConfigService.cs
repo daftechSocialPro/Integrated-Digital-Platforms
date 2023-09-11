@@ -80,8 +80,6 @@ namespace IntegratedImplementation.Services.Configuration
             return "";
         }
 
-<<<<<<< HEAD
-=======
 
         public async Task<List<GeneralCodeDto>> GetGeneralCodes()
         {
@@ -91,7 +89,5 @@ namespace IntegratedImplementation.Services.Configuration
             return generalCodeList;
         }
 
-
->>>>>>> 3f9f6872278de2b8d79a23c218404562d3cfea9f
     }
 }

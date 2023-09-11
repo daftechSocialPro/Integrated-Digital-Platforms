@@ -5,6 +5,7 @@ import { MessageService } from 'primeng/api';
 import { SelectList } from 'src/app/model/common';
 import { RegionGetDto } from 'src/app/model/configuration/IAddressDto';
 import { ConfigurationService } from 'src/app/services/configuration.service';
+import { DropDownService } from 'src/app/services/dropDown.service';
 
 @Component({
   selector: 'app-update-region',
@@ -31,7 +32,8 @@ export class UpdateRegionComponent implements OnInit {
     private activeModal: NgbActiveModal,
     private formBuilder: FormBuilder,
     private configService: ConfigurationService,
-    private messageService: MessageService) {
+    private messageService: MessageService,
+    private dropService: DropDownService) {
 
   }
 
@@ -40,7 +42,7 @@ export class UpdateRegionComponent implements OnInit {
   }
   getCountriesSelectList(){
 
-    this.configService.getContriesDropdown().subscribe({
+    this.dropService.getContriesDropdown().subscribe({
       next:(res)=>{
         this.Countries = res 
 

@@ -14,6 +14,7 @@ namespace IntegratedImplementation.Interfaces.Vacancy
     public interface IVacancyService
     {
         Task<List<VacancyListDto>> GetVacancyList();
+        Task<UpdateVacancyDto> GetVacancyEdit(Guid vacancyId);
         Task<ResponseMessage> AddVacancy(AddVacancyDto addVacancy);
         Task<ResponseMessage> UpdateVacancy(UpdateVacancyDto updateVacancy);
     }

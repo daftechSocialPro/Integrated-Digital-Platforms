@@ -26,13 +26,7 @@ namespace IntegratedDigitalAPI.Controllers.HRM
             return Ok(await _LeaveTypeService.GetLeaveTypeList());
         }
 
-        [HttpGet]
-        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
-
-        public async Task<IActionResult> GetLeaveTypeDropDownList()
-        {
-            return Ok(await _LeaveTypeService.GetLeaveTypeDropdownList());
-        }
+     
 
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]

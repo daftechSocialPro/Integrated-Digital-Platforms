@@ -8,6 +8,7 @@ import { SelectList } from 'src/app/model/common';
 import { UserView } from 'src/app/model/user';
 import { CommonService, toastPayload } from 'src/app/services/common.service';
 import { ConfigurationService } from 'src/app/services/configuration.service';
+import { DropDownService } from 'src/app/services/dropDown.service';
 import { HrmService } from 'src/app/services/hrm.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -37,7 +38,8 @@ export class AddEmployeeComponent implements OnInit {
     private activeModal: NgbActiveModal,
     private messageService : MessageService,
     private hrmService: HrmService,
-    private configurationService: ConfigurationService) {
+    private configurationService: ConfigurationService,
+    private dropService: DropDownService) {
 
     this.EmployeeForm = this.formBuilder.group({
 
@@ -76,7 +78,7 @@ export class AddEmployeeComponent implements OnInit {
 
   getCountries() {
 
-    this.configurationService.getContriesDropdown().subscribe({
+    this.dropService.getContriesDropdown().subscribe({
       next: (res) => {
         this.countries = res
       }
@@ -85,7 +87,7 @@ export class AddEmployeeComponent implements OnInit {
 
   getRegions(countryId: string) {
 
-    this.configurationService.getRegionsDropdown(countryId).subscribe({
+    this.dropService.getRegionsDropdown(countryId).subscribe({
       next: (res) => {
         this.regions = res
       }
@@ -93,7 +95,7 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   getZones (regionId:string){
-    this.configurationService.getZonesDropdown(regionId).subscribe({
+    this.dropService.getZonesDropdown(regionId).subscribe({
       next: (res) => {
         this.zones = res
       }
@@ -102,7 +104,7 @@ export class AddEmployeeComponent implements OnInit {
 
 
   getDepartments() {
-    this.hrmService.getDepartmentsDropdown().subscribe({
+    this.dropService.getDepartmentsDropdown().subscribe({
       next: (res) => {
         this.departments = res
 
@@ -113,7 +115,7 @@ export class AddEmployeeComponent implements OnInit {
 
 
   getPositions() {
-    this.hrmService.getPositionsDropdown().subscribe({
+    this.dropService.getPositionsDropdown().subscribe({
       next: (res) => {
         this.positions = res
       }

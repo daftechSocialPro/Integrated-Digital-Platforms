@@ -60,18 +60,6 @@ namespace IntegratedImplementation.Services.HRM
             return departmentList;
         }
 
-        public async Task<List<SelectListDto>> GetDepartmentDropdownList()
-        {
-            var departmentList = await _dbContext.Departments.AsNoTracking().Select(x => new SelectListDto
-            {
-                Id = x.Id,
-                Name = x.DepartmentName,
-            }).ToListAsync();
-
-            return departmentList;
-        }
-   
-
         public async Task<ResponseMessage> UpdateDepartment(DepartmentGetDto department)
         {
             var currentDepartment = await _dbContext.Departments.FirstOrDefaultAsync(x => x.Id.Equals(Guid.Parse(department.Id)));

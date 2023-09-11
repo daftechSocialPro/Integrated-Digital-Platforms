@@ -14,7 +14,6 @@ namespace IntegratedImplementation.Interfaces.HRM
         Task<List<PositionGetDto>> GetPositionList();
         Task<ResponseMessage> AddPosition(PositionPostDto PositionPost);
         Task<ResponseMessage> UpdatePosition(PositionGetDto PositionUpdate);
-        Task<List<SelectListDto>> GetPositionDropdownList();
-
+    
     }
 }

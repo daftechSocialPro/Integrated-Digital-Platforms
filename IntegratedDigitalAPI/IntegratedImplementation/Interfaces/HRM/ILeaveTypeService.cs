@@ -11,11 +11,9 @@ namespace IntegratedImplementation.Interfaces.HRM
 {
     public interface ILeaveTypeService
     {
-
         Task<List<LeaveTypeGetDto>> GetLeaveTypeList();
         Task<ResponseMessage> AddLeaveType(LeaveTypePostDto LeaveTypePost);
         Task<ResponseMessage> UpdateLeaveType(LeaveTypeGetDto LeaveTypeUpdate);
-        Task<List<SelectListDto>> GetLeaveTypeDropdownList();
-
+        
     }
 }

@@ -30,9 +30,6 @@ export class HrmService {
     getDepartments() {
         return this.http.get<DepartmentGetDto[]>(this.baseUrl + "/Department")
     }
-    getDepartmentsDropdown(){
-        return this.http.get<SelectList[]>(this.baseUrl + "/Department/getDepartmentDropdown")
-    }
     addDepratment(departmentPost: DepartmentPostDto) {
         return this.http.post<ResponseMessage>(this.baseUrl + "/Department", departmentPost)
     }
@@ -45,9 +42,7 @@ export class HrmService {
     getPositions() {
         return this.http.get<PositionGetDto[]>(this.baseUrl + "/Position")
     }
-    getPositionsDropdown(){
-        return this.http.get<SelectList[]>(this.baseUrl + "/Position/GetPositionDropdown")
-    }
+    
     addPosition(positionPost: PositionPostDto) {
         return this.http.post<ResponseMessage>(this.baseUrl + "/Position", positionPost)
     }
@@ -61,9 +56,7 @@ export class HrmService {
     getLeaveTypes() {
         return this.http.get<LeaveTypeGetDto[]>(this.baseUrl + "/LeaveType/GetLeaveTypeList")
     }
-    getLeaveTypesDropdown(){
-        return this.http.get<SelectList[]>(this.baseUrl + "/LeaveType/GetLeaveTypeDropDownList")
-    }
+  
     addLeaveType(LeaveTypePost: LeaveTypePostDto) {
         return this.http.post<ResponseMessage>(this.baseUrl + "/LeaveType/AddLeaveType", LeaveTypePost)
     }

@@ -14,7 +14,6 @@ namespace IntegratedImplementation.Interfaces.HRM
         Task<List<DepartmentGetDto>> GetDepartmentList();   
         Task<ResponseMessage> AddDepartment(DepartmentPostDto departmentPost);
         Task<ResponseMessage> UpdateDepartment(DepartmentGetDto departmentUpdate);
-        Task<List<SelectListDto>> GetDepartmentDropdownList();
 
     }
 }

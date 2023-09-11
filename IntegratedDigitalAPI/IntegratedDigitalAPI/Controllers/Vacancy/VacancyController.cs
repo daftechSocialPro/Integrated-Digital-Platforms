@@ -30,6 +30,14 @@ namespace IntegratedDigitalAPI.Controllers.Vacancy
             return Ok(await _vacancyService.GetVacancyList());
         }
 
+
+        [HttpGet]
+        [ProducesResponseType(typeof(UpdateVacancyDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetVacancyEdit(Guid vacancyId)
+        {
+            return Ok(await _vacancyService.GetVacancyEdit(vacancyId));
+        }
+
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> AddVacancy([FromBody] AddVacancyDto addVacancy)

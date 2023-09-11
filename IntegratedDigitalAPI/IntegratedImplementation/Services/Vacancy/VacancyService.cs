@@ -45,6 +45,18 @@ namespace IntegratedImplementation.Services.Vacancy
                            .ToListAsync();
         }
 
+        public async Task<UpdateVacancyDto> GetVacancyEdit(Guid vacancyId)
+        {
+            var currentVacancy = await _dbContext.VacancyLists.ProjectTo<UpdateVacancyDto>(_mapper.ConfigurationProvider)
+                         .FirstOrDefaultAsync(x => x.Id == vacancyId);
+            if(currentVacancy != null)
+            {
+                return currentVacancy;
+            }
+
+            return new UpdateVacancyDto();
+        }
+
         public async Task<ResponseMessage> AddVacancy(AddVacancyDto addVacancy)
         {
             VacancyList vacancy = new VacancyList()
@@ -132,5 +144,6 @@ namespace IntegratedImplementation.Services.Vacancy
             return query;
         }
 
+        
     }
 }

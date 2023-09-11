@@ -28,6 +28,6 @@ export interface AddVacancyDto {
     employmentType: number;
     vaccancyStartDate: Date;
     vaccancyEndDate: Date;
-    gPA: number;
+    gPA?: number;
     vacancyType: number;
 }

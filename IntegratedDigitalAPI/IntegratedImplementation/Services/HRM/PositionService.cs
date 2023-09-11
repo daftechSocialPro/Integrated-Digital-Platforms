@@ -59,16 +59,7 @@ namespace IntegratedImplementation.Services.HRM
 
             return PositionList;
         }
-        public async Task<List<SelectListDto>> GetPositionDropdownList()
-        {
-            var positionList = await _dbContext.Positions.AsNoTracking().Select(x => new SelectListDto
-            {
-                Id = x.Id,
-                Name = x.PositionName,
-            }).ToListAsync();
-
-            return positionList;
-        }
+        
         public async Task<ResponseMessage> UpdatePosition(PositionGetDto Position)
         {
             var currentPosition = await _dbContext.Positions.FirstOrDefaultAsync(x => x.Id.Equals(Guid.Parse(Position.Id)));

@@ -7,6 +7,7 @@ import { RegionPostDto } from 'src/app/model/configuration/IAddressDto';
 
 import { UserView } from 'src/app/model/user';
 import { ConfigurationService } from 'src/app/services/configuration.service';
+import { DropDownService } from 'src/app/services/dropDown.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -31,7 +32,8 @@ export class AddRegionComponent implements OnInit {
     private formBuilder: FormBuilder,
     private configService: ConfigurationService,
     private userService: UserService,
-    private messageService: MessageService) {
+    private messageService: MessageService,
+    private dropService: DropDownService) {
 
     this.RegionForm = this.formBuilder.group({
       RegionName: ['', Validators.required],
@@ -43,7 +45,7 @@ export class AddRegionComponent implements OnInit {
 
   getCountriesSelectList(){
 
-    this.configService.getContriesDropdown().subscribe({
+    this.dropService.getContriesDropdown().subscribe({
       next:(res)=>{
         this.Countries = res 
 

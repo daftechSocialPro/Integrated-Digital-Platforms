@@ -13,39 +13,70 @@
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="vacancyName" placeholder="vacancyName"
-                                            formControlName="vacancyName">
+                                        <input type="text" class="form-control" id="vacancyName" formControlName="vacancyName">
                                         <label for="vacancyName">Vacancy Name</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
+                                    <p-dropdown [options]="vacancyType"  optionLabel="name" optionValue="value" placeholder="Vacancy Type"
+                                        formControlName="vacancyType"></p-dropdown>
+                                </div>
+                                <div class="col-md-6">
+                                    <p-dropdown [options]="departments"  optionLabel="name" optionValue="id" placeholder="Department"
+                                        formControlName="departmentId" filterBy="name"></p-dropdown>
+                                </div>
+                                <div class="col-md-6">
+                                    <p-dropdown [options]="positions" optionLabel="name" optionValue="id" formControlName="positionId"
+                                    placeholder="Position"   filterBy="name"></p-dropdown>
+                                </div>
+                                <div class="col-md-6">
+                                    <p-dropdown [options]="educationalField" optionLabel="name" optionValue="id" placeholder="Education Field"
+                                        formControlName="educationalFieldId" filterBy="name"></p-dropdown>
+                                </div>
+                                <div class="col-md-4">
+                                    <p-dropdown [options]="educationalLevel" optionLabel="name" optionValue="id" formControlName="educationalLevelId"
+                                        placeholder="Education Level" filterBy="name"></p-dropdown>
+                                </div>
+                                <div class="col-md-6">
+                                    <p-dropdown [options]="employementType" optionLabel="name" optionValue="value" placeholder="Employement Type"
+                                        formControlName="employmentType"></p-dropdown>
+                                </div>
+                                <div class="col-md-6">
                                     <div class="form-floating">
-                                        <p-dropdown [options]="vacancyType" optionLabel="name" optionValue="value"
-                                        formControlName="vacancyType"  [showClear]="true"></p-dropdown>
-                                        <label for="vacancyType">Vacancy Type</label>
+                                        <p-calendar  formControlName="vaccancyStartDate"  dateFormat="dd.mm.yy"></p-calendar>
+                                        <label for="vaccancyStartDate">Start Date</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <p-dropdown [options]="vacancyType" optionLabel="name" optionValue="value"
-                                        formControlName="vacancyType"  [showClear]="true"></p-dropdown>
-                                        <label for="vacancyType">Vacancy Type</label>
+                                        <p-calendar  formControlName="vaccancyEndDate"  dateFormat="dd.mm.yy"></p-calendar>
+                                        <label for="vaccancyEndDate">End Date</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <textarea class="form-control" formControlName="Remark"
-                                            placeholder="Remark" id="Remark"
-                                            style="height: 120px;"></textarea><label for="Remark">
-                                                Remark
-                                            </label>
+                                        <input type="text" class="form-control" id="gPA" formControlName="gPA">
+                                        <label for="gPA">GPA</label>
                                     </div>
-                                </div>                                                         
+                                </div>  
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="quantity" formControlName="quantity">
+                                        <label for="quantity">Quantity</label>
+                                    </div>
+                                </div>   
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <textarea class="form-control" formControlName="vaccancyDescription" id="vaccancyDescription"
+                                            style="height: 120px;"></textarea>
+                                        <label for="vaccancyDescription"> Description </label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="modal-footer"> <button type="button" class="btn btn-secondary"
                             (click)="closeModal()">Close</button>
-                        <button type="button" type="submit"  [disabled]="!departmentForm.valid"
+                        <button type="button" type="submit"  [disabled]="!vacancyForm.valid"
                             class="btn btn-primary">Create</button>
                     </div>
                     </form>

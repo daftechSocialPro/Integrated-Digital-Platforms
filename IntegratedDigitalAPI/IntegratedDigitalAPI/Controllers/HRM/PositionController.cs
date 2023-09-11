@@ -27,16 +27,7 @@ namespace IntegratedDigitalAPI.Controllers.HRM
             return Ok(await _PositionService.GetPositionList());
         }
 
-        [HttpGet("getPositionDropdown")]
-        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
-
-        public async Task<IActionResult> GetPositionDropdownList()
-        {
-            return Ok(await _PositionService.GetPositionDropdownList());
-        }
-
-
-
+       
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> AddPosition([FromBody] PositionPostDto PositionDto)

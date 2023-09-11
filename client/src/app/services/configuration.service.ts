@@ -26,9 +26,7 @@ export class ConfigurationService {
   constructor(private toastr: ToastrService, private http: HttpClient, private sanitizer: DomSanitizer) { }
 
   //country 
-  getContriesDropdown() {
-    return this.http.get<SelectList[]>(this.baseUrl + "/Country/getCountryDropdown")
-  }
+
   getCountries() {
 
     return this.http.get<CountryGetDto[]>(this.baseUrl + "/Country")
@@ -45,9 +43,7 @@ export class ConfigurationService {
 
   //region
 
-  getRegionsDropdown(countryId: string) {
-    return this.http.get<SelectList[]>(this.baseUrl + "/Region/getRegionDropdown?countryId=" + countryId)
-  }
+
   getRegions() {
 
     return this.http.get<RegionGetDto[]>(this.baseUrl + "/Region")
@@ -62,9 +58,7 @@ export class ConfigurationService {
     return this.http.put<ResponseMessage>(this.baseUrl + "/Region", RegionPostDto)
   }
   //zone 
-  getZonesDropdown(regionId: string) {
-    return this.http.get<SelectList[]>(this.baseUrl + "/Zone/getZoneDropdown?regionId=" + regionId)
-  }
+
   getZones() {
 
     return this.http.get<ZoneGetDto[]>(this.baseUrl + "/Zone")

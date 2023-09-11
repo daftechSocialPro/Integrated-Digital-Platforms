@@ -18,14 +18,7 @@ namespace IntegratedDigitalAPI.Controllers.Configuration
             _ZoneService = ZoneService;
         }
 
-        [HttpGet("getZoneDropdown")]
-        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
-
-        public async Task<IActionResult> GetZoneDropdown(Guid RegionId)
-        {
-            return Ok(await _ZoneService.GetZoneDropdownList(RegionId));
-        }
-
+       
 
         [HttpGet]
         [ProducesResponseType(typeof(ZoneGetDto), (int)HttpStatusCode.OK)]

@@ -20,15 +20,7 @@ namespace IntegratedDigitalAPI.Controllers.Configuration
             _RegionService = RegionService;
         }
 
-        [HttpGet("getRegionDropdown")]
-        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
-
-        public async Task<IActionResult> GetRegionDropdown(Guid CountryId)
-        {
-            return Ok(await _RegionService.GetRegionDropdownList(CountryId));
-        }
-
-
+       
         [HttpGet]
         [ProducesResponseType(typeof(RegionGetDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetRegionList()

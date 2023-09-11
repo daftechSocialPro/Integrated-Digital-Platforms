@@ -23,19 +23,7 @@ namespace IntegratedImplementation.Services.Configuration
             _dbContext = dbContext;
         }
 
-        public async Task<List<SelectListDto>> GetRegionDropdownList(Guid countryId)
-        {
-            var regionList = await _dbContext.Regions.Where(x=>x.CountryId==countryId).AsNoTracking().Select(x => new SelectListDto
-            {
-                Id = x.Id,
-                Name = x.RegionName,
-            }).ToListAsync();
-
-            return regionList;
-        }
-
-
-
+       
         public async Task<ResponseMessage> AddRegion(RegionPostDto RegionPost)
         {
             Region Region = new Region
