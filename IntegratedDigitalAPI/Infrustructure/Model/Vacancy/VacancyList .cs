@@ -3,6 +3,7 @@ using IntegratedInfrustructure.Model.Configuration;
 using IntegratedInfrustructure.Model.HRM;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,11 @@ namespace IntegratedInfrustructure.Model.Vacancy
 {
     public class VacancyList : WithIdModel
     {
+
+        public VacancyList()
+        {
+            VaccancyDocuments = new HashSet<VacancyDocuments>();
+        }
         public string VacancyName { get; set; } = null!;
 
         public virtual Position Position { get; set; } = null!;
@@ -39,6 +45,10 @@ namespace IntegratedInfrustructure.Model.Vacancy
 
 
         public VacancyType VacancyType { get; set; }
+
+        [InverseProperty(nameof(VacancyDocuments.Vacancy))]
+        public ICollection<VacancyDocuments> VaccancyDocuments { get; set; }
+
     }
 
 

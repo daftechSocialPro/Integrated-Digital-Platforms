@@ -98,7 +98,7 @@ namespace IntegratedDigitalAPI.Controllers.Vacancy
 
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> AddVacancyDocument([FromBody] AddVacancyDocumentDto addVacancyDocument)
+        public async Task<IActionResult> AddVacancyDocument([FromForm] AddVacancyDocumentDto addVacancyDocument)
         {
             if (ModelState.IsValid)
             {
@@ -109,6 +109,16 @@ namespace IntegratedDigitalAPI.Controllers.Vacancy
                 return BadRequest();
             }
         }
+
+        [HttpDelete]
+
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> DeleteVacancyDocument(Guid vacancyDocId)
+        {
+            return Ok(await _vacancyService.DeleteVacancyDocument(vacancyDocId));
+        }
+
+        
 
     }
 }

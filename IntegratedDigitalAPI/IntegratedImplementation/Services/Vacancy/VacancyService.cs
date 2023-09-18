@@ -40,6 +40,7 @@ namespace IntegratedImplementation.Services.Vacancy
         public async Task<List<VacancyListDto>> GetVacancyList()
         {
             return await _dbContext.VacancyLists.Include(x => x.Department)
+             
                            .Include(x => x.Position)
                            .Include(x => x.EducationalLevel)
                            .Include(x => x.EducationalField)
@@ -52,7 +53,7 @@ namespace IntegratedImplementation.Services.Vacancy
         {
             var currentVacancy = await _dbContext.VacancyLists.ProjectTo<UpdateVacancyDto>(_mapper.ConfigurationProvider)
                          .FirstOrDefaultAsync(x => x.Id == vacancyId);
-            if(currentVacancy != null)
+            if (currentVacancy != null)
             {
                 return currentVacancy;
             }
@@ -97,7 +98,7 @@ namespace IntegratedImplementation.Services.Vacancy
             await _dbContext.VacancyLists.AddAsync(vacancy);
             await _dbContext.SaveChangesAsync();
 
-            return new ResponseMessage { Success = false, Message = "Added Successfully", Data = addVacancy };
+            return new ResponseMessage { Success = true, Message = "Added Successfully", Data = addVacancy };
         }
 
         public async Task<ResponseMessage> UpdateVacancy(UpdateVacancyDto updateVacancy)
@@ -120,7 +121,7 @@ namespace IntegratedImplementation.Services.Vacancy
                 currentVacancy.VaccancyEndDate = updateVacancy.VaccancyEndDate;
 
                 await _dbContext.SaveChangesAsync();
-                return new ResponseMessage { Success = false, Message = "Updated Successfully", Data = currentVacancy };
+                return new ResponseMessage { Success = true, Message = "Updated Successfully", Data = currentVacancy };
             }
 
             return new ResponseMessage { Success = false, Message = "Could not find Vacancy" };
@@ -134,7 +135,7 @@ namespace IntegratedImplementation.Services.Vacancy
             {
                 currentVacancy.IsApproved = true;
                 await _dbContext.SaveChangesAsync();
-                return new ResponseMessage { Success = false, Message = "Approved Successfully", Data = currentVacancy };
+                return new ResponseMessage { Success = true, Message = "Approved Successfully", Data = currentVacancy };
             }
             return new ResponseMessage { Success = false, Message = "Could not find Vacancy" };
         }
@@ -150,6 +151,17 @@ namespace IntegratedImplementation.Services.Vacancy
                                             DocumentPath = x.DocumentPath
                                         }).ToListAsync();
             return currentDocument;
+        }
+
+        public async Task<ResponseMessage> DeleteVacancyDocument(Guid vacancyDocId)
+        {
+            var VacancyDoc = await _dbContext.VacancyDocuments.FirstOrDefaultAsync(x => x.Id == vacancyDocId);
+            if (VacancyDoc == null)
+                return new ResponseMessage { Success = false, Message = "Vacancy Document Not found" };
+
+            _dbContext.Remove(VacancyDoc);
+            await _dbContext.SaveChangesAsync();
+            return new ResponseMessage { Success = true, Message = "Delted Succesfully" };
         }
 
         public async Task<ResponseMessage> AddVacancyDocument(AddVacancyDocumentDto addVacancyDocument)
@@ -178,10 +190,10 @@ namespace IntegratedImplementation.Services.Vacancy
             await _dbContext.VacancyDocuments.AddAsync(documents);
             await _dbContext.SaveChangesAsync();
 
-            return new ResponseMessage { Success = true, Message = "Added Succesfully", Data = documents };
+            return new ResponseMessage { Success = true, Message = "Added Succesfully" };
         }
 
-        public IQueryable<VacancyList> ApplyVacancyFilter(IQueryable<VacancyList> query, List<FilterCriteria> filterCriteria,int pageNumber, int pageSize)
+        public IQueryable<VacancyList> ApplyVacancyFilter(IQueryable<VacancyList> query, List<FilterCriteria> filterCriteria, int pageNumber, int pageSize)
         {
             ParameterExpression parameter = Expression.Parameter(typeof(VacancyList), "x");
             Expression filterExpression = null;
@@ -211,6 +223,6 @@ namespace IntegratedImplementation.Services.Vacancy
             return query;
         }
 
-     
+
     }
 }

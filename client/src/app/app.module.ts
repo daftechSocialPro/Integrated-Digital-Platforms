@@ -105,6 +105,7 @@ import { AddLeaveTypeComponent } from './pages/human-resource/hrm-configuration/
 import { UpdateLeaveTypeComponent } from './pages/human-resource/hrm-configuration/leave-type/update-leave-type/update-leave-type.component'
 import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
+import { AddVaccancyDocumentComponent } from './pages/human-resource/vacancy-management/add-vaccancy-document/add-vaccancy-document.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -190,6 +191,7 @@ import { CalendarModule } from 'primeng/calendar';
      UpdateEmployeeComponent,
      AddLeaveTypeComponent,
      UpdateLeaveTypeComponent,
+     AddVaccancyDocumentComponent,
    
      
   ],

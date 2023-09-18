@@ -58,7 +58,12 @@ namespace IntegratedImplementation.Datas
                 .ForMember(x => x.Position, e => e.MapFrom(mfg => mfg.Position.PositionName))
                 .ForMember(x => x.Department, e => e.MapFrom(mfg => mfg.Department.DepartmentName))
                 .ForMember(x => x.EmploymentType, e => e.MapFrom(mfg => mfg.EmploymentType.ToString()))
-                .ForMember(x => x.VacancyType, e => e.MapFrom(mfg => mfg.VacancyType.ToString()));
+                .ForMember(x => x.VacancyType, e => e.MapFrom(mfg => mfg.VacancyType.ToString()))
+                .ForMember(x => x.VaccancyDocuments, e => e.MapFrom(mfg => mfg.VaccancyDocuments));
+
+            CreateMap<VacancyDocuments, VacancyDocumentsDto>();
+
+            CreateMap<VacancyList, UpdateVacancyDto>();
 
         }
     }

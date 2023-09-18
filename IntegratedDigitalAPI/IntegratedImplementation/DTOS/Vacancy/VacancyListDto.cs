@@ -27,6 +27,8 @@ namespace IntegratedImplementation.DTOS.Vacancy
         public bool IsApproved { get; set; }
         public double? GPA { get; set; }
         public string VacancyType { get; set; } = null!;
+
+        public List<VacancyDocumentsDto> VaccancyDocuments { get; set; }
     }
 
     public class AddVacancyDto
@@ -57,7 +59,7 @@ namespace IntegratedImplementation.DTOS.Vacancy
         public Guid VacancyId { get; set; }
         public string CreatedById { get; set; } = null!;
         public string DocuemntName { get; set; } = null!;
-        public IFormFile DocumentPath { get; set; } = null!;
+        public IFormFile? DocumentPath { get; set; } = null!;
     }
 
     public class VacancyDocumentsDto

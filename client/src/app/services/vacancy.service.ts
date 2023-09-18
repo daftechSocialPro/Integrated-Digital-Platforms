@@ -9,23 +9,42 @@ import { UserService } from "./user.service";
     providedIn: 'root',
 })
 
-export class VacancyService{
+export class VacancyService {
     baseUrl: string = environment.baseUrl;
 
     constructor(private http: HttpClient,
-                private userService: UserService) { }
+        private userService: UserService) { }
 
     getVacancyList() {
         return this.http.get<VacancyListDto[]>(this.baseUrl + `/Vacancy/GetVacancyList`);
     }
 
-    getVacancyEdit(vacancyId: string){
+    getVacancyEdit(vacancyId: string) {
         return this.http.get<AddVacancyDto>(this.baseUrl + `/Vacancy/GetVacancyEdit?vacancyId=${vacancyId}`);
     }
 
     addVacancy(addVacancy: AddVacancyDto) {
         addVacancy.createdById = this.userService.getCurrentUser().userId;
         return this.http.post<ResponseMessage>(this.baseUrl + "/Vacancy/AddVacancy", addVacancy)
+    }
+    updateVacancy(addVacancy: AddVacancyDto) {
+        addVacancy.createdById = this.userService.getCurrentUser().userId;
+        return this.http.put<ResponseMessage>(this.baseUrl + "/Vacancy/UpdateVacancy", addVacancy)
+    }
+
+    approveVaccancy(vaccancyId: string) {
+
+        return this.http.put<ResponseMessage>(this.baseUrl + "/Vacancy/ApproveVacancy?vacancyId=" + vaccancyId, {})
+    }
+
+    addVaccancyDocument(formData: FormData) {
+        formData.append("createdById", this.userService.getCurrentUser().userId)
+
+        return this.http.post<ResponseMessage>(this.baseUrl + "/Vacancy/AddVacancyDocument", formData)
+    }
+    deleteVacancyDocumentId (vacancyDocId:string){
+
+        return this.http.delete<ResponseMessage>(this.baseUrl+ "/Vacancy/DeleteVacancyDocument?vacancyDocId="+vacancyDocId)
     }
 
 }

@@ -1,6 +1,6 @@
 <div class="modal-content">
     <div class="modal-header">
-        <h5 class="modal-title">Add Vacancy</h5>
+        <h5 class="modal-title">{{vacancyId?"Update":"Add"}} Vacancy</h5>
         <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
     </div>
 
@@ -17,55 +17,108 @@
                                         <label for="vacancyName">Vacancy Name</label>
                                     </div>
                                 </div>
+
                                 <div class="col-md-6">
-                                    <p-dropdown [options]="vacancyType"  optionLabel="name" optionValue="value" placeholder="Vacancy Type"
-                                        formControlName="vacancyType"></p-dropdown>
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" id="vacancyType" formControlName="vacancyType"
+                                            aria-label="State">
+    
+                                            <option></option>
+                                            <option *ngFor="let vacancyType of vacancyTypes" [value]="vacancyType.value">{{
+                                                vacancyType.name }}</option>
+                                        </select>
+                                        <label for="vacancyType">Vacancy Type</label>
+                                    </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <p-dropdown [options]="departments"  optionLabel="name" optionValue="id" placeholder="Department"
-                                        formControlName="departmentId" filterBy="name"></p-dropdown>
+                                <div class="col-md-3">
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" id="departmentId" formControlName="departmentId"
+                                            aria-label="State">
+    
+                                            <option></option>
+                                            <option *ngFor="let department of departments" [value]="department.id">{{
+                                                department.name }}</option>
+                                        </select>
+                                        <label for="departmentId">Department</label>
+                                    </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <p-dropdown [options]="positions" optionLabel="name" optionValue="id" formControlName="positionId"
-                                    placeholder="Position"   filterBy="name"></p-dropdown>
+                                <div class="col-md-3">
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" id="positionId" formControlName="positionId"
+                                            aria-label="State">
+    
+                                            <option></option>
+                                            <option *ngFor="let position of positions" [value]="position.id">{{
+                                                position.name }}</option>
+                                        </select>
+                                        <label for="positionId">Position</label>
+                                    </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <p-dropdown [options]="educationalField" optionLabel="name" optionValue="id" placeholder="Education Field"
-                                        formControlName="educationalFieldId" filterBy="name"></p-dropdown>
+
+                                <div class="col-md-3">
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" id="educationalFieldId" formControlName="educationalFieldId"
+                                            aria-label="State">
+    
+                                            <option></option>
+                                            <option *ngFor="let educationalField of educationalFields" [value]="educationalField.id">{{
+                                                educationalField.name }}</option>
+                                        </select>
+                                        <label for="educationalFieldId">Educational Field</label>
+                                    </div>
+                                </div>
+                               
+                                <div class="col-md-3">
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" id="educationalLevelId" formControlName="educationalLevelId"
+                                            aria-label="State">
+    
+                                            <option></option>
+                                            <option *ngFor="let educationalLevel of educationalLevels" [value]="educationalLevel.id">{{
+                                                educationalLevel.name }}</option>
+                                        </select>
+                                        <label for="educationalLevelId">Educational Level</label>
+                                    </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <p-dropdown [options]="educationalLevel" optionLabel="name" optionValue="id" formControlName="educationalLevelId"
-                                        placeholder="Education Level" filterBy="name"></p-dropdown>
-                                </div>
-                                <div class="col-md-6">
-                                    <p-dropdown [options]="employementType" optionLabel="name" optionValue="value" placeholder="Employement Type"
-                                        formControlName="employmentType"></p-dropdown>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <p-calendar  formControlName="vaccancyStartDate"  dateFormat="dd.mm.yy"></p-calendar>
-                                        <label for="vaccancyStartDate">Start Date</label>
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" id="employmentType" formControlName="employmentType"
+                                            aria-label="State">
+    
+                                            <option></option>
+                                            <option *ngFor="let employementType of employementTypes" [value]="employementType.value">{{
+                                                employementType.name }}</option>
+                                        </select>
+                                        <label for="employmentType">Employment Type </label>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <p-calendar  formControlName="vaccancyEndDate"  dateFormat="dd.mm.yy"></p-calendar>
-                                        <label for="vaccancyEndDate">End Date</label>
+                                <div class="col-md-4">
+                                    <div class="form-floating"> <input type="date" class="form-control" id="vaccancyStartDate"
+                                            placeholder="vaccancyStartDate" required formControlName="vaccancyStartDate">
+                                        <label for="vaccancyStartDate"> Start Date</label>
                                     </div>
                                 </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating"> <input type="date" class="form-control" id="vaccancyEndDate"
+                                            placeholder="vaccancyEndDate" required formControlName="vaccancyEndDate">
+                                        <label for="vaccancyEndDate"> End Date</label>
+                                    </div>
+                                </div>
+                          
+                           
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="gPA" formControlName="gPA">
-                                        <label for="gPA">GPA</label>
+                                        <input type="number" class="form-control" id="gpa" formControlName="gpa">
+                                        <label for="gpa">GPA</label>
                                     </div>
                                 </div>  
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="quantity" formControlName="quantity">
+                                        <input type="number" class="form-control" id="quantity" formControlName="quantity">
                                         <label for="quantity">Quantity</label>
                                     </div>
                                 </div>   
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="form-floating">
                                         <textarea class="form-control" formControlName="vaccancyDescription" id="vaccancyDescription"
                                             style="height: 120px;"></textarea>
@@ -77,7 +130,7 @@
                         <div class="modal-footer"> <button type="button" class="btn btn-secondary"
                             (click)="closeModal()">Close</button>
                         <button type="button" type="submit"  [disabled]="!vacancyForm.valid"
-                            class="btn btn-primary">Create</button>
+                            [class]="vacancyId?'btn btn-outline-warning':'btn btn-outline-primary'">{{vacancyId?"Update":"Create"}}</button>
                     </div>
                     </form>
                 </div>
