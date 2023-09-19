@@ -173,7 +173,7 @@ namespace IntegratedImplementation.Services.Vacancy
             var path = "";
             var Id = Guid.NewGuid();
             if (addVacancyDocument.DocumentPath != null)
-                path = _generalConfig.UploadFiles(addVacancyDocument.DocumentPath, Id.ToString(), "Employee").Result.ToString();
+                path = _generalConfig.UploadFiles(addVacancyDocument.DocumentPath, Id.ToString(), "Vacancy").Result.ToString();
 
 
             VacancyDocuments documents = new VacancyDocuments()

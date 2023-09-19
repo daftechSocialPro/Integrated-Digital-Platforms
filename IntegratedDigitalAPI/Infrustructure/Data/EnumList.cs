@@ -62,6 +62,7 @@ namespace IntegratedInfrustructure.Data
 
         public enum ApplicantStatus
         {
+            PENDING,
             APPLIED,
             SEEN,
             PROGRESS,
@@ -76,6 +77,12 @@ namespace IntegratedInfrustructure.Data
             INTERNAL,
             EXTERNAL,
             BOTH
+        }
+
+        public enum ApplicantType
+        {
+            INTERNAL,
+            EXTERNAL
         }
 
         public enum LeaveCategory

@@ -29,6 +29,7 @@ namespace IntegratedImplementation.Datas
 
             #region Vacancy
             services.AddScoped<IVacancyService, VacancyService>();
+            services.AddScoped<IApplicantService, ApplicantService>();
             #endregion
 
             // configuration

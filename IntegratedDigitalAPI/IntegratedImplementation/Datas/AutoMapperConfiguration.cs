@@ -65,6 +65,11 @@ namespace IntegratedImplementation.Datas
 
             CreateMap<VacancyList, UpdateVacancyDto>();
 
+            CreateMap<Applicant, ApplicantDetailDto>()
+             .ForMember(x => x.ApplicantType, e => e.MapFrom(mfg => mfg.ApplicantType.ToString()))
+             .ForMember(x => x.FullName, e => e.MapFrom(mfg => mfg.FirstName + " " + mfg.MiddleName + " " + mfg.LastName))
+             .ForMember(x => x.NationalityName, e => e.MapFrom(mfg => mfg.Nationality.CountryName))
+             .ForMember(x => x.ZoneName, e => e.MapFrom(mfg => mfg.Zone.ZoneName));
         }
     }
 }

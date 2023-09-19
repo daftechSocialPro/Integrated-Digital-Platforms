@@ -54,6 +54,7 @@ namespace IntegratedInfrustructure.Data
 
         #region Vacancy
         public DbSet<Applicant> Applicants { get; set; }
+        public DbSet<ApplicantVacancy> ApplicantVacancies { get; set; }
         public DbSet<ApplcantDocuments> ApplcantDocuments { get; set; }
         public DbSet<ApplicantEducation> ApplicantEducations { get; set; }
         public DbSet<ApplicantWorkExperiance> ApplicantWorkExperiances { get; set; }
