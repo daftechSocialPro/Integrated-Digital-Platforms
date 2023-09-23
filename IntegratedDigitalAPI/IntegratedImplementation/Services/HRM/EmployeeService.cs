@@ -190,6 +190,75 @@ namespace IntegratedImplementation.Services.HRM
 
 
         }
+
+
+
+        public async Task<ResponseMessage> UpdateEmployeeData(EmployeeUpdateDto updateEmployee)
+        {
+
+            try
+            {
+
+                var path = "";
+
+                var employee = _dbContext.Employees.Find(updateEmployee.Id);
+
+
+                if (updateEmployee.ImagePath != null)
+                    path = _generalConfig.UploadFiles(updateEmployee.ImagePath, employee.Id.ToString(), "Employee").Result.ToString();
+
+                if (employee != null)
+                {
+
+
+                    employee.FirstName = updateEmployee.FirstName;
+                    employee.MiddleName = updateEmployee.MiddleName;
+                    employee.LastName = updateEmployee.LastName;
+                    employee.PhoneNumber = updateEmployee.PhoneNumber;
+                    employee.Email = updateEmployee.Email;
+                    
+
+                    if (path != "")
+                    {
+                        employee.ImagePath = path;
+                    }
+             
+
+                    await _dbContext.SaveChangesAsync();
+
+                    return new ResponseMessage
+                    {
+
+                        Message = "Employee Updated Successfully ",
+                        Success = true
+                    };
+                }
+
+                else
+                {
+                    return new ResponseMessage
+                    {
+
+                        Message = "Employee Not Found !!",
+                        Success = true
+                    };
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return new ResponseMessage
+                {
+
+                    Message = ex.InnerException.Message,
+                    Success = true
+                };
+
+            }
+
+
+
+        }
         public async Task<List<EmployeeGetDto>> GetEmployees()
         {
             var employeeList = await _dbContext.Employees.AsNoTracking()

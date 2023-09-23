@@ -10,6 +10,7 @@ import { EmployeeManagmentComponent } from './pages/human-resource/employee-mana
 import { EmployeeDetailComponent } from './pages/human-resource/employee-managment/employee-detail/employee-detail.component';
 import { VacancyListComponent } from './pages/human-resource/vacancy-management/vacancy-list/vacancy-list.component';
 import { ConfigurationComponent } from './pages/configuration/configuration/configuration.component';
+import { UsersProfileComponent } from './pages/users-profile/users-profile.component';
 
 
 
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'HRM/configuration', canActivate: [AuthGuard], component: HrmConfigurationComponent, data: { permittedRoles: ['Admin'] } },
   { path: 'HRM/vacancyList', canActivate:[AuthGuard],component:VacancyListComponent,data:{permittedRoles:['Admin']} },
   { path: 'pages-login', component: PagesLoginComponent },
+  { path: 'user-profile',canActivate:[AuthGuard], component: UsersProfileComponent },
 
 ];
 

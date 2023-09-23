@@ -70,12 +70,18 @@ export class HrmService {
         return this.http.get<EmployeeGetDto[]>(this.baseUrl + "/Employee/GetEmployees")
     }
     addEmployee(employeePost: FormData) {
-        console.log(employeePost)
+   
         return this.http.post<ResponseMessage>(this.baseUrl + "/Employee/AddEmployee", employeePost)
     }
     updateEmployee(employeePost: FormData) {
-        console.log(employeePost)
+    
         return this.http.put<ResponseMessage>(this.baseUrl + "/Employee/UpdateEmployee", employeePost)
+    }
+
+    updateEmployeeData(employeePost: FormData){
+        return this.http.put<ResponseMessage>(this.baseUrl + "/Employee/UpdateEmployeeData", employeePost)
+   
+        
     }
     getEmployee(employeeId : string){
         return this.http.get<EmployeeGetDto>(this.baseUrl + "/Employee/GetEmployee?employeeId="+ employeeId)
@@ -131,6 +137,8 @@ export class HrmService {
     deleteEmployeeEducation (employeeId : string){
         return this.http.delete<ResponseMessage>(this.baseUrl +"/Employee/DeleteEmployeeEducation?employeeEducationId="+employeeId)
     }
+
+    
     
     
 

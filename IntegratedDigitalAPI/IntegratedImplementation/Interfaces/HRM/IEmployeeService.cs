@@ -15,6 +15,7 @@ namespace IntegratedImplementation.Interfaces.HRM
         Task<List<EmployeeGetDto>> GetEmployees();
         Task<ResponseMessage> AddEmployee(EmployeePostDto addEmployee);
         Task<ResponseMessage> UpdateEmployee(EmployeePostDto addEmployee);
+        Task<ResponseMessage> UpdateEmployeeData(EmployeeUpdateDto updateEmployee);
         Task<EmployeeGetDto> GetEmployee(Guid employeeId);
 
         //history

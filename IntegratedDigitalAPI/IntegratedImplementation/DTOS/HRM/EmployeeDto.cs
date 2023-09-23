@@ -92,6 +92,24 @@ namespace IntegratedImplementation.DTOS.HRM
 
     }
 
+    public record EmployeeUpdateDto
+    {
+
+        public Guid Id { get; set; } 
+        public string FirstName { get; set; } = null!;
+
+        public string MiddleName { get;set; } = null!;
+        public string LastName { get; set; } = null!;
+      
+        public string Email { get; set; } = null!;
+        public string PhoneNumber { get; set; }= null!;
+
+        public IFormFile? ImagePath { get; set; }
+        public Guid? ZoneId { get; set; }
+
+        public string? Woreda { get; set; } 
+    }
+
     public record EmployeeHistoryDto
     {
         public Guid Id { get; set; }

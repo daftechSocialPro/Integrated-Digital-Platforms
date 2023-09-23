@@ -46,6 +46,20 @@ namespace IntegratedDigitalAPI.Controllers.HRM
             }
         }
 
+        [HttpPut]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> UpdateEmployeeData([FromForm] EmployeeUpdateDto employee)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _employeeService.UpdateEmployeeData(employee));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
 
 
         [HttpPost]
