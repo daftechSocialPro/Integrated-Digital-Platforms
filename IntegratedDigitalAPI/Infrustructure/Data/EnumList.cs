@@ -110,6 +110,8 @@ namespace IntegratedInfrustructure.Data
             ANNUALLEAVESTARTMONTH,
             PERFORMANCESTARTDATE,
             PERFORMANCEENDDATE,
+            NUMBEROFDAYOFFS,
+            RESIGNATIONrEQUESTDAYS
         }
 
     }

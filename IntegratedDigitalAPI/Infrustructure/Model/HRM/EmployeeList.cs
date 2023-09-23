@@ -13,12 +13,9 @@ namespace IntegratedInfrustructure.Model.HRM
 {
     public class EmployeeList : WithIdModel
     {
-
-        public EmployeeList() {
-
-
+        public EmployeeList()
+        {
             EmployeeDetail = new HashSet<EmploymentDetail>();
-        
         }
         public string EmployeeCode { get; set; } = null!;
         public string FirstName { get; set; } = null!;
@@ -26,12 +23,9 @@ namespace IntegratedInfrustructure.Model.HRM
         public string LastName { get; set; } = null!;
         public string PhoneNumber { get; set; } = null!;
         public string Email { get; set; } = null!;
-
-        public Guid ZoneId { get; set; } 
+        public Guid ZoneId { get; set; }
         public virtual Zone Zone { get; set; } = null!;
-
         public string Woreda { get; set; } = null!;
-
         public Gender Gender { get; set; }
         public DateTime BirthDate { get; set; }
         public MaritalStatus MaritalStatus { get; set; }
@@ -46,7 +40,7 @@ namespace IntegratedInfrustructure.Model.HRM
         public string? PensionCode { get; set; } = null!;
         public string? TinNumber { get; set; } = null!;
         public string? BankAccountNo { get; set; } = null!;
-
+        public bool ExistingEmployee { get; set; }
 
         [InverseProperty(nameof(EmploymentDetail.Employee))]
         public ICollection<EmploymentDetail> EmployeeDetail { get; set; }

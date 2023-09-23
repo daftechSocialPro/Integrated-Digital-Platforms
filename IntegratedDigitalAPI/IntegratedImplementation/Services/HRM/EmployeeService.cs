@@ -36,6 +36,9 @@ namespace IntegratedImplementation.Services.HRM
             var id = Guid.NewGuid();
             var path = "";
 
+            if (addEmployee.EmploymentDate.CompareTo(DateTime.Now) <= 1 && addEmployee.ExistingEmployee)
+                return new ResponseMessage { Success = false, Message = "Employee is not existing please correct your fields" };
+
             if (addEmployee.ImagePath != null)
                 path = _generalConfig.UploadFiles(addEmployee.ImagePath, id.ToString(), "Employee").Result.ToString();
 
@@ -73,7 +76,7 @@ namespace IntegratedImplementation.Services.HRM
                 TinNumber = addEmployee.TinNumber,
                 ContractEndDate = addEmployee.EmploymentDate.AddDays(addEmployee.ContractDays),
                 Rowstatus = RowStatus.ACTIVE,
-            
+                ExistingEmployee = addEmployee.ExistingEmployee,
             };
             await _dbContext.Employees.AddAsync(employee);
             await _dbContext.SaveChangesAsync();
@@ -114,6 +117,8 @@ namespace IntegratedImplementation.Services.HRM
 
                 if (addEmployee.ImagePath != null)
                     path = _generalConfig.UploadFiles(addEmployee.ImagePath, employee.Id.ToString(), "Employee").Result.ToString();
+
+
 
                 if (employee!= null)
                 {
@@ -182,7 +187,7 @@ namespace IntegratedImplementation.Services.HRM
                 return new ResponseMessage
                 {
 
-                    Message = ex.InnerException.Message,
+                    Message = ex?.InnerException.Message,
                     Success = true
                 };
 

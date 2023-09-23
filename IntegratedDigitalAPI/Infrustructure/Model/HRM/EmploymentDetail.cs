@@ -8,7 +8,7 @@ using static IntegratedInfrustructure.Data.EnumList;
 
 namespace IntegratedInfrustructure.Model.HRM
 {
-    public class EmploymentDetail: WithIdModel
+    public class EmploymentDetail : WithIdModel
     {
 
         public virtual EmployeeList Employee { get; set; } = null!;
