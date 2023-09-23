@@ -33,6 +33,7 @@ namespace IntegratedInfrustructure.Data
         public DbSet<EducationalField> EducationalFields { get; set; }
         public DbSet<Region> Regions { get; set; }
         public DbSet<Zone> Zones { get; set; }
+        public DbSet<HolidayLst> Holidays { get; set; }
         #endregion
 
         #region HRM
@@ -49,6 +50,7 @@ namespace IntegratedInfrustructure.Data
         public DbSet<LeaveType> LeaveTypes { get; set; }
         public DbSet<Position> Positions { get; set; }
         public DbSet<HrmSetting> HrmSettings { get; set; }
+        public DbSet<ResignationRequest> ResignationRequests { get; set; }
 
         #endregion
 
