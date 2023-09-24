@@ -17,6 +17,8 @@ namespace IntegratedInfrustructure.Model.HRM
         public bool IsApproved { get; set; }
         public virtual EmployeeList Approver { get; set; } = null!;
         public Guid? ApproverId { get; set; }
+        public DateTime? ApprovedDate { get; set;}
+        public bool IsTerminated { get; set; }
 
     }
 }

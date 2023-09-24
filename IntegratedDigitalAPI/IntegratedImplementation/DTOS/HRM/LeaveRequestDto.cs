@@ -26,4 +26,14 @@ namespace IntegratedImplementation.DTOS.HRM
         public DateTime? PreviousExpDate { get; set; }
         public int LeavesTaken { get; set; }
     }
+
+    public class LeavesTakenDto
+    {
+        public Guid Id { get; set; }
+        public string TypeOfLeave { get; set; } = null!;
+        public string FullName { get; set; } = null!;
+        public DateTime LeaveDate { get; set; }
+        public DateTime BackToWorkOn { get; set; }
+
+    }
 }
