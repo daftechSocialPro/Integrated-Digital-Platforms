@@ -14,5 +14,8 @@ namespace IntegratedImplementation.Interfaces.HRM
         Task<ResponseMessage> AddLeaveRequest(LeaveRequestDto leaveRequestDto);
         Task<ResponseMessage> ApproveRequest(Guid leaveId, Guid employeeId);
         Task<ResponseMessage> RejectRequest(Guid leaveId, string remark);
+        Task<List<LeavesTakenDto>> GetEmployeeLeaves(Guid employeeId);
+
+
     }
 }

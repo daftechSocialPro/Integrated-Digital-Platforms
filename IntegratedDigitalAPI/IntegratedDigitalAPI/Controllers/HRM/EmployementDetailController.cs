@@ -84,11 +84,11 @@ namespace IntegratedDigitalAPI.Controllers.HRM
 
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> TerminateEmployee(Guid employementDetailId, string remark)
+        public async Task<IActionResult> TerminateEmployee(Guid employementDetailId, string remark, bool blacListed)
         {
             if (ModelState.IsValid)
             {
-                return Ok(await _employementDetailService.TerminateEmployee(employementDetailId, remark));
+                return Ok(await _employementDetailService.TerminateEmployee(employementDetailId, remark, blacListed));
             }
             else
             {

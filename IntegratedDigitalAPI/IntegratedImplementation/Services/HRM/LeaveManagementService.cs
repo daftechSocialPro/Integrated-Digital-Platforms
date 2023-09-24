@@ -170,6 +170,20 @@ namespace IntegratedImplementation.Services.HRM
             return new ResponseMessage { Success = true, Message = "Approved Request Successfully" };
         }
 
+        public async Task<List<LeavesTakenDto>> GetEmployeeLeaves(Guid employeeId)
+        {
+            return await _dbContext.EmployeeLeaves.Include(x => x.Employee).Include(x => x.LeaveType).AsNoTracking()
+                          .Where(x => x.EmployeeId == employeeId)
+                          .Select(x => new LeavesTakenDto
+                          {
+                              Id = x.Id,
+                              FullName = $"{x.Employee.FirstName} {x.Employee.MiddleName} {x.Employee.LastName}",
+                              BackToWorkOn = x.ToDate,
+                              LeaveDate = x.FromDate,
+                              TypeOfLeave = x.LeaveType.Name
+                          }).ToListAsync();
+        }
+
         public async Task<ResponseMessage> RejectRequest(Guid leaveId, string remark)
         {
             var currentRequest = await _dbContext.EmployeeLeaves.FirstOrDefaultAsync(x => x.Id == leaveId && x.LeaveStatus == LeaveRequestStatus.PENDING);
