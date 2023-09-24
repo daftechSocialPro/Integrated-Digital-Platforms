@@ -15,4 +15,15 @@ namespace Implementation.DTOS.Authentication
         [Required]
         public string Password { get; set; } = null!;
     }
+    public class ChangePasswordModel
+    {
+        [Required]
+        public string UserId { get; set; }
+
+        [Required]
+        public string CurrentPassword { get; set; }
+
+        [Required]
+        public string NewPassword { get; set; }
+    }
 }

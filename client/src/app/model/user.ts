@@ -14,3 +14,8 @@ export interface UserView {
 export interface Token {
     token :string ;
 }
+export interface ChangePasswordModel{
+    UserId : string
+    CurrentPassword :string
+    NewPassword :string
+   }

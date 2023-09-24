@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { HttpClient } from "@angular/common/http";
 import { environment } from 'src/environments/environment';
-import { Token, User, UserView } from '../model/user';
+import { ChangePasswordModel, Token, User, UserView } from '../model/user';
 import { SelectList } from '../model/common';
 import { ResponseMessage } from '../model/ResponseMessage.Model';
 //import { UserManagment } from '../common/user-management/user-managment';
@@ -80,6 +80,13 @@ export class UserService {
     return user;
   }
 
+
+
+    changePassword(formData: ChangePasswordModel)  {
+      return this.http.post<ResponseMessage>(this.BaseURI + "/Authentication/ChangePassword", formData)
+  
+    }
+  
   // createUser (body:UserManagment){
 
   //   return this.http.post(this.BaseURI+"/Authentication/Register",body)
