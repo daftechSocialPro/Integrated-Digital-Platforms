@@ -106,6 +106,18 @@ import { UpdateLeaveTypeComponent } from './pages/human-resource/hrm-configurati
 import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
 import { AddVaccancyDocumentComponent } from './pages/human-resource/vacancy-management/add-vaccancy-document/add-vaccancy-document.component';
+import { UserManagementComponent } from './pages/configuration/user-management/user-management.component';
+import { HrmSettingComponent } from './pages/human-resource/hrm-configuration/hrm-setting/hrm-setting.component';
+import { AddHrmSettingComponent } from './pages/human-resource/hrm-configuration/hrm-setting/add-hrm-setting/add-hrm-setting.component';
+import { UpdateHrmSettingComponent } from './pages/human-resource/hrm-configuration/hrm-setting/update-hrm-setting/update-hrm-setting.component';
+import { AddUserComponent } from './pages/configuration/user-management/add-user/add-user.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { AutocompleteComponent } from './components/autocomplete/autocomplete.component';
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
+
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { UpdateRolesComponent } from './pages/configuration/user-management/update-roles/update-roles.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -192,7 +204,14 @@ import { AddVaccancyDocumentComponent } from './pages/human-resource/vacancy-man
      AddLeaveTypeComponent,
      UpdateLeaveTypeComponent,
      AddVaccancyDocumentComponent,
-   
+     UserManagementComponent,
+     HrmSettingComponent,
+     AddHrmSettingComponent,
+     UpdateHrmSettingComponent,
+     AddUserComponent,
+     AutocompleteComponent,
+     UpdateRolesComponent,
+     
      
   ],
   imports: [
@@ -211,7 +230,10 @@ import { AddVaccancyDocumentComponent } from './pages/human-resource/vacancy-man
     TabViewModule,
     DropdownModule,
     CalendarModule,
-    
+    NgxPaginationModule,
+    AutocompleteLibModule,
+    AutoCompleteModule,
+   
     ToastrModule.forRoot({
       preventDuplicates: true,
     })

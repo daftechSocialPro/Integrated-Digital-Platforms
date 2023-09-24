@@ -11,7 +11,7 @@ export interface EmployeePostDto
      employmentType : string;
      paymentType : string;
      employmentDate : Date
-     contractEndDate? : Date
+     
      terminatedDate? : Date
      isPension? : boolean
      employmentStatus : string;
@@ -46,6 +46,7 @@ export interface EmployeeGetDto
      paymentType : string;
      employmentDate :Date;
      contractEndDate ?:Date;
+     contractDays?:number
      terminatedDate ?:Date;
      isPension: boolean;
      employmentStatus : string;

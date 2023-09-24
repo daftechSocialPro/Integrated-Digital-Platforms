@@ -43,4 +43,9 @@ export class DropDownService {
     getDepartmentsDropdown(){
         return this.http.get<SelectList[]>(this.baseUrl + "/DropDown/GetDepartmentDropdownList")
     }
+
+    getGeneralHrmSettings(){
+
+        return this.http.get<SelectList[]>(this.baseUrl+"/DropDown/GetHrmSettingDropDownList")
+    }
 }

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static IntegratedInfrustructure.Data.EnumList;
 
 namespace IntegratedImplementation.Services.Configuration
 {
@@ -104,5 +105,39 @@ namespace IntegratedImplementation.Services.Configuration
 
             return LeaveTypeList;
         }
-    }
+
+        public async Task<List<SelectListDto>> GetGeneralHRMSettingList()
+        {
+
+            List<string> enumValues = Enum.GetNames(typeof(GeneralHrmSetting)).ToList();
+
+            var HRMSettingList = await _dbContext.HrmSettings.AsNoTracking().Select(x => new SelectListDto
+            {
+                Id = x.Id,
+                Name = x.GeneralSetting.ToString(),
+            }).ToListAsync();
+
+            
+
+            foreach (string en in enumValues)
+            {
+
+
+                if (HRMSettingList.Any(x => x.Name==en))
+                {
+                   HRMSettingList.RemoveAll(x=>x.Name==en);
+                }
+                else
+                {
+                    HRMSettingList.Add(new SelectListDto
+                    {
+                        Name=en,
+                    });
+                }
+
+            }
+
+                return HRMSettingList ;
+        }
+     }
 }

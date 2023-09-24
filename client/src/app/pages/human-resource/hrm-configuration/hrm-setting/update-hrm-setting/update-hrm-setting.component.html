@@ -1,0 +1,43 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">{{hrmSetting?"Update":"Add"}} {{hrmSetting?hrmSetting.generalSetting:""}} Hrm Setting</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">HrmSetting Detail</h5>
+            <div class="row">
+                <div class="col-lg-12">
+                    <form class="" [formGroup]="hrmSettingForm" (ngSubmit)="submit()">
+                        <div class="modal-body">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                     
+
+                                        <input type="text" readonly class="form-control" id="value" placeholder="value"
+                                        [value]="hrmSetting.generalSetting"> 
+                                        <label for="generalSetting">General Setting</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="value"  placeholder="value"
+                                        formControlName="value">
+                                    <label for="value">Value</label>
+                                    </div>
+                                </div>                                                         
+                            </div>
+                        </div>
+                        <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
+                            (click)="closeModal()">Close</button>
+                        <button type="button" type="submit"  [disabled]="!hrmSettingForm.valid"
+                            class="btn btn-outline-warning">Update</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

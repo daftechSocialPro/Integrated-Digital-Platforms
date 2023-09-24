@@ -57,10 +57,10 @@ export class AddEmployeeComponent implements OnInit {
       employmentStatus: [null, Validators.required],
       departmentId: [null, Validators.required],
       positionId: [null, Validators.required],
-      contractEndDate: [null],
-      pensionCode: [null],
-      tinNumber: [null],
-      bankAccountNo: [null],
+      contractDays: [0],
+      pensionCode: [''],
+      tinNumber: [''],
+      bankAccountNo: [''],
       woreda: [null, Validators.required],
       zoneId: [null, Validators.required]
 
@@ -160,7 +160,7 @@ export class AddEmployeeComponent implements OnInit {
         employmentStatus: this.EmployeeForm.value.employmentStatus,
         paymentType: this.EmployeeForm.value.paymentType,
         employmentDate: this.EmployeeForm.value.employmentDate,
-        contractEndDate: this.EmployeeForm.value.contractEndDate,
+        contractDays: this.EmployeeForm.value.contractDays,
         pensionCode: this.EmployeeForm.value.pensionCode.toString(),
         tinNumber: this.EmployeeForm.value.tinNumber.toString(),
         bankAccountNo: this.EmployeeForm.value.bankAccountNo.toString(),

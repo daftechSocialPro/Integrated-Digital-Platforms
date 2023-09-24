@@ -70,6 +70,14 @@ namespace IntegratedImplementation.Datas
              .ForMember(x => x.FullName, e => e.MapFrom(mfg => mfg.FirstName + " " + mfg.MiddleName + " " + mfg.LastName))
              .ForMember(x => x.NationalityName, e => e.MapFrom(mfg => mfg.Nationality.CountryName))
              .ForMember(x => x.ZoneName, e => e.MapFrom(mfg => mfg.Zone.ZoneName));
+
+            CreateMap<HrmSetting, HrmSettingDto>()
+            .ForMember(x => x.GeneralSetting, e => e.MapFrom(mfg => mfg.GeneralSetting.ToString()));
+
+
+            CreateMap<HrmSetting, SelectListDto>()
+            .ForMember(x => x.Name, e => e.MapFrom(mfg => mfg.GeneralSetting.ToString()));
+
         }
     }
 }

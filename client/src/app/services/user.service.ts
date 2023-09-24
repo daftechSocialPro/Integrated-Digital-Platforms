@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { HttpClient } from "@angular/common/http";
 import { environment } from 'src/environments/environment';
-import { ChangePasswordModel, Token, User, UserView } from '../model/user';
+import { ChangePasswordModel, Token, User, UserList, UserPost, UserView } from '../model/user';
 import { SelectList } from '../model/common';
 import { ResponseMessage } from '../model/ResponseMessage.Model';
 //import { UserManagment } from '../common/user-management/user-managment';
@@ -46,9 +46,9 @@ export class UserService {
     var isMatch = false;
     var token = sessionStorage.getItem('token')
 
-    var payLoad = token? JSON.parse(window.atob(token!.split('.')[1])):"";
+    var payLoad = token ? JSON.parse(window.atob(token!.split('.')[1])) : "";
 
-    var userRole: string[] =payLoad? payLoad.role.split(","):[];
+    var userRole: string[] = payLoad ? payLoad.role.split(",") : [];
     allowedRoles.forEach((element: any) => {
       if (userRole.includes(element)) {
         isMatch = true;
@@ -76,21 +76,48 @@ export class UserService {
       employeeId: payLoad.employeeId,
       photo: payLoad.photo
     }
- 
+
     return user;
   }
 
 
 
-    changePassword(formData: ChangePasswordModel)  {
-      return this.http.post<ResponseMessage>(this.BaseURI + "/Authentication/ChangePassword", formData)
-  
-    }
-  
-  // createUser (body:UserManagment){
+  changePassword(formData: ChangePasswordModel) {
+    return this.http.post<ResponseMessage>(this.BaseURI + "/Authentication/ChangePassword", formData)
 
-  //   return this.http.post(this.BaseURI+"/Authentication/Register",body)
-  // }
+  }
+
+  getUserList() {
+
+    return this.http.get<UserList[]>(this.BaseURI + "/Authentication/GetUserList")
+  }
+
+  createUser(body: UserPost) {
+
+    return this.http.post<ResponseMessage>(this.BaseURI + "/Authentication/AddUser", body)
+  }
+
+  getRoleCategory (){
+
+    return this.http.get<SelectList[]>(this.BaseURI+"/Authentication/GetRoleCategory")
+  }
+
+  getNotAssignedRole(userId:string, roleCategory:number){
+    return this.http.get<SelectList[]>(this.BaseURI+`/Authentication/GetNotAssignedRole?userId=${userId}&categoryId=${roleCategory}`)
+    
+  }
+  getAssignedRole(userId:string, roleCategory:number){
+    return this.http.get<SelectList[]>(this.BaseURI+`/Authentication/GetAssignedRoles?userId=${userId}&categoryId=${roleCategory}`)
+    
+  }
+  assignRole(body:any){
+
+    return this.http.post<ResponseMessage>(this.BaseURI+'/Authentication/AssingRole',body)
+  }
+  revokeRole(body:any){
+
+    return this.http.post<ResponseMessage>(this.BaseURI+'/Authentication/RevokeRole',body)
+  }
   // getSystemUsers() {
   //   return this.http.get<Employee[]>(this.BaseURI + "/Authentication/users")
   // }

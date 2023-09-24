@@ -24,9 +24,9 @@
                             data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab"
                             aria-controls="contact" aria-selected="false">Leave Type</button></li>
                
-                            <li class="nav-item" role="presentation"> <button class="nav-link" id="contact-tab"
-                                data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab"
-                                aria-controls="contact" aria-selected="false">HRM Setting</button></li>
+                            <li class="nav-item" role="presentation"> <button class="nav-link" id="hrm-tab"
+                                data-bs-toggle="tab" data-bs-target="#hrm" type="button" role="tab"
+                                aria-controls="hrm" aria-selected="false">HRM Setting</button></li>
                    
                
                         </ul>
@@ -39,6 +39,9 @@
                     </div>
                     <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                         <app-leave-type />
+                    </div>
+                    <div class="tab-pane fade" id="hrm" role="tabpanel" aria-labelledby="hrm-tab">
+                        <app-hrm-setting/>
                     </div>
                 </div>
             </div>

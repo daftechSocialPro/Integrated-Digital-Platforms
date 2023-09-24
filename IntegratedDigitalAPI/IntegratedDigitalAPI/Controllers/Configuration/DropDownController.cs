@@ -80,6 +80,14 @@ namespace IntegratedDigitalAPI.Controllers.Configuration
             return Ok(await _DropDownService.GetLeaveTypeDropdownList());
         }
 
+        [HttpGet]
+        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetHrmSettingDropDownList()
+        {
+            return Ok(await _DropDownService.GetGeneralHRMSettingList());
+        }
+
+
 
     }
 }

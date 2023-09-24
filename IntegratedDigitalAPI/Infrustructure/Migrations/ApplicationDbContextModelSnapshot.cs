@@ -311,6 +311,35 @@ namespace IntegratedInfrustructure.Migrations
                     b.ToTable("GeneralCodes");
                 });
 
+            modelBuilder.Entity("IntegratedInfrustructure.Model.Configuration.HolidayLst", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.ToTable("Holidays");
+                });
+
             modelBuilder.Entity("IntegratedInfrustructure.Model.Configuration.Region", b =>
                 {
                     b.Property<Guid>("Id")
@@ -570,6 +599,9 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<Guid>("LeaveTypeId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Remark")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Rowstatus")
                         .HasColumnType("int");
 
@@ -629,6 +661,9 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.Property<int>("EmploymentType")
                         .HasColumnType("int");
+
+                    b.Property<bool>("ExistingEmployee")
+                        .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -930,6 +965,52 @@ namespace IntegratedInfrustructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Positions");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.ResignationRequest", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ApproverId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ReasonForResignation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ResignationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ResignationLetterPath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApproverId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("ResignationRequests");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Vacancy.ApplcantDocuments", b =>
@@ -1390,6 +1471,15 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("CreatedBy");
                 });
 
+            modelBuilder.Entity("IntegratedInfrustructure.Model.Configuration.HolidayLst", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.Navigation("CreatedBy");
+                });
+
             modelBuilder.Entity("IntegratedInfrustructure.Model.Configuration.Region", b =>
                 {
                     b.HasOne("IntegratedInfrustructure.Model.Configuration.Country", "Country")
@@ -1640,6 +1730,29 @@ namespace IntegratedInfrustructure.Migrations
                         .HasForeignKey("CreatedById");
 
                     b.Navigation("CreatedBy");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.ResignationRequest", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "Approver")
+                        .WithMany()
+                        .HasForeignKey("ApproverId");
+
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Approver");
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Vacancy.ApplcantDocuments", b =>

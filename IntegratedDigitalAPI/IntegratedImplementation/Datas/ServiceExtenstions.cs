@@ -26,6 +26,7 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<IGeneralConfigService, GeneralConfigService>();
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<ILeaveTypeService, LeaveTypeService>();
+            services.AddScoped<IHrmSettingService, HrmSettingService>();
 
             #region Vacancy
             services.AddScoped<IVacancyService, VacancyService>();
