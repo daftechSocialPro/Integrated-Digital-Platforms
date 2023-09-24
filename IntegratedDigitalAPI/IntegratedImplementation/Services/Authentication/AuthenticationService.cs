@@ -34,77 +34,107 @@ namespace Implementation.Services.Authentication
       
         public async Task<ResponseMessage> Login(LoginDto login)
         {
-            var user = await _userManager.FindByNameAsync(login.UserName);
 
-            if (user != null && await _userManager.CheckPasswordAsync(user, login.Password))
+            try
             {
-                if(user.RowStatus == RowStatus.INACTIVE)
+                var user = await _userManager.FindByNameAsync(login.UserName);
+
+                if (user != null && await _userManager.CheckPasswordAsync(user, login.Password))
+                {
+                    if (user.RowStatus == RowStatus.INACTIVE)
+                        return new ResponseMessage()
+                        {
+                            Success = false,
+                            Message = "Error!! please contact Your Admin"
+                        };
+                    var roleList = await _userManager.GetRolesAsync(user);
+                    IdentityOptions _options = new IdentityOptions();
+                    var str = String.Join(",", roleList);
+                    var employee = await _dbContext.Employees.FirstOrDefaultAsync(x => x.Id == user.EmployeeId);
+                    if (employee != null)
+                    {
+
+                        var TokenDescriptor = new SecurityTokenDescriptor
+                        {
+                            Subject = new System.Security.Claims.ClaimsIdentity(new Claim[]
+                            {
+                        new Claim("userId", user.Id.ToString()),
+                        new Claim("employeeId", user.EmployeeId.ToString()),
+                        new Claim("fullName", $"{employee.FirstName} {employee.MiddleName}"),
+                        new Claim("photo",employee?.ImagePath),
+                        new Claim(_options.ClaimsIdentity.RoleClaimType, str),
+
+                            }),
+                            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes("1225290901686999272364748849994004994049404940")), SecurityAlgorithms.HmacSha256Signature)
+                        };
+
+                        var TokenHandler = new JwtSecurityTokenHandler();
+                        var SecurityToken = TokenHandler.CreateToken(TokenDescriptor);
+                        var token = TokenHandler.WriteToken(SecurityToken);
+                        return new ResponseMessage()
+                        {
+                            Success = true,
+                            Message = "Login Success",
+                            Data = token
+                        };
+                    }
+
                     return new ResponseMessage()
                     {
                         Success = false,
-                        Message = "Error!! please contact Your Admin"
-                    };
-                var roleList = await _userManager.GetRolesAsync(user);
-                IdentityOptions _options = new IdentityOptions();
-                var str = String.Join(",", roleList);
-                var employee = await _dbContext.Employees.FirstOrDefaultAsync(x => x.Id == user.EmployeeId);
-                if (employee != null) {
-
-                    var TokenDescriptor = new SecurityTokenDescriptor
-                    {
-                        Subject = new System.Security.Claims.ClaimsIdentity(new Claim[]
-                        {
-                        new Claim("userId", user.Id.ToString()),
-                        new Claim("employeeId", user.EmployeeId.ToString()),
-                        new Claim("fullName", $"{employee.FirstName} {employee.MiddleName} {employee.LastName}"),                        
-                        new Claim("photo",employee?.ImagePath),
-                        new Claim(_options.ClaimsIdentity.RoleClaimType, str),
-                        
-                        }),
-                        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes("1225290901686999272364748849994004994049404940")), SecurityAlgorithms.HmacSha256Signature)
-                    };
-                    
-                    var TokenHandler = new JwtSecurityTokenHandler();
-                    var SecurityToken = TokenHandler.CreateToken(TokenDescriptor);
-                    var token = TokenHandler.WriteToken(SecurityToken);
-                    return new ResponseMessage()
-                    {
-                        Success = true,
-                        Message = "Login Success",
-                        Data = token
+                        Message = "could not find Employee"
                     };
                 }
-
+                else
+                    return new ResponseMessage()
+                    {
+                        Success = false,
+                        Message = "Invalid User Name or Password"
+                    };
+            }
+            catch(Exception ex)
+            {
                 return new ResponseMessage()
                 {
                     Success = false,
-                    Message = "could not find Employee"
+                    Message = ex.Message
                 };
             }
-            else
-                return new ResponseMessage()
-                {
-                    Success = false,
-                    Message = "Invalid User Name or Password"
-                };
 
         }
 
         public async Task<List<UserListDto>> GetUserList()
         {
-            var userList = await _userManager.Users.Select(x => new UserListDto
-            {
-                Id = x.Id,
-                EmployeeId = x.EmployeeId,
-                UserName = x.UserName,
-                Name = (from y in _dbContext.Employees
-                        where y.Id == x.EmployeeId
-                       select new { Name = $"{y.FirstName} {y.MiddleName} {y.LastName}" }).First().Name,
-                Status = x.RowStatus.ToString()
-                 
-            }).ToListAsync();
+            var userList = await _userManager.Users.ToListAsync();
 
-            return userList;
+            var users = new List<UserListDto>();
+            foreach (var user in userList)
+            {
+                var useer = new UserListDto();
+                var emp = _dbContext.Employees.
+                    Include(x=>x.EmployeeDetail).ThenInclude(x=>x.Department).
+                    Include(x => x.EmployeeDetail).ThenInclude(x => x.Position)
+                    .Where(x=>x.Id== user.EmployeeId).FirstOrDefault();
+                if (emp != null)
+                {
+                    useer.Id = user.Id;
+                    useer.EmployeeId = user.EmployeeId;
+                    useer.UserName = user.UserName;
+                    useer.Name = emp.FirstName + " " + emp.MiddleName;
+                    useer.Status = user.RowStatus.ToString();
+                    useer.ImagePath = emp.ImagePath;
+                    useer.Department = emp.EmployeeDetail.FirstOrDefault().Department.DepartmentName;
+                    useer.Position = emp.EmployeeDetail.FirstOrDefault().Position.PositionName;
+                    useer.Email = emp.Email;
+                    useer.PhoneNumber = emp.PhoneNumber;
+                    useer.Roles = (await _userManager.GetRolesAsync(user)).ToList();
+                };
+
+                users.Add(useer);
+
+            }
+
+            return users;
         }
 
         public async Task<ResponseMessage> AddUser(AddUSerDto addUSer)

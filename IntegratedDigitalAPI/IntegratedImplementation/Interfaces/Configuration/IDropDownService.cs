@@ -17,5 +17,6 @@ namespace IntegratedImplementation.Interfaces.Configuration
         Task<List<SelectListDto>> GetDepartmentDropdownList();
         Task<List<SelectListDto>> GetPositionDropdownList();
         Task<List<SelectListDto>> GetLeaveTypeDropdownList();
+        Task<List<SelectListDto>> GetGeneralHRMSettingList();
     }
 }

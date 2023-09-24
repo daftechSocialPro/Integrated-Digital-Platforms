@@ -1,12 +1,15 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Implementation.Helper;
+using IntegratedImplementation.DTOS.Configuration;
 using IntegratedImplementation.DTOS.HRM;
 using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedImplementation.Interfaces.HRM;
 using IntegratedInfrustructure.Data;
+using IntegratedInfrustructure.Model.Authentication;
 using IntegratedInfrustructure.Model.HRM;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -23,11 +26,17 @@ namespace IntegratedImplementation.Services.HRM
 
         private readonly ApplicationDbContext _dbContext;
         private readonly IGeneralConfigService _generalConfig;
+        private UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
-        public EmployeeService(ApplicationDbContext dbContext, IGeneralConfigService generalConfig, IMapper mapper)
+        public EmployeeService(
+            ApplicationDbContext dbContext, 
+            IGeneralConfigService generalConfig, 
+            IMapper mapper,
+            UserManager<ApplicationUser> userManager)
         {
             _dbContext = dbContext;
             _generalConfig = generalConfig;
+            _userManager = userManager;
             _mapper = mapper;
         }
 
@@ -103,6 +112,23 @@ namespace IntegratedImplementation.Services.HRM
             };
         }
 
+        public async Task<List<SelectListDto>> GetEmployeesNoUserSelectList()
+        {
+            var emp = _userManager.Users.Select(x => x.EmployeeId).ToList();
+
+            var EmployeeSelectList = await (from e in _dbContext.Employees
+                                            where !(emp.Contains(e.Id))
+                                            select new SelectListDto
+                                            {
+                                                Id = e.Id,
+                                                Name = $"{e.FirstName} {e.MiddleName} {e.LastName}"
+
+                                            }).ToListAsync();
+
+            return EmployeeSelectList;
+
+        }
+
 
         public async Task<ResponseMessage> UpdateEmployee(EmployeePostDto addEmployee)
         {
@@ -155,7 +181,7 @@ namespace IntegratedImplementation.Services.HRM
                         employee.ImagePath = path;
                     }
                     employee.EmploymentDate = addEmployee.EmploymentDate;
-                    employee.ContractEndDate = addEmployee.ContractEndDate;
+                    employee.ContractEndDate = addEmployee.EmploymentDate.AddDays(addEmployee.ContractDays);
                     employee.PensionCode = addEmployee.PensionCode;
                     employee.TinNumber = addEmployee.TinNumber;
                     employee.BankAccountNo = addEmployee.BankAccountNo;

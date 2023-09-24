@@ -31,7 +31,7 @@ namespace IntegratedImplementation.DTOS.HRM
         public string EmploymentType { get; set; } = null!;
         public string PaymentType { get; set; } = null!;
         public DateTime EmploymentDate { get; set; }
-        public DateTime? ContractEndDate { get; set; }
+      
         public DateTime? TerminatedDate { get; set; }
         public bool IsPension { get; set; }
         public string EmploymentStatus { get; set; } = null!;

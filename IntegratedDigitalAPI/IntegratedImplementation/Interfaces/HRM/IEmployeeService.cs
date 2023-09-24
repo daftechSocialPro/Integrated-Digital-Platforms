@@ -1,4 +1,5 @@
 ﻿using Implementation.Helper;
+using IntegratedImplementation.DTOS.Configuration;
 using IntegratedImplementation.DTOS.HRM;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -17,6 +18,7 @@ namespace IntegratedImplementation.Interfaces.HRM
         Task<ResponseMessage> UpdateEmployee(EmployeePostDto addEmployee);
         Task<ResponseMessage> UpdateEmployeeData(EmployeeUpdateDto updateEmployee);
         Task<EmployeeGetDto> GetEmployee(Guid employeeId);
+        Task<List<SelectListDto>> GetEmployeesNoUserSelectList();
 
         //history
         Task<List<EmployeeHistoryDto>> GetEmployeeHistory(Guid employeeId);

@@ -1,4 +1,5 @@
 ﻿using Implementation.Helper;
+using IntegratedImplementation.DTOS.Configuration;
 using IntegratedImplementation.DTOS.HRM;
 using IntegratedImplementation.Interfaces.HRM;
 using Microsoft.AspNetCore.Http;
@@ -58,6 +59,14 @@ namespace IntegratedDigitalAPI.Controllers.HRM
             {
                 return BadRequest();
             }
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
+        public async Task<List<SelectListDto>> GetEmployeesNoUserSelectList()
+        {
+
+            return await _employeeService.GetEmployeesNoUserSelectList();
         }
 
 
