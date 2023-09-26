@@ -1,0 +1,39 @@
+<div class="card">
+    <div class="row p-2">
+        <div class="col-lg-12 text-end ">
+            <button type="button" class="btn btn-outline-primary" (click)="addHoliday()"><i class="bi bi-plus me-1"></i>
+                Holiday Setting</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Holidays</h5>
+                    <p-table [value]="holidays" [paginator]="true" [rows]="5" [showCurrentPageReport]="true"
+                        [tableStyle]="{ 'min-width': '50rem' }"
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                        [rowsPerPageOptions]="[5, 25, 50]" styleClass="p-datatable-sm">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>Holiday Name</th>
+                                <th>Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-holiday>
+                            <tr>
+                                <td>{{holiday.holidayName}}</td>
+                                <td>{{holiday.holidayDate}}</td>
+                                <td>
+                                    <button type="button" (click)="updateHoliday(holiday)"
+                                        class="btn btn-outline-warning"><i class="bi bi-pencil"></i> </button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

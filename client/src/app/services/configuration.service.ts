@@ -8,6 +8,7 @@ import { CompanyProfileGetDto, CompanyProfilePostDto } from '../model/configurat
 import { CountryGetDto, CountryPostDto, RegionGetDto, RegionPostDto, ZoneGetDto, ZonePostDto } from '../model/configuration/IAddressDto';
 import { ResponseMessage } from '../model/ResponseMessage.Model';
 import { EducationalFieldGetDto, EducationalFieldPostDto, EducationalLevelGetDto, EducationalLevelPostDto } from '../model/configuration/ICommonDto';
+import { AddHolidayDto, HolidayListDto } from '../model/configuration/IHolidayDto';
 
 export interface toastPayload {
   message: string;
@@ -120,6 +121,20 @@ export class ConfigurationService {
   getGeneralCodes() {
 
     return this.http.get<GeneralCodeDto[]>(this.baseUrl + "/GeneralCodes")
+  }
+
+  //Holiday
+
+  getHolidayList() {
+    return this.http.get<HolidayListDto[]>(this.baseUrl + "/Holiday/GetHolidayList")
+  }
+
+  addHoliday(addHoliday: AddHolidayDto) {
+    return this.http.post<ResponseMessage>(this.baseUrl + "/Holiday/AddHoliday", addHoliday)
+  }
+
+  updateHoliday(addHoliday: AddHolidayDto) {
+    return this.http.put<ResponseMessage>(this.baseUrl + "/Holiday/UpdateHoliday", addHoliday)
   }
 
 }

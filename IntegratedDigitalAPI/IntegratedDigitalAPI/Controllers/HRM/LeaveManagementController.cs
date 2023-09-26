@@ -1,6 +1,7 @@
 ﻿using Implementation.Helper;
 using IntegratedImplementation.DTOS.HRM;
 using IntegratedImplementation.Interfaces.HRM;
+using IntegratedImplementation.Services.HRM;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -75,5 +76,25 @@ namespace IntegratedDigitalAPI.Controllers.HRM
             }
         }
 
+        [HttpGet]
+        [ProducesResponseType(typeof(LeavesTakenDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetEmployeeLeaves(Guid employeeId)
+        {
+            return Ok(await _leaveService.GetEmployeeLeaves(employeeId));
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(LeavesTakenDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetLeaveRequests()
+        {
+            return Ok(await _leaveService.GetLeaveRequests());
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(LeavesTakenDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetAnnualLeaveBalance(Guid employeeId)
+        {
+            return Ok(await _leaveService.GetAnnualLeaveBalance(employeeId));
+        }
     }
 }

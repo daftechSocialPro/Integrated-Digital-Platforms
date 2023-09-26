@@ -33,9 +33,9 @@ namespace IntegratedImplementation.Services.Vacancy
 
 
 
-        public async Task<List<ApplicantListDto>> GetApplicantList()
+        public async Task<List<ApplicantListDto>> GetApplicantList(Guid vacancyId)
         {
-            return await _dbContext.ApplicantVacancies.Include(x => x.Applicant).Include(x => x.Vacancy).AsNoTracking().Select(x => new ApplicantListDto
+            return await _dbContext.ApplicantVacancies.Include(x => x.Applicant).Include(x => x.Vacancy).Where(x => x.VacancyId == vacancyId).AsNoTracking().Select(x => new ApplicantListDto
             {
                 Id = x.Id,
                 ApplicantStatus = x.ApplicantStatus.ToString(),

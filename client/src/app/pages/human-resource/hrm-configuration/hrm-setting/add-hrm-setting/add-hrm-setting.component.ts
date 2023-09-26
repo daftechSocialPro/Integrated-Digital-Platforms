@@ -53,12 +53,9 @@ export class AddHrmSettingComponent implements OnInit {
     if (this.hrmSettingForm.valid){
 
       var hrmSettingPost : HrmSettingDto ={
-        
-       
         generalSetting : this.hrmSettingForm.value.generalSetting,
         value : this.hrmSettingForm.value.value,
         createdById : this.user.userId
-
       }
 
  

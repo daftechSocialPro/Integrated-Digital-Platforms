@@ -23,9 +23,9 @@ namespace IntegratedDigitalAPI.Controllers.Vacancy
 
         [HttpGet]
         [ProducesResponseType(typeof(ApplicantListDto), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetApplicantList()
+        public async Task<IActionResult> GetApplicantList(Guid vacancyId)
         {
-            return Ok(await _applicantService.GetApplicantList());
+            return Ok(await _applicantService.GetApplicantList(vacancyId));
         }
 
         [HttpPost]

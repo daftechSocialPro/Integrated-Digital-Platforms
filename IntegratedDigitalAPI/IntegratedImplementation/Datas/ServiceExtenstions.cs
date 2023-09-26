@@ -2,9 +2,11 @@
 using Implementation.Services.Authentication;
 using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedImplementation.Interfaces.HRM;
+using IntegratedImplementation.Interfaces.Notification;
 using IntegratedImplementation.Interfaces.Vacancy;
 using IntegratedImplementation.Services.Configuration;
 using IntegratedImplementation.Services.HRM;
+using IntegratedImplementation.Services.Notification;
 using IntegratedImplementation.Services.Vacancy;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -20,6 +22,9 @@ namespace IntegratedImplementation.Datas
         public static IServiceCollection AddCoreBusiness(this IServiceCollection services)
         {
             services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IHolidayService, HolidayService>();
+
+            services.AddScoped<IHrmNotificationService, HrmNotificationService>();
             //hrm services 
             services.AddScoped<IDepartmentService, DepartmentService>();
             services.AddScoped<IPositionService, PositionService>();

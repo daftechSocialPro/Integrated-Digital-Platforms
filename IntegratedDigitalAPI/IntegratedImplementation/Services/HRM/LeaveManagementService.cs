@@ -173,6 +173,8 @@ namespace IntegratedImplementation.Services.HRM
             return new ResponseMessage { Success = true, Message = "Approved Request Successfully" };
         }
 
+       
+
         public async Task<List<LeavesTakenDto>> GetEmployeeLeaves(Guid employeeId)
         {
             return await _dbContext.EmployeeLeaves.Include(x => x.Employee).Include(x => x.LeaveType).AsNoTracking()
@@ -183,7 +185,23 @@ namespace IntegratedImplementation.Services.HRM
                               FullName = $"{x.Employee.FirstName} {x.Employee.MiddleName} {x.Employee.LastName}",
                               BackToWorkOn = x.ToDate,
                               LeaveDate = x.FromDate,
-                              TypeOfLeave = x.LeaveType.Name
+                              TypeOfLeave = x.LeaveType.Name,
+                              LeaveStatus = x.LeaveStatus.ToString()
+                          }).ToListAsync();
+        }
+
+        public async Task<List<LeavesTakenDto>> GetLeaveRequests()
+        {
+            return await _dbContext.EmployeeLeaves.Include(x => x.Employee).Include(x => x.LeaveType).AsNoTracking()
+                          .Where(x => x.LeaveStatus == LeaveRequestStatus.PENDING)
+                          .Select(x => new LeavesTakenDto
+                          {
+                              Id = x.Id,
+                              FullName = $"{x.Employee.FirstName} {x.Employee.MiddleName} {x.Employee.LastName}",
+                              BackToWorkOn = x.ToDate,
+                              LeaveDate = x.FromDate,
+                              TypeOfLeave = x.LeaveType.Name,
+                              LeaveStatus = x.LeaveStatus.ToString()
                           }).ToListAsync();
         }
 
@@ -198,6 +216,26 @@ namespace IntegratedImplementation.Services.HRM
             await _dbContext.SaveChangesAsync();
 
             return new ResponseMessage { Success = true, Message = "Rejected Request Successfully" };
+        }
+
+        public async Task<AnnualLeaveBalanceDto> GetAnnualLeaveBalance(Guid employeeId)
+        {
+            var leaveBalance = await _dbContext.LeaveBalances.AsNoTracking()
+                        .Where(x => x.EmployeeId == employeeId)
+                        .Select(x => new AnnualLeaveBalanceDto
+                        {
+                            CurrentBalance = x.CurrentBalance,
+                            LeavesTaken = x.LeavesTaken,
+                            PreviousBalance = x.PreviousBalance,
+                            PreviousExpDate = x.PreviousExpDate,
+                            TotalBalance = x.TotalBalance
+                        }).FirstOrDefaultAsync();
+
+            if (leaveBalance == null)
+                return new AnnualLeaveBalanceDto();
+
+            return leaveBalance;
+
         }
     }
 }
