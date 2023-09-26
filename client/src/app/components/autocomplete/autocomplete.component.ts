@@ -11,16 +11,19 @@ export class AutocompleteComponent {
   @Input() data: SelectList[] = [];
   @Input() selectedId!: string;
   @Input() placeHolder!:string;
-
+  @Input() isDisabled : boolean = false
   placeholder!: String;
   selectedValue: any
+
+
 
   @Output() selectedItem = new EventEmitter<any>();
 
 
-  selectEvent(item: string) {
+  selectEvent(item: any) {
 
-    this.selectedItem.emit(item)
+
+    this.selectedItem.emit(item.id)
   }
 
   onChangeSearch(val: string) {
@@ -36,13 +39,13 @@ export class AutocompleteComponent {
   ngOnInit() {
 
     let key = this.data.filter(t => t.id === this.selectedId)
-
-    if (key[0] != null) {
-      this.placeholder = key[0].name
-      this.selectEvent(key[0].id)
-    }   
-    
+    if (key[0] != null) {   
+      this.placeHolder = key[0].name
+      this.selectEvent(key[0].id)    
+    }  
   }
+
+
 
 }
 

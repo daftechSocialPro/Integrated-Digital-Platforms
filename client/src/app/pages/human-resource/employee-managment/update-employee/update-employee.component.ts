@@ -63,7 +63,7 @@ export class UpdateEmployeeComponent implements OnInit {
       maritalStatus: [this.selectedEmployee.maritalStatus, Validators.required],
       employmentType: [this.selectedEmployee.employmentType, Validators.required],
       paymentType: [this.selectedEmployee.paymentType, Validators.required],
-      employmentDate: [this.selectedEmployee.employmentDate.toString().split(' ')[0], Validators.required],
+      employmentDate: [this.selectedEmployee.employmentDate.toString().split('T')[0], Validators.required],
       employmentStatus: [this.selectedEmployee.employmentStatus, Validators.required],
       contractDays: [this.selectedEmployee.contractDays?this.selectedEmployee.contractDays:0],
       pensionCode: [this.selectedEmployee.pensionCode],

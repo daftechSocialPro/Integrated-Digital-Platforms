@@ -8,8 +8,9 @@ import { ResponseMessage } from '../model/ResponseMessage.Model';
 import { PositionGetDto, PositionPostDto } from '../model/HRM/IPositionDto';
 import { EmployeeEducationGetDto, EmployeeEducationPostDto, EmployeeFamilyGetDto, EmployeeFamilyPostDto, EmployeeGetDto, EmployeeHistoryDto, EmployeeHistoryPostDto, EmployeePostDto } from '../model/HRM/IEmployeeDto';
 import { SelectList } from '../model/common';
-import { LeaveTypeGetDto, LeaveTypePostDto } from '../model/HRM/ILeaveDto';
+import { LeaveBalancePostDto, LeaveRequestPostDto, LeaveTypeGetDto, LeaveTypePostDto } from '../model/HRM/ILeaveDto';
 import { HrmSettingDto } from '../model/HRM/IHrmSettingDto';
+import { UserService } from './user.service';
 
 export interface toastPayload {
     message: string;
@@ -24,7 +25,7 @@ export interface toastPayload {
 export class HrmService {
 
     baseUrl: string = environment.baseUrl;
-    constructor(private toastr: ToastrService, private http: HttpClient, private sanitizer: DomSanitizer) { }
+    constructor(private userService : UserService, private http: HttpClient, private sanitizer: DomSanitizer) { }
 
     //departments
 
@@ -154,6 +155,21 @@ export class HrmService {
         return this.http.delete<ResponseMessage>(this.baseUrl + "/Employee/DeleteEmployeeEducation?employeeEducationId=" + employeeId)
     }
 
+    //Leave 
+
+    requestLeave (requestPost : LeaveRequestPostDto){
+        requestPost.createdById = this.userService.getCurrentUser().userId
+
+        return this.http.post<ResponseMessage>(this.baseUrl+"/LeaveManagement/AddLeaveRequest",requestPost)
+    }
+
+    addLeaveBalance (leaveBalance :LeaveBalancePostDto) {
+
+        leaveBalance.createdById = this.userService.getCurrentUser().userId
+
+        return this.http.post<ResponseMessage>(this.baseUrl+"/LeaveManagement/AddLeaveBalance",leaveBalance)
+   
+    }
 
 
 

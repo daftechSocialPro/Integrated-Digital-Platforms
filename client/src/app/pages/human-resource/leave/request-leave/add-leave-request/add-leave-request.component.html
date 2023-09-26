@@ -1,0 +1,79 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Add Leave Request</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Leave Request Detail</h5>
+            <div class="row">
+                <div class="col-lg-12">
+                    <form class="" [formGroup]="LeaveRequestForm" (ngSubmit)="submit()">
+
+
+                        <div class="modal-body">
+                            <div class="row g-3">
+
+                                <div style="display: flex; gap: 10px;">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1"
+                                          (change)="handleChange(true)" [checked]="isDisabled=== true">
+                                        <label class="form-check-label" for="gridRadios1">For Self</label>
+                                      </div>
+                                      <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2"
+                                          (change)="handleChange(false)" [checked]="isDisabled=== false">
+                                        <label class="form-check-label" for="gridRadios2">For Other</label>
+                                      </div>
+                                  </div>
+                                
+                                
+                                <div class="col-md-6">
+                                     
+                                    <app-autocomplete *ngIf="employeeList.length>0"  [isDisabled]="isDisabled" [data]="employeeList" [selectedId]="selectEmployeee"
+                                        (selectedItem)="selectEmployee($event)"></app-autocomplete>
+                                       
+
+                                </div>
+
+                                <div class="col-md-6">
+
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" id="LeaveTypes" formControlName="leaveTypeId"
+                                            aria-label="State">
+                                            <option></option>
+                                            <option *ngFor="let item of LeaveTypes" [value]="item.id">{{item.name}}
+                                            </option>
+                                        </select>
+                                        <label for="LeaveTypes">Leave Types</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="date" class="form-control" id="fromDate" placeholder="fromDate"
+                                            formControlName="fromDate">
+                                        <label for="fromDate">From Date</label>
+                                    </div>
+                                </div>         
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="number" class="form-control" id="totalDate" placeholder="totalDate"
+                                            formControlName="totalDate">
+                                        <label for="totalDate">Total Date</label>
+                                    </div>
+                                </div>                                             
+                            </div>
+                        </div>
+                        <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
+                                (click)="closeModal()">Close</button>
+                            <button type="button" type="submit" [disabled]="!LeaveRequestForm.valid"
+                                class="btn btn-outline-primary">Create</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

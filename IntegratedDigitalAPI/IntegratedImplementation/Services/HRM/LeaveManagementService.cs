@@ -45,6 +45,9 @@ namespace IntegratedImplementation.Services.HRM
                 TotalBalance = addLeaveBalance.CurrentBalance + addLeaveBalance.PreviousBalance,
             };
 
+            await _dbContext.AddAsync(balance);
+            await _dbContext.SaveChangesAsync();
+
             return new ResponseMessage { Success = true, Message = "Leave Balance Added Succesfully" };
         }
 

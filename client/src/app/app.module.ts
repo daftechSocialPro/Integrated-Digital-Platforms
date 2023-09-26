@@ -117,6 +117,11 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { UpdateRolesComponent } from './pages/configuration/user-management/update-roles/update-roles.component';
+import { LeaveComponent } from './pages/human-resource/leave/leave.component';
+import { RequestLeaveComponent } from './pages/human-resource/leave/request-leave/request-leave.component';
+import { LeaveRequestsComponent } from './pages/human-resource/leave/leave-requests/leave-requests.component';
+import { AddLeaveRequestComponent } from './pages/human-resource/leave/request-leave/add-leave-request/add-leave-request.component';
+import { LeaveBalanceComponent } from './pages/human-resource/leave/request-leave/leave-balance/leave-balance.component';
 
 @NgModule({
   declarations: [
@@ -211,6 +216,12 @@ import { UpdateRolesComponent } from './pages/configuration/user-management/upda
      AddUserComponent,
      AutocompleteComponent,
      UpdateRolesComponent,
+     LeaveComponent,
+     RequestLeaveComponent,
+     LeaveRequestsComponent,
+     AddLeaveRequestComponent,
+     LeaveBalanceComponent,
+    
      
      
   ],

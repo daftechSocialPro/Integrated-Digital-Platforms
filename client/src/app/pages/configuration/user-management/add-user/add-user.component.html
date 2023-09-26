@@ -12,7 +12,8 @@
                     <div class="row g-3">
 
 
-                        <div class="col-md-6"> <label for="inputName5" class="form-label">Employee</label>
+                        <div class="col-md-6">
+                            
 
                             <app-autocomplete *ngIf="employeeList.length>0" [data]="employeeList"
                                 (selectedItem)="selectEmployee($event)"></app-autocomplete>

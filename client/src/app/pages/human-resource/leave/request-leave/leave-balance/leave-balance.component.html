@@ -1,0 +1,86 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Add Leave Balance</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Leave Balance Detail</h5>
+            <div class="row">
+                <div class="col-lg-12">
+                    <form class="" [formGroup]="LeaveBalanceForm" (ngSubmit)="submit()">
+
+
+                        <div class="modal-body">
+                            <div class="row g-3">
+
+                                <div style="display: flex; gap: 10px;">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1"
+                                          (change)="handleChange(true)" [checked]="isDisabled=== true">
+                                        <label class="form-check-label" for="gridRadios1">For Self</label>
+                                      </div>
+                                      <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2"
+                                          (change)="handleChange(false)" [checked]="isDisabled=== false">
+                                        <label class="form-check-label" for="gridRadios2">For Other</label>
+                                      </div>
+                                  </div>
+                                
+                                
+                                <div class="col-md-6">
+                                     
+                                    <app-autocomplete *ngIf="employeeList.length>0"  [isDisabled]="isDisabled" [data]="employeeList" [selectedId]="selectEmployeee"
+                                        (selectedItem)="selectEmployee($event)"></app-autocomplete>
+                                       
+
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="number" class="form-control" id="currentBalance" placeholder="currentBalance"
+                                            formControlName="currentBalance">
+                                        <label for="currentBalance">Current Balance</label>
+                                    </div>
+                                
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <input type="number" class="form-control" id="previousBalance" placeholder="previousBalance"
+                                            formControlName="previousBalance">
+                                        <label for="previousBalance">Previous Balance</label>
+                                    </div>
+                                
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <input type="date" class="form-control" id="previousExpDate" placeholder="previousExpDate"
+                                            formControlName="previousExpDate">
+                                        <label for="previousExpDate">Previous ExpDate</label>
+                                    </div>
+                                
+                                </div>
+
+                                
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <input type="number" class="form-control" id="leavesTaken" placeholder="leavesTaken"
+                                            formControlName="leavesTaken">
+                                        <label for="leavesTaken">Leaves Taken</label>
+                                    </div>
+                                </div>                                             
+                            </div>
+                        </div>
+                        <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
+                                (click)="closeModal()">Close</button>
+                            <button type="button" type="submit" [disabled]="!LeaveBalanceForm.valid"
+                                class="btn btn-outline-primary">Create</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -48,4 +48,6 @@ export class DropDownService {
 
         return this.http.get<SelectList[]>(this.baseUrl+"/DropDown/GetHrmSettingDropDownList")
     }
+
+  
 }

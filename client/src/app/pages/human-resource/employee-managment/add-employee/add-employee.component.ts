@@ -19,8 +19,6 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class AddEmployeeComponent implements OnInit {
 
-
-
   imagePath: any=null;
   EmployeeForm !: FormGroup;
   user !: UserView;
@@ -29,7 +27,6 @@ export class AddEmployeeComponent implements OnInit {
   countries !: SelectList[];
   regions!: SelectList[];
   zones ! : SelectList[];
-
   fileGH! : File;
 
   constructor(
