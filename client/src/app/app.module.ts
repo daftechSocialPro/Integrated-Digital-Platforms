@@ -117,6 +117,8 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { UpdateRolesComponent } from './pages/configuration/user-management/update-roles/update-roles.component';
+import { HolidaySettingComponent } from './pages/configuration/holiday-setting/holiday-setting.component';
+import { AddHolidayComponent } from './pages/configuration/holiday-setting/add-holiday/add-holiday.component';
 
 @NgModule({
   declarations: [
@@ -211,6 +213,8 @@ import { UpdateRolesComponent } from './pages/configuration/user-management/upda
      AddUserComponent,
      AutocompleteComponent,
      UpdateRolesComponent,
+     HolidaySettingComponent,
+     AddHolidayComponent,
      
      
   ],

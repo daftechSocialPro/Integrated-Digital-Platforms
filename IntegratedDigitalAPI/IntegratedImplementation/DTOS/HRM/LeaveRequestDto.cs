@@ -31,9 +31,20 @@ namespace IntegratedImplementation.DTOS.HRM
     {
         public Guid Id { get; set; }
         public string TypeOfLeave { get; set; } = null!;
+        public string LeaveStatus { get; set; } = null!;
         public string FullName { get; set; } = null!;
         public DateTime LeaveDate { get; set; }
         public DateTime BackToWorkOn { get; set; }
-
     }
+
+    public class AnnualLeaveBalanceDto
+    {
+        public int CurrentBalance { get; set; }
+        public int PreviousBalance { get; set; }
+        public DateTime? PreviousExpDate { get; set; }
+        public int TotalBalance { get; set; }
+        public int LeavesTaken { get; set; }
+    }
+
+
 }
