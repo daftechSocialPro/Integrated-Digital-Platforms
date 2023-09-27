@@ -97,6 +97,25 @@ export class CommonService {
   
     return age;
   }
+  calculateDate(fromDate:Date,toDate:Date): number {
+    const millisecondsPerDay = 24 * 60 * 60 * 1000; // Number of milliseconds in a day
+
+    // Parse the date strings into Date objects
+    const fromDateObj = new Date(fromDate);
+    const toDateObj = new Date(toDate);
+  
+    // Convert the dates to UTC to handle potential timezone differences
+    const fromTime = Date.UTC(fromDateObj.getUTCFullYear(), fromDateObj.getUTCMonth(), fromDateObj.getUTCDate());
+    const toTime = Date.UTC(toDateObj.getUTCFullYear(), toDateObj.getUTCMonth(), toDateObj.getUTCDate());
+  
+    // Calculate the difference in milliseconds
+    const differenceMs = Math.abs(toTime - fromTime);
+  
+    // Convert the difference to days
+    const differenceDays = Math.floor(differenceMs / millisecondsPerDay);
+  
+    return differenceDays;
+  }
 
   convertToDate(dateTimeString: string): string {
     const date = new Date(dateTimeString);

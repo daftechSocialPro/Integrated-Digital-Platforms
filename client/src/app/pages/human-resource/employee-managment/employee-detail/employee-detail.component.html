@@ -1,5 +1,5 @@
 <main id="main" class="main">
-    <div class="pagetitle">
+    <!-- <div class="pagetitle">
         <h1>Employee Managment</h1>
         <nav>
             <ol class="breadcrumb">
@@ -8,7 +8,7 @@
                 <li class="breadcrumb-item active">Employee Detail</li>
             </ol>
         </nav>
-    </div>
+    </div> -->
     <div class="iconcontainer" (click)="employeeList()">
         <i class="bi bi-arrow-left-short"></i>
         <div>Employee List</div>
@@ -16,16 +16,9 @@
 
     <section class="section">
         <div class="card" *ngIf="employee">
-
-
-
-
-
             <div class="employee-details">
-
                 <img [src]="getImagePath(employee.imagePath!)" height="150" alt="user png" style="border-radius: 10px;
                 border: 10px solid #f4f4f4;">
-
 
                 <div class="employee-info mt-2">
 

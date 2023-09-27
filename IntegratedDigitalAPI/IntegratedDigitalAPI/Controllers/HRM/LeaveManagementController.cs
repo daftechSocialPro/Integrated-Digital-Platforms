@@ -50,7 +50,7 @@ namespace IntegratedDigitalAPI.Controllers.HRM
 
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> ApproveRequest([FromBody] Guid leaveId, Guid employeeId)
+        public async Task<IActionResult> ApproveRequest(Guid leaveId, Guid employeeId)
         {
             if (ModelState.IsValid)
             {
@@ -64,7 +64,7 @@ namespace IntegratedDigitalAPI.Controllers.HRM
 
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> RejectRequest([FromBody] Guid leaveId, string remark)
+        public async Task<IActionResult> RejectRequest( Guid leaveId, string remark)
         {
             if (ModelState.IsValid)
             {
@@ -82,6 +82,14 @@ namespace IntegratedDigitalAPI.Controllers.HRM
         {
             return Ok(await _leaveService.GetEmployeeLeaves(employeeId));
         }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(LeavesTakenDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetSingleLeaveRequest(Guid requestId)
+        {
+            return Ok(await _leaveService.GetSingleRequest(requestId));
+        }
+
 
         [HttpGet]
         [ProducesResponseType(typeof(LeavesTakenDto), (int)HttpStatusCode.OK)]
