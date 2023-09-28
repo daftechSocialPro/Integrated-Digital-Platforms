@@ -1,10 +1,12 @@
 ﻿using Azure.Core;
 using Implementation.Helper;
+using IntegratedImplementation.DTOS.Configuration;
 using IntegratedImplementation.DTOS.HRM;
 using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedImplementation.Interfaces.HRM;
 using IntegratedInfrustructure.Data;
 using IntegratedInfrustructure.Model.HRM;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -173,6 +175,69 @@ namespace IntegratedImplementation.Services.HRM
 
             return new ResponseMessage { Success = true, Message = "Approved Successfully" };
 
+        }
+
+        public async Task<List<EmployeeSupervisorsDto>> GetEmployeeSupervisors()
+        {
+            return await _dbContext.EmployeeSupervisors.Include(x => x.Employee)
+                                     .Include(x => x.Supervisor).Include(x => x.SecondSupervisor)
+                                    .AsNoTracking().Select(x =>
+                             new EmployeeSupervisorsDto
+                             {
+                                 Id = x.Id,
+                                 EmployeeName = $"{x.Employee.FirstName} {x.Employee.MiddleName} {x.Employee.LastName}",
+                                 ImmidiateSupervisor = $"{x.Supervisor.FirstName} {x.Supervisor.MiddleName} {x.Supervisor.LastName}",
+                                 SecondSupervisor = $"{x.SecondSupervisor.FirstName} {x.SecondSupervisor.MiddleName} {x.SecondSupervisor.LastName}",
+                             }).ToListAsync();
+        }
+
+        public async Task<List<SelectListDto>> GetToBeSupervisedEmployees()
+        {
+            var EmployeeSelectList = await(from e in _dbContext.Employees
+                                           where !(_dbContext.EmployeeSupervisors.Select(x => x.EmployeeId).Contains(e.Id))
+                                           select new SelectListDto
+                                           {
+                                               Id = e.Id,
+                                               Name = $"{e.FirstName} {e.MiddleName} {e.LastName}"
+
+                                           }).ToListAsync();
+
+            return EmployeeSelectList;
+        }
+
+        public async Task<ResponseMessage> AssignSupervisor(AssignSupervisorDto assignSupervisor)
+        {
+            var exists = await _dbContext.EmployeeSupervisors.AnyAsync(x => x.EmployeeId == assignSupervisor.EmployeeId);
+            if (exists)
+                return new ResponseMessage { Success = false, Message = "Employee Already Exists" };
+
+            EmployeeSupervisors employee = new EmployeeSupervisors()
+            {
+                Id = Guid.NewGuid(),
+                CreatedById = assignSupervisor.CreatedById,
+                CreatedDate = DateTime.Now,
+                EmployeeId = assignSupervisor.EmployeeId,
+                SecondSupervisorId = assignSupervisor.SecondSuprvisorId,
+                SupervisorId = assignSupervisor.SupervisorId,
+                Rowstatus = RowStatus.ACTIVE
+            };
+
+            await _dbContext.EmployeeSupervisors.AddAsync(employee);
+            await _dbContext.SaveChangesAsync();
+
+            return new ResponseMessage { Success = true, Message = "Assigned Successfully!" };
+        }
+
+        public async Task<ResponseMessage> DeleteSupervisee(Guid employeeId)
+        {
+            var exists = await _dbContext.EmployeeSupervisors.FirstOrDefaultAsync(x => x.EmployeeId == employeeId);
+            if (exists == null)
+                return new ResponseMessage { Success = false, Message = "Employee Could Not be found" };
+
+            _dbContext.EmployeeSupervisors.Remove(exists);
+            await _dbContext.SaveChangesAsync();
+
+            return new ResponseMessage { Success = true, Message = "Deleted Successfully!!" };
         }
     }
 }

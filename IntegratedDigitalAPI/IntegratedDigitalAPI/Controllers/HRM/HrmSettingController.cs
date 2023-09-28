@@ -29,6 +29,7 @@ namespace IntegratedDigitalAPI.Controllers.HRM
         {
             return Ok(await _hrmSettingService.GetHrmSettings());
         }
+
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> AddHrmSetting([FromBody] HrmSettingPostDto HrmSettingDto)
@@ -57,5 +58,27 @@ namespace IntegratedDigitalAPI.Controllers.HRM
                 return BadRequest();
             }
         }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(PerformanceSettingDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetPerformanceSettings()
+        {
+            return Ok(await _hrmSettingService.GetPerformanceSettings());
+        }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> AddPerformanceSetting([FromBody] PerformanceSettingDto performanceSetting)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _hrmSettingService.AddPerformanceSetting(performanceSetting));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
     }
 }

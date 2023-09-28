@@ -73,5 +73,37 @@ namespace IntegratedImplementation.Services.HRM
             return new ResponseMessage { Success = false, Message = "Unable To Find HrmSetting" };
         }
 
+        public async Task<List<PerformanceSettingDto>> GetPerformanceSettings()
+        {
+            return await _dbContext.PerformanceSettings.Select(x =>
+                            new PerformanceSettingDto
+                            {
+                                PerformanceMonth = x.PerformanceMonth,
+                                PerformanceIndex = x.PerformanceIndex,
+                                PerformanceEndDate = x.PerformanceEndDate,
+                                PerformanceStartDate = x.PerformanceStartDate,
+                            }).ToListAsync();
+        }
+
+        public async Task<ResponseMessage> AddPerformanceSetting(PerformanceSettingDto performanceSetting)
+        {
+          
+            PerformanceSetting performance = new PerformanceSetting
+            {
+                Id = Guid.NewGuid(),
+                CreatedById = performanceSetting.CreatedById,
+                CreatedDate = DateTime.Now,
+                PerformanceIndex = performanceSetting.PerformanceIndex,
+                PerformanceMonth = performanceSetting.PerformanceMonth,
+                PerformanceStartDate = performanceSetting.PerformanceStartDate,
+                PerformanceEndDate = performanceSetting.PerformanceEndDate,
+                Rowstatus = RowStatus.ACTIVE
+            };
+
+            await _dbContext.PerformanceSettings.AddAsync(performance);
+            await _dbContext.SaveChangesAsync();
+
+            return new ResponseMessage { Success = true, Message = "Added SuccessFully" };
+        }
     }
 }

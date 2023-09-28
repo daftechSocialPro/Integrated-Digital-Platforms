@@ -1,4 +1,5 @@
 ﻿using Implementation.Helper;
+using IntegratedImplementation.DTOS.Configuration;
 using IntegratedImplementation.DTOS.HRM;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,10 @@ namespace IntegratedImplementation.Interfaces.HRM
         public Task<ResponseMessage> TerminateEmployee(Guid employementDetailId, string remark, bool blacListed);
         public Task<List<TerminatedEmployeesDto>> TerminatedEmployeesList();
 
+        public Task<List<EmployeeSupervisorsDto>> GetEmployeeSupervisors();
+        public Task<List<SelectListDto>> GetToBeSupervisedEmployees();
+        public Task<ResponseMessage> AssignSupervisor(AssignSupervisorDto assignSupervisor);
+        public Task<ResponseMessage> DeleteSupervisee(Guid employeeId);
 
     }
 }

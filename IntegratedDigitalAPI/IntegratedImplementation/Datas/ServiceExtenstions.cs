@@ -34,6 +34,8 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<ILeaveManagementService, LeaveManagementService>();
             services.AddScoped<IEmployementDetailService, EmployementDetailService>();
             services.AddScoped<IHrmSettingService, HrmSettingService>();
+            services.AddScoped<IPerformancePlanService,PerformancePlanService>();
+            services.AddScoped<IEmployeePerformanceService, EmployeePerformanceService>();  
 
             #region Vacancy
             services.AddScoped<IVacancyService, VacancyService>();

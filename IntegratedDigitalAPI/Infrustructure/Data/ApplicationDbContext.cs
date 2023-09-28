@@ -22,8 +22,6 @@ namespace IntegratedInfrustructure.Data
   
         public DbSet<RoleCategory> RoleCategories { get; set; }
               
-        
-
         #region configuration
 
         public DbSet<CompanyProfile> CompanyProfiles { get; set; }
@@ -37,7 +35,6 @@ namespace IntegratedInfrustructure.Data
         #endregion
 
         #region HRM
-
         public DbSet<Department> Departments { get; set; }
         public DbSet<EmployeeEducation> EmployeeEducations { get; set; }
         public DbSet<EmployeeFamily> EmployeeFamilies { get; set; }
@@ -51,6 +48,14 @@ namespace IntegratedInfrustructure.Data
         public DbSet<Position> Positions { get; set; }
         public DbSet<HrmSetting> HrmSettings { get; set; }
         public DbSet<ResignationRequest> ResignationRequests { get; set; }
+        public DbSet<EmployeeSupervisors> EmployeeSupervisors { get; set; }
+        public DbSet<PerformanceSetting> PerformanceSettings { get; set; }
+        public DbSet<PerformancePlan> PerformancePlans { get; set; }
+        public DbSet<PerformancePlanDetail> PerformancePlanDetails { get; set; }  
+        public DbSet<EmployeePerformance> EmployeePerformances { get; set; }
+        public DbSet<EmployeePerformancePlan> EmployeePerformancePlans { get; set; }
+        public DbSet<EmployeeDevelopmentPlan> EmployeeDevelopmentPlans { get; set; }
+        public DbSet<EmployeeSupport> EmploeeSupports { get; set; }
 
         #endregion
 
@@ -63,11 +68,6 @@ namespace IntegratedInfrustructure.Data
         public DbSet<VacancyList> VacancyLists { get; set; }
         public DbSet<VacancyDocuments> VacancyDocuments { get; set; }
         #endregion
-
-
-
-
-
 
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
