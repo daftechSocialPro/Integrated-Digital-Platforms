@@ -15,12 +15,10 @@
             <div class="card">
                <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
                   <img [src]="getImage(Employee.imagePath!)" alt="Profile" class="rounded-circle">
-                  <h2>{{Employee.firstName}} 
-                      {{Employee.lastName}}</h2>
+                  <h2>{{Employee.firstName}}
+                     {{Employee.lastName}}</h2>
                   <h3 class="text-center">
                      {{user.role}}
-
-                     Leave balance ?
 
                   </h3>
                </div>
@@ -34,11 +32,11 @@
                            data-bs-target="#profile-overview">Overview</button></li>
                      <li class="nav-item"> <button class="nav-link" data-bs-toggle="tab"
                            data-bs-target="#profile-edit">Edit Profile</button></li>
-                           <li class="nav-item"> <button class="nav-link" data-bs-toggle="tab"
-                              data-bs-target="#profile-change-password">Change Password</button></li>
-   
-                    
-                  
+                     <li class="nav-item"> <button class="nav-link" data-bs-toggle="tab"
+                           data-bs-target="#profile-change-password">Change Password</button></li>
+
+
+
                   </ul>
                   <div class="tab-content pt-2">
                      <div class="tab-pane fade show active profile-overview" id="profile-overview">
@@ -96,9 +94,9 @@
                         <form [formGroup]="EmployeeForm" (submit)="submit()">
                            <div class="row">
 
-                          
-                           <div class="col-3">
-                              
+
+                              <div class="col-3">
+
                                  <img [src]="imageURL?imageURL:'assets/img/profile.jpg'" alt="Profile">
                                  <input #file (change)="showPreview($event)" type="file" style="display: none;"
                                     accept="image/*" />
@@ -107,46 +105,48 @@
                                        title="Upload new profile image">
                                        <i class="bi bi-upload"></i> Upload Image</a>
                                  </div>
-                             
+
+                              </div>
+
+                              <div class="col-8">
+                                 <div class="row mb-3">
+                                    <label for="Title" class="col-md-4 col-lg-3 col-form-label">First Name</label>
+                                    <div class="col-md-8 col-lg-9">
+                                       <input type="text" class="form-control" id="title" formControlName="firstName">
+                                    </div>
+                                 </div>
+                                 <div class="row mb-3">
+                                    <label for="middleName" class="col-md-4 col-lg-3 col-form-label">Middle Name</label>
+                                    <div class="col-md-8 col-lg-9">
+                                       <input type="text" class="form-control" id="middleName"
+                                          formControlName="middleName">
+                                    </div>
+                                 </div>
+                                 <div class="row mb-3">
+                                    <label for="lastName" class="col-md-4 col-lg-3 col-form-label">Last Name</label>
+                                    <div class="col-md-8 col-lg-9">
+                                       <input type="text" class="form-control" id="lastName" formControlName="lastName">
+                                    </div>
+                                 </div>
+                                 <div class="row mb-3">
+                                    <label for="email" class="col-md-4 col-lg-3 col-form-label">Email</label>
+                                    <div class="col-md-8 col-lg-9">
+                                       <input type="text" class="form-control" id="email" formControlName="email">
+                                    </div>
+                                 </div>
+
+
+                                 <div class="row mb-3">
+                                    <label for="PhoneNumber"
+                                       class="col-md-4 col-lg-3 col-form-label">PhoneNumber</label>
+                                    <div class="col-md-8 col-lg-9"> <input type="text" formControlName="phoneNumber"
+                                          class="form-control" id="PhoneNumber"></div>
+                                 </div>
+
+                              </div>
                            </div>
 
-                           <div class="col-8">
-                              <div class="row mb-3">
-                                 <label for="Title" class="col-md-4 col-lg-3 col-form-label">First Name</label>
-                                 <div class="col-md-8 col-lg-9">
-                                    <input type="text" class="form-control" id="title" formControlName="firstName">
-                                 </div>
-                              </div>
-                              <div class="row mb-3">
-                                 <label for="middleName" class="col-md-4 col-lg-3 col-form-label">Middle Name</label>
-                                 <div class="col-md-8 col-lg-9">
-                                    <input type="text" class="form-control" id="middleName" formControlName="middleName">
-                                 </div>
-                              </div>
-                              <div class="row mb-3">
-                                 <label for="lastName" class="col-md-4 col-lg-3 col-form-label">Last Name</label>
-                                 <div class="col-md-8 col-lg-9">
-                                    <input type="text" class="form-control" id="lastName" formControlName="lastName">
-                                 </div>
-                              </div>
-                              <div class="row mb-3">
-                                 <label for="email" class="col-md-4 col-lg-3 col-form-label">Email</label>
-                                 <div class="col-md-8 col-lg-9">
-                                    <input type="text" class="form-control" id="email" formControlName="email">
-                                 </div>
-                              </div>
-   
-   
-                              <div class="row mb-3">
-                                 <label for="PhoneNumber" class="col-md-4 col-lg-3 col-form-label">PhoneNumber</label>
-                                 <div class="col-md-8 col-lg-9"> <input type="text" formControlName="phoneNumber"
-                                       class="form-control" id="PhoneNumber"></div>
-                              </div>
-   
-                           </div>
-                        </div>
-
-<hr/>
+                           <hr />
                            <div class="text-end"> <button type="submit" [disabled]="!EmployeeForm.valid"
                                  class="btn btn-outline-secondary">Update
                                  Changes</button></div>

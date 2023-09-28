@@ -124,7 +124,11 @@ import { AddLeaveRequestComponent } from './pages/human-resource/leave/request-l
 import { LeaveBalanceComponent } from './pages/human-resource/leave/request-leave/leave-balance/leave-balance.component';
 import { HolidaySettingComponent } from './pages/configuration/holiday-setting/holiday-setting.component';
 import { AddHolidayComponent } from './pages/configuration/holiday-setting/add-holiday/add-holiday.component';
-
+import { BadgeModule } from 'primeng/badge';
+import { RequestDetailComponent } from './pages/human-resource/leave/leave-requests/request-detail/request-detail.component';
+import { CustomConfirmationComponent } from './pages/human-resource/leave/leave-requests/custom-confirmation/custom-confirmation.component';
+import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 @NgModule({
   declarations: [
     AppComponent,
@@ -226,6 +230,8 @@ import { AddHolidayComponent } from './pages/configuration/holiday-setting/add-h
     
      HolidaySettingComponent,
      AddHolidayComponent,
+     RequestDetailComponent,
+     CustomConfirmationComponent,
      
      
   ],
@@ -248,7 +254,9 @@ import { AddHolidayComponent } from './pages/configuration/holiday-setting/add-h
     NgxPaginationModule,
     AutocompleteLibModule,
     AutoCompleteModule,
-   
+    DynamicDialogModule,
+    OverlayPanelModule,
+    BadgeModule,   
     ToastrModule.forRoot({
       preventDuplicates: true,
     })
@@ -260,7 +268,8 @@ import { AddHolidayComponent } from './pages/configuration/holiday-setting/add-h
       multi: true,
     },
     ConfirmationService,
-    MessageService
+    MessageService,
+    DialogService
     
   ],
   bootstrap: [AppComponent]

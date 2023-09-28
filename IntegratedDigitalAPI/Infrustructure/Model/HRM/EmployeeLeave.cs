@@ -20,6 +20,8 @@ namespace IntegratedInfrustructure.Model.HRM
         public LeaveRequestStatus LeaveStatus { get; set; }
         public DateTime? ApprovedDate { get; set; }
         public Guid? ApproverEmployeeId { get; set; }
+
+        public string ? Reason { get; set; }
         public string? Remark { get; set; }
         public virtual EmployeeList ApproverEmployee { get; set; } = null!;
     }

@@ -119,6 +119,7 @@ namespace IntegratedImplementation.Services.HRM
                 TotalDate = leaveRequestDto.TotalDate,
                 LeaveTypeId = leaveRequestDto.LeaveTypeId,
                 LeaveStatus = LeaveRequestStatus.PENDING,
+                Reason=leaveRequestDto.Reason,
             };
 
             await _dbContext.EmployeeLeaves.AddAsync(empLeave);
@@ -134,7 +135,7 @@ namespace IntegratedImplementation.Services.HRM
 
         public async Task<ResponseMessage> ApproveRequest(Guid leaveId, Guid employeeId)
         {
-            var currentRequest = await _dbContext.EmployeeLeaves.FirstOrDefaultAsync(x => x.Id == leaveId && x.LeaveStatus == LeaveRequestStatus.PENDING);
+            var currentRequest = await _dbContext.EmployeeLeaves.Include(x=>x.LeaveType).FirstOrDefaultAsync(x => x.Id == leaveId && x.LeaveStatus == LeaveRequestStatus.PENDING);
             if (currentRequest == null)
                 return new ResponseMessage { Success = false, Message = "Request Could not be found" };
 
@@ -184,9 +185,12 @@ namespace IntegratedImplementation.Services.HRM
                               Id = x.Id,
                               FullName = $"{x.Employee.FirstName} {x.Employee.MiddleName} {x.Employee.LastName}",
                               BackToWorkOn = x.ToDate,
+                              EmployeeId = x.EmployeeId,
                               LeaveDate = x.FromDate,
                               TypeOfLeave = x.LeaveType.Name,
-                              LeaveStatus = x.LeaveStatus.ToString()
+                              LeaveStatus = x.LeaveStatus.ToString(),
+                              Reason = x.Reason,
+                              Remark = x.Remark
                           }).ToListAsync();
         }
 
@@ -199,10 +203,43 @@ namespace IntegratedImplementation.Services.HRM
                               Id = x.Id,
                               FullName = $"{x.Employee.FirstName} {x.Employee.MiddleName} {x.Employee.LastName}",
                               BackToWorkOn = x.ToDate,
+                              EmployeeId= x.EmployeeId,
                               LeaveDate = x.FromDate,
                               TypeOfLeave = x.LeaveType.Name,
-                              LeaveStatus = x.LeaveStatus.ToString()
+                              LeaveStatus = x.LeaveStatus.ToString(),
+                              Reason = x.Reason,
+                              Remark = x.Remark
                           }).ToListAsync();
+        }
+
+      public async  Task<LeavesTakenDto> GetSingleRequest(Guid Id)
+        {
+            var request = await _dbContext.EmployeeLeaves.Include(x => x.Employee).Include(x => x.LeaveType).AsNoTracking()
+                      .Where(x => x.Id == Id)
+                      .Select(x => new LeavesTakenDto
+                      {
+                          Id = x.Id,
+                          FullName = $"{x.Employee.FirstName} {x.Employee.MiddleName} {x.Employee.LastName}",
+                          BackToWorkOn = x.ToDate,
+                          EmployeeId = x.EmployeeId,
+                          LeaveDate = x.FromDate,
+                          TypeOfLeave = x.LeaveType.Name,
+                          Reason = x.Reason,
+                          Remark = x.Remark,
+                          LeaveStatus = x.LeaveStatus.ToString()
+                      }).ToListAsync();
+
+            if (request!=null)
+            {
+                return  request.FirstOrDefault();
+            }
+            else
+            {
+                return new LeavesTakenDto();
+            }
+
+
+
         }
 
         public async Task<ResponseMessage> RejectRequest(Guid leaveId, string remark)

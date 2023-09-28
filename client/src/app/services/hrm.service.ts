@@ -8,7 +8,7 @@ import { ResponseMessage } from '../model/ResponseMessage.Model';
 import { PositionGetDto, PositionPostDto } from '../model/HRM/IPositionDto';
 import { EmployeeEducationGetDto, EmployeeEducationPostDto, EmployeeFamilyGetDto, EmployeeFamilyPostDto, EmployeeGetDto, EmployeeHistoryDto, EmployeeHistoryPostDto, EmployeePostDto } from '../model/HRM/IEmployeeDto';
 import { SelectList } from '../model/common';
-import { LeaveBalancePostDto, LeaveRequestPostDto, LeaveTypeGetDto, LeaveTypePostDto } from '../model/HRM/ILeaveDto';
+import { AppliedLeavesGetDto, LeaveBalanceGetDto, LeaveBalancePostDto, LeaveRequestPostDto, LeaveTypeGetDto, LeaveTypePostDto } from '../model/HRM/ILeaveDto';
 import { HrmSettingDto } from '../model/HRM/IHrmSettingDto';
 import { UserService } from './user.service';
 
@@ -171,6 +171,39 @@ export class HrmService {
    
     }
 
+    getLeaveBalance (employeeId : string ){
+    
+        return this.http.get<LeaveBalanceGetDto>(this.baseUrl+`/LeaveManagement/GetAnnualLeaveBalance?employeeId=${employeeId}`)  
+    }
+
+    getAppliedLeaves(employeeId : string){
+
+        return this.http.get<AppliedLeavesGetDto[]>(this.baseUrl+`/LeaveManagement/GetEmployeeLeaves?employeeId=${employeeId}`)
+    }
+    getLeaveRequests(){
+
+        return this.http.get<AppliedLeavesGetDto[]>(this.baseUrl+`/LeaveManagement/GetLeaveRequests`)
+    }
+    getSingleLeaveRequest(requestId: string){
+
+        return this.http.get<AppliedLeavesGetDto>(this.baseUrl+`/LeaveManagement/GetSingleLeaveRequest?requestId=${requestId}`)
+    }
+
+    approveLeaveRequest (leaveId :string){
+        
+        let employeeId = this.userService.getCurrentUser().employeeId
+        return this.http.post<ResponseMessage>(this.baseUrl+`/LeaveManagement/ApproveRequest?leaveId=${leaveId}&employeeId=${employeeId}`,{})
+   
+    }
+    rejectLeaveRequest (leaveId :string,remark:string){        
+     
+        return this.http.post<ResponseMessage>(this.baseUrl+`/LeaveManagement/RejectRequest?leaveId=${leaveId}&remark=${remark}`,{})
+   
+    }
+
+ 
+    
+    
 
 
 

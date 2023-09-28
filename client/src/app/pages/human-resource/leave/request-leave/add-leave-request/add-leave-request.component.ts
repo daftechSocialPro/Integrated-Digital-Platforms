@@ -46,7 +46,8 @@ export class AddLeaveRequestComponent implements OnInit {
      
       leaveTypeId: ['', Validators.required],
       totalDate: ['', Validators.required],
-      fromDate: ['', Validators.required]
+      fromDate: ['', Validators.required],
+      reason:['']
     })
   }
 
@@ -90,7 +91,8 @@ export class AddLeaveRequestComponent implements OnInit {
         employeeId:this.selectEmployeee,
         leaveTypeId: this.LeaveRequestForm.value.leaveTypeId,
         fromDate: this.LeaveRequestForm.value.fromDate,
-        totalDate: this.LeaveRequestForm.value.totalDate
+        totalDate: this.LeaveRequestForm.value.totalDate,
+        reason:this.LeaveRequestForm.value.reason
 
       }
       console.log(leaveRequestPost)

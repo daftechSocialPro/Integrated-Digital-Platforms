@@ -28,6 +28,7 @@ export interface LeaveRequestPostDto {
     leaveTypeId: string,
     fromDate: Date,
     totalDate: Number
+    reason?:string
 
 }
 
@@ -41,3 +42,22 @@ export interface LeaveBalancePostDto {
     leavesTaken: number
 }
 
+export interface LeaveBalanceGetDto {
+    currentBalance: number,
+    previousBalance: number,
+    previousExpDate: Date,
+    totalBalance: number,
+    leavesTaken: number
+}
+export interface AppliedLeavesGetDto{
+
+    id: string,
+    employeeId : string ,
+    typeOfLeave: string,
+    leaveStatus: string,
+    fullName: string,
+    leaveDate: Date,
+    backToWorkOn: Date,
+    remark:string,
+    reason:string
+}

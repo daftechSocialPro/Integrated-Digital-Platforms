@@ -1,6 +1,4 @@
-<div class="row p-2">
 
-</div>
 
 
 
@@ -12,9 +10,9 @@
                 <h5 class="card-title">Leaves Overview</h5>
                 <div class="divider"></div>
 
-                <h5>Total Leave <span>- 45 days</span></h5>
-                <h5>Used <span>- 12 days </span></h5>
-                <h5>Balance <span>- 33 days</span> </h5>
+                <h5>Total Annual Leave <span>- {{LeaveBalance&&LeaveBalance.totalBalance}} days</span></h5>
+                <h5>Used <span>- {{LeaveBalance&&LeaveBalance.leavesTaken}} days </span></h5>
+                <h5>Balance <span>- {{LeaveBalance&&LeaveBalance.currentBalance}} days</span> </h5>
                 <div class="col-lg-12 text-center  p-2">
                     <button type="button" class="btn btn-outline-primary" (click)="addLeavebalance()"><i
                             class="bi bi-plus me-1"></i>
@@ -37,7 +35,7 @@
             <div class="card-body">
                 <h5 class="card-title">Applied Leaves</h5>
 
-                <p-table [value]="leaves" [paginator]="true" [rows]="5" [showCurrentPageReport]="true"
+                <p-table [value]="AppliedLeaves" [paginator]="true" [rows]="5" [showCurrentPageReport]="true"
                     [tableStyle]="{ 'min-width': '50rem' }"
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                     [rowsPerPageOptions]="[5, 25, 50]" styleClass="p-datatable-sm">
@@ -47,16 +45,29 @@
                             <th>From </th>
                             <th>To</th>
                             <th>Status </th>
-                            <!-- <th>Action</th> -->
-
+                            <th></th>
+                       
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-leave>
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>{{leave.typeOfLeave}}</td>
+                            <td>{{leave.leaveDate|date:"dd-MMM-yyyy"}}</td>
+                            <td>{{leave.backToWorkOn|date:"dd-MMM-yyyy"}}</td>
+                            
+                            <td >
+                                
+                                <p-overlayPanel #op>
+                                   <strong>Reason for Rejection</strong>
+                                    <P>{{leave.remark}}</P>
+                                </p-overlayPanel>
+                                
+                                <p-badge [value]="leave.leaveStatus" (click)="leave.leaveStatus=='REJECTED'&&op.toggle($event)" [severity]="getBadge(leave.leaveStatus)"></p-badge>
+                            
+                            
+                            </td>
+                            <td><p-button (onClick)="goToDetails(leave.id)" icon="pi pi-ellipsis-h" styleClass="p-button-outlined p-button-sm" ></p-button></td>
+    
 
                         </tr>
                     </ng-template>
