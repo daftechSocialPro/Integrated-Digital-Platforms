@@ -129,6 +129,15 @@ import { RequestDetailComponent } from './pages/human-resource/leave/leave-reque
 import { CustomConfirmationComponent } from './pages/human-resource/leave/leave-requests/custom-confirmation/custom-confirmation.component';
 import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { PerformanceSettingComponent } from './pages/human-resource/hrm-configuration/performance-setting/performance-setting.component';
+import { AddPerformanceSettingComponent } from './pages/human-resource/hrm-configuration/performance-setting/add-performance-setting/add-performance-setting.component';
+import { PerformancePlanComponent } from './pages/human-resource/hrm-configuration/performance-plan/performance-plan.component';
+import { AddPerformancePlanComponent } from './pages/human-resource/hrm-configuration/performance-plan/add-performance-plan/add-performance-plan.component';
+import { AddPerformanceDetailPlanComponent } from './pages/human-resource/hrm-configuration/performance-plan/add-performance-detail-plan/add-performance-detail-plan.component';
+import { EmployeeSupervisorsComponent } from './pages/human-resource/employee-supervisors/employee-supervisors.component';
+import { AssignSupervisorComponent } from './pages/human-resource/employee-supervisors/assign-supervisor/assign-supervisor.component';
+import { PerformanceManagementComponent } from './pages/human-resource/performance-management/performance-management.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -232,8 +241,14 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
      AddHolidayComponent,
      RequestDetailComponent,
      CustomConfirmationComponent,
-     
-     
+     PerformanceSettingComponent,
+     AddPerformanceSettingComponent,
+     PerformancePlanComponent,
+     AddPerformancePlanComponent,
+     AddPerformanceDetailPlanComponent,
+     EmployeeSupervisorsComponent,
+     AssignSupervisorComponent,
+     PerformanceManagementComponent
   ],
   imports: [
     BrowserModule, 

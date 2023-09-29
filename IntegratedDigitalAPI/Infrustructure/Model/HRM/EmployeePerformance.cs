@@ -12,6 +12,7 @@ namespace IntegratedInfrustructure.Model.HRM
     {
         public Guid EmployeeId { get; set; }
         public virtual EmployeeList Employee { get; set; } = null!;
+        public int Index { get; set; }
         public PerformanceStatus PlanStatus { get; set; }
         public PerformanceStatus IndividualDevt { get; set; }
         public PerformanceStatus RequiredSupport { get; set; }

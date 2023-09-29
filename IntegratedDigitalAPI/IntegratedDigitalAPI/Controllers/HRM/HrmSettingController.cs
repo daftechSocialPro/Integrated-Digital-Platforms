@@ -10,7 +10,7 @@ using System.Net;
 
 namespace IntegratedDigitalAPI.Controllers.HRM
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class HrmSettingController : ControllerBase
     {

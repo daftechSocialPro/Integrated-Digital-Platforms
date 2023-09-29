@@ -26,6 +26,7 @@ namespace IntegratedImplementation.DTOS.HRM
 
     public class AddPerformancePlanDto
     {
+        public int Index { get; set; }
         public string CreatedById { get; set; } = null!;
         public string Name { get; set; } = null!;
         public string Description { get; set; } = null!;

@@ -9,6 +9,7 @@ namespace IntegratedInfrustructure.Model.HRM
 {
     public class PerformancePlan: WithIdModel
     {
+        public int Index { get; set; }
         public string Name { get; set; } = null!;
         public string Description { get; set; } = null!;
         public double TotalTarget { get; set; }

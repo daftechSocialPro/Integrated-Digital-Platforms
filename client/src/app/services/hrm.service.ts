@@ -11,6 +11,9 @@ import { SelectList } from '../model/common';
 import { AppliedLeavesGetDto, LeaveBalanceGetDto, LeaveBalancePostDto, LeaveRequestPostDto, LeaveTypeGetDto, LeaveTypePostDto } from '../model/HRM/ILeaveDto';
 import { HrmSettingDto } from '../model/HRM/IHrmSettingDto';
 import { UserService } from './user.service';
+import { PerformanceSettingDto } from '../model/HRM/IPerformanceSettingDto';
+import { AddPerformancePlanDetailDto, AddPerformancePlanDto, PerformancePlanDto } from '../model/HRM/IPerformancePlanDto';
+import { AssignSupervisorDto, EmployeeSupervisorsDto } from '../model/HRM/IEmployeeSupervisorDto';
 
 export interface toastPayload {
     message: string;
@@ -25,7 +28,7 @@ export interface toastPayload {
 export class HrmService {
 
     baseUrl: string = environment.baseUrl;
-    constructor(private userService : UserService, private http: HttpClient, private sanitizer: DomSanitizer) { }
+    constructor(private userService: UserService, private http: HttpClient, private sanitizer: DomSanitizer) { }
 
     //departments
 
@@ -69,22 +72,33 @@ export class HrmService {
 
     getHrmSettings() {
 
-        return this.http.get<HrmSettingDto[]>(this.baseUrl + "/HrmSetting")
+        return this.http.get<HrmSettingDto[]>(this.baseUrl + "/HrmSetting/GetHrmSettingList")
     }
     addHrmSetting(hrmSesttingDto: HrmSettingDto) {
-        return this.http.post<ResponseMessage>(this.baseUrl + "/HrmSetting", hrmSesttingDto)
+        return this.http.post<ResponseMessage>(this.baseUrl + "/HrmSetting/AddHrmSetting", hrmSesttingDto)
     }
     updateHrmSetting(hrmSettingDto: HrmSettingDto) {
-        return this.http.put<ResponseMessage>(this.baseUrl + "/HrmSetting", hrmSettingDto)
+        return this.http.put<ResponseMessage>(this.baseUrl + "/HrmSetting/UpdateHrmSetting", hrmSettingDto)
     }
+
+    //Performance Setting
+
+    getPerformanceSettings() {
+
+        return this.http.get<PerformanceSettingDto[]>(this.baseUrl + "/HrmSetting/GetPerformanceSettings")
+    }
+    addPerformanceSetting(performanceSettings: PerformanceSettingDto) {
+        return this.http.post<ResponseMessage>(this.baseUrl + "/HrmSetting/AddPerformanceSetting", performanceSettings)
+    }
+
     // employees 
 
     getEmployees() {
         return this.http.get<EmployeeGetDto[]>(this.baseUrl + "/Employee/GetEmployees")
     }
 
-    getEmployeesNoUserSelectList(){
-        return this.http.get<SelectList[]>(this.baseUrl+"/Employee/GetEmployeesNoUserSelectList")
+    getEmployeesNoUserSelectList() {
+        return this.http.get<SelectList[]>(this.baseUrl + "/Employee/GetEmployeesNoUserSelectList")
     }
     addEmployee(employeePost: FormData) {
 
@@ -157,55 +171,90 @@ export class HrmService {
 
     //Leave 
 
-    requestLeave (requestPost : LeaveRequestPostDto){
+    requestLeave(requestPost: LeaveRequestPostDto) {
         requestPost.createdById = this.userService.getCurrentUser().userId
 
-        return this.http.post<ResponseMessage>(this.baseUrl+"/LeaveManagement/AddLeaveRequest",requestPost)
+        return this.http.post<ResponseMessage>(this.baseUrl + "/LeaveManagement/AddLeaveRequest", requestPost)
     }
 
-    addLeaveBalance (leaveBalance :LeaveBalancePostDto) {
+    addLeaveBalance(leaveBalance: LeaveBalancePostDto) {
 
         leaveBalance.createdById = this.userService.getCurrentUser().userId
 
-        return this.http.post<ResponseMessage>(this.baseUrl+"/LeaveManagement/AddLeaveBalance",leaveBalance)
-   
+        return this.http.post<ResponseMessage>(this.baseUrl + "/LeaveManagement/AddLeaveBalance", leaveBalance)
+
     }
 
-    getLeaveBalance (employeeId : string ){
-    
-        return this.http.get<LeaveBalanceGetDto>(this.baseUrl+`/LeaveManagement/GetAnnualLeaveBalance?employeeId=${employeeId}`)  
+    getLeaveBalance(employeeId: string) {
+
+        return this.http.get<LeaveBalanceGetDto>(this.baseUrl + `/LeaveManagement/GetAnnualLeaveBalance?employeeId=${employeeId}`)
     }
 
-    getAppliedLeaves(employeeId : string){
+    getAppliedLeaves(employeeId: string) {
 
-        return this.http.get<AppliedLeavesGetDto[]>(this.baseUrl+`/LeaveManagement/GetEmployeeLeaves?employeeId=${employeeId}`)
+        return this.http.get<AppliedLeavesGetDto[]>(this.baseUrl + `/LeaveManagement/GetEmployeeLeaves?employeeId=${employeeId}`)
     }
-    getLeaveRequests(){
+    getLeaveRequests() {
 
-        return this.http.get<AppliedLeavesGetDto[]>(this.baseUrl+`/LeaveManagement/GetLeaveRequests`)
+        return this.http.get<AppliedLeavesGetDto[]>(this.baseUrl + `/LeaveManagement/GetLeaveRequests`)
     }
-    getSingleLeaveRequest(requestId: string){
+    getSingleLeaveRequest(requestId: string) {
 
-        return this.http.get<AppliedLeavesGetDto>(this.baseUrl+`/LeaveManagement/GetSingleLeaveRequest?requestId=${requestId}`)
+        return this.http.get<AppliedLeavesGetDto>(this.baseUrl + `/LeaveManagement/GetSingleLeaveRequest?requestId=${requestId}`)
     }
 
-    approveLeaveRequest (leaveId :string){
-        
+    approveLeaveRequest(leaveId: string) {
+
         let employeeId = this.userService.getCurrentUser().employeeId
-        return this.http.post<ResponseMessage>(this.baseUrl+`/LeaveManagement/ApproveRequest?leaveId=${leaveId}&employeeId=${employeeId}`,{})
-   
+        return this.http.post<ResponseMessage>(this.baseUrl + `/LeaveManagement/ApproveRequest?leaveId=${leaveId}&employeeId=${employeeId}`, {})
+
     }
-    rejectLeaveRequest (leaveId :string,remark:string){        
-     
-        return this.http.post<ResponseMessage>(this.baseUrl+`/LeaveManagement/RejectRequest?leaveId=${leaveId}&remark=${remark}`,{})
-   
+    rejectLeaveRequest(leaveId: string, remark: string) {
+
+        return this.http.post<ResponseMessage>(this.baseUrl + `/LeaveManagement/RejectRequest?leaveId=${leaveId}&remark=${remark}`, {})
+
     }
 
- 
-    
-    
+    /// performancePlans
+    getPerformancePlans() {
+        return this.http.get<PerformancePlanDto[]>(this.baseUrl + `/PerformancePlan/GetPerformancePlans`)
+    }
+    addPerformancePlan(performancePlan: AddPerformancePlanDto) {
+        return this.http.post<ResponseMessage>(this.baseUrl + `/PerformancePlan/AddPerformancePlan`, performancePlan)
+    }
+    updatePerformancePlan(performancePlan: AddPerformancePlanDto) {
+        return this.http.post<ResponseMessage>(this.baseUrl + `/PerformancePlan/UpdatePerformancePlan`, performancePlan)
+    }
+    addPerformancePlanDetail(performancePlan: AddPerformancePlanDetailDto) {
+        return this.http.post<ResponseMessage>(this.baseUrl + `/PerformancePlan/addPerformancePlanDetail`, performancePlan)
+    }
+    updatePerformancePlanDetail(performancePlan: AddPerformancePlanDetailDto) {
+        return this.http.post<ResponseMessage>(this.baseUrl + `/PerformancePlan/UpdatePerformancePlanDetail`, performancePlan)
+    }
 
 
+    /// Employee Supervisors
+    getEmployeeSupervisors() {
+        return this.http.get<EmployeeSupervisorsDto[]>(this.baseUrl + "/EmployementDetail/GetEmployeeSupervisors")
+    }
+
+    getToBeSupervisedEmployees() {
+        return this.http.get<SelectList[]>(this.baseUrl + "/EmployementDetail/GetToBeSupervisedEmployees")
+    }
+
+    assignSupervisor(assignSupervisor: AssignSupervisorDto) {
+        return this.http.post<ResponseMessage>(this.baseUrl + "/EmployementDetail/AssignSupervisor", assignSupervisor)
+    }
+
+    deleteSupervisee(employeeId: string) {
+        return this.http.delete<ResponseMessage>(this.baseUrl + `/EmployementDetail/DeleteSupervisee?employeeId=${employeeId}`)
+    }
+
+
+    ///Employee Performance
+    getPerformanceTime() {
+        return this.http.get<ResponseMessage>(this.baseUrl + "/EmploeePerformance/GetPerformanceTime")
+    }
 
 
 }

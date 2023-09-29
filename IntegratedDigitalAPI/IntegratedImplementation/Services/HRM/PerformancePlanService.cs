@@ -25,6 +25,7 @@ namespace IntegratedImplementation.Services.HRM
         public async Task<List<PerformancePlanDto>> GetPerformancePlans()
         {
             return await _dbContext.PerformancePlans.AsNoTracking().
+                          OrderBy(x => x.Index).
                           Select(x => new PerformancePlanDto
                           {
                               Id = x.Id,
@@ -47,6 +48,7 @@ namespace IntegratedImplementation.Services.HRM
             PerformancePlan performance = new PerformancePlan()
             {
                 Id = Guid.NewGuid(),
+                Index = addPerformancePlan.Index,
                 CreatedById = addPerformancePlan.CreatedById,
                 CreatedDate = DateTime.Now,
                 Description = addPerformancePlan.Description,

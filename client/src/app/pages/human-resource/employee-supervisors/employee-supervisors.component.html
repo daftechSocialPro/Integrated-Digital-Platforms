@@ -1,0 +1,46 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Employee Supervisor</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+                <li class="breadcrumb-item">HRM</li>
+                <li class="breadcrumb-item active">Employee Supervisor</li>
+            </ol>
+        </nav>
+    </div>
+    <section class="section">
+        <div class="card">
+
+            <div class="col-lg-12 text-end p-2">
+                <button type="button" class="btn btn-outline-primary" (click)="addNew()"><i
+                        class="pi pi-user-plus me-1"></i>
+                    Assign Supervisor</button>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Employee Supervisor</h5>
+
+                <p-table [value]="employeeSupervisors" [paginator]="true" [rows]="5" [showCurrentPageReport]="true"
+                    [tableStyle]="{ 'min-width': '50rem' }"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                    [rowsPerPageOptions]="[5, 25, 50]" styleClass="p-datatable-sm">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>Employee Name</th>
+                            <th>Immidiate Supervisor</th>
+                            <th>Second Supervisor</th>
+
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-supervisor>
+                        <tr>
+                            <td>{{ supervisor.employeeName }}</td>
+                            <td>{{ supervisor.immidiateSupervisor }}</td>
+                            <td>{{ supervisor.secondSupervisor }}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </section>
+</main>

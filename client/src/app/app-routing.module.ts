@@ -14,6 +14,8 @@ import { UsersProfileComponent } from './pages/users-profile/users-profile.compo
 import { UserManagementComponent } from './pages/configuration/user-management/user-management.component';
 import { LeaveComponent } from './pages/human-resource/leave/leave.component';
 import { RequestDetailComponent } from './pages/human-resource/leave/leave-requests/request-detail/request-detail.component';
+import { EmployeeSupervisorsComponent } from './pages/human-resource/employee-supervisors/employee-supervisors.component';
+import { PerformanceManagementComponent } from './pages/human-resource/performance-management/performance-management.component';
 
 
 
@@ -27,6 +29,8 @@ const routes: Routes = [
   { path: 'HRM/vacancyList', canActivate:[AuthGuard],component:VacancyListComponent,data:{permittedRoles:['Admin']} },
   { path: 'HRM/leave', canActivate:[AuthGuard],component:LeaveComponent,data:{permittedRoles:['Admin']} },
   { path: 'HRM/leaverequest/:id', canActivate:[AuthGuard],component:RequestDetailComponent,data:{permittedRoles:['Admin']} },
+  { path: 'HRM/employeesupervisor', canActivate:[AuthGuard],component:EmployeeSupervisorsComponent,data:{permittedRoles:['Admin']} },
+  { path: 'HRM/employeeperformance', canActivate:[AuthGuard],component:PerformanceManagementComponent,data:{permittedRoles:['Admin']} },
   { path: 'pages-login', component: PagesLoginComponent },
   { path: 'user-profile',canActivate:[AuthGuard], component: UsersProfileComponent },
   { path : 'user_managment',canActivate:[AuthGuard],component:UserManagementComponent}
