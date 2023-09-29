@@ -33,5 +33,11 @@ namespace IntegratedImplementation.DTOS.HRM
         public DateTime? ApprovedDate { get; set; }
         public string ApproverEmployee { get; set; } = null!;
     }
+    public class TerminateRequestDto
+    {
+        public Guid EmployementDetailId { get; set; }
+        public string Remark { get; set; }
 
+        public bool BlacListed { get; set; }
+    }
 }

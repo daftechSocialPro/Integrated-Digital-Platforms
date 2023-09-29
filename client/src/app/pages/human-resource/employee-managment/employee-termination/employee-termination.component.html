@@ -1,0 +1,96 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Configuration</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+                <li class="breadcrumb-item">Employee Termination</li>
+                <li class="breadcrumb-item active">Configuration</li>
+            </ol>
+        </nav>
+    </div>
+    <section class="section">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Employee Termination</h5>
+                <ul class="nav nav-tabs nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation"> <button class="nav-link active" id="home-tab"
+                            data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home"
+                            aria-selected="true">Resignation List</button></li>
+                    <li class="nav-item" role="presentation"> <button class="nav-link" id="profile-tab"
+                            data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab"
+                            aria-controls="profile" aria-selected="false">Terminated Employees</button></li>
+
+
+                </ul>
+                <div class="tab-content pt-2" id="myTabContent">
+                    <div class="tab-pane fade show active p-2 " style="background-color: #f6f9ff;" id="home"
+                        role="tabpanel" aria-labelledby="home-tab">
+                        <app-resignation-list/>
+                    </div>
+                    <div class="tab-pane fade p-2" style="background-color: #f6f9ff;" id="profile" role="tabpanel"
+                        aria-labelledby="profile-tab">
+                      
+<!-- <div class="row p-2">
+    <div class="col-lg-12 ">
+        <p-dropdown [options]="filters" #drop (onChange)="filterChange(drop.value)" optionLabel="name"></p-dropdown>
+   
+    </div>
+</div> -->
+<div class="row">
+
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Termination List</h5>
+
+                <p-table
+                [value]="terminationList"
+                [paginator]="true"
+                [rows]="5"
+                [showCurrentPageReport]="true"
+                [tableStyle]="{ 'min-width': '50rem' }"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [rowsPerPageOptions]="[5, 25, 50]"
+                styleClass="p-datatable-sm"
+            >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th >Employee Name</th>   
+                        <th > Department</th>
+                        <th > Position</th>
+                        <th > Termination Reason</th>
+                        <th > Terminated Date</th>
+                        <th > Remark</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-termination>
+                    <tr>
+                        <td>{{ termination.fullName }}</td>
+                        <td>{{ termination.department }}</td>
+                        <td>{{ termination.position }}</td>
+                        <td>{{ termination.terminationReason }}</td>
+                        <td>{{ termination.terminatedDate|date:"dd MMM yyyy" }}</td>
+                        <td>{{ termination.remark }}</td>
+                       
+                        
+                     
+                    </tr>
+                </ng-template>
+               
+               
+            </p-table>
+      
+              
+            </div>
+        </div>
+    </div>
+</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </section>
+</main>

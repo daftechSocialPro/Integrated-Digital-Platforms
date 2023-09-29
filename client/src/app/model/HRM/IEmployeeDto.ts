@@ -64,6 +64,7 @@ export interface EmployeeGetDto
      zoneId :string ; 
      zoneName : string 
      woreda:string;
+     nationalityId:string
 
 
 }
@@ -146,6 +147,7 @@ export interface EmployeeFamilyPostDto {
           remark : string;
           createdById : string;
           employeeId ?:string;
+          applicantId?:string
      
      }
 

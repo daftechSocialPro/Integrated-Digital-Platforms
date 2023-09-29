@@ -14,8 +14,12 @@ namespace IntegratedImplementation.DTOS.Vacancy
         public Guid Id { get; set; }
         public string FullName { get; set; } = null!;
         public string Photo { get; set; } = null!;
+
+        public string PhoneNumber { get; set; } = null!;
         public string VacancyName { get; set; } = null!;
         public string ApplicantStatus { get; set; } = null!;
+
+        public Guid ApplicantId { get; set; }
     }
 
     public class ApplicantDetailDto

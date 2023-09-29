@@ -40,13 +40,14 @@ namespace IntegratedImplementation.Services.Notification
 
         public async Task<List<NotificationDataDto>> GetInternalVacancies()
         {
-            return await _dbContext.VacancyLists.Where(x => x.VaccancyStartDate >= DateTime.Now && x.VaccancyEndDate <= DateTime.Now && (x.VacancyType == VacancyType.INTERNAL || x.VacancyType == VacancyType.EXTERNAL))
+            return await _dbContext.VacancyLists.
+                Where(x => x.VaccancyStartDate <= DateTime.Now && x.VaccancyEndDate >= DateTime.Now && (x.VacancyType == VacancyType.INTERNAL || x.VacancyType == VacancyType.BOTH)&&x.IsApproved)
                         .Select(z => new NotificationDataDto
                         {
                             Id = z.Id,
                             Name = z.VacancyName,
-                            Description = "Remaining Days : " + DateTime.Now.CompareTo(z.VaccancyEndDate).ToString()
-                        }).ToListAsync();
+                            Description = "Remaining Days: " + (z.VaccancyEndDate - DateTime.Now).Days.ToString()
+        }).ToListAsync();
         }
     }
 }

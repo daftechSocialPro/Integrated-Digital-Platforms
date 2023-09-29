@@ -35,6 +35,10 @@
                      <li class="nav-item"> <button class="nav-link" data-bs-toggle="tab"
                            data-bs-target="#profile-change-password">Change Password</button></li>
 
+                     <li class="nav-item"> <button class="nav-link" data-bs-toggle="tab"
+                           data-bs-target="#profile-resign">Resignation Request</button></li>
+                     <li class="nav-item"> <button class="nav-link" data-bs-toggle="tab"
+                           data-bs-target="#profile-vacancy">Applied Vacancies</button></li>
 
 
                   </ul>
@@ -153,7 +157,6 @@
                         </form>
                      </div>
 
-
                      <div class="tab-pane fade pt-3" id="profile-change-password">
 
 
@@ -180,6 +183,14 @@
                         </form>
 
                      </div>
+
+                     <div class="tab-pane fade pt-3" id="profile-resign">
+                        <app-resignation-letter></app-resignation-letter>
+                     </div>
+                     <div class="tab-pane fade pt-3" id="profile-vacancy">
+                        <app-vaccancy-post></app-vaccancy-post>
+                     </div>
+
                   </div>
                </div>
             </div>

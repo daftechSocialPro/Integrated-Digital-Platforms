@@ -2,12 +2,19 @@
     <ul class="sidebar-nav" id="sidebar-nav">
        <li class="nav-item" *ngIf="roleMatch(['Admin'])" > <a class="nav-link" routerLink="/dashboard" routerLinkActive="active"> <i class="bi bi-grid"></i> <span>Dashboard</span> </a></li>
        <li class="nav-item" *ngIf="roleMatch(['Admin'])"  >
-          <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#"> <i class="bi bi-menu-button-wide" ></i><span>HR Managment</span><i class="bi bi-chevron-down ms-auto"></i> </a>
-          <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav" >
+          <a class="nav-link collapse" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#"> <i class="bi bi-menu-button-wide" ></i><span>HR Management</span><i class="bi bi-chevron-down ms-auto"></i> </a>
+          <ul id="components-nav" class="nav-content  " data-bs-parent="#sidebar-nav" >
             <li> <a routerLink="/HRM/configuration" routerLinkActive="active"> <i class="bi bi-circle"></i><span>Configuration</span> </a></li>           
-             <li> <a routerLink="/HRM/employeeMangment" routerLinkActive="active"> <i class="bi bi-circle"></i><span>Employee Managment</span> </a></li>
-             <li> <a routerLink="/HRM/vacancyList" routerLinkActive="active"> <i class="bi bi-circle"></i><span>Vacancy List</span> </a></li>
-             <li> <a routerLink="/HRM/leave" routerLinkActive="active"> <i class="bi bi-circle"></i><span>Leave</span> </a></li>
+         
+            <li> <a routerLink="/HRM/employeeMangment" routerLinkActive="active"> <i class="bi bi-circle"></i><span>Employee Management</span> </a></li>
+            <li> <a routerLink="/HRM/employeeTermination" routerLinkActive="active"> <i class="bi bi-circle"></i><span>Employee Termination</span> </a></li>
+         
+         
+            <li> <a routerLink="/HRM/vacancyList" routerLinkActive="active"> <i class="bi bi-circle"></i><span>Vacancy List</span> </a></li>
+             <li> <a routerLink="/HRM/leave" routerLinkActive="active"> <i class="bi bi-circle"></i><span>Leave</span>&nbsp;
+               <span
+                  class="badge bg-success badge-number"> {{leaves&&leaves.length}}</span>
+               </a></li>
           </ul>
        </li>
 

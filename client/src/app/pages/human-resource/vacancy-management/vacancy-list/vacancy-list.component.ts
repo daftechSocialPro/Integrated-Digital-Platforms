@@ -8,6 +8,7 @@ import { VacancyService } from 'src/app/services/vacancy.service';
 import { AddVacancyComponent } from './add-vacancy/add-vacancy.component';
 import { AddVaccancyDocumentComponent } from '../add-vaccancy-document/add-vaccancy-document.component';
 import { CommonService } from 'src/app/services/common.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-vacancy-list',
@@ -29,6 +30,7 @@ export class VacancyListComponent implements OnInit {
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private modalService: NgbModal,
+    private route : Router,
     private commonService: CommonService) { }
 
   ngOnInit() {
@@ -157,5 +159,9 @@ export class VacancyListComponent implements OnInit {
 
   }
 
+  goToDetails(vacancyId: string){
+
+    this.route.navigate(['/HRM/vacancyDetail',vacancyId])
+  }
 
 }

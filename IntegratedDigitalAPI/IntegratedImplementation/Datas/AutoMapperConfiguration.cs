@@ -28,6 +28,7 @@ namespace IntegratedImplementation.Datas
                 .ForMember(a => a.ZoneName, e => e.MapFrom(mfg => mfg.Zone.ZoneName))
                 .ForMember(a => a.RegionName, e => e.MapFrom(mfg => mfg.Zone.Region.RegionName))
                 .ForMember(a => a.Nationality, e => e.MapFrom(mfg => mfg.Zone.Region.Country.Nationality))
+                .ForMember(a => a.NationalityId, e => e.MapFrom(mfg => mfg.Zone.Region.Country.Id))
                 .ForMember(a => a.DepartmentName, e => e.MapFrom(mfg => mfg.EmployeeDetail.FirstOrDefault(x => x.Rowstatus == RowStatus.ACTIVE)!.Department.DepartmentName))
                 .ForMember(a => a.PostionName, e => e.MapFrom(mfg => mfg.EmployeeDetail.FirstOrDefault(x => x.Rowstatus == RowStatus.ACTIVE)!.Position.PositionName))
                 .ForMember(a => a.EmploymentStatus, e => e.MapFrom(mfg => mfg.EmploymentStatus.ToString()))
@@ -68,6 +69,7 @@ namespace IntegratedImplementation.Datas
             CreateMap<Applicant, ApplicantDetailDto>()
              .ForMember(x => x.ApplicantType, e => e.MapFrom(mfg => mfg.ApplicantType.ToString()))
              .ForMember(x => x.FullName, e => e.MapFrom(mfg => mfg.FirstName + " " + mfg.MiddleName + " " + mfg.LastName))
+             .ForMember(x=>x.PhoneNumber , e=>e.MapFrom(mfg => mfg.PhoneNumber.ToString()))
              .ForMember(x => x.NationalityName, e => e.MapFrom(mfg => mfg.Nationality.CountryName))
              .ForMember(x => x.ZoneName, e => e.MapFrom(mfg => mfg.Zone.ZoneName));
 

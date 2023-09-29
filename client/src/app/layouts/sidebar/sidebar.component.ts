@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NotificationDto } from 'src/app/model/INotificationDto';
+import { NotificationService } from 'src/app/services/notification.service';
 import { UserService } from 'src/app/services/user.service';
 
 
@@ -9,15 +11,26 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class SidebarComponent implements OnInit {
 
-  constructor(private userService : UserService) { }
+
+  leaves !: NotificationDto[]
+  constructor(private userService: UserService, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
+    this.getEligibleLeaves()
   }
 
-  
-  roleMatch (value : string[]){
+
+  roleMatch(value: string[]) {
     return this.userService.roleMatch(value)
+  }
+
+  getEligibleLeaves (){
+    this.notificationService.getEligibleLeaves().subscribe({
+      next:(res)=>{
+        this.leaves = res 
       }
-    
+    })
+  }
+
 
 }

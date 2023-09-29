@@ -11,8 +11,18 @@ export interface VacancyListDto {
     vaccancyStartDate: Date;
     vaccancyEndDate: Date;
     isApproved: boolean;
-    gPA: number;
+    gpa: number;
     vacancyType: number;
+    vaccancyDocuments?:VacancyDocumentDto[]
+}
+
+export interface VacancyDocumentDto{
+
+  
+          id: string,
+          docuemntName: string,
+          documentPath: string
+     
 }
 
 export interface AddVacancyDto {

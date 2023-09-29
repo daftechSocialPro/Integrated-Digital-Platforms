@@ -1,0 +1,43 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Terminate Employee</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Termination Detail</h5>
+            <div class="row">
+                <div class="col-lg-12">
+                    <form class="" [formGroup]="terminateForm" (ngSubmit)="submit()">
+                        <div class="modal-body">
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <label for="Blacklisted">Blacklisted</label>
+                                    <div class="form-floating">
+                                        <p-inputSwitch formControlName="blacListed" ></p-inputSwitch>
+                                        
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="form-floating">
+                                        <textarea class="form-control" formControlName="remark"
+                                            placeholder="Remark" id="Remark"
+                                            style="height: 120px;"></textarea><label for="Remark">
+                                                Remark
+                                            </label>
+                                    </div>
+                                </div>                                                         
+                            </div>
+                        </div>
+                        <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
+                            (click)="closeModal()">Close</button>
+                        <button type="button" type="submit"  [disabled]="!terminateForm.valid"
+                            class="btn btn-outline-primary">Create</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

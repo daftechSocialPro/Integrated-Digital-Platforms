@@ -16,10 +16,10 @@ namespace IntegratedImplementation.DTOS.Vacancy
         public string FirstName { get; set; } = null!;
         public string MiddleName { get; set; } = null!;
         public string LastName { get; set; } = null!;
-        public IFormFile? Photo { get; set; }
+        public string ? ImagePath { get; set; }
         public string Email { get; set; } = null!;
         public string PhoneNumber { get; set; } = null!;
-        public Gender Gender { get; set; }
+        public string Gender { get; set; }
         public Guid NationalityId { get; set; }
         public DateTime BirthDate { get; set; }
         public string Woreda { get; set; } = null!;

@@ -5,6 +5,7 @@ import { HrmService } from 'src/app/services/hrm.service';
 import { AddEmployeeComponent } from './add-employee/add-employee.component';
 import { Router } from '@angular/router';
 import { CommonService } from 'src/app/services/common.service';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-employee-managment',
@@ -55,6 +56,9 @@ export class EmployeeManagmentComponent implements OnInit {
 
   getImagePath(url:string){
      return this.commmonService.createImgPath(url)
+  }
+  onGlobalFilter(table: Table, event: Event) {
+    table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
 
 }

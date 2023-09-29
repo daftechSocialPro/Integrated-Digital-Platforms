@@ -1,0 +1,75 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Add Applicant Experiance </h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Applicant Experiance Detail </h5>
+            <div class="row">
+                <div class="col-lg-12">
+                    <form class="" [formGroup]="HistoryForm" (ngSubmit)="submit()">
+                        <div class="modal-body">
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <div class="form-floating"> <input type="text" class="form-control" id="organizationName"
+                                        placeholder="organizationName" required formControlName="organizationName">
+                                    <label for="organizationName"> Organization Name</label>
+                                </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating"> <input type="text" class="form-control" id="position"
+                                        placeholder="position" required formControlName="position">
+                                    <label for="position"> Position</label>
+                                </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating"> <input type="text" class="form-control" id="responsibility"
+                                            placeholder="responsibility" required formControlName="responsibility">
+                                        <label for="responsibility"> Responsibility</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating"> <input type="date" class="form-control" id="startDate"
+                                            placeholder="startDate" required formControlName="startDate">
+                                        <label for="startDate"> Start Date</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating"> <input type="date" class="form-control" id="endDate"
+                                            placeholder="endDate" required formControlName="endDate">
+                                        <label for="endDate"> End Date</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="file" class="form-control" (change)="onUpload($event)" id="file" 
+>                                      
+                                    </div>
+                                </div>
+
+     
+                                <div class="col-md-12">
+                                    <div class="form-floating">
+                                        <textarea class="form-control" formControlName="description"
+                                            placeholder="description" id="description"
+                                            style="height: 120px;"></textarea><label for="description">
+                                                Description
+                                            </label>
+                                    </div>
+                                </div>  
+
+
+                            </div>
+                        </div>
+                        <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
+                            (click)="closeModal()">Close</button> <button type="button" type="submit"
+                            [disabled]="!HistoryForm.valid" class="btn btn-outline-primary">Save
+                            changes</button></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -129,6 +129,23 @@ import { RequestDetailComponent } from './pages/human-resource/leave/leave-reque
 import { CustomConfirmationComponent } from './pages/human-resource/leave/leave-requests/custom-confirmation/custom-confirmation.component';
 import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { ResignationLetterComponent } from './pages/users-profile/resignation-letter/resignation-letter.component';
+import { ResignationRequestComponent } from './pages/users-profile/resignation-letter/resignation-request/resignation-request.component';
+import { EmployeeTerminationComponent } from './pages/human-resource/employee-managment/employee-termination/employee-termination.component';
+import { ViewPdfComponent } from './components/view-pdf/view-pdf.component';
+import { ResignationListComponent } from './pages/human-resource/employee-managment/employee-termination/resignation-list/resignation-list.component';
+import { TerminateEmployeeComponent } from './pages/human-resource/employee-managment/employee-termination/terminate-employee/terminate-employee.component';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { VaccancyPostComponent } from './pages/users-profile/vaccancy-post/vaccancy-post.component';
+import { VacancyDetailComponent } from './pages/human-resource/vacancy-management/vacancy-list/vacancy-detail/vacancy-detail.component';
+import { ApplicantComponent } from './pages/human-resource/vacancy-management/applicant/applicant.component';
+import { ApplicantEducationComponent } from './pages/human-resource/vacancy-management/applicant/applicant-education/applicant-education.component';
+import { AddApplicantEducationComponent } from './pages/human-resource/vacancy-management/applicant/applicant-education/add-applicant-education/add-applicant-education.component';
+import { ApplicantWorkExperianceComponent } from './pages/human-resource/vacancy-management/applicant/applicant-work-experiance/applicant-work-experiance.component';
+import { AddApplicantWorkComponent } from './pages/human-resource/vacancy-management/applicant/applicant-work-experiance/add-applicant-work/add-applicant-work.component';
+import { ApplicantDocumentsComponent } from './pages/human-resource/vacancy-management/applicant/applicant-documents/applicant-documents.component';
+import { AddApplicantDocumentsComponent } from './pages/human-resource/vacancy-management/applicant/applicant-documents/add-applicant-documents/add-applicant-documents.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -232,6 +249,21 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
      AddHolidayComponent,
      RequestDetailComponent,
      CustomConfirmationComponent,
+     ResignationLetterComponent,
+     ResignationRequestComponent,
+     EmployeeTerminationComponent,
+     ViewPdfComponent,
+     ResignationListComponent,
+     TerminateEmployeeComponent,
+     VaccancyPostComponent,
+     VacancyDetailComponent,
+     ApplicantComponent,
+     ApplicantEducationComponent,
+     AddApplicantEducationComponent,
+     ApplicantWorkExperianceComponent,
+     AddApplicantWorkComponent,
+     ApplicantDocumentsComponent,
+     AddApplicantDocumentsComponent
      
      
   ],
@@ -257,6 +289,7 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
     DynamicDialogModule,
     OverlayPanelModule,
     BadgeModule,   
+    InputSwitchModule,
     ToastrModule.forRoot({
       preventDuplicates: true,
     })

@@ -171,7 +171,7 @@ namespace IntegratedImplementation.Services.HRM
 
             await _dbContext.SaveChangesAsync();
 
-            return new ResponseMessage { Success = true, Message = "Approved Successfully" };
+            return new ResponseMessage { Success = true, Message = "Termination Requested Successfully" };
 
         }
     }

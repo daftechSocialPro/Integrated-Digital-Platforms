@@ -11,6 +11,7 @@ import { SelectList } from '../model/common';
 import { AppliedLeavesGetDto, LeaveBalanceGetDto, LeaveBalancePostDto, LeaveRequestPostDto, LeaveTypeGetDto, LeaveTypePostDto } from '../model/HRM/ILeaveDto';
 import { HrmSettingDto } from '../model/HRM/IHrmSettingDto';
 import { UserService } from './user.service';
+import { ResignationRequestDto, TerminationGetDto, TerminationRequesterDto } from '../model/HRM/IResignationDto';
 
 export interface toastPayload {
     message: string;
@@ -25,7 +26,7 @@ export interface toastPayload {
 export class HrmService {
 
     baseUrl: string = environment.baseUrl;
-    constructor(private userService : UserService, private http: HttpClient, private sanitizer: DomSanitizer) { }
+    constructor(private userService: UserService, private http: HttpClient, private sanitizer: DomSanitizer) { }
 
     //departments
 
@@ -83,8 +84,8 @@ export class HrmService {
         return this.http.get<EmployeeGetDto[]>(this.baseUrl + "/Employee/GetEmployees")
     }
 
-    getEmployeesNoUserSelectList(){
-        return this.http.get<SelectList[]>(this.baseUrl+"/Employee/GetEmployeesNoUserSelectList")
+    getEmployeesNoUserSelectList() {
+        return this.http.get<SelectList[]>(this.baseUrl + "/Employee/GetEmployeesNoUserSelectList")
     }
     addEmployee(employeePost: FormData) {
 
@@ -157,54 +158,88 @@ export class HrmService {
 
     //Leave 
 
-    requestLeave (requestPost : LeaveRequestPostDto){
+    requestLeave(requestPost: LeaveRequestPostDto) {
         requestPost.createdById = this.userService.getCurrentUser().userId
 
-        return this.http.post<ResponseMessage>(this.baseUrl+"/LeaveManagement/AddLeaveRequest",requestPost)
+        return this.http.post<ResponseMessage>(this.baseUrl + "/LeaveManagement/AddLeaveRequest", requestPost)
     }
 
-    addLeaveBalance (leaveBalance :LeaveBalancePostDto) {
+    addLeaveBalance(leaveBalance: LeaveBalancePostDto) {
 
         leaveBalance.createdById = this.userService.getCurrentUser().userId
 
-        return this.http.post<ResponseMessage>(this.baseUrl+"/LeaveManagement/AddLeaveBalance",leaveBalance)
-   
+        return this.http.post<ResponseMessage>(this.baseUrl + "/LeaveManagement/AddLeaveBalance", leaveBalance)
+
     }
 
-    getLeaveBalance (employeeId : string ){
-    
-        return this.http.get<LeaveBalanceGetDto>(this.baseUrl+`/LeaveManagement/GetAnnualLeaveBalance?employeeId=${employeeId}`)  
+    getLeaveBalance(employeeId: string) {
+
+        return this.http.get<LeaveBalanceGetDto>(this.baseUrl + `/LeaveManagement/GetAnnualLeaveBalance?employeeId=${employeeId}`)
     }
 
-    getAppliedLeaves(employeeId : string){
+    getAppliedLeaves(employeeId: string) {
 
-        return this.http.get<AppliedLeavesGetDto[]>(this.baseUrl+`/LeaveManagement/GetEmployeeLeaves?employeeId=${employeeId}`)
+        return this.http.get<AppliedLeavesGetDto[]>(this.baseUrl + `/LeaveManagement/GetEmployeeLeaves?employeeId=${employeeId}`)
     }
-    getLeaveRequests(){
+    getLeaveRequests() {
 
-        return this.http.get<AppliedLeavesGetDto[]>(this.baseUrl+`/LeaveManagement/GetLeaveRequests`)
+        return this.http.get<AppliedLeavesGetDto[]>(this.baseUrl + `/LeaveManagement/GetLeaveRequests`)
     }
-    getSingleLeaveRequest(requestId: string){
+    getSingleLeaveRequest(requestId: string) {
 
-        return this.http.get<AppliedLeavesGetDto>(this.baseUrl+`/LeaveManagement/GetSingleLeaveRequest?requestId=${requestId}`)
+        return this.http.get<AppliedLeavesGetDto>(this.baseUrl + `/LeaveManagement/GetSingleLeaveRequest?requestId=${requestId}`)
     }
 
-    approveLeaveRequest (leaveId :string){
-        
+    approveLeaveRequest(leaveId: string) {
+
         let employeeId = this.userService.getCurrentUser().employeeId
-        return this.http.post<ResponseMessage>(this.baseUrl+`/LeaveManagement/ApproveRequest?leaveId=${leaveId}&employeeId=${employeeId}`,{})
-   
+        return this.http.post<ResponseMessage>(this.baseUrl + `/LeaveManagement/ApproveRequest?leaveId=${leaveId}&employeeId=${employeeId}`, {})
+
     }
-    rejectLeaveRequest (leaveId :string,remark:string){        
-     
-        return this.http.post<ResponseMessage>(this.baseUrl+`/LeaveManagement/RejectRequest?leaveId=${leaveId}&remark=${remark}`,{})
-   
+    rejectLeaveRequest(leaveId: string, remark: string) {
+
+        return this.http.post<ResponseMessage>(this.baseUrl + `/LeaveManagement/RejectRequest?leaveId=${leaveId}&remark=${remark}`, {})
+
     }
 
- 
-    
-    
+    //resignation 
 
+    requestResignation(requestResignation: FormData) {
+
+        return this.http.post<ResponseMessage>(this.baseUrl + "/EmployementDetail/RequestResignationLetter", requestResignation)
+    }
+
+    getResignationList(){
+        return this.http.get<ResignationRequestDto[]>(this.baseUrl + "/EmployementDetail/GetResingationLists")       
+    }
+
+    getApprovedResignation(){
+        return this.http.get<ResignationRequestDto[]>(this.baseUrl + "/EmployementDetail/ApprovedResignationListDto")       
+    }
+    approveResignation(requestId:String){
+        let employeeId = this.userService.getCurrentUser().employeeId
+        return this.http.post<ResponseMessage>(this.baseUrl + `/EmployementDetail/ApproveResignationRequest?requestId=${requestId}&employeeId=${employeeId}`,{})
+    
+    }
+
+    //termination 
+
+    getTerminatedEmployeeList(){
+        return this.http.get<TerminationGetDto[]>(this.baseUrl + "/EmployementDetail/TerminatedEmployeesList")       
+        
+    }
+
+    terminateEmployee(requestId:string){
+        let employeeId = this.userService.getCurrentUser().employeeId
+        return this.http.post<ResponseMessage>(this.baseUrl + `/EmployementDetail/TerminateEmployee?requestId=${requestId}`,{})
+    
+    }
+
+    terminateRequest(terminatePost:TerminationRequesterDto){
+
+        return this.http.post<ResponseMessage>(this.baseUrl + `/EmployementDetail/TerminateEmployee`,terminatePost)
+    
+    }
 
 
 

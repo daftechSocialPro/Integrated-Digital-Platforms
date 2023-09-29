@@ -40,7 +40,9 @@ namespace IntegratedImplementation.Services.Vacancy
                 Id = x.Id,
                 ApplicantStatus = x.ApplicantStatus.ToString(),
                 FullName = $"{x.Applicant.FirstName} {x.Applicant.MiddleName} {x.Applicant.LastName}",
+                PhoneNumber = x.Applicant.PhoneNumber,
                 Photo = x.Applicant.Photo,
+                ApplicantId = x.ApplicantId,
                 VacancyName = x.Vacancy.VacancyName
             }).ToListAsync();
         }
@@ -53,10 +55,10 @@ namespace IntegratedImplementation.Services.Vacancy
                 return new ResponseMessage { Success = false, Message = "You have Already Applied for the Position" };
             }
 
-            var path = "";
+            //var path = "";
             var Id = Guid.NewGuid();
-            if (internalApplicantDto.Photo != null)
-                path = _generalConfig.UploadFiles(internalApplicantDto.Photo, Id.ToString(), "Applicant").Result.ToString();
+            //if (internalApplicantDto.Photo != null)
+            //    path = _generalConfig.UploadFiles(internalApplicantDto.Photo, Id.ToString(), "Applicant").Result.ToString();
 
 
 
@@ -66,15 +68,15 @@ namespace IntegratedImplementation.Services.Vacancy
                 CreatedDate = DateTime.Now,
                 CreatedById = internalApplicantDto.CreatedById,
                 ApplicantType = ApplicantType.INTERNAL,
-                 BirthDate = internalApplicantDto.BirthDate,
+                BirthDate = internalApplicantDto.BirthDate,
                 FirstName = internalApplicantDto.FirstName,
                 MiddleName = internalApplicantDto.MiddleName,
                 LastName = internalApplicantDto.LastName,
-                Gender = internalApplicantDto.Gender,
+                Gender =  Enum.Parse<Gender>(internalApplicantDto.Gender),
                 Email = internalApplicantDto.Email,
                 PhoneNumber = internalApplicantDto.PhoneNumber,
                 NationalityId = internalApplicantDto.NationalityId,
-                Photo = path,
+                Photo = internalApplicantDto.ImagePath,
                 Woreda = internalApplicantDto.Woreda,
                 ZoneId = internalApplicantDto.ZoneId
             };
@@ -82,7 +84,7 @@ namespace IntegratedImplementation.Services.Vacancy
             await _dbContext.Applicants.AddAsync(applicant);
             await _dbContext.SaveChangesAsync();
 
-            return new ResponseMessage { Success = true, Message = "You have Applied Successfully" };
+            return new ResponseMessage { Success = true, Message = "You have Applied Successfully", Data = applicant };
         }
 
         public async Task<ResponseMessage> AddEducationLevel(ApplicantEducationDto applicantEducation)
@@ -197,7 +199,7 @@ namespace IntegratedImplementation.Services.Vacancy
 
             await _dbContext.SaveChangesAsync();
 
-            return new ResponseMessage { Success = true, Message = "Saved SuccessFully" };
+            return new ResponseMessage { Success = true, Message = "Applied SuccessFully" };
         }
 
         public async Task<ApplicantDetailDto> GetApplicantDetail(Guid applicantId)

@@ -60,6 +60,7 @@ namespace IntegratedImplementation.DTOS.HRM
         public string DepartmentName { get; set; } = null!;
         public string PostionName { get; set; } = null!;
         public string Nationality { get; set; } = null!;
+        public string NationalityId { get; set; } = null!;
         public Guid CountryId { get; set; }
         public string RegionName { get; set; } = null!;
         public Guid RegionId { get; set; }

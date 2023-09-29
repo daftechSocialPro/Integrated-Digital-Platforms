@@ -24,6 +24,12 @@ namespace IntegratedDigitalAPI.Controllers.Notification
         {
             return Ok(await _hrmNotification.GetEligbleLeavs());
         }
+        [HttpGet]
+        [ProducesResponseType(typeof(NotificationDataDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetInternalVacancies()
+        {
+            return Ok(await _hrmNotification.GetInternalVacancies());
+        }
 
     }
 }

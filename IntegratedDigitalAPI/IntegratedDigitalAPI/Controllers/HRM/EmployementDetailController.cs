@@ -35,7 +35,7 @@ namespace IntegratedDigitalAPI.Controllers.HRM
 
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> RequestResignationLetter([FromBody] ResignationRequestDto resignationRequest)
+        public async Task<IActionResult> RequestResignationLetter([FromForm] ResignationRequestDto resignationRequest)
         {
             if (ModelState.IsValid)
             {
@@ -49,7 +49,7 @@ namespace IntegratedDigitalAPI.Controllers.HRM
 
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> ApproveResignationRequest([FromBody] Guid requestId, Guid employeeId)
+        public async Task<IActionResult> ApproveResignationRequest( Guid requestId, Guid employeeId)
         {
             if (ModelState.IsValid)
             {
@@ -70,7 +70,7 @@ namespace IntegratedDigitalAPI.Controllers.HRM
 
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> TerminateRequester([FromBody] Guid requestId)
+        public async Task<IActionResult> TerminateRequester( Guid requestId)
         {
             if (ModelState.IsValid)
             {
@@ -84,11 +84,11 @@ namespace IntegratedDigitalAPI.Controllers.HRM
 
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> TerminateEmployee(Guid employementDetailId, string remark, bool blacListed)
+        public async Task<IActionResult> TerminateEmployee([FromBody]TerminateRequestDto terminateEmployee)
         {
             if (ModelState.IsValid)
             {
-                return Ok(await _employementDetailService.TerminateEmployee(employementDetailId, remark, blacListed));
+                return Ok(await _employementDetailService.TerminateEmployee(terminateEmployee.EmployementDetailId, terminateEmployee.Remark, terminateEmployee.BlacListed));
             }
             else
             {

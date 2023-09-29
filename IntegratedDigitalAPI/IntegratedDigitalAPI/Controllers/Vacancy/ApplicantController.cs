@@ -30,7 +30,7 @@ namespace IntegratedDigitalAPI.Controllers.Vacancy
 
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> AddInternalApplicant([FromBody] InternalApplicantDto internalApplicant)
+        public async Task<IActionResult> AddInternalApplicant([FromForm] InternalApplicantDto internalApplicant)
         {
             if (ModelState.IsValid)
             {
@@ -58,7 +58,7 @@ namespace IntegratedDigitalAPI.Controllers.Vacancy
 
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> AddWorkExperience([FromBody] ApplicantWorkExperienceDto applicantWorkExperience)
+        public async Task<IActionResult> AddWorkExperience([FromForm] ApplicantWorkExperienceDto applicantWorkExperience)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace IntegratedDigitalAPI.Controllers.Vacancy
 
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> AddApplicantDocument([FromBody] ApplicantVacancyDocumentDto applicantVacancy)
+        public async Task<IActionResult> AddApplicantDocument([FromForm] ApplicantVacancyDocumentDto applicantVacancy)
         {
             if (ModelState.IsValid)
             {

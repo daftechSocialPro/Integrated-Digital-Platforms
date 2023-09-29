@@ -5,6 +5,7 @@ import { EmployeeGetDto } from 'src/app/model/HRM/IEmployeeDto';
 import { CommonService } from 'src/app/services/common.service';
 import { HrmService } from 'src/app/services/hrm.service';
 import { UpdateEmployeeComponent } from '../update-employee/update-employee.component';
+import { TerminateEmployeeComponent } from '../employee-termination/terminate-employee/terminate-employee.component';
 
 @Component({
   selector: 'app-employee-detail',
@@ -59,6 +60,16 @@ export class EmployeeDetailComponent implements OnInit {
       this.getEmployee()
     })
 
+  }
+
+  terminateEmployee(empId:string){
+    let modalRef = this.modalService.open(TerminateEmployeeComponent, { size: 'lg', backdrop: 'static' })
+    modalRef.componentInstance.empId = empId
+
+    modalRef.result.then (()=>{
+
+      this.getEmployee()
+    })
   }
 
 

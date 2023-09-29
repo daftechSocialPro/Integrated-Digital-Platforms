@@ -21,7 +21,7 @@
                 <div class="table-container">
                     <p-table #dt [value]="vacancyList" [rows]="5" [paginator]="true"
                         [globalFilterFields]="['vacancyName', 'position', 'department', 'educationalField']"
-                        [tableStyle]="{'min-width': '75rem'}"  dataKey="id"
+                        [tableStyle]="{'min-width': '75rem'}" dataKey="id"
                         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                         [showCurrentPageReport]="true">
                         <ng-template pTemplate="caption">
@@ -67,9 +67,9 @@
                                 </td>
                                 <td class="text-center">
                                     <div class="filter">
-                                        <a *ngIf="!vacancy.isApproved" class="icon" href="#" data-bs-toggle="dropdown">
+                                        <a class="icon" href="#" data-bs-toggle="dropdown">
                                             <i class="bi bi-three-dots-vertical"></i></a>
-                                        <ul *ngIf="!vacancy.isApproved"
+                                        <ul 
                                             class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                             <li *ngIf="!vacancy.isApproved"><a class="dropdown-item text-warning"
                                                     (click)="edit(vacancy.id)"> <i class="pi pi-pencil"></i>Edit</a>
@@ -81,6 +81,9 @@
                                             <li *ngIf="!vacancy.isApproved"><a class="dropdown-item text-secondary"
                                                     (click)="addDocuments(vacancy.id)"> <i class="pi pi-plus"></i>Add
                                                     Documents</a></li>
+                                            <li><a class="dropdown-item text-secondary"
+                                                    (click)="goToDetails(vacancy.id)"> <i class="pi pi-ellipsis-h"></i>
+                                                    Details</a></li>
 
                                         </ul>
                                     </div>
@@ -109,7 +112,8 @@
 
                                 </td>
                                 <td>
-                                   <a target="_blank" [href]="getImage(doc.documentPath) " class="btn btn-outline-primary" >View File</a>
+                                    <a target="_blank" [href]="getImage(doc.documentPath) "
+                                        class="btn btn-outline-primary">View File</a>
 
                                 </td>
                                 <td>
@@ -119,14 +123,15 @@
                                         <ul *ngIf="!vacancy.isApproved"
                                             class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                             <li *ngIf="!vacancy.isApproved"><a class="dropdown-item text-danger"
-                                                (click)="deleteDocument(doc.id,vacancy.vacancyName)"> <i class="pi pi-trash"></i>Delete</a>
-                                                </li>
-                                            </ul>
+                                                    (click)="deleteDocument(doc.id,vacancy.vacancyName)"> <i
+                                                        class="pi pi-trash"></i>Delete</a>
+                                            </li>
+                                        </ul>
                                     </div>
-                                   
-                            
+
+
                                 </td>
-                                
+
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="emptymessage">
