@@ -1,4 +1,5 @@
 ﻿using Implementation.Helper;
+using IntegratedImplementation.DTOS.Configuration;
 using IntegratedImplementation.DTOS.HRM;
 using IntegratedImplementation.Interfaces.HRM;
 using Microsoft.AspNetCore.Http;
@@ -89,6 +90,48 @@ namespace IntegratedDigitalAPI.Controllers.HRM
             if (ModelState.IsValid)
             {
                 return Ok(await _employementDetailService.TerminateEmployee(terminateEmployee.EmployementDetailId, terminateEmployee.Remark, terminateEmployee.BlacListed));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(EmployeeSupervisorsDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetEmployeeSupervisors()
+        {
+            return Ok(await _employementDetailService.GetEmployeeSupervisors());
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetToBeSupervisedEmployees()
+        {
+            return Ok(await _employementDetailService.GetToBeSupervisedEmployees());
+        }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> AssignSupervisor([FromBody] AssignSupervisorDto assignSupervisor)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _employementDetailService.AssignSupervisor(assignSupervisor));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpDelete]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> DeleteSupervisee(Guid employeeId)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _employementDetailService.DeleteSupervisee(employeeId));
             }
             else
             {

@@ -1,0 +1,55 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Add Performance Setting</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Add Performance Setting</h5>
+            <div class="row">
+                <div class="col-lg-12">
+                    <form class="" [formGroup]="performanceFormG" (ngSubmit)="submit()">
+                        <div class="modal-body">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="performanceMonth" placeholder="Month Name"
+                                            formControlName="performanceMonth">
+                                        <label for="performanceMonth">Month Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="performanceIndex" placeholder="Month Index"
+                                            formControlName="performanceIndex">
+                                        <label for="performanceIndex">Month Index</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="performanceStartDate" placeholder="Start Date"
+                                            formControlName="performanceStartDate">
+                                        <label for="performanceStartDate">Start Date</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="performanceEndDate" placeholder="End Date"
+                                            formControlName="performanceEndDate">
+                                        <label for="performanceEndDate">End Date</label>
+                                    </div>
+                                </div>                                                   
+                            </div>
+                        </div>
+                        <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
+                            (click)="closeModal()">Close</button>
+                        <button type="button" type="submit"  [disabled]="!performanceFormG.valid"
+                            class="btn btn-outline-primary">Create</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

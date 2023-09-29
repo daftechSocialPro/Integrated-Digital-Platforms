@@ -12,6 +12,9 @@ import { AppliedLeavesGetDto, LeaveBalanceGetDto, LeaveBalancePostDto, LeaveRequ
 import { HrmSettingDto } from '../model/HRM/IHrmSettingDto';
 import { UserService } from './user.service';
 import { ResignationRequestDto, TerminationGetDto, TerminationRequesterDto } from '../model/HRM/IResignationDto';
+import { PerformanceSettingDto } from '../model/HRM/IPerformanceSettingDto';
+import { AddPerformancePlanDetailDto, AddPerformancePlanDto, PerformancePlanDto } from '../model/HRM/IPerformancePlanDto';
+import { AssignSupervisorDto, EmployeeSupervisorsDto } from '../model/HRM/IEmployeeSupervisorDto';
 
 export interface toastPayload {
     message: string;
@@ -70,14 +73,25 @@ export class HrmService {
 
     getHrmSettings() {
 
-        return this.http.get<HrmSettingDto[]>(this.baseUrl + "/HrmSetting")
+        return this.http.get<HrmSettingDto[]>(this.baseUrl + "/HrmSetting/GetHrmSettingList")
     }
     addHrmSetting(hrmSesttingDto: HrmSettingDto) {
-        return this.http.post<ResponseMessage>(this.baseUrl + "/HrmSetting", hrmSesttingDto)
+        return this.http.post<ResponseMessage>(this.baseUrl + "/HrmSetting/AddHrmSetting", hrmSesttingDto)
     }
     updateHrmSetting(hrmSettingDto: HrmSettingDto) {
-        return this.http.put<ResponseMessage>(this.baseUrl + "/HrmSetting", hrmSettingDto)
+        return this.http.put<ResponseMessage>(this.baseUrl + "/HrmSetting/UpdateHrmSetting", hrmSettingDto)
     }
+
+    //Performance Setting
+
+    getPerformanceSettings() {
+
+        return this.http.get<PerformanceSettingDto[]>(this.baseUrl + "/HrmSetting/GetPerformanceSettings")
+    }
+    addPerformanceSetting(performanceSettings: PerformanceSettingDto) {
+        return this.http.post<ResponseMessage>(this.baseUrl + "/HrmSetting/AddPerformanceSetting", performanceSettings)
+    }
+
     // employees 
 
     getEmployees() {
@@ -202,8 +216,25 @@ export class HrmService {
 
     }
 
-    //resignation 
+   
+    /// performancePlans
+    getPerformancePlans() {
+        return this.http.get<PerformancePlanDto[]>(this.baseUrl + `/PerformancePlan/GetPerformancePlans`)
+    }
+    addPerformancePlan(performancePlan: AddPerformancePlanDto) {
+        return this.http.post<ResponseMessage>(this.baseUrl + `/PerformancePlan/AddPerformancePlan`, performancePlan)
+    }
+    updatePerformancePlan(performancePlan: AddPerformancePlanDto) {
+        return this.http.post<ResponseMessage>(this.baseUrl + `/PerformancePlan/UpdatePerformancePlan`, performancePlan)
+    }
+    addPerformancePlanDetail(performancePlan: AddPerformancePlanDetailDto) {
+        return this.http.post<ResponseMessage>(this.baseUrl + `/PerformancePlan/addPerformancePlanDetail`, performancePlan)
+    }
+    updatePerformancePlanDetail(performancePlan: AddPerformancePlanDetailDto) {
+        return this.http.post<ResponseMessage>(this.baseUrl + `/PerformancePlan/UpdatePerformancePlanDetail`, performancePlan)
+    }
 
+     //resignation 
     requestResignation(requestResignation: FormData) {
 
         return this.http.post<ResponseMessage>(this.baseUrl + "/EmployementDetail/RequestResignationLetter", requestResignation)
@@ -241,6 +272,28 @@ export class HrmService {
     
     }
 
+    /// Employee Supervisors
+    getEmployeeSupervisors() {
+        return this.http.get<EmployeeSupervisorsDto[]>(this.baseUrl + "/EmployementDetail/GetEmployeeSupervisors")
+    }
+
+    getToBeSupervisedEmployees() {
+        return this.http.get<SelectList[]>(this.baseUrl + "/EmployementDetail/GetToBeSupervisedEmployees")
+    }
+
+    assignSupervisor(assignSupervisor: AssignSupervisorDto) {
+        return this.http.post<ResponseMessage>(this.baseUrl + "/EmployementDetail/AssignSupervisor", assignSupervisor)
+    }
+
+    deleteSupervisee(employeeId: string) {
+        return this.http.delete<ResponseMessage>(this.baseUrl + `/EmployementDetail/DeleteSupervisee?employeeId=${employeeId}`)
+    }
+
+
+    ///Employee Performance
+    getPerformanceTime() {
+        return this.http.get<ResponseMessage>(this.baseUrl + "/EmploeePerformance/GetPerformanceTime")
+    }
 
 
 }

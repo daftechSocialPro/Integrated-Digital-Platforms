@@ -108,11 +108,16 @@ namespace IntegratedInfrustructure.Data
         {
             PROBATIONPERIOD,
             ANNUALLEAVESTARTMONTH,
-            PERFORMANCESTARTDATE,
-            PERFORMANCEENDDATE,
             NUMBEROFDAYOFFS,
             RESIGNATIONREQUESTDAYS,
             ANNUALLEAVEREQESTMONTH
+        }
+
+        public enum PerformanceStatus
+        {
+            PENDING,
+            ONPROGRESS,
+            FINALIZED,
         }
 
     }

@@ -1,0 +1,42 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Assign Supervisor</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Assign Supervisor</h5>
+            <div class="row">
+                <div class="col-lg-12">
+                    <form class="" [formGroup]="supervisorForm" (ngSubmit)="submit()">
+                        <div class="modal-body">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <app-autocomplete *ngIf="employeeList.length > 0" [data]="employeeList"
+                                        [selectedId]="selectEmployeee"
+                                        (selectedItem)="selectEmployee($event)"></app-autocomplete>
+                                </div>
+                                <div class="col-md-6">
+                                    <app-autocomplete *ngIf="supervisorList.length > 0" [data]="supervisorList"
+                                        [selectedId]="selectSupervisor" 
+                                        (selectedItem)="selectSupervisorEvent($event)"></app-autocomplete>
+                                </div>
+                                <div class="col-md-6">
+                                    <app-autocomplete *ngIf="secondSupervisorList.length > 0" 
+                                        [data]="secondSupervisorList" [selectedId]="selectSecondSupervisor"
+                                        (selectedItem)="selectSecondSupervisorEvent($event)"></app-autocomplete>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
+                                (click)="closeModal()">Close</button>
+                            <button type="button" type="submit" 
+                                class="btn btn-outline-primary">Create</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

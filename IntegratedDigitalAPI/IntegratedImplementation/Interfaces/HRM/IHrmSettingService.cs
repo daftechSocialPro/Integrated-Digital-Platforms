@@ -15,6 +15,7 @@ namespace IntegratedImplementation.Interfaces.HRM
         Task<List<HrmSettingDto>> GetHrmSettings();
         Task<ResponseMessage> AddHrmSetting(HrmSettingPostDto HrmSettingPost);
         Task<ResponseMessage> UpdateHrmSetting(HrmSettingDto HrmSettingUpdate);
-
+        Task<List<PerformanceSettingDto>> GetPerformanceSettings();
+        Task<ResponseMessage> AddPerformanceSetting(PerformanceSettingDto performanceSetting);
     }
 }

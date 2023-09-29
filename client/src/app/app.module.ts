@@ -145,6 +145,14 @@ import { ApplicantWorkExperianceComponent } from './pages/human-resource/vacancy
 import { AddApplicantWorkComponent } from './pages/human-resource/vacancy-management/applicant/applicant-work-experiance/add-applicant-work/add-applicant-work.component';
 import { ApplicantDocumentsComponent } from './pages/human-resource/vacancy-management/applicant/applicant-documents/applicant-documents.component';
 import { AddApplicantDocumentsComponent } from './pages/human-resource/vacancy-management/applicant/applicant-documents/add-applicant-documents/add-applicant-documents.component';
+import { PerformanceSettingComponent } from './pages/human-resource/hrm-configuration/performance-setting/performance-setting.component';
+import { AddPerformanceSettingComponent } from './pages/human-resource/hrm-configuration/performance-setting/add-performance-setting/add-performance-setting.component';
+import { PerformancePlanComponent } from './pages/human-resource/hrm-configuration/performance-plan/performance-plan.component';
+import { AddPerformancePlanComponent } from './pages/human-resource/hrm-configuration/performance-plan/add-performance-plan/add-performance-plan.component';
+import { AddPerformanceDetailPlanComponent } from './pages/human-resource/hrm-configuration/performance-plan/add-performance-detail-plan/add-performance-detail-plan.component';
+import { EmployeeSupervisorsComponent } from './pages/human-resource/employee-supervisors/employee-supervisors.component';
+import { AssignSupervisorComponent } from './pages/human-resource/employee-supervisors/assign-supervisor/assign-supervisor.component';
+import { PerformanceManagementComponent } from './pages/human-resource/performance-management/performance-management.component';
 
 @NgModule({
   declarations: [
@@ -263,9 +271,17 @@ import { AddApplicantDocumentsComponent } from './pages/human-resource/vacancy-m
      ApplicantWorkExperianceComponent,
      AddApplicantWorkComponent,
      ApplicantDocumentsComponent,
-     AddApplicantDocumentsComponent
+     AddApplicantDocumentsComponent,
      
      
+     PerformanceSettingComponent,
+     AddPerformanceSettingComponent,
+     PerformancePlanComponent,
+     AddPerformancePlanComponent,
+     AddPerformanceDetailPlanComponent,
+     EmployeeSupervisorsComponent,
+     AssignSupervisorComponent,
+     PerformanceManagementComponent
   ],
   imports: [
     BrowserModule, 
