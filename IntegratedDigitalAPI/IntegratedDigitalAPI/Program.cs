@@ -14,6 +14,7 @@ using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using System.Text.Json.Serialization;
 using System.Text.Json;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -60,7 +61,16 @@ builder.Services.Configure<FormOptions>(o =>
 });
 
 builder.Services.AddMvc().AddJsonOptions(opt => opt.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase);
+var emailSettings = builder.Configuration.GetSection("EmailSettings");
+var defaultFromEmail = emailSettings["DefaultFromEmail"];
+var host = emailSettings["SMTPSetting:Host"];
+var port = emailSettings.GetValue<int>("SMTPSetting:Port");
+var userName = emailSettings["SMTPSetting:UserName"];
+var password = emailSettings["SMTPSetting:Password"];
+builder.Services.AddFluentEmail(defaultFromEmail)
+    .AddSmtpSender(host, port, userName, password);
 builder.Services.AddCoreBusiness();
+
 
 builder.Services.AddAutoMapper(typeof(AutoMapperConfigurations));
 

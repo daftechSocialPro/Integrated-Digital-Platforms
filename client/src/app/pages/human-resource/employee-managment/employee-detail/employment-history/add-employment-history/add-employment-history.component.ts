@@ -24,12 +24,13 @@ export class AddEmploymentHistoryComponent implements OnInit {
   departments!: SelectList[];
   positions!: SelectList[];
   user ! : UserView
+  
   ngOnInit(): void {
     this.user = this.userService.getCurrentUser()
-
     this.getDepartments()
     this.getPositions()
   }
+
   constructor(
     private activeModal: NgbActiveModal, 
     private hrmService: HrmService,
@@ -39,14 +40,16 @@ export class AddEmploymentHistoryComponent implements OnInit {
     private dropService: DropDownService
     ) {
 
-      this.HistoryForm = this.formBuilder.group({        
-       
+      this.HistoryForm = this.formBuilder.group({  
         departmentId: [null, Validators.required],
         positionId: [null, Validators.required],
         salary: [null, Validators.required],
         startDate: [null, Validators.required],
-        endDate: [null, Validators.required]
+        endDate: [null, Validators.required],
+        sourceOfSalary:[null,Validators.required],
+        remark : [null,Validators.required]
       })
+
      }
 
   getDepartments() {
@@ -64,6 +67,7 @@ export class AddEmploymentHistoryComponent implements OnInit {
       }
     })
   }
+
   closeModal() {
     this.activeModal.close()
   }
@@ -71,28 +75,27 @@ export class AddEmploymentHistoryComponent implements OnInit {
   submit(){
     if (this.HistoryForm.valid){
 
-      var employeeHistory : EmployeeHistoryPostDto={
-
-        
+      var employeeHistory : EmployeeHistoryPostDto={        
         departmentId : this.HistoryForm.value.departmentId,
         positionId : this.HistoryForm.value.positionId,
         salary : this.HistoryForm.value.salary,
         startDate : this.HistoryForm.value.startDate,
         endDate : this.HistoryForm.value.endDate,
         createdById : this.user.userId,
-        employeeId : this.employeeId
+        employeeId : this.employeeId,
+        sourceOfSalary : this.HistoryForm.value.sourceOfSalary,
+        remark : this.HistoryForm.value.remark
       }
+
       this.hrmService.addEmployeeHistory(employeeHistory).subscribe(
         {
           next:(res)=>{
             if (res.success){
-              this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });              
-            
+              this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });  
               this.closeModal();
             }
             else {
-              this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: res.message });              
-            
+              this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: res.message }); 
             }
           },
           error:(err)=>{

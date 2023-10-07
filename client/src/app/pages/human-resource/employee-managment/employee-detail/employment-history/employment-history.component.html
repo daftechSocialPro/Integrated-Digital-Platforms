@@ -20,6 +20,8 @@
                             <th>START DATE</th>
                             <th>END DATE</th>
                             <th>SALARY</th>
+                            <th>SALARY SOURCE</th>
+                            <th>Remark</th>
                             <th>ACTIONS</th>
                         </tr>
                     </ng-template>
@@ -30,13 +32,14 @@
                             <td>{{ history.startDate | date:"MMM dd, YYYY"}}</td>
                             <td>{{ history.endDate| date:"MMM dd, YYYY" }}</td>
                             <td>{{ history.salary }}</td>
-
+                            <td>{{ history.sourceOfSalary }}</td>
+                            <td>{{ history.remark}}</td>
 
                             <td>
                                 <div class="filter">
                                     <a class="icon" href="#" data-bs-toggle="dropdown"> <i class="bi bi-three-dots-vertical"></i></a>
                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                       
+                                       <li *ngIf="history.sourceOfSalary=='PROJECT'"><a class="dropdown-item" (click)="addProjectSalary(history)"  > <i class="bi bi-plus"></i>Add Project Salary</a></li>
                                        <li><a class="dropdown-item" (click)="updateEmploymentHistory(history)"  > <i class="bi bi-pencil"></i>Update</a></li>
                                        <li><a class="dropdown-item" (click)="deleteEmployeeHistory(history.id)" ><i class="bi bi-trash"></i>Delete</a></li>
                                     </ul>

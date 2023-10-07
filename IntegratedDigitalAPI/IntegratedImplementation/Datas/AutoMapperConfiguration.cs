@@ -24,7 +24,7 @@ namespace IntegratedImplementation.Datas
 
              CreateMap<EmployeeList, EmployeeGetDto>()
                 .ForMember(a => a.Id, e => e.MapFrom(mfg => mfg.Id))
-                .ForMember(a => a.EmployeeName, e => e.MapFrom(mfg => $"{mfg.FirstName} {mfg.MiddleName} {mfg.LastName}"))
+                .ForMember(a => a.EmployeeName, e => e.MapFrom(mfg => $"{mfg.FirstName} {mfg.MiddleName} {mfg.LastName}"))              
                 .ForMember(a => a.ZoneName, e => e.MapFrom(mfg => mfg.Zone.ZoneName))
                 .ForMember(a => a.RegionName, e => e.MapFrom(mfg => mfg.Zone.Region.RegionName))
                 .ForMember(a => a.Nationality, e => e.MapFrom(mfg => mfg.Zone.Region.Country.Nationality))
@@ -38,6 +38,13 @@ namespace IntegratedImplementation.Datas
             CreateMap<EmploymentDetail, EmployeeHistoryDto>()
                 .ForMember(a => a.DepartmentName, e => e.MapFrom(mfg => mfg.Department.DepartmentName))
                 .ForMember(a => a.PositionName, e => e.MapFrom(mfg => mfg.Position.PositionName));
+
+            CreateMap<EmployeeSalary, EmployeeSalaryGetDto>()
+                .ForMember(a => a.ProjectName, e => e.MapFrom(mfg => mfg.ProjectName))
+                .ForMember(a => a.Amount, e => e.MapFrom(mfg => mfg.Amount));
+
+
+            
 
             CreateMap<EmployeeFamily, EmployeeFamilyGetDto>()
                 .ForMember(a => a.Gender, e => e.MapFrom(mfg => mfg.Gender.ToString()))

@@ -133,6 +133,54 @@ namespace IntegratedDigitalAPI.Controllers.HRM
                 return BadRequest();
             }
         }
+        // employee Salary 
+
+        [HttpGet]
+        [ProducesResponseType(typeof(EmployeeHistoryDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetEmployeeSalaryHistory(Guid employeeId)
+        {
+            return Ok(await _employeeService.GetEmployeeSalaryHistory(employeeId));
+        }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> AddEmployeeSalaryHistory(EmployeeSalryPostDto employeeSalary)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _employeeService.AddEmployeeSalaryHistory(employeeSalary));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> UpdateEmployeeSalaryHistory(EmployeeSalaryGetDto employeeSalary)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _employeeService.UpdateEmployeeSalaryHistory(employeeSalary));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+        [HttpDelete]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> DeleteEmployeeSalaryHistory(Guid employeeHistoryId)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _employeeService.deleteEmployeeSalaryHistory(employeeHistoryId));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
 
         //family 
 

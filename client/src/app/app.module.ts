@@ -153,6 +153,7 @@ import { AddPerformanceDetailPlanComponent } from './pages/human-resource/hrm-co
 import { EmployeeSupervisorsComponent } from './pages/human-resource/employee-supervisors/employee-supervisors.component';
 import { AssignSupervisorComponent } from './pages/human-resource/employee-supervisors/assign-supervisor/assign-supervisor.component';
 import { PerformanceManagementComponent } from './pages/human-resource/performance-management/performance-management.component';
+import { HistorySalaryComponent } from './pages/human-resource/employee-managment/employee-detail/employment-history/history-salary/history-salary.component';
 
 @NgModule({
   declarations: [
@@ -281,7 +282,8 @@ import { PerformanceManagementComponent } from './pages/human-resource/performan
      AddPerformanceDetailPlanComponent,
      EmployeeSupervisorsComponent,
      AssignSupervisorComponent,
-     PerformanceManagementComponent
+     PerformanceManagementComponent,
+     HistorySalaryComponent
   ],
   imports: [
     BrowserModule, 

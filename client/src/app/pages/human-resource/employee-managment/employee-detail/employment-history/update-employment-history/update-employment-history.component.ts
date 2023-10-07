@@ -31,9 +31,10 @@ export class UpdateEmploymentHistoryComponent implements OnInit {
     this.HistoryForm.controls['departmentId'].setValue(this.employeeHistory.departmentId)
     this.HistoryForm.controls['positionId'].setValue(this.employeeHistory.positionId) 
     this.HistoryForm.controls['salary'].setValue(this.employeeHistory.salary)    
-    this.HistoryForm.controls['startDate'].setValue(this.employeeHistory.startDate)
-    this.HistoryForm.controls['endDate'].setValue(this.employeeHistory.endDate)
-
+    this.HistoryForm.controls['startDate'].setValue(this.employeeHistory.startDate.toString().split('T')[0])  
+    this.HistoryForm.controls['endDate'].setValue(this.employeeHistory.endDate.toString().split('T')[0])
+    this.HistoryForm.controls['sourceOfSalary'].setValue(this.employeeHistory.sourceOfSalary)
+    this.HistoryForm.controls['remark'].setValue(this.employeeHistory.remark)
   }
   constructor(
     private activeModal: NgbActiveModal, 
@@ -49,7 +50,9 @@ export class UpdateEmploymentHistoryComponent implements OnInit {
         positionId: [null, Validators.required],
         salary: [null, Validators.required],
         startDate: [null, Validators.required],
-        endDate: [null, Validators.required]
+        endDate: [null, Validators.required],
+        sourceOfSalary:[null,Validators.required],
+        remark : [null,Validators.required]
       })
      }
 
@@ -84,7 +87,9 @@ export class UpdateEmploymentHistoryComponent implements OnInit {
         startDate : this.HistoryForm.value.startDate,
         endDate : this.HistoryForm.value.endDate,
         createdById : this.user.userId,
-        employeeId : this.employeeHistory.employeeId
+        employeeId : this.employeeHistory.employeeId,
+        sourceOfSalary : this.HistoryForm.value.sourceOfSalary,
+        remark : this.HistoryForm.value.remark
       }
       this.hrmService.updateEmployeeHistory(employeeHistory).subscribe(
         {

@@ -45,6 +45,12 @@
                                 </div>
                             </div>
                             <div class="col-md-3">
+                                <div class="form-floating"> <input type="text" class="form-control" id="amharicName"
+                                        placeholder="amharicName" required formControlName="amharicName">
+                                    <label for="amharicName"> Amharic Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
                                 <div class="form-floating"> <input type="text" class="form-control" id="PhoneNumber"
                                         placeholder="PhoneNumber" required formControlName="phoneNumber">
                                     <label for="PhoneNumber"> Phone Number</label>
@@ -94,12 +100,13 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-floating mb-3">
-                                    <select class="form-select" #employmentType id="EmploymentType" formControlName="employmentType"
-                                        aria-label="State">
+                                    <select class="form-select" #employmentType id="EmploymentType"
+                                        formControlName="employmentType" aria-label="State">
 
                                         <option></option>
                                         <option value="PERMANENT">PERMANENT</option>
                                         <option value="CONTRAT">CONTRAT</option>
+                                        <option value="TEMPORARY">TEMPORARY</option>
 
                                     </select>
                                     <label for="EmploymentType">Employment Type</label>
@@ -118,24 +125,25 @@
                                     <label for="PaymentType">Payment Type</label>
                                 </div>
                             </div>
-                            <div class="col-md-3" *ngIf="employmentType.value==='CONTRAT'">
-                                <div class="form-floating"> <input type="number" class="form-control" id="ContractDays"
-                                        placeholder="ContractDays"  formControlName="contractDays">
-                                    <label for="ContractDays"> Contract End Date </label>
-                                </div>
-                            </div>
-                              
-                          
+
+
+
                             <div class="col-md-3">
                                 <div class="form-floating"> <input type="date" class="form-control" id="EmploymentDate"
                                         placeholder="EmploymentDate" required formControlName="employmentDate">
                                     <label for="EmploymentDate"> Employment Date</label>
                                 </div>
                             </div>
+                            <div class="col-md-3" *ngIf="employmentType.value==='CONTRAT'">
+                                <div class="form-floating"> <input type="date" class="form-control" id="ContractEndDate"
+                                        placeholder="ContractEndDate" formControlName="ContractEndDate">
+                                    <label for="ContractEndDate"> Contract End Date </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                
-                   
+
+
 
                 </div>
                 <div class="row mb-3">
@@ -146,7 +154,7 @@
                         <div class="row g-3">
 
 
-                           
+
                             <div class="col-md-3">
                                 <div class="form-floating mb-3">
                                     <select class="form-select" id="EmploymentStatus" formControlName="employmentStatus"
@@ -161,9 +169,9 @@
                                 </div>
                             </div>
 
-                         
 
-                         
+
+
                             <div class="col-md-3">
                                 <div class="form-floating"> <input type="string" class="form-control" id="PensionCode"
                                         placeholder="PensionCode" required formControlName="pensionCode">
@@ -186,7 +194,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-2">
+                            <div class="col-md-4">
                                 <div class="form-floating mb-3">
                                     <select class="form-select" id="Departments" formControlName="departmentId"
                                         aria-label="State">
@@ -198,7 +206,7 @@
                                     <label for="Departments">Departments</label>
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-4">
                                 <div class="form-floating mb-3">
                                     <select class="form-select" id="positionId" formControlName="positionId"
                                         aria-label="State">
@@ -212,7 +220,15 @@
                             </div>
 
 
-                            <div class="col-md-2">
+                            <div class="col-md-4">
+                                <div class="form-floating"> <input type="number" class="form-control" id="salary"
+                                        placeholder="salary" required formControlName="salary">
+                                    <label for="salary"> Salary</label>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-3">
                                 <div class="form-floating mb-3">
                                     <select class="form-select" id="countryId" #country
                                         (change)="getRegions(country.value)" aria-label="State">
@@ -223,9 +239,9 @@
                                     <label for="countryId">Country</label>
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <div class="form-floating mb-3">
-                                    <select class="form-select" (change)="getZones(region.value)" #region id="regionId" 
+                                    <select class="form-select" (change)="getZones(region.value)" #region id="regionId"
                                         aria-label="State">
                                         <option></option>
                                         <option *ngFor="let region of regions" [value]="region.id">{{
@@ -235,10 +251,9 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <div class="form-floating mb-3">
-                                    <select class="form-select" id="zoneId" formControlName="zoneId"
-                                        aria-label="State">
+                                    <select class="form-select" id="zoneId" formControlName="zoneId" aria-label="State">
                                         <option></option>
                                         <option *ngFor="let zone of zones" [value]="zone.id">{{
                                             zone.name }}</option>
@@ -247,7 +262,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <div class="form-floating"> <input type="text" class="form-control" id="woreda"
                                         placeholder="woreda" required formControlName="woreda">
                                     <label for="woreda"> Woreda</label>

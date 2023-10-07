@@ -38,7 +38,13 @@ namespace IntegratedInfrustructure.Data
         public enum EmploymentType
         {
             PERMANENT,
-            CONTRAT
+            CONTRAT,
+            TEMPORARY
+        }
+        public enum SALARYSOURCE
+        {
+            PROJECT,
+            OTHER
         }
 
         public enum EmploymentStatus

@@ -4,13 +4,15 @@ export interface EmployeePostDto
      firstName : string;
      middleName : string;
      lastName : string;
+     amharicName:string,   
      gender : string;
      birthDate : Date
      maritalStatus:Number
      imagePath :  File | Blob;
      employmentType : string;
      paymentType : string;
-     employmentDate : Date
+     employmentDate : Date;
+     salary?:Number,
      
      terminatedDate? : Date
      isPension? : boolean
@@ -21,7 +23,7 @@ export interface EmployeePostDto
      phoneNumber:string;
      departmentId? : string;
      positionId ?: string;
-     contractDays ? : Number 
+     ContractEndDate ? : Date 
      createdById : string;
      email : string;   
      zoneId : string;
@@ -37,7 +39,8 @@ export interface EmployeeGetDto
      employeeName : string;      
      firstName : string;
      middleName : string;
-     lastName : string;       
+     lastName : string;
+     amharicName:string,       
      gender : string;
      birthDate : Date
      maritalStatus : string;
@@ -65,7 +68,7 @@ export interface EmployeeGetDto
      zoneName : string 
      woreda:string;
      nationalityId:string
-
+    
 
 }
 
@@ -80,6 +83,8 @@ export interface EmployeeHistoryDto {
      employeeId :string;
      departmentId :string ; 
      positionId : string ;
+     remark? : string ;
+     sourceOfSalary:string
 }
 export interface EmployeeHistoryPostDto {
 
@@ -91,9 +96,25 @@ export interface EmployeeHistoryPostDto {
      endDate : Date;
      createdById : string;
      employeeId :string;
+     remark? : string ;
+     sourceOfSalary:string
 
 }
 
+
+export interface EmployeeSalryPostDto {
+     employeeDetailId:string,
+     projectName:String
+     amount:String,
+     createdById?:string
+}
+
+export interface EmployeeSalaryGetDto {
+     id:string,
+     projectName:String
+     amount:number,
+     
+}
 
 
 export interface EmployeeFamilyGetDto {

@@ -13,16 +13,14 @@ namespace IntegratedImplementation.DTOS.HRM
     public record EmployeePostDto
     {
 
-        public Guid ? Id { get; set; }
-
+        public Guid? Id { get; set; }
         public string FirstName { get; set; } = null!;
         public string MiddleName { get; set; } = null!;
         public string LastName { get; set; } = null!;
+        public string AmharicName { get; set; } = null!;
         public string Gender { get; set; } = null!;
-
         public string Email { get; set; } = null!;
         public Guid ZoneId { get; set; }
-
         public string Woreda { get; set; } = null!;
         public string PhoneNumber { get; set; } = null!;
         public DateTime BirthDate { get; set; }
@@ -31,7 +29,6 @@ namespace IntegratedImplementation.DTOS.HRM
         public string EmploymentType { get; set; } = null!;
         public string PaymentType { get; set; } = null!;
         public DateTime EmploymentDate { get; set; }
-      
         public DateTime? TerminatedDate { get; set; }
         public bool IsPension { get; set; }
         public string EmploymentStatus { get; set; } = null!;
@@ -40,7 +37,8 @@ namespace IntegratedImplementation.DTOS.HRM
         public string? BankAccountNo { get; set; } = null!;
         public Guid DepartmentId { get; set; }
         public Guid PositionId { get; set; }
-        public int ContractDays { get; set; } = 0;
+        public DateTime? ContractEndDate { get; set; }
+        public double Salary { get; set; }
         public string CreatedById { get; set; } = null!;
         public bool ExistingEmployee { get; set; }
 
@@ -53,8 +51,9 @@ namespace IntegratedImplementation.DTOS.HRM
         public string EmployeeCode { get; set; } = null!;
         public string EmployeeName { get; set; } = null!;
         public string FirstName { get; set; } = null!;
-        public string MiddleName { get;set; } = null!;
+        public string MiddleName { get; set; } = null!;
         public string LastName { get; set; } = null!;
+        public string AmharicName { get; set; } = null!;
         public string PhoneNumber { get; set; } = null!;
         public string Email { get; set; } = null!;
         public string DepartmentName { get; set; } = null!;
@@ -87,19 +86,19 @@ namespace IntegratedImplementation.DTOS.HRM
     public record EmployeeUpdateDto
     {
 
-        public Guid Id { get; set; } 
+        public Guid Id { get; set; }
         public string FirstName { get; set; } = null!;
 
-        public string MiddleName { get;set; } = null!;
+        public string MiddleName { get; set; } = null!;
         public string LastName { get; set; } = null!;
-      
+
         public string Email { get; set; } = null!;
-        public string PhoneNumber { get; set; }= null!;
+        public string PhoneNumber { get; set; } = null!;
 
         public IFormFile? ImagePath { get; set; }
         public Guid? ZoneId { get; set; }
 
-        public string? Woreda { get; set; } 
+        public string? Woreda { get; set; }
     }
 
     public record EmployeeHistoryDto
@@ -115,31 +114,49 @@ namespace IntegratedImplementation.DTOS.HRM
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 
+        public string SourceOfSalary { get; set; }
+
         public Guid EmployeeId { get; set; }
 
+        public string Remark { get; set; }
+        public List<EmployeeSalaryGetDto> EmployeeSalaries { get; set; }
 
     }
 
+    public record EmployeeSalryPostDto
+    {
+        public Guid EmployeeDetailId { get; set; }
+        public string ProjectName { get; set; }=null!;
+        public double Amount { get; set; }
+        public string CreatedById { get; set; } = null!;
+
+    }
+
+    public record EmployeeSalaryGetDto
+    {
+        public Guid Id { get; set; }
+        public string ProjectName { get; set; }
+        public double Amount { get; set; }
+
+
+    }
     public record EmployeeHistoryPostDto
     {
         public Guid Id { get; set; }
-
         public Guid DepartmentId { get; set; }
         public Guid PositionId { get; set; }
         public double Salary { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-
+        public string SourceOfSalary { get; set; }
         public Guid EmployeeId { get; set; }
         public string CreatedById { get; set; } = null!;
-
+        public string Remark { get; set; }
 
     }
 
     public record EmployeeFamilyPostDto
     {
-
-
         public Guid EmployeeId { get; set; }
         public string FullName { get; set; } = null!;
         public string Gender { get; set; }
@@ -147,7 +164,6 @@ namespace IntegratedImplementation.DTOS.HRM
         public DateTime BirthDate { get; set; }
         public string? Remark { get; set; }
         public string CreatedById { get; set; } = null!;
-
     }
 
     public record EmployeeFamilyGetDto
@@ -160,7 +176,7 @@ namespace IntegratedImplementation.DTOS.HRM
         public string FamilyRelation { get; set; } = null!;
         public DateTime BirthDate { get; set; }
         public string? Remark { get; set; }
-       
+
 
     }
 
@@ -170,9 +186,9 @@ namespace IntegratedImplementation.DTOS.HRM
 
         public Guid Id { get; set; }
         public Guid EmployeeId { get; set; }
-     
+
         public Guid EducationalLevelId { get; set; }
-       
+
         public Guid EducationalFieldId { get; set; }
         public string Institution { get; set; } = null!;
         public DateTime FromDate { get; set; }
@@ -193,7 +209,7 @@ namespace IntegratedImplementation.DTOS.HRM
 
         public Guid? EducationalLevelId { get; set; }
 
-        public Guid ? EducationalFieldId { get; set; }
+        public Guid? EducationalFieldId { get; set; }
         public string EducationalField { get; set; } = null!;
         public string Institution { get; set; } = null!;
         public DateTime FromDate { get; set; }
