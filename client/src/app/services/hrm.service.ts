@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 import { DepartmentGetDto, DepartmentPostDto } from '../model/HRM/IDepartmentDto';
 import { ResponseMessage } from '../model/ResponseMessage.Model';
 import { PositionGetDto, PositionPostDto } from '../model/HRM/IPositionDto';
-import { EmployeeEducationGetDto, EmployeeEducationPostDto, EmployeeFamilyGetDto, EmployeeFamilyPostDto, EmployeeGetDto, EmployeeHistoryDto, EmployeeHistoryPostDto, EmployeePostDto, EmployeeSalaryGetDto, EmployeeSalryPostDto } from '../model/HRM/IEmployeeDto';
+import { EmployeeEducationGetDto, EmployeeEducationPostDto, EmployeeFamilyGetDto, EmployeeFamilyPostDto, EmployeeFileGetDto, EmployeeFilePostDto, EmployeeGetDto, EmployeeHistoryDto, EmployeeHistoryPostDto, EmployeePostDto, EmployeeSalaryGetDto, EmployeeSalryPostDto, EmployeeSuertyGetDto } from '../model/HRM/IEmployeeDto';
 import { SelectList } from '../model/common';
 import { AppliedLeavesGetDto, LeaveBalanceGetDto, LeaveBalancePostDto, LeaveRequestPostDto, LeaveTypeGetDto, LeaveTypePostDto } from '../model/HRM/ILeaveDto';
 import { HrmSettingDto } from '../model/HRM/IHrmSettingDto';
@@ -151,6 +151,37 @@ export class HrmService {
     deleteEmployeeSalaryHistory(employeeId: string) {
         return this.http.delete<ResponseMessage>(this.baseUrl + "/Employee/DeleteEmployeeSalaryHistory?employeeHistoryId=" + employeeId)
     }
+    //employee files 
+
+    getEmployeeFile(employeeId: string) {
+        return this.http.get<EmployeeFileGetDto[]>(this.baseUrl + "/Employee/GetEmployeeFiles?employeeId=" + employeeId)
+    }
+    addEmployeeFile(employeeFile: FormData) {
+        employeeFile.append('createdById',this.userService.getCurrentUser().userId)        
+        return this.http.post<ResponseMessage>(this.baseUrl + "/Employee/AddEmployeeFiles", employeeFile)
+    }    
+    updateEmployeeFile(employeeFile: FormData) {
+        return this.http.post<ResponseMessage>(this.baseUrl + "/Employee/UpdateEmployeeFile", employeeFile)
+    }
+    deleteEmployeeFile(employeeId: string) {
+        return this.http.delete<ResponseMessage>(this.baseUrl + "/Employee/DeleteEmployeeFiles?employeeFileId=" + employeeId)
+    }   
+    //employee surety
+
+    getEmployeeSurety(employeeId: string) {
+        return this.http.get<EmployeeSuertyGetDto[]>(this.baseUrl + "/Employee/GetEmployeeSuerty?employeeId=" + employeeId)
+    }
+    addEmployeeSurety(employeeSuerty: FormData) {
+        employeeSuerty.append('createdById',this.userService.getCurrentUser().userId)        
+        return this.http.post<ResponseMessage>(this.baseUrl + "/Employee/AddEmployeeSurety", employeeSuerty)
+    }    
+    updateEmployeeSurety(employeeSuerty: FormData) {
+        return this.http.post<ResponseMessage>(this.baseUrl + "/Employee/UpdateEmployeeSurety", employeeSuerty)
+    }  
+    deleteEmployeeSurety(employeeSuretyId: string) {
+        return this.http.delete<ResponseMessage>(this.baseUrl + "/Employee/DeleteEmployeeSurety?employeeSuretyId=" + employeeSuretyId)
+    }    
+
 
     //employee Family
     getEmployeeFamily(employeeId: string) {

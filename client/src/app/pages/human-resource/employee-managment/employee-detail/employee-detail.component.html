@@ -126,6 +126,27 @@
                         <app-employee-education [employeeId]="employeeId" />
                     </div>
                 </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingThree"> <button class="accordion-button collapsed"
+                            type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour"
+                            aria-expanded="false" aria-controls="collapseFour"> Employee Files</button></h2>
+                    <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                        data-bs-parent="#accordionExample">
+                        <app-employee-files [employeeId]="employeeId" />
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingThree"> <button class="accordion-button collapsed"
+                            type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive"
+                            aria-expanded="false" aria-controls="collapseFive"> Employee Surety</button></h2>
+                    <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                        data-bs-parent="#accordionExample">
+
+                        <app-employee-surety [employeeId]="employeeId"/>
+              
+                        <!-- <app-employee-files [employeeId]="employeeId" /> -->
+                    </div>
+                </div>
             </div>
         </div>
 

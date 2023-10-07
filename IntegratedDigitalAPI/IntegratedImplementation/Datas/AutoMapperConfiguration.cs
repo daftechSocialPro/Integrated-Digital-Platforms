@@ -22,18 +22,18 @@ namespace IntegratedImplementation.Datas
         public AutoMapperConfigurations()
         {
 
-             CreateMap<EmployeeList, EmployeeGetDto>()
-                .ForMember(a => a.Id, e => e.MapFrom(mfg => mfg.Id))
-                .ForMember(a => a.EmployeeName, e => e.MapFrom(mfg => $"{mfg.FirstName} {mfg.MiddleName} {mfg.LastName}"))              
-                .ForMember(a => a.ZoneName, e => e.MapFrom(mfg => mfg.Zone.ZoneName))
-                .ForMember(a => a.RegionName, e => e.MapFrom(mfg => mfg.Zone.Region.RegionName))
-                .ForMember(a => a.Nationality, e => e.MapFrom(mfg => mfg.Zone.Region.Country.Nationality))
-                .ForMember(a => a.NationalityId, e => e.MapFrom(mfg => mfg.Zone.Region.Country.Id))
-                .ForMember(a => a.DepartmentName, e => e.MapFrom(mfg => mfg.EmployeeDetail.FirstOrDefault(x => x.Rowstatus == RowStatus.ACTIVE)!.Department.DepartmentName))
-                .ForMember(a => a.PostionName, e => e.MapFrom(mfg => mfg.EmployeeDetail.FirstOrDefault(x => x.Rowstatus == RowStatus.ACTIVE)!.Position.PositionName))
-                .ForMember(a => a.EmploymentStatus, e => e.MapFrom(mfg => mfg.EmploymentStatus.ToString()))
-                .ForMember(a => a.CountryId, e => e.MapFrom(mfg => mfg.Zone.Region.CountryId))
-                .ForMember(a => a.RegionId, e => e.MapFrom(mfg => mfg.Zone.RegionId));
+            CreateMap<EmployeeList, EmployeeGetDto>()
+               .ForMember(a => a.Id, e => e.MapFrom(mfg => mfg.Id))
+               .ForMember(a => a.EmployeeName, e => e.MapFrom(mfg => $"{mfg.FirstName} {mfg.MiddleName} {mfg.LastName}"))
+               .ForMember(a => a.ZoneName, e => e.MapFrom(mfg => mfg.Zone.ZoneName))
+               .ForMember(a => a.RegionName, e => e.MapFrom(mfg => mfg.Zone.Region.RegionName))
+               .ForMember(a => a.Nationality, e => e.MapFrom(mfg => mfg.Zone.Region.Country.Nationality))
+               .ForMember(a => a.NationalityId, e => e.MapFrom(mfg => mfg.Zone.Region.Country.Id))
+               .ForMember(a => a.DepartmentName, e => e.MapFrom(mfg => mfg.EmployeeDetail.FirstOrDefault(x => x.Rowstatus == RowStatus.ACTIVE)!.Department.DepartmentName))
+               .ForMember(a => a.PostionName, e => e.MapFrom(mfg => mfg.EmployeeDetail.FirstOrDefault(x => x.Rowstatus == RowStatus.ACTIVE)!.Position.PositionName))
+               .ForMember(a => a.EmploymentStatus, e => e.MapFrom(mfg => mfg.EmploymentStatus.ToString()))
+               .ForMember(a => a.CountryId, e => e.MapFrom(mfg => mfg.Zone.Region.CountryId))
+               .ForMember(a => a.RegionId, e => e.MapFrom(mfg => mfg.Zone.RegionId));
 
             CreateMap<EmploymentDetail, EmployeeHistoryDto>()
                 .ForMember(a => a.DepartmentName, e => e.MapFrom(mfg => mfg.Department.DepartmentName))
@@ -44,11 +44,15 @@ namespace IntegratedImplementation.Datas
                 .ForMember(a => a.Amount, e => e.MapFrom(mfg => mfg.Amount));
 
 
-            
+
 
             CreateMap<EmployeeFamily, EmployeeFamilyGetDto>()
                 .ForMember(a => a.Gender, e => e.MapFrom(mfg => mfg.Gender.ToString()))
                 .ForMember(a => a.FamilyRelation, e => e.MapFrom(mfg => mfg.FamilyRelation.ToString()));
+
+            CreateMap<EmployeeFile, EmployeeFileGetDto>();
+            CreateMap<EmployeeSurety, EmployeeSuertyGetDto>();
+
 
 
             CreateMap<EmployeeEducation, EmployeeEducationGetDto>()
@@ -58,7 +62,7 @@ namespace IntegratedImplementation.Datas
             CreateMap<CompanyProfile, CompanyProfileGetDto>();
 
             CreateMap<GeneralCodes, GeneralCodeDto>()
-                .ForMember(a=>a.GeneralCode , e => e.MapFrom(mfg =>mfg.GeneralCodeType.ToString()));
+                .ForMember(a => a.GeneralCode, e => e.MapFrom(mfg => mfg.GeneralCodeType.ToString()));
 
             CreateMap<VacancyList, VacancyListDto>()
                 .ForMember(x => x.EducationalLevel, e => e.MapFrom(mfg => mfg.EducationalLevel.EducationalLevelName))
@@ -76,7 +80,7 @@ namespace IntegratedImplementation.Datas
             CreateMap<Applicant, ApplicantDetailDto>()
              .ForMember(x => x.ApplicantType, e => e.MapFrom(mfg => mfg.ApplicantType.ToString()))
              .ForMember(x => x.FullName, e => e.MapFrom(mfg => mfg.FirstName + " " + mfg.MiddleName + " " + mfg.LastName))
-             .ForMember(x=>x.PhoneNumber , e=>e.MapFrom(mfg => mfg.PhoneNumber.ToString()))
+             .ForMember(x => x.PhoneNumber, e => e.MapFrom(mfg => mfg.PhoneNumber.ToString()))
              .ForMember(x => x.NationalityName, e => e.MapFrom(mfg => mfg.Nationality.CountryName))
              .ForMember(x => x.ZoneName, e => e.MapFrom(mfg => mfg.Zone.ZoneName));
 

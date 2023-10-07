@@ -177,7 +177,24 @@ namespace IntegratedImplementation.DTOS.HRM
         public DateTime BirthDate { get; set; }
         public string? Remark { get; set; }
 
+    }
 
+    public record EmployeeFilePostDto
+    {
+        public Guid EmployeeId { get; set; }
+        public string FileName { get; set; } = null!;
+        public IFormFile FilePath { get; set; }=null!;
+        public string CreatedById { get; set; } = null!;
+
+    }
+
+    public record EmployeeFileGetDto
+    {
+
+        public Guid Id { get; set; }
+        public string FileName { get; set; } = null!;
+        public IFormFile? File { get; set; } = null!;
+        public string? FilePath { get; set; } = null!;
     }
 
 

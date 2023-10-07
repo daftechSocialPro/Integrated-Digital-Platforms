@@ -154,6 +154,12 @@ import { EmployeeSupervisorsComponent } from './pages/human-resource/employee-su
 import { AssignSupervisorComponent } from './pages/human-resource/employee-supervisors/assign-supervisor/assign-supervisor.component';
 import { PerformanceManagementComponent } from './pages/human-resource/performance-management/performance-management.component';
 import { HistorySalaryComponent } from './pages/human-resource/employee-managment/employee-detail/employment-history/history-salary/history-salary.component';
+import { EmployeeFilesComponent } from './pages/human-resource/employee-managment/employee-detail/employee-files/employee-files.component';
+import { AddEmployeeFileComponent } from './pages/human-resource/employee-managment/employee-detail/employee-files/add-employee-file/add-employee-file.component';
+import { UpdateEmployeeFileComponent } from './pages/human-resource/employee-managment/employee-detail/employee-files/update-employee-file/update-employee-file.component';
+import { EmployeeSuretyComponent } from './pages/human-resource/employee-managment/employee-detail/employee-surety/employee-surety.component';
+import { AddEmployeeSuretyComponent } from './pages/human-resource/employee-managment/employee-detail/employee-surety/add-employee-surety/add-employee-surety.component';
+import { UpdateEmployeeSuretyComponent } from './pages/human-resource/employee-managment/employee-detail/employee-surety/update-employee-surety/update-employee-surety.component';
 
 @NgModule({
   declarations: [
@@ -283,7 +289,13 @@ import { HistorySalaryComponent } from './pages/human-resource/employee-managmen
      EmployeeSupervisorsComponent,
      AssignSupervisorComponent,
      PerformanceManagementComponent,
-     HistorySalaryComponent
+     HistorySalaryComponent,
+     EmployeeFilesComponent,
+     AddEmployeeFileComponent,
+     UpdateEmployeeFileComponent,
+     EmployeeSuretyComponent,
+     AddEmployeeSuretyComponent,
+     UpdateEmployeeSuretyComponent
   ],
   imports: [
     BrowserModule, 
