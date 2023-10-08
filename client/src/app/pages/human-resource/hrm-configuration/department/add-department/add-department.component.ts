@@ -18,7 +18,8 @@ export class AddDepartmentComponent implements OnInit {
 
  
   departmentForm!: FormGroup;
-  user !: UserView
+  user !: UserView;
+  
   ngOnInit(): void {
     this.user  = this.userService.getCurrentUser()   
   }

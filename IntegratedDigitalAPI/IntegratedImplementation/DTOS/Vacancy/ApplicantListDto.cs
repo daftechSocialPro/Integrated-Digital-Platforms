@@ -13,13 +13,12 @@ namespace IntegratedImplementation.DTOS.Vacancy
     {
         public Guid Id { get; set; }
         public string FullName { get; set; } = null!;
-        public string Photo { get; set; } = null!;
-
+        public string Gender { get; set; } = null!;
+        public DateTime DateOfApplication { get; set; }
         public string PhoneNumber { get; set; } = null!;
-        public string VacancyName { get; set; } = null!;
         public string ApplicantStatus { get; set; } = null!;
-
         public Guid ApplicantId { get; set; }
+        public string ApplicantType { get; set; } = null!;
     }
 
     public class ApplicantDetailDto
@@ -35,6 +34,10 @@ namespace IntegratedImplementation.DTOS.Vacancy
         public string Woreda { get; set; } = null!;
         public string ZoneName { get; set; } = null!;
         public string ApplicantType { get; set; } = null!;
+        public bool AppliedForVacancy { get; set; }
+        public string? VacancyName { get; set; }
+        public string? ApplicantStatus { get; set; } = null!;
+        public Guid? ApplicantVacancyId { get; set; } = null!;
     }
 
     public class ApplicantEducationListDto

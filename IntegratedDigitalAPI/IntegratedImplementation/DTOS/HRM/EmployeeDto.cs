@@ -14,15 +14,12 @@ namespace IntegratedImplementation.DTOS.HRM
     {
 
         public Guid ? Id { get; set; }
-
         public string FirstName { get; set; } = null!;
         public string MiddleName { get; set; } = null!;
         public string LastName { get; set; } = null!;
         public string Gender { get; set; } = null!;
-
         public string Email { get; set; } = null!;
         public Guid ZoneId { get; set; }
-
         public string Woreda { get; set; } = null!;
         public string PhoneNumber { get; set; } = null!;
         public DateTime BirthDate { get; set; }
@@ -31,7 +28,6 @@ namespace IntegratedImplementation.DTOS.HRM
         public string EmploymentType { get; set; } = null!;
         public string PaymentType { get; set; } = null!;
         public DateTime EmploymentDate { get; set; }
-      
         public DateTime? TerminatedDate { get; set; }
         public bool IsPension { get; set; }
         public string EmploymentStatus { get; set; } = null!;
@@ -43,8 +39,6 @@ namespace IntegratedImplementation.DTOS.HRM
         public int ContractDays { get; set; } = 0;
         public string CreatedById { get; set; } = null!;
         public bool ExistingEmployee { get; set; }
-
-
     }
 
     public class EmployeeGetDto

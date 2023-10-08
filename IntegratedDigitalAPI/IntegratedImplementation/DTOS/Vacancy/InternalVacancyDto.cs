@@ -13,10 +13,11 @@ namespace IntegratedImplementation.DTOS.Vacancy
     public class InternalApplicantDto
     {
         public string CreatedById { get; set; } = null!;
+        public Guid EmployeeId { get; set; }
         public string FirstName { get; set; } = null!;
         public string MiddleName { get; set; } = null!;
         public string LastName { get; set; } = null!;
-        public string ? ImagePath { get; set; }
+        public string? ImagePath { get; set; }
         public string Email { get; set; } = null!;
         public string PhoneNumber { get; set; } = null!;
         public string Gender { get; set; }
@@ -55,10 +56,12 @@ namespace IntegratedImplementation.DTOS.Vacancy
 
     public class ApplyVacancyDto 
     {
+        public string? CreatedById { get; set; }
         public Guid Id { get; set; }
         public Guid ApplicantId { get; set; }
         public Guid VacancyId { get; set; }
         public ApplicantStatus ApplicantStatus { get; set; }
+        public string? Description { get; set; }
     }
 
     public class ApplicantVacancyDocumentDto
@@ -67,5 +70,18 @@ namespace IntegratedImplementation.DTOS.Vacancy
         public Guid ApplicantVacnncyId { get; set; }
         public IFormFile? DocumentPath { get; set; }
         public string? Description { get; set; }
+    }
+
+    public class ApplicantProcessDto
+    {
+        public Guid ApplicantId { get; set; }
+        public Guid VacancyId { get; set; }
+        public string UserId { get; set; } = null!;
+        public ApplicantStatus ApplicantStatus { get; set; }
+        public bool SendEmail { get; set; }
+        public string Subject { get; set; } = null!;
+        public string Description { get; set; } = null!;
+        public DateTime? HireDate { get; set; }
+        public DateTime? ScheduleDate { get; set; }
     }
 }

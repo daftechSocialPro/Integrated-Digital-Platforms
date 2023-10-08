@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Table } from 'primeng/table';
-import { ApplicantGetdto } from 'src/app/model/Vacancy/IApplicantDto';
+import { ApplicantListDto } from 'src/app/model/Vacancy/IApplicantDto';
 import { VacancyListDto } from 'src/app/model/Vacancy/vacancyList.Model';
 import { CommonService } from 'src/app/services/common.service';
 import { VacancyService } from 'src/app/services/vacancy.service';
@@ -15,7 +15,7 @@ export class VacancyDetailComponent implements OnInit {
 
   vacancyDetail!: VacancyListDto
   vacancyId!: string
-  vaccancyEmployees!:ApplicantGetdto[]
+  vaccancyEmployees!:ApplicantListDto[]
   ngOnInit(): void {
 
     this.vacancyId = this.route.snapshot.paramMap.get('id')!
@@ -55,10 +55,12 @@ export class VacancyDetailComponent implements OnInit {
     })
   }
 
+  onGlobalFilter(table: Table, event: Event) {
+    table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+  }
+
   getFIle(url:string){
-
-    return this.commonService.createImgPath(url)
-
+    return this.commonService.createImgPath(url);
   }
 
 apply(){

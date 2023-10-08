@@ -17,9 +17,8 @@
     <section class="section">
         <div class="card">
             <section class="section">
-                <div class="card" *ngIf="employee&&!applicant">
-
-                    <div class="col-lg-12 text-end p-2" *ngIf="!applicant">
+                <div class="card" *ngIf="employee&&!isApplicant">
+                    <div class="col-lg-12 text-end p-2">
                         <button type="button" class="btn btn-outline-primary" (click)="addApplicantProfile()"><i
                                 class="pi pi-plus me-1"></i>
                             Add Applicant Profile</button>
@@ -36,19 +35,14 @@
                             </div>
 
                         </div>
-
-
                     </div>
                     <div class="employee-details2">
-
-
                         <div class="col-lg-10">
                             <table class="table table-borderless">
                                 <thead>
                                     <tr class="table-head">
                                         <th>Gender</th>
                                         <th>Birth Date</th>
-
                                         <th>Phone Number</th>
                                         <th>Email</th>
                                         <th>Citizen Ship</th>
@@ -59,12 +53,9 @@
                                     <tr class="table-body">
                                         <td>{{employee.gender}}</td>
                                         <td>{{employee.birthDate | date:"MMM dd, YYYY"}}</td>
-
                                         <td>{{employee.phoneNumber}}</td>
                                         <td>{{employee.email}}</td>
                                         <td>{{employee.nationality }}</td>
-
-
                                     </tr>
                                 </tbody>
                             </table>
@@ -73,14 +64,20 @@
                     </div>
                 </div>
                 <div class="card" *ngIf="applicantDetail">
-
-                    <div class="col-lg-12 text-end p-2" *ngIf="applicant.applicantStatus=='PENDING'">
+                    <div class="col-lg-12 text-end p-2" *ngIf="!applicantDetail.appliedForVacancy">
+                        <button type="button" class="btn btn-outline-primary" (click)="startVacancy()">
+                            Start  Vacancy</button>
+                    </div>
+                    <div class="col-lg-12 text-end p-2" *ngIf="applicantDetail.applicantStatus =='PENDING'">
                         <button type="button" class="btn btn-outline-primary" (click)="finalizeApplicant()">
                             Finalize</button>
                     </div>
+                    <div class="col-lg-12 text-end p-2" *ngIf="applicantDetail.applicantStatus && applicantDetail.applicantStatus != 'PENDING'">
+                        <p-splitButton label="Actions" [model]="items"  styleClass="p-button-raised p-button-warning mr-2 mb-2"></p-splitButton>
+                    </div>
 
                     <div class="employee-details">
-                        <img [src]="getImagePath(applicantDetail.photo!)" height="150" alt="user png" style="border-radius: 10px;
+                        <img [src]="getImagePath(applicantDetail.imagePath!)" height="150" alt="user png" style="border-radius: 10px;
                         border: 10px solid #f4f4f4;">
 
                         <div class="employee-info mt-2">
@@ -98,20 +95,22 @@
                             </div>
                             <div class="employee-code"> Gender : <span> {{applicantDetail.gender}}</span>
                             </div>
-                         
-                         
-
+                            <div class="employee-code"> Applicant : <span>                                
+                                <p-badge [value]="applicantDetail.applicantStatus" [severity]="getBadge(applicantDetail.applicantStatus)"></p-badge>
+                              </span>
+                            </div>
+                            <div class="employee-code"> Vacancy Name : <span>                                
+                                {{applicantDetail.vacancyName}}
+                              </span>
+                            </div>
                         </div>
-
-
                     </div>
-             
                 </div>
             </section>
         </div>
 
 <div class="card">
-    <div class="accordion" id="accordionExample" *ngIf="applicant">
+    <div class="accordion" id="accordionExample" *ngIf="applicantDetail">
         <div class="accordion-item" >
             <h2 class="accordion-header" id="headingOne"> <button class="accordion-button" type="button"
                     data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
@@ -120,7 +119,7 @@
                 data-bs-parent="#accordionExample">
                 <div class="accordion-body">
                     <!-- <app-employemnt-history [employeeId]="employeeId"/> -->
-                    <app-applicant-education [applicantId]="applicant.applicantId"  [notFinalize]="applicant.applicantStatus=='PENDING'"   ></app-applicant-education>
+                    <app-applicant-education [applicantId]="applicantDetail.id"  [notFinalize]="applicantDetail.applicantStatus=='PENDING'"   ></app-applicant-education>
                 </div>
             </div>
         </div>
@@ -132,7 +131,7 @@
             <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
                 data-bs-parent="#accordionExample">
                 <div class="accordion-body">
-                    <app-applicant-work-experiance [applicantId]="applicant.applicantId" [notFinalize]="applicant.applicantStatus=='PENDING'" ></app-applicant-work-experiance>
+                    <app-applicant-work-experiance [applicantId]="applicantDetail.id" [notFinalize]="applicantDetail.applicantStatus=='PENDING'" ></app-applicant-work-experiance>
                 </div>
                 
             </div>
@@ -145,8 +144,7 @@
                     aria-expanded="false" aria-controls="collapseThree"> Applicant Files </button></h2>
             <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
                 data-bs-parent="#accordionExample">
-                
-                <app-applicant-documents [applicantId]="applicant.applicantId" [applicantVacancyId]="applicant.id" [notFinalize]="applicant.applicantStatus=='PENDING'"></app-applicant-documents>
+                <app-applicant-documents [applicantId]="applicantDetail.id" [applicantVacancyId]="vaccancyId" [notFinalize]="applicantDetail.applicantStatus=='PENDING'"></app-applicant-documents>
                 <!-- <app-employee-education [applicantId]="applicant.applicantId" /> -->
             </div>
         </div>

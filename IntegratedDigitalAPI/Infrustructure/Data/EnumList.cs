@@ -64,8 +64,7 @@ namespace IntegratedInfrustructure.Data
         {
             PENDING,
             APPLIED,
-            SEEN,
-            PROGRESS,
+            EXAM,
             INTERVIEW,
             REJECTED,
             HIRED,
@@ -118,6 +117,20 @@ namespace IntegratedInfrustructure.Data
             PENDING,
             ONPROGRESS,
             FINALIZED,
+        }
+
+        public enum TypeOfLoan
+        {
+            ADVANCE,
+            LOAN,
+            OTHER
+        }
+
+        public enum LoanStatus
+        {
+            PENDING,
+            APPROVED,
+            GIVEN,
         }
 
     }

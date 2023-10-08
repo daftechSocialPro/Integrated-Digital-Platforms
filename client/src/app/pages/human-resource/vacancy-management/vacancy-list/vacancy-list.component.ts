@@ -160,7 +160,6 @@ export class VacancyListComponent implements OnInit {
   }
 
   goToDetails(vacancyId: string){
-
     this.route.navigate(['/HRM/vacancyDetail',vacancyId])
   }
 

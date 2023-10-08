@@ -19,7 +19,6 @@ namespace IntegratedImplementation.Interfaces.Vacancy
         Task<ResponseMessage> UpdateVacancy(UpdateVacancyDto updateVacancy);
         Task<VacancyListDto> GetVacancyDetail(Guid vacancyId);
         Task<List<VacancyDocumentsDto>> GetVacancyDocuments(Guid vacancyId);
-
         Task<ResponseMessage> DeleteVacancyDocument(Guid vacancyDocId);
         Task<ResponseMessage> ApproveVacancy(Guid vacancyId);
         Task<ResponseMessage> AddVacancyDocument(AddVacancyDocumentDto addVacancyDocument);

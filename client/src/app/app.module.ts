@@ -153,6 +153,9 @@ import { AddPerformanceDetailPlanComponent } from './pages/human-resource/hrm-co
 import { EmployeeSupervisorsComponent } from './pages/human-resource/employee-supervisors/employee-supervisors.component';
 import { AssignSupervisorComponent } from './pages/human-resource/employee-supervisors/assign-supervisor/assign-supervisor.component';
 import { PerformanceManagementComponent } from './pages/human-resource/performance-management/performance-management.component';
+import { ChangeStatusComponent } from './pages/human-resource/vacancy-management/applicant/change-status/change-status.component';
+import { LoanSettingComponent } from './pages/human-resource/hrm-configuration/loan-setting/loan-setting.component';
+import { AddLoanSettingComponent } from './pages/human-resource/hrm-configuration/loan-setting/add-loan-setting/add-loan-setting.component';
 
 @NgModule({
   declarations: [
@@ -281,7 +284,10 @@ import { PerformanceManagementComponent } from './pages/human-resource/performan
      AddPerformanceDetailPlanComponent,
      EmployeeSupervisorsComponent,
      AssignSupervisorComponent,
-     PerformanceManagementComponent
+     PerformanceManagementComponent,
+     ChangeStatusComponent,
+     LoanSettingComponent,
+     AddLoanSettingComponent
   ],
   imports: [
     BrowserModule, 

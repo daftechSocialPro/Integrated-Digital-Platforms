@@ -3,6 +3,7 @@ using IntegratedImplementation.DTOS.Vacancy;
 using IntegratedImplementation.Interfaces.Vacancy;
 using IntegratedImplementation.Services.Vacancy;
 using IntegratedInfrustructure.Model.Vacancy;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -26,6 +27,13 @@ namespace IntegratedDigitalAPI.Controllers.Vacancy
         public async Task<IActionResult> GetApplicantList(Guid vacancyId)
         {
             return Ok(await _applicantService.GetApplicantList(vacancyId));
+        }
+
+        [HttpGet]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public async Task<IActionResult> CheckApplicantProfile(Guid employeeId)
+        {
+           return new JsonResult(await this._applicantService.CheckApplicantProfile(employeeId));
         }
 
         [HttpPost]
@@ -70,20 +78,7 @@ namespace IntegratedDigitalAPI.Controllers.Vacancy
             }
         }
 
-        [HttpPost]
-        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> ApplyForVanacncy([FromBody] ApplyVacancyDto applyVacancy)
-        {
-            if (ModelState.IsValid)
-            {
-                return Ok(await _applicantService.ApplyForVanacncy(applyVacancy));
-            }
-            else
-            {
-                return BadRequest();
-            }
-        }
-
+       
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> AddApplicantDocument([FromForm] ApplicantVacancyDocumentDto applicantVacancy)
@@ -91,6 +86,20 @@ namespace IntegratedDigitalAPI.Controllers.Vacancy
             if (ModelState.IsValid)
             {
                 return Ok(await _applicantService.AddApplicantDocument(applicantVacancy));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPut]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> StartVacancy(Guid applicantId, Guid vacancyId)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _applicantService.StartVacancy(applicantId, vacancyId));
             }
             else
             {
@@ -115,9 +124,9 @@ namespace IntegratedDigitalAPI.Controllers.Vacancy
 
         [HttpGet]
         [ProducesResponseType(typeof(ApplicantDetailDto), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetApplicantDetail(Guid applicantId)
+        public async Task<IActionResult> GetApplicantDetail(Guid applicantId, Guid vacancyId)
         {
-            return Ok(await _applicantService.GetApplicantDetail(applicantId));
+            return Ok(await _applicantService.GetApplicantDetail(applicantId, vacancyId));
         }
 
         [HttpGet]
@@ -146,6 +155,21 @@ namespace IntegratedDigitalAPI.Controllers.Vacancy
         public async Task<IActionResult> GetApplicantDocument(Guid applicantVacancyId)
         {
             return Ok(await _applicantService.GetApplicantDocument(applicantVacancyId));
+        }
+
+
+        [HttpPut]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> ChangeApplicantStatus(ApplicantProcessDto applicantProcess)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _applicantService.ChangeApplicantStatus(applicantProcess));
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
     }

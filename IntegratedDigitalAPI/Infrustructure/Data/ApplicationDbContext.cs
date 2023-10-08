@@ -57,6 +57,11 @@ namespace IntegratedInfrustructure.Data
         public DbSet<EmployeeDevelopmentPlan> EmployeeDevelopmentPlans { get; set; }
         public DbSet<EmployeeSupport> EmploeeSupports { get; set; }
 
+        public DbSet<LoanSetting> LoanSettings { get; set; }
+        public DbSet<LoanRequest> LoanRequests { get; set; }
+        public DbSet<EmployeeLoan> EmployeeLoans { get; set; }
+        public DbSet<EmployeeSettlement> EmployeeSettlements { get; set; }
+
         #endregion
 
         #region Vacancy
@@ -67,6 +72,7 @@ namespace IntegratedInfrustructure.Data
         public DbSet<ApplicantWorkExperiance> ApplicantWorkExperiances { get; set; }
         public DbSet<VacancyList> VacancyLists { get; set; }
         public DbSet<VacancyDocuments> VacancyDocuments { get; set; }
+        public DbSet<VacancyStatus> VacancyStatuses { get; set; }
         #endregion
 
 

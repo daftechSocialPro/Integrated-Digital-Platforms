@@ -4,6 +4,7 @@ using IntegratedInfrustructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IntegratedInfrustructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231006044035_VacancyStatus")]
+    partial class VacancyStatus
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -776,52 +779,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeLoan", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<double>("ApprovedAmmount")
-                        .HasColumnType("float");
-
-                    b.Property<Guid>("ApprovedById")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CreatedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("LoanRequestId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("PaymentEndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("PaymentStartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Rowstatus")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("SecondApproverId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApprovedById");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("LoanRequestId");
-
-                    b.HasIndex("SecondApproverId");
-
-                    b.ToTable("EmployeeLoans");
-                });
-
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeePerformance", b =>
                 {
                     b.Property<Guid>("Id")
@@ -911,36 +868,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasIndex("PerformancePlanDetailId");
 
                     b.ToTable("EmployeePerformancePlans");
-                });
-
-            modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeSettlement", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CreatedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("EmployeeLoanId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<double>("PayedMoney")
-                        .HasColumnType("float");
-
-                    b.Property<int>("Rowstatus")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("EmployeeLoanId");
-
-                    b.ToTable("EmployeeSettlements");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeSupervisors", b =>
@@ -1225,88 +1152,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.ToTable("LeaveTypes");
                 });
 
-            modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.LoanRequest", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CreatedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double>("DeductionRequest")
-                        .HasColumnType("float");
-
-                    b.Property<Guid>("LoanSettingId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("LoanStatus")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("RequesterId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Rowstatus")
-                        .HasColumnType("int");
-
-                    b.Property<double>("TotalMoneyRequest")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("LoanSettingId");
-
-                    b.HasIndex("RequesterId");
-
-                    b.ToTable("LoanRequests");
-                });
-
-            modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.LoanSetting", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CreatedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LoanName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("MaxDeductedPercent")
-                        .HasColumnType("float");
-
-                    b.Property<double>("MaxLoanAmmount")
-                        .HasColumnType("float");
-
-                    b.Property<double>("MinDeductedPercent")
-                        .HasColumnType("float");
-
-                    b.Property<int>("PaymentYear")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Rowstatus")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TypeOfLoan")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedById");
-
-                    b.ToTable("LoanSettings");
-                });
-
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.PerformancePlan", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1545,9 +1390,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("EmployeeCode")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -1828,20 +1670,11 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("HireDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<bool>("IsNotificationSent")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime?>("ScheduleDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
-
-                    b.Property<string>("Subject")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -2187,39 +2020,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("Zone");
                 });
 
-            modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeLoan", b =>
-                {
-                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "ApprovedBy")
-                        .WithMany()
-                        .HasForeignKey("ApprovedById")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
-
-                    b.HasOne("IntegratedInfrustructure.Model.HRM.LoanRequest", "LoanRequest")
-                        .WithMany()
-                        .HasForeignKey("LoanRequestId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "SecondApprover")
-                        .WithMany()
-                        .HasForeignKey("SecondApproverId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("ApprovedBy");
-
-                    b.Navigation("CreatedBy");
-
-                    b.Navigation("LoanRequest");
-
-                    b.Navigation("SecondApprover");
-                });
-
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeePerformance", b =>
                 {
                     b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "Approver")
@@ -2266,23 +2066,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("EmployeePerformance");
 
                     b.Navigation("PerformancePlanDetail");
-                });
-
-            modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeSettlement", b =>
-                {
-                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
-
-                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeLoan", "EmployeeLoan")
-                        .WithMany()
-                        .HasForeignKey("EmployeeLoanId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("CreatedBy");
-
-                    b.Navigation("EmployeeLoan");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeSupervisors", b =>
@@ -2412,40 +2195,6 @@ namespace IntegratedInfrustructure.Migrations
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.LeaveType", b =>
-                {
-                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
-
-                    b.Navigation("CreatedBy");
-                });
-
-            modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.LoanRequest", b =>
-                {
-                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
-
-                    b.HasOne("IntegratedInfrustructure.Model.HRM.LoanSetting", "LoanSetting")
-                        .WithMany()
-                        .HasForeignKey("LoanSettingId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "Requester")
-                        .WithMany()
-                        .HasForeignKey("RequesterId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("CreatedBy");
-
-                    b.Navigation("LoanSetting");
-
-                    b.Navigation("Requester");
-                });
-
-            modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.LoanSetting", b =>
                 {
                     b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()

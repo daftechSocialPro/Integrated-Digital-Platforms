@@ -5,7 +5,7 @@ import { AddVacancyDto, VacancyListDto } from "../model/Vacancy/vacancyList.Mode
 import { ResponseMessage } from "../model/ResponseMessage.Model";
 import { UserService } from "./user.service";
 import { EmployeeEducationGetDto, EmployeeEducationPostDto, EmployeeGetDto } from "../model/HRM/IEmployeeDto";
-import { ApplicantGetdto, ApplicantWorkDto, InternalApplicant } from "../model/Vacancy/IApplicantDto";
+import { ApplicantDetailDto, ApplicantListDto, ApplicantProcessDto, ApplicantWorkDto } from "../model/Vacancy/IApplicantDto";
 
 @Injectable({
     providedIn: 'root',
@@ -56,19 +56,18 @@ export class VacancyService {
     }
 
     getApplicantList(vacancyId: string) {
+        return this.http.get<ApplicantListDto[]>(this.baseUrl + `/Applicant/GetApplicantList?vacancyId=${vacancyId}`)
+    }
 
-        return this.http.get<ApplicantGetdto[]>(this.baseUrl + `/Applicant/GetApplicantList?vacancyId=${vacancyId}`)
+    checkApplicantProfile(employeeId: string) {
+        return this.http.get<string>(this.baseUrl + `/Applicant/CheckApplicantProfile?employeeId=${employeeId}`)
     }
 
     addInternalApplicant(applicantPost: FormData) {
         return this.http.post<ResponseMessage>(this.baseUrl + "/Applicant/AddInternalApplicant", applicantPost)
     }
 
-    applyForVacancy(vacancyPost: any) {
-        return this.http.post<ResponseMessage>(this.baseUrl + "/Applicant/ApplyForVanacncy", vacancyPost)
-
-
-    }
+    
     getApplicantEducation(applicantId: string) {
 
         return this.http.get<EmployeeEducationGetDto[]>(this.baseUrl + `/Applicant/GetApplicantEducation?applicantId=${applicantId}`)
@@ -82,13 +81,11 @@ export class VacancyService {
         return this.http.get<ApplicantWorkDto[]>(this.baseUrl + `/Applicant/GetApplicantExperience?applicantId=${applicantId}`)
     }
     addApplicantExperiance(employeeExperiancePost: FormData) {
-
         return this.http.post<ResponseMessage>(this.baseUrl + "/Applicant/AddWorkExperience", employeeExperiancePost)
     }
-    getApplicantDetail(applicantId: string) {
-        return this.http.get<InternalApplicant>(this.baseUrl + `/Applicant/GetApplicantDetail?applicantId=${applicantId}`)
 
-
+    getApplicantDetail(applicantId: string, vacancyId: string) {
+        return this.http.get<ApplicantDetailDto>(this.baseUrl + `/Applicant/GetApplicantDetail?applicantId=${applicantId}&vacancyId=${vacancyId}`)
     }
 
     getApplicantDocuments(applicantId: string) {
@@ -100,11 +97,17 @@ export class VacancyService {
         return this.http.post<ResponseMessage>(this.baseUrl + "/Applicant/AddApplicantDocument", appliicantDoc)
     }
 
-    finalizeApplicant(applicantId: string, vacancyId: string) {
+    startVacancy(applicantId: string, vacancyId: string) {
+        return this.http.put<ResponseMessage>(this.baseUrl + `/Applicant/StartVacancy?vacancyId=${vacancyId}&applicantId=${applicantId}`, {})
+    }
 
+    finalizeApplicant(applicantId: string, vacancyId: string) {
         return this.http.put<ResponseMessage>(this.baseUrl + `/Applicant/FinalizeApplication?vacancyId=${vacancyId}&applicantId=${applicantId}`, {})
     }
 
+    changeApplicantStatus(applicantStatus: ApplicantProcessDto) {
+        return this.http.put<ResponseMessage>(this.baseUrl + `/Applicant/ChangeApplicantStatus`, applicantStatus)
+    }
 
 
 }

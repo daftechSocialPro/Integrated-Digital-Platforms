@@ -1,0 +1,48 @@
+<div class="card">
+    <div class="row p-2">
+        <div class="col-lg-12 text-end ">
+            <button type="button" class="btn btn-outline-primary" (click)="addNew()"><i class="bi bi-plus me-1"></i>
+                Loan Setting</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Loan Settings</h5>
+
+                    <p-table [value]="loanSettings" [paginator]="true" [rows]="5" [showCurrentPageReport]="true"
+                        [tableStyle]="{ 'min-width': '50rem' }"
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                        [rowsPerPageOptions]="[5, 25, 50]" styleClass="p-datatable-sm">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>Type</th>
+                                <th>Name</th>
+                                <th>Max. Loan Ammount</th>
+                                <th>Payment Period (year)</th>
+                                <th>Min Deducted %</th>
+                                <th>Max Deducted %</th>
+                                <th></th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-setting>
+                            <tr>
+                                <td>{{ setting.typeOfLoan }}</td>
+                                <td>{{ setting.loanName }}</td>
+                                <td>{{ setting.maxLoanAmmount }}</td>
+                                <td>{{ setting.paymentYear }}</td>
+                                <td>{{ setting.minDeductedPercent }}</td>
+                                <td>{{ setting.maxDeductedPercent }}</td>
+                                <td>
+                                    <button type="button" (click)="update(setting)" class="btn btn-outline-warning"><i
+                                            class="bi bi-pencil "></i> </button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

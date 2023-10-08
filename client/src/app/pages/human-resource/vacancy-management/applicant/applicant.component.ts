@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MenuItem, MessageService } from 'primeng/api';
 import { EmployeeGetDto } from 'src/app/model/HRM/IEmployeeDto';
-import { ApplicantGetdto, InternalApplicant } from 'src/app/model/Vacancy/IApplicantDto';
+import { AddInternalApplicantDto, ApplicantDetailDto} from 'src/app/model/Vacancy/IApplicantDto';
 import { UserView } from 'src/app/model/user';
 import { CommonService } from 'src/app/services/common.service';
 import { HrmService } from 'src/app/services/hrm.service';
 import { UserService } from 'src/app/services/user.service';
 import { VacancyService } from 'src/app/services/vacancy.service';
+import { ChangeStatusComponent } from './change-status/change-status.component';
 
 @Component({
   selector: 'app-applicant',
@@ -16,26 +18,24 @@ import { VacancyService } from 'src/app/services/vacancy.service';
 })
 export class ApplicantComponent implements OnInit {
 
-  vaccancyId!: string
-  applicantId!:string
-  userView !: UserView
-  employee !: EmployeeGetDto
-  applicant !:ApplicantGetdto
-  
-  applicantDetail!:InternalApplicant
+  vaccancyId!: string;
+  applicantId!: string;
+  applicantDetail!: ApplicantDetailDto;
+  employee!: EmployeeGetDto;
+  userView!: UserView;
+  isApplicant: boolean = false;
+  items: any[] = [];
+
   ngOnInit(): void {
     this.userView = this.userService.getCurrentUser()
     this.vaccancyId = this.route.snapshot.paramMap.get('id')!
     this.applicantId = this.route.snapshot.paramMap.get('applicantId')!
     this.getEmployee();    
-
     if(this.applicantId){
-
-      this.getApplicantDetail(this.applicantId)
+      this.getApplicantDetail(this.applicantId);
     }
-
-  
   }
+
   constructor(
     private userService: UserService,
     private hrmService: HrmService,
@@ -43,46 +43,38 @@ export class ApplicantComponent implements OnInit {
     private vacancyService:VacancyService,
     private router: Router,
     private messageService:MessageService,
-    private route: ActivatedRoute) { }
-
-  getImagePath(url: string) {
-
-
+    private route: ActivatedRoute,
+    private modalService: NgbModal) { }
+    getImagePath(url: string) {
     return this.commonService.createImgPath(url)
   }
 
 
   getEmployee() {
-
     this.hrmService.getEmployee(this.userView.employeeId).subscribe({
       next: (res) => {
         this.employee = res
-        this.getApplicantList();
+        this.isApplicantRegisterd(res.id);
       }
-    })
-
-
+    });
   }
+
   goToVacancy() {
     this.router.navigate(['/HRM/vacancyDetail', this.vaccancyId])
-
   }
 
   addApplicantProfile() {
-
-    var applicantPost: InternalApplicant = {
-
-      createdById: this.userView.userId,
+    var applicantPost: AddInternalApplicantDto = {
       firstName: this.employee.firstName,
       middleName: this.employee.middleName,
-      lastName: this.employee.lastName,     
+      lastName: this.employee.lastName,
       email: this.employee.email,
-      imagePath : this.employee.imagePath,
+      imagePath: this.employee.imagePath,
       phoneNumber: this.employee.phoneNumber,
       gender: this.employee.gender,
-      nationalityId:this.employee.nationalityId,
-      birthDate:this.employee.birthDate,
-      woreda:this.employee.woreda ,
+      nationalityId: this.employee.nationalityId,
+      birthDate: this.employee.birthDate,
+      woreda: this.employee.woreda,
       zoneId: this.employee.zoneId,
     }
 
@@ -95,91 +87,185 @@ export class ApplicantComponent implements OnInit {
     }
 
     this.vacancyService.addInternalApplicant(formData).subscribe({
-
       next:(res)=>{
-        if (res.success){                  
-        
-          this.vacancyService.applyForVacancy({
-            applicantId: res.data.id,
-            vacancyId:this.vaccancyId
-          }).subscribe({
-            next:(ress)=>{
-              if(ress.success){
-                this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });  
-                window.location.reload() 
-               }
-              else {
-                this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: res.message });   
-              }
-
-            }
-            ,error:(err)=>{
-              this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail:err });
-            }
-          })
-          
-       
+        if (res.success){   
+          this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });  
+          window.location.reload();
         }
         else {
           this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: res.message });              
-        
         }
       },
       error:(err)=>{
         this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail:err });
       }
     })
-
-   
-
-
-
   }
 
-  getApplicantList(){
-
-    this.vacancyService.getApplicantList(this.vaccancyId).subscribe({
-      next:(res)=>{
-        let app =  res.filter((item)=> item.phoneNumber.toLowerCase()==this.employee.phoneNumber.toString())
-        if (app){
-          this.applicant = app[0]
-
-          console.log(this.applicant)
-          this.getApplicantDetail(this.applicant.applicantId)
+  isApplicantRegisterd(employeeId: string){
+    this.vacancyService.checkApplicantProfile(employeeId).subscribe({
+      next: (res) => {
+        if(res){
+          this.isApplicant = true;
+          this.getApplicantDetail(res)
+        }
+        else {
+          this.isApplicant = false;
         }
       }
-    })
+    });
   }
 
-  getApplicantDetail(applicantId:string){
+  getItemsDropDown() {
+    console.log(this.applicantDetail.applicantStatus)
+    if (this.applicantDetail.applicantStatus == "APPLIED") {
+      this.items = [
+        {
+          label: 'Set For Exam',
+          command: () => {
+            this.changeStatus(2);
+          }
+        },
+        {
+          label: 'Set For Interview',
+          command: () => {
+            this.changeStatus(3);
+          }
+        },
+        {
+          label: 'Reject',
+          command: () => {
+            this.changeStatus(4);
+          }
+        },
+        {
+          label: 'Black List',
+          command: () => {
+            this.changeStatus(6);
+          }
+        }
+      ];
+    }
+    else if (this.applicantDetail.applicantStatus == "EXAM") {
+      this.items = [
+        {
+          label: 'Set For Interview',
+          command: () => {
+            this.changeStatus(3);
+          }
+        },
+        {
+          label: 'Reject',
+          command: () => {
+            this.changeStatus(4);
+          }
+        },
+        {
+          label: 'Black List',
+          command: () => {
+            this.changeStatus(6);
+          }
+        }
+      ];
+    }
+    else if (this.applicantDetail.applicantStatus == "INTERVIEW") {
+      this.items = [
+        {
+          label: 'Hire',
+          command: () => {
+            this.changeStatus(5);
+          }
+        },
+        {
+          label: 'Reject',
+          command: () => {
+            this.changeStatus(4);
+          }
+        },
+        {
+          label: 'Black List',
+          command: () => {
+            this.changeStatus(6);
+          }
+        }
+      ];
+    }
+    else {
+      this.items = [
+        {
+          label: 'Black List',
+          command: () => {
+            this.changeStatus(6);
+          }
+        }
+      ];
+    }
+  }
 
-    this.vacancyService.getApplicantDetail(applicantId).subscribe({
+  
+  getApplicantDetail(applicantId:string){
+    this.vacancyService.getApplicantDetail(applicantId,this.vaccancyId).subscribe({
       next:(res)=>{
-        this.applicantDetail=res
-        console.log(res)
+        this.applicantDetail = res
+         this.getItemsDropDown();
       }
     })
   }
 
-  finalizeApplicant(){
-    
-    this.vacancyService.finalizeApplicant(this.applicant.applicantId,this.vaccancyId).subscribe({
-    
+  startVacancy(){
+    this.vacancyService.startVacancy(this.applicantDetail.id,this.vaccancyId).subscribe({
       next:(res)=>{
         if (res.success){
           this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });              
           window.location.reload()
-          
         }
         else {
-          this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: res.message });              
-        
+          this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: res.message }); 
         }
       },
       error:(err)=>{
         this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail:err });
       }
-    })
+    });
   }
+
+  finalizeApplicant(){
+
+    this.vacancyService.finalizeApplicant(this.applicantDetail.id,this.vaccancyId).subscribe({
+      next:(res)=>{
+        if (res.success){
+          this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });              
+          window.location.reload()
+        }
+        else {
+          this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: res.message }); 
+        }
+      },
+      error:(err)=>{
+        this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail:err });
+      }
+    });
+  }
+
+  getBadge(item: string) {
+    if (item == 'APPLIED') {
+      return 'success'
+    }
+    else if (item == 'REJECTED')
+      return 'danger'
+    else
+      return 'warning'
+  }
+
+  changeStatus(statusType: number){
+    let modalRef = this.modalService.open(ChangeStatusComponent,{size:'lg',backdrop:'static'})
+    modalRef.componentInstance.applicantStatus = statusType,
+    modalRef.componentInstance.applicantId = this.applicantDetail.id,
+    modalRef.componentInstance.vacancyId = this.vaccancyId,
+    modalRef.result.then(()=>{
+      window.location.reload();
+    });
+  }
+
 
 }
