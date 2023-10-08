@@ -1,0 +1,75 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Loan Settng</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Manage loan setting</h5>
+            <div class="row">
+                <div class="col-lg-12">
+                    <form class="" [formGroup]="LoanSettingForm" (ngSubmit)="submit()">
+                        <div class="modal-body">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="loanName" placeholder="name"
+                                            formControlName="loanName">
+                                        <label for="name">Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" id="typeOfLoan" formControlName="typeOfLoan"
+                                            aria-label="State">
+
+                                            <option></option>
+                                            <option value="0">ADVANCE</option>
+                                            <option value="1">LOAN</option>
+                                            <option value="2">OTHER</option>
+                                        </select>
+                                        <label for="typeOfLoan">Type of loan</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <input type="number" class="form-control" id="maxLoanAmmount"
+                                            placeholder="maxLoanAmmount" formControlName="maxLoanAmmount">
+                                        <label for="maxLoanAmmount">max Loan Ammount</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <input type="number" class="form-control" id="minDeductedPercent"
+                                            placeholder="minDeductedPercent" formControlName="minDeductedPercent">
+                                        <label for="minDeductedPercent">Min Deducted %</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <input type="number" class="form-control" id="maxDeductedPercent"
+                                            placeholder="maxDeductedPercent" formControlName="maxDeductedPercent">
+                                        <label for="maxDeductedPercent">Max Deducted %</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <input type="number" class="form-control" id="paymentYear"
+                                            placeholder="paymentYear" formControlName="paymentYear">
+                                        <label for="paymentYear">Payment Year</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
+                                (click)="closeModal()">Close</button>
+                            <button type="button" type="submit" [disabled]="!LoanSettingForm.valid"
+                                class="btn btn-outline-primary">Create</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

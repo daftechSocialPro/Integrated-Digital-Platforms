@@ -41,8 +41,6 @@ namespace IntegratedImplementation.DTOS.HRM
         public double Salary { get; set; }
         public string CreatedById { get; set; } = null!;
         public bool ExistingEmployee { get; set; }
-
-
     }
 
     public class EmployeeGetDto

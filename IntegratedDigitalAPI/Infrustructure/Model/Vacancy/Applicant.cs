@@ -17,7 +17,7 @@ namespace IntegratedInfrustructure.Model.Vacancy
         public string FirstName { get; set; } = null!;
         public string MiddleName { get; set; } = null!;
         public string LastName { get; set; } = null!;
-        public string Photo { get; set; } = null!;
+        public string? Photo { get; set; } = null!;
         public string Email { get; set; } = null!;
         public string PhoneNumber { get; set; } = null!;
         public Gender Gender { get; set; }
@@ -28,5 +28,6 @@ namespace IntegratedInfrustructure.Model.Vacancy
         public virtual Zone Zone { get; set; } = null!;
         public Guid ZoneId { get; set; }
         public ApplicantType ApplicantType { get; set; }
+        public string? EmployeeCode { get; set; }
     }
 }

@@ -27,8 +27,7 @@ namespace IntegratedImplementation.DTOS.Vacancy
         public bool IsApproved { get; set; }
         public double? GPA { get; set; }
         public string VacancyType { get; set; } = null!;
-
-        public List<VacancyDocumentsDto> VaccancyDocuments { get; set; }
+        public List<VacancyDocumentsDto> VaccancyDocuments { get; set; } = null!;
     }
 
     public class AddVacancyDto
