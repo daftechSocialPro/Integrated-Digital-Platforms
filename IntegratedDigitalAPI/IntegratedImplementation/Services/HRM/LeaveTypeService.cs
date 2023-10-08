@@ -1,4 +1,5 @@
-﻿using Implementation.Helper;
+﻿using AutoMapper.QueryableExtensions;
+using Implementation.Helper;
 using IntegratedImplementation.DTOS.Configuration;
 using IntegratedImplementation.DTOS.HRM;
 using IntegratedImplementation.Interfaces.HRM;
@@ -54,7 +55,7 @@ namespace IntegratedImplementation.Services.HRM
             {
                 return new ResponseMessage
                 {
-                    
+
                     Message = ex.InnerException.Message,
                     Success = false
                 };
@@ -78,7 +79,7 @@ namespace IntegratedImplementation.Services.HRM
             return LeaveTypeList;
         }
 
-     
+
 
 
         public async Task<ResponseMessage> UpdateLeaveType(LeaveTypeGetDto LeaveType)
@@ -91,9 +92,9 @@ namespace IntegratedImplementation.Services.HRM
                 if (currentLeaveType != null)
                 {
                     currentLeaveType.Name = LeaveType.Name;
-                    currentLeaveType.LeaveCategory = Enum.Parse<LeaveCategory>( LeaveType.LeaveCategory );
+                    currentLeaveType.LeaveCategory = Enum.Parse<LeaveCategory>(LeaveType.LeaveCategory);
                     currentLeaveType.MinDate = LeaveType.MinDate;
-                    currentLeaveType.MaxDate =LeaveType.MaxDate;
+                    currentLeaveType.MaxDate = LeaveType.MaxDate;
                     currentLeaveType.IncrementValue = LeaveType.IncrementValue;
                     await _dbContext.SaveChangesAsync();
                     return new ResponseMessage { Data = currentLeaveType, Success = true, Message = "Updated Successfully" };
@@ -104,11 +105,95 @@ namespace IntegratedImplementation.Services.HRM
             {
                 return new ResponseMessage
                 {
-                    
+
                     Message = ex.InnerException.Message,
                     Success = false
                 };
             }
+        }
+
+
+        public async Task<List<LeavePlanSettingGetDto>> GetEmployeeLeavePlan(Guid employeeId)
+        {
+            var employeeLeavePlan = await _dbContext.LeavePlanSetting.Include(x => x.Employee.EmployeeDetail).ThenInclude(x=>x.Department).OrderByDescending(x => x.CreatedDate).Select(x => new LeavePlanSettingGetDto
+            {
+                Id = x.Id,
+                FromDate = x.FromDate,
+                ToDate = x.ToDate,
+                EmployeeId = x.EmployeeId,
+                Rejectedremark = x.Rejectedremark,
+                LeavePlanSettingStatus = x.LeavePlanSettingStatus.ToString(),
+                EmployeeName = $"{x.Employee.FirstName} {x.Employee.MiddleName} {x.Employee.LastName}",
+                Department = x.Employee.EmployeeDetail != null ? $"{x.Employee.EmployeeDetail.FirstOrDefault().Department.DepartmentName}":"",
+
+            }).ToListAsync();
+            return employeeLeavePlan;
+        }
+       public async Task<ResponseMessage> AddEmployeeLeavePlan(LeavePlanSettingPostDto leavePlanSettingPost) {
+
+            try
+            {
+
+                LeavePlanSetting employeeLeavePlan = new LeavePlanSetting
+                {
+                    Id = Guid.NewGuid(),
+                    ToDate = leavePlanSettingPost.ToDate,
+                    FromDate = leavePlanSettingPost.FromDate,
+                    LeavePlanSettingStatus = LeavePlanSettingStatus.REQUESTED,
+                    EmployeeId = leavePlanSettingPost.EmployeeId,
+
+                    CreatedById = leavePlanSettingPost.CreatedById,
+                    CreatedDate = DateTime.Now,
+                    Rowstatus = RowStatus.ACTIVE
+                };
+
+                await _dbContext.LeavePlanSetting.AddAsync(employeeLeavePlan);
+                await _dbContext.SaveChangesAsync();
+
+                return new ResponseMessage
+                {
+                    Data = employeeLeavePlan,
+                    Message = "Leave plan Setting Added Successfully !!!",
+                    Success = true
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseMessage
+                {
+
+                    Message = ex.InnerException.Message,
+                    Success = false
+                };
+            }
+
+
+
+        }
+        public async Task<ResponseMessage> UpdateEmployeeLeavePlan(LeavePlanSettingUpdateDto leaveplan) {
+
+            var currentEmployeeLeavePlan = await _dbContext.LeavePlanSetting.FirstOrDefaultAsync(x => x.Id.Equals(leaveplan.Id));
+
+            if (currentEmployeeLeavePlan != null)
+            {
+     
+                if (leaveplan.LeavePlanSettingStatus != null)
+                {
+                    currentEmployeeLeavePlan.LeavePlanSettingStatus = Enum.Parse<LeavePlanSettingStatus>(leaveplan.LeavePlanSettingStatus);
+
+                }
+                if (leaveplan.Rejectedremark != null)
+                {
+                    currentEmployeeLeavePlan.Rejectedremark = leaveplan.Rejectedremark;
+
+                }
+
+
+
+                await _dbContext.SaveChangesAsync();
+                return new ResponseMessage { Message = "Successfully Updated Employee Leave Plan", Success = true };
+            }
+            return new ResponseMessage { Success = false, Message = "Unable To Find Employee Leave Plan !!!" };
         }
     }
 }

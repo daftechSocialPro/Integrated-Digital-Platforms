@@ -52,8 +52,8 @@
 
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="date" class="form-control" id="fromDate" placeholder="fromDate"
-                                            formControlName="fromDate">
+                                        <input type="date" class="form-control" #da  id="fromDate" placeholder="fromDate"
+                                            formControlName="fromDate" (change)="verifyFromDate(da.value)">
                                         <label for="fromDate">From Date</label>
                                     </div>
                                 </div>         

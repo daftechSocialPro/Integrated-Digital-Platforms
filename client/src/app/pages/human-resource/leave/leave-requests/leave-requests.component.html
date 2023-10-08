@@ -21,10 +21,9 @@
                     <td>{{leave.typeOfLeave}}</td>
                     <td>{{leave.leaveDate|date:"dd-MMM-yyyy"}}</td>
                     <td>{{leave.backToWorkOn|date:"dd-MMM-yyyy"}}</td>
-                    <td >
-                        
+                    <td>                       
                      
-                        <p-badge [value]="leave.leaveStatus" [severity]="getBadge(leave.leaveStatus)"></p-badge></td>
+                    <p-badge [value]="leave.leaveStatus" [severity]="getBadge(leave.leaveStatus)"></p-badge></td>
                     <td><p-button (onClick)="goToDetails(leave.id)" icon="pi pi-ellipsis-h" styleClass="p-button-outlined p-button-sm" ></p-button></td>
     
                 </tr>

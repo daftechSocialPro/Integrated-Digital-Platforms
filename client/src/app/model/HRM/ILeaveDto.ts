@@ -28,7 +28,7 @@ export interface LeaveRequestPostDto {
     leaveTypeId: string,
     fromDate: Date,
     totalDate: Number
-    reason?:string
+    reason?: string
 
 }
 
@@ -49,15 +49,47 @@ export interface LeaveBalanceGetDto {
     totalBalance: number,
     leavesTaken: number
 }
-export interface AppliedLeavesGetDto{
+export interface AppliedLeavesGetDto {
 
     id: string,
-    employeeId : string ,
+    employeeId: string,
     typeOfLeave: string,
     leaveStatus: string,
     fullName: string,
     leaveDate: Date,
     backToWorkOn: Date,
-    remark:string,
-    reason:string
+    remark: string,
+    reason: string
 }
+
+
+export interface LeavePlanSettingGetDto {
+    id: String
+    employeeId: string,
+    toDate: Date,
+    fromDate: Date,
+    leavePlanSettingStatus: string
+    rejectedremark?: string
+    employeeName:string
+    department:string
+
+
+}
+
+export interface LeavePlanSettingUpdateDto {
+    id: string,
+    leavePlanSettingStatus?: string,
+    rejectedremark?: string
+}
+export interface LeavePlanSettingPostDto {
+
+    id?: String,
+    toDate: Date,
+    fromDate: Date,
+    leavePlanSettingStatus?: string
+    rejectedremark?: string
+    createdById?: string
+    employeeId:string
+}
+
+

@@ -25,16 +25,13 @@
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-HrmSetting>
-                            <tr>
-                                <td>{{ HrmSetting.generalSetting }}</td>
-                                <td>{{ HrmSetting.value }}</td>
-                             
+                            <tr>                                <td>{{ HrmSetting.generalSetting }}</td>
+                                <td>{{ HrmSetting.value }}</td>                             
                                 <td>
-
                                      <button type="button" (click)="updateHrmSetting(HrmSetting)"
-                                        class="btn btn-outline-warning"><i class="bi bi-pencil "></i> </button> 
+                                        class="btn btn-outline-warning"><i class="bi bi-pencil "></i> 
+                                     </button> 
                                 </td>
-
                             </tr>
                         </ng-template>
 

@@ -14,6 +14,14 @@ namespace IntegratedImplementation.Interfaces.HRM
         Task<List<LeaveTypeGetDto>> GetLeaveTypeList();
         Task<ResponseMessage> AddLeaveType(LeaveTypePostDto LeaveTypePost);
         Task<ResponseMessage> UpdateLeaveType(LeaveTypeGetDto LeaveTypeUpdate);
-        
+
+        //
+
+        Task<List<LeavePlanSettingGetDto>> GetEmployeeLeavePlan(Guid employeeId);
+        Task<ResponseMessage> AddEmployeeLeavePlan(LeavePlanSettingPostDto leavePlanSettingPost);
+        Task<ResponseMessage> UpdateEmployeeLeavePlan(LeavePlanSettingUpdateDto leaveplan);
+
+        //Task<ResponseMessage> DeleteEmployee(Guid employeeSuretyId);
+
     }
 }

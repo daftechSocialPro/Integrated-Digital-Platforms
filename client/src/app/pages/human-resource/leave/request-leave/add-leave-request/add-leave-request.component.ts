@@ -43,11 +43,11 @@ export class AddLeaveRequestComponent implements OnInit {
     private userService: UserService) {
 
     this.LeaveRequestForm = this.formBuilder.group({
-     
+
       leaveTypeId: ['', Validators.required],
       totalDate: ['', Validators.required],
       fromDate: ['', Validators.required],
-      reason:['']
+      reason: ['']
     })
   }
 
@@ -88,11 +88,11 @@ export class AddLeaveRequestComponent implements OnInit {
 
       var leaveRequestPost: LeaveRequestPostDto = {
 
-        employeeId:this.selectEmployeee,
+        employeeId: this.selectEmployeee,
         leaveTypeId: this.LeaveRequestForm.value.leaveTypeId,
         fromDate: this.LeaveRequestForm.value.fromDate,
         totalDate: this.LeaveRequestForm.value.totalDate,
-        reason:this.LeaveRequestForm.value.reason
+        reason: this.LeaveRequestForm.value.reason
 
       }
       console.log(leaveRequestPost)
@@ -125,10 +125,36 @@ export class AddLeaveRequestComponent implements OnInit {
   }
   selectEmployee(event: string) {
 
-    if(event){
-    this.selectEmployeee= event
-  }
+    if (event) {
+      this.selectEmployeee = event
+    }
   }
 
+  verifyFromDate(date: string) {
 
+    var fromDate = new Date(date)
+    var toDate = new Date()
+    var timeDifference = fromDate.getTime() - toDate.getTime();
+    var daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
+    var maxDays = 0
+
+    if (daysDifference < 0) {
+      this.messageService.add({ severity: 'error', summary: 'Date Selection Error', detail: 'You entered a date that is earlier than today!!!' });
+      this.LeaveRequestForm.controls['fromDate'].setValue(null)
+    }
+    else {
+
+      this.hrmService.getHrmSettings().subscribe({
+        next: (res) => {
+          maxDays = res.filter(x => x.generalSetting == "LEAVEREQUESTDAYSBEFORE")![0]!.value
+        
+          if (daysDifference <= maxDays) {
+            this.messageService.add({ severity: 'error', summary: 'Date Selection Error', detail: `You can not request a leave before ${maxDays} days` });
+            this.LeaveRequestForm.controls['fromDate'].setValue(null)
+          }
+
+        }
+      })
+    }
+  }
 }

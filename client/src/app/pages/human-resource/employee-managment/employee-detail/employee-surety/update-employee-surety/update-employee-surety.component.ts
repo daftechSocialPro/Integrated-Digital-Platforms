@@ -78,6 +78,7 @@ export class UpdateEmployeeSuretyComponent implements OnInit {
 
 
     if (this.SuretyForm.valid) {
+
       var formData = new FormData();
       formData.append('photo', this.filePhoto);
       formData.append('letter', this.fileLetter);
@@ -88,26 +89,22 @@ export class UpdateEmployeeSuretyComponent implements OnInit {
       formData.append('companyName', this.SuretyForm.value.companyName);
       formData.append('compnayPhoneNumber', this.SuretyForm.value.compnayPhoneNumber);
       formData.append('id', this.employeeSurety.id)
+
       this.hrmService.updateEmployeeSurety(formData).subscribe(
         {
           next: (res) => {
             if (res.success) {
               this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });
-
               this.closeModal();
             }
             else {
               this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: res.message });
-
             }
           },
           error: (err) => {
             this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: err });
           }
         })
-
-
-
     }
 
 

@@ -56,5 +56,44 @@ namespace IntegratedDigitalAPI.Controllers.HRM
                 return BadRequest();
             }
         }
+
+
+        [HttpGet]
+        [ProducesResponseType(typeof(LeavePlanSettingGetDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetEmployeeLeavePlan(Guid employeeId)
+        {
+            return Ok(await _LeaveTypeService.GetEmployeeLeavePlan(employeeId));
+        }
+
+
+
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> AddLeavePlanSetting(LeavePlanSettingPostDto LeaveTypeDto)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _LeaveTypeService.AddEmployeeLeavePlan(LeaveTypeDto));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+
+        [HttpPut]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> UpdateLeavePlanSetting(LeavePlanSettingUpdateDto leavePlan)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _LeaveTypeService.UpdateEmployeeLeavePlan(leavePlan));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
     }
 }

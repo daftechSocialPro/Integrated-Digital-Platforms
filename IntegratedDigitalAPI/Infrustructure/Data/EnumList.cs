@@ -116,7 +116,8 @@ namespace IntegratedInfrustructure.Data
             ANNUALLEAVESTARTMONTH,
             NUMBEROFDAYOFFS,
             RESIGNATIONREQUESTDAYS,
-            ANNUALLEAVEREQESTMONTH
+            ANNUALLEAVEREQESTMONTH,
+            LEAVEREQUESTDAYSBEFORE
         }
 
         public enum PerformanceStatus
@@ -124,6 +125,14 @@ namespace IntegratedInfrustructure.Data
             PENDING,
             ONPROGRESS,
             FINALIZED,
+        }
+
+        public enum LeavePlanSettingStatus
+        {
+            REQUESTED,
+            REJECTED,
+            APPROVED
+        
         }
 
     }

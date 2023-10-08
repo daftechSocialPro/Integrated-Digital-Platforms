@@ -43,8 +43,12 @@ namespace IntegratedInfrustructure.Data
         public DbSet<EmployeeWorkExperiance> EmployeeWorkExperiances { get; set; }
         public DbSet <EmploymentDetail> EmploymentDetails { get; set; }
         public DbSet <EmployeeFile> EmployeeFiles { get; set; }
-
         public DbSet<EmployeeSurety> EmployeeSureties { get; set; }
+
+        public DbSet<LeavePlanSetting> LeavePlanSetting { get; set; }
+
+
+
         public DbSet<EmployeeSalary> EmployeeSalaries { get; set; }
         public DbSet<EmployeeDocuments> EmployeeDocuments { get; set; }
         public DbSet<LeaveBalance> LeaveBalances { get; set; }

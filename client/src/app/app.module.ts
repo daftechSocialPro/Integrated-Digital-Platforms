@@ -49,10 +49,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HrmConfigurationComponent } from './pages/human-resource/hrm-configuration/hrm-configuration/hrm-configuration.component';
 import { DepartmentComponent } from './pages/human-resource/hrm-configuration/department/department.component';
 
-import {TableModule} from 'primeng/table';
-import {InputTextModule} from 'primeng/inputtext';
-import {ButtonModule} from 'primeng/button';
-import {SplitButtonModule} from 'primeng/splitbutton';
+import { TableModule } from 'primeng/table';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { SplitButtonModule } from 'primeng/splitbutton';
 import { AddDepartmentComponent } from './pages/human-resource/hrm-configuration/department/add-department/add-department.component';
 import { UpdateDepartmentComponent } from './pages/human-resource/hrm-configuration/department/update-department/update-department.component';
 import { PositionComponent } from './pages/human-resource/hrm-configuration/position/position.component';
@@ -68,7 +68,7 @@ import { UpdateEmploymentHistoryComponent } from './pages/human-resource/employe
 
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/api';
-import { ToastModule} from 'primeng/toast';
+import { ToastModule } from 'primeng/toast';
 import { EmployeeFamilyComponent } from './pages/human-resource/employee-managment/employee-detail/employee-family/employee-family.component';
 import { AddEmployeeFamilyComponent } from './pages/human-resource/employee-managment/employee-detail/employee-family/add-employee-family/add-employee-family.component';
 import { UpdateEmployeeFamilyComponent } from './pages/human-resource/employee-managment/employee-detail/employee-family/update-employee-family/update-employee-family.component';
@@ -82,7 +82,7 @@ import { CompanyProfileComponent } from './pages/configuration/company-profile/c
 import { ConfigurationComponent } from './pages/configuration/configuration/configuration.component';
 import { CommonComponent } from './pages/configuration/common/common.component';
 import { AddressComponent } from './pages/configuration/address/address.component';
-import { TabViewModule} from 'primeng/tabview';
+import { TabViewModule } from 'primeng/tabview';
 import { CountryComponent } from './pages/configuration/address/country/country.component';
 import { RegionComponent } from './pages/configuration/address/region/region.component';
 import { ZoneComponent } from './pages/configuration/address/zone/zone.component';
@@ -160,6 +160,8 @@ import { UpdateEmployeeFileComponent } from './pages/human-resource/employee-man
 import { EmployeeSuretyComponent } from './pages/human-resource/employee-managment/employee-detail/employee-surety/employee-surety.component';
 import { AddEmployeeSuretyComponent } from './pages/human-resource/employee-managment/employee-detail/employee-surety/add-employee-surety/add-employee-surety.component';
 import { UpdateEmployeeSuretyComponent } from './pages/human-resource/employee-managment/employee-detail/employee-surety/update-employee-surety/update-employee-surety.component';
+import { LeaveSettingComponent } from './pages/human-resource/hrm-configuration/leave-setting/leave-setting.component';
+import { AddLeaveSettingComponent } from './pages/human-resource/hrm-configuration/leave-setting/add-leave-setting/add-leave-setting.component';
 
 @NgModule({
   declarations: [
@@ -212,101 +214,103 @@ import { UpdateEmployeeSuretyComponent } from './pages/human-resource/employee-m
     EmployeeDetailComponent,
 
     EmploymentHistoryComponent,
-     AddEmploymentHistoryComponent,
-     UpdateEmploymentHistoryComponent,
-     EmployeeFamilyComponent,
-     AddEmployeeFamilyComponent,
-     UpdateEmployeeFamilyComponent,
-     VacancyListComponent,
-     AddVacancyComponent,
-     EmployeeEducationComponent,
-     AddEmployeeEducationComponent,
-     UpdateEmployeeEducationComponent,
-     CompanyProfileComponent,
-     ConfigurationComponent,
-     CommonComponent,
-     AddressComponent,
-     CountryComponent,
-     RegionComponent,
-     ZoneComponent,
-     AddCountryComponent,
-     UpdateCountryComponent,
-     AddRegionComponent,
-     UpdateRegionComponent,
-     AddZoneComponent,
-     UpdateZoneComponent,
-     EducationalFieldComponent,
-     EducationalLevelComponent,
-     AddEdcuationalFieldComponent,
-     UpdateEductionalFieldComponent,
-     AddEdcuationalLevelComponent,
-     UpdateEdcuationalLevelComponent,
-     GeneralCodesComponent,
-     LeaveTypeComponent,
-     UpdateEmployeeComponent,
-     AddLeaveTypeComponent,
-     UpdateLeaveTypeComponent,
-     AddVaccancyDocumentComponent,
-     UserManagementComponent,
-     HrmSettingComponent,
-     AddHrmSettingComponent,
-     UpdateHrmSettingComponent,
-     AddUserComponent,
-     AutocompleteComponent,
-     UpdateRolesComponent,
-     LeaveComponent,
-     RequestLeaveComponent,
-     LeaveRequestsComponent,
-     AddLeaveRequestComponent,
-     LeaveBalanceComponent,
-    
-     HolidaySettingComponent,
-     AddHolidayComponent,
-     RequestDetailComponent,
-     CustomConfirmationComponent,
-     ResignationLetterComponent,
-     ResignationRequestComponent,
-     EmployeeTerminationComponent,
-     ViewPdfComponent,
-     ResignationListComponent,
-     TerminateEmployeeComponent,
-     VaccancyPostComponent,
-     VacancyDetailComponent,
-     ApplicantComponent,
-     ApplicantEducationComponent,
-     AddApplicantEducationComponent,
-     ApplicantWorkExperianceComponent,
-     AddApplicantWorkComponent,
-     ApplicantDocumentsComponent,
-     AddApplicantDocumentsComponent,
-     
-     
-     PerformanceSettingComponent,
-     AddPerformanceSettingComponent,
-     PerformancePlanComponent,
-     AddPerformancePlanComponent,
-     AddPerformanceDetailPlanComponent,
-     EmployeeSupervisorsComponent,
-     AssignSupervisorComponent,
-     PerformanceManagementComponent,
-     HistorySalaryComponent,
-     EmployeeFilesComponent,
-     AddEmployeeFileComponent,
-     UpdateEmployeeFileComponent,
-     EmployeeSuretyComponent,
-     AddEmployeeSuretyComponent,
-     UpdateEmployeeSuretyComponent
+    AddEmploymentHistoryComponent,
+    UpdateEmploymentHistoryComponent,
+    EmployeeFamilyComponent,
+    AddEmployeeFamilyComponent,
+    UpdateEmployeeFamilyComponent,
+    VacancyListComponent,
+    AddVacancyComponent,
+    EmployeeEducationComponent,
+    AddEmployeeEducationComponent,
+    UpdateEmployeeEducationComponent,
+    CompanyProfileComponent,
+    ConfigurationComponent,
+    CommonComponent,
+    AddressComponent,
+    CountryComponent,
+    RegionComponent,
+    ZoneComponent,
+    AddCountryComponent,
+    UpdateCountryComponent,
+    AddRegionComponent,
+    UpdateRegionComponent,
+    AddZoneComponent,
+    UpdateZoneComponent,
+    EducationalFieldComponent,
+    EducationalLevelComponent,
+    AddEdcuationalFieldComponent,
+    UpdateEductionalFieldComponent,
+    AddEdcuationalLevelComponent,
+    UpdateEdcuationalLevelComponent,
+    GeneralCodesComponent,
+    LeaveTypeComponent,
+    UpdateEmployeeComponent,
+    AddLeaveTypeComponent,
+    UpdateLeaveTypeComponent,
+    AddVaccancyDocumentComponent,
+    UserManagementComponent,
+    HrmSettingComponent,
+    AddHrmSettingComponent,
+    UpdateHrmSettingComponent,
+    AddUserComponent,
+    AutocompleteComponent,
+    UpdateRolesComponent,
+    LeaveComponent,
+    RequestLeaveComponent,
+    LeaveRequestsComponent,
+    AddLeaveRequestComponent,
+    LeaveBalanceComponent,
+
+    HolidaySettingComponent,
+    AddHolidayComponent,
+    RequestDetailComponent,
+    CustomConfirmationComponent,
+    ResignationLetterComponent,
+    ResignationRequestComponent,
+    EmployeeTerminationComponent,
+    ViewPdfComponent,
+    ResignationListComponent,
+    TerminateEmployeeComponent,
+    VaccancyPostComponent,
+    VacancyDetailComponent,
+    ApplicantComponent,
+    ApplicantEducationComponent,
+    AddApplicantEducationComponent,
+    ApplicantWorkExperianceComponent,
+    AddApplicantWorkComponent,
+    ApplicantDocumentsComponent,
+    AddApplicantDocumentsComponent,
+
+
+    PerformanceSettingComponent,
+    AddPerformanceSettingComponent,
+    PerformancePlanComponent,
+    AddPerformancePlanComponent,
+    AddPerformanceDetailPlanComponent,
+    EmployeeSupervisorsComponent,
+    AssignSupervisorComponent,
+    PerformanceManagementComponent,
+    HistorySalaryComponent,
+    EmployeeFilesComponent,
+    AddEmployeeFileComponent,
+    UpdateEmployeeFileComponent,
+    EmployeeSuretyComponent,
+    AddEmployeeSuretyComponent,
+    UpdateEmployeeSuretyComponent,
+    LeaveSettingComponent,
+    AddLeaveSettingComponent
   ],
   imports: [
-    BrowserModule, 
+    BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
     TableModule,
     ButtonModule,
-    InputTextModule,   
-    SplitButtonModule, 
+    InputTextModule,
+    SplitButtonModule,
     StepsModule,
     ConfirmDialogModule,
     ToastModule,
@@ -318,7 +322,7 @@ import { UpdateEmployeeSuretyComponent } from './pages/human-resource/employee-m
     AutoCompleteModule,
     DynamicDialogModule,
     OverlayPanelModule,
-    BadgeModule,   
+    BadgeModule,
     InputSwitchModule,
     ToastrModule.forRoot({
       preventDuplicates: true,
@@ -333,7 +337,7 @@ import { UpdateEmployeeSuretyComponent } from './pages/human-resource/employee-m
     ConfirmationService,
     MessageService,
     DialogService
-    
+
   ],
   bootstrap: [AppComponent]
 })
