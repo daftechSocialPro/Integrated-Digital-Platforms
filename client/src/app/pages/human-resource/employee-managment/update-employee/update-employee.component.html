@@ -45,6 +45,12 @@
                                 </div>
                             </div>
                             <div class="col-md-3">
+                                <div class="form-floating"> <input type="text" class="form-control" id="amharicName"
+                                        placeholder="amharicName" required formControlName="amharicName">
+                                    <label for="amharicName"> Amharic Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
                                 <div class="form-floating"> <input type="text" class="form-control" id="PhoneNumber"
                                         placeholder="PhoneNumber" required formControlName="phoneNumber">
                                     <label for="PhoneNumber"> Phone Number</label>
@@ -118,18 +124,20 @@
                                     <label for="PaymentType">Payment Type</label>
                                 </div>
                             </div>
-                            <div class="col-md-3" *ngIf="employmentType.value==='CONTRAT'">
-                                <div class="form-floating"> <input type="number" class="form-control" id="contractDays"
-                                        placeholder="contractDays" required formControlName="contractDays">
-                                    <label for="contractDays"> Contract Days </label>
-                                </div>
-                            </div>
-                              
+                        
                           
                             <div class="col-md-3">
                                 <div class="form-floating"> <input type= "date" class="form-control" id="EmploymentDate"
                                         placeholder="EmploymentDate" required formControlName="employmentDate">
                                     <label for="EmploymentDate"> Employment Date</label>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-3" *ngIf="employmentType.value==='CONTRAT'">
+                                <div class="form-floating"> <input type="date" class="form-control" id="ContractEndDate"
+                                        placeholder="ContractEndDate"  formControlName="ContractEndDate">
+                                    <label for="ContractEndDate"> Contract End Date </label>
                                 </div>
                             </div>
                         </div>
@@ -187,7 +195,7 @@
                             </div>
 
 
-
+                           
                             <div class="col-md-3">
                                 <div class="form-floating mb-3">
                                     <select class="form-select" id="countryId" #country formControlName="countryId"

@@ -65,12 +65,14 @@ export class UpdateEmployeeComponent implements OnInit {
       paymentType: [this.selectedEmployee.paymentType, Validators.required],
       employmentDate: [this.selectedEmployee.employmentDate.toString().split('T')[0], Validators.required],
       employmentStatus: [this.selectedEmployee.employmentStatus, Validators.required],
-      contractDays: [this.selectedEmployee.contractDays?this.selectedEmployee.contractDays:0],
+      ContractEndDate: [this.selectedEmployee.contractEndDate],
       pensionCode: [this.selectedEmployee.pensionCode],
       tinNumber: [this.selectedEmployee.tinNumber],
       bankAccountNo: [this.selectedEmployee.bankAccountNo],
       woreda: [this.selectedEmployee.woreda, Validators.required],
       countryId : [this.selectedEmployee.countryId],
+      amharicName:[this.selectedEmployee.amharicName],
+      
       regionId : [this.selectedEmployee.regionId],
       zoneId: [this.selectedEmployee.zoneId, Validators.required]
 
@@ -122,20 +124,15 @@ export class UpdateEmployeeComponent implements OnInit {
   }
 
   submit() {
-
-    
-
-
     
     if (this.EmployeeForm.valid) {
-
-
       var employeePost: EmployeePostDto = {
 
         id: this.selectedEmployee.id,
         firstName: this.EmployeeForm.value.firstName,
         middleName: this.EmployeeForm.value.middleName,
         lastName: this.EmployeeForm.value.lastName,
+        amharicName : this.EmployeeForm.value.amharicName,
         phoneNumber: this.EmployeeForm.value.phoneNumber,
         email: this.EmployeeForm.value.email,
         gender: this.EmployeeForm.value.gender,
@@ -143,14 +140,14 @@ export class UpdateEmployeeComponent implements OnInit {
         maritalStatus: this.EmployeeForm.value.maritalStatus,
         employmentType: this.EmployeeForm.value.employmentType,
         employmentStatus: this.EmployeeForm.value.employmentStatus,
+      
         paymentType: this.EmployeeForm.value.paymentType,
         employmentDate: this.EmployeeForm.value.employmentDate,
-        contractDays: this.EmployeeForm.value.contractDays,
+        ContractEndDate: this.EmployeeForm.value.ContractEndDate,
         pensionCode: this.EmployeeForm.value.pensionCode.toString(),
         tinNumber: this.EmployeeForm.value.tinNumber.toString(),
         bankAccountNo: this.EmployeeForm.value.bankAccountNo.toString(),
-     
-       
+              
         zoneId: this.EmployeeForm.value.zoneId,
         woreda: this.EmployeeForm.value.woreda,
         imagePath: this.fileGH,
@@ -166,11 +163,9 @@ export class UpdateEmployeeComponent implements OnInit {
       }
 
       // Append the file to the form data
-      formData.append('imagePath', this.fileGH);
-  
+      formData.append('imagePath', this.fileGH);  
 
-      this.hrmService.updateEmployee(formData).subscribe(
-        {
+      this.hrmService.updateEmployee(formData).subscribe({
           next:(res)=>{
             if (res.success){
               this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });              
@@ -185,8 +180,7 @@ export class UpdateEmployeeComponent implements OnInit {
           error:(err)=>{
             this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail:err });
           }
-        }
-      )
+        })
     }
 
   }

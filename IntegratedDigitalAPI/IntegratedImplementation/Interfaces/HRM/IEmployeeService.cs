@@ -23,9 +23,28 @@ namespace IntegratedImplementation.Interfaces.HRM
         //history
         Task<List<EmployeeHistoryDto>> GetEmployeeHistory(Guid employeeId);
         Task<ResponseMessage> AddEmployeeHistory(EmployeeHistoryPostDto addEmployeeHistory);
-
         Task<ResponseMessage> UpdateEmployeeHistory(EmployeeHistoryPostDto updateEmployeeHistory);
         Task<ResponseMessage> deleteEmployeeHistory(Guid employeeHistoryId);
+
+        //employee files 
+
+        Task<List<EmployeeFileGetDto>> GetEmployeeFiles(Guid employeeId);
+        Task<ResponseMessage> AddEmployeeFiles(EmployeeFilePostDto addEmployeeFile);
+        Task<ResponseMessage> UpdateEmployeeFiles(EmployeeFileGetDto updateEmployeeFile);
+        Task<ResponseMessage> DeleteEmployeeFiles(Guid employeeFileId);
+
+        //employeesurety
+        Task<List<EmployeeSuertyGetDto>> GetEmployeeSurety(Guid employeeId);
+        Task<ResponseMessage> AddEmployeeSurety(EmployeeSuretyPostDto addEmployeeSurety);
+        Task<ResponseMessage> UpdateEmployeeSurety(EmployeeSuretyPostDto updateEmployeeSurety);
+        Task<ResponseMessage> DeleteEmployeeSurety(Guid employeeSuretyId);
+
+
+        //salary History
+        Task<List<EmployeeSalaryGetDto>> GetEmployeeSalaryHistory(Guid employeeDetailId);
+        Task<ResponseMessage> AddEmployeeSalaryHistory(EmployeeSalryPostDto addEmployeeHistory);
+        Task<ResponseMessage> UpdateEmployeeSalaryHistory(EmployeeSalaryGetDto updateEmployeeHistory);
+        Task<ResponseMessage> deleteEmployeeSalaryHistory(Guid employeeHistoryId);
 
         //family
         Task<List<EmployeeFamilyGetDto>> GetEmployeeFamily(Guid employeeId);

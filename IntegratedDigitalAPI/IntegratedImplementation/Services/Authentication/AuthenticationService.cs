@@ -123,8 +123,8 @@ namespace Implementation.Services.Authentication
                     useer.Name = emp.FirstName + " " + emp.MiddleName;
                     useer.Status = user.RowStatus.ToString();
                     useer.ImagePath = emp.ImagePath;
-                    useer.Department = emp.EmployeeDetail.FirstOrDefault().Department.DepartmentName;
-                    useer.Position = emp.EmployeeDetail.FirstOrDefault().Position.PositionName;
+                    useer.Department = emp.EmployeeDetail.Any()? emp.EmployeeDetail.OrderByDescending(x=>x.StartDate).FirstOrDefault().Department.DepartmentName:"";
+                    useer.Position = emp.EmployeeDetail.Any()? emp.EmployeeDetail.FirstOrDefault().Position.PositionName:"";
                     useer.Email = emp.Email;
                     useer.PhoneNumber = emp.PhoneNumber;
                     useer.Roles = (await _userManager.GetRolesAsync(user)).ToList();

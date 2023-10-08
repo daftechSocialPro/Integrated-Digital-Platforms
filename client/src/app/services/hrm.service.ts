@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 import { DepartmentGetDto, DepartmentPostDto } from '../model/HRM/IDepartmentDto';
 import { ResponseMessage } from '../model/ResponseMessage.Model';
 import { PositionGetDto, PositionPostDto } from '../model/HRM/IPositionDto';
-import { EmployeeEducationGetDto, EmployeeEducationPostDto, EmployeeFamilyGetDto, EmployeeFamilyPostDto, EmployeeGetDto, EmployeeHistoryDto, EmployeeHistoryPostDto, EmployeePostDto } from '../model/HRM/IEmployeeDto';
+import { EmployeeEducationGetDto, EmployeeEducationPostDto, EmployeeFamilyGetDto, EmployeeFamilyPostDto, EmployeeFileGetDto, EmployeeFilePostDto, EmployeeGetDto, EmployeeHistoryDto, EmployeeHistoryPostDto, EmployeePostDto, EmployeeSalaryGetDto, EmployeeSalryPostDto, EmployeeSuertyGetDto } from '../model/HRM/IEmployeeDto';
 import { SelectList } from '../model/common';
 import { AppliedLeavesGetDto, LeaveBalanceGetDto, LeaveBalancePostDto, LeaveRequestPostDto, LeaveTypeGetDto, LeaveTypePostDto } from '../model/HRM/ILeaveDto';
 import { HrmSettingDto } from '../model/HRM/IHrmSettingDto';
@@ -135,6 +135,54 @@ export class HrmService {
     deleteEmployeeHistory(employeeId: string) {
         return this.http.delete<ResponseMessage>(this.baseUrl + "/Employee/DeleteEmployeeHistory?employeeHistoryId=" + employeeId)
     }
+    // employee Salary History 
+
+    getEmployeeSalaryHistory(employeeDetailId: string) {
+        return this.http.get<EmployeeSalaryGetDto[]>(this.baseUrl + "/Employee/GetEmployeeSalaryHistory?employeeId=" + employeeDetailId)
+    }
+
+    addEmployeeSalaryHistory(employeeHistoryPost: EmployeeSalryPostDto) {
+        employeeHistoryPost.createdById = this.userService.getCurrentUser().userId
+        return this.http.post<ResponseMessage>(this.baseUrl + "/Employee/AddEmployeeSalaryHistory", employeeHistoryPost)
+    }
+    updateEmployeeSalaryHistory(employeeHistoryPost: EmployeeSalaryGetDto) {
+        return this.http.post<ResponseMessage>(this.baseUrl + "/Employee/UpdateEmployeeSalaryHistory", employeeHistoryPost)
+    }
+
+    deleteEmployeeSalaryHistory(employeeId: string) {
+        return this.http.delete<ResponseMessage>(this.baseUrl + "/Employee/DeleteEmployeeSalaryHistory?employeeHistoryId=" + employeeId)
+    }
+    //employee files 
+
+    getEmployeeFile(employeeId: string) {
+        return this.http.get<EmployeeFileGetDto[]>(this.baseUrl + "/Employee/GetEmployeeFiles?employeeId=" + employeeId)
+    }
+    addEmployeeFile(employeeFile: FormData) {
+        employeeFile.append('createdById',this.userService.getCurrentUser().userId)        
+        return this.http.post<ResponseMessage>(this.baseUrl + "/Employee/AddEmployeeFiles", employeeFile)
+    }    
+    updateEmployeeFile(employeeFile: FormData) {
+        return this.http.post<ResponseMessage>(this.baseUrl + "/Employee/UpdateEmployeeFile", employeeFile)
+    }
+    deleteEmployeeFile(employeeId: string) {
+        return this.http.delete<ResponseMessage>(this.baseUrl + "/Employee/DeleteEmployeeFiles?employeeFileId=" + employeeId)
+    }   
+    //employee surety
+
+    getEmployeeSurety(employeeId: string) {
+        return this.http.get<EmployeeSuertyGetDto[]>(this.baseUrl + "/Employee/GetEmployeeSuerty?employeeId=" + employeeId)
+    }
+    addEmployeeSurety(employeeSuerty: FormData) {
+        employeeSuerty.append('createdById',this.userService.getCurrentUser().userId)        
+        return this.http.post<ResponseMessage>(this.baseUrl + "/Employee/AddEmployeeSurety", employeeSuerty)
+    }    
+    updateEmployeeSurety(employeeSuerty: FormData) {
+        return this.http.post<ResponseMessage>(this.baseUrl + "/Employee/UpdateEmployeeSurety", employeeSuerty)
+    }  
+    deleteEmployeeSurety(employeeSuretyId: string) {
+        return this.http.delete<ResponseMessage>(this.baseUrl + "/Employee/DeleteEmployeeSurety?employeeSuretyId=" + employeeSuretyId)
+    }    
+
 
     //employee Family
     getEmployeeFamily(employeeId: string) {
@@ -217,7 +265,7 @@ export class HrmService {
 
     }
 
-   
+
     /// performancePlans
     getPerformancePlans() {
         return this.http.get<PerformancePlanDto[]>(this.baseUrl + `/PerformancePlan/GetPerformancePlans`)
@@ -235,42 +283,42 @@ export class HrmService {
         return this.http.post<ResponseMessage>(this.baseUrl + `/PerformancePlan/UpdatePerformancePlanDetail`, performancePlan)
     }
 
-     //resignation 
+    //resignation 
     requestResignation(requestResignation: FormData) {
 
         return this.http.post<ResponseMessage>(this.baseUrl + "/EmployementDetail/RequestResignationLetter", requestResignation)
     }
 
-    getResignationList(){
-        return this.http.get<ResignationRequestDto[]>(this.baseUrl + "/EmployementDetail/GetResingationLists")       
+    getResignationList() {
+        return this.http.get<ResignationRequestDto[]>(this.baseUrl + "/EmployementDetail/GetResingationLists")
     }
 
-    getApprovedResignation(){
-        return this.http.get<ResignationRequestDto[]>(this.baseUrl + "/EmployementDetail/ApprovedResignationListDto")       
+    getApprovedResignation() {
+        return this.http.get<ResignationRequestDto[]>(this.baseUrl + "/EmployementDetail/ApprovedResignationListDto")
     }
-    approveResignation(requestId:String){
+    approveResignation(requestId: String) {
         let employeeId = this.userService.getCurrentUser().employeeId
-        return this.http.post<ResponseMessage>(this.baseUrl + `/EmployementDetail/ApproveResignationRequest?requestId=${requestId}&employeeId=${employeeId}`,{})
-    
+        return this.http.post<ResponseMessage>(this.baseUrl + `/EmployementDetail/ApproveResignationRequest?requestId=${requestId}&employeeId=${employeeId}`, {})
+
     }
 
     //termination 
 
-    getTerminatedEmployeeList(){
-        return this.http.get<TerminationGetDto[]>(this.baseUrl + "/EmployementDetail/TerminatedEmployeesList")       
-        
+    getTerminatedEmployeeList() {
+        return this.http.get<TerminationGetDto[]>(this.baseUrl + "/EmployementDetail/TerminatedEmployeesList")
+
     }
 
-    terminateEmployee(requestId:string){
+    terminateEmployee(requestId: string) {
         let employeeId = this.userService.getCurrentUser().employeeId
-        return this.http.post<ResponseMessage>(this.baseUrl + `/EmployementDetail/TerminateEmployee?requestId=${requestId}`,{})
-    
+        return this.http.post<ResponseMessage>(this.baseUrl + `/EmployementDetail/TerminateEmployee?requestId=${requestId}`, {})
+
     }
 
-    terminateRequest(terminatePost:TerminationRequesterDto){
+    terminateRequest(terminatePost: TerminationRequesterDto) {
 
-        return this.http.post<ResponseMessage>(this.baseUrl + `/EmployementDetail/TerminateEmployee`,terminatePost)
-    
+        return this.http.post<ResponseMessage>(this.baseUrl + `/EmployementDetail/TerminateEmployee`, terminatePost)
+
     }
 
     /// Employee Supervisors

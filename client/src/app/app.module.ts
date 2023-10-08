@@ -156,6 +156,13 @@ import { PerformanceManagementComponent } from './pages/human-resource/performan
 import { ChangeStatusComponent } from './pages/human-resource/vacancy-management/applicant/change-status/change-status.component';
 import { LoanSettingComponent } from './pages/human-resource/hrm-configuration/loan-setting/loan-setting.component';
 import { AddLoanSettingComponent } from './pages/human-resource/hrm-configuration/loan-setting/add-loan-setting/add-loan-setting.component';
+import { HistorySalaryComponent } from './pages/human-resource/employee-managment/employee-detail/employment-history/history-salary/history-salary.component';
+import { EmployeeFilesComponent } from './pages/human-resource/employee-managment/employee-detail/employee-files/employee-files.component';
+import { AddEmployeeFileComponent } from './pages/human-resource/employee-managment/employee-detail/employee-files/add-employee-file/add-employee-file.component';
+import { UpdateEmployeeFileComponent } from './pages/human-resource/employee-managment/employee-detail/employee-files/update-employee-file/update-employee-file.component';
+import { EmployeeSuretyComponent } from './pages/human-resource/employee-managment/employee-detail/employee-surety/employee-surety.component';
+import { AddEmployeeSuretyComponent } from './pages/human-resource/employee-managment/employee-detail/employee-surety/add-employee-surety/add-employee-surety.component';
+import { UpdateEmployeeSuretyComponent } from './pages/human-resource/employee-managment/employee-detail/employee-surety/update-employee-surety/update-employee-surety.component';
 
 @NgModule({
   declarations: [
@@ -287,7 +294,14 @@ import { AddLoanSettingComponent } from './pages/human-resource/hrm-configuratio
      PerformanceManagementComponent,
      ChangeStatusComponent,
      LoanSettingComponent,
-     AddLoanSettingComponent
+     AddLoanSettingComponent,
+     HistorySalaryComponent,
+     EmployeeFilesComponent,
+     AddEmployeeFileComponent,
+     UpdateEmployeeFileComponent,
+     EmployeeSuretyComponent,
+     AddEmployeeSuretyComponent,
+     UpdateEmployeeSuretyComponent
   ],
   imports: [
     BrowserModule, 

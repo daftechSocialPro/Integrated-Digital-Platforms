@@ -51,6 +51,9 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<IEducationalLevelService, EducationalLevelService>();
             services.AddScoped<IEducationalFieldService, EducationalFieldService>();
             services.AddScoped<IDropDownService, DropDownService>();
+            services.AddScoped<IEmailService, EmailService>();
+           
+
             return services;
         }
     }

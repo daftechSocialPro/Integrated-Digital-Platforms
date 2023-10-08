@@ -134,6 +134,149 @@ namespace IntegratedDigitalAPI.Controllers.HRM
             }
         }
 
+        //employee files
+        [HttpGet]
+        [ProducesResponseType(typeof(EmployeeFileGetDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetEmployeeFiles(Guid employeeId)
+        {
+            return Ok(await _employeeService.GetEmployeeFiles(employeeId));
+        }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> AddEmployeeFiles([FromForm]EmployeeFilePostDto employeeFile)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _employeeService.AddEmployeeFiles(employeeFile));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> UpdateEmployeeFile([FromForm]EmployeeFileGetDto employeeFile)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _employeeService.UpdateEmployeeFiles(employeeFile));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+        [HttpDelete]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> DeleteEmployeeFiles(Guid employeeFileId)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _employeeService.DeleteEmployeeFiles(employeeFileId));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+        // employee Surety 
+        [HttpGet]
+        [ProducesResponseType(typeof(EmployeeSuertyGetDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetEmployeeSuerty(Guid employeeId)
+        {
+            return Ok(await _employeeService.GetEmployeeSurety(employeeId));
+        }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> AddEmployeeSurety([FromForm] EmployeeSuretyPostDto employeeSurety)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _employeeService.AddEmployeeSurety(employeeSurety));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> UpdateEmployeeSurety([FromForm] EmployeeSuretyPostDto employeeSurety)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _employeeService.UpdateEmployeeSurety(employeeSurety));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+        [HttpDelete]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> DeleteEmployeeSurety(Guid employeeSuretyId)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _employeeService.DeleteEmployeeSurety(employeeSuretyId));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+        // employee Salary 
+
+        [HttpGet]
+        [ProducesResponseType(typeof(EmployeeHistoryDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetEmployeeSalaryHistory(Guid employeeId)
+        {
+            return Ok(await _employeeService.GetEmployeeSalaryHistory(employeeId));
+        }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> AddEmployeeSalaryHistory(EmployeeSalryPostDto employeeSalary)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _employeeService.AddEmployeeSalaryHistory(employeeSalary));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> UpdateEmployeeSalaryHistory(EmployeeSalaryGetDto employeeSalary)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _employeeService.UpdateEmployeeSalaryHistory(employeeSalary));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+        [HttpDelete]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> DeleteEmployeeSalaryHistory(Guid employeeHistoryId)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _employeeService.deleteEmployeeSalaryHistory(employeeHistoryId));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
         //family 
 
         [HttpGet]

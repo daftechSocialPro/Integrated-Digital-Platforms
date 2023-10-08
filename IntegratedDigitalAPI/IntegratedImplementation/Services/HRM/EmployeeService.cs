@@ -29,8 +29,8 @@ namespace IntegratedImplementation.Services.HRM
         private UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
         public EmployeeService(
-            ApplicationDbContext dbContext, 
-            IGeneralConfigService generalConfig, 
+            ApplicationDbContext dbContext,
+            IGeneralConfigService generalConfig,
             IMapper mapper,
             UserManager<ApplicationUser> userManager)
         {
@@ -45,71 +45,85 @@ namespace IntegratedImplementation.Services.HRM
             var id = Guid.NewGuid();
             var path = "";
 
-            if (addEmployee.EmploymentDate.CompareTo(DateTime.Now) <= 1 && addEmployee.ExistingEmployee)
-                return new ResponseMessage { Success = false, Message = "Employee is not existing please correct your fields" };
-
-            if (addEmployee.ImagePath != null)
-                path = _generalConfig.UploadFiles(addEmployee.ImagePath, id.ToString(), "Employee").Result.ToString();
-
-
-            var probationPeriod = await _dbContext.HrmSettings.FirstOrDefaultAsync(x => x.GeneralSetting == GeneralHrmSetting.PROBATIONPERIOD);
-            if (probationPeriod == null)
-                return new ResponseMessage { Success = false, Message = "Could Not Find Prohbation Period" };
-
-
-            var code = await _generalConfig.GenerateCode(GeneralCodeType.EMPLOYEEPREFIX);
-            EmployeeList employee = new EmployeeList
+            try
             {
-                Id = Guid.NewGuid(),
-                CreatedDate = DateTime.Now,
-                CreatedById = addEmployee.CreatedById,
-                EmployeeCode = code,
-                Woreda = addEmployee.Woreda,
-                Email = addEmployee.Email,
-                ZoneId = addEmployee.ZoneId,
-                EmploymentStatus = Enum.Parse<EmploymentStatus>(addEmployee.EmploymentStatus),
-                EmploymentType = Enum.Parse<EmploymentType>(addEmployee.EmploymentType),
-                FirstName = addEmployee.FirstName,
-                MiddleName = addEmployee.MiddleName,
-                LastName = addEmployee.LastName,               
-                BirthDate = addEmployee.BirthDate,
-                Gender =Enum.Parse<Gender>(addEmployee.Gender),
-                IsPension = addEmployee.IsPension,
-                MaritalStatus = Enum.Parse<MaritalStatus>(addEmployee.MaritalStatus),
-                PaymentType = Enum.Parse<PaymentType>(addEmployee.PaymentType),               
-                BankAccountNo = addEmployee.BankAccountNo,                
-                EmploymentDate = addEmployee.EmploymentDate,
-                ImagePath = path,
-                PhoneNumber = addEmployee.PhoneNumber,
-                PensionCode = addEmployee.PensionCode,             
-                TinNumber = addEmployee.TinNumber,
-                ContractEndDate = addEmployee.EmploymentDate.AddDays(addEmployee.ContractDays),
-                Rowstatus = RowStatus.ACTIVE,
-                ExistingEmployee = addEmployee.ExistingEmployee,
-            };
-            await _dbContext.Employees.AddAsync(employee);
-            await _dbContext.SaveChangesAsync();
 
-            EmploymentDetail employmentDetail = new EmploymentDetail()
-            {
-                Id = Guid.NewGuid(),
-                CreatedById = addEmployee.CreatedById,
-                CreatedDate = DateTime.Now,
-                EmployeeId = employee.Id,
-                EmploymentStatus = EmploymentStatus.ACTIVE,
-                DepartmentId = addEmployee.DepartmentId,               
-                PositionId = addEmployee.PositionId,
-               
-            };
-            await _dbContext.EmploymentDetails.AddAsync(employmentDetail);
-            await _dbContext.SaveChangesAsync();
+                if (addEmployee.EmploymentDate.CompareTo(DateTime.Now) <= 1 && addEmployee.ExistingEmployee)
+                    return new ResponseMessage { Success = false, Message = "Employee is not existing please correct your fields" };
 
-            return new ResponseMessage
+                if (addEmployee.ImagePath != null)
+                    path = _generalConfig.UploadFiles(addEmployee.ImagePath, id.ToString(), "Employee").Result.ToString();
+
+
+                var probationPeriod = await _dbContext.HrmSettings.FirstOrDefaultAsync(x => x.GeneralSetting == GeneralHrmSetting.PROBATIONPERIOD);
+                if (probationPeriod == null)
+                    return new ResponseMessage { Success = false, Message = "Could Not Find Prohbation Period" };
+
+
+                var code = await _generalConfig.GenerateCode(GeneralCodeType.EMPLOYEEPREFIX);
+                EmployeeList employee = new EmployeeList
+                {
+                    Id = Guid.NewGuid(),
+                    CreatedDate = DateTime.Now,
+                    CreatedById = addEmployee.CreatedById,
+                    EmployeeCode = code,
+                    Woreda = addEmployee.Woreda,
+                    Email = addEmployee.Email,
+                    ZoneId = addEmployee.ZoneId,
+                    EmploymentStatus = Enum.Parse<EmploymentStatus>(addEmployee.EmploymentStatus),
+                    EmploymentType = Enum.Parse<EmploymentType>(addEmployee.EmploymentType),
+                    FirstName = addEmployee.FirstName,
+                    MiddleName = addEmployee.MiddleName,
+                    LastName = addEmployee.LastName,
+                    AmharicName = addEmployee.AmharicName,
+                    BirthDate = addEmployee.BirthDate,
+                    Gender = Enum.Parse<Gender>(addEmployee.Gender),
+                    IsPension = addEmployee.IsPension,
+                    MaritalStatus = Enum.Parse<MaritalStatus>(addEmployee.MaritalStatus),
+                    PaymentType = Enum.Parse<PaymentType>(addEmployee.PaymentType),
+                    BankAccountNo = addEmployee.BankAccountNo,
+                    EmploymentDate = addEmployee.EmploymentDate,
+                    ImagePath = path,
+                    PhoneNumber = addEmployee.PhoneNumber,
+                    PensionCode = addEmployee.PensionCode,
+                    TinNumber = addEmployee.TinNumber,
+                    ContractEndDate = addEmployee.ContractEndDate,
+                    Rowstatus = RowStatus.ACTIVE,
+                    ExistingEmployee = addEmployee.ExistingEmployee,
+                };
+                await _dbContext.Employees.AddAsync(employee);
+                await _dbContext.SaveChangesAsync();
+
+                EmploymentDetail employmentDetail = new EmploymentDetail()
+                {
+                    Id = Guid.NewGuid(),
+                    CreatedById = addEmployee.CreatedById,
+                    CreatedDate = DateTime.Now,
+                    EmployeeId = employee.Id,
+                    EmploymentStatus = EmploymentStatus.ACTIVE,
+                    DepartmentId = addEmployee.DepartmentId,
+                    PositionId = addEmployee.PositionId,
+                    StartDate = addEmployee.EmploymentDate,
+                    Salary = addEmployee.Salary
+                };
+                await _dbContext.EmploymentDetails.AddAsync(employmentDetail);
+                await _dbContext.SaveChangesAsync();
+
+                return new ResponseMessage
+                {
+
+                    Message = "Employee Added Successfully",
+                    Success = true
+                };
+            }
+            catch (Exception ex)
             {
-                
-                Message = "Added Successfully",
-                Success = true
-            };
+                return new ResponseMessage
+                {
+                    Message = ex.Message,
+                    Success = false
+                };
+            }
         }
 
         public async Task<List<SelectListDto>> GetEmployeesNoUserSelectList()
@@ -146,18 +160,20 @@ namespace IntegratedImplementation.Services.HRM
 
 
 
-                if (employee!= null)
+                if (employee != null)
                 {
 
 
                     employee.FirstName = addEmployee.FirstName;
                     employee.MiddleName = addEmployee.MiddleName;
                     employee.LastName = addEmployee.LastName;
+                    employee.AmharicName = addEmployee.AmharicName;
                     employee.PhoneNumber = addEmployee.PhoneNumber;
+
                     employee.Email = addEmployee.Email;
                     if (addEmployee.Gender != null)
                     {
-                        employee.Gender = Enum.Parse<Gender>( addEmployee.Gender);
+                        employee.Gender = Enum.Parse<Gender>(addEmployee.Gender);
                     }
                     if (addEmployee.MaritalStatus != null)
                     {
@@ -181,17 +197,17 @@ namespace IntegratedImplementation.Services.HRM
                         employee.ImagePath = path;
                     }
                     employee.EmploymentDate = addEmployee.EmploymentDate;
-                    employee.ContractEndDate = addEmployee.EmploymentDate.AddDays(addEmployee.ContractDays);
+                    employee.ContractEndDate = addEmployee.ContractEndDate;
                     employee.PensionCode = addEmployee.PensionCode;
                     employee.TinNumber = addEmployee.TinNumber;
                     employee.BankAccountNo = addEmployee.BankAccountNo;
                     employee.BirthDate = employee.BirthDate;
 
-                   await _dbContext.SaveChangesAsync();
+                    await _dbContext.SaveChangesAsync();
 
                     return new ResponseMessage
                     {
-                      
+
                         Message = "Employee Updated Successfully ",
                         Success = true
                     };
@@ -208,7 +224,7 @@ namespace IntegratedImplementation.Services.HRM
                 }
 
             }
-            catch(Exception ex )
+            catch (Exception ex)
             {
                 return new ResponseMessage
                 {
@@ -247,13 +263,13 @@ namespace IntegratedImplementation.Services.HRM
                     employee.LastName = updateEmployee.LastName;
                     employee.PhoneNumber = updateEmployee.PhoneNumber;
                     employee.Email = updateEmployee.Email;
-                    
+
 
                     if (path != "")
                     {
                         employee.ImagePath = path;
                     }
-             
+
 
                     await _dbContext.SaveChangesAsync();
 
@@ -292,15 +308,15 @@ namespace IntegratedImplementation.Services.HRM
         }
         public async Task<List<EmployeeGetDto>> GetEmployees()
         {
-            var employeeList = await _dbContext.Employees.AsNoTracking()
+            var employeeList = await _dbContext.Employees.AsNoTracking().OrderByDescending(x => x.CreatedDate)
                                     .ProjectTo<EmployeeGetDto>(_mapper.ConfigurationProvider)
                                     .ToListAsync();
             return employeeList;
         }
         public async Task<EmployeeGetDto> GetEmployee(Guid employeeId)
         {
-            var employee = await _dbContext.Employees       
-                .Where(x=>x.Id == employeeId)
+            var employee = await _dbContext.Employees
+                .Where(x => x.Id == employeeId)
                 .AsNoTracking()
                 .ProjectTo<EmployeeGetDto>(_mapper.ConfigurationProvider).FirstAsync();
 
@@ -310,7 +326,7 @@ namespace IntegratedImplementation.Services.HRM
         //history
         public async Task<List<EmployeeHistoryDto>> GetEmployeeHistory(Guid employeeId)
         {
-            var employeeHistories = await _dbContext.EmploymentDetails.Where(x=>x.EmployeeId == employeeId).Include(x=>x.Department).Include(x=>x.Position).AsNoTracking()
+            var employeeHistories = await _dbContext.EmploymentDetails.Where(x => x.EmployeeId == employeeId).Include(x => x.Department).Include(x => x.Position).AsNoTracking()
                                 .ProjectTo<EmployeeHistoryDto>(_mapper.ConfigurationProvider)
                                 .ToListAsync();
             return employeeHistories;
@@ -330,7 +346,9 @@ namespace IntegratedImplementation.Services.HRM
                 PositionId = addEmployeeHistory.PositionId,
                 StartDate = addEmployeeHistory.StartDate,
                 EndDate = addEmployeeHistory.EndDate,
-                Salary = addEmployeeHistory.Salary
+                Salary = addEmployeeHistory.Salary,
+                SourceOfSalary = Enum.Parse<SALARYSOURCE>(addEmployeeHistory.SourceOfSalary),
+                Remark = addEmployeeHistory.Remark,
 
             };
             await _dbContext.EmploymentDetails.AddAsync(employmentDetail);
@@ -344,7 +362,7 @@ namespace IntegratedImplementation.Services.HRM
             };
 
         }
-       public async Task<ResponseMessage> UpdateEmployeeHistory(EmployeeHistoryPostDto updateEmployeeHistory)
+        public async Task<ResponseMessage> UpdateEmployeeHistory(EmployeeHistoryPostDto updateEmployeeHistory)
         {
             var currentEmployeeHistory = await _dbContext.EmploymentDetails.FirstOrDefaultAsync(x => x.Id.Equals(updateEmployeeHistory.Id));
 
@@ -356,7 +374,9 @@ namespace IntegratedImplementation.Services.HRM
                 currentEmployeeHistory.Salary = updateEmployeeHistory.Salary;
                 currentEmployeeHistory.StartDate = updateEmployeeHistory.StartDate;
                 currentEmployeeHistory.EndDate = updateEmployeeHistory.EndDate;
-               
+                currentEmployeeHistory.SourceOfSalary = Enum.Parse<SALARYSOURCE>(updateEmployeeHistory.SourceOfSalary);
+                currentEmployeeHistory.Remark = updateEmployeeHistory.Remark;
+
 
                 await _dbContext.SaveChangesAsync();
                 return new ResponseMessage { Message = "Successfully Updated", Success = true };
@@ -373,9 +393,270 @@ namespace IntegratedImplementation.Services.HRM
 
                 _dbContext.Remove(currentEmployeeHistory);
                 await _dbContext.SaveChangesAsync();
-                return new ResponseMessage { Message="Successfully Deleted", Success = true };
+                return new ResponseMessage { Message = "Successfully Deleted", Success = true };
             }
             return new ResponseMessage { Success = false, Message = "Unable To Find Employee History" };
+        }
+
+
+        //  employeeFiles
+
+        public async Task<List<EmployeeFileGetDto>> GetEmployeeFiles(Guid employeeId)
+        {
+            var employeeHistories = await _dbContext.EmployeeFiles.Where(x => x.EmployeeId == employeeId).AsNoTracking()
+                               .ProjectTo<EmployeeFileGetDto>(_mapper.ConfigurationProvider)
+                               .ToListAsync();
+            return employeeHistories;
+        }
+        public async Task<ResponseMessage> AddEmployeeFiles(EmployeeFilePostDto addEmployeeFile)
+        {
+
+            var id = Guid.NewGuid();
+            var path = "";
+            if (addEmployeeFile.FilePath != null)
+                path = _generalConfig.UploadFiles(addEmployeeFile.FilePath, id.ToString(), "Employee").Result.ToString();
+
+            EmployeeFile employeeFile = new EmployeeFile()
+            {
+                Id = Guid.NewGuid(),
+                CreatedById = addEmployeeFile.CreatedById,
+                CreatedDate = DateTime.Now,
+                EmployeeId = addEmployeeFile.EmployeeId,
+                FileName = addEmployeeFile.FileName,
+                FilePath = path,
+            };
+
+            await _dbContext.EmployeeFiles.AddAsync(employeeFile);
+            await _dbContext.SaveChangesAsync();
+
+            return new ResponseMessage
+            {
+
+                Message = "Added Successfully",
+                Success = true
+            };
+        }
+        public async Task<ResponseMessage> UpdateEmployeeFiles(EmployeeFileGetDto updateEmployeeFile)
+        {
+
+
+            var path = "";
+
+            var employeeFile = _dbContext.EmployeeFiles.Find(updateEmployeeFile.Id);
+
+
+            if (updateEmployeeFile.File != null)
+                path = _generalConfig.UploadFiles(updateEmployeeFile.File, employeeFile.Id.ToString(), "Employee").Result.ToString();
+
+            if (employeeFile != null)
+            {
+
+
+                employeeFile.FileName = updateEmployeeFile.FileName;
+
+                if (path != "")
+                {
+                    employeeFile.FilePath = path;
+                }
+                await _dbContext.SaveChangesAsync();
+                return new ResponseMessage { Message = "Successfully Updated", Success = true };
+            }
+            return new ResponseMessage { Success = false, Message = "Unable To Find Employee Files" };
+
+
+        }
+        public async Task<ResponseMessage> DeleteEmployeeFiles(Guid employeeFileId)
+        {
+            var currentEmployeeFile = await _dbContext.EmployeeFiles.FindAsync(employeeFileId);
+
+            if (currentEmployeeFile != null)
+            {
+
+                _dbContext.Remove(currentEmployeeFile);
+                await _dbContext.SaveChangesAsync();
+                return new ResponseMessage { Message = "Successfully Deleted", Success = true };
+            }
+            return new ResponseMessage { Success = false, Message = "Unable To Find Employee File" };
+        }
+
+        // employeesuerty
+        public async Task<List<EmployeeSuertyGetDto>> GetEmployeeSurety(Guid employeeId)
+        {
+            var employeeHistories = await _dbContext.EmployeeSureties.Where(x => x.EmployeeId == employeeId).AsNoTracking()
+                               .ProjectTo<EmployeeSuertyGetDto>(_mapper.ConfigurationProvider)
+                               .ToListAsync();
+            return employeeHistories;
+        }
+        public async Task<ResponseMessage> AddEmployeeSurety(EmployeeSuretyPostDto addEmployeeSuerty)
+        {
+
+            var id = Guid.NewGuid();
+            var photoPath = "";
+            var letterPath = "";
+            var idCardPath = "";
+            if (addEmployeeSuerty.Photo != null)
+                photoPath = _generalConfig.UploadFiles(addEmployeeSuerty.Photo, $"{id.ToString()}-photo", "Employee").Result.ToString();
+
+            if (addEmployeeSuerty.Letter != null)
+                letterPath = _generalConfig.UploadFiles(addEmployeeSuerty.Letter, $"{id.ToString()}-letter", "Employee").Result.ToString();
+
+            if (addEmployeeSuerty.IdCard != null)
+                idCardPath = _generalConfig.UploadFiles(addEmployeeSuerty.IdCard, $"{id.ToString()}-idcard", "Employee").Result.ToString();
+
+            EmployeeSurety employeeFile = new EmployeeSurety()
+            {
+                Id = id,
+                CreatedById = addEmployeeSuerty.CreatedById,
+                CreatedDate = DateTime.Now,
+                FullName = addEmployeeSuerty.FullName,
+                PhoneNumber = addEmployeeSuerty.PhoneNumber,
+                SuretyAddress = addEmployeeSuerty.SuretyAddress,
+                CompanyName = addEmployeeSuerty.CompanyName,
+                CompnayPhoneNumber = addEmployeeSuerty.CompnayPhoneNumber,
+                EmployeeId= addEmployeeSuerty.EmployeeId,
+                PhotoPath = photoPath,
+                LetterPath = letterPath,
+                IdCardPath = idCardPath
+
+            };
+
+
+            await _dbContext.EmployeeSureties.AddAsync(employeeFile);
+            await _dbContext.SaveChangesAsync();
+
+            return new ResponseMessage
+            {
+
+                Message = "Added Successfully",
+                Success = true
+            };
+        }
+        public async Task<ResponseMessage> UpdateEmployeeSurety(EmployeeSuretyPostDto updateEmployeeSuerty)
+        {
+
+
+            var employeeFile = _dbContext.EmployeeSureties.Find(updateEmployeeSuerty.Id);           
+
+            var photoPath = "";
+            var letterPath = "";
+            var idCardPath = "";
+            if (updateEmployeeSuerty.Photo != null)
+                photoPath = _generalConfig.UploadFiles(updateEmployeeSuerty.Photo, $"{employeeFile.Id.ToString()}-photo", "Employee").Result.ToString();
+
+            if (updateEmployeeSuerty.Letter != null)
+                letterPath = _generalConfig.UploadFiles(updateEmployeeSuerty.Letter, $"{employeeFile.Id.ToString()}-letter", "Employee").Result.ToString();
+
+            if (updateEmployeeSuerty.IdCard != null)
+                idCardPath = _generalConfig.UploadFiles(updateEmployeeSuerty.IdCard, $"{employeeFile.Id.ToString()}-idcard", "Employee").Result.ToString();
+
+
+            if (employeeFile != null)
+            {
+
+                employeeFile.FullName = updateEmployeeSuerty.FullName;
+                employeeFile.PhoneNumber = updateEmployeeSuerty.PhoneNumber;
+                employeeFile.SuretyAddress = updateEmployeeSuerty.SuretyAddress;
+                employeeFile.CompanyName = updateEmployeeSuerty.CompanyName;
+                employeeFile.CompnayPhoneNumber = updateEmployeeSuerty.CompnayPhoneNumber;
+             
+                if (photoPath != "")
+                {
+                    employeeFile.PhotoPath = photoPath;
+                }
+                if (letterPath != "")
+                {
+                    employeeFile.LetterPath = letterPath;
+                }
+                if (idCardPath != "")
+                {
+                    employeeFile.IdCardPath = idCardPath;
+                }
+
+
+
+                await _dbContext.SaveChangesAsync();
+                return new ResponseMessage { Message = "Successfully Updated", Success = true };
+            }
+            return new ResponseMessage { Success = false, Message = "Unable To Find Employee Suerty" };
+
+
+        }
+        public async Task<ResponseMessage> DeleteEmployeeSurety(Guid employeeFileId)
+        {
+            var currentEmployeeFile = await _dbContext.EmployeeSureties.FindAsync(employeeFileId);
+
+            if (currentEmployeeFile != null)
+            {
+
+                _dbContext.Remove(currentEmployeeFile);
+                await _dbContext.SaveChangesAsync();
+                return new ResponseMessage { Message = "Successfully Deleted", Success = true };
+            }
+            return new ResponseMessage { Success = false, Message = "Unable To Find Employee Suerty" };
+        }
+        //salary History 
+
+        public async Task<List<EmployeeSalaryGetDto>> GetEmployeeSalaryHistory(Guid employeeDetailId)
+        {
+            var employeeSalaryHistories = await _dbContext.EmployeeSalaries.Where(x => x.EmploymentDetailId == employeeDetailId).AsNoTracking()
+                                .ProjectTo<EmployeeSalaryGetDto>(_mapper.ConfigurationProvider)
+                                .ToListAsync();
+            return employeeSalaryHistories;
+        }
+        public async Task<ResponseMessage> AddEmployeeSalaryHistory(EmployeeSalryPostDto addEmployeeHistory)
+        {
+
+
+            EmployeeSalary employmentDetail = new EmployeeSalary()
+            {
+                Id = Guid.NewGuid(),
+                CreatedById = addEmployeeHistory.CreatedById,
+                CreatedDate = DateTime.Now,
+                ProjectName = addEmployeeHistory.ProjectName,
+                Amount = addEmployeeHistory.Amount,
+                EmploymentDetailId = addEmployeeHistory.EmployeeDetailId
+
+            };
+            await _dbContext.EmployeeSalaries.AddAsync(employmentDetail);
+            await _dbContext.SaveChangesAsync();
+
+            return new ResponseMessage
+            {
+
+                Message = "Added Successfully",
+                Success = true
+            };
+
+        }
+        public async Task<ResponseMessage> UpdateEmployeeSalaryHistory(EmployeeSalaryGetDto updateEmployeeSalary)
+        {
+            var currentEmployeeHistory = await _dbContext.EmployeeSalaries.FirstOrDefaultAsync(x => x.Id.Equals(updateEmployeeSalary.Id));
+
+            if (currentEmployeeHistory != null)
+            {
+
+                currentEmployeeHistory.ProjectName = updateEmployeeSalary.ProjectName;
+                currentEmployeeHistory.Amount = updateEmployeeSalary.Amount;
+
+
+                await _dbContext.SaveChangesAsync();
+                return new ResponseMessage { Message = "Successfully Updated", Success = true };
+            }
+            return new ResponseMessage { Success = false, Message = "Unable To Find Employee History" };
+        }
+        public async Task<ResponseMessage> deleteEmployeeSalaryHistory(Guid employeeSalaryHistoryId)
+        {
+
+            var currentEmployeeHistory = await _dbContext.EmployeeSalaries.FindAsync(employeeSalaryHistoryId);
+
+            if (currentEmployeeHistory != null)
+            {
+
+                _dbContext.Remove(currentEmployeeHistory);
+                await _dbContext.SaveChangesAsync();
+                return new ResponseMessage { Message = "Successfully Deleted", Success = true };
+            }
+            return new ResponseMessage { Success = false, Message = "Unable To Find Employee Salary History" };
         }
 
 
@@ -425,8 +706,8 @@ namespace IntegratedImplementation.Services.HRM
             {
 
                 currentEmployeeFamily.FullName = updateEmployeeFamily.FullName;
-                currentEmployeeFamily.Gender = Enum.Parse<Gender>( updateEmployeeFamily.Gender);
-                currentEmployeeFamily.FamilyRelation =Enum.Parse<FamilyRelation>( updateEmployeeFamily.FamilyRelation);
+                currentEmployeeFamily.Gender = Enum.Parse<Gender>(updateEmployeeFamily.Gender);
+                currentEmployeeFamily.FamilyRelation = Enum.Parse<FamilyRelation>(updateEmployeeFamily.FamilyRelation);
                 currentEmployeeFamily.BirthDate = updateEmployeeFamily.BirthDate;
                 currentEmployeeFamily.Remark = updateEmployeeFamily.Remark;
 
