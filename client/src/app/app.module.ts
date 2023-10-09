@@ -165,6 +165,7 @@ import { AddEmployeeSuretyComponent } from './pages/human-resource/employee-mana
 import { UpdateEmployeeSuretyComponent } from './pages/human-resource/employee-managment/employee-detail/employee-surety/update-employee-surety/update-employee-surety.component';
 import { LeaveSettingComponent } from './pages/human-resource/hrm-configuration/leave-setting/leave-setting.component';
 import { AddLeaveSettingComponent } from './pages/human-resource/hrm-configuration/leave-setting/add-leave-setting/add-leave-setting.component';
+import { RequestLoanComponent } from './pages/users-profile/request-loan/request-loan.component';
 
 @NgModule({
   declarations: [
@@ -388,7 +389,8 @@ import { AddLeaveSettingComponent } from './pages/human-resource/hrm-configurati
      UpdateEmployeeFileComponent,
      EmployeeSuretyComponent,
      AddEmployeeSuretyComponent,
-     UpdateEmployeeSuretyComponent
+     UpdateEmployeeSuretyComponent,
+     RequestLoanComponent
   ],
   imports: [
     BrowserModule,

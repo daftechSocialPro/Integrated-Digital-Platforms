@@ -16,6 +16,7 @@ import { PerformanceSettingDto } from '../model/HRM/IPerformanceSettingDto';
 import { AddPerformancePlanDetailDto, AddPerformancePlanDto, PerformancePlanDto } from '../model/HRM/IPerformancePlanDto';
 import { AssignSupervisorDto, EmployeeSupervisorsDto } from '../model/HRM/IEmployeeSupervisorDto';
 import { AddLoanSettingDto, LoanSettingDto } from '../model/HRM/ILoanSettingDto';
+import { LoanInfoDto, LoanRequestDto } from '../model/HRM/ILoanManagmentDto';
 
 export interface toastPayload {
     message: string;
@@ -368,5 +369,16 @@ export class HrmService {
     updateLoanSetting(updateLoanSetting: AddLoanSettingDto) {
         return this.http.put<ResponseMessage>(this.baseUrl + "/LoanSetting/UpdateLoanSetting", updateLoanSetting)
     }
+
+
+    // Loan Management 
+    employeesLoanAmmount(employeeId: string) {
+        return this.http.get<LoanInfoDto>(this.baseUrl + `/LoanManagement/EmployeesLoanAmmount?employeeId=${employeeId}`)
+    }
+
+    requestLoan(requestLoan: LoanRequestDto) {
+        return this.http.post<ResponseMessage>(this.baseUrl + "/LoanManagement/RequestLoan", requestLoan)
+    }
+    
 
 }

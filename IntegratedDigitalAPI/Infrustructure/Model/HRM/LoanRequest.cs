@@ -16,6 +16,5 @@ namespace IntegratedInfrustructure.Model.HRM
         public virtual LoanSetting LoanSetting { get; set; } = null!;
         public double TotalMoneyRequest { get; set; }
         public double DeductionRequest { get; set; }
-        public LoanStatus LoanStatus { get; set; }
     }
 }

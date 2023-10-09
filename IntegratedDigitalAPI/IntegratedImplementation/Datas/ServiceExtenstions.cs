@@ -37,6 +37,8 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<IPerformancePlanService,PerformancePlanService>();
             services.AddScoped<IEmployeePerformanceService, EmployeePerformanceService>();
             services.AddScoped<ILoanSettingService, LoanSettingService>();
+            services.AddScoped<ILoanManagementService, LoanManagementService>();
+
 
             #region Vacancy
             services.AddScoped<IVacancyService, VacancyService>();

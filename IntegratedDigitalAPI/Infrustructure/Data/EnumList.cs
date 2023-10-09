@@ -145,7 +145,9 @@ namespace IntegratedInfrustructure.Data
             PENDING,
             APPROVED,
             GIVEN,
+            PAID
         }
+
 
     }
 }

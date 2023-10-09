@@ -7,6 +7,7 @@ import { EmployeeGetDto } from 'src/app/model/HRM/IEmployeeDto';
 import { HrmService } from 'src/app/services/hrm.service';
 import { CommonService } from 'src/app/services/common.service';
 import { MessageService } from 'primeng/api';
+import { LoanInfoDto } from 'src/app/model/HRM/ILoanManagmentDto';
 
 @Component({
   selector: 'app-users-profile',
@@ -19,7 +20,9 @@ export class UsersProfileComponent implements OnInit {
   Employee!: EmployeeGetDto
   EmployeeForm!: FormGroup
   passwordForm!: FormGroup
-  imageURL!: string
+  imageURL!: string;
+  loanInfo!: LoanInfoDto;
+
 
 
   constructor(
@@ -68,11 +71,12 @@ export class UsersProfileComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.userService.getCurrentUser()
     this.getEmployee();
+    this.getLoan();
 
 
   }
-  getEmployee() {
 
+  getEmployee() {
     this.hrmService.getEmployee(this.user.employeeId).subscribe({
       next: (res) => {
         this.Employee = res
@@ -87,11 +91,21 @@ export class UsersProfileComponent implements OnInit {
       }, error: (err) => {
         console.error(err)
       }
-    })
+    });
   }
+
+  getLoan() {
+    this.hrmService.employeesLoanAmmount(this.user.employeeId).subscribe({
+      next: (res) => {
+        this.loanInfo = res
+      }, error: (err) => {
+        console.error(err)
+      }
+    });
+  }
+
+
   getImage(value: string) {
-
-
     return this.commonService.createImgPath(value)
   }
 

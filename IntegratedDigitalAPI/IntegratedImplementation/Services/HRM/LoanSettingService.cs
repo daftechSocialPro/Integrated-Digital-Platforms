@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static IntegratedInfrustructure.Data.EnumList;
 
+
 namespace IntegratedImplementation.Services.HRM
 {
     public class LoanSettingService : ILoanSettingService

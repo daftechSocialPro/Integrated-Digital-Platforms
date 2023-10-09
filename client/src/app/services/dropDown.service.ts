@@ -49,5 +49,9 @@ export class DropDownService {
         return this.http.get<SelectList[]>(this.baseUrl+"/DropDown/GetHrmSettingDropDownList")
     }
 
+    getLoanTypeDropDown(){
+        return this.http.get<SelectList[]>(this.baseUrl+"/DropDown/GetLoanTypeDropDown")
+    }
+
   
 }
