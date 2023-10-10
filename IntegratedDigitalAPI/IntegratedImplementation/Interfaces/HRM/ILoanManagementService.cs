@@ -13,5 +13,12 @@ namespace IntegratedImplementation.Interfaces.HRM
         Task<LoanInfoDto> EmployeesLoanAmmount(Guid employeeId);
 
         Task<ResponseMessage> RequestLoan(RequestLoanDto requestLoan);
+
+        public Task<List<RequestedLoanListDto>> LoanRequestList();
+
+        public Task<ResponseMessage> ApproveInitialRequest(ApproveInitialRequestDto approveinitial);
+
+        public Task<List<EmployeeLoanDto>> GetEmployeeLoans();
+
     }
 }

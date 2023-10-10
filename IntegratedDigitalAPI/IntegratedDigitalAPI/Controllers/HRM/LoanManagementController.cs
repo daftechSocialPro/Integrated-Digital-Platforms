@@ -39,5 +39,35 @@ namespace IntegratedDigitalAPI.Controllers.HRM
                 return BadRequest();
             }
         }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(LoanInfoDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> LoanRequestList()
+        {
+            return Ok(await _loanManagementService.LoanRequestList());
+        }
+
+
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> ApproveInitialRequest([FromBody] ApproveInitialRequestDto approveinitial)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _loanManagementService.ApproveInitialRequest(approveinitial));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+
+        [HttpGet]
+        [ProducesResponseType(typeof(EmployeeLoanDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetEmployeeLoans()
+        {
+            return Ok(await _loanManagementService.GetEmployeeLoans());
+        }
     }
 }

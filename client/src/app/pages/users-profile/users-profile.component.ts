@@ -8,6 +8,8 @@ import { HrmService } from 'src/app/services/hrm.service';
 import { CommonService } from 'src/app/services/common.service';
 import { MessageService } from 'primeng/api';
 import { LoanInfoDto } from 'src/app/model/HRM/ILoanManagmentDto';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { RequestLoanComponent } from './request-loan/request-loan.component';
 
 @Component({
   selector: 'app-users-profile',
@@ -31,6 +33,7 @@ export class UsersProfileComponent implements OnInit {
     private authGuard: AuthGuard,
     private commonService: CommonService,
     private formBuilder: FormBuilder,
+    private modalService: NgbModal,
     private messageService: MessageService) {
     this.EmployeeForm = this.formBuilder.group({
       avatar: [null],
@@ -200,5 +203,13 @@ export class UsersProfileComponent implements OnInit {
     }
 
   }
+
+  requestLoan() {
+    let modalRef = this.modalService.open(RequestLoanComponent, { size: 'xl', backdrop: 'static' })
+    modalRef.componentInstance.employeeId = this.Employee.id
+    modalRef.result.then(() => {
+    })
+  }
+
 
 }

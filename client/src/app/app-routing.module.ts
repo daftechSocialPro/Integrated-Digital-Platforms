@@ -19,6 +19,7 @@ import { VacancyDetailComponent } from './pages/human-resource/vacancy-managemen
 import { ApplicantComponent } from './pages/human-resource/vacancy-management/applicant/applicant.component';
 import { EmployeeSupervisorsComponent } from './pages/human-resource/employee-supervisors/employee-supervisors.component';
 import { PerformanceManagementComponent } from './pages/human-resource/performance-management/performance-management.component';
+import { LoanManagementComponent } from './pages/human-resource/loan-management/loan-management.component';
 
 
 
@@ -41,7 +42,8 @@ const routes: Routes = [
   { path: 'HRM/employeeperformance', canActivate:[AuthGuard],component:PerformanceManagementComponent,data:{permittedRoles:['Admin']} },
   { path: 'pages-login', component: PagesLoginComponent },
   { path: 'user-profile',canActivate:[AuthGuard], component: UsersProfileComponent },
-  { path : 'user_managment',canActivate:[AuthGuard],component:UserManagementComponent}
+  { path : 'user_managment',canActivate:[AuthGuard],component:UserManagementComponent},
+  { path : 'HRM/loan-managment',canActivate:[AuthGuard],component:LoanManagementComponent}
 
 ];
 

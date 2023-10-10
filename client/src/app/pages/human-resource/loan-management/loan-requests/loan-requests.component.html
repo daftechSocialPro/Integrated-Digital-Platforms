@@ -1,0 +1,33 @@
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title"> Loan Requests</h5>
+    
+        <p-table [value]="requestLists" [paginator]="true" [rows]="5" [showCurrentPageReport]="true"
+            [tableStyle]="{ 'min-width': '50rem' }"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [rowsPerPageOptions]="[5, 25, 50]" styleClass="p-datatable-sm">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Employee Name </th>
+                    <th>Request Date </th>
+                    <th>Loan Type</th>
+                    <th>Requested Ammount</th>
+                    <th>Deduction Percent</th>
+                    <th>Action</th>
+               
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-loanrequest>
+                <tr>
+                    <td>{{loanrequest.employeeName}}</td>
+                    <td>{{loanrequest.requestedDate|date:"dd-MMM-yyyy"}}</td>
+                    <td>{{loanrequest.loanType}}</td>
+                    <td>{{loanrequest.requestedAmount}}</td>
+                    <td>{{loanrequest.deductionPercent}}</td>      
+                    <td><p-button (onClick)="approveRequest(loanrequest.requestId)" icon="pi pi-check" styleClass="p-button-outlined p-button-sm" ></p-button></td>
+    
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
