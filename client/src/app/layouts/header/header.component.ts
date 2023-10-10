@@ -7,6 +7,8 @@ import { CommonService } from 'src/app/services/common.service';
 import { NotificationDto } from 'src/app/model/INotificationDto';
 import { NotificationService } from 'src/app/services/notification.service';
 import { Router } from '@angular/router';
+import { SelectList } from 'src/app/model/common';
+import { HrmService } from 'src/app/services/hrm.service';
 
 @Component({
   selector: 'app-header',
@@ -16,20 +18,23 @@ import { Router } from '@angular/router';
 export class HeaderComponent implements OnInit {
 
   user !: UserView
+  contactEndEMployees!: SelectList[]
   vacancies!: NotificationDto[]
   constructor(@Inject(DOCUMENT) private document: Document,
-  private authGuard: AuthGuard,
-  private route : Router,
-  private userService: UserService,
-  private notificationService:NotificationService,
-  private commonService: CommonService) { }
+    private authGuard: AuthGuard,
+    private route: Router,
+    private hrmService: HrmService,
+    private userService: UserService,
+    private notificationService: NotificationService,
+    private commonService: CommonService) { }
 
   ngOnInit(): void {
     this.user = this.userService.getCurrentUser()
     this.getVacancyList()
+    this.getContractEndEmp()
+
   }
-  sidebarToggle()
-  {
+  sidebarToggle() {
     //toggle sidebar function
     this.document.body.classList.toggle('toggle-sidebar');
   }
@@ -38,23 +43,42 @@ export class HeaderComponent implements OnInit {
     this.authGuard.logout();
   }
 
-  createImagePath(url:string){
+  createImagePath(url: string) {
     return this.commonService.createImgPath(url)
   }
 
-  getVacancyList(){
+  getVacancyList() {
 
     this.notificationService.getVacanciesNotification().subscribe({
 
-      next:(res)=>{
-        this.vacancies = res 
+      next: (res) => {
+        this.vacancies = res
       }
     })
 
   }
-  navigateToDetail(id:string){
+  navigateToDetail(id: string) {
 
-    this.route.navigate(['/HRM/vacancyDetail',id])
+    this.route.navigate(['/HRM/vacancyDetail', id])
+
+  } navigateToempDetail(id: string) {
+
+
+    this.route.navigate(['HRM/employeeDetail', { employeeId: id }])
+  }
+
+  roleMatch(value: string[]) {
+    return this.userService.roleMatch(value)
+  }
+
+  getContractEndEmp() {
+
+    this.hrmService.getEmployeeswithContractend().subscribe({
+      next: (res) => {
+        this.contactEndEMployees = res
+      }
+    })
+
 
   }
 }

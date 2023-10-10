@@ -19,26 +19,30 @@ import { VacancyDetailComponent } from './pages/human-resource/vacancy-managemen
 import { ApplicantComponent } from './pages/human-resource/vacancy-management/applicant/applicant.component';
 import { EmployeeSupervisorsComponent } from './pages/human-resource/employee-supervisors/employee-supervisors.component';
 import { PerformanceManagementComponent } from './pages/human-resource/performance-management/performance-management.component';
+import { VolunterComponent } from './pages/human-resource/volunter/volunter.component';
+import { VolunterDetailComponent } from './pages/human-resource/volunter/volunter-detail/volunter-detail.component';
 
 
 
 const routes: Routes = [
-  { path: '', canActivate: [AuthGuard], component: DashboardComponent, data: { permittedRoles: ['Admin'] } },
-  { path: 'dashboard', canActivate: [AuthGuard], component: DashboardComponent, data: { permittedRoles: ['Admin'] } },
-  { path: 'configuration', canActivate: [AuthGuard], component: ConfigurationComponent, data: { permittedRoles: ['Admin'] } },  
-  { path: 'HRM/employeeMangment', canActivate: [AuthGuard], component: EmployeeManagmentComponent, data: { permittedRoles: ['Admin'] } },
-  { path: 'HRM/employeeTermination', canActivate: [AuthGuard], component: EmployeeTerminationComponent, data: { permittedRoles: ['Admin'] } },
-   
-  { path: 'HRM/employeeDetail', canActivate: [AuthGuard], component: EmployeeDetailComponent, data: { permittedRoles: ['Admin'] } },
-  { path: 'HRM/configuration', canActivate: [AuthGuard], component: HrmConfigurationComponent, data: { permittedRoles: ['Admin'] } },
-  { path: 'HRM/vacancyList', canActivate:[AuthGuard],component:VacancyListComponent,data:{permittedRoles:['Admin']} },
-  { path: 'HRM/vacancyDetail/:id', canActivate:[AuthGuard],component:VacancyDetailComponent,data:{permittedRoles:['Admin']} },
-  { path: 'HRM/leave', canActivate:[AuthGuard],component:LeaveComponent,data:{permittedRoles:['Admin']} },
-  { path: 'HRM/internalApplicant/:id', canActivate:[AuthGuard],component:ApplicantComponent,data:{permittedRoles:['Admin']} },
-  { path: 'HRM/internalApplicant/:id/:applicantId', canActivate:[AuthGuard],component:ApplicantComponent,data:{permittedRoles:['Admin']} },
-  { path: 'HRM/leaverequest/:id', canActivate:[AuthGuard],component:RequestDetailComponent,data:{permittedRoles:['Admin']} },
-  { path: 'HRM/employeesupervisor', canActivate:[AuthGuard],component:EmployeeSupervisorsComponent,data:{permittedRoles:['Admin']} },
-  { path: 'HRM/employeeperformance', canActivate:[AuthGuard],component:PerformanceManagementComponent,data:{permittedRoles:['Admin']} },
+  { path: '', canActivate: [AuthGuard], component: DashboardComponent },
+  { path: 'dashboard', canActivate: [AuthGuard], component: DashboardComponent},
+  { path: 'configuration', canActivate: [AuthGuard], component: ConfigurationComponent, data: { permittedRoles: ['GENERAL-CONFIGURATION'] } },  
+  { path: 'HRM/employeeMangment', canActivate: [AuthGuard], component: EmployeeManagmentComponent, data: { permittedRoles: ['EMPLOYEE-MANAGEMENT','USER-MANAGER'] } },
+  { path: 'HRM/volunters', canActivate: [AuthGuard], component: VolunterComponent, data: { permittedRoles: ['EMPLOYEE-MANAGEMENT','USER-MANAGER'] } },
+ 
+  { path: 'HRM/employeeTermination', canActivate: [AuthGuard], component: EmployeeTerminationComponent,  data: { permittedRoles: ['EMPLOYEE-MANAGEMENT'] }},     
+  { path: 'HRM/employeeDetail', canActivate: [AuthGuard], component: EmployeeDetailComponent, data: { permittedRoles: ['EMPLOYEE-MANAGEMENT','USER-MANAGER'] } },
+  { path: 'HRM/volunterDetail', canActivate: [AuthGuard], component: VolunterDetailComponent, data: { permittedRoles: ['EMPLOYEE-MANAGEMENT','USER-MANAGER'] } },
+  { path: 'HRM/configuration', canActivate: [AuthGuard], component: HrmConfigurationComponent, data: { permittedRoles: ['HRM-CONFIGURATION'] } },
+  { path: 'HRM/vacancyList', canActivate:[AuthGuard],component:VacancyListComponent,data:{permittedRoles:['VACANCY-POST','VACANCY-APPROVER','VACANCY-2ND-APPROVER']} },
+  { path: 'HRM/vacancyDetail/:id', canActivate:[AuthGuard],component:VacancyDetailComponent,data:{permittedRoles:['VACANCY-POST','VACANCY-APPROVER','VACANCY-2ND-APPROVER']} },
+  { path: 'HRM/leave', canActivate:[AuthGuard],component:LeaveComponent},
+  { path: 'HRM/internalApplicant/:id', canActivate:[AuthGuard],component:ApplicantComponent,data:{permittedRoles:['VACANCY-APPROVER','VACANCY-2ND-APPROVER']} },
+  { path: 'HRM/internalApplicant/:id/:applicantId', canActivate:[AuthGuard],component:ApplicantComponent },
+  { path: 'HRM/leaverequest/:id', canActivate:[AuthGuard],component:RequestDetailComponent },
+  { path: 'HRM/employeesupervisor', canActivate:[AuthGuard],component:EmployeeSupervisorsComponent,data:{permittedRoles:['EVALUATER']} },
+  { path: 'HRM/employeeperformance', canActivate:[AuthGuard],component:PerformanceManagementComponent,data:{permittedRoles:['EVALUATER']} },
   { path: 'pages-login', component: PagesLoginComponent },
   { path: 'user-profile',canActivate:[AuthGuard], component: UsersProfileComponent },
   { path : 'user_managment',canActivate:[AuthGuard],component:UserManagementComponent}

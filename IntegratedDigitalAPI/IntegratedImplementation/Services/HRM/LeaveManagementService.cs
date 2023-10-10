@@ -1,5 +1,7 @@
 ﻿using Implementation.Helper;
 using IntegratedImplementation.DTOS.HRM;
+using IntegratedImplementation.Helper;
+using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedImplementation.Interfaces.HRM;
 using IntegratedInfrustructure.Data;
 using IntegratedInfrustructure.Model.HRM;
@@ -15,10 +17,12 @@ namespace IntegratedImplementation.Services.HRM
 {
     public class LeaveManagementService : ILeaveManagementService
     {
+        private readonly IEmailService _emialService;
         private readonly ApplicationDbContext _dbContext;
-        public LeaveManagementService(ApplicationDbContext dbContext)
+        public LeaveManagementService(ApplicationDbContext dbContext ,IEmailService emailService)
         {
             _dbContext = dbContext;
+            _emialService = emailService;
         }
 
         public async Task<ResponseMessage> AddLeaveBalance(AddLeaveBalanceDto addLeaveBalance)
@@ -119,11 +123,29 @@ namespace IntegratedImplementation.Services.HRM
                 TotalDate = leaveRequestDto.TotalDate,
                 LeaveTypeId = leaveRequestDto.LeaveTypeId,
                 LeaveStatus = LeaveRequestStatus.PENDING,
-                Reason=leaveRequestDto.Reason,
+                Reason = leaveRequestDto.Reason,
             };
 
             await _dbContext.EmployeeLeaves.AddAsync(empLeave);
             await _dbContext.SaveChangesAsync();
+
+            var employeeApprovers = _dbContext.UserRoles.Where(x => x.RoleId == "8").Select(x => x.UserId).ToList();
+
+            foreach (var employeeApprover in employeeApprovers)
+            {
+                var user = _dbContext.Users.Find(employeeApprover);
+
+                if (user != null)
+                {
+                    var emp = _dbContext.Employees.Find(leaveRequestDto.EmployeeId);
+                    if (emp != null) { }
+                    var email = new EmailMetadata
+                             (emp.Email, "Leave Approval",
+                                 $"Dear {user.UserName},\n\nEmployee {emp.FirstName} {emp.MiddleName} {emp.LastName} has been requsted a leave from :{empLeave.FromDate} - To :{empLeave.ToDate}." +
+                                 $" Please review the employee details and provide your approval.\n\nThank you.\n\nSincerely,\nEMIA");
+                    await _emialService.Send(email);
+                } }
+        
 
             return new ResponseMessage
             {
@@ -170,6 +192,15 @@ namespace IntegratedImplementation.Services.HRM
             currentRequest.ApproverEmployeeId = employeeId;
 
             await _dbContext.SaveChangesAsync();
+
+            
+                var emp = _dbContext.Employees.Find(currentRequest.EmployeeId);
+                if (emp != null) { }
+                var email = new EmailMetadata
+                         (emp.Email, "Leave Approved",
+                             $"Dear {emp.FirstName} {emp.MiddleName} {emp.LastName},\n\n the Leave approval request that you sent has been accepted.\n\nThank you.\n\nSincerely,\nEMIA");
+                await _emialService.Send(email);
+            
 
             return new ResponseMessage { Success = true, Message = "Approved Request Successfully" };
         }
@@ -251,6 +282,13 @@ namespace IntegratedImplementation.Services.HRM
             currentRequest.Remark = remark;
 
             await _dbContext.SaveChangesAsync();
+
+            var emp = _dbContext.Employees.Find(currentRequest.EmployeeId);
+            if (emp != null) { }
+            var email = new EmailMetadata
+                     (emp.Email, "Leave Rejected",
+                         $"Dear {emp.FirstName} {emp.MiddleName} {emp.LastName},\n\n the Leave approval request that you sent has been rejected.\n\nThank you.\n\nSincerely,\nEMIA");
+            await _emialService.Send(email);
 
             return new ResponseMessage { Success = true, Message = "Rejected Request Successfully" };
         }

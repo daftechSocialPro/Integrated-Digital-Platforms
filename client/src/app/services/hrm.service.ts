@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 import { DepartmentGetDto, DepartmentPostDto } from '../model/HRM/IDepartmentDto';
 import { ResponseMessage } from '../model/ResponseMessage.Model';
 import { PositionGetDto, PositionPostDto } from '../model/HRM/IPositionDto';
-import { EmployeeEducationGetDto, EmployeeEducationPostDto, EmployeeFamilyGetDto, EmployeeFamilyPostDto, EmployeeFileGetDto, EmployeeFilePostDto, EmployeeGetDto, EmployeeHistoryDto, EmployeeHistoryPostDto, EmployeePostDto, EmployeeSalaryGetDto, EmployeeSalryPostDto, EmployeeSuertyGetDto } from '../model/HRM/IEmployeeDto';
+import { EmployeeEducationGetDto, EmployeeEducationPostDto, EmployeeFamilyGetDto, EmployeeFamilyPostDto, EmployeeFileGetDto, EmployeeFilePostDto, EmployeeGetDto, EmployeeHistoryDto, EmployeeHistoryPostDto, EmployeePostDto, EmployeeSalaryGetDto, EmployeeSalryPostDto, EmployeeSuertyGetDto, VolunterGetDto, VolunterPostDto } from '../model/HRM/IEmployeeDto';
 import { SelectList } from '../model/common';
 import { AppliedLeavesGetDto, LeaveBalanceGetDto, LeaveBalancePostDto, LeavePlanSettingGetDto, LeavePlanSettingPostDto, LeavePlanSettingUpdateDto, LeaveRequestPostDto, LeaveTypeGetDto, LeaveTypePostDto } from '../model/HRM/ILeaveDto';
 import { HrmSettingDto } from '../model/HRM/IHrmSettingDto';
@@ -92,13 +92,39 @@ export class HrmService {
     addPerformanceSetting(performanceSettings: PerformanceSettingDto) {
         return this.http.post<ResponseMessage>(this.baseUrl + "/HrmSetting/AddPerformanceSetting", performanceSettings)
     }
+    //GetEmployeeswithContractend
+    getEmployeeswithContractend(){
+     
+            return this.http.get<SelectList[]>(this.baseUrl + "/Employee/GetEmployeeswithContractend")
+        
+    }
 
+    //volunter
+    
+    getVolunters() {
+        return this.http.get<VolunterGetDto[]>(this.baseUrl + "/Employee/GetVolunters")
+    }
+    getVolunter(employeeId:string){
+        return this.http.get<EmployeeGetDto>(this.baseUrl + "/Employee/GetVolunter?employeeId="+employeeId)
+   
+    }
+    addVolunter(voluterPost:FormData) {
+        return this.http.post<ResponseMessage>(this.baseUrl + "/Employee/AddVolunter",voluterPost)
+    }
+    updateVolunter(volunterPost:FormData){
+        return this.http.put<ResponseMessage>(this.baseUrl + "/Employee/UpdateVolunter",volunterPost)
+     
+    }
     // employees 
 
     getEmployees() {
         return this.http.get<EmployeeGetDto[]>(this.baseUrl + "/Employee/GetEmployees")
     }
+    
+    approveEmployee(employeeId : string ){
 
+        return this.http.post<ResponseMessage>(this.baseUrl+"/Employee/ApproveEmployee?employeeId="+employeeId,{})
+    }
     getEmployeesNoUserSelectList() {
         return this.http.get<SelectList[]>(this.baseUrl + "/Employee/GetEmployeesNoUserSelectList")
     }
@@ -269,6 +295,9 @@ export class HrmService {
 
     getEmployeeLeavePlan(employeeId: string) {
         return this.http.get<LeavePlanSettingGetDto[]>(this.baseUrl + `/LeaveType/GetEmployeeLeavePlan?employeeId=${employeeId}`)
+    }
+    getEmployeeLeavePlans() {
+        return this.http.get<LeavePlanSettingGetDto[]>(this.baseUrl + `/LeaveType/GetEmployeeLeavePlans`)
     }
 
     addEmployeeLeavePlan(planSettingPost: LeavePlanSettingPostDto) {

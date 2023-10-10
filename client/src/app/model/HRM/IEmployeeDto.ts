@@ -66,6 +66,7 @@ export interface EmployeeGetDto {
      zoneName: string
      woreda: string;
      nationalityId: string
+     isApproved:boolean
 
 
 }
@@ -213,7 +214,69 @@ export interface EmployeeSuertyGetDto {
 }
 
 
+export interface VolunterPostDto {
+     id?: string
+     firstName: string;
+     middleName: string;
+     lastName: string;
+     amharicName: string,
+     phoneNumber: string;
+     email: string;
+     zoneId: string;
+     woreda: string;
+     gender: string;
+     birthDate: Date
+     maritalStatus: Number
+   
+     ContractEndDate?: Date
+     terminatedDate?: Date     
+     paymentType: string;
+     employmentDate: Date;
+     salary?: Number,
+     sourceOfSalary:string; 
+     bankAccountNo?: string; 
+     createdById: string;
+     
+    
 
+}
+
+
+export interface VolunterGetDto {
+     id: string;
+
+     employeeName: string;
+     firstName: string;
+     middleName: string;
+     lastName: string;
+     amharicName: string,
+     gender: string;
+     birthDate: Date
+     maritalStatus: string;
+     imagePath?: string;
+   
+     paymentType: string;
+     employmentDate: Date;
+     contractEndDate?: Date;
+     contractDays?: number
+     terminatedDate?: Date;
+     salary?:number,
+     sourceOfSalary?:string,
+     phoneNumber: string;
+     tinNumber?: string;
+     bankAccountNo?: string;
+     email: string;
+    
+     countryId: string
+     nationality: string;
+     regionId: string;
+     regionName: string;
+     zoneId: string;
+     zoneName: string
+     woreda: string;
+     nationalityId: string
+
+}
 
 
 

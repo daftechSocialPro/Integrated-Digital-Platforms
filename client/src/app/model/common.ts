@@ -5,6 +5,7 @@ export interface SelectList {
 
     id: string;
     name: string;
+    reason?:string
 
 }
 

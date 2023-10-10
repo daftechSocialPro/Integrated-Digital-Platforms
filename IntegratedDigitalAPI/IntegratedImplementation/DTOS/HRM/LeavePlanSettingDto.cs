@@ -40,7 +40,7 @@ namespace IntegratedImplementation.DTOS.HRM
         public Guid Id { get; set; }
         public string LeavePlanSettingStatus { get; set; }
 
-         public string Rejectedremark { get;set; }
+         public string? Rejectedremark { get;set; }
     }
  
 }

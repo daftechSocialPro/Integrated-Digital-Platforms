@@ -25,11 +25,34 @@ namespace IntegratedDigitalAPI.Controllers.HRM
         {
             return Ok(await _employeeService.GetEmployees());
         }
+
+
+        [HttpGet]
+        [ProducesResponseType(typeof(VolunterGetDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetVolunters()
+        {
+            return Ok(await _employeeService.GetVolunters());
+        }
+
         [HttpGet]
         [ProducesResponseType(typeof(EmployeeGetDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetEmployee(Guid employeeId)
         {
             return Ok(await _employeeService.GetEmployee(employeeId));
+        }
+
+
+        [HttpGet]
+        [ProducesResponseType(typeof(VolunterGetDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetVolunter(Guid employeeId)
+        {
+            return Ok(await _employeeService.GetVolunter(employeeId));
+        }
+        [HttpGet]
+        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetEmployeeswithContractend()
+        {
+            return Ok(await _employeeService.GetEmployeeswithContractend());
         }
 
 
@@ -40,6 +63,20 @@ namespace IntegratedDigitalAPI.Controllers.HRM
             if (ModelState.IsValid)
             {
                 return Ok(await _employeeService.UpdateEmployee(employee));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPut]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> UpdateVolunter([FromForm] VolunterPostDto employee)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _employeeService.UpdateVolunter(employee));
             }
             else
             {
@@ -78,6 +115,21 @@ namespace IntegratedDigitalAPI.Controllers.HRM
             if (ModelState.IsValid)
             {
                 return Ok(await _employeeService.AddEmployee(employee));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> AddVolunter([FromForm] VolunterPostDto employee)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _employeeService.AddVolunter(employee));
             }
             else
             {
@@ -215,6 +267,24 @@ namespace IntegratedDigitalAPI.Controllers.HRM
                 return BadRequest();
             }
         }
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> ApproveEmployee(Guid employeeId)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _employeeService.ApproveEmployee(employeeId));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+        
+
+
+
+
         [HttpDelete]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> DeleteEmployeeSurety(Guid employeeSuretyId)

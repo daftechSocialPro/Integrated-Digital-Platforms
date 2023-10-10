@@ -147,14 +147,39 @@ export class AddLeaveRequestComponent implements OnInit {
       this.hrmService.getHrmSettings().subscribe({
         next: (res) => {
           maxDays = res.filter(x => x.generalSetting == "LEAVEREQUESTDAYSBEFORE")![0]!.value
-        
+
           if (daysDifference <= maxDays) {
             this.messageService.add({ severity: 'error', summary: 'Date Selection Error', detail: `You can not request a leave before ${maxDays} days` });
             this.LeaveRequestForm.controls['fromDate'].setValue(null)
           }
+          this.hrmService.getEmployeeLeavePlan(this.userService.getCurrentUser().employeeId).subscribe({
+            next: (res) => {
+              
+              var result = res.filter(x => x.leavePlanSettingStatus == "APPROVED")
+              if (result!.length > 0) {
+                var frommDate = new Date( result[0].fromDate)
+                var toDate = new Date (result[0].toDate)
+                console.log(frommDate,toDate,fromDate.getDate())
+                console.log(fromDate >= frommDate && fromDate <= toDate)
+
+                if (!(fromDate.getTime() >= frommDate.getTime() && fromDate.getTime() <= toDate.getTime())) {
+                  this.messageService.add({ severity: 'error', summary: 'Date Selection Error', detail: `You can not request a leave your leave plan is from ${fromDate} - ${toDate}` });
+                  this.LeaveRequestForm.controls['fromDate'].setValue(null)
+                }
+              }
+              else {
+                this.messageService.add({ severity: 'error', summary: 'Date Selection Error', detail: `The leave plan has not been set or no approved leave plan exists. Please configure the leave plan settings.` });
+                this.LeaveRequestForm.controls['fromDate'].setValue(null)
+              }
+
+            }
+          })
 
         }
       })
     }
+  }
+  roleMatch(value: string[]) {
+    return this.userService.roleMatch(value)
   }
 }

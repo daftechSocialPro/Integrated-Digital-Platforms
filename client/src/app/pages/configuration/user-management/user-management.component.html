@@ -27,20 +27,20 @@
     <section class="section profile">
         <div class="row">
 
-            <div class="col-xl-4"
+            <div class="col-xl-6"
                 *ngFor="let user of filteredUserList| paginate: { itemsPerPage: 6, currentPage: p }; let i = index">
                 <div class="card profile-card ">
 
 
                     <div class="row p-2 align-items-center">
                         <div class="col-4  text-center">
-                            <img [src]="getPath(user.imagePath)" height="100px" alt="Profile" class="rounded-circle">
+                            <img [src]="getPath(user.imagePath)" height="120px"  alt="Profile" class="rounded-circle">
                         </div>
                         <div class="col-8 ">
-                            <h3>{{user.userName}} ({{user.email}})</h3>
+                            <h6>{{user.userName}} ({{user.email}})</h6>
                             <h2>{{user.name}}</h2>
                             <h3>{{user.department}}( {{user.position}} )</h3>
-                            <h4>{{user.phoneNumber}}</h4>
+                            <h6>{{user.phoneNumber}}</h6>
 
                             <div class="text-end">
                                 <a class="btn btn-outline-warning" (click)="updateUser(user)">Roles </a>

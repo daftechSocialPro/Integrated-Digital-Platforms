@@ -83,4 +83,6 @@ export class RequestLeaveComponent implements OnInit {
     
     this.router.navigate(['/HRM/leaverequest/', id]);   
   }
+
+
 }

@@ -145,6 +145,7 @@ namespace IntegratedImplementation.Services.HRM
                                   Position = x.Position.PositionName,
                                   FullName = $"{x.Employee.FirstName} {x.Employee.MiddleName} {x.Employee.LastName}",
                                   TerminatedDate = x.EndDate,
+                                  IsBlackListed=x.IsBlackListed,
                                   TerminationReason = x.EmploymentStatus.ToString(),
                                   Remark = x.Remark
                               }).ToListAsync();

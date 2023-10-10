@@ -115,7 +115,7 @@ namespace IntegratedImplementation.Services.HRM
 
         public async Task<List<LeavePlanSettingGetDto>> GetEmployeeLeavePlan(Guid employeeId)
         {
-            var employeeLeavePlan = await _dbContext.LeavePlanSetting.Include(x => x.Employee.EmployeeDetail).ThenInclude(x=>x.Department).OrderByDescending(x => x.CreatedDate).Select(x => new LeavePlanSettingGetDto
+            var employeeLeavePlan = await _dbContext.LeavePlanSetting.Include(x => x.Employee.EmployeeDetail).ThenInclude(x=>x.Department).Where(x=>x.EmployeeId==employeeId).OrderByDescending(x => x.CreatedDate).Select(x => new LeavePlanSettingGetDto
             {
                 Id = x.Id,
                 FromDate = x.FromDate,
@@ -129,7 +129,25 @@ namespace IntegratedImplementation.Services.HRM
             }).ToListAsync();
             return employeeLeavePlan;
         }
-       public async Task<ResponseMessage> AddEmployeeLeavePlan(LeavePlanSettingPostDto leavePlanSettingPost) {
+        public async Task<List<LeavePlanSettingGetDto>> GetEmployeeLeavePlans()
+        {
+            var employeeLeavePlan = await _dbContext.LeavePlanSetting
+                .Where(x=>x.LeavePlanSettingStatus == LeavePlanSettingStatus.REQUESTED)
+                .Include(x => x.Employee.EmployeeDetail).ThenInclude(x => x.Department).OrderByDescending(x => x.CreatedDate).Select(x => new LeavePlanSettingGetDto
+            {
+                Id = x.Id,
+                FromDate = x.FromDate,
+                ToDate = x.ToDate,
+                EmployeeId = x.EmployeeId,
+                Rejectedremark = x.Rejectedremark,
+                LeavePlanSettingStatus = x.LeavePlanSettingStatus.ToString(),
+                EmployeeName = $"{x.Employee.FirstName} {x.Employee.MiddleName} {x.Employee.LastName}",
+                Department = x.Employee.EmployeeDetail != null ? $"{x.Employee.EmployeeDetail.FirstOrDefault().Department.DepartmentName}" : "",
+
+            }).ToListAsync();
+            return employeeLeavePlan;
+        }
+        public async Task<ResponseMessage> AddEmployeeLeavePlan(LeavePlanSettingPostDto leavePlanSettingPost) {
 
             try
             {

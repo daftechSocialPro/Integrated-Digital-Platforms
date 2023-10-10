@@ -165,6 +165,10 @@ import { AddEmployeeSuretyComponent } from './pages/human-resource/employee-mana
 import { UpdateEmployeeSuretyComponent } from './pages/human-resource/employee-managment/employee-detail/employee-surety/update-employee-surety/update-employee-surety.component';
 import { LeaveSettingComponent } from './pages/human-resource/hrm-configuration/leave-setting/leave-setting.component';
 import { AddLeaveSettingComponent } from './pages/human-resource/hrm-configuration/leave-setting/add-leave-setting/add-leave-setting.component';
+import { VolunterComponent } from './pages/human-resource/volunter/volunter.component';
+import { AddVolunterComponent } from './pages/human-resource/volunter/add-volunter/add-volunter.component';
+import { UpdateVolunterComponent } from './pages/human-resource/volunter/update-volunter/update-volunter.component';
+import { VolunterDetailComponent } from './pages/human-resource/volunter/volunter-detail/volunter-detail.component';
 
 @NgModule({
   declarations: [
@@ -388,7 +392,11 @@ import { AddLeaveSettingComponent } from './pages/human-resource/hrm-configurati
      UpdateEmployeeFileComponent,
      EmployeeSuretyComponent,
      AddEmployeeSuretyComponent,
-     UpdateEmployeeSuretyComponent
+     UpdateEmployeeSuretyComponent,
+     VolunterComponent,
+     AddVolunterComponent,
+     UpdateVolunterComponent,
+     VolunterDetailComponent
   ],
   imports: [
     BrowserModule,

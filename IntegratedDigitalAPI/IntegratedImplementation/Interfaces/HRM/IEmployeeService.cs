@@ -19,6 +19,8 @@ namespace IntegratedImplementation.Interfaces.HRM
         Task<ResponseMessage> UpdateEmployeeData(EmployeeUpdateDto updateEmployee);
         Task<EmployeeGetDto> GetEmployee(Guid employeeId);
         Task<List<SelectListDto>> GetEmployeesNoUserSelectList();
+        Task<List<SelectListDto>> GetEmployeeswithContractend();
+        Task<ResponseMessage> ApproveEmployee(Guid employeeId);
 
         //history
         Task<List<EmployeeHistoryDto>> GetEmployeeHistory(Guid employeeId);
@@ -57,6 +59,14 @@ namespace IntegratedImplementation.Interfaces.HRM
         Task<ResponseMessage> AddEmployeeEducation(EmployeeEducationPostDto addEmployeeEducation);
         Task<ResponseMessage> UpdateEmployeeEducation(EmployeeEducationPostDto updateEmployeeEducation);
         Task<ResponseMessage> deleteEmployeeEducation(Guid employeeEducationId);
+
+
+        //volunter 
+
+        Task<List<VolunterGetDto>> GetVolunters();
+        Task<VolunterGetDto> GetVolunter(Guid employeeId);
+        Task<ResponseMessage> AddVolunter(VolunterPostDto addVolunter);
+        Task<ResponseMessage> UpdateVolunter(VolunterPostDto addVolunter);
 
     }
 }

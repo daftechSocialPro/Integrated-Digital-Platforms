@@ -6,6 +6,12 @@
     </div>
 
     <section class="section">
+        <div class="col-lg-12 text-end p-2">
+            <button type="button" class="btn btn-outline-success" *ngIf="!employee.isApproved" (click)="approveEmployee()" ><i
+                    class="pi pi-check-circle me-1"></i>
+                Approve</button>
+        </div>
+        
         <div class="card" *ngIf="employee">
             <div class="employee-details">
                 <img [src]="getImagePath(employee.imagePath!)" height="150" alt="user png" style="border-radius: 10px;
@@ -20,7 +26,10 @@
                     <div class="text-right mt-2">
                         <button type="button" class="btn btn-outline-warning " (click)="updateEmployee(employee)"><i
                                 class="pi pi-pencil me-1"></i>
-                            Edit</button> | <button type="button" class="btn btn-outline-danger" (click)="terminateEmployee(employee.id)"><i
+                            Edit</button> 
+
+                            <span  *ngIf="roleMatch(['EMPLOYEE-TERMINATER'])" > | </span>
+                             <button type="button" *ngIf="roleMatch(['EMPLOYEE-TERMINATER'])" class="btn btn-outline-danger" (click)="terminateEmployee(employee.id)"><i
                                 class="bi bi-person-x me-1"></i>
                             Terminate</button>
                     </div>
@@ -35,25 +44,24 @@
                     <table class="table table-borderless">
                         <thead>
                             <tr class="table-head">
-                                <th>Gender</th>
-                                <th>Birth Date</th>
-                                <th>Age</th>
-                                <th>Phone Number</th>
-                                <th>Email</th>
-                                <th>Citizen Ship</th>
-                                <th>Education</th>
+                                <th class="text-center">Gender</th>
+                                <th class="text-center">Birth Date</th>
+                                <th class="text-center">Age</th>
+                                <th class="text-center">Phone Number</th>
+                                <th class="text-center">Email</th>                              
+                                <th class="text-center">Hired Date</th>
+                                <th class="text-center">Contract End Date</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr class="table-body">
-                                <td>{{employee.gender}}</td>
-                                <td>{{employee.birthDate | date:"MMM dd, YYYY"}}</td>
-                                <td>{{callcuclateAge(employee.birthDate)}}</td>
-                                <td>{{employee.phoneNumber}}</td>
-                                <td>{{employee.email}}</td>
-                                <td>{{employee.nationality }}</td>
-                                <td></td>
-
+                                <td class="text-center">{{employee.gender}}</td>
+                                <td class="text-center">{{employee.birthDate | date:"MMM dd, YYYY"}}</td>
+                                <td class="text-center">{{callcuclateAge(employee.birthDate)}}</td>
+                                <td class="text-center">{{employee.phoneNumber}}</td>
+                                <td class="text-center">{{employee.email}}</td>                               
+                                <td class="text-center">{{employee.employmentDate | date:"MMM dd, YYYY" }}</td>
+                                <td class="text-center">{{employee.contractEndDate | date:"MMM dd, YYYY" }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -64,24 +72,22 @@
                     <table class="table table-borderless">
                         <thead>
                             <tr class="table-head">
-                                <th>Tin Number</th>
-                                <th>Address</th>
-                                <th>Hired Date</th>
-                                <th>Position</th>
-                                <th>Department</th>
-                                <th>Employment Status</th>
-                                <th>Employment Type</th>
+                                <th class="text-center">Citizen Ship</th>
+                                <th class="text-center">Address</th>                             
+                                <th class="text-center">Position</th>
+                                <th class="text-center">Department</th>
+                                <th class="text-center">Employment Status</th>
+                                <th class="text-center">Employment Type</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr class="table-body">
-                                <th>{{employee.tinNumber }}</th>
-                                <th>{{employee.woreda}}, {{employee.zoneName}}, {{employee.regionName}}</th>
-                                <td>{{employee.employmentDate | date:"MMM dd, YYYY" }}</td>
-                                <td>{{employee.postionName}}</td>
-                                <td>{{employee.departmentName}}</td>
-                                <td>{{employee.employmentStatus}}</td>
-                                <td>{{employee.employmentType}}</td>
+                                <td class="text-center">{{employee.nationality }}</td>
+                                <th class="text-center"> Woreda {{employee.woreda}}, {{employee.zoneName}}, {{employee.regionName}}</th>                               
+                                <td class="text-center">{{employee.postionName}}</td>
+                                <td class="text-center">{{employee.departmentName}}</td>
+                                <td class="text-center">{{employee.employmentStatus}}</td>
+                                <td class="text-center">{{employee.employmentType}}</td>
                             </tr>
                         </tbody>
                     </table>

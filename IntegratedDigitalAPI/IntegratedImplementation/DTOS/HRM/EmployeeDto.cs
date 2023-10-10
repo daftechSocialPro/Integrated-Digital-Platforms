@@ -79,6 +79,7 @@ namespace IntegratedImplementation.DTOS.HRM
         public string? TinNumber { get; set; } = null!;
         public string? BankAccountNo { get; set; } = null!;
         public bool ExistingEmployee { get; set; }
+        public bool IsApproved { get; set; }
     }
 
     public record EmployeeUpdateDto

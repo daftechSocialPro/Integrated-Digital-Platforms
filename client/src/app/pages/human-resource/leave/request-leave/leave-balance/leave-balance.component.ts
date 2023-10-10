@@ -117,6 +117,10 @@ export class LeaveBalanceComponent implements OnInit {
   }
   
   }
+
+  roleMatch(value: string[]) {
+    return this.userService.roleMatch(value)
+  }
   
 
 }

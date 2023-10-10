@@ -70,6 +70,8 @@ namespace IntegratedInfrustructure.Data
         public DbSet<EmployeeLoan> EmployeeLoans { get; set; }
         public DbSet<EmployeeSettlement> EmployeeSettlements { get; set; }
 
+        public DbSet<Volunter> Volunters { get; set; }
+
         #endregion
 
         #region Vacancy

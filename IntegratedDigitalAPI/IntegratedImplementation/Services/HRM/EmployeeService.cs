@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using Implementation.Helper;
 using IntegratedImplementation.DTOS.Configuration;
 using IntegratedImplementation.DTOS.HRM;
+using IntegratedImplementation.Helper;
 using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedImplementation.Interfaces.HRM;
 using IntegratedInfrustructure.Data;
@@ -28,16 +29,19 @@ namespace IntegratedImplementation.Services.HRM
         private readonly IGeneralConfigService _generalConfig;
         private UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
+        private readonly IEmailService _emailService;
         public EmployeeService(
             ApplicationDbContext dbContext,
             IGeneralConfigService generalConfig,
             IMapper mapper,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            IEmailService emailService)
         {
             _dbContext = dbContext;
             _generalConfig = generalConfig;
             _userManager = userManager;
             _mapper = mapper;
+            _emailService = emailService;
         }
 
         public async Task<ResponseMessage> AddEmployee(EmployeePostDto addEmployee)
@@ -108,6 +112,23 @@ namespace IntegratedImplementation.Services.HRM
                 };
                 await _dbContext.EmploymentDetails.AddAsync(employmentDetail);
                 await _dbContext.SaveChangesAsync();
+
+                var employeeApprovers = _dbContext.UserRoles.Where(x => x.RoleId == "6").Select(x => x.UserId).ToList();
+
+                foreach (var employeeApprover in employeeApprovers)
+                {
+                    var user = _dbContext.Users.Find(employeeApprover);
+
+                    if (user != null)
+                    {
+                        var email = new EmailMetadata
+                        (user.Email, "Employee Approval",
+                            $"Dear {user.UserName},\n\nEmployee {employee.FirstName} {employee.MiddleName} {employee.LastName} has been registered." +
+                            $" Please review the employee details and provide your approval.\n\nThank you.\n\nSincerely,\nEMIA");
+                        await _emailService.Send(email);
+                    }
+                }
+
 
                 return new ResponseMessage
                 {
@@ -201,7 +222,8 @@ namespace IntegratedImplementation.Services.HRM
                     employee.PensionCode = addEmployee.PensionCode;
                     employee.TinNumber = addEmployee.TinNumber;
                     employee.BankAccountNo = addEmployee.BankAccountNo;
-                    employee.BirthDate = employee.BirthDate;
+                    employee.BirthDate = addEmployee.BirthDate;
+                    employee.Woreda = addEmployee.Woreda;
 
                     await _dbContext.SaveChangesAsync();
 
@@ -321,6 +343,227 @@ namespace IntegratedImplementation.Services.HRM
                 .ProjectTo<EmployeeGetDto>(_mapper.ConfigurationProvider).FirstAsync();
 
             return employee;
+        }
+
+        public async Task<VolunterGetDto> GetVolunter(Guid employeeId)
+        {
+            var employee = await _dbContext.Volunters
+                .Where(x => x.Id == employeeId)
+                .AsNoTracking()
+                .ProjectTo<VolunterGetDto>(_mapper.ConfigurationProvider).FirstAsync();
+
+            return employee;
+        }
+
+
+        public async Task<ResponseMessage> ApproveEmployee(Guid employeeId)
+        {
+            try
+            {
+
+                var employee = _dbContext.Employees.Find(employeeId);
+
+                if (employee != null)
+                {
+                    employee.IsApproved = true;
+                    await _dbContext.SaveChangesAsync();
+
+                    return new ResponseMessage
+                    {
+
+                        Message = "Employee Approved Successfully ",
+                        Success = true
+                    };
+
+                }
+                else
+                {
+                    return new ResponseMessage
+                    {
+
+                        Message = "Employee not Found !!!",
+                        Success = false
+                    };
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseMessage
+                {
+
+                    Message = ex.Message,
+                    Success = false
+                };
+            }
+
+        }
+        //
+        //Volunter
+
+        public async Task<List<VolunterGetDto>> GetVolunters()
+        {
+            var volunterList = await _dbContext.Volunters.AsNoTracking().OrderByDescending(x => x.CreatedDate)
+                                    .ProjectTo<VolunterGetDto>(_mapper.ConfigurationProvider)
+                                    .ToListAsync();
+            return volunterList;
+        }
+        public async Task<ResponseMessage> AddVolunter(VolunterPostDto addEmployee)
+        {
+            var id = Guid.NewGuid();
+            var path = "";
+
+            try
+            {
+
+                if (addEmployee.ImagePath != null)
+                    path = _generalConfig.UploadFiles(addEmployee.ImagePath, id.ToString(), "Volunter").Result.ToString();
+
+
+
+
+                var code = await _generalConfig.GenerateCode(GeneralCodeType.EMPLOYEEPREFIX);
+                Volunter employee = new Volunter
+                {
+                    Id = id,
+                    CreatedDate = DateTime.Now,
+                    CreatedById = addEmployee.CreatedById,
+
+                    Woreda = addEmployee.Woreda,
+                    Email = addEmployee.Email,
+                    ZoneId = addEmployee.ZoneId,
+
+                    FirstName = addEmployee.FirstName,
+                    MiddleName = addEmployee.MiddleName,
+                    LastName = addEmployee.LastName,
+                    AmharicName = addEmployee.AmharicName,
+                    BirthDate = addEmployee.BirthDate,
+                    Gender = Enum.Parse<Gender>(addEmployee.Gender),
+
+                    MaritalStatus = Enum.Parse<MaritalStatus>(addEmployee.MaritalStatus),
+                    PaymentType = Enum.Parse<PaymentType>(addEmployee.PaymentType),
+                    BankAccountNo = addEmployee.BankAccountNo,
+                    EmploymentDate = addEmployee.EmploymentDate,
+                    ImagePath = path,
+                    PhoneNumber = addEmployee.PhoneNumber,
+                    Salary = addEmployee.Salary,
+                    SourceOfSalary = addEmployee.SourceOfSalary,
+                    ContractEndDate = addEmployee.ContractEndDate,
+                    Rowstatus = RowStatus.ACTIVE,
+
+                };
+                await _dbContext.Volunters.AddAsync(employee);
+                await _dbContext.SaveChangesAsync();
+
+
+
+
+
+                return new ResponseMessage
+                {
+
+                    Message = "Volunter Added Successfully",
+                    Success = true
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseMessage
+                {
+                    Message = ex.Message,
+                    Success = false
+                };
+            }
+        }
+
+        public async Task<ResponseMessage> UpdateVolunter(VolunterPostDto addEmployee)
+        {
+
+            try
+            {
+
+                var path = "";
+
+                var employee = _dbContext.Volunters.Find(addEmployee.Id);
+
+
+                if (addEmployee.ImagePath != null)
+                    path = _generalConfig.UploadFiles(addEmployee.ImagePath, employee.Id.ToString(), "Volunter").Result.ToString();
+
+
+
+                if (employee != null)
+                {
+
+
+                    employee.FirstName = addEmployee.FirstName;
+                    employee.MiddleName = addEmployee.MiddleName;
+                    employee.LastName = addEmployee.LastName;
+                    employee.AmharicName = addEmployee.AmharicName;
+                    employee.PhoneNumber = addEmployee.PhoneNumber;
+
+                    employee.Email = addEmployee.Email;
+                    if (addEmployee.Gender != null)
+                    {
+                        employee.Gender = Enum.Parse<Gender>(addEmployee.Gender);
+                    }
+                    if (addEmployee.MaritalStatus != null)
+                    {
+                        employee.MaritalStatus = Enum.Parse<MaritalStatus>(addEmployee.MaritalStatus);
+                    }
+                  
+                    if (addEmployee.PaymentType != null)
+                    {
+                        employee.PaymentType = Enum.Parse<PaymentType>(addEmployee.PaymentType);
+                    }
+
+                    if (path != "")
+                    {
+                        employee.ImagePath = path;
+                    }
+                    employee.EmploymentDate = addEmployee.EmploymentDate;
+                    employee.ContractEndDate = addEmployee.ContractEndDate;
+                    employee.Salary = addEmployee.Salary;
+                    employee.SourceOfSalary = addEmployee.SourceOfSalary;
+                    employee.BankAccountNo = addEmployee.BankAccountNo;
+                    employee.BirthDate = addEmployee.BirthDate;
+                    employee.Woreda = addEmployee.Woreda;
+
+                    await _dbContext.SaveChangesAsync();
+
+                    return new ResponseMessage
+                    {
+
+                        Message = "Volunter Updated Successfully ",
+                        Success = true
+                    };
+                }
+
+                else
+                {
+                    return new ResponseMessage
+                    {
+
+                        Message = "Volunter Not Found !!",
+                        Success = true
+                    };
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return new ResponseMessage
+                {
+
+                    Message = ex?.InnerException.Message,
+                    Success = true
+                };
+
+            }
+
+
         }
 
         //history
@@ -513,7 +756,7 @@ namespace IntegratedImplementation.Services.HRM
                 SuretyAddress = addEmployeeSuerty.SuretyAddress,
                 CompanyName = addEmployeeSuerty.CompanyName,
                 CompnayPhoneNumber = addEmployeeSuerty.CompnayPhoneNumber,
-                EmployeeId= addEmployeeSuerty.EmployeeId,
+                EmployeeId = addEmployeeSuerty.EmployeeId,
                 PhotoPath = photoPath,
                 LetterPath = letterPath,
                 IdCardPath = idCardPath
@@ -535,7 +778,7 @@ namespace IntegratedImplementation.Services.HRM
         {
 
 
-            var employeeFile = _dbContext.EmployeeSureties.Find(updateEmployeeSuerty.Id);           
+            var employeeFile = _dbContext.EmployeeSureties.Find(updateEmployeeSuerty.Id);
 
             var photoPath = "";
             var letterPath = "";
@@ -558,7 +801,7 @@ namespace IntegratedImplementation.Services.HRM
                 employeeFile.SuretyAddress = updateEmployeeSuerty.SuretyAddress;
                 employeeFile.CompanyName = updateEmployeeSuerty.CompanyName;
                 employeeFile.CompnayPhoneNumber = updateEmployeeSuerty.CompnayPhoneNumber;
-             
+
                 if (photoPath != "")
                 {
                     employeeFile.PhotoPath = photoPath;
@@ -803,6 +1046,24 @@ namespace IntegratedImplementation.Services.HRM
             return new ResponseMessage { Success = false, Message = "Unable To Find Employee Education" };
         }
 
+
+
+        public async Task<List<SelectListDto>> GetEmployeeswithContractend()
+        {
+            DateTime tenDaysFromNow = DateTime.Now.AddDays(10);
+
+            var employees = await _dbContext.Employees
+                .Where(x => x.ContractEndDate < DateTime.Now || x.ContractEndDate <= tenDaysFromNow)
+                .Select(x=>new SelectListDto
+                {
+                    Id = x.Id,
+                    Name = $"{x.FirstName} {x.MiddleName} {x.LastName} / {x.Email}",
+                    Reason= x.ContractEndDate < DateTime.Now?$"Contract expired on {x.ContractEndDate}" :$"Contract Remining days is 10 or less "
+
+                }).ToListAsync();
+
+            return employees;
+        }
     }
 
 

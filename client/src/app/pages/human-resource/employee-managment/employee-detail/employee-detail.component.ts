@@ -6,6 +6,8 @@ import { CommonService } from 'src/app/services/common.service';
 import { HrmService } from 'src/app/services/hrm.service';
 import { UpdateEmployeeComponent } from '../update-employee/update-employee.component';
 import { TerminateEmployeeComponent } from '../employee-termination/terminate-employee/terminate-employee.component';
+import { UserService } from 'src/app/services/user.service';
+import { ConfirmEventType, ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-employee-detail',
@@ -25,7 +27,10 @@ export class EmployeeDetailComponent implements OnInit {
     private router: ActivatedRoute,
     private route: Router,
     private hrmService: HrmService,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService,
     private modalService: NgbModal,
+    private userService: UserService,
     private commonService: CommonService) { }
 
   getEmployee() {
@@ -72,6 +77,50 @@ export class EmployeeDetailComponent implements OnInit {
     })
   }
 
+  roleMatch(value: string[]) {
+    return this.userService.roleMatch(value)
+  }
+
+  approveEmployee(){
+
+   this.confirmationService.confirm({
+    message: 'Do you want to Approve this Employee?',
+    header: 'Employee Approval',
+    icon: 'pi pi-info-circle',
+    accept: () => {
+     
+      this.hrmService.approveEmployee(this.employeeId).subscribe({
+        next: (res) => {
+
+          if (res.success) {
+            this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: res.message });
+            this.getEmployee()
+          }
+          else {
+            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: res.message });
+          }
+        }, error: (err) => {
+
+          this.messageService.add({ severity: 'error', summary: 'Rejected', detail: err });
+
+
+        }
+      })
+
+    },
+    reject: (type: ConfirmEventType) => {
+      switch (type) {
+        case ConfirmEventType.REJECT:
+          this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
+          break;
+        case ConfirmEventType.CANCEL:
+          this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
+          break;
+      }
+    },
+    key: 'positionDialog'
+  });
+  }
 
 
 }

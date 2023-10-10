@@ -15,6 +15,8 @@ namespace IntegratedImplementation.DTOS.HRM
         public string TerminationReason { get; set; } = null!;
         public DateTime? TerminatedDate { get; set; }
         public string Remark { get; set; } = null!;
+
+        public bool IsBlackListed { get; set; }
     }
 
 

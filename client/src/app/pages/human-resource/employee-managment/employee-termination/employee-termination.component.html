@@ -60,6 +60,7 @@
                         <th > Department</th>
                         <th > Position</th>
                         <th > Termination Reason</th>
+                        <th > Is BlackListed</th>
                         <th > Terminated Date</th>
                         <th > Remark</th>
                     </tr>
@@ -70,6 +71,7 @@
                         <td>{{ termination.department }}</td>
                         <td>{{ termination.position }}</td>
                         <td>{{ termination.terminationReason }}</td>
+                        <td>{{ termination.isBlackListed }}</td>
                         <td>{{ termination.terminatedDate|date:"dd MMM yyyy" }}</td>
                         <td>{{ termination.remark }}</td>
                        

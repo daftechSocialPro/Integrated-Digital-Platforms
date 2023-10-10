@@ -18,6 +18,7 @@ namespace IntegratedImplementation.Interfaces.HRM
         //
 
         Task<List<LeavePlanSettingGetDto>> GetEmployeeLeavePlan(Guid employeeId);
+        Task<List<LeavePlanSettingGetDto>> GetEmployeeLeavePlans();
         Task<ResponseMessage> AddEmployeeLeavePlan(LeavePlanSettingPostDto leavePlanSettingPost);
         Task<ResponseMessage> UpdateEmployeeLeavePlan(LeavePlanSettingUpdateDto leaveplan);
 

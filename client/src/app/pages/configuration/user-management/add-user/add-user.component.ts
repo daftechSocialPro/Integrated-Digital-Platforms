@@ -21,13 +21,13 @@ export class AddUserComponent implements OnInit {
   userForm!: FormGroup;
   employeeList: SelectList[] = [];
 
-  employee !: SelectList;
+  employee !: string;
   constructor(
     private hrmService: HrmService,
-    private userService:UserService, 
+    private userService: UserService,
     private formBuilder: FormBuilder,
-     private activeModal: NgbActiveModal,
-     private messageService:MessageService) { }
+    private activeModal: NgbActiveModal,
+    private messageService: MessageService) { }
 
   ngOnInit(): void {
 
@@ -35,13 +35,13 @@ export class AddUserComponent implements OnInit {
       UserName: ['', Validators.required],
       Password: ['', Validators.required],
       ConfirmPassword: ['', Validators.required],
-         });
+    });
 
-  
+
     this.getEmployees();
   }
 
- 
+
 
   getEmployees() {
 
@@ -63,10 +63,12 @@ export class AddUserComponent implements OnInit {
     if (this.userForm.valid && this.employee != null) {
       if (this.userForm.value.Password === this.userForm.value.ConfirmPassword) {
         let user: UserPost = {
-          employeeId :this.employee.id,
+          employeeId: this.employee,
           password: this.userForm.value.Password,
           userName: this.userForm.value.UserName
         }
+
+        
         this.userService.createUser(user).subscribe({
           next: (res) => {
             if(res.success){
@@ -79,7 +81,7 @@ export class AddUserComponent implements OnInit {
           }
           , error: (err) => {
             this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail:err });
-         
+
           }
         })
 
@@ -97,8 +99,9 @@ export class AddUserComponent implements OnInit {
     this.activeModal.close()
   }
 
-  selectEmployee(event: SelectList) {
+  selectEmployee(event: string) {
     this.employee = event
+
   }
 
 }

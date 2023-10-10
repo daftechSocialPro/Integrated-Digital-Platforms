@@ -22,4 +22,5 @@ export interface TerminationGetDto{
     terminationReason: string,
     terminatedDate:Date,
     remark: string
+    isBlackListed:boolean
 }

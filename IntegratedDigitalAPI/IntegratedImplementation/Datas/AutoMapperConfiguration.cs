@@ -35,6 +35,21 @@ namespace IntegratedImplementation.Datas
                .ForMember(a => a.CountryId, e => e.MapFrom(mfg => mfg.Zone.Region.CountryId))
                .ForMember(a => a.RegionId, e => e.MapFrom(mfg => mfg.Zone.RegionId));
 
+
+
+
+            CreateMap<Volunter, VolunterGetDto>()
+               .ForMember(a => a.Id, e => e.MapFrom(mfg => mfg.Id))
+               .ForMember(a => a.EmployeeName, e => e.MapFrom(mfg => $"{mfg.FirstName} {mfg.MiddleName} {mfg.LastName}"))
+               .ForMember(a => a.ZoneName, e => e.MapFrom(mfg => mfg.Zone.ZoneName))
+               .ForMember(a => a.RegionName, e => e.MapFrom(mfg => mfg.Zone.Region.RegionName))
+               .ForMember(a => a.Nationality, e => e.MapFrom(mfg => mfg.Zone.Region.Country.Nationality))
+               .ForMember(a => a.NationalityId, e => e.MapFrom(mfg => mfg.Zone.Region.Country.Id))
+       
+               .ForMember(a => a.CountryId, e => e.MapFrom(mfg => mfg.Zone.Region.CountryId))
+               .ForMember(a => a.RegionId, e => e.MapFrom(mfg => mfg.Zone.RegionId));
+
+
             CreateMap<EmploymentDetail, EmployeeHistoryDto>()
                 .ForMember(a => a.DepartmentName, e => e.MapFrom(mfg => mfg.Department.DepartmentName))
                 .ForMember(a => a.PositionName, e => e.MapFrom(mfg => mfg.Position.PositionName));

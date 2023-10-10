@@ -10,6 +10,7 @@ import { AddLeaveSettingComponent } from './add-leave-setting/add-leave-setting.
 import { ConfirmEventType, ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CustomConfirmationComponent } from '../../leave/leave-requests/custom-confirmation/custom-confirmation.component';
+import { SelectList } from 'src/app/model/common';
 
 @Component({
   selector: 'app-leave-setting',
@@ -18,6 +19,9 @@ import { CustomConfirmationComponent } from '../../leave/leave-requests/custom-c
 })
 export class LeaveSettingComponent implements OnInit {
 
+
+  filters: SelectList[] = [{ name: "Mine", id: '1' }, { "name": "Requests", id: '2' }];
+  selected:SelectList={ name: "Mine", id: '1' }
   LeavePlanSettings!: LeavePlanSettingGetDto[]
   user!: UserView
   leaveRequest: any;
@@ -41,7 +45,15 @@ export class LeaveSettingComponent implements OnInit {
     this.hrmService.getEmployeeLeavePlan(this.user.employeeId).subscribe({
       next: (res) => {
         this.LeavePlanSettings = res
-
+      }, error: (err) => {
+        console.log(err)
+      }
+    })
+  }
+  getEmployeeLeavePlans() {
+    this.hrmService.getEmployeeLeavePlans().subscribe({
+      next: (res) => {
+        this.LeavePlanSettings = res
       }, error: (err) => {
         console.log(err)
       }
@@ -72,11 +84,11 @@ export class LeaveSettingComponent implements OnInit {
   }
   approve(leavePlanId:string) {
 
-    console.log("jgjhgfj",leavePlanId)
+   
 
     this.confirmationService.confirm({
       message: 'Do you want to Approve this Employee Leave Plan?',
-      header: 'Leave Approval',
+      header: 'Leave Plan Approval',
       icon: 'pi pi-info-circle',
       accept: () => {
         var leaveplan :LeavePlanSettingUpdateDto={
@@ -88,7 +100,7 @@ export class LeaveSettingComponent implements OnInit {
 
             if (res.success) {
               this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: res.message });
-              this.goToRequestList()
+              this.getLeavePlans()
             }
             else {
               this.messageService.add({ severity: 'error', summary: 'Rejected', detail: res.message });
@@ -168,6 +180,25 @@ export class LeaveSettingComponent implements OnInit {
         }
       });
   
+  
+    }
+
+    roleMatch(value: string[]) {
+      return this.userService.roleMatch(value)
+    }
+
+    filterChange(value: SelectList) {
+      this.selected = value
+      if (this.selected.id=='1') {
+      this.getLeavePlans();
+
+      }
+      else {
+      
+        this.getEmployeeLeavePlans()
+        //this.getResignation()
+      }
+
   
     }
   }

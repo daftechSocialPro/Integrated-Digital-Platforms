@@ -37,7 +37,8 @@ namespace Implementation.Services.Authentication
 
             try
             {
-                var user = await _userManager.FindByNameAsync(login.UserName);
+                var user = await _userManager.FindByEmailAsync(login.UserName);
+             
 
                 if (user != null && await _userManager.CheckPasswordAsync(user, login.Password))
                 {
@@ -140,13 +141,15 @@ namespace Implementation.Services.Authentication
         public async Task<ResponseMessage> AddUser(AddUSerDto addUSer)
         {
             var currentEmployee = _dbContext.Users.Any(x => x.EmployeeId.Equals(addUSer.EmployeeId));
+             
             if(currentEmployee)
                 return new ResponseMessage { Success = false, Message = "Employee Already Exists" };
 
+            var employee = _dbContext.Employees.Find(addUSer.EmployeeId);
             var applicationUser = new ApplicationUser
             {
                 EmployeeId = addUSer.EmployeeId,
-                Email = addUSer.UserName + "@her.com",
+                Email = employee.Email,
                 UserName = addUSer.UserName,
                 RowStatus = RowStatus.ACTIVE,
             };

@@ -65,6 +65,12 @@ namespace IntegratedDigitalAPI.Controllers.HRM
             return Ok(await _LeaveTypeService.GetEmployeeLeavePlan(employeeId));
         }
 
+        [HttpGet]
+        [ProducesResponseType(typeof(LeavePlanSettingGetDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetEmployeeLeavePlans()
+        {
+            return Ok(await _LeaveTypeService.GetEmployeeLeavePlans());
+        }
 
 
         [HttpPost]
