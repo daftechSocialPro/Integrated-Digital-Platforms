@@ -19,6 +19,7 @@ namespace IntegratedDigitalAPI.Controllers.Configuration
         {
             _emailService=emailService;
         }
+
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> SendEmail(EmailMetadata emailMetadata)

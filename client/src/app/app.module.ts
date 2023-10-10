@@ -169,6 +169,10 @@ import { VolunterComponent } from './pages/human-resource/volunter/volunter.comp
 import { AddVolunterComponent } from './pages/human-resource/volunter/add-volunter/add-volunter.component';
 import { UpdateVolunterComponent } from './pages/human-resource/volunter/update-volunter/update-volunter.component';
 import { VolunterDetailComponent } from './pages/human-resource/volunter/volunter-detail/volunter-detail.component';
+import { RequestLoanComponent } from './pages/users-profile/request-loan/request-loan.component';
+import { LoanManagementComponent } from './pages/human-resource/loan-management/loan-management.component';
+import { LoanRequestsComponent } from './pages/human-resource/loan-management/loan-requests/loan-requests.component';
+import { EmployeeLoanComponent } from './pages/human-resource/loan-management/employee-loan/employee-loan.component';
 
 @NgModule({
   declarations: [
@@ -396,7 +400,11 @@ import { VolunterDetailComponent } from './pages/human-resource/volunter/volunte
      VolunterComponent,
      AddVolunterComponent,
      UpdateVolunterComponent,
-     VolunterDetailComponent
+     VolunterDetailComponent,
+     RequestLoanComponent,
+     LoanManagementComponent,
+     LoanRequestsComponent,
+     EmployeeLoanComponent
   ],
   imports: [
     BrowserModule,

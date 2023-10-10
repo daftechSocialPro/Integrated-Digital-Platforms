@@ -87,7 +87,12 @@ namespace IntegratedDigitalAPI.Controllers.Configuration
             return Ok(await _DropDownService.GetGeneralHRMSettingList());
         }
 
-
+        [HttpGet]
+        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetLoanTypeDropDown()
+        {
+            return Ok(await _DropDownService.GetLoanTypeDropDown());
+        }
 
     }
 }

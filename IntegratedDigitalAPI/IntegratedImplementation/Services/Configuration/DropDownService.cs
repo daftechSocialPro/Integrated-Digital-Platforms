@@ -139,5 +139,16 @@ namespace IntegratedImplementation.Services.Configuration
 
                 return HRMSettingList ;
         }
-     }
+
+        public async Task<List<SelectListDto>> GetLoanTypeDropDown()
+        {
+            var loanRequestList = await _dbContext.LoanSettings.AsNoTracking().Select(x => new SelectListDto
+            {
+                Id = x.Id,
+                Name = x.LoanName,
+            }).ToListAsync();
+
+            return loanRequestList;
+        }
+    }
 }

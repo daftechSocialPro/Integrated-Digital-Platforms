@@ -1,0 +1,40 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Configuration</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+                <li class="breadcrumb-item">Loan</li>
+                <li class="breadcrumb-item active">Loan Management</li>
+            </ol>
+        </nav>
+    </div>
+    <section class="section">
+        <div class="card">
+            <div class="card-body">
+                
+                <ul class="nav nav-tabs nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation"> <button class="nav-link active" id="loanRequest-tab"
+                            data-bs-toggle="tab" data-bs-target="#loanRequest" type="button" role="tab" aria-controls="loanRequest"
+                            aria-selected="true">Loan Requests</button></li>
+                    <li class="nav-item" role="presentation"> <button class="nav-link" id="employeeLoan-tab"
+                            data-bs-toggle="tab" data-bs-target="#employeeLoan" type="button" role="tab"
+                            aria-controls="employeeLoan" aria-selected="false">Employee Loan</button></li>
+
+                </ul>
+                <div class="tab-content pt-2" id="myTabContent">
+                    <div class="tab-pane fade show active p-2 " style="background-color: #f6f9ff;" id="loanRequest"
+                        role="tabpanel" aria-labelledby="loanRequest-tab">
+                        <app-loan-requests />
+                    </div>
+                    <div class="tab-pane fade p-2" style="background-color: #f6f9ff;" id="employeeLoan" role="tabpanel"
+                        aria-labelledby="employeeLoan-tab">
+                        <app-employee-loan />
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+    </section>
+</main>

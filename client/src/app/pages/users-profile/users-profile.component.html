@@ -23,6 +23,13 @@
                   </h3>
                </div>
             </div>
+            <div class="card">
+               <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+                  <p-button (click)="requestLoan()" label="RequestLoan" icon="pi pi-plus" iconPos="right"></p-button>
+                  <h3>Total Borrowed Money</h3>
+                  <h2>{{loanInfo.borrowedAmount}}</h2>
+               </div>
+            </div>
          </div>
          <div class="col-xl-8">
             <div class="card">
@@ -83,13 +90,10 @@
                                  <div class="col-lg-4 col-md-4 label">Phone</div>
                                  <div class="col-lg-8 col-md-8">{{Employee?.phoneNumber}}</div>
                               </div>
-
                               <div class="row">
                                  <div class="col-lg-3 col-md-4 label">Email</div>
                                  <div class="col-lg-9 col-md-8">{{Employee?.email}}</div>
                               </div>
-
-
                            </div>
                         </div>
 
@@ -98,9 +102,7 @@
                         <form [formGroup]="EmployeeForm" (submit)="submit()">
                            <div class="row">
 
-
                               <div class="col-3">
-
                                  <img [src]="imageURL?imageURL:'assets/img/profile.jpg'" alt="Profile">
                                  <input #file (change)="showPreview($event)" type="file" style="display: none;"
                                     accept="image/*" />
@@ -109,7 +111,6 @@
                                        title="Upload new profile image">
                                        <i class="bi bi-upload"></i> Upload Image</a>
                                  </div>
-
                               </div>
 
                               <div class="col-8">
@@ -146,20 +147,15 @@
                                     <div class="col-md-8 col-lg-9"> <input type="text" formControlName="phoneNumber"
                                           class="form-control" id="PhoneNumber"></div>
                                  </div>
-
                               </div>
                            </div>
-
                            <hr />
                            <div class="text-end"> <button type="submit" [disabled]="!EmployeeForm.valid"
-                                 class="btn btn-outline-secondary">Update
-                                 Changes</button></div>
+                                 class="btn btn-outline-secondary">Update Changes</button></div>
                         </form>
                      </div>
-
+                     
                      <div class="tab-pane fade pt-3" id="profile-change-password">
-
-
                         <form [formGroup]="passwordForm" (submit)="submit2()">
                            <div class="row mb-3">
                               <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current
@@ -181,7 +177,6 @@
                            <div class="text-center"> <button type="submit" [disabled]="!passwordForm.valid"
                                  class="btn btn-primary">Change Password</button></div>
                         </form>
-
                      </div>
 
                      <div class="tab-pane fade pt-3" id="profile-resign">
@@ -190,7 +185,6 @@
                      <div class="tab-pane fade pt-3" id="profile-vacancy">
                         <app-vaccancy-post></app-vaccancy-post>
                      </div>
-
                   </div>
                </div>
             </div>

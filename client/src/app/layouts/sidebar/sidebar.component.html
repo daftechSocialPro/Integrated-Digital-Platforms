@@ -25,6 +25,9 @@
                      <span class="badge bg-success badge-number"> {{leaves&&leaves.length}}</span> </span>  -->
                   </a>
             </li>
+            
+            <li> <a routerLink="/HRM/loan-managment" routerLinkActive="active"> <i class="bi bi-circle"></i><span>Loan</span> </a></li>
+           
             <li *ngIf="roleMatch(['EVALUATER'])"> <a routerLink="/HRM/employeesupervisor" routerLinkActive="active"> <i
                      class="bi bi-circle"></i><span>Employee Supervisor</span> </a></li>
             <li *ngIf="roleMatch(['EVALUATER'])"> <a routerLink="/HRM/employeeperformance" routerLinkActive="active"> <i

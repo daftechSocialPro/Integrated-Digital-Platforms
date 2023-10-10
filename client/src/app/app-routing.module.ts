@@ -21,6 +21,7 @@ import { EmployeeSupervisorsComponent } from './pages/human-resource/employee-su
 import { PerformanceManagementComponent } from './pages/human-resource/performance-management/performance-management.component';
 import { VolunterComponent } from './pages/human-resource/volunter/volunter.component';
 import { VolunterDetailComponent } from './pages/human-resource/volunter/volunter-detail/volunter-detail.component';
+import { LoanManagementComponent } from './pages/human-resource/loan-management/loan-management.component';
 
 
 
@@ -45,7 +46,8 @@ const routes: Routes = [
   { path: 'HRM/employeeperformance', canActivate:[AuthGuard],component:PerformanceManagementComponent,data:{permittedRoles:['EVALUATER']} },
   { path: 'pages-login', component: PagesLoginComponent },
   { path: 'user-profile',canActivate:[AuthGuard], component: UsersProfileComponent },
-  { path : 'user_managment',canActivate:[AuthGuard],component:UserManagementComponent}
+  { path : 'user_managment',canActivate:[AuthGuard],component:UserManagementComponent},
+  { path : 'HRM/loan-managment',canActivate:[AuthGuard],component:LoanManagementComponent}
 
 ];
 

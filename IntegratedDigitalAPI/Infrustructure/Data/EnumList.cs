@@ -140,12 +140,17 @@ namespace IntegratedInfrustructure.Data
             OTHER
         }
 
+       
+
         public enum LoanStatus
         {
+            REJECTED,
             PENDING,
             APPROVED,
             GIVEN,
+            PAID
         }
+
 
     }
 }
