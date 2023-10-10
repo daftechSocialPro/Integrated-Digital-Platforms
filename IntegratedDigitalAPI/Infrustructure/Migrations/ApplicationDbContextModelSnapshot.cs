@@ -851,7 +851,7 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<int>("Rowstatus")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("SecondApproverId")
+                    b.Property<Guid?>("SecondApproverId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -2481,16 +2481,14 @@ namespace IntegratedInfrustructure.Migrations
                         .HasForeignKey("CreatedById");
 
                     b.HasOne("IntegratedInfrustructure.Model.HRM.LoanRequest", "LoanRequest")
-                        .WithMany()
+                        .WithMany("EmployeeLoans")
                         .HasForeignKey("LoanRequestId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "SecondApprover")
                         .WithMany()
-                        .HasForeignKey("SecondApproverId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .HasForeignKey("SecondApproverId");
 
                     b.Navigation("ApprovedBy");
 
@@ -3045,6 +3043,11 @@ namespace IntegratedInfrustructure.Migrations
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmploymentDetail", b =>
                 {
                     b.Navigation("EmployeeSalaries");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.LoanRequest", b =>
+                {
+                    b.Navigation("EmployeeLoans");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Vacancy.VacancyList", b =>
