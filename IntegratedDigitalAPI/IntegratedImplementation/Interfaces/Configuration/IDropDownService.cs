@@ -19,5 +19,13 @@ namespace IntegratedImplementation.Interfaces.Configuration
         Task<List<SelectListDto>> GetLeaveTypeDropdownList();
         Task<List<SelectListDto>> GetGeneralHRMSettingList();
         Task<List<SelectListDto>> GetLoanTypeDropDown();
+
+        Task<List<SelectListDto>> GetUnitofMeasurment();
+        Task<List<SelectListDto>> GetEmployeeSelectList();
+
+        Task<List<SelectListDto>> GetStrategicPlans();
+        Task<List<SelectListDto>> GetProjectLocations();
+
+
     }
 }

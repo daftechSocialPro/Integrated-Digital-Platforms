@@ -9,6 +9,9 @@ import { CountryGetDto, CountryPostDto, RegionGetDto, RegionPostDto, ZoneGetDto,
 import { ResponseMessage } from '../model/ResponseMessage.Model';
 import { EducationalFieldGetDto, EducationalFieldPostDto, EducationalLevelGetDto, EducationalLevelPostDto } from '../model/configuration/ICommonDto';
 import { AddHolidayDto, HolidayListDto } from '../model/configuration/IHolidayDto';
+import { IndicatorGetDto, IndicatorPostDto } from '../model/PM/IndicatorsDto';
+import { UserService } from './user.service';
+import { ProjectLocationGetDto, ProjectLocationPostDto } from '../model/PM/ProjectLocationDto';
 
 export interface toastPayload {
   message: string;
@@ -24,7 +27,7 @@ export class ConfigurationService {
 
   baseUrl: string = environment.baseUrl
 
-  constructor(private toastr: ToastrService, private http: HttpClient, private sanitizer: DomSanitizer) { }
+  constructor(private userService: UserService, private http: HttpClient, private sanitizer: DomSanitizer) { }
 
   //country 
 
@@ -135,6 +138,40 @@ export class ConfigurationService {
 
   updateHoliday(addHoliday: AddHolidayDto) {
     return this.http.put<ResponseMessage>(this.baseUrl + "/Holiday/UpdateHoliday", addHoliday)
+  }
+
+  // indicator
+
+  getUnitOfMeasurment() {
+    return this.http.get<IndicatorGetDto[]>(this.baseUrl + "/UnitOfMeasurment")
+  }
+
+  addUnitOfMeasurment(unitOfmeasurmentPost: IndicatorPostDto) {
+
+    unitOfmeasurmentPost.createdById = this.userService.getCurrentUser().userId
+    return this.http.post<ResponseMessage>(this.baseUrl + "/UnitOfMeasurment", unitOfmeasurmentPost)
+  }
+
+  updateUnitOfMeasurment(unitOfmeasurmentGet: IndicatorGetDto) {
+    return this.http.put<ResponseMessage>(this.baseUrl + "/UnitOfMeasurment", unitOfmeasurmentGet)
+  }
+
+  //project locations
+
+  getProjectLocations() {
+    return this.http.get<ProjectLocationGetDto[]>(this.baseUrl + "/ProjectLocation")
+  }
+
+  addProjectLocation(projectLocation: ProjectLocationPostDto) {
+    projectLocation.createdById = this.userService.getCurrentUser().userId
+    return this.http.post<ResponseMessage>(this.baseUrl + "/ProjectLocation", projectLocation)
+  }
+
+  updateProjectLocation(projectLocation: ProjectLocationGetDto) {
+    return this.http.put<ResponseMessage>(this.baseUrl + "/ProjectLocation", projectLocation)
+  }
+  deleteProjectLocation(locationId:string){
+    return this.http.delete<ResponseMessage>(this.baseUrl +`/ProjectLocation?projectLocationId=${locationId}`)
   }
 
 }

@@ -13,5 +13,9 @@ namespace IntegratedImplementation.DTOS.Configuration
         public string Name { get; set; } = null!;
 
         public string ? Reason { get; set; } 
+
+        public string ? Photo { get; set; }
+
+        public string ? EmployeeId { get; set; }
     }
 }

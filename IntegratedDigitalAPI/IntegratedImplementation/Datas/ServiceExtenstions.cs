@@ -1,12 +1,19 @@
 ﻿using Implementation.Interfaces.Authentication;
 using Implementation.Services.Authentication;
+using IntegratedDigitalAPI.Services.PM;
+using IntegratedDigitalAPI.Services.PM.Activity;
+using IntegratedDigitalAPI.Services.PM.Commite;
+using IntegratedDigitalAPI.Services.PM.Plan;
+using IntegratedDigitalAPI.Services.PM.ProgressReport;
 using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedImplementation.Interfaces.HRM;
 using IntegratedImplementation.Interfaces.Notification;
+using IntegratedImplementation.Interfaces.PM;
 using IntegratedImplementation.Interfaces.Vacancy;
 using IntegratedImplementation.Services.Configuration;
 using IntegratedImplementation.Services.HRM;
 using IntegratedImplementation.Services.Notification;
+using IntegratedImplementation.Services.PM;
 using IntegratedImplementation.Services.Vacancy;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -21,11 +28,13 @@ namespace IntegratedImplementation.Datas
     {
         public static IServiceCollection AddCoreBusiness(this IServiceCollection services)
         {
+
+            #region Hrm Service
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IHolidayService, HolidayService>();
 
             services.AddScoped<IHrmNotificationService, HrmNotificationService>();
-            //hrm services 
+           
             services.AddScoped<IDepartmentService, DepartmentService>();
             services.AddScoped<IPositionService, PositionService>();
             services.AddScoped<IGeneralConfigService, GeneralConfigService>();
@@ -38,7 +47,7 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<IEmployeePerformanceService, EmployeePerformanceService>();
             services.AddScoped<ILoanSettingService, LoanSettingService>();
             services.AddScoped<ILoanManagementService, LoanManagementService>();
-
+            #endregion
 
             #region Vacancy
             services.AddScoped<IVacancyService, VacancyService>();
@@ -54,7 +63,22 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<IEducationalFieldService, EducationalFieldService>();
             services.AddScoped<IDropDownService, DropDownService>();
             services.AddScoped<IEmailService, EmailService>();
-           
+            services.AddScoped<IProjectLocationService, ProjectLocationService>();
+
+            #region PM
+            services.AddScoped<IUnitOfMeasurmentService, UnitOfMeasurmentService>();
+            services.AddScoped<IStrategicPlanService, StrategicPlanService>();
+            services.AddScoped<IActivityService, ActivityService>();
+            services.AddScoped<ICommiteService, CommiteService>();
+            services.AddScoped<IPlanService, PlanService>();
+            services.AddScoped<IProgressReportService, ProgressReportService>();
+            services.AddScoped<ITaskService, TaskService>();
+            services.AddScoped<IProgressReportService, ProgressReportService>();
+
+
+            #endregion
+
+
 
             return services;
         }

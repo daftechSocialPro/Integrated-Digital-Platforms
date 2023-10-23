@@ -1,0 +1,99 @@
+<main id="main" class="main">
+   <div class="pagetitle">
+      <h1>Projects</h1>
+      <nav>
+         <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+            <li class="breadcrumb-item">Projects</li>
+            <li class="breadcrumb-item active">List</li>
+         </ol>
+      </nav>
+   </div>
+   <div class="text-end col-lg-12">
+      <button class="btn btn-outline-primary text-end mb-3" (click)="addPlan()"><i class="bi bi-plus me-1"></i> Project </button>
+   </div>
+   <section class="section profile">
+      <div class="row">
+
+         <div class="col-lg-6" *ngFor="let plan of Plans" style="cursor: pointer;"  (click)="tasks(plan)">
+
+            <div class="card">
+               <div class="card-header">
+                  
+          <div>
+            <div>
+               {{plan.planName}} ({{plan.projectNumber}})
+            </div>
+            <div  style="text-align: right!important;">
+               <span *ngIf="plan.hasTask" class="badge bg-success" >Has Task</span> <span *ngIf="!plan.hasTask" class="badge bg-danger" >Has No Task</span></div>   
+          </div>
+           </div>
+               <div class="card-body" style="background-color: #f6f9ff !important;">
+                  <h5 class="card-title ">
+                     <div class="row">
+                        <div class="col-md-6">
+                           {{plan.structureName }}
+
+                        </div>
+                        <div class="col-md-6  text-end">
+
+                           {{plan.startDate}} - {{plan.endDate}}
+                        </div>
+                        <!-- <div class="col-md-2" style="text-align: right!important;">
+                           {{plan.ProjectType}}
+                        </div> -->
+                     </div>
+                  </h5>
+
+                  <div class="text-center" style="color: #798eb3;">
+                     <span class="card-title"> Planned Budegt :</span>
+                     {{plan.plandBudget}} ETB &nbsp;
+                     <span class="card-title"> Remaining Budegt : </span>
+                     {{plan.remainingBudget}} ETB <br />
+                     <div class="mt-2">
+
+                     </div>
+                     {{plan.projectManager}} - Project Manager <br />
+                     {{plan.director}} - Director <br />
+                    
+                  </div>
+                  <div class="mt-2">
+                     <span class="card-title"> Goal :</span>
+                     {{plan.goal}} <br/>
+                     <span class="card-title"> Objective :</span>
+                     {{plan.objective}} &nbsp;
+
+                  </div>
+              
+
+               </div>
+               <div class="card-footer">
+
+                  <div class="row">
+                     <div class="col-lg-12">
+                        Tasks: {{plan.numberOfTask}} &nbsp;&nbsp;
+                        Actvities : {{plan.numberOfActivities}}
+
+                     </div>
+                   
+                  </div>
+
+                  <!-- <div style="text-align: right; ">
+                     {{plan.PlanWeight}} %
+                  </div> -->
+
+
+                  <div class="progress mt-3">
+                     <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar"
+                     
+                     [ngStyle]="applyStyles(plan.numberOfActivities,plan.numberOfTaskCompleted)"
+                         aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+               </div>
+            </div>
+
+         </div>
+
+      </div>
+   </section>
+</main>

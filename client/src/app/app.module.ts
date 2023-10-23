@@ -43,7 +43,7 @@ import { AuthHeaderIneterceptor } from './http-interceptors/auth-header-intercep
 import { SpinnerComponent } from './components/spinner/spinner.component';
 
 import { ToastrModule } from 'ngx-toastr';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PagesLoginComponent } from './auth/pages-login/pages-login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HrmConfigurationComponent } from './pages/human-resource/hrm-configuration/hrm-configuration/hrm-configuration.component';
@@ -173,6 +173,41 @@ import { RequestLoanComponent } from './pages/users-profile/request-loan/request
 import { LoanManagementComponent } from './pages/human-resource/loan-management/loan-management.component';
 import { LoanRequestsComponent } from './pages/human-resource/loan-management/loan-requests/loan-requests.component';
 import { EmployeeLoanComponent } from './pages/human-resource/loan-management/employee-loan/employee-loan.component';
+import { PMConfigurationComponent } from './pages/project-managment/pm-configuration/pm-configuration.component';
+import { UnitIndicatorsComponent } from './pages/project-managment/pm-configuration/unit-indicators/unit-indicators.component';
+import { AddMeasurementComponent } from './pages/project-managment/pm-configuration/unit-indicators/add-measurement/add-measurement.component';
+import { UpdateMeasurmentComponent } from './pages/project-managment/pm-configuration/unit-indicators/update-measurment/update-measurment.component';
+import { StrategicPlanComponent } from './pages/project-managment/strategic-plan/strategic-plan.component';
+import { AddStrategicPlanComponent } from './pages/project-managment/strategic-plan/add-strategic-plan/add-strategic-plan.component';
+import { UpdateStrategicPlanComponent } from './pages/project-managment/strategic-plan/update-strategic-plan/update-strategic-plan.component';
+import { PlansComponent } from './pages/project-managment/plans/plans.component';
+import { AddPlansComponent } from './pages/project-managment/plans/add-plans/add-plans.component';
+import { CommitteeEmployeeComponent } from './pages/project-managment/comittes/committee-employee/committee-employee.component';
+import { AddComiteeComponent } from './pages/project-managment/comittes/add-comitee/add-comitee.component';
+import { UpdateCpmmitteeComponent } from './pages/project-managment/comittes/update-cpmmittee/update-cpmmittee.component';
+import { ComittesComponent } from './pages/project-managment/comittes/comittes.component';
+import { TasksComponent } from './pages/project-managment/tasks/tasks.component';
+import { AddTasksComponent } from './pages/project-managment/tasks/add-tasks/add-tasks.component';
+import { ActivityParentsComponent } from './pages/project-managment/activity-parents/activity-parents.component';
+import { AddActivitiesComponent } from './pages/project-managment/activity-parents/add-activities/add-activities.component';
+import { ActivityforapprovalComponent } from './pages/project-managment/activityforapproval/activityforapproval.component';
+import { AssignedActivitiesComponent } from './pages/project-managment/assigned-activities/assigned-activities.component';
+import { ViewActivtiesComponent } from './pages/project-managment/view-activties/view-activties.component';
+import { ActivityTargetComponent } from './pages/project-managment/view-activties/activity-target/activity-target.component';
+import { AddProgressComponent } from './pages/project-managment/view-activties/add-progress/add-progress.component';
+import { ViewProgressComponent } from './pages/project-managment/view-activties/view-progress/view-progress.component';
+import { AcceptRejectComponent } from './pages/project-managment/view-activties/view-progress/accept-reject/accept-reject.component';
+import { Autocomplete2Component } from './components/autocomplete/autocomplete2/autocomplete2.component';
+import { PerformanceReportComponent } from './pages/project-managment/progress-report/performance-report/performance-report.component';
+import { PlanReportTodayComponent } from './pages/project-managment/progress-report/plan-report-today/plan-report-today.component';
+import { PlannedReportComponent } from './pages/project-managment/progress-report/planned-report/planned-report.component';
+import { ProgressReportComponent } from './pages/project-managment/progress-report/progress-report/progress-report.component';
+import { ProgressReportBystructureComponent } from './pages/project-managment/progress-report/progress-report-bystructure/progress-report-bystructure.component';
+import { EstimatedCoastComponent } from './pages/project-managment/progress-report/estimated-coast/estimated-coast.component';
+import { GetActivityProgressComponent } from './pages/project-managment/progress-report/performance-report/get-activity-progress/get-activity-progress.component';
+import { ProjectLocationComponent } from './pages/project-managment/pm-configuration/project-location/project-location.component';
+import { AddProjectLocationComponent } from './pages/project-managment/pm-configuration/project-location/add-project-location/add-project-location.component';
+import { StrategicPlanReportComponent } from './pages/project-managment/progress-report/strategic-plan-report/strategic-plan-report.component';
 
 @NgModule({
   declarations: [
@@ -311,103 +346,146 @@ import { EmployeeLoanComponent } from './pages/human-resource/loan-management/em
     UpdateEmployeeSuretyComponent,
     LeaveSettingComponent,
     AddLeaveSettingComponent,
-     AddEmploymentHistoryComponent,
-     UpdateEmploymentHistoryComponent,
-     EmployeeFamilyComponent,
-     AddEmployeeFamilyComponent,
-     UpdateEmployeeFamilyComponent,
-     VacancyListComponent,
-     AddVacancyComponent,
-     EmployeeEducationComponent,
-     AddEmployeeEducationComponent,
-     UpdateEmployeeEducationComponent,
-     CompanyProfileComponent,
-     ConfigurationComponent,
-     CommonComponent,
-     AddressComponent,
-     CountryComponent,
-     RegionComponent,
-     ZoneComponent,
-     AddCountryComponent,
-     UpdateCountryComponent,
-     AddRegionComponent,
-     UpdateRegionComponent,
-     AddZoneComponent,
-     UpdateZoneComponent,
-     EducationalFieldComponent,
-     EducationalLevelComponent,
-     AddEdcuationalFieldComponent,
-     UpdateEductionalFieldComponent,
-     AddEdcuationalLevelComponent,
-     UpdateEdcuationalLevelComponent,
-     GeneralCodesComponent,
-     LeaveTypeComponent,
-     UpdateEmployeeComponent,
-     AddLeaveTypeComponent,
-     UpdateLeaveTypeComponent,
-     AddVaccancyDocumentComponent,
-     UserManagementComponent,
-     HrmSettingComponent,
-     AddHrmSettingComponent,
-     UpdateHrmSettingComponent,
-     AddUserComponent,
-     AutocompleteComponent,
-     UpdateRolesComponent,
-     LeaveComponent,
-     RequestLeaveComponent,
-     LeaveRequestsComponent,
-     AddLeaveRequestComponent,
-     LeaveBalanceComponent,
+    AddEmploymentHistoryComponent,
+    UpdateEmploymentHistoryComponent,
+    EmployeeFamilyComponent,
+    AddEmployeeFamilyComponent,
+    UpdateEmployeeFamilyComponent,
+    VacancyListComponent,
+    AddVacancyComponent,
+    EmployeeEducationComponent,
+    AddEmployeeEducationComponent,
+    UpdateEmployeeEducationComponent,
+    CompanyProfileComponent,
+    ConfigurationComponent,
+    CommonComponent,
+    AddressComponent,
+    CountryComponent,
+    RegionComponent,
+    ZoneComponent,
+    AddCountryComponent,
+    UpdateCountryComponent,
+    AddRegionComponent,
+    UpdateRegionComponent,
+    AddZoneComponent,
+    UpdateZoneComponent,
+    EducationalFieldComponent,
+    EducationalLevelComponent,
+    AddEdcuationalFieldComponent,
+    UpdateEductionalFieldComponent,
+    AddEdcuationalLevelComponent,
+    UpdateEdcuationalLevelComponent,
+    GeneralCodesComponent,
+    LeaveTypeComponent,
+    UpdateEmployeeComponent,
+    AddLeaveTypeComponent,
+    UpdateLeaveTypeComponent,
+    AddVaccancyDocumentComponent,
+    UserManagementComponent,
+    HrmSettingComponent,
+    AddHrmSettingComponent,
+    UpdateHrmSettingComponent,
+    AddUserComponent,
+    AutocompleteComponent,
+    UpdateRolesComponent,
+    LeaveComponent,
+    RequestLeaveComponent,
+    LeaveRequestsComponent,
+    AddLeaveRequestComponent,
+    LeaveBalanceComponent,
+
+    HolidaySettingComponent,
+    AddHolidayComponent,
+    RequestDetailComponent,
+    CustomConfirmationComponent,
+    ResignationLetterComponent,
+    ResignationRequestComponent,
+    EmployeeTerminationComponent,
+    ViewPdfComponent,
+    ResignationListComponent,
+    TerminateEmployeeComponent,
+    VaccancyPostComponent,
+    VacancyDetailComponent,
+    ApplicantComponent,
+    ApplicantEducationComponent,
+    AddApplicantEducationComponent,
+    ApplicantWorkExperianceComponent,
+    AddApplicantWorkComponent,
+    ApplicantDocumentsComponent,
+    AddApplicantDocumentsComponent,
+
+    PerformanceSettingComponent,
+    AddPerformanceSettingComponent,
+    PerformancePlanComponent,
+    AddPerformancePlanComponent,
+    AddPerformanceDetailPlanComponent,
+    EmployeeSupervisorsComponent,
+    AssignSupervisorComponent,
+    PerformanceManagementComponent,
+    ChangeStatusComponent,
+    LoanSettingComponent,
+    AddLoanSettingComponent,
+    HistorySalaryComponent,
+    EmployeeFilesComponent,
+    AddEmployeeFileComponent,
+    UpdateEmployeeFileComponent,
+    EmployeeSuretyComponent,
+    AddEmployeeSuretyComponent,
+    UpdateEmployeeSuretyComponent,
+    VolunterComponent,
+    AddVolunterComponent,
+    UpdateVolunterComponent,
+    VolunterDetailComponent,
+    RequestLoanComponent,
+    LoanManagementComponent,
+    LoanRequestsComponent,
+    EmployeeLoanComponent,
+    PMConfigurationComponent,
+    UnitIndicatorsComponent,
+    UpdateMeasurmentComponent,
+    AddMeasurementComponent,
+    StrategicPlanComponent,
+    AddStrategicPlanComponent,
+    UpdateStrategicPlanComponent,
+
+    PlansComponent,
+    AddPlansComponent,
+    CommitteeEmployeeComponent,
+    AddComiteeComponent,
+    UpdateCpmmitteeComponent,
+    ComittesComponent,
+    TasksComponent,
+    AddTasksComponent,
+    ActivityParentsComponent,
+    AddActivitiesComponent,
+    ActivityforapprovalComponent,
+    AssignedActivitiesComponent,
+    ViewActivtiesComponent,
+    ActivityTargetComponent,
+    AddProgressComponent,
+    ViewProgressComponent,
+    AcceptRejectComponent,
+    Autocomplete2Component,
+    PerformanceReportComponent,
+    PlanReportTodayComponent,
+    PlannedReportComponent,
+    ProgressReportComponent,
+    ProgressReportBystructureComponent,
+    EstimatedCoastComponent,
+    GetActivityProgressComponent,
+    ProjectLocationComponent,
+    AddProjectLocationComponent,
+    StrategicPlanReportComponent
     
-     HolidaySettingComponent,
-     AddHolidayComponent,
-     RequestDetailComponent,
-     CustomConfirmationComponent,
-     ResignationLetterComponent,
-     ResignationRequestComponent,
-     EmployeeTerminationComponent,
-     ViewPdfComponent,
-     ResignationListComponent,
-     TerminateEmployeeComponent,
-     VaccancyPostComponent,
-     VacancyDetailComponent,
-     ApplicantComponent,
-     ApplicantEducationComponent,
-     AddApplicantEducationComponent,
-     ApplicantWorkExperianceComponent,
-     AddApplicantWorkComponent,
-     ApplicantDocumentsComponent,
-     AddApplicantDocumentsComponent,     
-     
-     PerformanceSettingComponent,
-     AddPerformanceSettingComponent,
-     PerformancePlanComponent,
-     AddPerformancePlanComponent,
-     AddPerformanceDetailPlanComponent,
-     EmployeeSupervisorsComponent,
-     AssignSupervisorComponent,
-     PerformanceManagementComponent,
-     ChangeStatusComponent,
-     LoanSettingComponent,
-     AddLoanSettingComponent,
-     HistorySalaryComponent,
-     EmployeeFilesComponent,
-     AddEmployeeFileComponent,
-     UpdateEmployeeFileComponent,
-     EmployeeSuretyComponent,
-     AddEmployeeSuretyComponent,
-     UpdateEmployeeSuretyComponent,
-     VolunterComponent,
-     AddVolunterComponent,
-     UpdateVolunterComponent,
-     VolunterDetailComponent,
-     RequestLoanComponent,
-     LoanManagementComponent,
-     LoanRequestsComponent,
-     EmployeeLoanComponent
+
+
+
+    //  AddMeasurementComponent,
+    //  UpdateMeasurmentComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,

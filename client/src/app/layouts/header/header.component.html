@@ -12,6 +12,38 @@
       <ul class="d-flex align-items-center">
          <li class="nav-item d-block d-lg-none"> <a class="nav-link nav-icon search-bar-toggle " href="#"> <i
                   class="bi bi-search"></i> </a></li>
+                  <li class="nav-item dropdown">
+                     <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown"> <i class="bi bi-bell"></i> <span
+                           class="badge bg-primary badge-number">{{activites?.length}}</span> </a>
+                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications" style="max-height:400px;overflow-x: scroll;">
+                        <li class="dropdown-header"> You have {{activites?.length}} new notifications <a
+                              href="/actForApproval"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+                        </li>
+         
+                        <li>
+                           <hr class="dropdown-divider">
+                        </li>
+         
+                        <ng-container *ngFor="let act of activites">
+                           <li class="notification-item" (click)="routeToApproval(act)">
+                              <i class="bi bi-exclamation-circle text-warning"></i>
+                              <div>
+                                 <h4>{{act.name}}</h4>
+                                 <p>Needs Approval</p>
+                                 <span class="badge bg-danger text-white">{{act?.progresscreatedAt| date:'fullDate'}}</span>
+                              </div>
+                           </li>
+                           <li>
+                              <hr class="dropdown-divider">
+                           </li>
+         
+                        </ng-container>
+         
+         
+         
+                        <li class="dropdown-footer"> <a href="/actForApproval">Show all activities</a></li>
+                     </ul>
+                  </li>
          <li class="nav-item dropdown" *ngIf="roleMatch(['EMPLOYEE-MANAGEMENT'])">
             <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown"> <i class="bi bi-bell"></i> <span
                   class="badge bg-primary badge-number">{{contactEndEMployees&&contactEndEMployees.length}}</span> </a>

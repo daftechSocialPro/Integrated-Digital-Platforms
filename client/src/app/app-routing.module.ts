@@ -22,32 +22,74 @@ import { PerformanceManagementComponent } from './pages/human-resource/performan
 import { VolunterComponent } from './pages/human-resource/volunter/volunter.component';
 import { VolunterDetailComponent } from './pages/human-resource/volunter/volunter-detail/volunter-detail.component';
 import { LoanManagementComponent } from './pages/human-resource/loan-management/loan-management.component';
+import { PMConfigurationComponent } from './pages/project-managment/pm-configuration/pm-configuration.component';
+import { StrategicPlanComponent } from './pages/project-managment/strategic-plan/strategic-plan.component';
+import { PlansComponent } from './pages/project-managment/plans/plans.component';
+import { ComittesComponent } from './pages/project-managment/comittes/comittes.component';
+import { TasksComponent } from './pages/project-managment/tasks/tasks.component';
+import { ActivityParentsComponent } from './pages/project-managment/activity-parents/activity-parents.component';
+import { AssignedActivitiesComponent } from './pages/project-managment/assigned-activities/assigned-activities.component';
+import { ActivityforapprovalComponent } from './pages/project-managment/activityforapproval/activityforapproval.component';
+import { PlanReportTodayComponent } from './pages/project-managment/progress-report/plan-report-today/plan-report-today.component';
+import { PlannedReportComponent } from './pages/project-managment/progress-report/planned-report/planned-report.component';
+import { EstimatedCoastComponent } from './pages/project-managment/progress-report/estimated-coast/estimated-coast.component';
+import { PerformanceReportComponent } from './pages/project-managment/progress-report/performance-report/performance-report.component';
+import { ProgressReportBystructureComponent } from './pages/project-managment/progress-report/progress-report-bystructure/progress-report-bystructure.component';
+import { ProgressReportComponent } from './pages/project-managment/progress-report/progress-report/progress-report.component';
+import { StrategicPlanReportComponent } from './pages/project-managment/progress-report/strategic-plan-report/strategic-plan-report.component';
 
 
 
 const routes: Routes = [
   { path: '', canActivate: [AuthGuard], component: DashboardComponent },
-  { path: 'dashboard', canActivate: [AuthGuard], component: DashboardComponent},
-  { path: 'configuration', canActivate: [AuthGuard], component: ConfigurationComponent, data: { permittedRoles: ['GENERAL-CONFIGURATION'] } },  
-  { path: 'HRM/employeeMangment', canActivate: [AuthGuard], component: EmployeeManagmentComponent, data: { permittedRoles: ['EMPLOYEE-MANAGEMENT','USER-MANAGER'] } },
-  { path: 'HRM/volunters', canActivate: [AuthGuard], component: VolunterComponent, data: { permittedRoles: ['EMPLOYEE-MANAGEMENT','USER-MANAGER'] } },
- 
-  { path: 'HRM/employeeTermination', canActivate: [AuthGuard], component: EmployeeTerminationComponent,  data: { permittedRoles: ['EMPLOYEE-MANAGEMENT'] }},     
-  { path: 'HRM/employeeDetail', canActivate: [AuthGuard], component: EmployeeDetailComponent, data: { permittedRoles: ['EMPLOYEE-MANAGEMENT','USER-MANAGER'] } },
-  { path: 'HRM/volunterDetail', canActivate: [AuthGuard], component: VolunterDetailComponent, data: { permittedRoles: ['EMPLOYEE-MANAGEMENT','USER-MANAGER'] } },
+  { path: 'dashboard', canActivate: [AuthGuard], component: DashboardComponent },
+  { path: 'configuration', canActivate: [AuthGuard], component: ConfigurationComponent, data: { permittedRoles: ['GENERAL-CONFIGURATION'] } },
+  { path: 'pm/configuration', canActivate: [AuthGuard], component: PMConfigurationComponent },
+  { path: 'pm/strategicPlans', canActivate: [AuthGuard], component: StrategicPlanComponent },
+
+  { path: 'pm/projects', canActivate: [AuthGuard], component: PlansComponent },
+  { path: 'pm/task', canActivate: [AuthGuard], component: TasksComponent },
+  { path: 'pm/activityparent', canActivate: [AuthGuard], component: ActivityParentsComponent },
+  { path: 'pm/assignedactivities', canActivate: [AuthGuard], component: AssignedActivitiesComponent },
+  { path: 'pm/actForApproval', canActivate: [AuthGuard], component: ActivityforapprovalComponent },
+  //report
+
+  
+  { path: 'strategicplanreport', canActivate: [AuthGuard], component: StrategicPlanReportComponent },
+  { path: 'planreportdetail', canActivate: [AuthGuard], component: PlanReportTodayComponent },
+  { path: 'plannedreport', canActivate: [AuthGuard], component: PlannedReportComponent },
+  { path: 'progressreport', canActivate: [AuthGuard], component: ProgressReportComponent },
+
+
+  { path: 'progressreportbystructure', canActivate: [AuthGuard], component: ProgressReportBystructureComponent },
+
+  { path: 'performancereport', canActivate: [AuthGuard], component: PerformanceReportComponent },
+
+  { path: 'estimatedcoast', canActivate: [AuthGuard], component: EstimatedCoastComponent },
+
+
+
+  { path: 'pm/projectTeam', canActivate: [AuthGuard], component: ComittesComponent },
+
+  { path: 'HRM/employeeMangment', canActivate: [AuthGuard], component: EmployeeManagmentComponent, data: { permittedRoles: ['EMPLOYEE-MANAGEMENT', 'USER-MANAGER'] } },
+  { path: 'HRM/volunters', canActivate: [AuthGuard], component: VolunterComponent, data: { permittedRoles: ['EMPLOYEE-MANAGEMENT', 'USER-MANAGER'] } },
+
+  { path: 'HRM/employeeTermination', canActivate: [AuthGuard], component: EmployeeTerminationComponent, data: { permittedRoles: ['EMPLOYEE-MANAGEMENT'] } },
+  { path: 'HRM/employeeDetail', canActivate: [AuthGuard], component: EmployeeDetailComponent, data: { permittedRoles: ['EMPLOYEE-MANAGEMENT', 'USER-MANAGER'] } },
+  { path: 'HRM/volunterDetail', canActivate: [AuthGuard], component: VolunterDetailComponent, data: { permittedRoles: ['EMPLOYEE-MANAGEMENT', 'USER-MANAGER'] } },
   { path: 'HRM/configuration', canActivate: [AuthGuard], component: HrmConfigurationComponent, data: { permittedRoles: ['HRM-CONFIGURATION'] } },
-  { path: 'HRM/vacancyList', canActivate:[AuthGuard],component:VacancyListComponent,data:{permittedRoles:['VACANCY-POST','VACANCY-APPROVER','VACANCY-2ND-APPROVER']} },
-  { path: 'HRM/vacancyDetail/:id', canActivate:[AuthGuard],component:VacancyDetailComponent,data:{permittedRoles:['VACANCY-POST','VACANCY-APPROVER','VACANCY-2ND-APPROVER']} },
-  { path: 'HRM/leave', canActivate:[AuthGuard],component:LeaveComponent},
-  { path: 'HRM/internalApplicant/:id', canActivate:[AuthGuard],component:ApplicantComponent,data:{permittedRoles:['VACANCY-APPROVER','VACANCY-2ND-APPROVER']} },
-  { path: 'HRM/internalApplicant/:id/:applicantId', canActivate:[AuthGuard],component:ApplicantComponent },
-  { path: 'HRM/leaverequest/:id', canActivate:[AuthGuard],component:RequestDetailComponent },
-  { path: 'HRM/employeesupervisor', canActivate:[AuthGuard],component:EmployeeSupervisorsComponent,data:{permittedRoles:['EVALUATER']} },
-  { path: 'HRM/employeeperformance', canActivate:[AuthGuard],component:PerformanceManagementComponent,data:{permittedRoles:['EVALUATER']} },
+  { path: 'HRM/vacancyList', canActivate: [AuthGuard], component: VacancyListComponent, data: { permittedRoles: ['VACANCY-POST', 'VACANCY-APPROVER', 'VACANCY-2ND-APPROVER'] } },
+  { path: 'HRM/vacancyDetail/:id', canActivate: [AuthGuard], component: VacancyDetailComponent, data: { permittedRoles: ['VACANCY-POST', 'VACANCY-APPROVER', 'VACANCY-2ND-APPROVER'] } },
+  { path: 'HRM/leave', canActivate: [AuthGuard], component: LeaveComponent },
+  { path: 'HRM/internalApplicant/:id', canActivate: [AuthGuard], component: ApplicantComponent, data: { permittedRoles: ['VACANCY-APPROVER', 'VACANCY-2ND-APPROVER'] } },
+  { path: 'HRM/internalApplicant/:id/:applicantId', canActivate: [AuthGuard], component: ApplicantComponent },
+  { path: 'HRM/leaverequest/:id', canActivate: [AuthGuard], component: RequestDetailComponent },
+  { path: 'HRM/employeesupervisor', canActivate: [AuthGuard], component: EmployeeSupervisorsComponent, data: { permittedRoles: ['EVALUATER'] } },
+  { path: 'HRM/employeeperformance', canActivate: [AuthGuard], component: PerformanceManagementComponent, data: { permittedRoles: ['EVALUATER'] } },
   { path: 'pages-login', component: PagesLoginComponent },
-  { path: 'user-profile',canActivate:[AuthGuard], component: UsersProfileComponent },
-  { path : 'user_managment',canActivate:[AuthGuard],component:UserManagementComponent},
-  { path : 'HRM/loan-managment',canActivate:[AuthGuard],component:LoanManagementComponent}
+  { path: 'user-profile', canActivate: [AuthGuard], component: UsersProfileComponent },
+  { path: 'user_managment', canActivate: [AuthGuard], component: UserManagementComponent },
+  { path: 'HRM/loan-managment', canActivate: [AuthGuard], component: LoanManagementComponent }
 
 ];
 

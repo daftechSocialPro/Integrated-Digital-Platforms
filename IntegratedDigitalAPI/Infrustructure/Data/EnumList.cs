@@ -151,6 +151,53 @@ namespace IntegratedInfrustructure.Data
             PAID
         }
 
+        public enum MeasurmentType
+        {
+            PERCENT,
+            NUMBER
+        }
+
+        public enum ActivityType
+        {
+            BOTH,
+            OFFICE_WORK,
+            FIELD_WORK
+        }
+        public enum Status
+        {
+            ASSIGNED,
+            STARTED,
+            FINALIZED,
+            ONPROGRESS,
+            TERMINATED
+        }
+
+        public enum ProgressStatus
+        {
+            SIMPLEPROGRESS,
+            FINALIZE
+        }
+
+        public enum ApprovalStatus
+        {
+            PENDING,
+            APPROVED,
+            REJECTED
+        }
+
+        public enum TargetDivision
+        {
+            QUARTERLY,
+            MONTHLY
+        }
+
+        public enum ProjectTeamEmployeeStatus
+        {
+            NOMINATED,
+            APPROVED,
+            REJECTED
+        }
+
 
     }
 }

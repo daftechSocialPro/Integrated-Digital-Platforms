@@ -1,0 +1,81 @@
+<main id="main" class="main">
+   <div class="pagetitle">
+      <h1>Task</h1>
+      <nav>
+         <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+            <li class="breadcrumb-item">Task</li>
+            <li class="breadcrumb-item active">List</li>
+         </ol>
+      </nav>
+   </div>
+   <div class="text-end col-lg-12">
+      <button class="btn btn-outline-primary text-end mb-3" (click)="addTask()"><i class="bi bi-plus me-1"></i> Task </button>
+   </div>
+   <section class="section profile">
+      <div class="row">
+         <div class="col-lg-8 listtask" style="height: 70vh; overflow-y: auto;"  *ngIf="plan">
+            <div class="card" *ngFor="let task of plan.tasks" style="cursor:pointer" (click)="TaskDetail(task)">
+               <div class="card-header">
+                  <div class="row">
+                     <div class="col-8">
+                        {{task.taskName}}
+                     </div>
+                     <div class="col-4" style="text-align: right!important;">
+                        <span *ngIf="task.hasActivity" class="badge bg-success">Has Activity</span>
+                        <span *ngIf="!task.hasActivity" class="badge bg-danger">Has No Activity</span>
+                     </div>
+                  </div>
+               </div>
+
+               <div class="card-body" style="background-color: #f6f9ff !important; color: #798eb3;">
+                  <span class="card-title">Planned Budget :</span> {{task.plannedBudget}} ETB<br />
+                  <span class="card-title">Task Weight :</span> {{task.taskWeight}} %<br /><br />
+                  <i class="bi bi-list-check"></i> {{task.numberofActivities}} Actvities
+                  &nbsp;&nbsp;
+                  {{task.numberOfFinalized}} &nbsp;<span class="badge bg-success"> Finalized</span>&nbsp;&nbsp;
+                  {{task.numberOfTerminated}} &nbsp; <span class="badge bg-danger"> Terminated</span>
+               </div>
+
+               <div class="card-footer">
+                  <div class="row">
+                     <div class="col-md-6">
+                        <i class="bi bi-calendar-check"></i> Start Date : {{task.startDate | date:"MMMM d, YYYY"}} <br />
+                        <i class="bi bi-calendar-check"></i> End Date : {{task.endDate | date:"MMMM d, YYYY" }}
+                     </div>
+                     <div class="col-md-6" style="text-align: right!important;">
+                        <i style="font-size: 40px;" class="bi bi-person-circle"></i> {{task.numberOfMembers}} Members
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+         </div>
+
+         <div class="col-lg-4">
+            <div class="modal-content ">
+               <div class="modal-header bg-secondary text-white">
+                  <h5 class="modal-title">Tips</h5>
+               </div>
+
+               <div class="modal-body" *ngIf="plan" >
+                  <div class="card-title text-center">{{plan.planName!}}</div>
+                  <!-- <div class="text-center">{{plan?.ProgramBudgetYear}}</div>  -->
+
+                  <div class=" text-center" *ngIf="plan.tasks&&plan.tasks.length>0">
+                     <span class="card-title">{{plan.startDate|date:"MMMM d, YYYY"}}</span> - <span class="card-title">{{plan.startDate|date:"MMMM d, YYYY"}}</span>
+                  </div>
+                  
+                  <div class="text-center">
+                     <span class="card-title"> Planned Budget : {{plan.plannedBudget!}} ETB</span> <br />
+                     <span class="card-title"> Remaining Budget : {{plan.remainingBudget!}} ETB</span> <br />
+                     <span class="card-title"> Remaining Weight : {{plan.remainingWeight!}} %</span>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+
+
+   </section>
+</main>

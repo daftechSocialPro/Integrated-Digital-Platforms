@@ -52,6 +52,24 @@ export class DropDownService {
     getLoanTypeDropDown(){
         return this.http.get<SelectList[]>(this.baseUrl+"/DropDown/GetLoanTypeDropDown")
     }
+    GetEmployeeDropDown(){
+        return this.http.get<SelectList[]>(this.baseUrl+"/DropDown/GetEmployeeDropDown")
+    }
+    GetUnitOfMeasurment(){
+        return this.http.get<SelectList[]>(this.baseUrl+"/DropDown/GetUnitOfMeasurment")
+    }
 
+    getStrategicPlans(){
+        return this.http.get<SelectList[]>(this.baseUrl+"/DropDown/GetStrategicPlans")
+    }
+    getProjectLocations(){
+        return this.http.get<SelectList[]>(this.baseUrl+"/DropDown/GetProjectLocations")
+    }
+
+
+    
+
+    
+    
   
 }

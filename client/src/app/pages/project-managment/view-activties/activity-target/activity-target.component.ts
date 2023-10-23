@@ -1,0 +1,150 @@
+import { Component, Input, OnInit } from '@angular/core';
+import { FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { IndividualConfig } from 'ngx-toastr';
+
+import { ActivityView, TargetDivisionDto,ActivityTargetDivisionDto } from '../activityview';
+import { UserView } from 'src/app/model/user';
+import { CommonService } from 'src/app/services/common.service';
+import { PMService } from 'src/app/services/pm.services';
+import { UserService } from 'src/app/services/user.service';
+import { MessageService } from 'primeng/api';
+
+@Component({
+  selector: 'app-activity-target',
+  templateUrl: './activity-target.component.html',
+  styleUrls: ['./activity-target.component.css']
+})
+export class ActivityTargetComponent implements OnInit {
+
+  @Input() activity!: ActivityView;
+  targetForm !: FormGroup;
+  user! : UserView;
+
+  actTargets = new FormArray([
+    new FormGroup({
+      monthName: new FormControl({ value: 'July (ሃምሌ)', disabled: true }),
+      monthValue: new FormControl(0, Validators.required),
+      Target: new FormControl(0, Validators.required),
+      Budget: new FormControl(0, Validators.required)
+    })
+  ])
+
+  months: string[] = [
+    'August (ነሃሴ)',
+    'September (መስከረም)',
+    'October (ጥቅምት)',
+    'November (ህዳር)',
+    'December (ታህሳስ)',
+    'January (ጥር)',
+    'February (የካቲት)',
+    'March (መጋቢት)',
+    'April (ሚያዚያ)',
+    'May (ግንቦት)',
+    'June (ሰኔ)'
+  ];
+
+  constructor(
+    private activeModal: NgbActiveModal,
+    private commonService: CommonService,
+    private userService : UserService,
+    private messageService : MessageService,
+    private pmService : PMService) { }
+
+  ngOnInit(): void {
+    this.addTargetForm();
+    this.user = this.userService.getCurrentUser();
+  }
+
+  addTargetForm() {
+    var index = 1
+    for (let month of this.months) {
+      const target = new FormGroup({
+        monthName: new FormControl({ value: month, disabled: true }),
+        monthValue: new FormControl(index, Validators.required),
+        Target: new FormControl(0, Validators.required),
+        Budget: new FormControl(0, Validators.required)
+      });
+      this.actTargets.push(target);
+      index += 1
+    }
+  }
+
+  submitTarget() {
+ 
+   if(this.actTargets.valid){
+    var sumOfTarget = 0
+    var sumOfBudget = 0
+
+    let  targetDivisionDtos:TargetDivisionDto[]=[]
+   
+    for (let formValue of this.actTargets.value) {
+      sumOfTarget += Number(formValue.Target)
+      sumOfBudget += Number(formValue.Budget)
+
+      let  targetDivisionDto : TargetDivisionDto ={
+        order: Number(formValue.monthValue),
+        target : Number(formValue.Target),
+        targetBudget : Number(formValue.Budget)
+      }
+
+      targetDivisionDtos.push(targetDivisionDto)
+    }
+
+    let ActivityTargetDivisionDto : ActivityTargetDivisionDto={
+
+      activiyId :this.activity.id,
+      createdBy : this.user.userId,
+     targetDivisionDtos :targetDivisionDtos
+    }
+
+  
+
+    
+
+    if (sumOfTarget != (this.activity.target - this.activity.begining)) {
+
+
+      this.messageService.add({ severity: 'error', summary: 'Verfication Failed.', detail: 'Sum of Activity target not equal to target of Activity' });        
+
+
+      return
+
+    }
+
+    if (sumOfBudget != this.activity.plannedBudget) {
+      this.messageService.add({ severity: 'error', summary: 'Verfication Failed.', detail: 'Sum of Activity Budget not equal to Planned Budget' });        
+
+
+      return
+
+    }
+
+
+    this.pmService.addActivityTargetDivision(ActivityTargetDivisionDto).subscribe({
+      next:(res)=>{
+
+        this.messageService.add({ severity: 'success', summary: 'Successfully created.', detail: 'Activity Target Assigned successFully' });        
+
+       
+       this.closeModal()
+       window.location.reload()
+
+      },error:(err)=>{
+        this.messageService.add({ severity: 'error', summary: 'Something went wrong.', detail: err.message });        
+
+        
+      }
+    })
+  }
+  else {
+
+
+  }
+  }
+  closeModal() {
+    this.activeModal.close()
+  }
+
+
+}

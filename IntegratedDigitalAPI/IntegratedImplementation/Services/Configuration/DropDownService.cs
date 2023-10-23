@@ -150,5 +150,51 @@ namespace IntegratedImplementation.Services.Configuration
 
             return loanRequestList;
         }
+
+        public async Task<List<SelectListDto>> GetUnitofMeasurment()
+        {
+            var loanRequestList = await _dbContext.UnitOfMeasurment.AsNoTracking().Select(x => new SelectListDto
+            {
+                Id = x.Id,
+                Name = $"{x.Name} ({x.LocalName})",
+            }).ToListAsync();
+
+            return loanRequestList;
+        }
+
+        public async Task<List<SelectListDto>> GetEmployeeSelectList()
+        {
+            var employeesList = await _dbContext.Employees.Include(x=>x.EmployeeDetail).ThenInclude(x=>x.Department).AsNoTracking().Select(x => new SelectListDto
+            {
+                Id=x.Id,
+                Name = $"{x.FirstName} {x.MiddleName} {x.LastName}" + (x.EmployeeDetail.OrderByDescending(x => x.CreatedDate).Any() ? x.EmployeeDetail.OrderByDescending(x => x.CreatedDate).FirstOrDefault().Department.DepartmentName : "")
+            }).ToListAsync();
+
+            return employeesList;
+        }
+        public async Task<List<SelectListDto>> GetStrategicPlans()
+        {
+            var strategicPlans = await _dbContext.StrategicPlans.AsNoTracking().Select(x => new SelectListDto
+            {
+                Id = x.Id,
+                Name = x.Name
+            }).ToListAsync();
+
+            return strategicPlans;
+        }
+        public async Task<List<SelectListDto>> GetProjectLocations()
+        {
+            var strategicPlans = await _dbContext.ProjectLocations.AsNoTracking().Select(x => new SelectListDto
+            {
+                Id = x.Id,
+                Name = x.Name
+            }).ToListAsync();
+
+            return strategicPlans;
+        }
+
+        
+
+
     }
 }

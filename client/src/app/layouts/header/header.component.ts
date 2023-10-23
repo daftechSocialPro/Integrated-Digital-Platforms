@@ -9,6 +9,8 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { Router } from '@angular/router';
 import { SelectList } from 'src/app/model/common';
 import { HrmService } from 'src/app/services/hrm.service';
+import { ActivityView } from 'src/app/model/PM/ActivityViewDto';
+import { PMService } from 'src/app/services/pm.services';
 
 @Component({
   selector: 'app-header',
@@ -17,6 +19,7 @@ import { HrmService } from 'src/app/services/hrm.service';
 })
 export class HeaderComponent implements OnInit {
 
+  activites!: ActivityView[]
   user !: UserView
   contactEndEMployees!: SelectList[]
   vacancies!: NotificationDto[]
@@ -26,12 +29,14 @@ export class HeaderComponent implements OnInit {
     private hrmService: HrmService,
     private userService: UserService,
     private notificationService: NotificationService,
-    private commonService: CommonService) { }
+    private commonService: CommonService,
+    private pmService:PMService) { }
 
   ngOnInit(): void {
     this.user = this.userService.getCurrentUser()
     this.getVacancyList()
     this.getContractEndEmp()
+    this.getActivityForApproval()
 
   }
   sidebarToggle() {
@@ -57,6 +62,20 @@ export class HeaderComponent implements OnInit {
     })
 
   }
+  getActivityForApproval() {
+
+    this.pmService.getActivityForApproval(this.user.employeeId).subscribe({
+      next: (res) => {
+
+        this.activites = res
+
+        console.log("act",res)
+
+      }, error: (err) => {
+        console.error(err)
+      }
+    })
+  }
   navigateToDetail(id: string) {
 
     this.route.navigate(['/HRM/vacancyDetail', id])
@@ -66,7 +85,10 @@ export class HeaderComponent implements OnInit {
 
     this.route.navigate(['HRM/employeeDetail', { employeeId: id }])
   }
-
+  routeToApproval (act:ActivityView){
+    
+    this.route.navigate(['pm/actForApproval',{Activties:act}])
+  }
   roleMatch(value: string[]) {
     return this.userService.roleMatch(value)
   }

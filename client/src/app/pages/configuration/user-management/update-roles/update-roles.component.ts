@@ -137,9 +137,7 @@ export class UpdateRolesComponent implements OnInit {
   }
 
   closeModal() {
-
-    this.activeModal.close()
-
+    this.activeModal.close();
   }
 
 

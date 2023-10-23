@@ -5,7 +5,10 @@ export interface SelectList {
 
     id: string;
     name: string;
+    employeeId ?: string 
     reason?:string
+    photo ?:string
+    commiteeStatus?:string
 
 }
 
@@ -49,4 +52,11 @@ export interface GeneralCodeDto {
     pad: number
     currentNumber: number
 
+}
+
+export interface GetStartEndDate{
+
+    fromDate : string
+    endDate:string
+   
 }

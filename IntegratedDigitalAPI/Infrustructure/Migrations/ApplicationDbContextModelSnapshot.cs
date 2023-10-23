@@ -340,6 +340,32 @@ namespace IntegratedInfrustructure.Migrations
                     b.ToTable("Holidays");
                 });
 
+            modelBuilder.Entity("IntegratedInfrustructure.Model.Configuration.ProjectLocation", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.ToTable("ProjectLocations");
+                });
+
             modelBuilder.Entity("IntegratedInfrustructure.Model.Configuration.Region", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1765,6 +1791,157 @@ namespace IntegratedInfrustructure.Migrations
                     b.ToTable("Volunters");
                 });
 
+            modelBuilder.Entity("IntegratedInfrustructure.Model.PM.Project", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("DepartmentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Goal")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("HasTask")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Objective")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PeriodEndAt")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PeriodStartAt")
+                        .HasColumnType("int");
+
+                    b.Property<float>("PlannedBudget")
+                        .HasColumnType("real");
+
+                    b.Property<Guid>("ProjectManagerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ProjectName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProjectNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("ProjectManagerId");
+
+                    b.ToTable("Projects");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Model.PM.StrategicPlan", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.ToTable("StrategicPlans");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Model.PM.Tasks", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<float?>("ActualBudget")
+                        .HasColumnType("real");
+
+                    b.Property<DateTime?>("ActualEnd")
+                        .HasColumnType("datetime2");
+
+                    b.Property<float>("ActualWorked")
+                        .HasColumnType("real");
+
+                    b.Property<DateTime?>("ActuallStart")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<float?>("Goal")
+                        .HasColumnType("real");
+
+                    b.Property<bool>("HasActivityParent")
+                        .HasColumnType("bit");
+
+                    b.Property<float>("PlanedBudget")
+                        .HasColumnType("real");
+
+                    b.Property<Guid?>("ProjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ShouldEnd")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ShouldStartPeriod")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TaskDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float?>("Weight")
+                        .HasColumnType("real");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("Tasks");
+                });
+
             modelBuilder.Entity("IntegratedInfrustructure.Model.Vacancy.ApplcantDocuments", b =>
                 {
                     b.Property<Guid>("Id")
@@ -2116,6 +2293,685 @@ namespace IntegratedInfrustructure.Migrations
                     b.ToTable("VacancyStatuses");
                 });
 
+            modelBuilder.Entity("IntegratedInfrustructure.Models.Common.UnitOfMeasurment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LocalName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.ToTable("UnitOfMeasurment");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.PM.Activity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ActivityDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ActivityNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("ActivityParentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("ActivityType")
+                        .HasColumnType("int");
+
+                    b.Property<float?>("ActualBudget")
+                        .HasColumnType("real");
+
+                    b.Property<DateTime?>("ActualEnd")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ActualStart")
+                        .HasColumnType("datetime2");
+
+                    b.Property<float>("ActualWorked")
+                        .HasColumnType("real");
+
+                    b.Property<float>("Begining")
+                        .HasColumnType("real");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<float>("FieldWork")
+                        .HasColumnType("real");
+
+                    b.Property<float>("Goal")
+                        .HasColumnType("real");
+
+                    b.Property<double>("Latitude")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Longtude")
+                        .HasColumnType("float");
+
+                    b.Property<float>("OfficeWork")
+                        .HasColumnType("real");
+
+                    b.Property<Guid?>("PlanId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<float>("PlanedBudget")
+                        .HasColumnType("real");
+
+                    b.Property<bool>("PostToCase")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("ProjectLocationId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ProjectTeamId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ShouldEnd")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ShouldStat")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("StrategicPlanId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("TaskId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UnitOfMeasurementId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<float>("Weight")
+                        .HasColumnType("real");
+
+                    b.Property<int?>("targetDivision")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ActivityParentId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("PlanId");
+
+                    b.HasIndex("ProjectLocationId");
+
+                    b.HasIndex("ProjectTeamId");
+
+                    b.HasIndex("StrategicPlanId");
+
+                    b.HasIndex("TaskId");
+
+                    b.HasIndex("UnitOfMeasurementId");
+
+                    b.ToTable("Activities");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.PM.ActivityParent", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ActivityParentDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float?>("ActualBudget")
+                        .HasColumnType("real");
+
+                    b.Property<DateTime?>("ActualEnd")
+                        .HasColumnType("datetime2");
+
+                    b.Property<float>("ActualWorked")
+                        .HasColumnType("real");
+
+                    b.Property<DateTime?>("ActuallStart")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<float?>("Goal")
+                        .HasColumnType("real");
+
+                    b.Property<bool>("HasActivity")
+                        .HasColumnType("bit");
+
+                    b.Property<float>("PlanedBudget")
+                        .HasColumnType("real");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ShouldEnd")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ShouldStartPeriod")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("TaskId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<float?>("Weight")
+                        .HasColumnType("real");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("TaskId");
+
+                    b.ToTable("ActivitiesParents");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.PM.ActivityProgress", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ActivityId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<float>("ActualBudget")
+                        .HasColumnType("real");
+
+                    b.Property<float>("ActualWorked")
+                        .HasColumnType("real");
+
+                    b.Property<string>("CoordinatorApprovalRemark")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DirectorApprovalRemark")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("EmployeeValueId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("FinanceApprovalRemark")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FinanceDocumentPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("IsApprovedByDirector")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IsApprovedByFinance")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IsApprovedByManager")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Lat")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Lng")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("QuarterId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("progressStatus")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ActivityId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("EmployeeValueId");
+
+                    b.HasIndex("QuarterId");
+
+                    b.ToTable("ActivityProgresses");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.PM.ActivityTargetDivision", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ActivityId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.Property<float>("Target")
+                        .HasColumnType("real");
+
+                    b.Property<float>("TargetBudget")
+                        .HasColumnType("real");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ActivityId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.ToTable("ActivityTargetDivisions");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.PM.ActivityTerminationHistories", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ActivityId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ApprovedByDirectorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DocumentPath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("FromEmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsRejected")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Isapproved")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TerminationReason")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("ToEmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ToProjectTeamId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TopProjectTeamId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ActivityId");
+
+                    b.HasIndex("ApprovedByDirectorId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("FromEmployeeId");
+
+                    b.HasIndex("ToEmployeeId");
+
+                    b.HasIndex("TopProjectTeamId");
+
+                    b.ToTable("ActivityTerminationHistories");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.PM.EmployeesAssignedForActivities", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ActivityId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ActivityId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("EmployeesAssignedForActivities");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.PM.ProgressAttachment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ActivityProgressId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ActivityProgressId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.ToTable("ProgressAttachments");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.PM.ProjectTeam", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ProjectTeamName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.ToTable("ProjectTeams");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.PM.ProjectTeamEmployees", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProjectTeamId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("ProjectTeamStatus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("ProjectTeamId");
+
+                    b.ToTable("ProjectTeamEmployees");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.PM.QuarterSetting", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EndMonth")
+                        .HasColumnType("int");
+
+                    b.Property<string>("QuarterName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("QuarterOrder")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StartMonth")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.ToTable("QuarterSettings");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.PM.TaskMembers", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ActivityParentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("PlanId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("TaskId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ActivityParentId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("PlanId");
+
+                    b.HasIndex("TaskId");
+
+                    b.ToTable("TaskMembers");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.PM.TaskMemo", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ActivityParentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("PlanId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("TaskId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ActivityParentId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("PlanId");
+
+                    b.HasIndex("TaskId");
+
+                    b.ToTable("TaskMemos");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.PM.TaskMemoReply", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("TaskMemoId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("TaskMemoId");
+
+                    b.ToTable("TaskMemoReply");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
@@ -2268,6 +3124,15 @@ namespace IntegratedInfrustructure.Migrations
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Configuration.HolidayLst", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.Navigation("CreatedBy");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Model.Configuration.ProjectLocation", b =>
                 {
                     b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
@@ -2868,6 +3733,55 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("Zone");
                 });
 
+            modelBuilder.Entity("IntegratedInfrustructure.Model.PM.Project", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("IntegratedInfrustructure.Model.HRM.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "ProjectManager")
+                        .WithMany()
+                        .HasForeignKey("ProjectManagerId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("Department");
+
+                    b.Navigation("ProjectManager");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Model.PM.StrategicPlan", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.Navigation("CreatedBy");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Model.PM.Tasks", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("IntegratedInfrustructure.Model.PM.Project", "Project")
+                        .WithMany("Tasks")
+                        .HasForeignKey("ProjectId");
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("Project");
+                });
+
             modelBuilder.Entity("IntegratedInfrustructure.Model.Vacancy.ApplcantDocuments", b =>
                 {
                     b.HasOne("IntegratedInfrustructure.Model.Vacancy.ApplicantVacancy", "ApplicantVacnncy")
@@ -3030,6 +3944,370 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("ApplicantVacancy");
                 });
 
+            modelBuilder.Entity("IntegratedInfrustructure.Models.Common.UnitOfMeasurment", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.Navigation("CreatedBy");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.PM.Activity", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Models.PM.ActivityParent", "ActivityParent")
+                        .WithMany("Activities")
+                        .HasForeignKey("ActivityParentId");
+
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId");
+
+                    b.HasOne("IntegratedInfrustructure.Model.PM.Project", "Plan")
+                        .WithMany("Activities")
+                        .HasForeignKey("PlanId");
+
+                    b.HasOne("IntegratedInfrustructure.Model.Configuration.ProjectLocation", "ProjectLocation")
+                        .WithMany()
+                        .HasForeignKey("ProjectLocationId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("IntegratedInfrustructure.Models.PM.ProjectTeam", "Commitee")
+                        .WithMany()
+                        .HasForeignKey("ProjectTeamId");
+
+                    b.HasOne("IntegratedInfrustructure.Model.PM.StrategicPlan", "StrategicPlan")
+                        .WithMany()
+                        .HasForeignKey("StrategicPlanId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("IntegratedInfrustructure.Model.PM.Tasks", "Task")
+                        .WithMany("Activities")
+                        .HasForeignKey("TaskId");
+
+                    b.HasOne("IntegratedInfrustructure.Models.Common.UnitOfMeasurment", "UnitOfMeasurement")
+                        .WithMany()
+                        .HasForeignKey("UnitOfMeasurementId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("ActivityParent");
+
+                    b.Navigation("Commitee");
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Plan");
+
+                    b.Navigation("ProjectLocation");
+
+                    b.Navigation("StrategicPlan");
+
+                    b.Navigation("Task");
+
+                    b.Navigation("UnitOfMeasurement");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.PM.ActivityParent", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("IntegratedInfrustructure.Model.PM.Tasks", "Task")
+                        .WithMany("ActivitiesParents")
+                        .HasForeignKey("TaskId");
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("Task");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.PM.ActivityProgress", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Models.PM.Activity", "Activity")
+                        .WithMany("ActProgress")
+                        .HasForeignKey("ActivityId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "EmployeeValue")
+                        .WithMany()
+                        .HasForeignKey("EmployeeValueId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("IntegratedInfrustructure.Models.PM.ActivityTargetDivision", "Quarter")
+                        .WithMany()
+                        .HasForeignKey("QuarterId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Activity");
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("EmployeeValue");
+
+                    b.Navigation("Quarter");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.PM.ActivityTargetDivision", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Models.PM.Activity", "Activity")
+                        .WithMany("ActivityTargetDivisions")
+                        .HasForeignKey("ActivityId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.Navigation("Activity");
+
+                    b.Navigation("CreatedBy");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.PM.ActivityTerminationHistories", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Models.PM.Activity", "Activity")
+                        .WithMany()
+                        .HasForeignKey("ActivityId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "ApprovedByDirector")
+                        .WithMany()
+                        .HasForeignKey("ApprovedByDirectorId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "FromEmployee")
+                        .WithMany()
+                        .HasForeignKey("FromEmployeeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "ToEmployee")
+                        .WithMany()
+                        .HasForeignKey("ToEmployeeId");
+
+                    b.HasOne("IntegratedInfrustructure.Models.PM.ProjectTeam", "TopProjectTeam")
+                        .WithMany()
+                        .HasForeignKey("TopProjectTeamId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Activity");
+
+                    b.Navigation("ApprovedByDirector");
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("FromEmployee");
+
+                    b.Navigation("ToEmployee");
+
+                    b.Navigation("TopProjectTeam");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.PM.EmployeesAssignedForActivities", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Models.PM.Activity", "Activity")
+                        .WithMany("AssignedEmploye")
+                        .HasForeignKey("ActivityId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Activity");
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("Employee");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.PM.ProgressAttachment", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Models.PM.ActivityProgress", "ActivityProgress")
+                        .WithMany("ProgressAttachments")
+                        .HasForeignKey("ActivityProgressId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.Navigation("ActivityProgress");
+
+                    b.Navigation("CreatedBy");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.PM.ProjectTeam", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.Navigation("CreatedBy");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.PM.ProjectTeamEmployees", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("IntegratedInfrustructure.Models.PM.ProjectTeam", "ProjectTeam")
+                        .WithMany("Employees")
+                        .HasForeignKey("ProjectTeamId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("ProjectTeam");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.PM.QuarterSetting", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.Navigation("CreatedBy");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.PM.TaskMembers", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Models.PM.ActivityParent", "ActivityParent")
+                        .WithMany("TaskMember")
+                        .HasForeignKey("ActivityParentId");
+
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("IntegratedInfrustructure.Model.PM.Project", "Plan")
+                        .WithMany("TaskMember")
+                        .HasForeignKey("PlanId");
+
+                    b.HasOne("IntegratedInfrustructure.Model.PM.Tasks", "Task")
+                        .WithMany("TaskMember")
+                        .HasForeignKey("TaskId");
+
+                    b.Navigation("ActivityParent");
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Plan");
+
+                    b.Navigation("Task");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.PM.TaskMemo", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Models.PM.ActivityParent", "ActivityParent")
+                        .WithMany("TaskMemos")
+                        .HasForeignKey("ActivityParentId");
+
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("IntegratedInfrustructure.Model.PM.Project", "Plan")
+                        .WithMany("TaskMemos")
+                        .HasForeignKey("PlanId");
+
+                    b.HasOne("IntegratedInfrustructure.Model.PM.Tasks", "Task")
+                        .WithMany("TaskMemos")
+                        .HasForeignKey("TaskId");
+
+                    b.Navigation("ActivityParent");
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Plan");
+
+                    b.Navigation("Task");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.PM.TaskMemoReply", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("IntegratedInfrustructure.Models.PM.TaskMemo", "TaskMemo")
+                        .WithMany("Replies")
+                        .HasForeignKey("TaskMemoId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("TaskMemo");
+                });
+
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeList", b =>
                 {
                     b.Navigation("EmployeeDetail");
@@ -3050,9 +4328,64 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("EmployeeLoans");
                 });
 
+            modelBuilder.Entity("IntegratedInfrustructure.Model.PM.Project", b =>
+                {
+                    b.Navigation("Activities");
+
+                    b.Navigation("TaskMember");
+
+                    b.Navigation("TaskMemos");
+
+                    b.Navigation("Tasks");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Model.PM.Tasks", b =>
+                {
+                    b.Navigation("Activities");
+
+                    b.Navigation("ActivitiesParents");
+
+                    b.Navigation("TaskMember");
+
+                    b.Navigation("TaskMemos");
+                });
+
             modelBuilder.Entity("IntegratedInfrustructure.Model.Vacancy.VacancyList", b =>
                 {
                     b.Navigation("VaccancyDocuments");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.PM.Activity", b =>
+                {
+                    b.Navigation("ActProgress");
+
+                    b.Navigation("ActivityTargetDivisions");
+
+                    b.Navigation("AssignedEmploye");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.PM.ActivityParent", b =>
+                {
+                    b.Navigation("Activities");
+
+                    b.Navigation("TaskMember");
+
+                    b.Navigation("TaskMemos");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.PM.ActivityProgress", b =>
+                {
+                    b.Navigation("ProgressAttachments");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.PM.ProjectTeam", b =>
+                {
+                    b.Navigation("Employees");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.PM.TaskMemo", b =>
+                {
+                    b.Navigation("Replies");
                 });
 #pragma warning restore 612, 618
         }

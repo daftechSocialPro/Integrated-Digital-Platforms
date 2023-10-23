@@ -11,7 +11,11 @@ using System.Threading.Tasks;
 using IntegratedInfrustructure.Model.Configuration;
 using IntegratedInfrustructure.Model.HRM;
 using IntegratedInfrustructure.Model.Vacancy;
-
+using System.Diagnostics;
+using IntegratedInfrustructure.Models.PM;
+using Activity = IntegratedInfrustructure.Models.PM.Activity;
+using IntegratedInfrustructure.Model.PM;
+using IntegratedInfrustructure.Models.Common;
 
 namespace IntegratedInfrustructure.Data
 {
@@ -32,6 +36,9 @@ namespace IntegratedInfrustructure.Data
         public DbSet<Region> Regions { get; set; }
         public DbSet<Zone> Zones { get; set; }
         public DbSet<HolidayLst> Holidays { get; set; }
+        public DbSet<ProjectLocation> ProjectLocations { get; set; }
+        
+        public DbSet<UnitOfMeasurment> UnitOfMeasurment { get; set; }
         #endregion
 
         #region HRM
@@ -85,6 +92,27 @@ namespace IntegratedInfrustructure.Data
         public DbSet<VacancyStatus> VacancyStatuses { get; set; }
         #endregion
 
+        #region PM
+        public DbSet<Activity> Activities { get; set; }
+        public DbSet<ActivityParent> ActivitiesParents { get; set; }
+
+        public DbSet<ActivityProgress> ActivityProgresses { get; set; }
+        public DbSet<ActivityTargetDivision> ActivityTargetDivisions { get; set; }
+        public DbSet<ActivityTerminationHistories> ActivityTerminationHistories { get; set; }
+        public DbSet<EmployeesAssignedForActivities> EmployeesAssignedForActivities { get; set; }
+        public DbSet<ProgressAttachment> ProgressAttachments { get; set; }
+        public DbSet<Project>Projects { get; set; }
+        public DbSet<ProjectTeamEmployees> ProjectTeamEmployees { get; set; }
+        public DbSet<ProjectTeam> ProjectTeams { get; set; }
+        public DbSet<QuarterSetting> QuarterSettings { get; set; }
+        public DbSet<StrategicPlan> StrategicPlans { get; set; }
+        public DbSet<TaskMembers> TaskMembers { get; set; }
+        public DbSet<TaskMemo> TaskMemos { get; set; }
+        public DbSet<TaskMemoReply> TaskMemoReply { get; set; }
+        public DbSet<Tasks> Tasks { get; set; }  
+        #endregion
+
+
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -125,6 +153,7 @@ namespace IntegratedInfrustructure.Data
             modelBuilder.Entity<Department>().HasIndex(b => b.DepartmentName).IsUnique();
             modelBuilder.Entity<LeaveType>().HasIndex(b => b.Name).IsUnique();
 
+           
 
 
 

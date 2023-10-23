@@ -106,6 +106,8 @@ namespace IntegratedImplementation.Datas
             CreateMap<HrmSetting, SelectListDto>()
             .ForMember(x => x.Name, e => e.MapFrom(mfg => mfg.GeneralSetting.ToString()));
 
+            CreateMap<ProjectLocation, ProjectLocationGetDto>();
+
         }
     }
 }

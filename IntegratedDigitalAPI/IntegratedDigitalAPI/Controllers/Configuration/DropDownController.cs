@@ -94,5 +94,41 @@ namespace IntegratedDigitalAPI.Controllers.Configuration
             return Ok(await _DropDownService.GetLoanTypeDropDown());
         }
 
+        [HttpGet]
+        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetEmployeeDropDown()
+        {
+            return Ok(await _DropDownService.GetEmployeeSelectList());
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetUnitOfMeasurment()
+        {
+            return Ok(await _DropDownService.GetUnitofMeasurment());
+        }
+
+
+
+        [HttpGet]
+        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetStrategicPlans()
+        {
+            return Ok(await _DropDownService.GetStrategicPlans());
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetProjectLocations()
+        {
+            return Ok(await _DropDownService.GetProjectLocations());
+        }
+
+
+
+
+
+
+
     }
 }
