@@ -80,6 +80,7 @@ export interface ViewProgressDto {
     managerApprovalRemark: string
     directorApprovalRemark: string
     createdAt: string
+    quarterId: string
 
 
 }

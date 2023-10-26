@@ -12,6 +12,7 @@ import { UserView } from 'src/app/model/user';
 import { CommonService } from 'src/app/services/common.service';
 import { UserService } from 'src/app/services/user.service';
 import { ShowonmapComponent } from '../progress-report/performance-report/showonmap/showonmap.component';
+import { SelectList } from 'src/app/model/common';
 
 @Component({
   selector: 'app-view-activties',
@@ -23,19 +24,22 @@ export class ViewActivtiesComponent implements OnInit {
   @Input() actView!: ActivityView;
   isMember: boolean = false;
   user!: UserView;
+ 
+  monthsArray :SelectList[]=[];
 
   months: string[] = [
-    'August (ነሃሴ)',
-    'September (መስከረም)',
-    'October (ጥቅምት)',
-    'November (ህዳር)',
-    'December (ታህሳስ)',
-    'January (ጥር)',
-    'February (የካቲት)',
-    'March (መጋቢት)',
-    'April (ሚያዚያ)',
-    'May (ግንቦት)',
-    'June (ሰኔ)'
+    'January',
+    'Feburary',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'Augest',
+    'September',
+    'October',
+    'November',
+    'December'
   ];
 
   constructor(
@@ -49,6 +53,9 @@ export class ViewActivtiesComponent implements OnInit {
     if (this.actView.members.find(x => x.employeeId?.toLowerCase() == this.user.employeeId.toLowerCase()) ) {
       this.isMember = true;
     }
+   this.getMonthDifference(this.actView.startDate,this.actView.endDate)
+
+   console.log('performance', this.actView.monthPerformance)
   }
   getImage(value: string) {
     return this.commonService.createImgPath(value)
@@ -115,11 +122,52 @@ export class ViewActivtiesComponent implements OnInit {
 
   Showonmap(lat:number,lng:number){
 
-    console.log(lat,lng)
+   console.log(lat,lng)
   let modalRef =this.modalService.open(ShowonmapComponent,{size:'xl',backdrop:'static'})
   modalRef.componentInstance.lat=lat
   modalRef.componentInstance.lng = lng
   modalRef.componentInstance.title = "Project Location"
   }
 
+
+  getMonthDifference(startDate: string, endDate: string) {
+    const startYear = new Date(startDate).getFullYear();
+    const startMonth = new Date(startDate).getMonth();
+    const endYear = new Date(endDate).getFullYear();
+    const endMonth = new Date(endDate).getMonth();
+  
+    const monthDifference = (endYear - startYear) * 12 + (endMonth - startMonth);
+  
+    console.log('Month Difference:', monthDifference);
+
+    this.generateMonthsArray(monthDifference)
+  
+  }
+
+  generateMonthsArray(monthDifference: number) {
+  
+   let startMonth = (new Date (this.actView.startDate)).getMonth()
+   let total =  monthDifference+startMonth
+    while (startMonth< total) {
+      const monthObject :SelectList = {
+        id: startMonth.toString(),
+        name: this.getMonthName(startMonth),
+      };
+  
+      this.monthsArray.push(monthObject);
+
+      startMonth+=1
+    }
+
+  
+  }
+
+  getMonthName(monthIndex: number): string {
+    const monthNames = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+  
+    return monthNames[monthIndex];
+  }
 }

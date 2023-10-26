@@ -33,7 +33,11 @@ namespace IntegratedInfrustructure.Models.PM
         public string ? DirectorApprovalRemark { get; set; } 
         public string Lat { get; set; } = null!;
         public string Lng { get; set; } = null!;
+
+        public bool IsDraft { get; set; }
         public ProgressStatus progressStatus { get; set; }
+
+        public string Remark { get; set; }
 
      
         public  ICollection<ProgressAttachment> ProgressAttachments { get; set; }

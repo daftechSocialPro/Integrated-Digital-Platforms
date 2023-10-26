@@ -1,14 +1,14 @@
 <div class="modal-content">
     <div class="modal-header">
-        <h5 class="modal-title">Activity Progress</h5>
+        <h5 class="modal-title">Activity Progress {{draftedProgress?"( Drafted )":""}}</h5>
         <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
     </div>
 
     <div class="card">
 
-        <form [formGroup]="progressForm" (submit)="submit()">
+        <form [formGroup]="progressForm" >
         <div class="card-body">
-            <h5 class="card-title">{{ProgressStatus=="0"?"Add":"Finalize"}}Add Activity Progress for {{activity.name}}</h5>
+            <h5 class="card-title">{{ProgressStatus=="0"?"Add":"Finalize"}} Activity Progress for {{activity.name}}</h5>
             <hr />
 
             <div class="row mt-2">
@@ -19,7 +19,7 @@
 
                             <option *ngFor="let perform of activity.monthPerformance ;let i= index;" value={{i+1}}
                                 value={{perform.id}}>
-                                {{months[i]}} ( overall {{perform.planned}} ) </option>
+                                {{months[perform.order-1]}} ( overall {{perform.planned}} ) </option>
                         </select>
                         <label for="QuarterId">Month</label>
                     </div>
@@ -53,11 +53,22 @@
                     <div class="col-6">
                         <label for="inputNumber" class="col-sm-12 col-form-label">Documents</label>
                         <div class="col-sm-12"> <input (change)="onFileSelected($event)"  class="form-control" multiple type="file" id="formFile"></div>
+                    
+
+                        <div *ngIf="draftedProgress">
+
+                        <ng-container *ngFor="let file of draftedProgress.documents;let i = index;">
+                            <a target="_blank" class="btn btn-sm btn-secondary m-2" href={{getFilePath(file)}}>View
+                                FIle {{i+1}}</a>
+                        </ng-container>
+                        </div>
                     </div>
 
                     <div class="col-6">
                         <label for="inputNumber" class="col-sm-12 col-form-label">Finance Documents</label>
                         <div class="col-sm-12"> <input (change)="onFinanceFileSelected($event)"  class="form-control" type="file" id="formFile2"></div>
+                        <a target="_blank" *ngIf="draftedProgress" class="btn btn-sm btn-secondary mt-2"
+                        href={{getFilePath(draftedProgress&&draftedProgress.financeDocument!)}}>View File</a>
                     </div>
 
                 </div>
@@ -67,8 +78,11 @@
             </div>
 
         </div>
-        <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"  (click)="closeModal()">Close</button>
-            <button type="button" type="submit" [disabled]="!progressForm.valid" class="btn btn-outline-primary">Create</button>
+        <div class="modal-footer"> 
+                     
+            <button type="button" type="submit" [disabled]="!progressForm.valid" class="btn btn-outline-secondary" (click)="submit(true)"> Draft</button>
+            <button type="button" type="submit" [disabled]="!progressForm.valid"  (click)="submit(false)" class="btn btn-outline-primary">Create</button>
+
         </div>
     </form>
     </div>

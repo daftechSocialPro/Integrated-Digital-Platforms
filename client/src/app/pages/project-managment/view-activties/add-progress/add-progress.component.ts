@@ -9,6 +9,7 @@ import { CommonService } from 'src/app/services/common.service';
 import { PMService } from 'src/app/services/pm.services';
 import { UserService } from 'src/app/services/user.service';
 import { MessageService } from 'primeng/api';
+import { ViewProgressDto } from 'src/app/model/PM/ActivityViewDto';
 
 @Component({
   selector: 'app-add-progress',
@@ -23,24 +24,27 @@ export class AddProgressComponent implements OnInit {
   progress !: AddProgressActivityDto;
   user!: UserView;
   position: any;
-  Documents:any;
+  Documents:File[]=[];
   FinanceDoc:any; 
+  draftedProgress!:ViewProgressDto
+  
+
 
 
 
   months: string[] = [
-    'July (ሃምሌ)',
-    'August (ነሃሴ)',
-    'September (መስከረም)',
-    'October (ጥቅምት)',
-    'November (ህዳር)',
-    'December (ታህሳስ)',
-    'January (ጥር)',
-    'February (የካቲት)',
-    'March (መጋቢት)',
-    'April (ሚያዚያ)',
-    'May (ግንቦት)',
-    'June (ሰኔ)'
+    'January',
+    'Feburary',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'Augest',
+    'September',
+    'October',
+    'November',
+    'December'
   ];
 
   constructor (
@@ -65,25 +69,48 @@ export class AddProgressComponent implements OnInit {
   ngOnInit():  void {    
     this.getLocation()
     this.user = this.userService.getCurrentUser();
+    this.getDraftedProgress()
+
+  
+
+    console.log('month performance',this.activity.monthPerformance)
   }
 
+  getDraftedProgress(){
+
+    this.pmService.viewDraftProgress(this.activity.id).subscribe({
+      next:(res)=>{
+        this.draftedProgress =res
+        
+
+        if(this.draftedProgress){
+          this.progressForm.controls['ActualBudget'].setValue(this.draftedProgress.usedBudget)
+          this.progressForm.controls['QuarterId'].setValue(this.draftedProgress.quarterId)
+          this.progressForm.controls['ActualWorked'].setValue(this.draftedProgress.actalWorked)
+          this.progressForm.controls['Remark'].setValue(this.draftedProgress.remark)
+        }
+      }
+    })
+
+  }
   getLocation= async ()=>{
      this.position = await this.commonService.getCurrentLocation();
 
   }
 
-  submit(){
+  
+
+  submit(bool:boolean){
 
 
-
-    if (this.progressForm.valid && this.Documents){
+    if (this.progressForm.valid ){
       var progressValue = this.progressForm.value;
       const formData = new FormData();
 
       for(let file of this.Documents){
-        formData.append('files',file);        
+        formData.append('DcoumentPath',file);        
       }
-      formData.append('Finance', this.FinanceDoc) ;
+      formData.append('FinacncePath', this.FinanceDoc) ;
       formData.set('QuarterId', progressValue.QuarterId);
       formData.set('ActualBudget', progressValue.ActualBudget);
       formData.set('ActualWorked', progressValue.ActualWorked);
@@ -93,27 +120,88 @@ export class AddProgressComponent implements OnInit {
       formData.set('CreatedBy', this.user.userId);
       formData.set('EmployeeValueId', this.user.employeeId);
       formData.set('lat',this.position.lat)
-      formData.set('lng',this.position.lng)
+      formData.set('lng',this.position.lng)    
+      formData.set('IsDraft',bool.toString())
 
+      if(this.draftedProgress){
+        formData.set('Id',this.draftedProgress.id)
+        this.pmService.updateActivityProgress(formData).subscribe({
+          next:(res)=>{
+  
+            if(res.success){
+  
+              this.messageService.add({ severity: 'success', summary: 'Successfully created.', detail: res.message });       
+    
+              this.closeModal()
+              window.location.reload()   
+            
+            }
+              else {
+                this.messageService.add({ severity: 'error', summary: 'Verfication Failed.', detail: res.message });       
+    
+              }
+    
+  
+          },error:(err)=>{
+            
+            this.messageService.add({ severity: 'error', summary: 'Network Error.', detail: 'Something went wrong' });        
+  
+            console.error(err)
+          
+          }
+        })
+      }
+      else {
+        this.pmService.addActivityPorgress(formData).subscribe({
+          next:(res)=>{
+
+            if(res.success){
+  
+            this.messageService.add({ severity: 'success', summary: 'Successfully created.', detail: res.message });       
+  
+            this.closeModal()
+            window.location.reload()
+          }
+            else {
+              this.messageService.add({ severity: 'error', summary: 'Verfication Failed.', detail: res.message });       
+  
+            }
+  
+          },error:(err)=>{
+            
+            this.messageService.add({ severity: 'error', summary: 'Network Error.', detail: 'Something went wrong' });        
+  
+            console.error(err)
+          
+          }
+        })
+      }
+
+
+      
    
 
-      this.pmService.addActivityPorgress(formData).subscribe({
-        next:(res)=>{
-
-          this.messageService.add({ severity: 'success', summary: 'Successfully created.', detail: 'Progress Successfully Created' });        
-
-          this.closeModal()
-
-        },error:(err)=>{
-          
-          this.messageService.add({ severity: 'error', summary: 'Network Error.', detail: 'Something went wrong' });        
-
-          console.error(err)
-        
-        }
-      })
-      console.log(formData)
+     
+     
     }
+
+  }
+
+
+  updateProgress(){
+    
+  }
+
+
+
+
+
+
+
+
+  getFilePath (value:string){
+
+    return this.commonService.createImgPath(value)
 
   }
 

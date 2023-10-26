@@ -1,7 +1,11 @@
 ﻿using Azure.Core;
+using Implementation.Helper;
 using IntegratedDigitalAPI.DTOS.PM;
 using IntegratedImplementation.DTOS.Configuration;
+using IntegratedImplementation.Helper;
+using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedInfrustructure.Data;
+using IntegratedInfrustructure.Model.HRM;
 using IntegratedInfrustructure.Models.PM;
 using Microsoft.AspNetCore.Hosting.Server;
 
@@ -18,9 +22,13 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
     public class ActivityService : IActivityService
     {
         private readonly ApplicationDbContext _dBContext;
-        public ActivityService(ApplicationDbContext context)
+        private readonly IGeneralConfigService _generalConfig;
+        private readonly IEmailService _emailService;
+        public ActivityService(ApplicationDbContext context, IGeneralConfigService generalConfig, IEmailService emailService)
         {
             _dBContext = context;
+            _generalConfig = generalConfig;
+            _emailService = emailService;
         }
 
         public async Task<int> AddActivityDetails(ActivityDetailDto activityDetail)
@@ -265,69 +273,285 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
 
         }
 
-        public async Task<int> AddProgress(AddProgressActivityDto activityProgress)
+        public async Task<ResponseMessage> AddProgress(AddProgressActivityDto activityProgress)
         {
 
-            var activityProgress2 = new ActivityProgress
-            {
-                Id = Guid.NewGuid(),
-                CreatedDate = DateTime.Now,
-                FinanceDocumentPath = activityProgress.FinacncePath,
-                QuarterId = activityProgress.QuarterId,
-                ActualBudget = activityProgress.ActualBudget,
-                ActualWorked = activityProgress.ActualWorked,
-                progressStatus = int.Parse(activityProgress.ProgressStatus) == 0 ? ProgressStatus.SIMPLEPROGRESS : ProgressStatus.FINALIZE,
-              
-                ActivityId = activityProgress.ActivityId,
-                CreatedById = activityProgress.CreatedBy.ToString(),
-                EmployeeValueId = activityProgress.EmployeeValueId,
-                Lat = activityProgress.lat,
-                Lng = activityProgress.lng,
-            };
-
-            await _dBContext.ActivityProgresses.AddAsync(activityProgress2);
-            await _dBContext.SaveChangesAsync();
-
-            foreach (var file in activityProgress.DcoumentPath)
+            try
             {
 
-                var attachment = new ProgressAttachment()
+                var Goal = _dBContext.Activities.Find(activityProgress.ActivityId).Goal- _dBContext.Activities.Find(activityProgress.ActivityId).Begining;
+                var progressGoal = _dBContext.ActivityProgresses.Where(x => x.ActivityId == activityProgress.ActivityId && !x.IsDraft).Sum(x => x.ActualWorked);
+
+                if (Goal < (progressGoal + activityProgress.ActualWorked))
+                {
+                    return new ResponseMessage
+                    {
+                        Success = false,
+                        Message = "Actual worked greater than Target !!! "
+                    };
+                }
+
+                var activityProgress2 = new ActivityProgress
                 {
                     Id = Guid.NewGuid(),
-                    CreatedById = activityProgress.CreatedBy.ToString(),
                     CreatedDate = DateTime.Now,
-                   
-                    FilePath = file,
-                    ActivityProgressId = activityProgress2.Id
+                    Remark = activityProgress.Remark,
+                    //FinanceDocumentPath = activityProgress.FinacncePath,
+                    QuarterId = activityProgress.QuarterId,
+                    ActualBudget = activityProgress.ActualBudget,
+                    ActualWorked = activityProgress.ActualWorked,
+                    progressStatus = int.Parse(activityProgress.ProgressStatus) == 0 ? ProgressStatus.SIMPLEPROGRESS : ProgressStatus.FINALIZE,
+                    ActivityId = activityProgress.ActivityId,
+                    CreatedById = activityProgress.CreatedBy.ToString(),
+                    EmployeeValueId = activityProgress.EmployeeValueId,
+                    Lat = activityProgress.lat,
+                    Lng = activityProgress.lng,
+                    IsDraft = Boolean.Parse(activityProgress.IsDraft),
                 };
-                await _dBContext.ProgressAttachments.AddAsync(attachment);
+
+                if (activityProgress.Finacnce != null)
+                {
+                    var financePath = _generalConfig.UploadFiles(activityProgress.Finacnce, $"{activityProgress.Id.ToString()}-Finance", "PM/Progress").Result.ToString();
+                    activityProgress2.FinanceDocumentPath = financePath;
+                }
+
+
+                await _dBContext.ActivityProgresses.AddAsync(activityProgress2);
                 await _dBContext.SaveChangesAsync();
 
-            }
+                if (activityProgress.Dcouments != null)
+                {
 
-            var ac = _dBContext.Activities.Find(activityProgress2.ActivityId);
-            ac.Status = activityProgress2.progressStatus == ProgressStatus.SIMPLEPROGRESS ? Status.ONPROGRESS : Status.FINALIZED;
-            if (ac.ActualStart == null)
+                    foreach (var file in activityProgress.Dcouments)
+                    {
+
+                        var attachment = new ProgressAttachment()
+                        {
+                            Id = Guid.NewGuid(),
+                            CreatedById = activityProgress.CreatedBy.ToString(),
+                            CreatedDate = DateTime.Now,
+
+                            ActivityProgressId = activityProgress2.ActivityId
+                        };
+
+                        var documentPath = _generalConfig.UploadFiles(file, $"{attachment.Id.ToString()}-Document", "PM/Progress").Result.ToString();
+
+                        attachment.FilePath = documentPath;
+
+                        await _dBContext.ProgressAttachments.AddAsync(attachment);
+                        await _dBContext.SaveChangesAsync();
+
+                    }
+                }
+
+           
+                var ac = _dBContext.Activities.Find(activityProgress2.ActivityId);
+                ac.Status = activityProgress2.progressStatus == ProgressStatus.SIMPLEPROGRESS ? Status.ONPROGRESS : Status.FINALIZED;
+                if (ac.ActualStart == null)
+                {
+                    ac.ActualStart = DateTime.Now;
+                }
+                if (activityProgress2.progressStatus == ProgressStatus.FINALIZE)
+                {
+                    ac.ActualEnd = DateTime.Now;
+                }
+                ac.ActualWorked += activityProgress2.ActualWorked;
+                ac.ActualBudget += activityProgress2.ActualBudget;
+
+
+                await _dBContext.SaveChangesAsync();
+
+                if (!bool.Parse(activityProgress.IsDraft))
+                {
+                    var employeee = _dBContext.Employees.Find(activityProgress.Id);
+                    var employee = new EmployeeList();
+                    if (ac.ActivityParentId != null)
+                        employee = ac.ActivityParent.Task.Project.ProjectManager;
+                    if (ac.TaskId != null)
+                        employee = ac.Task.Project.ProjectManager;
+                    if (ac.PlanId != null)
+                        employee = ac.Plan.ProjectManager;
+
+                    var email = new EmailMetadata
+                    (employee.Email, "Activity Progress Approval",
+                        $"Dear {employee.FirstName} {employee.MiddleName} {employee.LastName},\n\nEmployee {employeee.FirstName} {employeee.MiddleName} {employeee.LastName} has been report a progress on {ac.ActivityDescription}." +
+                        $" Please review the Progress and provide your approval.\n\nThank you.\n\nSincerely,\nEMIA");
+                    await _emailService.Send(email);
+
+                }
+
+
+
+
+                return new ResponseMessage
+                {
+                    Success = true,
+                    Message = "Progress Updated Successfully !!!"
+                };
+            }
+            catch (Exception ex)
             {
-                ac.ActualStart = DateTime.Now;
+                return new ResponseMessage
+                {
+                    Success = false,
+                    Message = ex.Message
+                };
             }
-            if (activityProgress2.progressStatus == ProgressStatus.FINALIZE)
-            {
-                ac.ActualEnd = DateTime.Now;
-            }
-            ac.ActualWorked += activityProgress2.ActualWorked;
-            ac.ActualBudget += activityProgress2.ActualBudget ;
-
-
-            await _dBContext.SaveChangesAsync();
-
-
-
-
-
-            return 1;
         }
 
+        public async Task<ResponseMessage> UpdateProgress(AddProgressActivityDto activityProgress)
+        {
+
+            try
+            {
+                
+
+
+
+
+
+                var actProgress = _dBContext.ActivityProgresses
+                    .Include(x=>x.EmployeeValue)
+                    .Include(x=>x.Activity)
+                    .Where(x=>x.Id==activityProgress.Id).FirstOrDefault();
+                if (actProgress!=null)
+                {
+
+
+                    var Goal = actProgress.Activity.Goal- actProgress.Activity.Begining;
+                    var progressGoal = _dBContext.ActivityProgresses.Where(x => x.ActivityId == actProgress.ActivityId && !x.IsDraft).Sum(x => x.ActualWorked);
+
+                    if (Goal < (progressGoal + activityProgress.ActualWorked))
+                    {
+                        return new ResponseMessage
+                        {
+                            Success = false,
+                            Message = "Actual worked greater than Target "
+                        };
+                    }
+                    var oldActualWorked = actProgress.ActualWorked;
+                    var oldActualBudget = actProgress.ActualBudget;
+
+                    if (actProgress != null)
+                    {
+
+                        actProgress.QuarterId = activityProgress.QuarterId;
+                        actProgress.ActualBudget = activityProgress.ActualBudget;
+                        actProgress.ActualWorked = activityProgress.ActualWorked;
+                        actProgress.progressStatus = int.Parse(activityProgress.ProgressStatus) == 0 ? ProgressStatus.SIMPLEPROGRESS : ProgressStatus.FINALIZE;
+                        actProgress.Lat = activityProgress.lat;
+                        actProgress.Lng = activityProgress.lng;
+                        actProgress.IsDraft = Boolean.Parse(activityProgress.IsDraft);
+                        actProgress.Remark = activityProgress.Remark;
+                        if (activityProgress.Finacnce != null)
+                        {
+                            var financePath = _generalConfig.UploadFiles(activityProgress.Finacnce, $"{actProgress.Id.ToString()}-Finance", "PM/Progress").Result.ToString();
+                            actProgress.FinanceDocumentPath = financePath;
+                        }
+
+                    }
+
+
+                    await _dBContext.SaveChangesAsync();
+
+                    if (activityProgress.Dcouments != null)
+                    {
+
+                        foreach (var file in activityProgress.Dcouments)
+                        {
+
+                            var attachment = new ProgressAttachment()
+                            {
+                                Id = Guid.NewGuid(),
+                                CreatedById = activityProgress.CreatedBy.ToString(),
+                                CreatedDate = DateTime.Now,
+
+                                ActivityProgressId = actProgress.ActivityId
+                            };
+
+                            var documentPath = _generalConfig.UploadFiles(file, $"{attachment.Id.ToString()}-Document", "PM/Progress").Result.ToString();
+
+                            attachment.FilePath = documentPath;
+
+                            await _dBContext.ProgressAttachments.AddAsync(attachment);
+                            await _dBContext.SaveChangesAsync();
+
+                        }
+                    }
+
+                    var ac = _dBContext.Activities
+                        
+                        .Include(x=>x.ActivityParent.Task.Project.ProjectManager)
+                        .Include(x=>x.Task.Project.ProjectManager)
+                        .Include(x=>x.Plan.ProjectManager)                        
+                        .Where(x=>x.Id==activityProgress.ActivityId).FirstOrDefault();
+
+                    ac.Status = actProgress.progressStatus == ProgressStatus.SIMPLEPROGRESS ? Status.ONPROGRESS : Status.FINALIZED;
+                    if (ac.ActualStart == null)
+                    {
+                        ac.ActualStart = DateTime.Now;
+                    }
+                    if (actProgress.progressStatus == ProgressStatus.FINALIZE)
+                    {
+                        ac.ActualEnd = DateTime.Now;
+                    }
+
+                    ac.ActualWorked -= oldActualWorked;
+                    ac.ActualBudget -= oldActualBudget;
+
+                    ac.ActualWorked += actProgress.ActualWorked;
+                    ac.ActualBudget += actProgress.ActualBudget;
+
+
+                    await _dBContext.SaveChangesAsync();
+
+
+                    if (!bool.Parse(activityProgress.IsDraft))
+                    {
+                        var  employee = new EmployeeList();
+                        if(ac.ActivityParentId!=null)
+                            employee = ac.ActivityParent.Task.Project.ProjectManager;
+                        if (ac.TaskId != null)
+                            employee = ac.Task.Project.ProjectManager;
+                        if (ac.PlanId != null)
+                            employee = ac.Plan.ProjectManager;
+
+                        var email = new EmailMetadata
+                        (employee.Email, "Activity Progress Approval",
+                            $"Dear {employee.FirstName} {employee.MiddleName} {employee.LastName},\n\nEmployee {actProgress.EmployeeValue.FirstName} {actProgress.EmployeeValue.MiddleName} {actProgress.EmployeeValue.LastName} has been report a progress on {actProgress.Activity.ActivityDescription}." +
+                            $" Please review the Progress and provide your approval.\n\nThank you.\n\nSincerely,\nEMIA");
+                        await _emailService.Send(email);
+
+
+
+                    }
+
+                    return new ResponseMessage
+                    {
+                        Success = true,
+                        Message = "Progress Updated Successfully !!!"
+                    };
+                }
+                else
+                {
+                    return new ResponseMessage
+                    {
+                        Success = false,
+                        Message = "No Progress Found !!!"
+                    };
+                }
+            }
+            catch(Exception ex)
+            {
+
+                return new ResponseMessage
+                {
+                    Success = false,
+                    Message = ex.Message
+                };
+
+            }
+        }
 
         public async Task<List<ProgressViewDto>> ViewProgress(Guid actId)
         {
@@ -359,6 +583,31 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
 
         }
 
+        public async Task<ProgressViewDto> ViewDraftProgress(Guid actId)
+        {
+            var progressView = await (from p in _dBContext.ActivityProgresses.Where(x => x.ActivityId == actId&&x.IsDraft)
+                                      select new ProgressViewDto
+                                      {
+                                          Id = p.Id,
+                                          ActalWorked = p.ActualWorked,
+                                          UsedBudget = p.ActualBudget,
+                                          QuarterId=p.QuarterId,
+                                          Remark =p.Remark,
+
+                                          IsApprovedByManager = p.IsApprovedByManager.ToString(),
+                                          IsApprovedByFinance = p.IsApprovedByFinance.ToString(),
+                                          IsApprovedByDirector = p.IsApprovedByDirector.ToString(),
+                                          ManagerApprovalRemark = p.CoordinatorApprovalRemark,
+                                          FinanceApprovalRemark = p.FinanceApprovalRemark,
+                                          DirectorApprovalRemark = p.DirectorApprovalRemark,
+                                          FinanceDocument = p.FinanceDocumentPath,
+                                          Documents = _dBContext.ProgressAttachments.Where(x => x.ActivityProgressId == p.Id).Select(y => y.FilePath).ToArray(),
+                                          CreatedAt = p.CreatedDate
+
+                                      }).FirstOrDefaultAsync();
+
+            return progressView;
+        }
         public async Task<List<ActivityViewDto>> GetAssignedActivity(Guid employeeId)
         {
 
@@ -459,7 +708,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                 List<ActivityViewDto> actDtos = new List<ActivityViewDto>();
 
 
-                var activityProgress = _dBContext.ActivityProgresses;
+                var activityProgress = _dBContext.ActivityProgresses.Where(x=>!x.IsDraft);
                 foreach (var activitprogress in not)
                 {
 

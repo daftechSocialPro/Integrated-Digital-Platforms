@@ -1,5 +1,6 @@
 ﻿
 
+using Implementation.Helper;
 using IntegratedDigitalAPI.DTOS.PM;
 
 namespace IntegratedDigitalAPI.Services.PM.Activity
@@ -11,7 +12,8 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
 
         public Task<int> AddTargetActivities(ActivityTargetDivisionDto targetDivisions);
 
-        public Task<int> AddProgress(AddProgressActivityDto activityProgress);
+        public Task<ResponseMessage> AddProgress(AddProgressActivityDto activityProgress);
+        public Task<ResponseMessage> UpdateProgress(AddProgressActivityDto activityProgress);
 
         public Task<List<ProgressViewDto>> ViewProgress(Guid actId);
 
@@ -28,6 +30,9 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
 
 
         public Task<List<ActivityAttachmentDto>> getAttachemnts(Guid taskId);
-        
+
+        public Task<ProgressViewDto> ViewDraftProgress(Guid actId);
+
+
     }
 }

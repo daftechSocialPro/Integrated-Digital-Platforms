@@ -1,6 +1,8 @@
 ﻿
 
 using IntegratedImplementation.DTOS.Configuration;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Internal;
 
 namespace IntegratedDigitalAPI.DTOS.PM
 {
@@ -71,6 +73,7 @@ namespace IntegratedDigitalAPI.DTOS.PM
 
     public class AddProgressActivityDto
     {
+        public Guid? Id { get; set; }
         public Guid ActivityId { get; set; }
         public Guid QuarterId { get; set; }
         public Guid EmployeeValueId { get; set; }
@@ -81,12 +84,13 @@ namespace IntegratedDigitalAPI.DTOS.PM
         public string Lng { get; set; } = null!;
         public Guid CreatedBy { get; set; }
 
-        public string[] DcoumentPath { get; set; }
-        public string FinacncePath { get; set; }
+        public IFormFile[] ? Dcouments { get; set; }
+        public IFormFile? Finacnce{ get; set; }
         public string Remark { get; set; }
 
         public string lat { get; set; }
         public string lng { get; set; }
+        public string IsDraft { get; set; }
 
     }
 
@@ -106,7 +110,7 @@ namespace IntegratedDigitalAPI.DTOS.PM
         public string? FinanceApprovalRemark { get; set; }
         public string? ManagerApprovalRemark { get; set; }
         public string? DirectorApprovalRemark { get; set; }
-
+        public Guid QuarterId { get; set; }
         public DateTime CreatedAt { get; set; }
 
 
