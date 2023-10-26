@@ -38,6 +38,7 @@ import { ProgressReportBystructureComponent } from './pages/project-managment/pr
 import { ProgressReportComponent } from './pages/project-managment/progress-report/progress-report/progress-report.component';
 import { StrategicPlanReportComponent } from './pages/project-managment/progress-report/strategic-plan-report/strategic-plan-report.component';
 import { DisciplinaryCasesComponent } from './pages/human-resource/employee-managment/disciplinary-cases/disciplinary-cases.component';
+import { StaffWeeklyPlanComponent } from './pages/project-managment/progress-report/staff-weekly-plan/staff-weekly-plan.component';
 
 
 
@@ -65,6 +66,7 @@ const routes: Routes = [
   { path: 'progressreportbystructure', canActivate: [AuthGuard], component: ProgressReportBystructureComponent },
 
   { path: 'performancereport', canActivate: [AuthGuard], component: PerformanceReportComponent },
+  { path: 'weeklyPlanReport', canActivate: [AuthGuard], component: StaffWeeklyPlanComponent },
 
   { path: 'estimatedcoast', canActivate: [AuthGuard], component: EstimatedCoastComponent },
 

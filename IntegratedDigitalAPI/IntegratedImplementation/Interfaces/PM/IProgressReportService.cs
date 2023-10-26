@@ -2,6 +2,7 @@
 
 
 
+using IntegratedImplementation.DTOS.PM;
 using IntegratedInfrustructure.Model.HRM;
 using IntegratedInfrustructure.Models.PM;
 using Microsoft.EntityFrameworkCore;
@@ -24,9 +25,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
         Task<PerfomanceReport> PerformanceReports(FilterationCriteria filterationCriteria);
         Task<List<ActivityProgressViewModel>> GetActivityProgress(Guid? activityId);
         Task<List<EstimatedCostDto>> GetEstimatedCost(Guid structureId, int budegtYear);
-
-
-        
+        Task<List<StaffWeeklyPlanDto>> GetStaffWeeklyPlans(FilterDateCriteriaDto filterDateCriteria);
 
     }
 }

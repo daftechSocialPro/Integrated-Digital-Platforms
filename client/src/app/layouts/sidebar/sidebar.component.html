@@ -33,22 +33,30 @@
 
                         <li class="nav-heading">Pm Reports</li>
 
-                        
 
-                        <li> <a routerLink="/strategicplanreport"   routerLinkActive="active"> <i class="bi bi-circle"></i><span>Strategic Plan Report
-                                          </span> </a>
+
+                        <li> <a routerLink="/strategicplanreport" routerLinkActive="active"> <i
+                                          class="bi bi-circle"></i><span>Strategic Plan Report
+                                    </span> </a>
                         </li>
-                        <li> <a routerLink="/plannedreport"   routerLinkActive="active"> <i class="bi bi-circle"></i><span>Planned Report </span>
+                        <li> <a routerLink="/plannedreport" routerLinkActive="active"> <i
+                                          class="bi bi-circle"></i><span>Planned Report </span>
                               </a>
                         </li>
 
-                        <li> <a routerLink="/progressreport"   routerLinkActive="active"> <i class="bi bi-circle"></i><span>Progress Report</span>
+                        <li> <a routerLink="/progressreport" routerLinkActive="active"> <i
+                                          class="bi bi-circle"></i><span>Progress Report</span>
                               </a></li>
-                        <li> <a routerLink="/progressreportbystructure"   routerLinkActive="active"> <i class="bi bi-circle"></i><span>Progress
+                        <li> <a routerLink="/progressreportbystructure" routerLinkActive="active"> <i
+                                          class="bi bi-circle"></i><span>Progress
                                           Report By
                                           Department</span></a></li>
-                        <li> <a routerLink="/performancereport"   routerLinkActive="active"> <i class="bi bi-circle"></i><span>Progress
+                        <li> <a routerLink="/performancereport" routerLinkActive="active"> <i
+                                          class="bi bi-circle"></i><span>Progress
                                           Report</span> </a>
+                        </li>
+                        <li> <a routerLink="/weeklyPlanReport" routerLinkActive="active"> <i
+                                          class="bi bi-circle"></i><span>Weekly Plan Report</span> </a>
                         </li>
                         <!-- <li> <a routerLink="/estimatedcoast"   routerLinkActive="active"> <i class="bi bi-circle"></i><span>Estimated Coast </span>
                               </a>
@@ -61,37 +69,43 @@
                               class="bi bi-chevron-down ms-auto"></i>
                   </a>
                   <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                        <li *ngIf="roleMatch(['HRM-CONFIGURATION'])"> <a routerLink="/HRM/configuration" routerLinkActive="active">
+                        <li *ngIf="roleMatch(['HRM-CONFIGURATION'])"> <a routerLink="/HRM/configuration"
+                                    routerLinkActive="active">
                                     <i class="bi bi-circle"></i><span>Configuration</span> </a></li>
-                        <li *ngIf="roleMatch(['EMPLOYEE-MANAGEMENT','USER-MANAGER'])"> <a routerLink="/HRM/employeeMangment"
-                                    routerLinkActive="active"> <i class="bi bi-circle"></i><span>Employee Managment</span> </a></li>
-                  
+                        <li *ngIf="roleMatch(['EMPLOYEE-MANAGEMENT','USER-MANAGER'])"> <a
+                                    routerLink="/HRM/employeeMangment" routerLinkActive="active"> <i
+                                          class="bi bi-circle"></i><span>Employee Managment</span> </a></li>
+
                         <li *ngIf="roleMatch(['EMPLOYEE-MANAGEMENT','USER-MANAGER'])"> <a routerLink="/HRM/volunters"
                                     routerLinkActive="active"> <i class="bi bi-circle"></i><span>Volunters</span> </a>
                         </li>
                         <li *ngIf="roleMatch(['EMPLOYEE-MANAGEMENT'])"> <a routerLink="/HRM/employeeTermination"
                                     routerLinkActive="active"> <i class="bi bi-circle"></i><span>Employee
                                           Termination</span> </a></li>
-                  
+
                         <li *ngIf="roleMatch(['VACANCY-POST','VACANCY-APPROVER','VACANCY-2ND-APPROVER'])"> <a
-                                    routerLink="/HRM/vacancyList" routerLinkActive="active"> <i class="bi bi-circle"></i><span>Vacancy
+                                    routerLink="/HRM/vacancyList" routerLinkActive="active"> <i
+                                          class="bi bi-circle"></i><span>Vacancy
                                           List</span> </a></li>
-                        <li> <a routerLink="/HRM/leave" routerLinkActive="active"> <i class="bi bi-circle"></i><span>Leave </span>
-                  
+                        <li> <a routerLink="/HRM/leave" routerLinkActive="active"> <i
+                                          class="bi bi-circle"></i><span>Leave </span>
+
                               </a>
                         </li>
-                  
-                        <li *ngIf="roleMatch(['LOAN-APPROVER','LOAN-2ND-APPROVER'])"> <a routerLink="/HRM/loan-managment"
-                                    routerLinkActive="active"> <i class="bi bi-circle"></i><span>Loan</span> </a></li>
-                  
-                        <li *ngIf="roleMatch(['EVALUATER'])"> <a routerLink="/HRM/employeesupervisor" routerLinkActive="active"> <i
-                                          class="bi bi-circle"></i><span>Employee
+
+                        <li *ngIf="roleMatch(['LOAN-APPROVER','LOAN-2ND-APPROVER'])"> <a
+                                    routerLink="/HRM/loan-managment" routerLinkActive="active"> <i
+                                          class="bi bi-circle"></i><span>Loan</span> </a></li>
+
+                        <li *ngIf="roleMatch(['EVALUATER'])"> <a routerLink="/HRM/employeesupervisor"
+                                    routerLinkActive="active"> <i class="bi bi-circle"></i><span>Employee
                                           Supervisor</span> </a></li>
-                        <li *ngIf="roleMatch(['EVALUATER'])"> <a routerLink="/HRM/employeeperformance" routerLinkActive="active"> <i
-                                          class="bi bi-circle"></i><span>Performance
+                        <li *ngIf="roleMatch(['EVALUATER'])"> <a routerLink="/HRM/employeeperformance"
+                                    routerLinkActive="active"> <i class="bi bi-circle"></i><span>Performance
                                           Management</span> </a></li>
                         <li *ngIf="roleMatch(['Case-Recorder','EVALUATER'])"> <a routerLink="/HRM/disciplinary-case"
-                                    routerLinkActive="active"> <i class="bi bi-circle"></i><span>Disciplinary Case</span> </a></li>
+                                    routerLinkActive="active"> <i class="bi bi-circle"></i><span>Disciplinary
+                                          Case</span> </a></li>
                   </ul>
             </li>
 

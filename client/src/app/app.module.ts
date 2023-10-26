@@ -211,6 +211,7 @@ import { AddProjectLocationComponent } from './pages/project-managment/pm-config
 import { StrategicPlanReportComponent } from './pages/project-managment/progress-report/strategic-plan-report/strategic-plan-report.component';
 import { DisciplinaryCasesComponent } from './pages/human-resource/employee-managment/disciplinary-cases/disciplinary-cases.component';
 import { AddDisciplinaryCaseComponent } from './pages/human-resource/employee-managment/disciplinary-cases/add-disciplinary-case/add-disciplinary-case.component';
+import { StaffWeeklyPlanComponent } from './pages/project-managment/progress-report/staff-weekly-plan/staff-weekly-plan.component';
 
 @NgModule({
   declarations: [
@@ -480,7 +481,8 @@ import { AddDisciplinaryCaseComponent } from './pages/human-resource/employee-ma
     AddProjectLocationComponent,
     StrategicPlanReportComponent,
     DisciplinaryCasesComponent,
-    AddDisciplinaryCaseComponent
+    AddDisciplinaryCaseComponent,
+    StaffWeeklyPlanComponent
     
 
 

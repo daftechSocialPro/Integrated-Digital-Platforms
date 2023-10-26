@@ -9,6 +9,7 @@ using IntegratedInfrustructure.Data;
 using IntegratedInfrustructure.Model.HRM;
 using static IntegratedInfrustructure.Data.EnumList;
 using IntegratedInfrustructure.Models.PM;
+using IntegratedImplementation.DTOS.PM;
 
 namespace IntegratedDigitalAPI.Services.PM.ProgressReport
 {
@@ -3887,6 +3888,24 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
             return contribution;
         }
 
+        public async Task<List<StaffWeeklyPlanDto>> GetStaffWeeklyPlans(FilterDateCriteriaDto filterDateCriteria)
+        {
+            var report = await  _dBContext.Activities.AsNoTracking()
+                                 .Include(x => x.ProjectLocation)
+                                 .Include(x => x.Employee)
+                                 .Where(x => x.ShouldEnd >= filterDateCriteria.FromDate
+                                 && x.ShouldEnd <= filterDateCriteria.ToDate)
+                                 .Select(x => new StaffWeeklyPlanDto
+                                 {
+                                     ActivityNo = x.ActivityNumber,
+                                     Activity = x.ActivityDescription,
+                                     ExecutionDate = x.ShouldEnd,
+                                     PlaceOfWork = x.ProjectLocation.Name,
+                                     Responsible = String.Join("," ,x.AssignedEmploye.Select(x => $"{x.Employee.FirstName} {x.Employee.MiddleName} {x.Employee.LastName}").ToList())
+                                     
+                                 }).ToListAsync();
+            return report;
+        }
 
         public class PlanReportByProgramDto
         {
