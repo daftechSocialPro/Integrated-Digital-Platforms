@@ -23,6 +23,7 @@
                                 <th>Payment Period (year)</th>
                                 <th>Min Deducted %</th>
                                 <th>Max Deducted %</th>
+                                <th>Remark</th>
                                 <th></th>
                             </tr>
                         </ng-template>
@@ -34,6 +35,7 @@
                                 <td>{{ setting.paymentYear }}</td>
                                 <td>{{ setting.minDeductedPercent }}</td>
                                 <td>{{ setting.maxDeductedPercent }}</td>
+                                <td>{{ setting.remark }}</td>
                                 <td>
                                     <button type="button" (click)="update(setting)" class="btn btn-outline-warning"><i
                                             class="bi bi-pencil "></i> </button>

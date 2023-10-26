@@ -114,6 +114,7 @@ import { AddUserComponent } from './pages/configuration/user-management/add-user
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AutocompleteComponent } from './components/autocomplete/autocomplete.component';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
 
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { UpdateRolesComponent } from './pages/configuration/user-management/update-roles/update-roles.component';
@@ -208,6 +209,8 @@ import { GetActivityProgressComponent } from './pages/project-managment/progress
 import { ProjectLocationComponent } from './pages/project-managment/pm-configuration/project-location/project-location.component';
 import { AddProjectLocationComponent } from './pages/project-managment/pm-configuration/project-location/add-project-location/add-project-location.component';
 import { StrategicPlanReportComponent } from './pages/project-managment/progress-report/strategic-plan-report/strategic-plan-report.component';
+import { DisciplinaryCasesComponent } from './pages/human-resource/employee-managment/disciplinary-cases/disciplinary-cases.component';
+import { AddDisciplinaryCaseComponent } from './pages/human-resource/employee-managment/disciplinary-cases/add-disciplinary-case/add-disciplinary-case.component';
 
 @NgModule({
   declarations: [
@@ -475,7 +478,9 @@ import { StrategicPlanReportComponent } from './pages/project-managment/progress
     GetActivityProgressComponent,
     ProjectLocationComponent,
     AddProjectLocationComponent,
-    StrategicPlanReportComponent
+    StrategicPlanReportComponent,
+    DisciplinaryCasesComponent,
+    AddDisciplinaryCaseComponent
     
 
 
@@ -507,6 +512,7 @@ import { StrategicPlanReportComponent } from './pages/project-managment/progress
     OverlayPanelModule,
     BadgeModule,
     InputSwitchModule,
+    ConfirmPopupModule,
     ToastrModule.forRoot({
       preventDuplicates: true,
     })

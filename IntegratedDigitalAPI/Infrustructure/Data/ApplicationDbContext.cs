@@ -76,6 +76,7 @@ namespace IntegratedInfrustructure.Data
         public DbSet<LoanRequest> LoanRequests { get; set; }
         public DbSet<EmployeeLoan> EmployeeLoans { get; set; }
         public DbSet<EmployeeSettlement> EmployeeSettlements { get; set; }
+        public DbSet<EmployeeDisciplinaryCase> EmployeeDisciplinaryCases { get; set; }
 
         public DbSet<Volunter> Volunters { get; set; }
 

@@ -17,6 +17,7 @@ import { AddPerformancePlanDetailDto, AddPerformancePlanDto, PerformancePlanDto 
 import { AssignSupervisorDto, EmployeeSupervisorsDto } from '../model/HRM/IEmployeeSupervisorDto';
 import { AddLoanSettingDto, LoanSettingDto } from '../model/HRM/ILoanSettingDto';
 import { ApproveInitialRequestDto, EmployeeLoanDto, LoanInfoDto, LoanRequestDto, RequestedLoanListDto } from '../model/HRM/ILoanManagmentDto';
+import { AddDisciplinaryCaseDto, ApproveDisciplinaryCase, DisciplinaryCaseListDto, EmployeeDisciplinaryListDto } from '../model/HRM/IDisplinaryCaseDto';
 
 export interface toastPayload {
     message: string;
@@ -420,6 +421,17 @@ export class HrmService {
     getEmployeeLoans() {
         return this.http.get<EmployeeLoanDto[]>(this.baseUrl + `/LoanManagement/GetEmployeeLoans`)
     }
-    
 
+    getDisciplinaryCase() {
+        return this.http.get<EmployeeDisciplinaryListDto[]>(this.baseUrl + `/EmployementDetail/GetEmployeeDisciplinaries`);
+    }
+
+    addDisciplinaryCase(addDisciplinaryCase: AddDisciplinaryCaseDto) {
+        return this.http.post<ResponseMessage>(this.baseUrl + "/EmployementDetail/AddDisciplinaryCase", addDisciplinaryCase);
+    }
+
+    approveDisciplinaryCase(approveCase: ApproveDisciplinaryCase) {
+        return this.http.post<ResponseMessage>(this.baseUrl + "/EmployementDetail/ApproveCase", approveCase)
+    }
+    
 }

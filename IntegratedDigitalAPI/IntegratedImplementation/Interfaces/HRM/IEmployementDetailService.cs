@@ -25,5 +25,10 @@ namespace IntegratedImplementation.Interfaces.HRM
         public Task<ResponseMessage> AssignSupervisor(AssignSupervisorDto assignSupervisor);
         public Task<ResponseMessage> DeleteSupervisee(Guid employeeId);
 
+
+        public Task<List<EmployeeDisciplinaryListDto>> GetEmployeeDisciplinaries();
+        public Task<ResponseMessage> AddDisciplinaryCase(AddDisciplinaryCaseDto addDisciplinary);
+        public Task<ResponseMessage> ApproveCase(ApproveDisciplinaryCase approveDisplinary);
+
     }
 }

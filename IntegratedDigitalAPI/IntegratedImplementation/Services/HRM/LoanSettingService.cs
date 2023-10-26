@@ -36,6 +36,7 @@ namespace IntegratedImplementation.Services.HRM
                 MinDeductedPercent = addLoanSetting.MinDeductedPercent,
                 PaymentYear = addLoanSetting.PaymentYear,
                 TypeOfLoan = addLoanSetting.TypeOfLoan,
+                Remark = addLoanSetting.Remark,
                 Rowstatus = RowStatus.ACTIVE
             };
 
@@ -55,6 +56,7 @@ namespace IntegratedImplementation.Services.HRM
                 MaxLoanAmmount= x.MaxLoanAmmount,
                 MinDeductedPercent = x.MinDeductedPercent,
                 PaymentYear = x.PaymentYear,
+                Remark = x.Remark,
                 TypeOfLoan = x.TypeOfLoan.ToString()
             }).ToListAsync();
         }
@@ -71,6 +73,7 @@ namespace IntegratedImplementation.Services.HRM
             currentSetting.MinDeductedPercent = updateLoanSetting.MinDeductedPercent;
             currentSetting.MaxLoanAmmount = updateLoanSetting.MaxLoanAmmount;
             currentSetting.PaymentYear = updateLoanSetting.PaymentYear;
+            currentSetting.Remark = updateLoanSetting.Remark;
 
             await _dbContext.SaveChangesAsync();
 

@@ -37,6 +37,7 @@ import { PerformanceReportComponent } from './pages/project-managment/progress-r
 import { ProgressReportBystructureComponent } from './pages/project-managment/progress-report/progress-report-bystructure/progress-report-bystructure.component';
 import { ProgressReportComponent } from './pages/project-managment/progress-report/progress-report/progress-report.component';
 import { StrategicPlanReportComponent } from './pages/project-managment/progress-report/strategic-plan-report/strategic-plan-report.component';
+import { DisciplinaryCasesComponent } from './pages/human-resource/employee-managment/disciplinary-cases/disciplinary-cases.component';
 
 
 
@@ -89,7 +90,8 @@ const routes: Routes = [
   { path: 'pages-login', component: PagesLoginComponent },
   { path: 'user-profile', canActivate: [AuthGuard], component: UsersProfileComponent },
   { path: 'user_managment', canActivate: [AuthGuard], component: UserManagementComponent },
-  { path: 'HRM/loan-managment', canActivate: [AuthGuard], component: LoanManagementComponent }
+  { path: 'HRM/loan-managment', canActivate: [AuthGuard], component: LoanManagementComponent },
+  { path: 'HRM/disciplinary-case', canActivate: [AuthGuard], component: DisciplinaryCasesComponent, data: { permittedRoles: ['EVALUATER'] } },
 
 ];
 

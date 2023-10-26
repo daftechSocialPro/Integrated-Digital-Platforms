@@ -16,6 +16,7 @@ namespace IntegratedImplementation.DTOS.HRM
         public int PaymentYear { get; set; }
         public double MinDeductedPercent { get; set; }
         public double MaxDeductedPercent { get; set; }
+        public string? Remark { get; set; }
     }
 
     public class AddLoanSettingDto
@@ -27,6 +28,7 @@ namespace IntegratedImplementation.DTOS.HRM
         public int PaymentYear { get; set; }
         public double MinDeductedPercent { get; set; }
         public double MaxDeductedPercent { get; set; }
+        public string? Remark { get; set; }
     }
 
     public class UpdateLoanSettingDto : AddLoanSettingDto

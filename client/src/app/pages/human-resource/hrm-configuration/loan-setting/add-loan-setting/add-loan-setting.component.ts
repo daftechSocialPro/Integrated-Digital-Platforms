@@ -28,6 +28,7 @@ export class AddLoanSettingComponent implements OnInit {
       paymentYear:[null, Validators.required],
       minDeductedPercent:[null, Validators.required],
       maxDeductedPercent:[null, Validators.required],
+      remark:[null],
   });
   }
 
@@ -52,6 +53,7 @@ export class AddLoanSettingComponent implements OnInit {
         minDeductedPercent: this.LoanSettingForm.value.minDeductedPercent,
         maxLoanAmmount: this.LoanSettingForm.value.maxLoanAmmount,
         paymentYear: this.LoanSettingForm.value.paymentYear,
+        remark: this.LoanSettingForm.value.remark,
         createdById : this.user.userId
       }
       this.hrmService.addLoanSetting(loanSetting).subscribe({

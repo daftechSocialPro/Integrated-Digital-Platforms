@@ -6,6 +6,7 @@ export interface LoanSettingDto {
     paymentYear: number,
     minDeductedPercent: number,
     maxDeductedPercent: number,
+    remark: string,
 }
 
 export interface AddLoanSettingDto {
@@ -17,5 +18,6 @@ export interface AddLoanSettingDto {
     paymentYear: number,
     minDeductedPercent: number,
     maxDeductedPercent: number,
+    remark?: string;
 }
 

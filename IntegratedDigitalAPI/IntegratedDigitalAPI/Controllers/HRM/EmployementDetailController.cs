@@ -138,5 +138,40 @@ namespace IntegratedDigitalAPI.Controllers.HRM
                 return BadRequest();
             }
         }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(EmployeeDisciplinaryListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetEmployeeDisciplinaries()
+        {
+            return Ok(await _employementDetailService.GetEmployeeDisciplinaries());
+        }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> AddDisciplinaryCase(AddDisciplinaryCaseDto addDisciplinary)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _employementDetailService.AddDisciplinaryCase(addDisciplinary));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPut]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> ApproveCase(ApproveDisciplinaryCase approveDisplinary)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _employementDetailService.ApproveCase(approveDisplinary));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
     }
 }

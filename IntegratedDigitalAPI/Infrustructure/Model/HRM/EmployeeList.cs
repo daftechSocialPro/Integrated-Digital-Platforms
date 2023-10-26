@@ -16,6 +16,7 @@ namespace IntegratedInfrustructure.Model.HRM
         public EmployeeList()
         {
             EmployeeDetail = new HashSet<EmploymentDetail>();
+            EmployeeDisplinaryCases = new HashSet<EmployeeDisciplinaryCase>();
         }
         public string EmployeeCode { get; set; } = null!;
         public string FirstName { get; set; } = null!;
@@ -47,6 +48,9 @@ namespace IntegratedInfrustructure.Model.HRM
 
         [InverseProperty(nameof(EmploymentDetail.Employee))]
         public ICollection<EmploymentDetail> EmployeeDetail { get; set; }
+        
+        [InverseProperty(nameof(EmployeeDisciplinaryCase.Employee))]
+        public ICollection<EmployeeDisciplinaryCase> EmployeeDisplinaryCases { get; set; }
 
     }
 }

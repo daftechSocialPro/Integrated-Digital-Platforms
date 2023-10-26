@@ -198,6 +198,12 @@ namespace IntegratedInfrustructure.Data
             REJECTED
         }
 
+        public enum WarningType
+        {
+            ORAL,
+            LETTER
+        }
+
 
     }
 }

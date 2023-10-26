@@ -2,6 +2,7 @@
 using Implementation.Helper;
 using IntegratedImplementation.DTOS.Configuration;
 using IntegratedImplementation.DTOS.HRM;
+using IntegratedImplementation.Helper;
 using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedImplementation.Interfaces.HRM;
 using IntegratedInfrustructure.Data;
@@ -12,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Threading.Tasks;
 using static IntegratedInfrustructure.Data.EnumList;
@@ -22,10 +24,12 @@ namespace IntegratedImplementation.Services.HRM
     {
         private readonly ApplicationDbContext _dbContext;
         private IGeneralConfigService _generalConfig;
-        public EmployementDetailService(ApplicationDbContext dbContext,IGeneralConfigService generalConfig) 
+        private IEmailService _emailService;
+        public EmployementDetailService(ApplicationDbContext dbContext,IGeneralConfigService generalConfig, IEmailService emailService) 
         { 
             _dbContext = dbContext;
             _generalConfig = generalConfig;
+            _emailService = emailService;
         }
 
         public async Task<List<ResignationRequestListDto>> GetResingationLists()
@@ -168,11 +172,16 @@ namespace IntegratedImplementation.Services.HRM
             empReqst.IsBlackListed = blacListed;
             empReqst.Remark = remark;
 
-            currentEmp.EmploymentStatus = EmploymentStatus.RESIGNED;
+            currentEmp.EmploymentStatus = EmploymentStatus.TERMINATED;
             currentEmp.TerminatedDate = DateTime.Now;
 
-
             await _dbContext.SaveChangesAsync();
+
+            var email = new EmailMetadata
+                   (currentEmp.Email, "Notice for Termination",
+                       $"Dear {currentEmp.FirstName} {currentEmp.MiddleName} {currentEmp.LastName} \n You have been  terminated from your current job." +
+                       $" Please come to the office and finish your termination \n regards ");
+            await _emailService.Send(email);
 
             return new ResponseMessage { Success = true, Message = "Termination Requested Successfully" };
 
@@ -239,6 +248,64 @@ namespace IntegratedImplementation.Services.HRM
             await _dbContext.SaveChangesAsync();
 
             return new ResponseMessage { Success = true, Message = "Deleted Successfully!!" };
+        }
+
+        public  async Task<List<EmployeeDisciplinaryListDto>> GetEmployeeDisciplinaries()
+        {
+            var EmployeeSelectList = await (from e in _dbContext.Employees
+                                           where e.EmployeeDisplinaryCases.Any()
+                                           select new EmployeeDisciplinaryListDto
+                                           {
+                                               EmployeeId = e.Id,
+                                               EmployeeName = $"{e.FirstName} {e.MiddleName} {e.LastName}",
+                                               ImagePath = e.ImagePath,
+                                               TotalWarnings = e.EmployeeDisplinaryCases.Count(),
+                                               DisciplinaryCaseLists = e.EmployeeDisplinaryCases.Select(x =>  new DisciplinaryCaseListDto
+                                               {
+                                                   ApprovedDate = x.ApprovedDate,
+                                                   ApproverEmployee = $"{x.ApprovedBy.FirstName} {x.ApprovedBy.MiddleName} {x.ApprovedBy.LastName}",
+                                                   Date = x.Date,
+                                                   Fault = x.Fault,
+                                                   DetailDescription = x.DetailDescription,
+                                                   WarningType = x.WarningType.ToString(),
+                                               }).ToList()
+                                           }).ToListAsync();
+
+            return EmployeeSelectList;
+        }
+
+        public async Task<ResponseMessage> AddDisciplinaryCase(AddDisciplinaryCaseDto addDisciplinary)
+        {
+            EmployeeDisciplinaryCase disciplinaryCase = new EmployeeDisciplinaryCase()
+            {
+                Id = Guid.NewGuid(),
+                CreatedById = addDisciplinary.CreatedById,
+                CreatedDate = DateTime.Now,
+                Date = addDisciplinary.Date,
+                DetailDescription = addDisciplinary.DetailDescription,
+                EmployeeId = addDisciplinary.EmployeeId,
+                Fault = addDisciplinary.Fault,
+                WarningType = addDisciplinary.WarningType,
+                Rowstatus = RowStatus.ACTIVE
+            };
+
+            await _dbContext.EmployeeDisciplinaryCases.AddAsync(disciplinaryCase);
+            await _dbContext.SaveChangesAsync();
+
+            return new ResponseMessage { Success = true, Message = "Registered Successfully" };
+        }
+
+        public async Task<ResponseMessage> ApproveCase(ApproveDisciplinaryCase approveDisplinary)
+        {
+            var currentCase = await _dbContext.EmployeeDisciplinaryCases.FirstOrDefaultAsync(x => x.Id == approveDisplinary.Id);
+            if (currentCase == null)
+                return new ResponseMessage { Success = false, Message = "Could not find case!!" };
+
+            currentCase.ApprovedById = approveDisplinary.ApproverId;
+            currentCase.ApprovedDate = DateTime.Now;
+
+            await _dbContext.SaveChangesAsync();
+            return new ResponseMessage { Success = true, Message = "Approved Successfully!!" };
         }
     }
 }

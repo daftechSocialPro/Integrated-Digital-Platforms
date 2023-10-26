@@ -16,5 +16,6 @@ namespace IntegratedInfrustructure.Model.HRM
         public int PaymentYear { get; set; }
         public double MinDeductedPercent { get; set; }
         public double MaxDeductedPercent { get; set; }
+        public string? Remark { get; set; }
     }
 }

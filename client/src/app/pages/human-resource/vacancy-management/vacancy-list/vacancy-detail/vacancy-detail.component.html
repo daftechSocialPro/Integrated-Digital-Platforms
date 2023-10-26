@@ -78,56 +78,40 @@
             </div>
             <div class="card-body">
                 <h5 class="card-title"> Candidates</h5>
-                <p-table #dt [value]="vaccancyEmployees" [rows]="5" [paginator]="true"
-                    [globalFilterFields]="['fullName', 'phoneNumber', 'applicantStatus']"
-                    [tableStyle]="{'min-width': '75rem'}" dataKey="id"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                    [showCurrentPageReport]="true">
+
+                <p-table #dt [columns]="cols" [value]="vaccancyEmployees" 
+                 [exportHeader]="'customExportHeader'" 
+                 [(selection)]="selectedApplicants"
+                 [tableStyle]="{ 'min-width': '50rem' }">
                     <ng-template pTemplate="caption">
                         <div class="flex">
-                            <button pButton label="Search" class="p-button-outlined" icon="pi pi-filter-slash"></button>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <span class="p-input-icon-left ml-auto">
-                                <i class="pi pi-search"></i>
-                                <input pInputText type="text" (input)="onGlobalFilter(dt, $event)"
-                                    placeholder="Search keyword" />
-                            </span>
+                            <button type="button" pButton pRipple icon="pi pi-file" (click)="dt.exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button> &nbsp;&nbsp;
+                            <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button> &nbsp;
+                            <button type="button" pButton pRipple  icon="pi pi-upload"class="mr-2"></button>
                         </div>
                     </ng-template>
-                    <ng-template pTemplate="header">
+                    <ng-template pTemplate="header" let-columns>
                         <tr>
-                            <th>Name </th>
-                            <th>Gender </th>
-                            <th pSortableColumn="dateOfApplication">
-                                Date Of Application <p-sortIcon field="dateOfApplication"></p-sortIcon></th>
-                            <th>Phone Number </th>
-                            <th>Application Type</th>
-                            <th>Application Status</th>
-                            <th>Action</th>
-                            <!-- <th>Experience </th>
-                            <th></th> -->
-
+                            <th></th>
+                            <th *ngFor="let col of columns">
+                                {{ col.header }}
+                            </th>
+                            <th></th>
                         </tr>
                     </ng-template>
-                    <ng-template pTemplate="body" let-vemp>
-                        <tr>
-                            <td>{{vemp.fullName}}</td>
-                            <td>{{vemp.gender}}</td>
-                            <td>{{vemp.dateOfApplication | date: 'yyyy, MMM, dd'}}</td>
-                            <td>{{vemp.phoneNumber}}</td>
-                            <td>{{vemp.applicantType}}</td>
-                            <td>{{vemp.applicantStatus}}</td>
-                            <td><p-button (onClick)="goToDetails(vemp.id)" icon="pi pi-ellipsis-h"
-                                    styleClass="p-button-outlined p-button-sm"></p-button></td>
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="emptymessage">
-                        <tr>
-                            <td colspan="7">No Applicants yet.</td>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns">
+                        <tr [pSelectableRow]="rowData">
+                            <td>
+                                <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+                            </td>
+                            <td *ngFor="let col of columns">
+                                {{ rowData[col.field] }}
+                            </td>
+                            <td><p-button (onClick)="goToDetails(rowData.id)" icon="pi pi-ellipsis-h"
+                                styleClass="p-button-outlined p-button-sm"></p-button></td>
                         </tr>
                     </ng-template>
                 </p-table>
-
             </div>
         </div>
 
