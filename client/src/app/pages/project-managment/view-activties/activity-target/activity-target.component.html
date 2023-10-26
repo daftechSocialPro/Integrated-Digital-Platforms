@@ -10,11 +10,12 @@
             <h5 class="card-title">Assign Target for {{activity.name}}</h5>
 
             <h5 style="text-align: right!important ;">
-                Overall Target : <b>{{activity.target - activity.begining}} {{activity.unitOfMeasurment}}</b><br/>
+                <b>{{activity.startDate|date:"dd MMMM, yyyy"}} - {{activity.endDate|date:"dd MMMM, yyyy"}}</b><br />
+                Overall Target : <b>{{activity.target - activity.begining}} {{activity.unitOfMeasurment}}</b><br />
                 Overall Budget : <b> {{activity.plannedBudget}} ETB</b>
-            
-            <br/>
-            
+
+                <br />
+
             </h5>
             <hr />
 
@@ -24,41 +25,41 @@
 
 
                 <div class="col-md-4" *ngFor="let tar of actTargets.controls;">
-                    <ng-container  [formGroup]="tar">
-                <div style="text-align:center; padding: 25px; background-color : #f6f9ff;">
-                    <span style="text-align: center !important;">
-                        <input class="form-control" formControlName="monthName" />                     
-                    </span>
-                    <div class="row mt-2">
-                        <div class="col-md-6">
-                            <div class="form-floating">
-                                <input type="number"  formControlName="Target" class="form-control" id="Target" placeholder="Target"
-                                    >
-                                <label for="Target">Target</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-floating">
-                                <input type="number" class="form-control" id="Budget" placeholder="Budget"
-                                 formControlName = "Budget"  >
-                                <label for="Budget">Budget</label>
-                            </div>
-                        </div>
+                    <ng-container [formGroup]="tar">
+                        <div style="text-align:center; padding: 25px; background-color : #f6f9ff;">
+                            <span style="text-align: center !important;">
+                                <input class="form-control" formControlName="monthName" />
+                            </span>
+                            <div class="row mt-2">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="number" formControlName="Target" class="form-control" id="Target"
+                                            placeholder="Target">
+                                        <label for="Target">Target</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="number" class="form-control" id="Budget" placeholder="Budget"
+                                            formControlName="Budget">
+                                        <label for="Budget">Budget</label>
+                                    </div>
+                                </div>
 
-                    </div>
+                            </div>
 
+                        </div>
+                    </ng-container>
                 </div>
-            </ng-container>
+
+
+
+
             </div>
-
-
-
-
+            <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
+                    (click)="closeModal()">Close</button>
+                <button type="button" type="submit" (click)="submitTarget()" class="btn btn-outline-primary">Assign
+                    Target </button>
+            </div>
         </div>
-        <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
-            (click)="closeModal()">Close</button>
-        <button type="button" type="submit" (click)="submitTarget()"
-            class="btn btn-outline-primary">Assign Target  </button>
     </div>
-    </div>
-</div>

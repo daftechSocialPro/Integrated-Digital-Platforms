@@ -23,25 +23,27 @@ export class ActivityTargetComponent implements OnInit {
 
   actTargets = new FormArray([
     new FormGroup({
-      monthName: new FormControl({ value: 'July (ሃምሌ)', disabled: true }),
+      monthName: new FormControl({ value: 'January', disabled: true }),
       monthValue: new FormControl(0, Validators.required),
       Target: new FormControl(0, Validators.required),
       Budget: new FormControl(0, Validators.required)
     })
   ])
 
-  months: string[] = [
-    'August (ነሃሴ)',
-    'September (መስከረም)',
-    'October (ጥቅምት)',
-    'November (ህዳር)',
-    'December (ታህሳስ)',
-    'January (ጥር)',
-    'February (የካቲት)',
-    'March (መጋቢት)',
-    'April (ሚያዚያ)',
-    'May (ግንቦት)',
-    'June (ሰኔ)'
+  months: string[] = [   
+
+    'January',
+    'Feburary',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'Augest',
+    'September',
+    'October',
+    'November',
+    'December'
   ];
 
   constructor(
@@ -54,19 +56,36 @@ export class ActivityTargetComponent implements OnInit {
   ngOnInit(): void {
     this.addTargetForm();
     this.user = this.userService.getCurrentUser();
+
+    console.log('activity',this.activity)
   }
 
   addTargetForm() {
-    var index = 1
-    for (let month of this.months) {
+    debugger
+
+    let monthDiffernce = this.getMonthDifference(this.activity.startDate,this.activity.endDate)
+    console.log('monthdiffernce',monthDiffernce)
+    this.actTargets.removeAt(0)
+
+   
+    
+    var monthIndex = new Date(this.activity.startDate).getMonth();
+    let total = monthDiffernce +  monthIndex
+    while ( monthIndex < 12) {
       const target = new FormGroup({
-        monthName: new FormControl({ value: month, disabled: true }),
-        monthValue: new FormControl(index, Validators.required),
+        monthName: new FormControl({ value: this.months[monthIndex], disabled: true }),
+        monthValue: new FormControl(monthIndex, Validators.required),
         Target: new FormControl(0, Validators.required),
         Budget: new FormControl(0, Validators.required)
       });
+
+     
       this.actTargets.push(target);
-      index += 1
+      monthIndex += 1
+      if (monthIndex==total)
+        break;
+
+      
     }
   }
 
@@ -120,6 +139,8 @@ export class ActivityTargetComponent implements OnInit {
 
     }
 
+    console.log("target act",ActivityTargetDivisionDto)
+
 
     this.pmService.addActivityTargetDivision(ActivityTargetDivisionDto).subscribe({
       next:(res)=>{
@@ -144,6 +165,19 @@ export class ActivityTargetComponent implements OnInit {
   }
   closeModal() {
     this.activeModal.close()
+  }
+
+  getMonthDifference(startDate: string, endDate: string): number {
+    const startYear = new Date(startDate).getFullYear();
+    const startMonth = new Date(startDate).getMonth();
+    const endYear = new Date(endDate).getFullYear();
+    const endMonth = new Date(endDate).getMonth();
+  
+    const monthDifference = (endYear - startYear) * 12 + (endMonth - startMonth);
+  
+    console.log('Month Difference:', monthDifference);
+  
+    return monthDifference;
   }
 
 

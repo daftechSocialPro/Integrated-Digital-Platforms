@@ -13,6 +13,7 @@ import { IActivityAttachment } from '../model/PM/ActivityAttachment';
 import { FilterationCriteria } from '../model/PM/ProgressReportDto';
 import { IPlanReportByProgramDto, IPlanReportDetailDto } from '../model/PM/PlanReportDetailDto';
 import { IPlannedReport } from '../model/PM/PlannedReportDto';
+import { ResponseMessage } from '../model/ResponseMessage.Model';
 
 
 @Injectable({
@@ -72,11 +73,22 @@ export class PMService {
 
     addActivityPorgress(progress: FormData) {
 
-        return this.http.post(this.BaseURI + "/Activity/addProgress", progress)
+        return this.http.post<ResponseMessage>(this.BaseURI + "/Activity/addProgress", progress)
     }
+
+    updateActivityProgress(progress:FormData){
+
+        return this.http.put<ResponseMessage>(this.BaseURI + "/Activity/updateProgress", progress)
+        
+    }
+
     viewProgress(activityId: string) {
 
         return this.http.get<ViewProgressDto[]>(this.BaseURI + "/Activity/viewProgress?actId=" + activityId)
+    }
+    viewDraftProgress(activityId: string) {
+
+        return this.http.get<ViewProgressDto>(this.BaseURI + "/Activity/viewDraftProgress?actId=" + activityId)
     }
 
     getAssignedActivities(empId: string) {

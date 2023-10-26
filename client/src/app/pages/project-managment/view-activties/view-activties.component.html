@@ -50,7 +50,7 @@
                 <br />
             </div>
             <div>
-                <span>Begining :</span> {{actView.begining}} <br />
+                <span>Baseline :</span> {{actView.begining}} <br />
                 <span>Target :</span> {{actView.target}} <br />
                 <span>Unit Measurment: </span> {{actView.unitOfMeasurment}}
             </div>
@@ -60,13 +60,12 @@
             <table class="table table-bordered table-responsive" *ngIf="actView.monthPerformance!.length>0">
                 <thead>
                     <tr>
-                        <th class="text-center" colspan="3">
+                        <!-- <th class="text-center" colspan="3">
                             July (ሃምሌ)
-                        </th>
-                        <th class="text-center" *ngFor="let month of months " colspan="4">
-
-                            {{month}}
-                        </th>
+                        </th> -->
+                        <th *ngFor="let month of monthsArray; let i = index" [attr.colspan]="i === 0 ? 3 : 4">
+                            {{ month.name }}
+                          </th>
 
 
                     </tr>
@@ -76,14 +75,14 @@
                         <th> p</th>
                         <th>A</th>
                         <th style="background-color:#E2EFDA">P(%) </th>
-                        <ng-container *ngFor="let month of months ">
-
-                            <th> p</th>
-                            <th>A</th>
-                            <th>P(%) </th>
-                            <th style="background-color:#E2EFDA">Upto {{month}}</th>
-
-                        </ng-container>
+                        <ng-container *ngFor="let month of monthsArray; let i = index">
+                            <ng-container *ngIf="i >= 1">
+                              <th>p</th>
+                              <th>A</th>
+                              <th>P(%)</th>
+                              <th style="background-color:#E2EFDA">Upto {{ month.name }}</th>
+                            </ng-container>
+                          </ng-container>
 
 
 

@@ -1,10 +1,11 @@
-﻿using IntegratedDigitalAPI.DTOS.PM;
+﻿using Implementation.Helper;
+using IntegratedDigitalAPI.DTOS.PM;
 using IntegratedDigitalAPI.Services.PM.Activity;
+using IntegratedImplementation.DTOS.HRM;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.SqlServer.Server;
-
-
+using System.Net;
 using System.Net.Http.Headers;
 
 namespace IntegratedDigitalAPI.Controllers.PM
@@ -64,123 +65,55 @@ namespace IntegratedDigitalAPI.Controllers.PM
                 return StatusCode(500, $"Internal Server Error : {ex}");
             }
         }
+
+
+
         [HttpPost("addProgress")]
-
-        public IActionResult AddActivityProgress()
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> AddActivityProgress([FromForm] AddProgressActivityDto Progress)
         {
-
-            try
+            if (ModelState.IsValid)
             {
-                var files = Request.Form.Files;
-
-
-
-                List<string> DocumentPathlist = new List<string>();
-
-
-
-
-                string FinancePath = "";
-                if (files.Any())
-
-                {
-                    foreach (var file in files)
-                    {
-
-                        var folderName = Path.Combine("wwwroot", "ActivityDocuments");
-                        
-                        var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-
-
-                        if (!Directory.Exists(pathToSave))
-                        
-                            Directory.CreateDirectory(pathToSave);
-                        
-
-
-
-                        if (file.Name == "Finance")
-                        {
-                            var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-                            var fileNameSave = Guid.NewGuid() + "." + fileName.Split('.')[1];
-                            var fullPath = Path.Combine(pathToSave, fileNameSave);
-                            FinancePath = Path.Combine(folderName, fileNameSave);
-
-                            if (System.IO.File.Exists(fullPath))
-                            {
-                                System.IO.File.Delete(fullPath);
-                            }
-
-                            using (var stream = new FileStream(fullPath, FileMode.Create))
-                            {
-                                file.CopyTo(stream);
-                            }
-                        }
-                        if (file.Name == "files")
-                        {
-                            var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-                            var fileNameSave = Guid.NewGuid() + "." + fileName.Split('.')[1];
-                            var fullPath = Path.Combine(pathToSave, fileNameSave);
-                            DocumentPathlist.Add(Path.Combine(folderName, fileNameSave));
-
-                            if (System.IO.File.Exists(fullPath))
-                            {
-                                System.IO.File.Delete(fullPath);
-                            }
-
-                            using (var stream = new FileStream(fullPath, FileMode.Create))
-                            {
-                                file.CopyTo(stream);
-                            }
-                        }
-
-
-
-
-                    }
-
-
-
-
-                }
-                var progress = new AddProgressActivityDto
-                {
-
-                    DcoumentPath = DocumentPathlist.ToArray(),
-                    FinacncePath = FinancePath,
-                    QuarterId = Guid.Parse(Request.Form["QuarterId"]),
-                    ActualBudget = float.Parse(Request.Form["ActualBudget"]),
-                    ActualWorked = float.Parse(Request.Form["ActualWorked"]),
-                    Remark = Request.Form["Remark"],
-                    ActivityId = Guid.Parse(Request.Form["ActivityId"]),
-                    ProgressStatus = Request.Form["ProgressStatus"],
-                    CreatedBy = Guid.Parse(Request.Form["CreatedBy"]),
-                    EmployeeValueId = Guid.Parse(Request.Form["EmployeeValueId"]),
-                    lat = Request.Form["lat"],
-                    lng = Request.Form["lng"],
-
-                };
-
-
-
-
-                var response = _activityService.AddProgress(progress);
-                return Ok(new { response });
+                return Ok(await _activityService.AddProgress(Progress));
             }
-            catch (Exception ex)
+            else
             {
-                return StatusCode(500, $"Internal Server Error : {ex}");
+                return BadRequest();
             }
         }
+
+
+        [HttpPut("updateProgress")]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> UpdateActivityProgress([FromForm] AddProgressActivityDto Progress)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _activityService.UpdateProgress(Progress));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+
+
+
 
         [HttpGet("viewProgress")]
         public async Task<List<ProgressViewDto>> ViewActivityProgress(Guid actId)
         {
             return await _activityService.ViewProgress(actId);
         }
+        [HttpGet("viewDraftProgress")]
+        public async Task<ProgressViewDto> ViewDraftActivityProgress(Guid actId)
+        {
+            return await _activityService.ViewDraftProgress(actId);
+        }
 
         [HttpGet("getAssignedActivties")]
-        public async Task<List<ActivityViewDto>> GetAssignedActivity (Guid employeeId)
+        public async Task<List<ActivityViewDto>> GetAssignedActivity(Guid employeeId)
         {
             return await _activityService.GetAssignedActivity(employeeId);
         }
@@ -192,7 +125,7 @@ namespace IntegratedDigitalAPI.Controllers.PM
         }
 
         [HttpPost("approve")]
-       public IActionResult ApproveProgress(ApprovalProgressDto approvalProgressDto)
+        public IActionResult ApproveProgress(ApprovalProgressDto approvalProgressDto)
         {
             try
             {
@@ -208,10 +141,10 @@ namespace IntegratedDigitalAPI.Controllers.PM
         [HttpGet("getActivityAttachments")]
         public async Task<List<ActivityAttachmentDto>> GetActivityAtachments(Guid taskId)
         {
-           
-                return await _activityService.getAttachemnts(taskId);
-             
-          
+
+            return await _activityService.getAttachemnts(taskId);
+
+
         }
 
     }
