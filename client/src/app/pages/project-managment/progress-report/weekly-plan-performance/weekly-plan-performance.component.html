@@ -1,10 +1,10 @@
 <main id="main" class="main">
     <div class="pagetitle">
-        <h1>Performance Report </h1>
+        <h1>Plan Summary Sheet </h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
-                <li class="breadcrumb-item active">Plan Report </li>
+                <li class="breadcrumb-item active">Plan Summary Sheet </li>
             </ol>
         </nav>
     </div>
@@ -20,8 +20,7 @@
         </div>
         
         <div class="card">
-            <p-table #dt [value]="staffWeeklyPlanDto" rowGroupMode="rowspan" groupRowsBy="responsible"
-                sortField="responsible" sortMode="single" [tableStyle]="{'min-width': '75rem'}">
+            <p-table #dt [value]="staffWeeklyPlanDto"  [tableStyle]="{'min-width': '75rem'}">
                 <ng-template pTemplate="caption">
                     <div class="flex">
                         <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button> &nbsp;
@@ -32,13 +31,12 @@
                         <th style="width:3rem">S.N</th>
                         <th>Activity Number</th>
                         <th>Activity</th>
-                        <th>Place Of Work</th>
-                        <th>Execution Date</th>
-                        <th>Responsible</th>
+                        <th>Status</th>
+                        <th>Reason For Not Acomplished</th>
+                        <th>Remark</th>
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-acts let-rowIndex="rowIndex" let-rowgroup="rowgroup"
-                    let-rowspan="rowspan">
+                <ng-template pTemplate="body" let-acts let-rowIndex="rowIndex" >
                     <tr>
                         <td>{{rowIndex + 1}}</td>
                         <td>
@@ -48,13 +46,13 @@
                             {{acts.activity}}
                         </td>
                         <td>
-                            {{acts.placeOfWork}}
+                            {{acts.status}}
                         </td>
                         <td>
-                            {{acts.executionDate | date : 'dd, MMMM, yyyy'}}
+                            {{acts.reasonsForNotComplited}}
                         </td>
-                        <td *ngIf="rowgroup" [attr.rowspan]="rowspan">
-                            {{acts.responsible}}
+                        <td >
+                            {{acts.remark}}
                         </td>
                     </tr>
                 </ng-template>

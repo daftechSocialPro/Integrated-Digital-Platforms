@@ -10,3 +10,12 @@ export interface FilterDateCriteriaDto {
     fromDate: Date;
     toDate: Date;
 }
+
+
+export interface PlanPerformanceListDto {
+    activityNo: string;
+    activity: string;
+    status: string;
+    reasonsForNotComplited: string;
+    remark: string;
+}

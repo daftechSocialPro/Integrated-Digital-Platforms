@@ -150,6 +150,19 @@ namespace IntegratedDigitalAPI.Controllers.PM
             }
         }
 
+        [HttpPost("GetWeeklyPerformancePlans")]
+        public async Task<IActionResult> GetWeeklyPerformancePlans(FilterDateCriteriaDto filterDateCriteria)
+        {
+            try
+            {
+                return Ok(await _progressReportService.GetWeeklyPerformancePlans(filterDateCriteria));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
         [HttpGet("GetEstimatedCost")]
         public async Task<IActionResult> GetEstimatedCost(Guid structureId, int budegtYear)
         {

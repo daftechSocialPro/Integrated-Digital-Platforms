@@ -26,6 +26,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
         Task<List<ActivityProgressViewModel>> GetActivityProgress(Guid? activityId);
         Task<List<EstimatedCostDto>> GetEstimatedCost(Guid structureId, int budegtYear);
         Task<List<StaffWeeklyPlanDto>> GetStaffWeeklyPlans(FilterDateCriteriaDto filterDateCriteria);
+        Task<List<PlanPerformanceListDto>> GetWeeklyPerformancePlans(FilterDateCriteriaDto filterDateCriteria);
 
     }
 }

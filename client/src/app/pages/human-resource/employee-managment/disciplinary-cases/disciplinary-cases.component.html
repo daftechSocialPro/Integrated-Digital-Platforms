@@ -1,67 +1,94 @@
-<p-table [value]="disciplinaryCase" dataKey="name" [tableStyle]="{ 'min-width': '60rem' }">
-    <ng-template pTemplate="caption">
-        <div class="flex">
-            <button type="button" pButton pRipple icon="pi pi-plus" (click)="addDisplinary()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Disciplinary Case</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+                <li class="breadcrumb-item">Disciplinary Case</li>
+                <li class="breadcrumb-item active"></li>
+            </ol>
+        </nav>
+    </div>
+    <section class="section">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Disciplinary Case</h5>
+
+                <p-table [value]="disciplinaryCase" dataKey="name" [tableStyle]="{ 'min-width': '60rem' }">
+                    <ng-template pTemplate="caption">
+                        <div class="flex">
+                            <button type="button" pButton pRipple icon="pi pi-plus" (click)="addDisplinary()"
+                                class="mr-2" pTooltip="Add New" tooltipPosition="bottom"></button>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 5rem"></th>
+                            <th pSortableColumn="name">Employee Name <p-sortIcon field="name"></p-sortIcon></th>
+                            <th>Image</th>
+                            <th pSortableColumn="price">Total Warnings <p-sortIcon field="price"></p-sortIcon></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-employee let-expanded="expanded">
+                        <tr>
+                            <td>
+                                <button type="button" pButton pRipple [pRowToggler]="employee"
+                                    class="p-button-text p-button-rounded p-button-plain"
+                                    [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                            </td>
+                            <td>{{employee.employeeName}}</td>
+                            <td><img [src]="getImage(employee.imagePath)" [alt]="employee.employeeName" width="50"
+                                    class="shadow-4" /></td>
+                            <td>{{ employee.totalWarnings}}</td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="rowexpansion" let-employee>
+                        <tr>
+                            <td colspan="7">
+                                <div class="p-3">
+                                    <p-table [value]="employee.disciplinaryCaseLists" dataKey="id">
+                                        <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="date">Date <p-sortIcon field="date"></p-sortIcon></th>
+                            <th pSortableColumn="warningType">Warning Type <p-sortIcon field="warningType"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="fault">Fault <p-sortIcon field="fault"></p-sortIcon></th>
+                            <th pSortableColumn="detailDescription">Detail Description <p-sortIcon
+                                    field="detailDescription"></p-sortIcon></th>
+                            <th>Approve Date </th>
+                            <th>Approver Employee </th>
+                            <th style="width: 4rem"></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-caseList>
+                        <tr>
+                            <td>{{ caseList.date | date: 'dd, MMMM, yyyy' }}</td>
+                            <td>{{ caseList.warningType }}</td>
+                            <td>{{ caseList.fault }}</td>
+                            <td>{{ caseList.detailDescription }}</td>
+                            <td>{{ caseList.approvedDate | date: 'dd, MMMM, yyyy'}}</td>
+                            <td>{{ caseList.approverEmployee}}</td>
+                            <td>
+                                <p-toast></p-toast>
+                                <p-confirmPopup></p-confirmPopup>
+                                <button *ngIf="caseList.approverEmployee" type="button" pButton pRipple
+                                    icon="pi pi-check" (click)="confirm($event,caseList.id)" class="mr-2" pTooltip="Approve"
+                                    tooltipPosition="bottom"></button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td colspan="6">There are no cases for the Employee.</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+            </td>
+            </tr>
+            </ng-template>
+            </p-table>
         </div>
-    </ng-template>
-    <ng-template pTemplate="header">
-        <tr>
-            <th style="width: 5rem"></th>
-            <th pSortableColumn="name">Employee Name <p-sortIcon field="name"></p-sortIcon></th>
-            <th>Image</th>
-            <th pSortableColumn="price">Total Warnings <p-sortIcon field="price"></p-sortIcon></th>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-employee let-expanded="expanded">
-        <tr>
-            <td>
-                <button type="button" pButton pRipple [pRowToggler]="employee" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
-            </td>
-            <td>{{employee.employeeName}}</td>
-            <td><img [src]="getImage(employee.imagePath)" [alt]="employee.employeeName" width="50" class="shadow-4" /></td>
-            <td>{{ employee.totalWarnings}}</td>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="rowexpansion" let-employee>
-        <tr>
-            <td colspan="7">
-                <div class="p-3">
-                    <p-table [value]="employee.disciplinaryCaseLists" dataKey="id">
-                        <ng-template pTemplate="header">
-                            <tr>
-                                <th pSortableColumn="date">Date <p-sortIcon field="date"></p-sortIcon></th>
-                                <th pSortableColumn="warningType">Warning Type <p-sortIcon field="warningType"></p-sortIcon></th>
-                                <th pSortableColumn="fault">Fault <p-sortIcon field="fault"></p-sortIcon></th>
-                                <th pSortableColumn="detailDescription">Detail Description <p-sortIcon field="detailDescription"></p-sortIcon></th>
-                                <th>Approve Date </th>
-                                <th>Approver Employee </th>
-                                <th style="width: 4rem"></th>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="body" let-caseList>
-                            <tr>
-                                <td>{{ caseList.date | date: 'dd, MMMM, yyyy' }}</td>
-                                <td>{{ caseList.warningType }}</td>
-                                <td>{{ caseList.fault }}</td>
-                                <td>{{ caseList.detailDescription }}</td>
-                                <td>{{ caseList.approvedDate | date: 'dd, MMMM, yyyy'}}</td>
-                                <td>{{ caseList.approverEmployee}}</td>
-                                <td>
-                                    <p-toast></p-toast>
-                                    <p-confirmPopup></p-confirmPopup>
-                                    <button *ngIf="caseList.approverEmployee" type="button" pButton pRipple icon="pi pi-check"
-                                        (click)="confirm($event,caseList.id)" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
-                                </td>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="emptymessage">
-                            <tr>
-                                <td colspan="6">There are no cases for the Employee.</td>
-                            </tr>
-                        </ng-template>
-                    </p-table>
-                </div>
-            </td>
-        </tr>
-    </ng-template>
-</p-table>
+        </div>
+    </section>
+</main>>

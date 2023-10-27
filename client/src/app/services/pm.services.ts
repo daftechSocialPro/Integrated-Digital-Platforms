@@ -14,7 +14,7 @@ import { FilterationCriteria } from '../model/PM/ProgressReportDto';
 import { IPlanReportByProgramDto, IPlanReportDetailDto } from '../model/PM/PlanReportDetailDto';
 import { IPlannedReport } from '../model/PM/PlannedReportDto';
 import { ResponseMessage } from '../model/ResponseMessage.Model';
-import { FilterDateCriteriaDto, StaffWeeklyPlanDto } from '../model/PM/StaffWeeklyPlanDto';
+import { FilterDateCriteriaDto, PlanPerformanceListDto, StaffWeeklyPlanDto } from '../model/PM/StaffWeeklyPlanDto';
 
 
 @Injectable({
@@ -198,5 +198,9 @@ export class PMService {
 
     getStaffWeeklyPlans(FilterDateCriteriaDto: FilterDateCriteriaDto) {
         return this.http.post<StaffWeeklyPlanDto[]>(this.BaseURI + "/ProgressReport/GetStaffWeeklyPlans", FilterDateCriteriaDto)
+    }
+
+    getWeeklyPerformancePlans(FilterDateCriteriaDto: FilterDateCriteriaDto) {
+        return this.http.post<PlanPerformanceListDto[]>(this.BaseURI + "/ProgressReport/GetWeeklyPerformancePlans", FilterDateCriteriaDto)
     }
 }

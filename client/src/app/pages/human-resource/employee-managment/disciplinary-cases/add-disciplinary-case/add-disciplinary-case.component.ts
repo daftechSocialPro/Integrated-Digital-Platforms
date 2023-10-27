@@ -22,6 +22,7 @@ export class AddDisciplinaryCaseComponent implements OnInit {
   disciplinaryCaseForm !: FormGroup;
   user !: UserView
   employeeDropDown: SelectList[] = [];
+  employee!: string;
 
 
   constructor(
@@ -33,7 +34,7 @@ export class AddDisciplinaryCaseComponent implements OnInit {
     private dropService: DropDownService,
   ) {
     this.disciplinaryCaseForm = this.formBuilder.group({
-      employeeId: [null, Validators.required],
+      employeeId: [null],
       date: [null, Validators.required],
       warningType: [null, Validators.required],
       fault: [null, Validators.required],
@@ -63,9 +64,9 @@ export class AddDisciplinaryCaseComponent implements OnInit {
 
       var disciplinaryCase: AddDisciplinaryCaseDto = {
 
-        employeeId: this.disciplinaryCaseForm.value.employeeId,
+        employeeId: this.employee,
         date: this.disciplinaryCaseForm.value.date,
-        warningType: this.disciplinaryCaseForm.value.warningType,
+        warningType: Number(this.disciplinaryCaseForm.value.warningType),
         fault: this.disciplinaryCaseForm.value.fault,
         detailDescription: this.disciplinaryCaseForm.value.detailDescription,
         createdById: this.user.userId
@@ -88,6 +89,11 @@ export class AddDisciplinaryCaseComponent implements OnInit {
         }
       )
     }
+  }
+
+  selectEmployee(event: string) {
+    this.employee = event
+
   }
 
 }

@@ -3907,6 +3907,41 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
             return report;
         }
 
+        public async Task<List<PlanPerformanceListDto>> GetWeeklyPerformancePlans(FilterDateCriteriaDto filterDateCriteria)
+        {
+            List<PlanPerformanceListDto> planPerformanceLists = new List<PlanPerformanceListDto>();
+
+            var report = await _dBContext.Activities.AsNoTracking()
+                                 .Include(x => x.ActProgress)
+                                 .Where(x => x.ShouldEnd >= filterDateCriteria.FromDate
+                                 && x.ShouldEnd <= filterDateCriteria.ToDate).ToListAsync();
+
+            foreach(var items in report)
+            {
+                PlanPerformanceListDto plan =   new PlanPerformanceListDto
+                {
+                    Activity = items.ActivityDescription,
+                    ActivityNo = items.ActivityNumber,
+                };
+
+                if (!items.ActProgress.Any())
+                {
+                    plan.Status = "Not done";
+                }
+                else
+                {
+                    plan.Status = items.ActProgress.Any(x => x.progressStatus == ProgressStatus.SIMPLEPROGRESS) ? "In Progress" : "Finalized";
+
+                }
+
+                planPerformanceLists.Add(plan);
+            }
+
+            return planPerformanceLists;
+
+
+        }
+
         public class PlanReportByProgramDto
         {
             public List<ProgramViewModel> ProgramViewModels { get; set; }
