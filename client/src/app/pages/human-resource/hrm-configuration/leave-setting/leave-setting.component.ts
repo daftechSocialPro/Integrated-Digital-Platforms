@@ -11,6 +11,7 @@ import { ConfirmEventType, ConfirmationService, MessageService } from 'primeng/a
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CustomConfirmationComponent } from '../../leave/leave-requests/custom-confirmation/custom-confirmation.component';
 import { SelectList } from 'src/app/model/common';
+import { LeaveCalanderComponent } from './leave-calander/leave-calander.component';
 
 @Component({
   selector: 'app-leave-setting',
@@ -64,6 +65,13 @@ export class LeaveSettingComponent implements OnInit {
     modalRef.result.then(() => {
       this.getLeavePlans()
     })
+  }
+  calanderView(){
+    let modalRef = this.modalService.open(LeaveCalanderComponent, { size: 'xl', backdrop: 'static' })
+    modalRef.componentInstance.LeavePlanSettings = this.LeavePlanSettings
+    // modalRef.result.then(() => {
+    //   this.getLeavePlans()
+    // })
   }
 
 

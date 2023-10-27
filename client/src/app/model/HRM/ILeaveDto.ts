@@ -64,7 +64,7 @@ export interface AppliedLeavesGetDto {
 
 
 export interface LeavePlanSettingGetDto {
-    id: String
+    id: string
     employeeId: string,
     toDate: Date,
     fromDate: Date,

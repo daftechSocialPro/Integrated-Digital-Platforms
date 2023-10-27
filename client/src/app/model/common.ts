@@ -60,3 +60,15 @@ export interface GetStartEndDate{
     endDate:string
    
 }
+
+export interface IEvoCalanderDto {
+
+
+    id: string
+    name: string
+    description: string
+    badge: string
+    date: string
+    type: string
+    everyYear: boolean
+}

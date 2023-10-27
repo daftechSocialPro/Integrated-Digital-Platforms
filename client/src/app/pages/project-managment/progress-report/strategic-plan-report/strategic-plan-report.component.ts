@@ -47,8 +47,9 @@ export class StrategicPlanReportComponent implements OnInit {
   
   Search() {
 
-    this.pmService.getPlannedReport(this.serachForm.value.BudgetYear, this.serachForm.value.ReportBy, this.serachForm.value.selectStructureId).subscribe({
+    this.pmService.getStrategicPlanReport(this.serachForm.value.BudgetYear, this.serachForm.value.ReportBy, this.serachForm.value.StrategicPlanId).subscribe({
       next: (res) => {
+
              this.plannedreport = res 
              this.cnt=  this.plannedreport?.pMINT
 
@@ -56,7 +57,7 @@ export class StrategicPlanReportComponent implements OnInit {
         console.error(err)
       }
     })
-
+    
   }
   exportTableToExcel(table: HTMLElement, fileName: string): void {
     const worksheet = XLSX.utils.table_to_sheet(table);

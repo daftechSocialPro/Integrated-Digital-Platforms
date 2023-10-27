@@ -211,6 +211,9 @@ import { AddProjectLocationComponent } from './pages/project-managment/pm-config
 import { StrategicPlanReportComponent } from './pages/project-managment/progress-report/strategic-plan-report/strategic-plan-report.component';
 import { DisciplinaryCasesComponent } from './pages/human-resource/employee-managment/disciplinary-cases/disciplinary-cases.component';
 import { AddDisciplinaryCaseComponent } from './pages/human-resource/employee-managment/disciplinary-cases/add-disciplinary-case/add-disciplinary-case.component';
+import { LeaveCalanderComponent } from './pages/human-resource/hrm-configuration/leave-setting/leave-calander/leave-calander.component';
+import { ActivityLocationComponent } from './pages/project-managment/progress-report/activity-location/activity-location.component';
+import { ActivityMapComponent } from './pages/project-managment/progress-report/activity-location/activity-map/activity-map.component';
 
 @NgModule({
   declarations: [
@@ -480,7 +483,10 @@ import { AddDisciplinaryCaseComponent } from './pages/human-resource/employee-ma
     AddProjectLocationComponent,
     StrategicPlanReportComponent,
     DisciplinaryCasesComponent,
-    AddDisciplinaryCaseComponent
+    AddDisciplinaryCaseComponent,
+    LeaveCalanderComponent,
+    ActivityLocationComponent,
+    ActivityMapComponent
     
 
 

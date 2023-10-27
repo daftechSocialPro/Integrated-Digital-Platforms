@@ -95,3 +95,13 @@ export interface ApprovalProgressDto {
 
 }
 
+export interface ActivityMaps{
+
+    activityName :string
+    activityNumber : string
+    lat : number
+    lng: number
+    projectLocation:string
+    
+}
+
