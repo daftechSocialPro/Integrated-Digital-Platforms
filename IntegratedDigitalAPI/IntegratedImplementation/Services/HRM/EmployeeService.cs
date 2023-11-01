@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Implementation.DTOS.Authentication;
 using Implementation.Helper;
+using Implementation.Interfaces.Authentication;
 using IntegratedImplementation.DTOS.Configuration;
 using IntegratedImplementation.DTOS.HRM;
 using IntegratedImplementation.Helper;
@@ -30,18 +32,21 @@ namespace IntegratedImplementation.Services.HRM
         private UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
         private readonly IEmailService _emailService;
+        private readonly IAuthenticationService _authenticationService;
         public EmployeeService(
             ApplicationDbContext dbContext,
             IGeneralConfigService generalConfig,
             IMapper mapper,
             UserManager<ApplicationUser> userManager,
-            IEmailService emailService)
+            IEmailService emailService,
+            IAuthenticationService authenticationService)
         {
             _dbContext = dbContext;
             _generalConfig = generalConfig;
             _userManager = userManager;
             _mapper = mapper;
             _emailService = emailService;
+            _authenticationService = authenticationService;
         }
 
         public async Task<ResponseMessage> AddEmployee(EmployeePostDto addEmployee)
@@ -79,7 +84,9 @@ namespace IntegratedImplementation.Services.HRM
                     FirstName = addEmployee.FirstName,
                     MiddleName = addEmployee.MiddleName,
                     LastName = addEmployee.LastName,
-                    AmharicName = addEmployee.AmharicName,
+                    AmharicFirstName = addEmployee.AmharicFirstName,
+                    AmharicMiddleName = addEmployee.AmharicMiddleName,
+                    AmharicLastName = addEmployee.AmharicLastName,
                     BirthDate = addEmployee.BirthDate,
                     Gender = Enum.Parse<Gender>(addEmployee.Gender),
                     IsPension = addEmployee.IsPension,
@@ -188,7 +195,9 @@ namespace IntegratedImplementation.Services.HRM
                     employee.FirstName = addEmployee.FirstName;
                     employee.MiddleName = addEmployee.MiddleName;
                     employee.LastName = addEmployee.LastName;
-                    employee.AmharicName = addEmployee.AmharicName;
+                    employee.AmharicFirstName = addEmployee.AmharicFirstName;
+                    employee.AmharicMiddleName = addEmployee.AmharicMiddleName;
+                    employee.AmharicLastName = addEmployee.AmharicLastName;
                     employee.PhoneNumber = addEmployee.PhoneNumber;
 
                     employee.Email = addEmployee.Email;
@@ -367,6 +376,25 @@ namespace IntegratedImplementation.Services.HRM
                 {
                     employee.IsApproved = true;
                     await _dbContext.SaveChangesAsync();
+
+                    AddUSerDto currentUser = new AddUSerDto
+                    {
+                        EmployeeId = employee.Id,
+                        UserName = employee.Email,
+                        Password = _generalConfig.GeneratePassword()
+                    };
+
+                   ResponseMessage response = await _authenticationService.AddUser(currentUser);
+
+                    if (response.Success)
+                    {
+                        var email = new EmailMetadata
+                        (employee.Email, "Account Registration\n\n",
+                            $"Dear {employee.FirstName} {employee.MiddleName} {employee.LastName} , Your account has been registerd." +
+                            $"\n\n Your user name is {employee.Email}" +
+                            $"\n\n and your password is {currentUser.Password}\n\n Regards,\nEMIA");
+                        await _emailService.Send(email);
+                    }
 
                     return new ResponseMessage
                     {

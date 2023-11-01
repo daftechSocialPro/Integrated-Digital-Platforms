@@ -36,8 +36,7 @@ export class PagesLoginComponent implements OnInit {
         next: (res) => {
 
           if (res.success) {
-            this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });              
-          
+            this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });        
             sessionStorage.setItem('token', res.data);
             this.router.navigateByUrl('/');
           }

@@ -27,16 +27,7 @@ export class UserManagementComponent implements OnInit {
 
   }
 
-  addUser() {
-
-    let modalRef = this.modalService.open(AddUserComponent, { size: 'lg', backdrop: 'static' })
-    modalRef.result.then(() => {
-      this.getUsers()
-    })
-  }
-
   updateUser(user:UserList){
-
     let modalRef = this.modalService.open(UpdateRolesComponent,{size:'lg',backdrop:'static'})
     modalRef.componentInstance.employee = user
     modalRef.result.then(() => {

@@ -17,10 +17,16 @@
                   <img [src]="getImage(Employee.imagePath!)" alt="Profile" class="rounded-circle">
                   <h2>{{Employee.firstName}}
                      {{Employee.lastName}}</h2>
-                  <h3 class="text-center">
-                     {{user.role}}
-
-                  </h3>
+                     <br/>
+                     <p-overlayPanel #op>
+                        <ng-template pTemplate="content">
+                           <h3 class="text-center">
+                              <p-listbox [options]="roleLists" [filter]="true"  [listStyle]="{'max-height':'250px'}" [style]="{'width':'25rem'}"></p-listbox>
+                           </h3>
+                        </ng-template>
+                    </p-overlayPanel>
+                    <button pButton pRipple type="button" (click)="op.toggle($event)" label="View User Roles" class="p-button-text"></button>
+                   
                </div>
             </div>
             <div class="card">
