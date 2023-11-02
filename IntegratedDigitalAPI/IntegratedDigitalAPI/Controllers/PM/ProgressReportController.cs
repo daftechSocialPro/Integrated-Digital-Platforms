@@ -5,6 +5,7 @@ using IntegratedDigitalAPI.Services.PM.ProgressReport;
 using static IntegratedDigitalAPI.Services.PM.ProgressReport.ProgressReportService;
 using IntegratedInfrustructure.Model.PM;
 using IntegratedDigitalAPI.DTOS.PM;
+using IntegratedImplementation.DTOS.PM;
 
 namespace IntegratedDigitalAPI.Controllers.PM
 {
@@ -151,6 +152,33 @@ namespace IntegratedDigitalAPI.Controllers.PM
                 return StatusCode(500, "Internal Server Error");
             }
         }
+
+        [HttpPost("GetStaffWeeklyPlans")]
+        public async Task<IActionResult> GetStaffWeeklyPlans(FilterDateCriteriaDto filterDateCriteria)
+        {
+            try
+            {
+                return Ok(await _progressReportService.GetStaffWeeklyPlans(filterDateCriteria));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        [HttpPost("GetWeeklyPerformancePlans")]
+        public async Task<IActionResult> GetWeeklyPerformancePlans(FilterDateCriteriaDto filterDateCriteria)
+        {
+            try
+            {
+                return Ok(await _progressReportService.GetWeeklyPerformancePlans(filterDateCriteria));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
         [HttpGet("GetEstimatedCost")]
         public async Task<IActionResult> GetEstimatedCost(Guid structureId, int budegtYear)
         {
