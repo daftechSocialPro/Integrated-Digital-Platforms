@@ -107,7 +107,7 @@ export class HrmService {
         return this.http.get<VolunterGetDto[]>(this.baseUrl + "/Employee/GetVolunters")
     }
     getVolunter(employeeId:string){
-        return this.http.get<EmployeeGetDto>(this.baseUrl + "/Employee/GetVolunter?employeeId="+employeeId)
+        return this.http.get<VolunterGetDto>(this.baseUrl + "/Employee/GetVolunter?employeeId="+employeeId)
    
     }
     addVolunter(voluterPost:FormData) {

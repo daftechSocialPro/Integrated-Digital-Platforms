@@ -24,6 +24,7 @@ export class UsersProfileComponent implements OnInit {
   passwordForm!: FormGroup
   imageURL!: string;
   loanInfo!: LoanInfoDto;
+  roleLists: string[] = [];
 
 
 
@@ -73,6 +74,8 @@ export class UsersProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.userService.getCurrentUser()
+    this.roleLists = this.user.role.toString().split(',');
+    console.log("Role Lists",this.roleLists);
     this.getEmployee();
     this.getLoan();
 

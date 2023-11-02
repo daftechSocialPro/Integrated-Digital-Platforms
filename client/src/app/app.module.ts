@@ -52,6 +52,7 @@ import { DepartmentComponent } from './pages/human-resource/hrm-configuration/de
 import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
+import {ListboxModule} from 'primeng/listbox';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { AddDepartmentComponent } from './pages/human-resource/hrm-configuration/department/add-department/add-department.component';
 import { UpdateDepartmentComponent } from './pages/human-resource/hrm-configuration/department/update-department/update-department.component';
@@ -523,6 +524,7 @@ import { WeeklyPlanPerformanceComponent } from './pages/project-managment/progre
     BadgeModule,
     InputSwitchModule,
     ConfirmPopupModule,
+    ListboxModule,
     ToastrModule.forRoot({
       preventDuplicates: true,
     })

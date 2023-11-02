@@ -63,6 +63,7 @@ namespace Implementation.Services.Authentication
                         new Claim("employeeId", user.EmployeeId.ToString()),
                         new Claim("fullName", $"{employee.FirstName} {employee.MiddleName}"),
                         new Claim("photo",employee?.ImagePath),
+                        new Claim("ChangePassword",user.PasswordChanged.ToString()),
                         new Claim(_options.ClaimsIdentity.RoleClaimType, str),
 
                             }),
@@ -152,6 +153,7 @@ namespace Implementation.Services.Authentication
                 Email = employee.Email,
                 UserName = addUSer.UserName,
                 RowStatus = RowStatus.ACTIVE,
+                PasswordChanged = false
             };
 
             await _userManager.CreateAsync(applicationUser, addUSer.Password);
@@ -284,7 +286,10 @@ namespace Implementation.Services.Authentication
                     Success=false,
                     Message = "User not found."};
             }
-
+             user.PasswordChanged = true;
+               
+            await _dbContext.SaveChangesAsync();
+               
             var result = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
 
             if (!result.Succeeded)

@@ -12,6 +12,7 @@ namespace IntegratedInfrustructure.Model.Authentication
     {
         public Guid EmployeeId { get; set; }
         public RowStatus RowStatus { get; set; }
+        public bool PasswordChanged { get; set; }
         public UserType UserType { get; set; }
     }
 }

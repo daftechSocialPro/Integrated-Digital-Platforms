@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,7 +20,7 @@ namespace IntegratedImplementation.Services.Configuration
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly IMapper _mapper;
-
+        
         public GeneralConfigService(ApplicationDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
@@ -89,5 +90,23 @@ namespace IntegratedImplementation.Services.Configuration
             return generalCodeList;
         }
 
+        public  string GeneratePassword()
+        {
+            int length = 8;
+            string Letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_-+=<>?0123456789";
+            RandomNumberGenerator Rng = RandomNumberGenerator.Create();
+           
+            var data = new byte[length];
+            Rng.GetBytes(data);
+
+            var password = new char[length];
+            for (int i = 0; i < length; i++)
+            {
+                int index = data[i] % Letters.Length;
+                password[i] = Letters[index];
+            }
+
+            return new string(password);
+        }
     }
 }

@@ -43,6 +43,9 @@ export class AddEmployeeComponent implements OnInit {
       firstName: [null, Validators.required],
       middleName: [null, Validators.required],
       lastName: [null, Validators.required],
+      amharicfirstName: [null, Validators.required],
+      amharicmiddleName: [null, Validators.required],
+      amhariclastName: [null, Validators.required],
       email: [null, Validators.required],
       phoneNumber: [null, Validators.required],
       gender: [null, Validators.required],
@@ -59,7 +62,6 @@ export class AddEmployeeComponent implements OnInit {
       pensionCode: [''],
       tinNumber: [''],
       bankAccountNo: [''],
-      amharicName:[null,Validators.required],
       woreda: [null, Validators.required],
       zoneId: [null, Validators.required]
 
@@ -150,7 +152,9 @@ export class AddEmployeeComponent implements OnInit {
         firstName: this.EmployeeForm.value.firstName,
         middleName: this.EmployeeForm.value.middleName,
         lastName: this.EmployeeForm.value.lastName,
-        amharicName:this.EmployeeForm.value.amharicName,
+        amharicFirstName:this.EmployeeForm.value.amharicName,
+        amharicMiddleName:this.EmployeeForm.value.amharicmiddleName,
+        amharicLastName:this.EmployeeForm.value.amhariclastName,
         phoneNumber: this.EmployeeForm.value.phoneNumber,
         email: this.EmployeeForm.value.email,
         gender: this.EmployeeForm.value.gender,

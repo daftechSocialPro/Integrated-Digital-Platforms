@@ -1,19 +1,19 @@
 export interface EmployeePostDto {
-     id?: string
+     id?: string;
      firstName: string;
      middleName: string;
      lastName: string;
-     amharicName: string,
+     amharicFirstName: string;
+     amharicMiddleName: string;
+     amharicLastName: string;
      gender: string;
-     birthDate: Date
-     maritalStatus: Number
+     birthDate: Date;
+     maritalStatus: Number;
      imagePath: File | Blob;
      employmentType: string;
      paymentType: string;
      employmentDate: Date;
      salary?: Number,
-
-     terminatedDate?: Date
      isPension?: boolean
      employmentStatus: string;
      pensionCode?: string;
@@ -38,7 +38,9 @@ export interface EmployeeGetDto {
      firstName: string;
      middleName: string;
      lastName: string;
-     amharicName: string,
+     amharicFirstName: string;
+     amharicMiddleName: string;
+     amharicLastName: string;
      gender: string;
      birthDate: Date
      maritalStatus: string;
@@ -47,8 +49,7 @@ export interface EmployeeGetDto {
      paymentType: string;
      employmentDate: Date;
      contractEndDate?: Date;
-     contractDays?: number
-     terminatedDate?: Date;
+     contractDays?: number;
      isPension: boolean;
      employmentStatus: string;
      pensionCode?: string;
