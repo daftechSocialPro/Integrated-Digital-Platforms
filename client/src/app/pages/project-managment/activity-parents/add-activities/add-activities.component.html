@@ -16,33 +16,34 @@
                             <div class="row g-3">
 
 
-                                <div  class="col-12">
+                                <div class="col-12">
                                     <div class="form-floating">
-                                        <textarea class="form-control"
-                                            formControlName="ActivityDescription" placeholder="ActivityDescription"
-                                            id="ActivityDescription" style="height: 120px;"></textarea><label
-                                            for="ActivityDescription">Activity Description</label>
+                                        <textarea class="form-control" formControlName="ActivityDescription"
+                                            placeholder="ActivityDescription" id="ActivityDescription"
+                                            style="height: 120px;"></textarea><label for="ActivityDescription">Activity
+                                            Description</label>
                                     </div>
                                 </div>
-                                <div  class="col-4">
+                                <div class="col-4">
                                     <div class="flex flex-column gap-2">
                                         <label for="ActivityNumber">Activity Number</label>
-                                     
-                                        <input type="text" pInputText id="ActivityNumber" formControlName="ActivityNumber" />
+
+                                        <input type="text" pInputText id="ActivityNumber"
+                                            formControlName="ActivityNumber" />
                                     </div>
-                                  
+
                                 </div>
                                 <div class="col-md-4">
-                                   
 
-                                        <div class="flex flex-column gap-2">
-                                            <label htmlFor="startDate">Start Date</label>
-    
-                                            <p-calendar formControlName="StartDate" [minDate]="minDate" [maxDate]="maxDate"
-                                                inputId="yearpicker"></p-calendar>
-                                           
-                                        </div>
-                                    
+
+                                    <div class="flex flex-column gap-2">
+                                        <label htmlFor="startDate">Start Date</label>
+
+                                        <p-calendar formControlName="StartDate" [minDate]="minDate" [maxDate]="maxDate"
+                                            inputId="yearpicker"></p-calendar>
+
+                                    </div>
+
                                 </div>
                                 <div class="col-md-4">
                                     <div class="flex flex-column gap-2">
@@ -50,13 +51,13 @@
 
                                         <p-calendar formControlName="EndDate" [minDate]="minDate" [maxDate]="maxDate"
                                             inputId="yearpicker"></p-calendar>
-                                       
+
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="number" class="form-control" id="PlannedBudget" placeholder="EndDate"
-                                            formControlName="PlannedBudget">
+                                        <input type="number" class="form-control" id="PlannedBudget"
+                                            placeholder="EndDate" formControlName="PlannedBudget">
                                         <label for="PlannedBudget">Planned Budget</label>
                                         <small style="color: red;">Remaining Budget : {{task?.remainingBudget}}</small>
                                     </div>
@@ -97,7 +98,7 @@
                                         <label for="FieldWOrk">Field WOrk</label>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-6">
                                     <div class="form-floating mb-3">
                                         <select class="form-select" id="UnitofMeasurment"
                                             formControlName="UnitOfMeasurement">
@@ -109,10 +110,9 @@
                                 </div>
 
 
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-floating mb-3">
-                                        <select class="form-select" id="strategicPlans"
-                                            formControlName="StrategicPlan">
+                                        <select class="form-select" id="strategicPlans" formControlName="StrategicPlan">
 
                                             <option *ngFor="let um of strategicPlans" value={{um.id}}>{{um.name}}
                                             </option>
@@ -123,6 +123,51 @@
                                 </div>
 
                                 <div class="col-md-3">
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" id="countryId" #country
+                                            (change)="getRegions(country.value)" aria-label="State">
+                                            <option></option>
+                                            <option *ngFor="let country of countries" [value]="country.id">{{
+                                                country.name }}</option>
+                                        </select>
+                                        <label for="countryId">Country</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" (change)="getZones(region.value)" #region
+                                            id="regionId" aria-label="State">
+                                            <option></option>
+                                            <option *ngFor="let region of regions" [value]="region.id">{{
+                                                region.name }}</option>
+                                        </select>
+                                        <label for="countryId">Region</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" id="zoneId" formControlName="ZoneId"
+                                            aria-label="State">
+                                            <option></option>
+                                            <option *ngFor="let zone of zones" [value]="zone.id">{{
+                                                zone.name }}</option>
+                                        </select>
+                                        <label for="zoneId"> Zone</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <div class="form-floating"> <input type="text" class="form-control" id="woreda"
+                                            placeholder="woreda" required formControlName="Woreda">
+                                        <label for="woreda"> Woreda</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <button class="btn btn-outline-primary" (click)="addLocation()">
+                                        <i class="pi pi-map-marker"></i>
+                                    </button>
+                                </div>
+                                <!-- <div class="col-md-3">
                                     <div class="form-floating mb-3">
                                         <select class="form-select" id="ProjectLocationId"
                                             formControlName="ProjectLocationId">
@@ -138,11 +183,11 @@
                                 <button class="btn btn-outline-primary" (click)="addLocation()">
                                     <i class="pi pi-map-marker"></i>
                                 </button>
-                                </div>
+                                </div> -->
 
 
 
-                                
+
 
                                 <div class="col-md-6">
                                     <div class="form-floating">
@@ -174,7 +219,9 @@
                                 </div>
                                 <div class="col-md-6" *ngIf="assign.value=='0'">
                                     <div class="form-floating mb-3">
-                                        <select class="form-select" id="comiteee" #committeValue (change)="onCommiteChange(committeValue.value)"    formControlName="CommiteeId">
+                                        <select class="form-select" id="comiteee" #committeValue
+                                            (change)="onCommiteChange(committeValue.value)"
+                                            formControlName="CommiteeId">
                                             <option *ngFor="let c of committees" value={{c.id}}>{{c.name}}</option>
                                         </select>
                                         <label for="comiteee">Comittee</label>
@@ -184,8 +231,10 @@
                                     <div class="form-floating mb-3">
                                         <div class="mb-4">
 
-                                            <select class="form-select" formControlName="AssignedEmployee" id="employees" multiple>
-                                                <option *ngFor="let emp of task.taskMembers" value={{emp.employeeId}}>{{emp.name}}</option>
+                                            <select class="form-select" formControlName="AssignedEmployee"
+                                                id="employees" multiple>
+                                                <option *ngFor="let emp of task.taskMembers" value={{emp.employeeId}}>
+                                                    {{emp.name}}</option>
                                             </select>
 
                                         </div>
@@ -205,30 +254,32 @@
                         <div class="modal-header bg-secondary text-white">
                             <h5 class="modal-title">Tips</h5>
                         </div>
-                        <div class="modal-body" *ngIf="task" >
+                        <div class="modal-body" *ngIf="task">
                             <div class="card-title text-center">{{task.taskName!}}</div>
                             <div class="text-center">
-                                <span  class="card-title" *ngIf="dateAndTime"> {{dateAndTime.fromDate}} - {{dateAndTime.endDate}} </span> <br />
-                               
+                                <span class="card-title" *ngIf="dateAndTime"> {{dateAndTime.fromDate}} -
+                                    {{dateAndTime.endDate}} </span> <br />
+
                                 <span class="card-title"> Task Budget : {{task.plannedBudget!}} ETB</span> <br />
-                                <span  class="card-title"> Remaining Task Budget : {{task.remainingBudget}} ETB</span> <br />
+                                <span class="card-title"> Remaining Task Budget : {{task.remainingBudget}} ETB</span>
+                                <br />
                                 <!-- <span class="card-title">Remaining Task Weight :{{task.remianingWeight}} %</span> -->
                             </div>
                         </div>
 
                     </div>
-                    <div class="modal-content mt-2 " *ngIf="comitteEmployees.length>0" >
+                    <div class="modal-content mt-2 " *ngIf="comitteEmployees.length>0">
                         <div class="modal-header bg-secondary text-white">
                             <h5 class="modal-title">Comittee Employees</h5>
                         </div>
-                        <div class="modal-body" >
+                        <div class="modal-body">
 
                             <ul>
                                 <li *ngFor="let item of comitteEmployees">
                                     <span>{{item.name}} ({{item.commiteeStatus}})</span>
 
                                 </li>
-                                </ul>
+                            </ul>
                             <!-- <div class="card-title text-center">{{task.TaskName!}}</div> -->
                             <!-- <div class="text-center">
                                 <span  class="card-title"> {{task.StartDate! | date:"MMMM d, YYYY"}} - {{task.EndDate! | date:"MMMM d, YYYY"}} </span> <br />

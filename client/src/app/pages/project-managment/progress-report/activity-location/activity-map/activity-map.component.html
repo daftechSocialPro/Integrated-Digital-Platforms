@@ -4,10 +4,17 @@
         <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
     </div>
 
-    <div class="card">
+    <div class="card " #modalContent>
+        <div class="row">
+            
+        </div>
         <div class="card-body">
-            <div id="map" style="height: 600px;"></div>
+            <div id="map" style="height: 400px;"></div>
 
         </div>
     </div>
+    <div class="modal-footer"> 
+        <button type="button" class="btn btn-outline-success" (click)="printModal()">Print</button>
+</div>
+
 </div>

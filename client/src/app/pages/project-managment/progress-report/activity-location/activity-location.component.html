@@ -19,21 +19,43 @@
 
                     <form [formGroup]="serachForm" (submit)="Search()">
                         <div class="d-flex justify-content-start ">
-                            <div class="form-floating col-3 me-2">
+                            <div class="form-floating col-2 me-2">
                                 <input type="number" class="form-control" id="budgetYear" formControlName="BudgetYear"
                                     placeholder="Budget Year (yyyy)">
                                 <label for="budgetYear">Budget Year (yyyy)</label>
                             </div>
-                            <div class="form-floating col-3 me-2">
-                                <select class="form-control" formControlName="locationId" id="locationId"
-                                    placeholder="locationId">
-
-                                    <option *ngFor="let item of locations" value={{item.id}}>{{item.name}}</option>
-
-
-                                </select>
-
-                                <label for="locationId">Project Locations</label>
+                            <div class="col-md-2 me-2">
+                                <div class="form-floating mb-2">
+                                    <select class="form-select" id="countryId" #country
+                                        (change)="getRegions(country.value)" aria-label="State">
+                                        <option></option>
+                                        <option *ngFor="let country of countries" [value]="country.id">{{
+                                            country.name }}</option>
+                                    </select>
+                                    <label for="countryId">Country</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2 me-2">
+                                <div class="form-floating mb-2">
+                                    <select class="form-select" (change)="getZones(region.value)" #region
+                                        id="regionId" aria-label="State">
+                                        <option></option>
+                                        <option *ngFor="let region of regions" [value]="region.id">{{
+                                            region.name }}</option>
+                                    </select>
+                                    <label for="countryId">Region</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2 me-2">
+                                <div class="form-floating mb-2">
+                                    <select class="form-select" id="zoneId" formControlName="locationId"
+                                        aria-label="State">
+                                        <option></option>
+                                        <option *ngFor="let zone of zones" [value]="zone.id">{{
+                                            zone.name }}</option>
+                                    </select>
+                                    <label for="zoneId"> Zone</label>
+                                </div>
                             </div>
 
                          

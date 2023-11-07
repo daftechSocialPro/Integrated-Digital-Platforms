@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActivityMaps, ActivityView } from 'src/app/model/PM/ActivityViewDto';
 import { SelectList } from 'src/app/model/common';
@@ -20,10 +20,15 @@ export class ActivityLocationComponent implements OnInit {
 
   locations !: SelectList[] 
 
+  countries !: SelectList[];
+  regions!: SelectList[];
+  zones ! : SelectList[];
+
   constructor(
     private dropDownService:DropDownService,
     private modalService : NgbModal,
     private formBuilder:FormBuilder,
+    private dropService: DropDownService,
     private pmService : PMService){}
 
   ngOnInit(): void {
@@ -31,10 +36,11 @@ export class ActivityLocationComponent implements OnInit {
    
     this.serachForm = this.formBuilder.group({
       BudgetYear: [''],
-      locationId: [''],     
+      locationId: ['',Validators.required],     
     })
 
     this.getLocations()
+    this.getCountries()
     
   }
 
@@ -64,6 +70,31 @@ export class ActivityLocationComponent implements OnInit {
       }
     })
 
+  }
+  getCountries() {
+
+    this.dropService.getContriesDropdown().subscribe({
+      next: (res) => {
+        this.countries = res
+      }
+    })
+  }
+
+  getRegions(countryId: string) {
+
+    this.dropService.getRegionsDropdown(countryId).subscribe({
+      next: (res) => {
+        this.regions = res
+      }
+    })
+  }
+
+  getZones (regionId:string){
+    this.dropService.getZonesDropdown(regionId).subscribe({
+      next: (res) => {
+        this.zones = res
+      }
+    })
   }
 
   viewOnMap (){

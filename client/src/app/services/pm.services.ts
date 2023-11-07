@@ -15,13 +15,15 @@ import { IPlanReportByProgramDto, IPlanReportDetailDto } from '../model/PM/PlanR
 import { IPlannedReport } from '../model/PM/PlannedReportDto';
 import { ResponseMessage } from '../model/ResponseMessage.Model';
 import { FilterDateCriteriaDto, PlanPerformanceListDto, StaffWeeklyPlanDto } from '../model/PM/StaffWeeklyPlanDto';
+import { IBudgetYearDto, IReportingPeriodGetDto, IReportingPeriodPostDto } from '../model/PM/ITimePeriodDto';
+import { UserService } from './user.service';
 
 
 @Injectable({
     providedIn: 'root',
 })
 export class PMService {
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient,private userService:UserService) { }
     BaseURI: string = environment.baseUrl + "/PM"
 
     //comittee
@@ -215,5 +217,30 @@ export class PMService {
 
     getWeeklyPerformancePlans(FilterDateCriteriaDto: FilterDateCriteriaDto) {
         return this.http.post<PlanPerformanceListDto[]>(this.BaseURI + "/ProgressReport/GetWeeklyPerformancePlans", FilterDateCriteriaDto)
+    }
+
+    // Reporting Period
+    getReportingPeriod() {
+        return this.http.get<IReportingPeriodGetDto[]>(this.BaseURI + "/TimePeriod/GetReportingPeriodList")
+    }
+    addReportingPeriod(periodPost: IReportingPeriodPostDto) {
+        return this.http.post<ResponseMessage>(this.BaseURI + "/TimePeriod/AddReportingPeriod", periodPost)
+    }
+    updateReportingPeriod(periodUpdate: IReportingPeriodGetDto) {
+        return this.http.put<ResponseMessage>(this.BaseURI + "/TimePeriod/UpdateReportingPeriod", periodUpdate)
+    }
+
+    // budget year 
+
+    getBudgetyear() {
+        return this.http.get<IBudgetYearDto[]>(this.BaseURI + "/TimePeriod/GetBudgetYearList")
+    }
+    addBudgetYear(budgetYear: IBudgetYearDto) {
+        return this.http.post<ResponseMessage>(this.BaseURI + "/TimePeriod/AddBudgetYear", budgetYear)
+    }
+    updateBudgetYear(budgetYear: IBudgetYearDto) {
+
+        budgetYear.createdById = this.userService.getCurrentUser().userId
+        return this.http.put<ResponseMessage>(this.BaseURI + "/TimePeriod/UpdateBudgetYear", budgetYear)
     }
 }

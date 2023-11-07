@@ -217,6 +217,10 @@ import { ActivityLocationComponent } from './pages/project-managment/progress-re
 import { ActivityMapComponent } from './pages/project-managment/progress-report/activity-location/activity-map/activity-map.component';
 import { StaffWeeklyPlanComponent } from './pages/project-managment/progress-report/staff-weekly-plan/staff-weekly-plan.component';
 import { WeeklyPlanPerformanceComponent } from './pages/project-managment/progress-report/weekly-plan-performance/weekly-plan-performance.component';
+import { ReportingPeriodComponent } from './pages/project-managment/pm-configuration/reporting-period/reporting-period.component';
+import { BudgetYearComponent } from './pages/project-managment/pm-configuration/budget-year/budget-year.component';
+import { AddReportPeriodComponent } from './pages/project-managment/pm-configuration/reporting-period/add-report-period/add-report-period.component';
+import { AddBudgetYearComponent } from './pages/project-managment/pm-configuration/budget-year/add-budget-year/add-budget-year.component';
 
 @NgModule({
   declarations: [
@@ -491,7 +495,11 @@ import { WeeklyPlanPerformanceComponent } from './pages/project-managment/progre
     ActivityLocationComponent,
     ActivityMapComponent,
     StaffWeeklyPlanComponent,
-    WeeklyPlanPerformanceComponent
+    WeeklyPlanPerformanceComponent,
+    ReportingPeriodComponent,
+    BudgetYearComponent,
+    AddReportPeriodComponent,
+    AddBudgetYearComponent
     
 
 

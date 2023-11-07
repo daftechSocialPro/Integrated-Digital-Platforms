@@ -204,6 +204,12 @@ namespace IntegratedInfrustructure.Data
             LETTER
         }
 
+        public enum ReportingType
+        {
+            FROMACTIVITYENDDATE,
+            FROMQUARTEENDDATE
+
+        }
 
     }
 }

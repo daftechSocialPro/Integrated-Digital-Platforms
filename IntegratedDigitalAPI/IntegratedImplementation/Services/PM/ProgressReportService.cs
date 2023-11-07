@@ -14,6 +14,7 @@ using IntegratedInfrustructure.Model.PM;
 using IntegratedDigitalAPI.DTOS.PM;
 using IntegratedImplementation.DTOS.Configuration;
 using IntegratedImplementation.DTOS.PM;
+using System.Globalization;
 
 namespace IntegratedDigitalAPI.Services.PM.ProgressReport
 {
@@ -27,7 +28,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
         }
 
 
-      
+
         //public async Task<PlanReportByProgramDto> PlanReportByProgram(string BudgetYear, string ReportBy)
         //{
         //    PlanReportByProgramDto prbp = new PlanReportByProgramDto();
@@ -39,7 +40,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
         //        {
 
         //            int budgetYearPlan = Convert.ToInt32(BudgetYear);
-                   
+
         //            var ProgLists = _dBContext.Programs.Where(x => x.ProgramBudgetYearId == BudgetYearValue.ProgramBudgetYearId).OrderBy(x => x.CreatedAt).ToList();
         //            string MeasurementName = "";
         //            foreach (var items in ProgLists)
@@ -285,7 +286,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                             .Include(x => x.Tasks).ThenInclude(x => x.ActivitiesParents).ThenInclude(x => x.Activities).ThenInclude(x => x.ActivityTargetDivisions)
                             .Include(x => x.Tasks).ThenInclude(x => x.Activities).ThenInclude(x => x.ActivityTargetDivisions)
                             .Include(x => x.Activities).ThenInclude(x => x.ActivityTargetDivisions)
-                            .Where(x => x.DepartmentId == stItems.Id ).ToList().OrderBy(x => x.CreatedDate);
+                            .Where(x => x.DepartmentId == stItems.Id).ToList().OrderBy(x => x.CreatedDate);
                         foreach (var Plitems in plansinStruc)
                         {
                             StructurePlan StrPlan = new StructurePlan();
@@ -566,8 +567,8 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
 
                 var activities = await _dBContext.Activities
                     .Include(x => x.ActivityTargetDivisions)
-                    .Include(x=>x.UnitOfMeasurement)                   
-                    
+                    .Include(x => x.UnitOfMeasurement)
+
                     .Where(x => x.StrategicPlanId == strategicPlanId).ToListAsync();
 
                 List<PlanOcc> planoccPlan = new List<PlanOcc>();
@@ -677,8 +678,8 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
 
                                 if (byQuarter[i] != null)
                                     planO.PlanTarget += byQuarter[i].Target;
-                                if (byQuarter[i+1] != null)
-                                    planO.PlanTarget += byQuarter[i+1].Target;
+                                if (byQuarter[i + 1] != null)
+                                    planO.PlanTarget += byQuarter[i + 1].Target;
                                 if (byQuarter[i + 2] != null)
                                     planO.PlanTarget += byQuarter[i + 2].Target;
 
@@ -721,7 +722,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
             try
             {
 
-                
+
                 var allPlans = _dBContext.Projects
                       .Include(x => x.Tasks).ThenInclude(x => x.ActivitiesParents).ThenInclude(x => x.Activities).ThenInclude(x => x.UnitOfMeasurement)
                                  .Include(x => x.Tasks).ThenInclude(x => x.Activities).ThenInclude(x => x.UnitOfMeasurement)
@@ -730,7 +731,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                                  .Include(x => x.Tasks).ThenInclude(x => x.Activities).ThenInclude(x => x.ActivityTargetDivisions)
                                  .Include(x => x.Activities).ThenInclude(x => x.ActivityTargetDivisions)
 
-                     .Where(x => x.DepartmentId == selectStructureId ).OrderBy(c => c.CreatedDate).ToList();
+                     .Where(x => x.DepartmentId == selectStructureId).OrderBy(c => c.CreatedDate).ToList();
 
                 List<PlansLst> plansLsts = new List<PlansLst>();
 
@@ -740,7 +741,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                 {
                     PlansLst plns = new PlansLst();
                     plns.PlanName = plansItems.ProjectName;
-                  
+
                     //plns.PlRemark = plansItems.remar;
                     plns.HasTask = plansItems.HasTask;
                     if (plansItems.HasTask)
@@ -1264,56 +1265,62 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
 
         public async Task<List<ActivityViewDto>> GetActivityByLocation(string BugetYear, Guid LocationId)
         {
-        
+
+
+            DateTime budgetYearStart = DateTime.ParseExact(BugetYear, "yyyy", CultureInfo.InvariantCulture);
+            DateTime budgetYearEnd = budgetYearStart.AddYears(1).AddSeconds(-1);
 
             var activityProgress = _dBContext.ActivityProgresses;
             List<ActivityViewDto> assignedActivities =
-                await(from e in _dBContext.Activities
+                await (from e in _dBContext.Activities
                        .Include(x => x.UnitOfMeasurement)
-                       .Include(x => x.ProjectLocation)
+                        .Include(x => x.Zone).ThenInclude(x => x.Region).ThenInclude(x => x.Country)
                        .Include(x => x.Commitee).ThenInclude(x => x.Employees)
-                       .Where(x =>x.ProjectLocationId == LocationId)
-                     
-                      select new ActivityViewDto
-                      {
-                          Id = e.Id,
-                          Name = e.ActivityDescription,
-                          PlannedBudget = e.PlanedBudget,
-                          ActivityType = e.ActivityType.ToString(),
-                          ProjectLocation = e.ProjectLocation.Name,
-                          ProjectLocationLng = e.Longtude,
-                          ProjectLocationLat = e.Latitude,
-                          ActivityNumber = e.ActivityNumber,
+                       .Where(x => x.ZoneId == LocationId &&
+                         x.ShouldStat >= budgetYearStart &&
+                    x.ShouldEnd <= budgetYearEnd)
 
-                          Begining = e.Begining,
-                          Target = e.Goal,
-                          UnitOfMeasurment = e.UnitOfMeasurement.Name,
-                          OverAllPerformance = 0,
-                          StartDate = e.ShouldStat.ToString(),
-                          EndDate = e.ShouldEnd.ToString(),
-                          Members = _dBContext.EmployeesAssignedForActivities.Include(x => x.Employee).Where(x => x.ActivityId == e.Id).Select(y => new SelectListDto
-                          {
-                              Id = y.Id,
-                              Name = $"{y.Employee.FirstName} {y.Employee.LastName}",
-                              Photo = y.Employee.ImagePath,
-                              EmployeeId = y.EmployeeId.ToString(),
+                       select new ActivityViewDto
+                       {
+                           Id = e.Id,
+                           Name = e.ActivityDescription,
+                           PlannedBudget = e.PlanedBudget,
+                           ActivityType = e.ActivityType.ToString(),
+                           ProjectLocation = $"{e.Woreda}-{e.Zone.ZoneName}-{e.Zone.Region.RegionName}-{e.Zone.Region.Country.CountryName}",
 
-                          }).ToList(),
-                          MonthPerformance = _dBContext.ActivityTargetDivisions.Where(x => x.ActivityId == e.Id).OrderBy(x => x.Order).Select(y => new MonthPerformanceViewDto
-                          {
-                              Id = y.Id,
-                              Order = y.Order,
-                              Planned = y.Target,
-                              Actual = activityProgress.Where(x => x.QuarterId == y.Id).Sum(mp => mp.ActualWorked),
-                              Percentage = y.Target != 0 ? (activityProgress.Where(x => x.QuarterId == y.Id && x.IsApprovedByDirector == ApprovalStatus.APPROVED && x.IsApprovedByFinance == ApprovalStatus.APPROVED && x.IsApprovedByManager == ApprovalStatus.APPROVED).Sum(x => x.ActualWorked) / y.Target) * 100 : 0
+                           ProjectLocationLng = e.Longtude,
+                           ProjectLocationLat = e.Latitude,
+                           ActivityNumber = e.ActivityNumber,
 
+                           Begining = e.Begining,
+                           Target = e.Goal,
+                           UnitOfMeasurment = e.UnitOfMeasurement.Name,
+                           OverAllPerformance = 0,
+                           StartDate = e.ShouldStat.ToString(),
+                           EndDate = e.ShouldEnd.ToString(),
+                           Members = _dBContext.EmployeesAssignedForActivities.Include(x => x.Employee).Where(x => x.ActivityId == e.Id).Select(y => new SelectListDto
+                           {
+                               Id = y.Id,
+                               Name = $"{y.Employee.FirstName} {y.Employee.LastName}",
+                               Photo = y.Employee.ImagePath,
+                               EmployeeId = y.EmployeeId.ToString(),
 
-                          }).ToList()
-
-
+                           }).ToList(),
+                           MonthPerformance = _dBContext.ActivityTargetDivisions.Where(x => x.ActivityId == e.Id).OrderBy(x => x.Order).Select(y => new MonthPerformanceViewDto
+                           {
+                               Id = y.Id,
+                               Order = y.Order,
+                               Planned = y.Target,
+                               Actual = activityProgress.Where(x => x.QuarterId == y.Id).Sum(mp => mp.ActualWorked),
+                               Percentage = y.Target != 0 ? (activityProgress.Where(x => x.QuarterId == y.Id && x.IsApprovedByDirector == ApprovalStatus.APPROVED && x.IsApprovedByFinance == ApprovalStatus.APPROVED && x.IsApprovedByManager == ApprovalStatus.APPROVED).Sum(x => x.ActualWorked) / y.Target) * 100 : 0
 
 
-                      }
+                           }).ToList()
+
+
+
+
+                       }
                                     ).ToListAsync();
 
 
@@ -1341,7 +1348,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                 if (filterationCriteria.actParentId != Guid.Empty)
                 {
                     List<QuarterMonth> QuarterMonth = new List<QuarterMonth>();
-                  
+
                     ReportType = "Activity Report for";
                     var allActivities = _dBContext.Activities
 
@@ -1452,7 +1459,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                         Progress.EndDate = items.ShouldEnd;
                         Progress.ActualStartDate = items.ActualStart == null ? items.ActualStart : items.ActualStart.Value;
                         Progress.ActualEndDate = items.ActualEnd == null ? items.ActualEnd : items.ActualEnd.Value;
-                        Progress.PlanStartDate =items.ShouldStat.ToString();
+                        Progress.PlanStartDate = items.ShouldStat.ToString();
                         Progress.PlanEndDate = items.ShouldEnd.ToString();
                         Progress.ProgressStartDate = items.ActualStart.ToString();
                         Progress.ProgressEndDate = items.ActualEnd.ToString();
@@ -1796,8 +1803,8 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                 else if (filterationCriteria.planId != Guid.Empty)
                 {
                     List<QuarterMonth> QuarterMonth = new List<QuarterMonth>();
-                   
-                    DateTime BudgetYear = DateTime.Parse("1/1/"+ filterationCriteria.budgetYear);
+
+                    DateTime BudgetYear = DateTime.Parse("1/1/" + filterationCriteria.budgetYear);
                     ReportType = "Activity Report for";
 
                     List<IntegratedInfrustructure.Models.PM.Activity> actes = new List<IntegratedInfrustructure.Models.PM.Activity>();
@@ -1856,7 +1863,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                     if (filterationCriteria.budgetYear != null)
                     {
                         DateType = "Year of " + " " + filterationCriteria.budgetYear;
-                        allActivities = allActivities.Where(x =>  x.Goal != 0).ToList();
+                        allActivities = allActivities.Where(x => x.Goal != 0).ToList();
                     }
 
                     foreach (var items in allActivities)
@@ -1960,7 +1967,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                         Progress.ActualStartDate = items.ActualStart == null ? items.ActualStart : items.ActualStart.Value;
                         Progress.ActualEndDate = items.ActualEnd == null ? items.ActualEnd : items.ActualEnd.Value;
                         Progress.PlanStartDate = items.ShouldStat.ToString();
-                        Progress.PlanEndDate =items.ShouldEnd.ToString();
+                        Progress.PlanEndDate = items.ShouldEnd.ToString();
                         Progress.ProgressStartDate = items.ActualStart.ToString();
                         Progress.ProgressEndDate = items.ActualEnd.ToString();
                         Progress.UsedBudget = items.ActualBudget;
@@ -2086,8 +2093,8 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                         .Where(x => x.DepartmentId == selectStructureId)
                         .OrderBy(c => c.PeriodStartAt)
                         .ToList();
-                    
-                    
+
+
 
                     progresseReportByStructure.planDuration = 0;
                     List<QuarterMonth> QuarterMonth = new List<QuarterMonth>();
@@ -2098,7 +2105,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                     {
                         PlansLst plns = new PlansLst();
                         plns.PlanName = plansItems.ProjectName;
-                       
+
                         plns.HasTask = plansItems.HasTask;
                         if (plansItems.HasTask)
                         {
@@ -2727,7 +2734,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                 if (filterationCriteria.structureId != null)
                 {
                     List<PerformancePlan> performancePlans = new List<PerformancePlan>();
-                 
+
                     var ActualWorked = _dBContext.ActivityProgresses
                         .Include(x => x.Activity).ThenInclude(x => x.ActivityParent).ThenInclude(x => x.Task).ThenInclude(x => x.Project)
                         .Include(x => x.Activity).ThenInclude(x => x.Plan)
@@ -2746,13 +2753,13 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                         DateTime end = DateTime.Now;
                         if (filterationCriteria.Quarter == 1)
                         {
-                            begin = DateTime.Parse("1/11/"+(filterationCriteria.budgetYear - 1).ToString());
-                            end = DateTime.Parse("30/1/"+ filterationCriteria.budgetYear);
+                            begin = DateTime.Parse("1/11/" + (filterationCriteria.budgetYear - 1).ToString());
+                            end = DateTime.Parse("30/1/" + filterationCriteria.budgetYear);
                         }
                         else if (filterationCriteria.Quarter == 2)
                         {
 
-                            begin =DateTime.Parse("1/2/"+ filterationCriteria.budgetYear);
+                            begin = DateTime.Parse("1/2/" + filterationCriteria.budgetYear);
                             end = DateTime.Parse("30/4/" + filterationCriteria.budgetYear);
 
                         }
@@ -2762,14 +2769,14 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                             begin = DateTime.Parse("1/5/" + filterationCriteria.budgetYear);
                             end = DateTime.Parse("30/7/" + filterationCriteria.budgetYear);
 
-                           
+
                         }
                         else if (filterationCriteria.Quarter == 4)
                         {
                             begin = DateTime.Parse("1/8/" + filterationCriteria.budgetYear);
                             end = DateTime.Parse("30/10/" + filterationCriteria.budgetYear);
 
-                    
+
                         }
                         ActualWorked = ActualWorked.Where(x => x.CreatedDate >= begin && x.CreatedDate <= end).ToList();
                     }
@@ -2997,7 +3004,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                              .Include(x => x.Tasks).ThenInclude(x => x.Activities).ThenInclude(x => x.ActivityTargetDivisions)
                              .Include(x => x.Activities).ThenInclude(x => x.ActivityTargetDivisions)
 
-                .Where(x => x.DepartmentId == structureId )
+                .Where(x => x.DepartmentId == structureId)
                 .ToListAsync();
 
             foreach (var item in plans)
@@ -3325,7 +3332,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                                 float GoalPercent = 0;
                                 if (!Activities.Any())
                                 {
-                                    Goal = Goal ;
+                                    Goal = Goal;
                                 }
                                 foreach (var activityItems in Activities)
                                 {
@@ -3351,7 +3358,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                             float GoalPercent = 0;
                             if (!Activities.Any())
                             {
-                                Goal = Goal ;
+                                Goal = Goal;
                             }
                             foreach (var activityItems in Activities)
                             {
@@ -3361,8 +3368,8 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
 
                             }
                             float taskItemsWeight = taskItems.Weight == null ? 0 : (float)taskItems.Weight;
-                            BeginingPlan = BeginingPlan + ((BeginingPercent * taskItemsWeight) );
-                            ActualPlan = ActualPlan + ((ActualWorkedPercent * taskItemsWeight) );
+                            BeginingPlan = BeginingPlan + ((BeginingPercent * taskItemsWeight));
+                            ActualPlan = ActualPlan + ((ActualWorkedPercent * taskItemsWeight));
                             Goal = Goal + ((GoalPercent * taskItemsWeight));
                         }
                     }
@@ -3376,7 +3383,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                     float GoalPercent = 0;
                     if (!Activities.Any())
                     {
-                        Goal = Goal ;
+                        Goal = Goal;
                     }
                     foreach (var activityItems in Activities)
                     {
@@ -3391,9 +3398,9 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                     Goal = Goal + GoalPercent;
 
                 }
-                Pro_BeginingPlan = Pro_BeginingPlan + ((BeginingPlan ) / 100);
-                Pro_ActualPlan = Pro_ActualPlan + ((ActualPlan ) / 100);
-                Pro_Goal = Pro_Goal + ((Goal ) / 100);
+                Pro_BeginingPlan = Pro_BeginingPlan + ((BeginingPlan) / 100);
+                Pro_ActualPlan = Pro_ActualPlan + ((ActualPlan) / 100);
+                Pro_Goal = Pro_Goal + ((Goal) / 100);
             }
             if (Pro_ActualPlan > 0)
             {
@@ -3465,7 +3472,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                                 float GoalPercent = 0;
                                 if (!Activities.Any())
                                 {
-                                    Goal = Goal ;
+                                    Goal = Goal;
                                 }
                                 foreach (var activityItems in Activities)
                                 {
@@ -3491,7 +3498,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                             float GoalPercent = 0;
                             if (!Activities.Any())
                             {
-                                Goal = Goal ;
+                                Goal = Goal;
                             }
                             foreach (var activityItems in Activities)
                             {
@@ -3501,9 +3508,9 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
 
                             }
                             float taskItemsWeight = taskItems.Weight == null ? 0 : (float)taskItems.Weight;
-                            BeginingPlan = BeginingPlan + ((BeginingPercent * taskItemsWeight) );
-                            ActualPlan = ActualPlan + ((ActualWorkedPercent * taskItemsWeight) );
-                            Goal = Goal + ((GoalPercent * taskItemsWeight) );
+                            BeginingPlan = BeginingPlan + ((BeginingPercent * taskItemsWeight));
+                            ActualPlan = ActualPlan + ((ActualWorkedPercent * taskItemsWeight));
+                            Goal = Goal + ((GoalPercent * taskItemsWeight));
                         }
                     }
                 }
@@ -3516,7 +3523,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                     float GoalPercent = 0;
                     if (!Activities.Any())
                     {
-                        Goal = Goal ;
+                        Goal = Goal;
                     }
                     foreach (var activityItems in Activities)
                     {
@@ -3531,9 +3538,9 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                     Goal = Goal + GoalPercent;
 
                 }
-                Pro_BeginingPlan = Pro_BeginingPlan + ((BeginingPlan ) / 100);
-                Pro_ActualPlan = Pro_ActualPlan + ((ActualPlan ) / 100);
-                Pro_Goal = Pro_Goal + ((Goal ) / 100);
+                Pro_BeginingPlan = Pro_BeginingPlan + ((BeginingPlan) / 100);
+                Pro_ActualPlan = Pro_ActualPlan + ((ActualPlan) / 100);
+                Pro_Goal = Pro_Goal + ((Goal) / 100);
             }
             if (Pro_ActualPlan > 0)
             {
@@ -3565,8 +3572,8 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
 
         public async Task<List<StaffWeeklyPlanDto>> GetStaffWeeklyPlans(FilterDateCriteriaDto filterDateCriteria)
         {
-            var report = await  _dBContext.Activities.AsNoTracking()
-                                 .Include(x => x.ProjectLocation)
+            var report = await _dBContext.Activities.AsNoTracking()
+                                 .Include(x => x.Zone.Region.Country)
                                  .Include(x => x.Employee)
                                  .Where(x => x.ShouldEnd >= filterDateCriteria.FromDate
                                  && x.ShouldEnd <= filterDateCriteria.ToDate)
@@ -3575,9 +3582,9 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                                      ActivityNo = x.ActivityNumber,
                                      Activity = x.ActivityDescription,
                                      ExecutionDate = x.ShouldEnd,
-                                     PlaceOfWork = x.ProjectLocation.Name,
-                                     Responsible = String.Join("," ,x.AssignedEmploye.Select(x => $"{x.Employee.FirstName} {x.Employee.MiddleName} {x.Employee.LastName}").ToList())
-                                     
+                                     PlaceOfWork = $"{x.Woreda}-{x.Zone.ZoneName}-{x.Zone.Region.RegionName}-{x.Zone.Region.Country.CountryName}",
+                                     Responsible = String.Join(",", x.AssignedEmploye.Select(x => $"{x.Employee.FirstName} {x.Employee.MiddleName} {x.Employee.LastName}").ToList())
+
                                  }).ToListAsync();
             return report;
         }
@@ -3591,9 +3598,9 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                                  .Where(x => x.ShouldEnd >= filterDateCriteria.FromDate
                                  && x.ShouldEnd <= filterDateCriteria.ToDate).ToListAsync();
 
-            foreach(var items in report)
+            foreach (var items in report)
             {
-                PlanPerformanceListDto plan =   new PlanPerformanceListDto
+                PlanPerformanceListDto plan = new PlanPerformanceListDto
                 {
                     Activity = items.ActivityDescription,
                     ActivityNo = items.ActivityNumber,

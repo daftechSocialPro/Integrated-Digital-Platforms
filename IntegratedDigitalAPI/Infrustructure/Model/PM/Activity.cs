@@ -74,8 +74,12 @@ namespace IntegratedInfrustructure.Models.PM
         public Guid StrategicPlanId { get; set; }
         public virtual StrategicPlan StrategicPlan { get; set; }
 
-        public Guid ProjectLocationId { get; set; }
-        public virtual ProjectLocation ProjectLocation { get; set; }
+        public Guid ZoneId { get; set; }
+        public virtual Zone Zone { get; set; } = null!;
+        public string Woreda { get; set; } = null!;
+
+        //public Guid ProjectLocationId { get; set; }
+        //public virtual ProjectLocation ProjectLocation { get; set; }
 
         public double Latitude { get; set; }
 

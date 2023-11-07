@@ -28,6 +28,11 @@ export class AddActivitiesComponent implements OnInit {
   @Input() requestFrom!: string;
   @Input() requestFromId!: string;
   @Input() dateAndTime!:GetStartEndDate
+
+  countries !: SelectList[];
+  regions!: SelectList[];
+  zones ! : SelectList[];
+
   activityForm!: FormGroup;
   selectedEmployee: SelectList[] = [];
   user !: UserView;
@@ -54,6 +59,7 @@ export class AddActivitiesComponent implements OnInit {
     private dropDownService : DropDownService,
     private messageService : MessageService,
     private modalService : NgbModal,
+    private dropService: DropDownService,
     private commonService: CommonService
   ) {
 
@@ -74,7 +80,8 @@ export class AddActivitiesComponent implements OnInit {
       CommiteeId: [null],
       AssignedEmployee: [],
       StrategicPlan:[],
-      ProjectLocationId:[]
+      ZoneId:['',Validators.required],
+      Woreda:['',Validators.required]
 
 
     })
@@ -82,6 +89,8 @@ export class AddActivitiesComponent implements OnInit {
   ngOnInit(): void {
 
     this.user = this.userService.getCurrentUser()
+
+    this.getCountries()
 
     this.GetStrategicPlans()
     this.pmService.getComitteeSelectList().subscribe({
@@ -134,6 +143,34 @@ export class AddActivitiesComponent implements OnInit {
 
   }
 
+  getCountries() {
+
+    this.dropService.getContriesDropdown().subscribe({
+      next: (res) => {
+        this.countries = res
+      }
+    })
+  }
+
+  getRegions(countryId: string) {
+
+    this.dropService.getRegionsDropdown(countryId).subscribe({
+      next: (res) => {
+        this.regions = res
+      }
+    })
+  }
+
+  getZones (regionId:string){
+    this.dropService.getZonesDropdown(regionId).subscribe({
+      next: (res) => {
+        this.zones = res
+      }
+    })
+  }
+
+
+
   GetStrategicPlans(){
 
     this.dropDownService.getStrategicPlans().subscribe({
@@ -165,6 +202,8 @@ export class AddActivitiesComponent implements OnInit {
   }
 
   submit() {
+
+    console.log(this.activityForm.value)
     if(this.requestFrom == "PLAN" || this.requestFrom == "TASK"){
         this.addSubActivity()
     }
@@ -204,7 +243,9 @@ export class AddActivitiesComponent implements OnInit {
         longtude: this.lng,
         latitude: this.lat,
         StrategicPlanId:this.activityForm.value.StrategicPlan,
-        ProjectLocationId:this.activityForm.value.ProjectLocationId
+        ZoneId:this.activityForm.value.ZoneId,
+        Woreda:this.activityForm.value.Woreda       
+        
       }
       if(this.requestFrom == "PLAN"){
         actvityP.PlanId = this.requestFromId;
@@ -213,7 +254,8 @@ export class AddActivitiesComponent implements OnInit {
         actvityP.TaskId = this.requestFromId;
       }
 
-      console.log("act",actvityP)
+ 
+      console.log("sdfsdfd",actvityP)
 
       this.pmService.addSubActivity(actvityP).subscribe({
         next: (res) => {
@@ -260,10 +302,14 @@ export class AddActivitiesComponent implements OnInit {
         CommiteeId: this.activityForm.value.CommiteeId,
         Employees: this.activityForm.value.AssignedEmployee,
         StrategicPlanId:this.activityForm.value.StrategicPlan,
-        ProjectLocationId:this.activityForm.value.ProjectLocationId,
+        ZoneId:this.activityForm.value.ZoneId,
+        Woreda :this.activityForm.value.Woreda,
+
         longtude: this.lng,
         latitude: this.lat,
       }
+
+      console.log("rrrrrrrrrrrrr",actvityP)
 
       if(this.requestFrom == "Plan"){
         actvityP.PlanId = this.requestFromId;

@@ -74,6 +74,7 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<IProgressReportService, ProgressReportService>();
             services.AddScoped<ITaskService, TaskService>();
             services.AddScoped<IProgressReportService, ProgressReportService>();
+            services.AddScoped<ITimePeriodService, TimePeriodService>();
 
 
             #endregion

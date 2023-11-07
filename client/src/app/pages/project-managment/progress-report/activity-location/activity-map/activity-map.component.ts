@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import * as L from 'leaflet';
 import { ActivityMaps } from 'src/app/model/PM/ActivityViewDto';
@@ -11,9 +11,11 @@ export class ActivityMapComponent implements OnInit {
 
   ngOnInit(): void {
     
+    console.log(this.activtYMaps)
   }
 
   @Input() activtYMaps! :ActivityMaps[]
+  @ViewChild('modalContent') modalContent!: ElementRef;
   lat :number=9.1450
   lng :number=40.4897
   private map!: L.Map; 
@@ -59,7 +61,7 @@ export class ActivityMapComponent implements OnInit {
       const marker = L.marker([element.lat,element.lng], { icon: greenIcon }).addTo(this.map);
 
       
-      marker.bindPopup(element.activityNumber);
+      marker.bindPopup(`${element.activityNumber},(${element.projectLocation})`);
       
     });
    
@@ -68,7 +70,18 @@ export class ActivityMapComponent implements OnInit {
 
         this.activeModal.close()
       }
+
+      printModal() {
+        const printContent = this.modalContent.nativeElement.innerHTML;
+        const originalContent = document.body.innerHTML;
+    
+        document.body.innerHTML = printContent;
+        window.print();
+        document.body.innerHTML = originalContent;
+      }
 }
+
+
 
 
 
