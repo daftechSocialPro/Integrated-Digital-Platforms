@@ -1,0 +1,20 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">{{activtYMaps&&activtYMaps[0].projectLocation}}</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="card " #modalContent>
+        <div class="row">
+            
+        </div>
+        <div class="card-body">
+            <div id="map" style="height: 400px;"></div>
+
+        </div>
+    </div>
+    <div class="modal-footer"> 
+        <button type="button" class="btn btn-outline-success" (click)="printModal()">Print</button>
+</div>
+
+</div>

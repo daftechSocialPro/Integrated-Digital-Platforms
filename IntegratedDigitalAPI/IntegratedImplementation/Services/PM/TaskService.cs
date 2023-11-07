@@ -102,7 +102,9 @@ namespace IntegratedDigitalAPI.Services.PM
                 if (task.HasActivityParent)
                 {
                     activityViewDtos = (from a in _dBContext.ActivitiesParents.Where(x => x.TaskId == taskId)
-                                        join e in _dBContext.Activities.Include(x=>x.ProjectLocation).Include(x => x.UnitOfMeasurement) on a.Id equals e.ActivityParentId
+                                        join e in _dBContext.Activities.
+                                        Include(x=>x.Zone).ThenInclude(x=>x.Region).ThenInclude(x=>x.Country)
+                                        .Include(x => x.UnitOfMeasurement) on a.Id equals e.ActivityParentId
                                         // join ae in _dBContext.EmployeesAssignedForActivities.Include(x=>x.Employee) on e.Id equals ae.ActivityId
                                         select new ActivityViewDto
                                         {
@@ -110,7 +112,8 @@ namespace IntegratedDigitalAPI.Services.PM
                                             Name = e.ActivityDescription,
                                             PlannedBudget = e.PlanedBudget,
                                             ActivityType = e.ActivityType.ToString(),
-                                            ProjectLocation = e.ProjectLocation.Name,
+                                            ProjectLocation = $"{e.Woreda}-{e.Zone.ZoneName}-{e.Zone.Region.RegionName}-{e.Zone.Region.Country.CountryName}",
+
                                             ProjectLocationLng = e.Longtude,
                                             ProjectLocationLat = e.Latitude,
                                             ActivityNumber = e.ActivityNumber,
@@ -154,6 +157,7 @@ namespace IntegratedDigitalAPI.Services.PM
                 else
                 {
                     activityViewDtos = (from e in _dBContext.Activities.Include(x => x.UnitOfMeasurement)
+                                         .Include(x => x.Zone).ThenInclude(x => x.Region).ThenInclude(x => x.Country)
                                         where e.TaskId == task.Id
                                         // join ae in _dBContext.EmployeesAssignedForActivities.Include(x=>x.Employee) on e.Id equals ae.ActivityId
                                         select new ActivityViewDto
@@ -162,7 +166,8 @@ namespace IntegratedDigitalAPI.Services.PM
                                             Name = e.ActivityDescription,
                                             PlannedBudget = e.PlanedBudget,
                                             ActivityType = e.ActivityType.ToString(),
-                                            ProjectLocation = e.ProjectLocation.Name,
+                                            ProjectLocation = $"{e.Woreda}-{e.Zone.ZoneName}-{e.Zone.Region.RegionName}-{e.Zone.Region.Country.CountryName}",
+
                                             ProjectLocationLng = e.Longtude,
                                             ProjectLocationLat = e.Latitude,
                                             ActivityNumber =e.ActivityNumber,
@@ -258,7 +263,8 @@ namespace IntegratedDigitalAPI.Services.PM
 
                     var activityProgress = _dBContext.ActivityProgresses;
 
-                    var activityViewDtos = (from e in _dBContext.Activities.Include(x => x.UnitOfMeasurement)
+                    var activityViewDtos = (from e in _dBContext.Activities.
+                                            Include(x => x.UnitOfMeasurement).Include(x=>x.Zone).ThenInclude(x=>x.Region).ThenInclude(x=>x.Country)
                                             where e.PlanId == plan.Id
                                             // join ae in _dBContext.EmployeesAssignedForActivities.Include(x=>x.Employee) on e.Id equals ae.ActivityId
                                             select new ActivityViewDto
@@ -267,7 +273,7 @@ namespace IntegratedDigitalAPI.Services.PM
                                                 Name = e.ActivityDescription,
                                                 PlannedBudget = e.PlanedBudget,
                                                 ActivityType = e.ActivityType.ToString(),
-                                                ProjectLocation = e.ProjectLocation.Name,
+                                                ProjectLocation = $"{e.Woreda}-{e.Zone.ZoneName}-{e.Zone.Region.RegionName}-{e.Zone.Region.Country.CountryName}",
                                                 ProjectLocationLng = e.Longtude,
                                                 ProjectLocationLat = e.Latitude,
                                                 ActivityNumber= e.ActivityNumber,

@@ -120,13 +120,13 @@ export class ViewActivtiesComponent implements OnInit {
 
   }
 
-  Showonmap(lat:number,lng:number){
+  Showonmap(lat:number,lng:number,projectLocation:string){
 
    console.log(lat,lng)
   let modalRef =this.modalService.open(ShowonmapComponent,{size:'xl',backdrop:'static'})
   modalRef.componentInstance.lat=lat
   modalRef.componentInstance.lng = lng
-  modalRef.componentInstance.title = "Project Location"
+  modalRef.componentInstance.title = `Project Locatio: \n ${projectLocation}`
   }
 
 

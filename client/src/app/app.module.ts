@@ -212,9 +212,16 @@ import { AddProjectLocationComponent } from './pages/project-managment/pm-config
 import { StrategicPlanReportComponent } from './pages/project-managment/progress-report/strategic-plan-report/strategic-plan-report.component';
 import { DisciplinaryCasesComponent } from './pages/human-resource/employee-managment/disciplinary-cases/disciplinary-cases.component';
 import { AddDisciplinaryCaseComponent } from './pages/human-resource/employee-managment/disciplinary-cases/add-disciplinary-case/add-disciplinary-case.component';
+import { LeaveCalanderComponent } from './pages/human-resource/hrm-configuration/leave-setting/leave-calander/leave-calander.component';
+import { ActivityLocationComponent } from './pages/project-managment/progress-report/activity-location/activity-location.component';
+import { ActivityMapComponent } from './pages/project-managment/progress-report/activity-location/activity-map/activity-map.component';
 import { StaffWeeklyPlanComponent } from './pages/project-managment/progress-report/staff-weekly-plan/staff-weekly-plan.component';
 import { WeeklyPlanPerformanceComponent } from './pages/project-managment/progress-report/weekly-plan-performance/weekly-plan-performance.component';
 import { ContractAgreementComponent } from './pages/print-out/HRM/contract-agreement/contract-agreement.component';
+import { ReportingPeriodComponent } from './pages/project-managment/pm-configuration/reporting-period/reporting-period.component';
+import { BudgetYearComponent } from './pages/project-managment/pm-configuration/budget-year/budget-year.component';
+import { AddReportPeriodComponent } from './pages/project-managment/pm-configuration/reporting-period/add-report-period/add-report-period.component';
+import { AddBudgetYearComponent } from './pages/project-managment/pm-configuration/budget-year/add-budget-year/add-budget-year.component';
 
 @NgModule({
   declarations: [
@@ -485,8 +492,15 @@ import { ContractAgreementComponent } from './pages/print-out/HRM/contract-agree
     StrategicPlanReportComponent,
     DisciplinaryCasesComponent,
     AddDisciplinaryCaseComponent,
+    LeaveCalanderComponent,
+    ActivityLocationComponent,
+    ActivityMapComponent,
     StaffWeeklyPlanComponent,
     WeeklyPlanPerformanceComponent,
+    ReportingPeriodComponent,
+    BudgetYearComponent,
+    AddReportPeriodComponent,
+    AddBudgetYearComponent
     
 
 

@@ -2,6 +2,7 @@
 
 
 
+using IntegratedDigitalAPI.DTOS.PM;
 using IntegratedImplementation.DTOS.PM;
 using IntegratedInfrustructure.Model.HRM;
 using IntegratedInfrustructure.Models.PM;
@@ -19,7 +20,8 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
 
         Task<PlanReportDetailDto> StructureReportByProgram(string BudgetYear, string ProgramId, string ReportBy);
          Task<PlannedReport> PlanReports(string BudgetYea, Guid selectStructureId, string ReportBy);
-         Task<PlannedReport> StrategicPlanReport(string BudgetYea, Guid strategicPlanId, string ReportBy);
+         Task<List<ActivityViewDto>> GetActivityByLocation(string BugetYear,Guid LocationId);
+        Task<PlannedReport> StrategicPlanReport(string BudgetYea, Guid strategicPlanId, string ReportBy);
          Task<ProgresseReport> ProgresssReport(FilterationCriteria filterationCriteria);
         Task<ProgresseReportByStructure> GetProgressByStructure(int BudgetYea, Guid selectStructureId, string ReportBy);
         Task<PerfomanceReport> PerformanceReports(FilterationCriteria filterationCriteria);

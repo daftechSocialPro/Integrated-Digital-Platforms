@@ -4,6 +4,7 @@ using IntegratedDigitalAPI.Services.PM;
 using IntegratedDigitalAPI.Services.PM.ProgressReport;
 using static IntegratedDigitalAPI.Services.PM.ProgressReport.ProgressReportService;
 using IntegratedInfrustructure.Model.PM;
+using IntegratedDigitalAPI.DTOS.PM;
 using IntegratedImplementation.DTOS.PM;
 
 namespace IntegratedDigitalAPI.Controllers.PM
@@ -69,6 +70,21 @@ namespace IntegratedDigitalAPI.Controllers.PM
                 return StatusCode(500, "Internal Server Error");
             }
         }
+
+        [HttpGet("ActivityLocation")]
+        public async Task<IActionResult> GetActiviyByLocation(string BudgetYea, Guid locationId)
+        {
+            try
+            {
+                return Ok(await _progressReportService.GetActivityByLocation(BudgetYea, locationId));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+     
         [HttpGet("StrategicPlanReport")]
         public async Task<IActionResult> StrategicPlanReport(string BudgetYea, Guid strategicPlanId, string ReportBy)
         {

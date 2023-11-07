@@ -38,13 +38,14 @@
 
     </div>
     <div class="card-body">
-        <div class="d-flex justify-content-between col-6 p-2 m-2">
+        <div class="d-flex justify-content-between col-9 p-2 m-2">
             <div>
                 <span> Planned Budget : </span> {{actView.plannedBudget}} ETB <br />
                 <span> Activity Type : </span> {{actView.activityType}} <br />
-                <span> Project Location :</span> {{actView.projectLocation}}  
+                <span> Project Location :</span> {{actView.projectLocation}}  <br/>
                 
-                <button class="btn btn-outline-primary"(click)="Showonmap(actView.projectLocationLat,actView.projectLocationLng)"
+                <button class="btn btn-outline-primary"(click)="Showonmap(
+                    actView.projectLocationLat,actView.projectLocationLng,actView.projectLocation)"
                 >View On Map </button>
                 
                 <br />

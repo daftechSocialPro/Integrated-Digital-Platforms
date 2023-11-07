@@ -94,6 +94,11 @@ namespace IntegratedInfrustructure.Data
         #endregion
 
         #region PM
+        public DbSet<ReportingPeriod> ReportingPeriods { get; set; }    
+        public DbSet<BudgetYear> BudgetYears { get; set; }    
+
+
+
         public DbSet<Activity> Activities { get; set; }
         public DbSet<ActivityParent> ActivitiesParents { get; set; }
 
@@ -154,7 +159,7 @@ namespace IntegratedInfrustructure.Data
             modelBuilder.Entity<Department>().HasIndex(b => b.DepartmentName).IsUnique();
             modelBuilder.Entity<LeaveType>().HasIndex(b => b.Name).IsUnique();
 
-           
+        
 
 
 

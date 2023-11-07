@@ -7,8 +7,11 @@ namespace IntegratedDigitalAPI.DTOS.PM
         public bool HasActivity { get; set; }
         public Guid TaskId { get; set; }
 
-        public Guid ProjectLocationId { get; set; }     
-        
+        public Guid ZoneId { get; set; }
+
+        public string? Woreda { get; set; }
+
+       
         public string? ActivityNumber { get; set; }
 
         public Guid CreatedBy { get; set; }
@@ -37,7 +40,9 @@ namespace IntegratedDigitalAPI.DTOS.PM
         public Guid? TaskId { get; set; }
         public string[]? Employees { get; set; }
 
-        public Guid ProjectLocationId { get; set; }
+        public Guid ZoneId { get; set; }
+
+        public string Woreda { get; set; }
         public Guid StrategicPlanId { get; set; }
 
         public double Longtude { get; set; }

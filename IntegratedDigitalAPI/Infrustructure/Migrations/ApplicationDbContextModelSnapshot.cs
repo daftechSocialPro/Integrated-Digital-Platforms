@@ -43,7 +43,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("RoleCategoryId");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Authentication.ApplicationUser", b =>
@@ -107,7 +107,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Authentication.RoleCategory", b =>
@@ -124,7 +124,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RoleCategories");
+                    b.ToTable("RoleCategories", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Configuration.CompanyProfile", b =>
@@ -169,7 +169,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("CompanyProfiles");
+                    b.ToTable("CompanyProfiles", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Configuration.Country", b =>
@@ -209,7 +209,7 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasIndex("Nationality")
                         .IsUnique();
 
-                    b.ToTable("Countries");
+                    b.ToTable("Countries", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Configuration.EducationalField", b =>
@@ -241,7 +241,7 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasIndex("EducationalFieldName")
                         .IsUnique();
 
-                    b.ToTable("EducationalFields");
+                    b.ToTable("EducationalFields", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Configuration.EducationalLevel", b =>
@@ -273,7 +273,7 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasIndex("EducationalLevelName")
                         .IsUnique();
 
-                    b.ToTable("EducationalLevels");
+                    b.ToTable("EducationalLevels", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Configuration.GeneralCodes", b =>
@@ -311,7 +311,7 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasIndex("GeneralCodeType")
                         .IsUnique();
 
-                    b.ToTable("GeneralCodes");
+                    b.ToTable("GeneralCodes", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Configuration.HolidayLst", b =>
@@ -340,7 +340,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("Holidays");
+                    b.ToTable("Holidays", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Configuration.ProjectLocation", b =>
@@ -366,7 +366,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("ProjectLocations");
+                    b.ToTable("ProjectLocations", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Configuration.Region", b =>
@@ -400,7 +400,7 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasIndex("RegionName")
                         .IsUnique();
 
-                    b.ToTable("Regions");
+                    b.ToTable("Regions", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Configuration.Zone", b =>
@@ -434,7 +434,7 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasIndex("ZoneName")
                         .IsUnique();
 
-                    b.ToTable("Zones");
+                    b.ToTable("Zones", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.Department", b =>
@@ -467,7 +467,7 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasIndex("DepartmentName")
                         .IsUnique();
 
-                    b.ToTable("Departments");
+                    b.ToTable("Departments", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeDevelopmentPlan", b =>
@@ -516,7 +516,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("EmployeePerformanceId");
 
-                    b.ToTable("EmployeeDevelopmentPlans");
+                    b.ToTable("EmployeeDevelopmentPlans", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeDisciplinaryCase", b =>
@@ -565,7 +565,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("EmployeeDisciplinaryCases");
+                    b.ToTable("EmployeeDisciplinaryCases", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeDocuments", b =>
@@ -600,7 +600,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("EmployeeDocuments");
+                    b.ToTable("EmployeeDocuments", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeEducation", b =>
@@ -650,7 +650,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("EmployeeEducations");
+                    b.ToTable("EmployeeEducations", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeFamily", b =>
@@ -693,7 +693,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("EmployeeFamilies");
+                    b.ToTable("EmployeeFamilies", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeFile", b =>
@@ -728,7 +728,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("EmployeeFiles");
+                    b.ToTable("EmployeeFiles", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeLeave", b =>
@@ -786,7 +786,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("LeaveTypeId");
 
-                    b.ToTable("EmployeeLeaves");
+                    b.ToTable("EmployeeLeaves", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeList", b =>
@@ -901,7 +901,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("ZoneId");
 
-                    b.ToTable("Employees");
+                    b.ToTable("Employees", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeLoan", b =>
@@ -950,7 +950,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("SecondApproverId");
 
-                    b.ToTable("EmployeeLoans");
+                    b.ToTable("EmployeeLoans", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeePerformance", b =>
@@ -1000,7 +1000,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("EmployeePerformances");
+                    b.ToTable("EmployeePerformances", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeePerformancePlan", b =>
@@ -1041,7 +1041,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("PerformancePlanDetailId");
 
-                    b.ToTable("EmployeePerformancePlans");
+                    b.ToTable("EmployeePerformancePlans", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeSalary", b =>
@@ -1075,7 +1075,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("EmploymentDetailId");
 
-                    b.ToTable("EmployeeSalaries");
+                    b.ToTable("EmployeeSalaries", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeSettlement", b =>
@@ -1105,7 +1105,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("EmployeeLoanId");
 
-                    b.ToTable("EmployeeSettlements");
+                    b.ToTable("EmployeeSettlements", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeSupervisors", b =>
@@ -1142,7 +1142,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("SupervisorId");
 
-                    b.ToTable("EmployeeSupervisors");
+                    b.ToTable("EmployeeSupervisors", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeSupport", b =>
@@ -1173,7 +1173,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("EmployeePerformanceId");
 
-                    b.ToTable("EmploeeSupports");
+                    b.ToTable("EmploeeSupports", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeSurety", b =>
@@ -1232,7 +1232,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("EmployeeSureties");
+                    b.ToTable("EmployeeSureties", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeWorkExperiance", b =>
@@ -1279,7 +1279,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("EmployeeWorkExperiances");
+                    b.ToTable("EmployeeWorkExperiances", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmploymentDetail", b =>
@@ -1337,7 +1337,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("PositionId");
 
-                    b.ToTable("EmploymentDetails");
+                    b.ToTable("EmploymentDetails", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.HrmSetting", b =>
@@ -1365,7 +1365,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("HrmSettings");
+                    b.ToTable("HrmSettings", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.LeaveBalance", b =>
@@ -1407,7 +1407,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("LeaveBalances");
+                    b.ToTable("LeaveBalances", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.LeavePlanSetting", b =>
@@ -1446,7 +1446,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("LeavePlanSetting");
+                    b.ToTable("LeavePlanSetting", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.LeaveType", b =>
@@ -1487,7 +1487,7 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("LeaveTypes");
+                    b.ToTable("LeaveTypes", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.LoanRequest", b =>
@@ -1525,7 +1525,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("RequesterId");
 
-                    b.ToTable("LoanRequests");
+                    b.ToTable("LoanRequests", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.LoanSetting", b =>
@@ -1569,7 +1569,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("LoanSettings");
+                    b.ToTable("LoanSettings", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.PerformancePlan", b =>
@@ -1605,7 +1605,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("PerformancePlans");
+                    b.ToTable("PerformancePlans", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.PerformancePlanDetail", b =>
@@ -1643,7 +1643,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("PerformancePlanId");
 
-                    b.ToTable("PerformancePlanDetails");
+                    b.ToTable("PerformancePlanDetails", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.PerformanceSetting", b =>
@@ -1678,7 +1678,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("PerformanceSettings");
+                    b.ToTable("PerformanceSettings", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.Position", b =>
@@ -1711,7 +1711,7 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasIndex("PositionName")
                         .IsUnique();
 
-                    b.ToTable("Positions");
+                    b.ToTable("Positions", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.ResignationRequest", b =>
@@ -1763,7 +1763,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("ResignationRequests");
+                    b.ToTable("ResignationRequests", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.Volunter", b =>
@@ -1851,7 +1851,32 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("ZoneId");
 
-                    b.ToTable("Volunters");
+                    b.ToTable("Volunters", (string)null);
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Model.PM.BudgetYear", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.ToTable("BudgetYears", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.PM.Project", b =>
@@ -1911,7 +1936,35 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("ProjectManagerId");
 
-                    b.ToTable("Projects");
+                    b.ToTable("Projects", (string)null);
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Model.PM.ReportingPeriod", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("NumberOfDays")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ReportingType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.ToTable("ReportingPeriods", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.PM.StrategicPlan", b =>
@@ -1941,7 +1994,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("StrategicPlans");
+                    b.ToTable("StrategicPlans", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.PM.Tasks", b =>
@@ -2002,7 +2055,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("Tasks");
+                    b.ToTable("Tasks", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Vacancy.ApplcantDocuments", b =>
@@ -2025,7 +2078,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("ApplicantVacnncyId");
 
-                    b.ToTable("ApplcantDocuments");
+                    b.ToTable("ApplcantDocuments", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Vacancy.Applicant", b =>
@@ -2094,7 +2147,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("ZoneId");
 
-                    b.ToTable("Applicants");
+                    b.ToTable("Applicants", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Vacancy.ApplicantEducation", b =>
@@ -2139,7 +2192,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("EducationalLevelId");
 
-                    b.ToTable("ApplicantEducations");
+                    b.ToTable("ApplicantEducations", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Vacancy.ApplicantVacancy", b =>
@@ -2163,7 +2216,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("VacancyId");
 
-                    b.ToTable("ApplicantVacancies");
+                    b.ToTable("ApplicantVacancies", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Vacancy.ApplicantWorkExperiance", b =>
@@ -2202,7 +2255,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("ApplicantId");
 
-                    b.ToTable("ApplicantWorkExperiances");
+                    b.ToTable("ApplicantWorkExperiances", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Vacancy.VacancyDocuments", b =>
@@ -2237,7 +2290,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("VacancyId");
 
-                    b.ToTable("VacancyDocuments");
+                    b.ToTable("VacancyDocuments", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Vacancy.VacancyList", b =>
@@ -2308,7 +2361,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("PositionId");
 
-                    b.ToTable("VacancyLists");
+                    b.ToTable("VacancyLists", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Vacancy.VacancyStatus", b =>
@@ -2353,7 +2406,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("ApplicantVacancyId");
 
-                    b.ToTable("VacancyStatuses");
+                    b.ToTable("VacancyStatuses", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.Common.UnitOfMeasurment", b =>
@@ -2386,7 +2439,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("UnitOfMeasurment");
+                    b.ToTable("UnitOfMeasurment", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.PM.Activity", b =>
@@ -2457,9 +2510,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<bool>("PostToCase")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("ProjectLocationId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid?>("ProjectTeamId")
                         .HasColumnType("uniqueidentifier");
 
@@ -2487,6 +2537,13 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<float>("Weight")
                         .HasColumnType("real");
 
+                    b.Property<string>("Woreda")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ZoneId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int?>("targetDivision")
                         .HasColumnType("int");
 
@@ -2500,8 +2557,6 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("PlanId");
 
-                    b.HasIndex("ProjectLocationId");
-
                     b.HasIndex("ProjectTeamId");
 
                     b.HasIndex("StrategicPlanId");
@@ -2510,7 +2565,9 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("UnitOfMeasurementId");
 
-                    b.ToTable("Activities");
+                    b.HasIndex("ZoneId");
+
+                    b.ToTable("Activities", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.PM.ActivityParent", b =>
@@ -2574,7 +2631,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("TaskId");
 
-                    b.ToTable("ActivitiesParents");
+                    b.ToTable("ActivitiesParents", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.PM.ActivityProgress", b =>
@@ -2656,7 +2713,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("QuarterId");
 
-                    b.ToTable("ActivityProgresses");
+                    b.ToTable("ActivityProgresses", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.PM.ActivityTargetDivision", b =>
@@ -2692,7 +2749,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("ActivityTargetDivisions");
+                    b.ToTable("ActivityTargetDivisions", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.PM.ActivityTerminationHistories", b =>
@@ -2756,7 +2813,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("TopProjectTeamId");
 
-                    b.ToTable("ActivityTerminationHistories");
+                    b.ToTable("ActivityTerminationHistories", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.PM.EmployeesAssignedForActivities", b =>
@@ -2788,7 +2845,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("EmployeesAssignedForActivities");
+                    b.ToTable("EmployeesAssignedForActivities", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.PM.ProgressAttachment", b =>
@@ -2819,7 +2876,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("ProgressAttachments");
+                    b.ToTable("ProgressAttachments", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.PM.ProjectTeam", b =>
@@ -2845,7 +2902,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("ProjectTeams");
+                    b.ToTable("ProjectTeams", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.PM.ProjectTeamEmployees", b =>
@@ -2880,7 +2937,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("ProjectTeamId");
 
-                    b.ToTable("ProjectTeamEmployees");
+                    b.ToTable("ProjectTeamEmployees", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.PM.QuarterSetting", b =>
@@ -2915,7 +2972,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("QuarterSettings");
+                    b.ToTable("QuarterSettings", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.PM.TaskMembers", b =>
@@ -2957,7 +3014,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("TaskId");
 
-                    b.ToTable("TaskMembers");
+                    b.ToTable("TaskMembers", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.PM.TaskMemo", b =>
@@ -3003,7 +3060,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("TaskId");
 
-                    b.ToTable("TaskMemos");
+                    b.ToTable("TaskMemos", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.PM.TaskMemoReply", b =>
@@ -3039,7 +3096,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("TaskMemoId");
 
-                    b.ToTable("TaskMemoReply");
+                    b.ToTable("TaskMemoReply", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -3061,7 +3118,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RoleClaims");
+                    b.ToTable("RoleClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -3083,7 +3140,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserClaims");
+                    b.ToTable("UserClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -3102,7 +3159,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
-                    b.ToTable("UserLogins");
+                    b.ToTable("UserLogins", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
@@ -3115,7 +3172,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasKey("UserId", "RoleId");
 
-                    b.ToTable("UserRoles");
+                    b.ToTable("UserRoles", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -3134,7 +3191,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("UserTokens");
+                    b.ToTable("UserTokens", (string)null);
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Authentication.ApplicationRole", b =>
@@ -3826,6 +3883,15 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("Zone");
                 });
 
+            modelBuilder.Entity("IntegratedInfrustructure.Model.PM.BudgetYear", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.Navigation("CreatedBy");
+                });
+
             modelBuilder.Entity("IntegratedInfrustructure.Model.PM.Project", b =>
                 {
                     b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
@@ -3849,6 +3915,15 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("Department");
 
                     b.Navigation("ProjectManager");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Model.PM.ReportingPeriod", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.Navigation("CreatedBy");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.PM.StrategicPlan", b =>
@@ -4064,12 +4139,6 @@ namespace IntegratedInfrustructure.Migrations
                         .WithMany("Activities")
                         .HasForeignKey("PlanId");
 
-                    b.HasOne("IntegratedInfrustructure.Model.Configuration.ProjectLocation", "ProjectLocation")
-                        .WithMany()
-                        .HasForeignKey("ProjectLocationId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("IntegratedInfrustructure.Models.PM.ProjectTeam", "Commitee")
                         .WithMany()
                         .HasForeignKey("ProjectTeamId");
@@ -4090,6 +4159,12 @@ namespace IntegratedInfrustructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("IntegratedInfrustructure.Model.Configuration.Zone", "Zone")
+                        .WithMany()
+                        .HasForeignKey("ZoneId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.Navigation("ActivityParent");
 
                     b.Navigation("Commitee");
@@ -4100,13 +4175,13 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.Navigation("Plan");
 
-                    b.Navigation("ProjectLocation");
-
                     b.Navigation("StrategicPlan");
 
                     b.Navigation("Task");
 
                     b.Navigation("UnitOfMeasurement");
+
+                    b.Navigation("Zone");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.PM.ActivityParent", b =>
