@@ -1,0 +1,8 @@
+.decimal-list {
+    list-style-type: none;
+    counter-reset: item;
+  }
+  .decimal-list li:before {
+    content: counter(item) ".1";
+    counter-increment: item;
+  }

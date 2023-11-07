@@ -6,6 +6,7 @@ import { ResponseMessage } from "../model/ResponseMessage.Model";
 import { UserService } from "./user.service";
 import { EmployeeEducationGetDto, EmployeeEducationPostDto, EmployeeGetDto } from "../model/HRM/IEmployeeDto";
 import { ApplicantDetailDto, ApplicantListDto, ApplicantProcessDto, ApplicantWorkDto } from "../model/Vacancy/IApplicantDto";
+import { ApplicantFilter, VacancyFilter } from "../model/FilterCriteria";
 
 @Injectable({
     providedIn: 'root',
@@ -17,8 +18,8 @@ export class VacancyService {
     constructor(private http: HttpClient,
         private userService: UserService) { }
 
-    getVacancyList() {
-        return this.http.get<VacancyListDto[]>(this.baseUrl + `/Vacancy/GetVacancyList`);
+    getVacancyList(vacancyFilter: VacancyFilter) {
+        return this.http.post<VacancyListDto[]>(this.baseUrl + `/Vacancy/GetVacancyList`,vacancyFilter);
     }
     getVacanyDetail(vacancyId: string) {
 
@@ -55,8 +56,8 @@ export class VacancyService {
         return this.http.delete<ResponseMessage>(this.baseUrl + "/Vacancy/DeleteVacancyDocument?vacancyDocId=" + vacancyDocId)
     }
 
-    getApplicantList(vacancyId: string) {
-        return this.http.get<ApplicantListDto[]>(this.baseUrl + `/Applicant/GetApplicantList?vacancyId=${vacancyId}`)
+    getApplicantList(applicantFilter: ApplicantFilter) {
+        return this.http.post<ApplicantListDto[]>(this.baseUrl + `/Applicant/GetApplicantList?vacancyId`,applicantFilter);
     }
 
     checkApplicantProfile(employeeId: string) {

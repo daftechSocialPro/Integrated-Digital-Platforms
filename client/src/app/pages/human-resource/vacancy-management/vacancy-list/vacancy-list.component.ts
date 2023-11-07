@@ -2,13 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmEventType, ConfirmationService, FilterMetadata, LazyLoadEvent, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
-import { FilterCriteria, FilterDetail } from 'src/app/model/FilterCriteria';
+import { FilterCriteria, FilterDetail, VacancyFilter } from 'src/app/model/FilterCriteria';
 import { VacancyListDto } from 'src/app/model/Vacancy/vacancyList.Model';
 import { VacancyService } from 'src/app/services/vacancy.service';
 import { AddVacancyComponent } from './add-vacancy/add-vacancy.component';
 import { AddVaccancyDocumentComponent } from '../add-vaccancy-document/add-vaccancy-document.component';
 import { CommonService } from 'src/app/services/common.service';
 import { Router } from '@angular/router';
+import { SelectList } from 'src/app/model/common';
+import { DropDownService } from 'src/app/services/dropDown.service';
 
 @Component({
   selector: 'app-vacancy-list',
@@ -18,12 +20,16 @@ import { Router } from '@angular/router';
 
 export class VacancyListComponent implements OnInit {
 
-  filterCriteria: FilterCriteria[] = [];
+  vacancyFilter: VacancyFilter = {
+
+  };
   filterDetail: FilterDetail = null!;
   vacancyList: VacancyListDto[] = [];
   loading: boolean = false;
   totalRecords: number = 0;
   filters: any[] = [];
+  departments!: SelectList[];
+  positions!: SelectList[];
 
   constructor(
     private vacancyService: VacancyService,
@@ -31,18 +37,50 @@ export class VacancyListComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private modalService: NgbModal,
     private route : Router,
-    private commonService: CommonService) { }
+    private commonService: CommonService,
+    private dropService: DropDownService) { }
 
   ngOnInit() {
-    this.getVacnacy();
+   
+    this.getDepartments();
+    this.getPositions();
   }
 
+  clear(table: Table) {
+    table.clear();
+}
+
   getVacnacy() {
-    this.vacancyService.getVacancyList().subscribe({
+   if(this.vacancyFilter && this.vacancyFilter.status){
+    this.vacancyFilter.status = this.vacancyFilter.status.toString().toLowerCase() === 'true';
+   }
+    this.vacancyService.getVacancyList(this.vacancyFilter).subscribe({
       next: (res) => {
         this.vacancyList = res;
+        this.vacancyFilter =   {
+
+        };
       }, error: (err) => {
         console.log(err)
+      }
+    })
+  }
+
+  getDepartments() {
+    this.dropService.getDepartmentsDropdown().subscribe({
+      next: (res) => {
+        this.departments = res
+
+      }
+    })
+  }
+
+
+
+  getPositions() {
+    this.dropService.getPositionsDropdown().subscribe({
+      next: (res) => {
+        this.positions = res
       }
     })
   }

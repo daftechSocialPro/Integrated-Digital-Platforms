@@ -214,6 +214,7 @@ import { DisciplinaryCasesComponent } from './pages/human-resource/employee-mana
 import { AddDisciplinaryCaseComponent } from './pages/human-resource/employee-managment/disciplinary-cases/add-disciplinary-case/add-disciplinary-case.component';
 import { StaffWeeklyPlanComponent } from './pages/project-managment/progress-report/staff-weekly-plan/staff-weekly-plan.component';
 import { WeeklyPlanPerformanceComponent } from './pages/project-managment/progress-report/weekly-plan-performance/weekly-plan-performance.component';
+import { ContractAgreementComponent } from './pages/print-out/HRM/contract-agreement/contract-agreement.component';
 
 @NgModule({
   declarations: [
@@ -485,7 +486,7 @@ import { WeeklyPlanPerformanceComponent } from './pages/project-managment/progre
     DisciplinaryCasesComponent,
     AddDisciplinaryCaseComponent,
     StaffWeeklyPlanComponent,
-    WeeklyPlanPerformanceComponent
+    WeeklyPlanPerformanceComponent,
     
 
 

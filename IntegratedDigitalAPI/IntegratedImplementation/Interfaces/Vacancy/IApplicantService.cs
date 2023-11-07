@@ -10,7 +10,7 @@ namespace IntegratedImplementation.Interfaces.Vacancy
 {
     public interface IApplicantService
     {
-        Task<List<ApplicantListDto>> GetApplicantList(Guid vacancyId);
+        Task<List<ApplicantListDto>> GetApplicantList(ApplicantFilterDto filterDto);
         Task<string> CheckApplicantProfile(Guid employeeId);
         Task<ResponseMessage> AddInternalApplicant(InternalApplicantDto internalApplicantDto);
         Task<ResponseMessage> AddEducationLevel(ApplicantEducationDto applicantEducation);
