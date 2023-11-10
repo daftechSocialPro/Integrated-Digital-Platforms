@@ -307,5 +307,43 @@ namespace IntegratedImplementation.Services.HRM
             await _dbContext.SaveChangesAsync();
             return new ResponseMessage { Success = true, Message = "Approved Successfully!!" };
         }
+
+        public async Task<List<EmployeeBenefitListDto>> GetEmployeeBenefits(Guid employeeId)
+        {
+            return await _dbContext.EmployeeBenefits.AsNoTracking().Include(x => x.Benefit)
+                           .Where(x => x.EmployeeId == employeeId).Select(x => new EmployeeBenefitListDto
+                            {
+                                Id = x.Id,
+                                TypeofBenefit = x.TypeOfBenefit.ToString(),
+                                BenefitName = x.Benefit.Name,
+                                Amount = x.Amount
+                            }).ToListAsync();
+        }
+
+        public async Task<ResponseMessage> AddEmployeeBenefit(AddEmployeeBenefitDto addBenefit)
+        {
+            var exists = await _dbContext.EmployeeBenefits.AnyAsync(x => x.EmployeeId == addBenefit.EmployeeId && x.BenefitId == addBenefit.BenefitListId);
+            if (exists)
+            {
+                return new ResponseMessage { Success = false, Message = "The benefit already Exists" };
+            }
+
+            EmployeeBenefits emp = new EmployeeBenefits
+            {
+                Id = Guid.NewGuid(),
+                CreatedById = addBenefit.CreatedById,
+                CreatedDate = DateTime.Now,
+                EmployeeId = addBenefit.EmployeeId,
+                Amount = addBenefit.Ammount,
+                BenefitId = addBenefit.BenefitListId,
+                TypeOfBenefit = addBenefit.TypeOfBenefit,
+                Rowstatus = RowStatus.ACTIVE
+            };
+
+            await _dbContext.EmployeeBenefits.AddAsync(emp);
+            await _dbContext.SaveChangesAsync();
+
+            return new ResponseMessage { Success = true, Message = "Successfully added Employee Benefit" };
+        }
     }
 }

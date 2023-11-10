@@ -173,5 +173,26 @@ namespace IntegratedDigitalAPI.Controllers.HRM
                 return BadRequest();
             }
         }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(EmployeeBenefitListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetEmployeeBenefits(Guid employeeId)
+        {
+            return Ok(await _employementDetailService.GetEmployeeBenefits(employeeId));
+        }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> AddEmployeeBenefit(AddEmployeeBenefitDto addEmployeeBenefit)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _employementDetailService.AddEmployeeBenefit(addEmployeeBenefit));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
     }
 }

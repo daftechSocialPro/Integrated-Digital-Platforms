@@ -105,5 +105,62 @@ namespace IntegratedImplementation.Services.HRM
 
             return new ResponseMessage { Success = true, Message = "Added SuccessFully" };
         }
+
+        public async Task<List<BenefitListDto>> GetBenefitLists()
+        {
+            return await _dbContext.BenefitLists.Select(x =>
+                          new BenefitListDto
+                          {
+                                Id = x.Id,
+                                Name = x.Name,
+                                AmharicName = x.AmharicName,
+                                Taxable = x.Taxable,
+                                AddOnContract = x.AddOnContract
+                          }).ToListAsync();
+        }
+
+        public async Task<ResponseMessage> AddBenefitList(AddBenefitListDto addBenefitList)
+        {
+            var nameExists = await _dbContext.BenefitLists.AnyAsync(x => x.Name == addBenefitList.Name);
+            if (nameExists)
+                return new ResponseMessage { Success = false, Message = "Name already exists" };
+
+            BenefitList newBenefit = new BenefitList
+            {
+                Id = Guid.NewGuid(),
+                CreatedById = addBenefitList.CreatedById,
+                CreatedDate = DateTime.Now,
+                Rowstatus = RowStatus.ACTIVE,
+                Name = addBenefitList.Name,
+                AmharicName = addBenefitList.AmharicName,
+                Taxable = addBenefitList.Taxable,
+                AddOnContract = addBenefitList.AddOnContract
+            };
+
+            await _dbContext.BenefitLists.AddAsync(newBenefit);
+            await _dbContext.SaveChangesAsync();
+
+            return new ResponseMessage { Success = true, Message = "Successfully Added Benefit", Data = newBenefit };
+        }
+
+        public async Task<ResponseMessage> UpdateBenefitList(UpdateBenefitListDto updateBenefitList)
+        {
+            var currentBenefit = await _dbContext.BenefitLists.FirstOrDefaultAsync(x => x.Id == updateBenefitList.Id);
+            if (currentBenefit == null)
+                return new ResponseMessage { Success = false, Message = "Could not find benefit" };
+
+            var nameExists = await _dbContext.BenefitLists.AnyAsync(x => x.Id != currentBenefit.Id && updateBenefitList.Name == x.Name);
+            if (nameExists)
+                return new ResponseMessage { Success = false, Message = "Name already Exists" };
+
+            currentBenefit.Name = updateBenefitList.Name;
+            currentBenefit.AmharicName = updateBenefitList.AmharicName;
+            currentBenefit.Taxable = updateBenefitList.Taxable;
+            currentBenefit.AddOnContract = updateBenefitList.AddOnContract;
+
+            await _dbContext.SaveChangesAsync();
+
+            return new ResponseMessage { Success = true, Message = "Updated Succesfully" };
+        }
     }
 }

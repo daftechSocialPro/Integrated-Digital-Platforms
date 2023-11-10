@@ -193,8 +193,25 @@ namespace IntegratedImplementation.Services.Configuration
             return strategicPlans;
         }
 
-        
+        public async Task<List<SelectListDto>> GetBenefitDropDowns()
+        {
+            var strategicPlans = await _dbContext.BenefitLists.AsNoTracking().Select(x => new SelectListDto
+            {
+                Id = x.Id,
+                Name = x.Name
+            }).ToListAsync();
 
+            return strategicPlans;
+        }
 
+        public async Task<List<BankSelectList>> GetBankDropDowns()
+        {
+            return await _dbContext.BankLists.Select(x => new BankSelectList
+                         {
+                            Id = x.Id,
+                            Name = x.BankName,
+                            BankDigit = x.BankDigitNumber  
+                         }).ToListAsync();
+        }
     }
 }

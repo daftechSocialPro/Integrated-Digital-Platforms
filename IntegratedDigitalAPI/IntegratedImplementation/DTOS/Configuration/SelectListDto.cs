@@ -18,4 +18,11 @@ namespace IntegratedImplementation.DTOS.Configuration
 
         public string ? EmployeeId { get; set; }
     }
+
+    public class BankSelectList
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; } = null!;
+        public int BankDigit { get; set; }
+    }
 }

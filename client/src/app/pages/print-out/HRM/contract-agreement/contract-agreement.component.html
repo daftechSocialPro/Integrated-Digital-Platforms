@@ -2,13 +2,15 @@
   <div class="letter">
     <div class="header">
       <div style="text-align: left;">
-        <img src="../../../../../../../assets/layout/images/letterHead.PNG" alt="Image" width="100%">
+        <img [src]="sanitizer.bypassSecurityTrustUrl('../../../../../assets/img/PrintOut/em_logo.png')" alt="Image" width="50"/>
+        <!-- <img src="../../../../../assets/img/PrintOut/em_logo.png" alt="Image" width="50"> -->
       </div>
     </div>
     <div class="watermark">
       <div class="container">
-        <img src="../../../../../../../assets/layout/images/letterHead.jpg" style="margin-left: 64%;margin-top: 31%;"
-          alt="Image" width="250" height="250">
+        <img [src]="sanitizer.bypassSecurityTrustUrl('../../../../../assets/img/PrintOut/em_logo.png')" 
+        style="margin-left: 64%;margin-top: 31%;"
+         alt="Image" width="250" height="250" />
       </div>
 
     </div>
@@ -86,13 +88,14 @@
   <div class="letter">
     <div class="header">
       <div style="text-align: left;">
-        <img src="../../../../../../../assets/layout/images/letterHead.PNG" alt="Image" width="100%">
+        <img [src]="sanitizer.bypassSecurityTrustUrl('../../../../../assets/img/PrintOut/em_logo.png')" alt="Image" width="50"/>
       </div>
     </div>
     <div class="watermark">
       <div class="container">
-        <img src="../../../../../../../assets/layout/images/letterHead.jpg" style="margin-left: 64%;margin-top: 31%;"
-          alt="Image" width="250" height="250">
+        <img [src]="sanitizer.bypassSecurityTrustUrl('../../../../../assets/img/PrintOut/em_logo.png')" 
+        style="margin-left: 64%;margin-top: 31%;"
+         alt="Image" width="250" height="250" />
       </div>
 
     </div>
@@ -100,8 +103,8 @@
       <h6 style="text-align: center;">Part III</h6>
       <h6 style="text-align: center;">Duties and Obligation of the Employee</h6>
     
-      <ol class="decimal-list">
-        <li>
+      <ol style="text-align: justify;">
+        <li value="3.1">
           The employee is obliged to devote all his/her time energy and ability to his/her work and undertake to
           discharge
           his duties and responsibilities conscientiously and diligently so that the objectives and aims of EMwA must be
@@ -153,6 +156,9 @@
           the
           project budget.
         </li>
+        <li>
+          value="3.1"
+        </li>
         
       </ol>
      
@@ -169,13 +175,14 @@
   <div class="letter">
     <div class="header">
       <div style="text-align: left;">
-        <img src="../../../../../../../assets/layout/images/letterHead.PNG" alt="Image" width="100%">
+        <img [src]="sanitizer.bypassSecurityTrustUrl('../../../../../assets/img/PrintOut/em_logo.png')" alt="Image" width="50"/>
       </div>
     </div>
     <div class="watermark">
       <div class="container">
-        <img src="../../../../../../../assets/layout/images/letterHead.jpg" style="margin-left: 64%;margin-top: 31%;"
-          alt="Image" width="250" height="250">
+        <img [src]="sanitizer.bypassSecurityTrustUrl('../../../../../assets/img/PrintOut/em_logo.png')" 
+         style="margin-left: 64%;margin-top: 31%;"
+          alt="Image" width="250" height="250" />
       </div>
 
     </div>
@@ -208,7 +215,7 @@
      
       <ol start="5.1">
         <li>
-          This employment contract shall be terminated based up on the legal grounds stated on the association&sup1;s HR
+          This employment contract shall be terminated based up on the legal grounds stated on the association<sup>'</sup>s  HR
           manual and
           Ethiopian labor proclamation No 1156/2019 on this regard.
         </li>

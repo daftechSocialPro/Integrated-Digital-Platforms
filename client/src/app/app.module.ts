@@ -222,6 +222,12 @@ import { ReportingPeriodComponent } from './pages/project-managment/pm-configura
 import { BudgetYearComponent } from './pages/project-managment/pm-configuration/budget-year/budget-year.component';
 import { AddReportPeriodComponent } from './pages/project-managment/pm-configuration/reporting-period/add-report-period/add-report-period.component';
 import { AddBudgetYearComponent } from './pages/project-managment/pm-configuration/budget-year/add-budget-year/add-budget-year.component';
+import { BenefitListsComponent } from './pages/human-resource/hrm-configuration/benefit-lists/benefit-lists.component';
+import { AddBenefitListComponent } from './pages/human-resource/hrm-configuration/benefit-lists/add-benefit-list/add-benefit-list.component';
+import { EmployeeBenefitsComponent } from './pages/human-resource/employee-managment/employee-detail/employee-benefits/employee-benefits.component';
+import { AddEmployeeBenefitComponent } from './pages/human-resource/employee-managment/employee-detail/employee-benefits/add-employee-benefit/add-employee-benefit.component';
+import { BankListComponent } from './pages/configuration/bank-list/bank-list.component';
+import { AddBankListComponent } from './pages/configuration/bank-list/add-bank-list/add-bank-list.component';
 
 @NgModule({
   declarations: [
@@ -500,7 +506,13 @@ import { AddBudgetYearComponent } from './pages/project-managment/pm-configurati
     ReportingPeriodComponent,
     BudgetYearComponent,
     AddReportPeriodComponent,
-    AddBudgetYearComponent
+    AddBudgetYearComponent,
+    BenefitListsComponent,
+    AddBenefitListComponent,
+    EmployeeBenefitsComponent,
+    AddEmployeeBenefitComponent,
+    BankListComponent,
+    AddBankListComponent
     
 
 

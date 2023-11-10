@@ -1,3 +1,5 @@
+  @media print {
+
   body{
     background-color: white;
   }
@@ -22,7 +24,7 @@
     height: 11in;
     margin: 0 auto;
     background-color: white;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); */
     padding: 1in;
   }
 
@@ -63,7 +65,7 @@
     top: 0;
     left: 0;
     right: 0;
-    height: 1in;
+    height: 0.5in;
     /* Header styles go here */
   }
 
@@ -73,7 +75,7 @@
     left: 0.1in;
     right: 5in;
     height: 2in;
-    opacity: 0.3;
+    opacity: 0.2;
     /* Watermark styles go here */
   }
 
@@ -84,6 +86,9 @@
     bottom: 0;
     left: 0;
     right: 0;
-    height: 1in;
+    height: 0.2in;
     /* Footer styles go here */
   }
+
+  }
+  

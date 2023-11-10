@@ -95,7 +95,7 @@ const routes: Routes = [
   { path: 'user_managment', canActivate: [AuthGuard], component: UserManagementComponent },
   { path: 'HRM/loan-managment', canActivate: [AuthGuard], component: LoanManagementComponent },
   { path: 'HRM/disciplinary-case', canActivate: [AuthGuard], component: DisciplinaryCasesComponent, data: { permittedRoles: ['EVALUATER'] } },
-
+  { path: 'printout', loadChildren: () => import('./pages/print-out/print-out.module').then(m => m.PrintOutModule) }
 ];
 
 @NgModule({

@@ -211,5 +211,11 @@ namespace IntegratedInfrustructure.Data
 
         }
 
+        public enum TypeOfBenefit
+        {
+            PERCENTILE,
+            NUMBER,
+        }
+
     }
 }

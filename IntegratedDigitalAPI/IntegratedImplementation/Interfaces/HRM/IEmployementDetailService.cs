@@ -30,5 +30,8 @@ namespace IntegratedImplementation.Interfaces.HRM
         public Task<ResponseMessage> AddDisciplinaryCase(AddDisciplinaryCaseDto addDisciplinary);
         public Task<ResponseMessage> ApproveCase(ApproveDisciplinaryCase approveDisplinary);
 
+
+        public Task<List<EmployeeBenefitListDto>> GetEmployeeBenefits(Guid employeeId);
+        public Task<ResponseMessage> AddEmployeeBenefit(AddEmployeeBenefitDto addEmployeeBenefit);
     }
 }

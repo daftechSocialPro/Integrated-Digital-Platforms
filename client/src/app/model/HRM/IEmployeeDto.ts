@@ -27,6 +27,7 @@ export interface EmployeePostDto {
      email: string;
      zoneId: string;
      woreda: string;
+     bankId: string;
 
 }
 
@@ -66,8 +67,9 @@ export interface EmployeeGetDto {
      zoneId: string;
      zoneName: string
      woreda: string;
-     nationalityId: string
-     isApproved:boolean
+     nationalityId: string;
+     isApproved:boolean;
+     bankId: string;
 
 
 }

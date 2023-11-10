@@ -47,6 +47,7 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<IEmployeePerformanceService, EmployeePerformanceService>();
             services.AddScoped<ILoanSettingService, LoanSettingService>();
             services.AddScoped<ILoanManagementService, LoanManagementService>();
+            services.AddScoped<IHrmLetterService, HrmLetterService>();
             #endregion
 
             #region Vacancy
@@ -64,6 +65,7 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<IDropDownService, DropDownService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IProjectLocationService, ProjectLocationService>();
+            services.AddScoped<IBankListService, BankListService>();
 
             #region PM
             services.AddScoped<IUnitOfMeasurmentService, UnitOfMeasurmentService>();

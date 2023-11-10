@@ -17,7 +17,7 @@ namespace IntegratedImplementation.Services.HRM
         public string SourceOfFund { get; set; } = null!;
         public string PlaceOfWork { get; set; } = null!;
         public DateTime ContractStartDate { get; set; } 
-        public DateTime ContractEndDate { get; set; } 
+        public DateTime? ContractEndDate { get; set; } 
         public string JobTitle { get; set; } = null!;
         public string ReportingTo { get; set; } = null!;
         public double GrossSalary { get; set; }

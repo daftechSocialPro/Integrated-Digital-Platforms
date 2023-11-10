@@ -162,25 +162,6 @@
                     <div class="col-md-12">
                         <div class="row g-3">
 
-
-
-                            <div class="col-md-3">
-                                <div class="form-floating mb-3">
-                                    <select class="form-select" id="EmploymentStatus" formControlName="employmentStatus"
-                                        aria-label="State">
-
-                                        <option></option>
-                                        <option value="ACTIVE">ACTIVE</option>
-                                        <option value="TERMINATED">TERMINATED</option>
-                                        <option value="RESIGNED">RESIGNED</option>
-                                    </select>
-                                    <label for="EmploymentStatus">Employment Status</label>
-                                </div>
-                            </div>
-
-
-
-
                             <div class="col-md-3">
                                 <div class="form-floating"> <input type="string" class="form-control" id="PensionCode"
                                         placeholder="PensionCode" required formControlName="pensionCode">
@@ -195,7 +176,17 @@
                                 </div>
                             </div>
 
-
+                            <div class="col-md-4">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="bankId" formControlName="bankId"
+                                        aria-label="State">
+                                        <option></option>
+                                        <option *ngFor="let bank of bankLists" [value]="bank.id">{{
+                                            bank.name }}</option>
+                                    </select>
+                                    <label for="bankId">Bank</label>
+                                </div>
+                            </div>
                             <div class="col-md-3">
                                 <div class="form-floating"> <input type="number" class="form-control" id="BankAccountNo"
                                         placeholder="BankAccountNo" required formControlName="bankAccountNo">
@@ -207,7 +198,6 @@
                                 <div class="form-floating mb-3">
                                     <select class="form-select" id="Departments" formControlName="departmentId"
                                         aria-label="State">
-
                                         <option></option>
                                         <option *ngFor="let department of departments" [value]="department.id">{{
                                             department.name }}</option>

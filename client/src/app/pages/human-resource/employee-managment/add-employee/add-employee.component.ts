@@ -4,7 +4,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { IndividualConfig } from 'ngx-toastr';
 import { MessageService } from 'primeng/api';
 import { EmployeePostDto } from 'src/app/model/HRM/IEmployeeDto';
-import { SelectList } from 'src/app/model/common';
+import { BankSelectList, SelectList } from 'src/app/model/common';
 import { UserView } from 'src/app/model/user';
 import { CommonService, toastPayload } from 'src/app/services/common.service';
 import { ConfigurationService } from 'src/app/services/configuration.service';
@@ -25,6 +25,7 @@ export class AddEmployeeComponent implements OnInit {
   departments!: SelectList[];
   positions!: SelectList[];
   countries !: SelectList[];
+  bankLists !: BankSelectList[];
   regions!: SelectList[];
   zones ! : SelectList[];
   fileGH! : File;
@@ -54,7 +55,6 @@ export class AddEmployeeComponent implements OnInit {
       employmentType: [null, Validators.required],
       paymentType: [null, Validators.required],
       employmentDate: [null, Validators.required],
-      employmentStatus: [null, Validators.required],
       departmentId: [null, Validators.required],
       positionId: [null, Validators.required],
       ContractEndDate: [''],
@@ -63,7 +63,8 @@ export class AddEmployeeComponent implements OnInit {
       tinNumber: [''],
       bankAccountNo: [''],
       woreda: [null, Validators.required],
-      zoneId: [null, Validators.required]
+      zoneId: [null, Validators.required],
+      bankId: [null, Validators.required]
 
 
     })
@@ -74,6 +75,7 @@ export class AddEmployeeComponent implements OnInit {
     this.getDepartments();
     this.getPositions();
     this.getCountries();
+    this.getBankList();
   }
 
 
@@ -83,7 +85,15 @@ export class AddEmployeeComponent implements OnInit {
       next: (res) => {
         this.countries = res
       }
-    })
+    });
+  }
+
+  getBankList(){
+    this.dropService.getBankDropDowns().subscribe({
+      next: (res) => {
+        this.bankLists = res
+      }
+    });
   }
 
   getRegions(countryId: string) {
@@ -175,6 +185,7 @@ export class AddEmployeeComponent implements OnInit {
         woreda: this.EmployeeForm.value.woreda,
         imagePath: this.fileGH,
         createdById: this.user.userId,
+        bankId: this.EmployeeForm.value.bankId
 
       }
 

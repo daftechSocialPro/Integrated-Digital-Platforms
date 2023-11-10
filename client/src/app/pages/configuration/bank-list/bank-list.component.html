@@ -1,0 +1,53 @@
+<div class="card">
+    <div class="row p-2">
+        <div class="col-lg-12 text-end ">
+            <button type="button" class="btn btn-outline-primary" (click)="addNew()"><i class="bi bi-plus me-1"></i>
+                Bank</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Bank Lists</h5>
+
+                    <p-table
+                    [value]="bankLists"
+                    [paginator]="true"
+                    [rows]="5"
+                    [showCurrentPageReport]="true"
+                    [tableStyle]="{ 'min-width': '50rem' }"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                    [rowsPerPageOptions]="[5, 25, 50]"
+                    styleClass="p-datatable-sm"
+                >
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th >Bank Name</th>
+                            <th >Amharic Name</th>                                                
+                            <th >Address</th>
+                            <th >Amharic Address</th>
+                            <th>Account Digit</th>
+                            <th>Account Number</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-bankList>
+                        <tr>
+                            <td>{{ bankList.bankName }}</td>
+                            <td>{{ bankList.amharicName }}</td>
+                            <td>{{ bankList.address }}</td>
+                            <td>{{ bankList.amharicAddress }}</td>
+                            <td>{{ bankList.bankDigitNumber }}</td>
+                            <td>{{ bankList.accountNumber }}</td>
+                            <td>
+                                <button type="button" (click)="update(bankList)" class="btn btn-outline-warning"><i class="bi bi-pencil"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
