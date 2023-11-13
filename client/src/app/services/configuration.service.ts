@@ -12,6 +12,7 @@ import { AddHolidayDto, HolidayListDto } from '../model/configuration/IHolidayDt
 import { IndicatorGetDto, IndicatorPostDto } from '../model/PM/IndicatorsDto';
 import { UserService } from './user.service';
 import { ProjectLocationGetDto, ProjectLocationPostDto } from '../model/PM/ProjectLocationDto';
+import { AddBankDto, BankListDto } from '../model/configuration/IBankListDto';
 
 export interface toastPayload {
   message: string;
@@ -172,6 +173,19 @@ export class ConfigurationService {
   }
   deleteProjectLocation(locationId:string){
     return this.http.delete<ResponseMessage>(this.baseUrl +`/ProjectFundSource?projectFundSourceId=${locationId}`)
+  }
+
+  /// Bank 
+  getBankList() {
+    return this.http.get<BankListDto[]>(this.baseUrl + "/BankList/GetBankList")
+  }
+
+  addBank(addBank: AddBankDto) {
+    return this.http.post<ResponseMessage>(this.baseUrl + "/BankList/AddBank", addBank)
+  }
+
+  updateBank(updateBank: AddBankDto) {
+    return this.http.put<ResponseMessage>(this.baseUrl + "/BankList/UpdateBank", updateBank)
   }
 
 }

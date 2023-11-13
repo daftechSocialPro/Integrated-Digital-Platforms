@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment";
-import { SelectList } from "../model/common";
+import { BankSelectList, SelectList } from "../model/common";
 
 @Injectable({
     providedIn: 'root',
@@ -66,9 +66,13 @@ export class DropDownService {
         return this.http.get<SelectList[]>(this.baseUrl+"/DropDown/GetProjectFundSources")
     }
 
-
+    getBenefitDropDowns(){
+        return this.http.get<SelectList[]>(this.baseUrl+"/DropDown/GetBenefitDropDowns")
+    }
     
-
+    getBankDropDowns(){
+        return this.http.get<BankSelectList[]>(this.baseUrl+"/DropDown/GetBankDropDowns")
+    }
     
     
   

@@ -217,6 +217,7 @@ import { ActivityLocationComponent } from './pages/project-managment/progress-re
 import { ActivityMapComponent } from './pages/project-managment/progress-report/activity-location/activity-map/activity-map.component';
 import { StaffWeeklyPlanComponent } from './pages/project-managment/progress-report/staff-weekly-plan/staff-weekly-plan.component';
 import { WeeklyPlanPerformanceComponent } from './pages/project-managment/progress-report/weekly-plan-performance/weekly-plan-performance.component';
+import { ContractAgreementComponent } from './pages/print-out/HRM/contract-agreement/contract-agreement.component';
 import { ReportingPeriodComponent } from './pages/project-managment/pm-configuration/reporting-period/reporting-period.component';
 import { BudgetYearComponent } from './pages/project-managment/pm-configuration/budget-year/budget-year.component';
 import { AddReportPeriodComponent } from './pages/project-managment/pm-configuration/reporting-period/add-report-period/add-report-period.component';
@@ -227,6 +228,12 @@ import { AddTrainerComponent } from './pages/training/add-trainer/add-trainer.co
 import { TrainerListComponent } from './pages/training/trainer-list/trainer-list.component';
 import { TraineesFormComponent } from './pages/training/trainees-form/trainees-form.component';
 import { TrainingReportFormComponenT } from './pages/training/training-report-form/training-report-form.component';
+import { BenefitListsComponent } from './pages/human-resource/hrm-configuration/benefit-lists/benefit-lists.component';
+import { AddBenefitListComponent } from './pages/human-resource/hrm-configuration/benefit-lists/add-benefit-list/add-benefit-list.component';
+import { EmployeeBenefitsComponent } from './pages/human-resource/employee-managment/employee-detail/employee-benefits/employee-benefits.component';
+import { AddEmployeeBenefitComponent } from './pages/human-resource/employee-managment/employee-detail/employee-benefits/add-employee-benefit/add-employee-benefit.component';
+import { BankListComponent } from './pages/configuration/bank-list/bank-list.component';
+import { AddBankListComponent } from './pages/configuration/bank-list/add-bank-list/add-bank-list.component';
 
 @NgModule({
   declarations: [
@@ -511,7 +518,14 @@ import { TrainingReportFormComponenT } from './pages/training/training-report-fo
     AddTrainerComponent,
     TrainerListComponent,
     TraineesFormComponent,
-    TrainingReportFormComponenT 
+    TrainingReportFormComponenT ,
+    BenefitListsComponent,
+    AddBenefitListComponent,
+    EmployeeBenefitsComponent,
+    AddEmployeeBenefitComponent,
+    BankListComponent,
+    AddBankListComponent
+    
 
 
 

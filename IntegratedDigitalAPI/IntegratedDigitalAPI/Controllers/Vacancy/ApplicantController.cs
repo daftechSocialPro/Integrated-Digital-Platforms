@@ -22,11 +22,11 @@ namespace IntegratedDigitalAPI.Controllers.Vacancy
            _applicantService = applicantService;
         }
 
-        [HttpGet]
+        [HttpPost]
         [ProducesResponseType(typeof(ApplicantListDto), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetApplicantList(Guid vacancyId)
+        public async Task<IActionResult> GetApplicantList(ApplicantFilterDto filterDto)
         {
-            return Ok(await _applicantService.GetApplicantList(vacancyId));
+            return Ok(await _applicantService.GetApplicantList(filterDto));
         }
 
         [HttpGet]

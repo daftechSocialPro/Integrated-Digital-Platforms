@@ -9,7 +9,12 @@ export interface SelectList {
     reason?:string
     photo ?:string
     commiteeStatus?:string
+}
 
+export interface BankSelectList{
+    id: string;
+    name: string;
+    bankDigit: number;
 }
 
 export interface ProgramBudgetYear {

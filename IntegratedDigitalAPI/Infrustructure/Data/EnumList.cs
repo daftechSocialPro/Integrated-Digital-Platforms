@@ -222,7 +222,12 @@ namespace IntegratedInfrustructure.Data
         public enum TraineeListStatus
         {
                 DRAFTED,
-                SUBMITTED                
+                SUBMITTED     
+        }           
+        public enum TypeOfBenefit
+        {
+            PERCENTILE,
+            NUMBER,
         }
 
     }

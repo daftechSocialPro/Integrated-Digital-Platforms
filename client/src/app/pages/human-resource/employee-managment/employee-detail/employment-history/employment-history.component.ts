@@ -57,6 +57,11 @@ export class EmploymentHistoryComponent implements OnInit {
   }
 
 
+  printContractLetter(historyId: string) {
+    const url = `/printout/contractLetter?historyId=${historyId}`;
+    window.open( url, '_blank');
+  }
+
   deleteEmployeeHistory(historyId: string) {
 
     this.confirmationService.confirm({

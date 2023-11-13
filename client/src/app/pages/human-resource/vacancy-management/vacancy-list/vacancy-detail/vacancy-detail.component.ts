@@ -8,6 +8,7 @@ import { CommonService } from 'src/app/services/common.service';
 import { VacancyService } from 'src/app/services/vacancy.service';
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
+import { ApplicantFilter } from 'src/app/model/FilterCriteria';
 
 @Component({
   selector: 'app-vacancy-detail',
@@ -16,6 +17,14 @@ import * as XLSX from 'xlsx';
 })
 export class VacancyDetailComponent implements OnInit {
 
+  applicantFilter: ApplicantFilter = {
+    vacancyId: ''
+  }
+  applicantFind: ApplicantFilter = {
+    vacancyId: '',
+    applicantStatus: null,
+    applicantType: null,
+  }
   vacancyDetail!: VacancyListDto
   vacancyId!: string
   vaccancyEmployees!:ApplicantListDto[]
@@ -37,13 +46,11 @@ export class VacancyDetailComponent implements OnInit {
     ];
     this.vacancyId = this.route.snapshot.paramMap.get('id')!
     this.getVacancyDetail()
-    this.getApplicantList()
+    
 
   }
 
-  loadAppricants(event: any){
-    this.loading = false;
-  }
+ 
 
   constructor(
     private commonService:CommonService,
@@ -78,14 +85,7 @@ exportExcel() {
     this.router.navigate(['/HRM/vacancyList'])
 
   }
-  getVacancyEmployees(){
 
-    this.vacancyService.getApplicantList(this.vacancyId).subscribe({
-      next:(res)=>{
-        this.vaccancyEmployees = res 
-      }
-    })
-  }
 
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
@@ -101,7 +101,12 @@ apply(){
 
 getApplicantList(){
 
-  this.vacancyService.getApplicantList(this.vacancyId).subscribe({
+  this.applicantFilter = {
+    vacancyId: this.vacancyId,
+    applicantStatus : this.applicantFind.applicantStatus != null ? this.applicantFind.applicantStatus : null,
+    applicantType : this.applicantFind.applicantType != null ? this.applicantFind.applicantType : null,
+  }
+  this.vacancyService.getApplicantList(this.applicantFilter).subscribe({
     next:(res)=>{
       
       this.vaccancyEmployees = res 

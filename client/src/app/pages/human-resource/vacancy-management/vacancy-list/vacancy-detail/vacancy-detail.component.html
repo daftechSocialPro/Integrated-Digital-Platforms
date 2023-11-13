@@ -49,7 +49,7 @@
                         <p>
                             {{vacancyDetail&&vacancyDetail.vaccancyDescription}} </p>
                     </div>
-                    <div class="col-6">
+                    <div *ngIf="vacancyDetail && vacancyDetail.vaccancyDocuments" class="col-6">
                         <h6> <strong> Attachments</strong></h6>
                         <div class="p-2 text-primary" *ngFor="let item of vacancyDetail.vaccancyDocuments">
                             <a target="_blank" [href]="getFIle(item.documentPath)"> <i
@@ -78,7 +78,32 @@
             </div>
             <div class="card-body">
                 <h5 class="card-title"> Candidates</h5>
-
+                <div class="row col-12">
+                    <div class="col-2">
+                        <select class="form-select" id="status" [(ngModel)]="applicantFind && applicantFind.applicantType" aria-label="State">
+                            <option></option>
+                            <option [value]=0>Internal</option>
+                            <option [value]=1>External</option>
+                        </select> 
+                    </div>
+                    <div class="col-2">
+                        <select class="form-select" id="status" [(ngModel)]="applicantFind && applicantFind.applicantStatus" aria-label="State">
+                            <option></option>
+                            <option [value]=0>Pending</option>
+                            <option [value]=1>Applied</option>
+                            <option [value]=2>Exam</option>
+                            <option [value]=3>Interview</option>
+                            <option [value]=4>Rejected</option>
+                            <option [value]=5>Hired</option>
+                            <option [value]=6>Black List</option>
+                        </select> 
+                    </div>
+                    
+                    
+                    <div class="col-2">
+                        <button pButton (click)="getApplicantList()" pRipple type="button" icon="pi pi-search" class="p-button-rounded p-button-success p-button-outlined"></button>
+                    </div>
+                </div>
                 <p-table #dt [columns]="cols" [value]="vaccancyEmployees" 
                  [exportHeader]="'customExportHeader'" 
                  [(selection)]="selectedApplicants"

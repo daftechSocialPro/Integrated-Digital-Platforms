@@ -37,16 +37,40 @@ namespace IntegratedImplementation.Services.Vacancy
             _generalConfig = generalConfig;
         }
 
-        public async Task<List<VacancyListDto>> GetVacancyList()
+        public async Task<List<VacancyListDto>> GetVacancyList(VacancyFilterDto filterDto)
         {
-            return await _dbContext.VacancyLists.Include(x => x.Department)
-             
-                           .Include(x => x.Position)
-                           .Include(x => x.EducationalLevel)
-                           .Include(x => x.EducationalField)
-                           .ProjectTo<VacancyListDto>
-                           (_mapper.ConfigurationProvider)
-                           .ToListAsync();
+
+            var query = _dbContext.VacancyLists.Include(x => x.Department)
+                .Include(x => x.Position)
+                .Include(x => x.EducationalLevel)
+                .Include(x => x.EducationalField)
+                .AsQueryable();
+
+            if (filterDto.Status != null)
+            {
+                query = query.Where(x => x.IsApproved == filterDto.Status);
+            }
+
+            if (filterDto.PositionId != null)
+            {
+                query = query.Where(x => x.PositionId == filterDto.PositionId);
+            }
+
+            if (filterDto.DepartmentId != null)
+            {
+                query = query.Where(x => x.DepartmentId == filterDto.DepartmentId);
+            }
+
+            if (filterDto.Date.HasValue)
+            {
+                query = query.Where(x => x.VaccancyStartDate >= filterDto.Date && x.VaccancyEndDate <= filterDto.Date);
+            }
+
+            var result = await query
+                .ProjectTo<VacancyListDto>(_mapper.ConfigurationProvider)
+                .ToListAsync();
+
+            return result;
         }
 
         public async Task<UpdateVacancyDto> GetVacancyEdit(Guid vacancyId)

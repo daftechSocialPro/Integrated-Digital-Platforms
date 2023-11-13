@@ -35,19 +35,38 @@ namespace IntegratedImplementation.Services.Vacancy
             _mapper = mapper;
         }
 
-        public async Task<List<ApplicantListDto>> GetApplicantList(Guid vacancyId)
+        public async Task<List<ApplicantListDto>> GetApplicantList(ApplicantFilterDto filterDto)
         {
-            return await _dbContext.VacancyStatuses.Include(x => x.ApplicantVacancy.Applicant).Include(x => x.ApplicantVacancy.Vacancy).Where(x => x.ApplicantVacancy.VacancyId == vacancyId && x.Status).AsNoTracking().Select(x => new ApplicantListDto
+
+            var query = _dbContext.VacancyStatuses.
+                                    Include(x => x.ApplicantVacancy.Applicant)
+                                   .Include(x => x.ApplicantVacancy.Vacancy)
+                                   .Where(x => x.ApplicantVacancy.VacancyId == filterDto.VacancyId && x.Status)
+                                   .AsQueryable();
+
+            if(filterDto.ApplicantStatus != null)
             {
-                Id = x.Id,
-                FullName = $"{x.ApplicantVacancy.Applicant.FirstName} {x.ApplicantVacancy.Applicant.MiddleName} {x.ApplicantVacancy.Applicant.LastName}",
-                PhoneNumber = x.ApplicantVacancy.Applicant.PhoneNumber,
-                ApplicantId = x.ApplicantVacancy.ApplicantId,
-                ApplicantStatus = x.ApplicantStatus.ToString(),
-                ApplicantType = x.ApplicantVacancy.Applicant.ApplicantType.ToString(),
-                DateOfApplication = x.CreatedDate,
-                Gender = x.ApplicantVacancy.Applicant.Gender.ToString(),
-            }).ToListAsync();
+                query = query.Where(x => x.ApplicantStatus == (ApplicantStatus)filterDto.ApplicantStatus);
+            }
+
+            if(filterDto.ApplicantType != null)
+            {
+                query = query.Where(x => x.ApplicantVacancy.Applicant.ApplicantType == (ApplicantType)filterDto.ApplicantType);
+            }
+
+            var result = await query.AsNoTracking().
+                        Select(x => new ApplicantListDto
+                        {
+                            Id = x.Id,
+                            FullName = $"{x.ApplicantVacancy.Applicant.FirstName} {x.ApplicantVacancy.Applicant.MiddleName} {x.ApplicantVacancy.Applicant.LastName}",
+                            PhoneNumber = x.ApplicantVacancy.Applicant.PhoneNumber,
+                            ApplicantId = x.ApplicantVacancy.ApplicantId,
+                            ApplicantStatus = x.ApplicantStatus.ToString(),
+                            ApplicantType = x.ApplicantVacancy.Applicant.ApplicantType.ToString(),
+                            DateOfApplication = x.CreatedDate,
+                            Gender = x.ApplicantVacancy.Applicant.Gender.ToString(),
+                        }).ToListAsync();
+            return result;
         }
 
         public async Task<string> CheckApplicantProfile(Guid employeeId)

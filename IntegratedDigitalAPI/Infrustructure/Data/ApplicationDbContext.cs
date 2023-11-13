@@ -43,6 +43,7 @@ namespace IntegratedInfrustructure.Data
         
         
         public DbSet<UnitOfMeasurment> UnitOfMeasurment { get; set; }
+        public DbSet<BankList> BankLists { get; set; }
         #endregion
 
         #region HRM
@@ -55,11 +56,7 @@ namespace IntegratedInfrustructure.Data
         public DbSet <EmploymentDetail> EmploymentDetails { get; set; }
         public DbSet <EmployeeFile> EmployeeFiles { get; set; }
         public DbSet<EmployeeSurety> EmployeeSureties { get; set; }
-
         public DbSet<LeavePlanSetting> LeavePlanSetting { get; set; }
-
-
-
         public DbSet<EmployeeSalary> EmployeeSalaries { get; set; }
         public DbSet<EmployeeDocuments> EmployeeDocuments { get; set; }
         public DbSet<LeaveBalance> LeaveBalances { get; set; }
@@ -75,14 +72,15 @@ namespace IntegratedInfrustructure.Data
         public DbSet<EmployeePerformancePlan> EmployeePerformancePlans { get; set; }
         public DbSet<EmployeeDevelopmentPlan> EmployeeDevelopmentPlans { get; set; }
         public DbSet<EmployeeSupport> EmploeeSupports { get; set; }
-
         public DbSet<LoanSetting> LoanSettings { get; set; }
         public DbSet<LoanRequest> LoanRequests { get; set; }
         public DbSet<EmployeeLoan> EmployeeLoans { get; set; }
         public DbSet<EmployeeSettlement> EmployeeSettlements { get; set; }
         public DbSet<EmployeeDisciplinaryCase> EmployeeDisciplinaryCases { get; set; }
-
         public DbSet<Volunter> Volunters { get; set; }
+        public DbSet<BenefitList> BenefitLists { get; set; }
+        public DbSet<EmployeeBenefits> EmployeeBenefits { get; set; }
+      
 
         #endregion
 
@@ -174,7 +172,9 @@ namespace IntegratedInfrustructure.Data
             modelBuilder.Entity<Position>().HasIndex(b => b.PositionName).IsUnique();
             modelBuilder.Entity<Department>().HasIndex(b => b.DepartmentName).IsUnique();
             modelBuilder.Entity<LeaveType>().HasIndex(b => b.Name).IsUnique();
-
+            modelBuilder.Entity<BankList>().HasIndex(b => b.BankName).IsUnique();
+            modelBuilder.Entity<BenefitList>().HasIndex(b => b.Name).IsUnique();
+            modelBuilder.Entity<EmployeeBenefits>().HasIndex(b => new { b.BenefitId, b.EmployeeId }).IsUnique();
         
 
 

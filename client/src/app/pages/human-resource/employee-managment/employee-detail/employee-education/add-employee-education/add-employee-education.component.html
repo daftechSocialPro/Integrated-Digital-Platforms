@@ -24,26 +24,19 @@
                                     <div class="form-floating mb-3">
                                         <select class="form-select" id="educationalLevelId"
                                             formControlName="educationalLevelId" aria-label="State">
-
                                             <option></option>
-                                            <option value="c5119de9-5451-435b-9920-dc618980c7c9">Level 1</option>
-                                            <option value="c5119de9-5451-435b-9920-dc618980c7c9">Level 2 </option>
-
-
+                                            <option *ngFor="let eduLevel of educationLevel" [value]="eduLevel.id">{{
+                                                eduLevel.name }}</option>
                                         </select>
                                         <label for="educationalLevelId">Educational Level</label>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-floating mb-3">
-                                        <select class="form-select" id="educationalFieldId"
-                                            formControlName="educationalFieldId" aria-label="State">
-
+                                        <select class="form-select" id="educationalFieldId" formControlName="educationalFieldId" aria-label="State">
                                             <option></option>
-                                            <option value="c5119de9-5451-435b-9920-dc618980c7b9">Field 1</option>
-                                            <option value="c5119de9-5451-435b-9920-dc618980c7b9">Field 2 </option>
-
-
+                                            <option *ngFor="let eduField of educationField" [value]="eduField.id">{{
+                                                eduField.name }}</option>
                                         </select>
                                         <label for="educationalFieldId">Educational Field</label>
                                     </div>

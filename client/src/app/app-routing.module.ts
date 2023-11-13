@@ -101,6 +101,7 @@ const routes: Routes = [
 
 {path:'trainee-form/:trainingId',component:TraineesFormComponent},
 {path:'trainee-form/training-report-form/:trainingId',component:TrainingReportFormComponenT}
+  { path: 'printout', loadChildren: () => import('./pages/print-out/print-out.module').then(m => m.PrintOutModule) }
 ];
 
 @NgModule({

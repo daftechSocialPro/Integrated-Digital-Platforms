@@ -125,6 +125,20 @@ namespace IntegratedDigitalAPI.Controllers.Configuration
         }
 
 
+        [HttpGet]
+        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetBenefitDropDowns()
+        {
+            return Ok(await _DropDownService.GetBenefitDropDowns());
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(BankSelectList), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetBankDropDowns()
+        {
+            return Ok(await _DropDownService.GetBankDropDowns());
+        }
+
 
 
 

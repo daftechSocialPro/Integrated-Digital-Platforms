@@ -1,0 +1,282 @@
+<div id="contractLetter">
+  <div class="letter">
+    <div class="header">
+      <div style="text-align: left;">
+        <img [src]="sanitizer.bypassSecurityTrustUrl('../../../../../assets/img/PrintOut/em_logo.png')" alt="Image" width="50"/>
+        <!-- <img src="../../../../../assets/img/PrintOut/em_logo.png" alt="Image" width="50"> -->
+      </div>
+    </div>
+    <div class="watermark">
+      <div class="container">
+        <img [src]="sanitizer.bypassSecurityTrustUrl('../../../../../assets/img/PrintOut/em_logo.png')" 
+        style="margin-left: 64%;margin-top: 31%;"
+         alt="Image" width="250" height="250" />
+      </div>
+
+    </div>
+    <div class="content">
+      <h3 style="text-align: center;">Ethiopian Midwives Association (EMwA)</h3>
+      <h3 style="text-align: center;">Contract of Employment </h3>
+
+      <h6 style="text-align: center;">Part 1</h6>
+      <h6 style="text-align: center;">General </h6>
+   
+        This contract of employment is made and entered in by Ethiopian Midwives Association (EMwA) whose address is
+        Addis
+        Ababa, (hereafter called “the employer”) and <u>{{contractLetter.employeeName}}</u> (hereafter called “the
+        employee”)
+
+
+      <div>
+        <ol>
+          <li>
+            Name of the employee: <u>{{contractLetter.employeeName}}</u>
+          </li>
+          <li>
+            Address of the employee: <u>{{contractLetter.employeeAddress}}</u> <br />
+            Telephone: <u>{{contractLetter.phoneNumber}}</u>
+          </li>
+          <li>
+            Type of employment: <u>{{contractLetter.typeOfEmployement}}</u>
+          </li>
+          <li>
+            Source of Fund: <u>{{contractLetter.sourceOfFund}}</u>
+          </li>
+          <li>
+            Place of work: <u>{{contractLetter.placeOfWork}}</u>
+          </li>
+          <li>
+            Duration of the contract: From <u>{{contractLetter.ContractStartDate | date: 'dd, MMMM, yyyy'}}</u> to
+            <u>{{contractLetter.contractEndDate | date: 'dd, MMMM, yyyy'}}</u>
+          </li>
+          <li>
+            Job title: <u>{{contractLetter.jobTitle}}</u>
+          </li>
+          <li>
+            Reporting to: <u>{{contractLetter.ReportingTo}}</u>
+          </li>
+        </ol>
+      </div>
+      <h6 style="text-align: center;">Part II</h6>
+      <h6 style="text-align: center;">Payment of salary and allowance </h6>
+      
+        2.1 The employee shall be paid a monthly gross salary of Birr {{contractLetter.grossSalary}}
+        (<u>{{contractLetter.grossSalaryInWord}}</u>) with {{contractLetter.transportAllowance}}
+        (<u>{{contractLetter.transportAllowanceInWord}}</u>) Transport Allowance,{{contractLetter.mobileAllowance}}
+        (<u>{{contractLetter.mobileAllowanceInWord}}</u>) mobile allowance.
+        <br />
+        2.2. All legal income tax, other taxes authorized by the law, and other liabilities shall be deducted according
+        to the
+        relevant law.
+        <br />
+        2.3 The employee is also entitled to receive travel allowance and related expenses according to the regulations
+        issued
+        by the employer when the employee is assigned to perform work outside of Addis Ababa. Depending on the situation
+        the
+        employer has a right to pass decisions regarding requirements which need to be fulfilled for the payment of
+        travel
+        expenses and allowances including places eligible for this payment.
+  
+    </div>
+    <div class="footer">
+      <div style="text-align: left;">
+        Consented by EMwA ED: __________________________________
+      </div>
+    </div>
+  </div>
+  <p style="page-break-after: always;">&nbsp;</p>
+  <div class="letter">
+    <div class="header">
+      <div style="text-align: left;">
+        <img [src]="sanitizer.bypassSecurityTrustUrl('../../../../../assets/img/PrintOut/em_logo.png')" alt="Image" width="50"/>
+      </div>
+    </div>
+    <div class="watermark">
+      <div class="container">
+        <img [src]="sanitizer.bypassSecurityTrustUrl('../../../../../assets/img/PrintOut/em_logo.png')" 
+        style="margin-left: 64%;margin-top: 31%;"
+         alt="Image" width="250" height="250" />
+      </div>
+
+    </div>
+    <div class="content">
+      <h6 style="text-align: center;">Part III</h6>
+      <h6 style="text-align: center;">Duties and Obligation of the Employee</h6>
+    
+      <ol style="text-align: justify;">
+        <li value="3.1">
+          The employee is obliged to devote all his/her time energy and ability to his/her work and undertake to
+          discharge
+          his duties and responsibilities conscientiously and diligently so that the objectives and aims of EMwA must be
+          fully
+          realized.
+        </li>
+        <li>
+          When assigned as a lead trainer/ trainer, he/she should respect his/her team mates and participants/ trainees.
+        </li>
+        <li>
+          The employee is obliged to be punctual, tolerance and create team spirit among his/her team mates and
+          colleagues.
+        </li>
+        <li>
+          The employee agrees and undertakes to abide by the current & new rules and regulations issued by the employer.
+        </li>
+        <li>
+          The employee has the duty and obligation to keep well and utilize properly all property and equipment supplied
+          to
+          him/her by the employer.
+        </li>
+        <li>
+          When he/she completes his/her duty or when he/she ceases to work, the employee has the obligations to return
+          to the
+          employer all property and equipment in the conditions in which he/initially received them from the employer.
+        </li>
+        <li>
+          When he/she completes his/her duty or when he/she ceases to work, the employee has the obligations to return
+          to the
+          employer all property and equipment in the conditions in which he/initially received them from the employer.
+        </li>
+        <li>
+          The employee shall refrain from all activities which may cause danger or harm to his/her colleagues, employer
+          etc.
+        </li>
+        <li>
+          The employee will be responsible to work full time on the regular working hours and days of EMwA. The normal
+          working
+          hours are: from 8:30a.m. to 12:30p.m in the morning and from 1:30-5:30 p.m. in the afternoon Monday through
+          Thursday;
+          and from 8:30 am-11:30 pm in the morning and from 1:30 pm - 5: 30 pm in the afternoon on Friday. However, the
+          employee
+          has a duty to work up to 48 hours in a week
+        </li>
+        <li>
+          Whenever necessary, the employee may be instructed to work on weekends or holidays, outside normal duty hours
+          and will
+          be compensated in additional leave or additional pay depending on the situation and availability of funds in
+          the
+          project budget.
+        </li>
+        <li>
+          value="3.1"
+        </li>
+        
+      </ol>
+     
+
+
+    </div>
+    <div class="footer">
+      <div style="text-align: left;">
+        Consented by EMwA ED: __________________________________
+      </div>
+    </div>
+  </div>
+   <p style="page-break-after: always;">&nbsp;</p>
+  <div class="letter">
+    <div class="header">
+      <div style="text-align: left;">
+        <img [src]="sanitizer.bypassSecurityTrustUrl('../../../../../assets/img/PrintOut/em_logo.png')" alt="Image" width="50"/>
+      </div>
+    </div>
+    <div class="watermark">
+      <div class="container">
+        <img [src]="sanitizer.bypassSecurityTrustUrl('../../../../../assets/img/PrintOut/em_logo.png')" 
+         style="margin-left: 64%;margin-top: 31%;"
+          alt="Image" width="250" height="250" />
+      </div>
+
+    </div>
+    <div class="content">
+      <h6 style="text-align: center;">Part IV</h6>
+      <h6 style="text-align: center;">Obligations of Employer</h6>
+      <ol start="4.1">
+        <li>
+          The employer has the obligation to provide office accommodation and office equipment necessary for the
+          employee to perform his/her duties.
+        </li>
+        <li>
+          The employer is obliged to pay the monthly salary on due date, and the employee will not be penalized for
+          failure to
+          do his/her work on grounds of the absence of the necessary equipment and accommodation which should have been
+          made
+          available to him/her on time.
+        </li>
+        <li>
+          The employee is also entitled to have sick leave, annual leave and maternal leave in accordance with the Human
+          Resources Manual of the employer.
+        </li>
+        <li>
+          The employer will deduct pension
+        </li>
+
+      </ol>
+      <h6 style="text-align: center;">Part V</h6>
+      <h6 style="text-align: center;">Termination of Contract</h6>
+     
+      <ol start="5.1">
+        <li>
+          This employment contract shall be terminated based up on the legal grounds stated on the association<sup>'</sup>s  HR
+          manual and
+          Ethiopian labor proclamation No 1156/2019 on this regard.
+        </li>
+        <li>
+          This contract shall be terminated by either party (employer or employee) on the basis of the provisions of the
+          Human Resources Manual of EMwA and the relevant laws.
+        </li>
+      </ol>
+    
+      <h6 style="text-align: center;">Part VI</h6>
+      <h6 style="text-align: center;">Governing laws and rules </h6>
+   
+      <ol start="6.1">
+        <li>
+          The job description, the Human Resource Manual and other rules/ policies of the employer are part and parcel
+          of this
+          employment contract.
+        </li>
+      </ol>
+      
+      <h6 style="text-align: center;"> <u>Contracting Parties </u></h6>
+      <table width="100%" style="align-content: center;text-align: center;">
+        <tr>
+          <td>
+            <strong><u>For EMwA Office HR</u></strong>
+          </td>
+          <td>
+            <strong><u>Employee</u></strong>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Name: ___________________________
+          </td>
+          <td>
+            Name: ___________________________
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Signature: _________________________
+          </td>
+          <td>
+            Signature: _________________________
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Date: _________________________
+          </td>
+          <td>
+            Date: _________________________
+          </td>
+        </tr>
+      </table>
+
+    </div>
+    <div class="footer">
+      <div style="text-align: left;">
+        Consented by EMwA ED: __________________________________
+      </div>
+    </div>
+  </div>
+</div>

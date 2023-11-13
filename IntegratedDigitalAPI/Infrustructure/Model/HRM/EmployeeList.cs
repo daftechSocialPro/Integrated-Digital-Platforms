@@ -46,6 +46,8 @@ namespace IntegratedInfrustructure.Model.HRM
         public string? BankAccountNo { get; set; } = null!;
         public bool ExistingEmployee { get; set; }
         public bool IsApproved { get; set; }
+        public Guid BankId { get; set; }
+        public BankList Bank { get; set; } = null!;
 
         [InverseProperty(nameof(EmploymentDetail.Employee))]
         public ICollection<EmploymentDetail> EmployeeDetail { get; set; }

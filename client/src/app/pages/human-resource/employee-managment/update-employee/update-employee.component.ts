@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
 import { EmployeeGetDto, EmployeePostDto } from 'src/app/model/HRM/IEmployeeDto';
-import { SelectList } from 'src/app/model/common';
+import { BankSelectList, SelectList } from 'src/app/model/common';
 import { UserView } from 'src/app/model/user';
 import { CommonService } from 'src/app/services/common.service';
 import { ConfigurationService } from 'src/app/services/configuration.service';
@@ -29,6 +29,7 @@ export class UpdateEmployeeComponent implements OnInit {
   countries !: SelectList[];
   regions!: SelectList[];
   zones ! : SelectList[];
+  bankLists!: BankSelectList[];
 
   fileGH! : File;
 
@@ -67,7 +68,6 @@ export class UpdateEmployeeComponent implements OnInit {
       employmentType: [this.selectedEmployee.employmentType, Validators.required],
       paymentType: [this.selectedEmployee.paymentType, Validators.required],
       employmentDate: [this.selectedEmployee.employmentDate.toString().split('T')[0], Validators.required],
-      employmentStatus: [this.selectedEmployee.employmentStatus, Validators.required],
       ContractEndDate: [this.selectedEmployee.contractEndDate!.toString().split('T')[0]],
       pensionCode: [this.selectedEmployee.pensionCode],
       tinNumber: [this.selectedEmployee.tinNumber],
@@ -75,9 +75,8 @@ export class UpdateEmployeeComponent implements OnInit {
       woreda: [this.selectedEmployee.woreda, Validators.required],
       countryId : [this.selectedEmployee.countryId],     
       regionId : [this.selectedEmployee.regionId],
-      zoneId: [this.selectedEmployee.zoneId, Validators.required]
-
-
+      zoneId: [this.selectedEmployee.zoneId, Validators.required],
+      bankId: [this.selectedEmployee.bankId, Validators.required]
     })
     this.getRegions(this.selectedEmployee.countryId)
     this.getZones(this.selectedEmployee.regionId)
@@ -91,6 +90,14 @@ export class UpdateEmployeeComponent implements OnInit {
         this.countries = res
       }
     })
+  }
+
+  getBankList(){
+    this.dropService.getBankDropDowns().subscribe({
+      next: (res) => {
+        this.bankLists = res
+      }
+    });
   }
 
   getRegions(countryId: string) {
@@ -155,7 +162,7 @@ export class UpdateEmployeeComponent implements OnInit {
         woreda: this.EmployeeForm.value.woreda,
         imagePath: this.fileGH,
         createdById: this.user.userId,
-
+        bankId: this.EmployeeForm.value.bankId.toString()
       }
 
       var formData = new FormData();

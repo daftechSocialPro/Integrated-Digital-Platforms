@@ -80,5 +80,42 @@ namespace IntegratedDigitalAPI.Controllers.HRM
             }
         }
 
+
+        [HttpGet]
+        [ProducesResponseType(typeof(BenefitListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetBenefitLists()
+        {
+            return Ok(await _hrmSettingService.GetBenefitLists());
+        }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> AddBenefitList([FromBody] AddBenefitListDto addBenefitList)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _hrmSettingService.AddBenefitList(addBenefitList));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+
+        [HttpPut]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> UpdateBenefitList(UpdateBenefitListDto updateBenefitList)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _hrmSettingService.UpdateBenefitList(updateBenefitList));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
     }
 }

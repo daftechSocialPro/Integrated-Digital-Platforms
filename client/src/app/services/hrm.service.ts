@@ -18,6 +18,9 @@ import { AssignSupervisorDto, EmployeeSupervisorsDto } from '../model/HRM/IEmplo
 import { AddLoanSettingDto, LoanSettingDto } from '../model/HRM/ILoanSettingDto';
 import { ApproveInitialRequestDto, EmployeeLoanDto, LoanInfoDto, LoanRequestDto, RequestedLoanListDto } from '../model/HRM/ILoanManagmentDto';
 import { AddDisciplinaryCaseDto, ApproveDisciplinaryCase, DisciplinaryCaseListDto, EmployeeDisciplinaryListDto } from '../model/HRM/IDisplinaryCaseDto';
+import { ContractLetterDto } from '../model/PrintOuts/IContractLetter.Model';
+import { AddBenefitListDto, BenefitListDto } from '../model/HRM/IBenefitListDto';
+import { AddEmployeeBenefitDto, EmployeeBenefitListDto } from '../model/HRM/IEmployeeBenefitDto';
 
 export interface toastPayload {
     message: string;
@@ -94,6 +97,21 @@ export class HrmService {
     addPerformanceSetting(performanceSettings: PerformanceSettingDto) {
         return this.http.post<ResponseMessage>(this.baseUrl + "/HrmSetting/AddPerformanceSetting", performanceSettings)
     }
+    /// Benefit Lists 
+
+
+    getBenefitLists() {
+        return this.http.get<BenefitListDto[]>(this.baseUrl + "/HrmSetting/GetBenefitLists")
+    }
+
+    addBenefitList(addBenefitList: AddBenefitListDto) {
+        return this.http.post<ResponseMessage>(this.baseUrl + "/HrmSetting/AddBenefitList", addBenefitList)
+    }
+
+    updateBenefitList(updateBenefitList: AddBenefitListDto) {
+        return this.http.put<ResponseMessage>(this.baseUrl + "/HrmSetting/UpdateBenefitList", updateBenefitList)
+    }
+
     //GetEmployeeswithContractend
     getEmployeeswithContractend(){
      
@@ -433,5 +451,22 @@ export class HrmService {
     approveDisciplinaryCase(approveCase: ApproveDisciplinaryCase) {
         return this.http.post<ResponseMessage>(this.baseUrl + "/EmployementDetail/ApproveCase", approveCase)
     }
+
+
+    /// HRM letters 
+    getContractLetter(historyId: string) {
+        return this.http.get<ContractLetterDto>(this.baseUrl + `/HRMLetter/GetContractLetter?historyId=${historyId}`);
+    }
+
+    /// Employee Benefits
+
+    getEmployeeBenefits(employeeId: string) {
+        return this.http.get<EmployeeBenefitListDto[]>(this.baseUrl + `/EmployementDetail/GetEmployeeBenefits?employeeId=${employeeId}`);
+    }
+
+    addEmployeeBenefit(addBenefit: AddEmployeeBenefitDto) {
+        return this.http.post<ResponseMessage>(this.baseUrl + "/EmployementDetail/AddEmployeeBenefit", addBenefit);
+    }
+
     
 }
