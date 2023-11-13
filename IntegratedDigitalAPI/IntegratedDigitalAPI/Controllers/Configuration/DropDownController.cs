@@ -119,9 +119,9 @@ namespace IntegratedDigitalAPI.Controllers.Configuration
 
         [HttpGet]
         [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetProjectLocations()
+        public async Task<IActionResult> GetProjectFundSources()
         {
-            return Ok(await _DropDownService.GetProjectLocations());
+            return Ok(await _DropDownService.GetProjectFundSources());
         }
 
 

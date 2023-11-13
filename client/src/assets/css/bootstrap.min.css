@@ -6397,6 +6397,12 @@ fieldset:disabled .btn {
     }
 }
 
+@media (min-width:1140px) {
+    .modal-xxl {
+        max-width: 1200px
+    }
+}
+
 .modal-fullscreen {
     width: 100vw;
     max-width: none;

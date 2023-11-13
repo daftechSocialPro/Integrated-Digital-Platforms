@@ -159,19 +159,19 @@ export class ConfigurationService {
   //project locations
 
   getProjectLocations() {
-    return this.http.get<ProjectLocationGetDto[]>(this.baseUrl + "/ProjectLocation")
+    return this.http.get<ProjectLocationGetDto[]>(this.baseUrl + "/ProjectFundSource")
   }
 
   addProjectLocation(projectLocation: ProjectLocationPostDto) {
     projectLocation.createdById = this.userService.getCurrentUser().userId
-    return this.http.post<ResponseMessage>(this.baseUrl + "/ProjectLocation", projectLocation)
+    return this.http.post<ResponseMessage>(this.baseUrl + "/ProjectFundSource", projectLocation)
   }
 
   updateProjectLocation(projectLocation: ProjectLocationGetDto) {
-    return this.http.put<ResponseMessage>(this.baseUrl + "/ProjectLocation", projectLocation)
+    return this.http.put<ResponseMessage>(this.baseUrl + "/ProjectFundSource", projectLocation)
   }
   deleteProjectLocation(locationId:string){
-    return this.http.delete<ResponseMessage>(this.baseUrl +`/ProjectLocation?projectLocationId=${locationId}`)
+    return this.http.delete<ResponseMessage>(this.baseUrl +`/ProjectFundSource?projectFundSourceId=${locationId}`)
   }
 
 }

@@ -26,7 +26,9 @@ namespace IntegratedDigitalAPI.DTOS.PM
         public string StartDate { get; set; } = null!;
         public string EndDate { get; set; } = null!;
         public float PlannedBudget { get; set; }
-      
+        public bool IsTraining { get; set; }
+
+
         public int ActivityType { get; set; }
         public float OfficeWork { get; set; }
         public float FieldWork { get; set; }
@@ -41,7 +43,6 @@ namespace IntegratedDigitalAPI.DTOS.PM
         public string[]? Employees { get; set; }
 
         public Guid ZoneId { get; set; }
-
         public string Woreda { get; set; }
         public Guid StrategicPlanId { get; set; }
 

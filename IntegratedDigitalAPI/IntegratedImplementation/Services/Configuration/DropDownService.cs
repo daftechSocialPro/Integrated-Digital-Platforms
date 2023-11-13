@@ -182,9 +182,9 @@ namespace IntegratedImplementation.Services.Configuration
 
             return strategicPlans;
         }
-        public async Task<List<SelectListDto>> GetProjectLocations()
+        public async Task<List<SelectListDto>> GetProjectFundSources()
         {
-            var strategicPlans = await _dbContext.ProjectLocations.AsNoTracking().Select(x => new SelectListDto
+            var strategicPlans = await _dbContext.ProjectFundSources.AsNoTracking().Select(x => new SelectListDto
             {
                 Id = x.Id,
                 Name = x.Name

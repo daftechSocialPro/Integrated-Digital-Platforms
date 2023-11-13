@@ -211,5 +211,19 @@ namespace IntegratedInfrustructure.Data
 
         }
 
+        public enum ReportStatus
+        {
+            NOTSENT,
+            SENT,
+            DRAFTED,
+            SUBMITTED
+        }
+
+        public enum TraineeListStatus
+        {
+                DRAFTED,
+                SUBMITTED                
+        }
+
     }
 }

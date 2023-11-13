@@ -3,7 +3,74 @@
             <li class="nav-item" *ngIf="roleMatch(['Admin'])"> <a class="nav-link" routerLink="/dashboard"
                         routerLinkActive="active"> <i class="bi bi-grid"></i> <span>Dashboard</span> </a></li>
 
-           
+
+                        <li class="nav-item">
+                              <a class="nav-link collapsed" data-bs-target="#components-project" data-bs-toggle="collapse" href="#">
+                                    <i class="pi pi-chart-bar"></i><span>Project Management</span><i
+                                          class="bi bi-chevron-down ms-auto"></i>
+                              </a>
+                              <ul id="components-project" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                                    <li *ngIf="roleMatch(['HRM-CONFIGURATION'])"> <a routerLink="/pm/configuration"
+                                                routerLinkActive="active">
+                                                <i class="bi bi-circle"></i><span>Configuration</span> </a></li>
+                                    <li> <a routerLink="/pm/strategicPlans" routerLinkActive="active">
+                                                <i class="bi bi-circle"></i><span>Strategic Directions</span> </a></li>
+                                    <li> <a routerLink="/pm/projects" routerLinkActive="active"> <i
+                                                      class="bi bi-circle"></i><span>Projects</span> </a></li>
+            
+                                    <li> <a routerLink="/pm/assignedactivities" routerLinkActive="active"> <i
+                                                      class="bi bi-circle"></i><span>Assigned Activities
+            
+                                                      <p-badge *ngIf="Activties&&Activties.length>0" severity="success"
+                                                            [value]="Activties&&Activties.length.toString()"></p-badge>
+            
+                                                </span>
+            
+            
+            
+                                          </a></li>
+                                    <li> <a routerLink="/pm/projectTeam" routerLinkActive="active"> <i
+                                                      class="bi bi-circle"></i><span>Project Teams</span> </a></li>
+            
+                                    <li class="nav-heading">Pm Reports</li>
+            
+            
+            
+                                    <li> <a routerLink="/strategicplanreport" routerLinkActive="active"> <i
+                                                      class="bi bi-circle"></i><span>Strategic Plan Report
+                                                </span> </a>
+                                    </li>
+                                    <li> <a routerLink="/activityLocation"   routerLinkActive="active"> <i class="bi bi-circle"></i><span>Activity Location
+                                    </span> </a>
+                  </li>
+                                    <li> <a routerLink="/plannedreport"   routerLinkActive="active"> <i class="bi bi-circle"></i><span>Planned Report </span>
+                                 
+            </a>
+            </li>
+                                    <li> <a routerLink="/progressreport" routerLinkActive="active"> <i
+                                                      class="bi bi-circle"></i><span>Progress Report</span>
+                                          </a></li>
+                                    <li> <a routerLink="/progressreportbystructure" routerLinkActive="active"> <i
+                                                      class="bi bi-circle"></i><span>Progress
+                                                      Report By
+                                                      Department</span></a></li>
+                                    <li> <a routerLink="/performancereport" routerLinkActive="active"> <i
+                                                      class="bi bi-circle"></i><span>Progress
+                                                      Report</span> </a>
+                                    </li>
+                                    <li> <a routerLink="/weeklyPlanReport" routerLinkActive="active"> <i
+                                                      class="bi bi-circle"></i><span>Weekly Plan Report</span> </a>
+                                    </li>
+                                    <li> <a routerLink="/weeklyProgressPlanReport" routerLinkActive="active"> <i
+                                          class="bi bi-circle"></i><span>Weekly Progress Plan Report</span> </a>
+                        </li>
+                                    <!-- <li> <a routerLink="/estimatedcoast"   routerLinkActive="active"> <i class="bi bi-circle"></i><span>Estimated Coast </span>
+                                          </a>
+                                    </li> -->
+                                    </ul>
+                              
+                        </li>
+       
             <li class="nav-item">
                   <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#"> <i
                               class="bi bi-menu-button-wide"></i><span>HR Management</span><i

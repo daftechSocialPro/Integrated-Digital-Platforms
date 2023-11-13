@@ -41,6 +41,8 @@ import { DisciplinaryCasesComponent } from './pages/human-resource/employee-mana
 import { ActivityLocationComponent } from './pages/project-managment/progress-report/activity-location/activity-location.component';
 import { StaffWeeklyPlanComponent } from './pages/project-managment/progress-report/staff-weekly-plan/staff-weekly-plan.component';
 import { WeeklyPlanPerformanceComponent } from './pages/project-managment/progress-report/weekly-plan-performance/weekly-plan-performance.component';
+import { TraineesFormComponent } from './pages/training/trainees-form/trainees-form.component';
+import { TrainingReportFormComponenT } from './pages/training/training-report-form/training-report-form.component';
 
 
 
@@ -95,7 +97,10 @@ const routes: Routes = [
   { path: 'user_managment', canActivate: [AuthGuard], component: UserManagementComponent },
   { path: 'HRM/loan-managment', canActivate: [AuthGuard], component: LoanManagementComponent },
   { path: 'HRM/disciplinary-case', canActivate: [AuthGuard], component: DisciplinaryCasesComponent, data: { permittedRoles: ['EVALUATER'] } },
+//trainee
 
+{path:'trainee-form/:trainingId',component:TraineesFormComponent},
+{path:'trainee-form/training-report-form/:trainingId',component:TrainingReportFormComponenT}
 ];
 
 @NgModule({

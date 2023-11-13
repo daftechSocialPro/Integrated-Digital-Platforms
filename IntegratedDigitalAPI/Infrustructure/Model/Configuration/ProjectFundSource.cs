@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace IntegratedInfrustructure.Model.Configuration
 {
-    public class ProjectLocation : WithIdModel
+    public class ProjectFundSource : WithIdModel
     {
 
         public string Name { get; set; }

@@ -184,7 +184,7 @@ export class ActivityParentsComponent implements OnInit {
   }
 
   addActivity() {
-    let modalRef = this.modalService.open(AddActivitiesComponent, { size: "xl", backdrop: 'static' })
+    let modalRef = this.modalService.open(AddActivitiesComponent, { size: "xxl", backdrop: 'static' })
     modalRef.componentInstance.task = this.task
     modalRef.componentInstance.requestFrom = this.requestFrom;
     modalRef.componentInstance.requestFromId = this.parentId;

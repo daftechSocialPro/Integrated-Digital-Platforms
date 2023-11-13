@@ -1,0 +1,68 @@
+
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">View Trainer List for 
+            <span  style="color:brown;"> Training {{TrainingTitle}}</span> </h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="card p-4">
+
+        <div class="row mb-2">
+            <div class="col-12 text-end">
+                <button class="btn btn-outline-primary" (click)="addTrainer()"
+                >
+                <i class="bi bi-plus text-primary"></i>
+                Add Trainer
+                </button>
+            </div>
+        </div>
+
+        
+<p-table [value]="trainerList" [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-sm p-datatable-gridlines">
+    <ng-template pTemplate="header">
+        <tr>
+            
+            <th class="text-center">Full Name</th>
+            <th class="text-center">Email</th>
+            <th class="text-center">Phone Number</th>
+     
+            <th class="text-center">
+                Action
+            </th>
+           
+           
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-trainer>
+        <tr>
+           
+            <td>{{ trainer.fullName }}</td>
+            <td>{{ trainer.email }}</td>
+            <td>{{ trainer.phoneNumber }}</td>
+          
+            <td>
+                <li style="list-style: none; text-align: right;">
+                    <a class="nav-link nav-profile  pe-0" href="#" data-bs-toggle="dropdown"> <span
+                            class="d-none d-md-block dropdown-toggle ps-2">Action </span> </a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                        <li> <a class="dropdown-item d-flex align-items-center" (click)="sendEmail(trainer)">
+                                 <i class="bi bi-message text-primary"></i> <span>
+                                    send Training
+                                    </span> </a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                       
+                          
+
+
+                    </ul>
+                </li>
+            </td>
+
+        </tr>
+    </ng-template>
+</p-table>
+</div>
+</div>

@@ -1,0 +1,54 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Add trainer</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+
+        <form [formGroup]="trainerForm" (ngSubmit)="submit()" >
+        <div class="card-body">
+            <h5 class="card-title">Trainer Detail</h5>
+            <hr />
+
+            <div class="row mt-2">
+
+                
+
+                <div class="col-md-4">
+                    <div class="form-floating">
+                        <input type="text" formControlName="FullName" class="form-control" id="FullName"
+                            placeholder="FullName">
+                        <label for="FullName">Full Name </label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-floating">
+                        <input type="text" formControlName="phoneNumber" class="form-control" id="phoneNumber"
+                            placeholder="phoneNumber">
+                        <label for="phoneNumber">Phone Number </label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-floating">
+                        <input type="email" formControlName="email" class="form-control" id="email"
+                            placeholder="email">
+                        <label for="email">Email </label>
+                    </div>
+                </div>
+        
+
+            </div>
+
+            
+
+        </div>
+        <div class="modal-footer"> 
+                     
+            <button type="button"  class="btn btn-outline-secondary" (click)="closeModal()"> Close</button>
+            <button type="button" type="submit" [disabled]="!trainerForm.valid"   class="btn btn-outline-primary">Create</button>
+
+        </div>
+    </form>
+    </div>
+</div>

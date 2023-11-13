@@ -49,12 +49,14 @@
                      <span class="card-title"> Planned Budegt :</span>
                      {{plan.plandBudget}} ETB &nbsp;
                      <span class="card-title"> Remaining Budegt : </span>
-                     {{plan.remainingBudget}} ETB <br />
+                     {{plan.remainingBudget}} ETB <br/>
                      <div class="mt-2">
 
                      </div>
                      {{plan.projectManager}} - Project Manager <br />
-                     {{plan.director}} - Director <br />
+                     {{plan.director}} - Director <br/>
+
+                     <span *ngFor="let item of plan.projectFunds">{{item}},</span>
                     
                   </div>
                   <div class="mt-2">

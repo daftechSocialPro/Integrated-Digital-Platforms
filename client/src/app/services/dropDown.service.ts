@@ -62,8 +62,8 @@ export class DropDownService {
     getStrategicPlans(){
         return this.http.get<SelectList[]>(this.baseUrl+"/DropDown/GetStrategicPlans")
     }
-    getProjectLocations(){
-        return this.http.get<SelectList[]>(this.baseUrl+"/DropDown/GetProjectLocations")
+    getProjectFundSourcess(){
+        return this.http.get<SelectList[]>(this.baseUrl+"/DropDown/GetProjectFundSources")
     }
 
 

@@ -16,6 +16,7 @@ export interface Plan {
     objective :string 
     startDate : number 
     endDate :number 
+    projectFunds:string
     createdById ?:string
     
 
@@ -44,6 +45,7 @@ export interface PlanView {
     startDate : string 
     endDate :string 
     projectNumber:string
+    projectFunds:string
 
 
 }

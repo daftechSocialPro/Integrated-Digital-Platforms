@@ -24,7 +24,7 @@ namespace IntegratedImplementation.Interfaces.Configuration
         Task<List<SelectListDto>> GetEmployeeSelectList();
 
         Task<List<SelectListDto>> GetStrategicPlans();
-        Task<List<SelectListDto>> GetProjectLocations();
+        Task<List<SelectListDto>> GetProjectFundSources();
 
 
     }

@@ -113,7 +113,7 @@ namespace IntegratedDigitalAPI.Services.PM
                                             PlannedBudget = e.PlanedBudget,
                                             ActivityType = e.ActivityType.ToString(),
                                             ProjectLocation = $"{e.Woreda}-{e.Zone.ZoneName}-{e.Zone.Region.RegionName}-{e.Zone.Region.Country.CountryName}",
-
+                                            IsTraining = e.IsTraining,
                                             ProjectLocationLng = e.Longtude,
                                             ProjectLocationLat = e.Latitude,
                                             ActivityNumber = e.ActivityNumber,
@@ -167,7 +167,7 @@ namespace IntegratedDigitalAPI.Services.PM
                                             PlannedBudget = e.PlanedBudget,
                                             ActivityType = e.ActivityType.ToString(),
                                             ProjectLocation = $"{e.Woreda}-{e.Zone.ZoneName}-{e.Zone.Region.RegionName}-{e.Zone.Region.Country.CountryName}",
-
+                                            IsTraining = e.IsTraining,
                                             ProjectLocationLng = e.Longtude,
                                             ProjectLocationLat = e.Latitude,
                                             ActivityNumber =e.ActivityNumber,
@@ -277,6 +277,7 @@ namespace IntegratedDigitalAPI.Services.PM
                                                 ProjectLocationLng = e.Longtude,
                                                 ProjectLocationLat = e.Latitude,
                                                 ActivityNumber= e.ActivityNumber,
+                                                IsTraining = e.IsTraining,
                                                 Begining = e.Begining,
                                                 Target = e.Goal,
                                                 UnitOfMeasurment = e.UnitOfMeasurement.Name,

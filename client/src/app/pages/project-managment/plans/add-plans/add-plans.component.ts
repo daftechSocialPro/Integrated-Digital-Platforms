@@ -25,12 +25,16 @@ export class AddPlansComponent implements OnInit {
   Programs: SelectList[] = [];
   Structures: SelectList[] = [];
   Employees: SelectList[] = [];
+
+  projectSourceFunds :SelectList[]=[]
   
   Branchs: SelectList[] = [];
   employeeList: SelectList[] = [];
   
   ProjectManagerId!: SelectList;
   FinanceId!: string;
+
+  
 
 
   constructor(
@@ -46,6 +50,7 @@ private messageService: MessageService,
 
     this.listEmployees();
     this.getDepartments();
+    this.getProjectSourceFunds();
    
     this.planForm = this.formBuilder.group({
 
@@ -57,6 +62,7 @@ private messageService: MessageService,
       ProjectNumber: ['',Validators.required],
       StartDate:['',Validators.required],
       EndDate:['',Validators.required],
+      SelectedProjectFunds :['',Validators.required],
  
       Remark: [''],
       Goal:[''],
@@ -78,6 +84,14 @@ private messageService: MessageService,
 
   }
 
+  getProjectSourceFunds(){
+
+    this.dorpDownService.getProjectFundSourcess().subscribe({
+      next:(res)=>{
+        this.projectSourceFunds = res 
+      }
+    })
+  }
   
 
   listEmployees() {
@@ -140,7 +154,8 @@ private messageService: MessageService,
         objective :this.planForm.value.Objective,
         startDate : this.planForm.value.StartDate.getFullYear(),
         endDate : this.planForm.value.EndDate.getFullYear(),
-        projectNumber:this.planForm.value.ProjectNumber
+        projectNumber:this.planForm.value.ProjectNumber,
+        projectFunds:this.planForm.value.SelectedProjectFunds
       }
 
       

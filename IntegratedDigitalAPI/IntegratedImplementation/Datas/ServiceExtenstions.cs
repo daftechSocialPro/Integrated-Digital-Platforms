@@ -9,11 +9,13 @@ using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedImplementation.Interfaces.HRM;
 using IntegratedImplementation.Interfaces.Notification;
 using IntegratedImplementation.Interfaces.PM;
+using IntegratedImplementation.Interfaces.Training;
 using IntegratedImplementation.Interfaces.Vacancy;
 using IntegratedImplementation.Services.Configuration;
 using IntegratedImplementation.Services.HRM;
 using IntegratedImplementation.Services.Notification;
 using IntegratedImplementation.Services.PM;
+using IntegratedImplementation.Services.Training;
 using IntegratedImplementation.Services.Vacancy;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -63,7 +65,7 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<IEducationalFieldService, EducationalFieldService>();
             services.AddScoped<IDropDownService, DropDownService>();
             services.AddScoped<IEmailService, EmailService>();
-            services.AddScoped<IProjectLocationService, ProjectLocationService>();
+            services.AddScoped<IProjectFundSourceService, ProjectFundSourceService>();
 
             #region PM
             services.AddScoped<IUnitOfMeasurmentService, UnitOfMeasurmentService>();
@@ -77,6 +79,10 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<ITimePeriodService, TimePeriodService>();
 
 
+            #endregion
+
+            #region
+            services.AddScoped<ITrainingService, TrainingService>();
             #endregion
 
 

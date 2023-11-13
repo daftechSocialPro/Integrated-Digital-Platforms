@@ -28,7 +28,8 @@ export interface TaskView {
     numberOfTerminated?: number
     taskMembers?: SelectList[]
     taskMemos?: TaskMemoView[]
-    activityViewDtos?: ActivityView[]
+    activityViewDtos?: ActivityView[],
+   
 }
 
 export interface TaskMembers {

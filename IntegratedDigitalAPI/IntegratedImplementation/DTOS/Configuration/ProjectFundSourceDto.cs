@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IntegratedImplementation.DTOS.Configuration
 {
-    public record ProjectLocationGetDto
+    public record ProjectFundSourceGetDto
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
@@ -14,7 +14,7 @@ namespace IntegratedImplementation.DTOS.Configuration
       
     }
 
-    public record ProjectLocationPostDto
+    public record ProjectFundSourcePostDto
     {
 
         public string Name { get; set; } 

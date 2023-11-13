@@ -25,6 +25,8 @@ namespace IntegratedDigitalAPI.DTOS.PM
         public int StartDate { get; set; }
         public int EndDate { get; set; }
 
+        public List<Guid> ProjectFunds { get;set; } 
+
         public string CreatedById {get;set;}
 
     }
@@ -51,6 +53,8 @@ namespace IntegratedDigitalAPI.DTOS.PM
         public int NumberOfTaskCompleted { get; set; }
 
         public bool HasTask { get; set; }
+
+        public List<string> ProjectFunds { get; set; }
 
         public string Goal { get; set; }
         public string Objective { get; set; }

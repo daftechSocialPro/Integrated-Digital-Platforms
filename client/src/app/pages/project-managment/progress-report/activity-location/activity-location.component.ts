@@ -39,18 +39,18 @@ export class ActivityLocationComponent implements OnInit {
       locationId: ['',Validators.required],     
     })
 
-    this.getLocations()
+   // this.getLocations()
     this.getCountries()
     
   }
 
-  getLocations(){
-    this.dropDownService.getProjectLocations().subscribe({
-      next:(res)=>{
-        this.locations = res 
-      }
-    })
-  }
+  // getLocations(){
+  //   this.dropDownService.getProjectLocations().subscribe({
+  //     next:(res)=>{
+  //       this.locations = res 
+  //     }
+  //   })
+  // }
 
   Search(){
 

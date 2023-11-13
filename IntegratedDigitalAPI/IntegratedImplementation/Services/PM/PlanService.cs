@@ -3,6 +3,7 @@ using IntegratedDigitalAPI.DTOS.PM;
 using IntegratedDigitalAPI.Services.PM.Plan;
 using IntegratedImplementation.DTOS.Configuration;
 using IntegratedInfrustructure.Data;
+using IntegratedInfrustructure.Migrations;
 using IntegratedInfrustructure.Model.PM;
 using Microsoft.EntityFrameworkCore;
 using static IntegratedInfrustructure.Data.EnumList;
@@ -42,6 +43,23 @@ namespace IntegratedDigitalAPI.Services.PM
                 };
                 await _dBContext.AddAsync(Plans);
                 await _dBContext.SaveChangesAsync();
+
+
+                foreach (var fund in plan.ProjectFunds)
+                {
+                    var project_Fund = new Project_Fund
+                    {
+                        Id = Guid.NewGuid(),
+                        ProjectId = Plans.Id,
+                        ProjectSourceFundId = fund,
+                        CreatedDate = DateTime.Now,
+                        CreatedById = plan.CreatedById
+                    };
+                    await _dBContext.Project_Funds.AddAsync(project_Fund);
+                    await _dBContext.SaveChangesAsync();
+
+                }
+
                 return new ResponseMessage
                 {
                     Success=true,
@@ -73,13 +91,12 @@ namespace IntegratedDigitalAPI.Services.PM
            
         }
 
-        public async Task<List<PlanViewDto>> GetPlans( Guid ? programId)
-        
+        public async Task<List<PlanViewDto>> GetPlans( Guid ? programId)        
         
         {
 
-            var plans =programId!=null? _dBContext.Projects.Include(x => x.Department).Include(x => x.ProjectManager):
-                _dBContext.Projects.Include(x => x.Department).Include(x => x.ProjectManager);
+            var plans =programId!=null? _dBContext.Projects.Include(x => x.Department).Include(x => x.ProjectManager).Include(x=>x.ProjectFunds):
+                _dBContext.Projects.Include(x => x.Department).Include(x => x.ProjectManager).Include(x => x.ProjectFunds);
 
 
             return await (from p in plans             
@@ -95,14 +112,13 @@ namespace IntegratedDigitalAPI.Services.PM
                               PlandBudget = p.PlannedBudget,
                               StructureName = p.Department.DepartmentName,
                               RemainingBudget = (float)(p.PlannedBudget - p.Tasks.Sum(x => (float)x.ActualBudget)),
-                              ProjectManager = $"{p.ProjectManager.FirstName} {p.ProjectManager.MiddleName} {p.ProjectManager.LastName}",
-                             
-                              //Director = _dBContext.Employees.Where(x => x.Position == Models.Common.Position.Director&&x.OrganizationalStructureId== p.StructureId).FirstOrDefault().FullName,
-                              
+                              ProjectManager = $"{p.ProjectManager.FirstName} {p.ProjectManager.MiddleName} {p.ProjectManager.LastName}",                             
+                              //Director = _dBContext.Employees.Where(x => x.Position == Models.Common.Position.Director&&x.OrganizationalStructureId== p.StructureId).FirstOrDefault().FullName,                              
                               NumberOfTask = _dBContext.Tasks.Count(x=>x.ProjectId==p.Id),
                               NumberOfActivities = _dBContext.Activities.Include(x=>x.ActivityParent.Task.Project).Where(x=>x.PlanId==p.Id||x.Task.ProjectId==p.Id||x.ActivityParent.Task.ProjectId==p.Id).Count(),
                               NumberOfTaskCompleted = _dBContext.Activities.Include(x => x.ActivityParent.Task.Project).Where(x => x.Status == Status.FINALIZED && (x.PlanId == p.Id || x.Task.ProjectId == p.Id || x.ActivityParent.Task.ProjectId == p.Id)).Count(),
                               HasTask = p.HasTask,
+                              ProjectFunds = p.ProjectFunds.Select(x=>x.ProjectSourceFund.Name).ToList(),
 
                               StartDate = p.PeriodStartAt,
                               EndDate = p.PeriodEndAt

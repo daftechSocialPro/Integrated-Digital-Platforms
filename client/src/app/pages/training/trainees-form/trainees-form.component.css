@@ -1,0 +1,25 @@
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .custom-table th,
+  .custom-table td {
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #ccc;
+  }
+  
+  .custom-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .custom-table tfoot input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+  }
+  
+  .custom-table tfoot button {
+    margin-top: 8px;
+  }

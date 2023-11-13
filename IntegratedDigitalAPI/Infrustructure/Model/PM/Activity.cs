@@ -10,6 +10,7 @@ using IntegratedInfrustructure.Model.HRM;
 using IntegratedInfrustructure.Model.PM;
 using static IntegratedInfrustructure.Data.EnumList;
 using IntegratedInfrustructure.Model.Configuration;
+using IntegratedInfrustructure.Model.Training;
 
 namespace IntegratedInfrustructure.Models.PM
 {
@@ -20,7 +21,7 @@ namespace IntegratedInfrustructure.Models.PM
         {
             ActProgress = new HashSet<ActivityProgress>();
             AssignedEmploye = new HashSet<EmployeesAssignedForActivities>();
-            ActivityTargetDivisions = new HashSet<ActivityTargetDivision>();
+    
         }
 
         public string ActivityDescription { get; set; } = null!;
@@ -63,7 +64,7 @@ namespace IntegratedInfrustructure.Models.PM
         [DefaultValue(false)]
         public Boolean PostToCase { get; set; }
         public Guid? EmployeeId { get; set; }
-        public virtual EmployeeList Employee { get; set; } = null!; 
+        public virtual EmployeeList Employee { get; set; } = null!;
         public Guid? PlanId { get; set; }
         public virtual Project Plan { get; set; } = null!;
         public Guid? TaskId { get; set; }
@@ -82,13 +83,16 @@ namespace IntegratedInfrustructure.Models.PM
         //public virtual ProjectLocation ProjectLocation { get; set; }
 
         public double Latitude { get; set; }
-
         public double Longtude { get; set; }
+
+        public  bool IsTraining {get;set;}
 
 
         public ICollection<ActivityProgress> ActProgress { get; set; }
+
         public ICollection<EmployeesAssignedForActivities> AssignedEmploye { get; set; }
         public ICollection<ActivityTargetDivision> ActivityTargetDivisions { get; set; }
+  
     }
 
  

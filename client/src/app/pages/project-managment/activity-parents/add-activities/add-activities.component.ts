@@ -80,6 +80,7 @@ export class AddActivitiesComponent implements OnInit {
       CommiteeId: [null],
       AssignedEmployee: [],
       StrategicPlan:[],
+      IsTraining:[false,Validators.required],
       ZoneId:['',Validators.required],
       Woreda:['',Validators.required]
 
@@ -139,7 +140,7 @@ export class AddActivitiesComponent implements OnInit {
     //   },
     // })
 
-    this.GetProjectLocations()
+   // this.GetProjectLocations()
 
   }
 
@@ -180,13 +181,13 @@ export class AddActivitiesComponent implements OnInit {
     })
   }
 
-  GetProjectLocations(){
-    this.dropDownService.getProjectLocations().subscribe({
-      next:(res)=>{
-        this.projectLocations = res
-      }
-    })
-  }
+  // GetProjectLocations(){
+  //   this.dropDownService.getProjectLocations().subscribe({
+  //     next:(res)=>{
+  //       this.projectLocations = res
+  //     }
+  //   })
+  // }
 
   selectEmployee(event: SelectList) {
     this.selectedEmployee.push(event)
@@ -244,7 +245,8 @@ export class AddActivitiesComponent implements OnInit {
         latitude: this.lat,
         StrategicPlanId:this.activityForm.value.StrategicPlan,
         ZoneId:this.activityForm.value.ZoneId,
-        Woreda:this.activityForm.value.Woreda       
+        Woreda:this.activityForm.value.Woreda ,
+        IsTraining:this.activityForm.value.IsTraining      
         
       }
       if(this.requestFrom == "PLAN"){
@@ -304,7 +306,7 @@ export class AddActivitiesComponent implements OnInit {
         StrategicPlanId:this.activityForm.value.StrategicPlan,
         ZoneId:this.activityForm.value.ZoneId,
         Woreda :this.activityForm.value.Woreda,
-
+        IsTraining:this.activityForm.value.IsTraining,   
         longtude: this.lng,
         latitude: this.lat,
       }

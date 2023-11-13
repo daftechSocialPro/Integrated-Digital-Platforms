@@ -1,4 +1,5 @@
-﻿using IntegratedInfrustructure.Model.Authentication;
+﻿using IntegratedInfrustructure.Migrations;
+using IntegratedInfrustructure.Model.Authentication;
 using IntegratedInfrustructure.Model.HRM;
 using IntegratedInfrustructure.Models.PM;
 using System;
@@ -21,6 +22,7 @@ namespace IntegratedInfrustructure.Model.PM
             TaskMemos = new HashSet<TaskMemo>();
             TaskMember = new HashSet<TaskMembers>();
             Activities = new HashSet<Activity>();
+            ProjectFunds = new HashSet<Project_Fund>();
         }
 
         public string ProjectName { get; set; } = null!;
@@ -44,7 +46,7 @@ namespace IntegratedInfrustructure.Model.PM
 
         public ICollection<Tasks> Tasks { get; set; }
 
-
+        public ICollection <Project_Fund> ProjectFunds { get; set; }
         public ICollection<TaskMemo> TaskMemos { get; set; }
 
         public ICollection<TaskMembers> TaskMember { get; set; }

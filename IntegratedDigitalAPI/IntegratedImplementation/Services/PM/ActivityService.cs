@@ -85,6 +85,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                 activity.ActivityNumber = item.ActivityNumber;
                 activity.Longtude = item.Longtude;
                 activity.Latitude = item.Latitude;
+                activity.IsTraining = item.IsTraining;
 
                 await _dBContext.Activities.AddAsync(activity);
                 await _dBContext.SaveChangesAsync();
@@ -174,6 +175,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
 
             activity.Longtude = activityDetail.Longtude;
             activity.Latitude = activityDetail.Latitude;
+            activity.IsTraining = activityDetail.IsTraining;
 
             if (activityDetail.PlanId != null)
             {
@@ -632,7 +634,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                            PlannedBudget = e.PlanedBudget,
                            ActivityType = e.ActivityType.ToString(),
                            ProjectLocation = $"{e.Woreda}-{e.Zone.ZoneName}-{e.Zone.Region.RegionName}-{e.Zone.Region.Country.CountryName}",
-
+                           IsTraining = e.IsTraining,
                            ProjectLocationLng = e.Longtude,
                            ProjectLocationLat = e.Latitude,
                            ActivityNumber = e.ActivityNumber,
@@ -724,6 +726,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                                                 PlannedBudget = e.Activity.PlanedBudget,
                                                 ActivityType = e.Activity.ActivityType.ToString(),
                                                 ProjectLocation = $"{e.Activity.Woreda}-{e.Activity.Zone.ZoneName}-{e.Activity.Zone.Region.RegionName}-{e.Activity.Zone.Region.Country.CountryName}",
+                                               IsTraining = e.Activity.IsTraining,
 
                                                 ProjectLocationLng = e.Activity.Longtude,
                                                 ProjectLocationLat = e.Activity.Latitude,

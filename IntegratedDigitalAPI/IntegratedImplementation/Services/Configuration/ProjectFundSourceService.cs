@@ -15,35 +15,35 @@ using static IntegratedInfrustructure.Data.EnumList;
 
 namespace IntegratedImplementation.Services.Configuration
 {
-    public class ProjectLocationService : IProjectLocationService
+    public class ProjectFundSourceService : IProjectFundSourceService
     {
 
         private readonly ApplicationDbContext _dbContext;
         private readonly IGeneralConfigService _generalConfig;
         private readonly IMapper _mapper;
-        public ProjectLocationService(ApplicationDbContext dbContext, IGeneralConfigService generalConfig, IMapper mapper)
+        public ProjectFundSourceService(ApplicationDbContext dbContext, IGeneralConfigService generalConfig, IMapper mapper)
         {
             _dbContext = dbContext;
             _generalConfig = generalConfig;
             _mapper = mapper;
         }
 
-        public async Task<ResponseMessage> AddProjectLocation(ProjectLocationPostDto projectLocationPost)
+        public async Task<ResponseMessage> AddProjectFundSource(ProjectFundSourcePostDto projectFundSourcePost)
         {
 
             var id = Guid.NewGuid();
         
-            ProjectLocation projectLocation = new ProjectLocation
+            ProjectFundSource projectFundSource = new ProjectFundSource
             {
                 Id = id,
-                Name = projectLocationPost.Name,           
-                CreatedById = projectLocationPost.CreatedById,
+                Name = projectFundSourcePost.Name,           
+                CreatedById = projectFundSourcePost.CreatedById,
                 CreatedDate = DateTime.Now,
               
 
             };
 
-            await _dbContext.ProjectLocations.AddAsync(projectLocation);
+            await _dbContext.ProjectFundSources.AddAsync(projectFundSource);
             await _dbContext.SaveChangesAsync();
 
             return new ResponseMessage
@@ -55,40 +55,40 @@ namespace IntegratedImplementation.Services.Configuration
         }
 
 
-        public async Task<List<ProjectLocationGetDto>> GetProjectLocation()
+        public async Task<List<ProjectFundSourceGetDto>> GetProjectFundSource()
         {
-            var project = await _dbContext.ProjectLocations.AsNoTracking().
-                ProjectTo<ProjectLocationGetDto>(_mapper.ConfigurationProvider).ToListAsync();
+            var project = await _dbContext.ProjectFundSources.AsNoTracking().
+                ProjectTo<ProjectFundSourceGetDto>(_mapper.ConfigurationProvider).ToListAsync();
 
             return project;
         }
 
 
 
-        public async Task<ResponseMessage> UpdateProjectLocation(ProjectLocationGetDto projectLocationPut)
+        public async Task<ResponseMessage> UpdateProjectFundSource(ProjectFundSourceGetDto projectFundSourcePut)
         {
-            var currentCompanyProfile = await _dbContext.ProjectLocations.FirstOrDefaultAsync(x => x.Id.Equals(projectLocationPut.Id));
+            var currentCompanyProfile = await _dbContext.ProjectFundSources.FirstOrDefaultAsync(x => x.Id.Equals(projectFundSourcePut.Id));
 
            
             if (currentCompanyProfile != null)
                
             {
 
-                currentCompanyProfile.Name = projectLocationPut.Name;
+                currentCompanyProfile.Name = projectFundSourcePut.Name;
            
 
                 await _dbContext.SaveChangesAsync();
                 return new ResponseMessage { Data = currentCompanyProfile, Success = true, Message = "Company Profile Updated Successfully" };
             }
-            return new ResponseMessage { Success = false, Message = "Unable To Find Company Profile" };
+            return new ResponseMessage { Success = false, Message = "Unable To Find Project Fund Source" };
         }
 
-        public async Task<ResponseMessage> DeleteProjectLocation(Guid projectLocationId)
+        public async Task<ResponseMessage> DeleteProjectFundSource(Guid projectFundSourceId)
         {
 
             try
             {
-                var currentEmployeeHistory = await _dbContext.ProjectLocations.FindAsync(projectLocationId);
+                var currentEmployeeHistory = await _dbContext.ProjectFundSources.FindAsync(projectFundSourceId);
 
                 if (currentEmployeeHistory != null)
                 {
@@ -97,7 +97,7 @@ namespace IntegratedImplementation.Services.Configuration
                     await _dbContext.SaveChangesAsync();
                     return new ResponseMessage { Message = "Successfully Deleted", Success = true };
                 }
-                return new ResponseMessage { Success = false, Message = "Unable To Find Project Locations!!!" };
+                return new ResponseMessage { Success = false, Message = "Unable To Find Project Fund Source!!!" };
             }
             catch (Exception ex)
             {

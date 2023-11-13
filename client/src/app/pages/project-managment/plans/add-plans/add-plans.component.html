@@ -70,7 +70,7 @@
 
                                 <div class="col-md-4">
                                     <div class="flex flex-column gap-2">
-                                        <label htmlFor="startDate">Start Date</label>
+                                        <label htmlFor="startDate">Start Year</label>
 
                                         <p-calendar formControlName="StartDate" view="year" dateFormat="yy"
                                             inputId="yearpicker"></p-calendar>
@@ -79,7 +79,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="flex flex-column gap-2">
-                                        <label htmlFor="endDate">End Date</label>
+                                        <label htmlFor="endDate">End Year</label>
                                         <p-calendar formControlName="EndDate" view="year" dateFormat="yy"
                                             inputId="yearpicker"></p-calendar>
 
@@ -91,11 +91,22 @@
                                             class="form-check-label" style="font-size: 28px; font-weight: bold;"
                                             for="gridCheck">Has Task </label></div>
                                 </div>
-                                <div class="col-12">
+                                <div class="col-8">
+                                    <label htmlFor="ProjectSourceFunds">Remark</label>
                                     <div class="form-floating"><textarea class="form-control" formControlName="Remark"
-                                            placeholder="Address" id="Remark" style="height: 100px;"></textarea><label
-                                            for="Remark">Remark</label>
+                                            placeholder="Address" id="Remark" style="height: 100px;"></textarea>
                                     </div>
+                                </div>
+
+                                <div class="col-4">
+
+                                    <label htmlFor="ProjectSourceFunds">Project Source Funds</label>
+                                    <select class="form-control" multiple formControlName="SelectedProjectFunds">
+                                        
+                                        <option *ngFor="let item of projectSourceFunds" [value]="item.id">{{item.name}}</option>
+
+                                    </select>
+                                    
                                 </div>
 
                                 <div class="col-6">

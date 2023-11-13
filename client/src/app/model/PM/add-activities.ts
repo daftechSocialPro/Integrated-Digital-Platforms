@@ -28,7 +28,7 @@ export interface SubActivityDetailDto {
     Employees :string[]
     CreatedBy?:string,
     StrategicPlanId:String,
-    
+    IsTraining:boolean
     ZoneId:string,
     Woreda:string,
     longtude: number,

@@ -16,6 +16,7 @@ using IntegratedInfrustructure.Models.PM;
 using Activity = IntegratedInfrustructure.Models.PM.Activity;
 using IntegratedInfrustructure.Model.PM;
 using IntegratedInfrustructure.Models.Common;
+using IntegratedInfrustructure.Model.Training;
 
 namespace IntegratedInfrustructure.Data
 {
@@ -36,7 +37,10 @@ namespace IntegratedInfrustructure.Data
         public DbSet<Region> Regions { get; set; }
         public DbSet<Zone> Zones { get; set; }
         public DbSet<HolidayLst> Holidays { get; set; }
-        public DbSet<ProjectLocation> ProjectLocations { get; set; }
+        public DbSet<ProjectFundSource> ProjectFundSources { get; set; }
+        public DbSet<Project_Fund> Project_Funds { get; set; }
+
+        
         
         public DbSet<UnitOfMeasurment> UnitOfMeasurment { get; set; }
         #endregion
@@ -115,7 +119,19 @@ namespace IntegratedInfrustructure.Data
         public DbSet<TaskMembers> TaskMembers { get; set; }
         public DbSet<TaskMemo> TaskMemos { get; set; }
         public DbSet<TaskMemoReply> TaskMemoReply { get; set; }
-        public DbSet<Tasks> Tasks { get; set; }  
+        public DbSet<Tasks> Tasks { get; set; }
+        #endregion
+
+        #region 
+        public DbSet<Training> Trainings { get; set; }
+        public DbSet<ActivityTraining> ActivityTrainings { get; set; }
+        public DbSet<Trainee> Trainees { get; set; }
+
+        public DbSet<TraineesPicture> TraineesPictures { get; set; }
+        public DbSet<Trainers> Trainers { get; set; }
+        public DbSet<TrainingReport> TrainingReports { get; set; }
+
+         
         #endregion
 
 

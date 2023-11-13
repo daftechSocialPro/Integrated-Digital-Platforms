@@ -13,6 +13,7 @@ import { CommonService } from 'src/app/services/common.service';
 import { UserService } from 'src/app/services/user.service';
 import { ShowonmapComponent } from '../progress-report/performance-report/showonmap/showonmap.component';
 import { SelectList } from 'src/app/model/common';
+import { TrainingListComponent } from '../../training/training-list/training-list.component';
 
 @Component({
   selector: 'app-view-activties',
@@ -170,4 +171,13 @@ export class ViewActivtiesComponent implements OnInit {
   
     return monthNames[monthIndex];
   }
+
+  viewTrainings(activityId : string ){
+
+    let modalRef = this.modalService.open(TrainingListComponent,{size:'xxl',backdrop:'static'})
+    modalRef.componentInstance.activityId  = activityId
+
+
+  }
+  
 }

@@ -1,6 +1,7 @@
 ﻿using Implementation.Helper;
 using IntegratedImplementation.DTOS.Configuration;
 using IntegratedImplementation.Interfaces.Configuration;
+using IntegratedImplementation.Services.Configuration;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -9,30 +10,30 @@ namespace IntegratedDigitalAPI.Controllers.Configuration
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProjectLocationController : ControllerBase
+    public class ProjectFundSourceController : ControllerBase
     {
-        IProjectLocationService _ProjectLocationService;
+        IProjectFundSourceService _ProjectFundSourceService;
 
-        public ProjectLocationController(IProjectLocationService ProjectLocationService)
+        public ProjectFundSourceController(IProjectFundSourceService ProjectFundSourceService)
         {
-            _ProjectLocationService = ProjectLocationService;
+            _ProjectFundSourceService = ProjectFundSourceService;
         }
 
 
         [HttpGet]
-        [ProducesResponseType(typeof(ProjectLocationGetDto), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetProjectLocationList()
+        [ProducesResponseType(typeof(ProjectFundSourceGetDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetProjectFundSourceList()
         {
-            return Ok(await _ProjectLocationService.GetProjectLocation());
+            return Ok(await _ProjectFundSourceService.GetProjectFundSource());
         }
 
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> AddProjectLocation([FromBody] ProjectLocationPostDto ProjectLocationDto)
+        public async Task<IActionResult> AddProjectFundSource([FromBody] ProjectFundSourcePostDto ProjectFundSourceDto)
         {
             if (ModelState.IsValid)
             {
-                return Ok(await _ProjectLocationService.AddProjectLocation(ProjectLocationDto));
+                return Ok(await _ProjectFundSourceService.AddProjectFundSource(ProjectFundSourceDto));
             }
             else
             {
@@ -43,11 +44,11 @@ namespace IntegratedDigitalAPI.Controllers.Configuration
 
         [HttpPut]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> UpdateProjectLocation(ProjectLocationGetDto ProjectLocationDto)
+        public async Task<IActionResult> UpdateProjectFundSource(ProjectFundSourceGetDto ProjectFundSourceDto)
         {
             if (ModelState.IsValid)
             {
-                return Ok(await _ProjectLocationService.UpdateProjectLocation(ProjectLocationDto));
+                return Ok(await _ProjectFundSourceService.UpdateProjectFundSource(ProjectFundSourceDto));
             }
             else
             {
@@ -57,11 +58,11 @@ namespace IntegratedDigitalAPI.Controllers.Configuration
 
         [HttpDelete]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> DeleteProjectLocation(Guid projectLocationId)
+        public async Task<IActionResult> DeleteProjectFundSource(Guid projectFundSourceId)
         {
             if (ModelState.IsValid)
             {
-                return Ok(await _ProjectLocationService.DeleteProjectLocation(projectLocationId));
+                return Ok(await _ProjectFundSourceService.DeleteProjectFundSource(projectFundSourceId));
             }
             else
             {

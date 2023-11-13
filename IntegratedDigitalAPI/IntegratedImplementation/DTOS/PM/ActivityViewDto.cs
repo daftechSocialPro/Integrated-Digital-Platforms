@@ -35,6 +35,8 @@ namespace IntegratedDigitalAPI.DTOS.PM
        
         public bool IsProjectManager { get; set; }
         public bool IsDirector { get; set; }
+
+        public bool IsTraining { get; set; }
     }
 
     public class MonthPerformanceViewDto

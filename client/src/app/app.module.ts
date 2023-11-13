@@ -221,6 +221,12 @@ import { ReportingPeriodComponent } from './pages/project-managment/pm-configura
 import { BudgetYearComponent } from './pages/project-managment/pm-configuration/budget-year/budget-year.component';
 import { AddReportPeriodComponent } from './pages/project-managment/pm-configuration/reporting-period/add-report-period/add-report-period.component';
 import { AddBudgetYearComponent } from './pages/project-managment/pm-configuration/budget-year/add-budget-year/add-budget-year.component';
+import { TrainingListComponent } from './pages/training/training-list/training-list.component';
+import { AddTrainingListComponent } from './pages/training/add-training-list/add-training-list.component';
+import { AddTrainerComponent } from './pages/training/add-trainer/add-trainer.component';
+import { TrainerListComponent } from './pages/training/trainer-list/trainer-list.component';
+import { TraineesFormComponent } from './pages/training/trainees-form/trainees-form.component';
+import { TrainingReportFormComponenT } from './pages/training/training-report-form/training-report-form.component';
 
 @NgModule({
   declarations: [
@@ -499,8 +505,13 @@ import { AddBudgetYearComponent } from './pages/project-managment/pm-configurati
     ReportingPeriodComponent,
     BudgetYearComponent,
     AddReportPeriodComponent,
-    AddBudgetYearComponent
-    
+    AddBudgetYearComponent,
+    TrainingListComponent,
+    AddTrainingListComponent,
+    AddTrainerComponent,
+    TrainerListComponent,
+    TraineesFormComponent,
+    TrainingReportFormComponenT 
 
 
 

@@ -25,6 +25,7 @@ export interface ActivityView {
     isProjectManager: boolean
     isDirector: boolean
     overAllProgress: number
+    isTraining :boolean
 
 
 }
