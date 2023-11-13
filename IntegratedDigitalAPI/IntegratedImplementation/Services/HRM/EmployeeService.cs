@@ -101,7 +101,7 @@ namespace IntegratedImplementation.Services.HRM
                     ContractEndDate = addEmployee.ContractEndDate,
                     Rowstatus = RowStatus.ACTIVE,
                     ExistingEmployee = addEmployee.ExistingEmployee,
-                    BankId = addEmployee.BankId
+                    //BankId = addEmployee.BankId
                 };
                 await _dbContext.Employees.AddAsync(employee);
                 await _dbContext.SaveChangesAsync();
@@ -234,7 +234,7 @@ namespace IntegratedImplementation.Services.HRM
                     employee.BankAccountNo = addEmployee.BankAccountNo;
                     employee.BirthDate = addEmployee.BirthDate;
                     employee.Woreda = addEmployee.Woreda;
-                    employee.BankId = addEmployee.BankId;
+                    //employee.BankId = addEmployee.BankId;
 
                     await _dbContext.SaveChangesAsync();
 

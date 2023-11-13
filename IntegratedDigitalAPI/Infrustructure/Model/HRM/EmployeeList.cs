@@ -47,7 +47,7 @@ namespace IntegratedInfrustructure.Model.HRM
         public bool ExistingEmployee { get; set; }
         public bool IsApproved { get; set; }
         public Guid BankId { get; set; }
-        public BankList Bank { get; set; } = null!;
+        public virtual BankList Bank { get; set; }
 
         [InverseProperty(nameof(EmploymentDetail.Employee))]
         public ICollection<EmploymentDetail> EmployeeDetail { get; set; }

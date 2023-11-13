@@ -4,6 +4,7 @@ using IntegratedInfrustructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IntegratedInfrustructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231113143204_Benfit")]
+    partial class Benfit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -934,9 +937,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<string>("BankAccountNo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("BankId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
 
@@ -1023,8 +1023,6 @@ namespace IntegratedInfrustructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BankId");
 
                     b.HasIndex("CreatedById");
 
@@ -3943,12 +3941,6 @@ namespace IntegratedInfrustructure.Migrations
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeList", b =>
                 {
-                    b.HasOne("IntegratedInfrustructure.Model.Configuration.BankList", "Bank")
-                        .WithMany()
-                        .HasForeignKey("BankId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedById");
@@ -3958,8 +3950,6 @@ namespace IntegratedInfrustructure.Migrations
                         .HasForeignKey("ZoneId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
-
-                    b.Navigation("Bank");
 
                     b.Navigation("CreatedBy");
 
