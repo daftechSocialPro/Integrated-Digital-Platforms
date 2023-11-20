@@ -56,12 +56,9 @@ export class AssignSupervisorComponent implements OnInit {
 
 
   getEmployees() {
-    this.hrmService.getEmployees().subscribe({
+    this.dopdownService.GetEmployeeDropDown().subscribe({
       next: (res) => {
-        this.supervisorList = res.map(item => ({
-          id: item.id,
-          name: `${item.firstName} ${item.middleName}`
-        }));
+        this.supervisorList = res;
         this.secondSupervisorList = this.supervisorList;
       }
       , error: (err) => {

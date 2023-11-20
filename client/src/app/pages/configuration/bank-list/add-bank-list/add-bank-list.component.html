@@ -35,23 +35,23 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <textarea class="form-control" formControlName="amharicAdress" placeholder="amharic address" id="amharicAdress"
+                                        <textarea class="form-control" formControlName="amharicAddress" placeholder="amharic address" id="amharicAddress"
                                             style="height: 120px;"></textarea>
-                                        <label for="amharicAdress">Amharic Address</label>
+                                        <label for="amharicAddress">Amharic Address</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="number" (input)="OnDigitChange($event.target)" class="form-control" id="bankName" placeholder="bankName"
-                                            formControlName="bankName">
-                                        <label for="bankName">Bank Digit</label>
+                                        <input type="number" (input)="OnDigitChange($event.target)" class="form-control" id="bankDigitNumber" placeholder="Digit"
+                                            formControlName="bankDigitNumber">
+                                        <label for="bankDigitNumber">Bank Digit</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="text"  class="form-control" id="amharicName" placeholder="amharicName"
-                                            formControlName="amharicName">
-                                        <label for="amharicName">Account Number</label>
+                                        <input type="text"  class="form-control" id="accountNumber" placeholder="account Number"
+                                            formControlName="accountNumber">
+                                        <label for="accountNumber">Account Number</label>
                                     </div>
                                 </div>
                                                                                 
@@ -60,7 +60,7 @@
                         <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
                             (click)="closeModal()">Close</button>
                         <button type="button" type="submit"  [disabled]="!bankFormGroup.valid"
-                            class="btn btn-outline-primary">Create</button>
+                            class="btn btn-outline-primary">Save</button>
                     </div>
                     </form>
                 </div>

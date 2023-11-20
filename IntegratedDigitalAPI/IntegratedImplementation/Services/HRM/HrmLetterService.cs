@@ -33,6 +33,8 @@ namespace IntegratedImplementation.Services.HRM
             if (employmentDetail == null)
                 return new ContractLetterDto();
 
+            var imediateSupervisor = await _dbContext.EmployeeSupervisors.Include(x => x.Supervisor).FirstOrDefaultAsync(x => x.EmployeeId == employmentDetail.EmployeeId);
+         
 
             var currentContract = new ContractLetterDto
             {
@@ -45,14 +47,10 @@ namespace IntegratedImplementation.Services.HRM
                 EmployerName = companyName.CompanyName,
                 GrossSalaryInWord = NumberExtensions.toWords(employmentDetail.Salary),
                 JobTitle = employmentDetail.Position.PositionName,
-                MobileAllowance = 0,
-                MobileAllowanceInWord = "",
                 PhoneNumber = employmentDetail.Employee.PhoneNumber,
                 PlaceOfWork = "",
-                ReportingTo = "",
+                ReportingTo = imediateSupervisor != null ? $"{imediateSupervisor.Supervisor.FirstName} {imediateSupervisor.Supervisor.MiddleName} {imediateSupervisor.Supervisor.LastName}" : " ",
                 SourceOfFund = "",
-                TransportAllowance = 0,
-                TransportAllowanceInWord = "",
                 TypeOfEmployement = employmentDetail.Employee.EmploymentType.ToString()
             };
 

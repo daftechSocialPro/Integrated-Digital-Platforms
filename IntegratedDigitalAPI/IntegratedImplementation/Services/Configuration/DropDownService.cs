@@ -164,7 +164,7 @@ namespace IntegratedImplementation.Services.Configuration
 
         public async Task<List<SelectListDto>> GetEmployeeSelectList()
         {
-            var employeesList = await _dbContext.Employees.Include(x=>x.EmployeeDetail).ThenInclude(x=>x.Department).AsNoTracking().Select(x => new SelectListDto
+            var employeesList = await _dbContext.Employees.Where(x => x.EmploymentStatus == EmploymentStatus.ACTIVE).Include(x=>x.EmployeeDetail).ThenInclude(x=>x.Department).AsNoTracking().Select(x => new SelectListDto
             {
                 Id=x.Id,
                 Name = $"{x.FirstName} {x.MiddleName} {x.LastName}" + (x.EmployeeDetail.OrderByDescending(x => x.CreatedDate).Any() ? x.EmployeeDetail.OrderByDescending(x => x.CreatedDate).FirstOrDefault().Department.DepartmentName : "")

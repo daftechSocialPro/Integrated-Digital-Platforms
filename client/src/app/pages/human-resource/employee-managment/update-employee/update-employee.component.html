@@ -26,240 +26,216 @@
                         <div class="row g-3">
                             <!-- Existing code for personal information fields -->
 
-                            <div class="col-md-3">
-                                <div class="form-floating"> <input type="text" class="form-control" id="FirstName"
-                                        placeholder="FirstName" required formControlName="firstName">
+                            <div class="col-md-4">
+                                <div class="form-group">
                                     <label for="FirstName"> First Name</label>
+                                    <input type="text" class="form-control" id="FirstName" required
+                                        formControlName="firstName">
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-floating"> <input type="text" class="form-control" id="MiddleName"
-                                        placeholder="MiddleName" required formControlName="middleName">
+                            <div class="col-md-4">
+                                <div class="form-group">
                                     <label for="MiddleName"> Middle Name</label>
+                                    <input type="text" class="form-control" id="MiddleName" required
+                                        formControlName="middleName">
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-floating"> <input type="text" class="form-control" id="LastName"
-                                        placeholder="LastName" required formControlName="lastName">
+                            <div class="col-md-4">
+                                <div class="form-group">
                                     <label for="LastName"> Last Name</label>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-floating"> <input type="text" class="form-control" id="amharicName"
-                                        placeholder="amharicName" required formControlName="amharicName">
-                                    <label for="amharicName"> Amharic Name</label>
+                                    <input type="text" class="form-control" id="LastName" required
+                                        formControlName="lastName">
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="form-floating"> <input type="text" class="form-control" id="amharicFirstName"
-                                        placeholder="amharicFirstName" required formControlName="amharicfirstName">
+                                <div class="form-group">
                                     <label for="FirstName">Amharic First Name</label>
+                                    <input type="text" class="form-control" id="amharicFirstName" required
+                                        formControlName="amharicfirstName">
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="form-floating"> <input type="text" class="form-control" id="amharicMiddleName"
-                                        placeholder="amharicMiddleName" required formControlName="amharicmiddleName">
+                                <div class="form-group">
                                     <label for="MiddleName">Amharic Middle Name</label>
+                                    <input type="text" class="form-control" id="amharicMiddleName" required
+                                        formControlName="amharicmiddleName">
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="form-floating"> <input type="text" class="form-control" id="amharicLastName"
-                                        placeholder="amharicLastName" required formControlName="amhariclastName">
+                                <div class="form-group">
                                     <label for="LastName">Amharic Last Name</label>
+                                    <input type="text" class="form-control" id="amharicLastName" required
+                                        formControlName="amhariclastName">
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-floating"> <input type="text" class="form-control" id="PhoneNumber"
-                                        placeholder="PhoneNumber" required formControlName="phoneNumber">
-                                    <label for="PhoneNumber"> Phone Number</label>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-floating"> <input type="text" class="form-control" id="email"
-                                        placeholder="email" required formControlName="email">
-                                    <label for="email"> Email</label>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-floating mb-3">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="Gender">Gender</label>
                                     <select class="form-select" id="Gender" formControlName="gender" aria-label="State">
                                         <option></option>
                                         <option value="MALE">MALE</option>
                                         <option value="FEMALE">FEMALE</option>
                                     </select>
-                                    <label for="Gender">Gender</label>
                                 </div>
                             </div>
-
-                            <div class="col-md-3">
-                                <div class="form-floating"> <input type="date" class="form-control" id="BirthDate"
-                                        placeholder="BirthDate" required formControlName="birthDate">
+                            <div class="col-md-4">
+                                <div class="form-group">
                                     <label for="BirthDate"> Birth Date</label>
+                                    <p-calendar formControlName="birthDate" [maxDate]="maxBirthDate"
+                                        [readonlyInput]="true"></p-calendar>
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-floating mb-3">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="MaritalStatus">Marital Status</label>
                                     <select class="form-select" id="MaritalStatus" formControlName="maritalStatus"
                                         aria-label="State">
-
                                         <option></option>
                                         <option value="SINGLE">SINGLE</option>
                                         <option value="MARRIED">MARRIED</option>
                                         <option value="DIVORCE">DIVORCE</option>
                                         <option value="WIDOW">WIDOW</option>
-
-
                                     </select>
-                                    <label for="MaritalStatus">Marital Status</label>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-floating mb-3">
-                                    <select class="form-select" #employmentType id="EmploymentType" formControlName="employmentType"
-                                        aria-label="State">
-
-                                        <option></option>
-                                        <option value="PERMANENT">PERMANENT</option>
-                                        <option value="CONTRAT">CONTRAT</option>
-
-                                    </select>
-                                    <label for="EmploymentType">Employment Type</label>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-floating mb-3">
-                                    <select class="form-select" id="PaymentType" formControlName="paymentType"
-                                        aria-label="State">
-
-                                        <option></option>
-                                        <option value="PERDAY">PERDAY</option>
-                                        <option value="PERWEEK">PERWEEK</option>
-                                        <option value="PERMONTH">PERMONTH</option>
-                                    </select>
-                                    <label for="PaymentType">Payment Type</label>
-                                </div>
-                            </div>
-                        
-                          
-                            <div class="col-md-3">
-                                <div class="form-floating"> <input type= "date" class="form-control" id="EmploymentDate"
-                                        placeholder="EmploymentDate" required formControlName="employmentDate">
-                                    <label for="EmploymentDate"> Employment Date</label>
-                                </div>
-                            </div>
-
-
-                            <div class="col-md-3" *ngIf="employmentType.value==='CONTRAT'">
-                                <div class="form-floating"> <input type="date" class="form-control" id="ContractEndDate"
-                                        placeholder="ContractEndDate"  formControlName="ContractEndDate">
-                                    <label for="ContractEndDate"> Contract End Date </label>
                                 </div>
                             </div>
                         </div>
                     </div>
-                
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="countryId">Country</label>
+                            <select class="form-select" formControlName="countryId" id="countryId" #country (change)="getRegions(country.value)"
+                                aria-label="State">
+                                <option></option>
+                                <option *ngFor="let country of countries" [value]="country.id">{{
+                                    country.name }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="countryId">Region</label>
+                            <select class="form-select" formControlName="regionId" (change)="getZones(region.value)" #region id="regionId"
+                                aria-label="State">
+                                <option></option>
+                                <option *ngFor="let region of regions" [value]="region.id">{{
+                                    region.name }}</option>
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="zoneId"> Zone</label>
+                            <select class="form-select" id="zoneId" formControlName="zoneId" aria-label="State">
+                                <option></option>
+                                <option *ngFor="let zone of zones" [value]="zone.id">{{
+                                    zone.name }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="woreda"> Woreda</label>
+                            <input type="text" class="form-control" id="woreda" placeholder="woreda" required
+                                formControlName="woreda">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="PhoneNumber"> Phone Number</label>
+                            <p-inputMask mask="(999) 999-999999" formControlName="phoneNumber"
+                                placeholder="(999) 999-999999"></p-inputMask>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="email"> Email</label>
+                            <input type="text" formControlName="email" class="form-control" id="email" required>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="bankId">Bank</label>
+                            <select class="form-select" id="bankId" formControlName="bankId"
+                                (change)="changeBankDigit($event.target)" aria-label="State">
+                                <option></option>
+                                <option *ngFor="let bank of bankLists" [value]="bank.id">{{
+                                    bank.name }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="BankAccountNo"> Bank Account No</label>
+                            <input type="text" class="form-control" id="BankAccountNo" placeholder="BankAccountNo"
+                                required [minlength]="bankDigit" [maxlength]="bankDigit"
+                                formControlName="bankAccountNo">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="EmploymentType">Employment Type</label>
+                            <select class="form-select" #employmentType id="EmploymentType"
+                                formControlName="employmentType" aria-label="State">
+                                <option></option>
+                                <option value="PERMANENT">PERMANENT</option>
+                                <option value="CONTRAT">CONTRAT</option>
+                                <option value="TEMPORARY">TEMPORARY</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="PaymentType">Payment Type</label>
+                            <select class="form-select" id="PaymentType" formControlName="paymentType"
+                                aria-label="State">
+                                <option></option>
+                                <option value="PERDAY">PERDAY</option>
+                                <option value="PERWEEK">PERWEEK</option>
+                                <option value="PERMONTH">PERMONTH</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="EmploymentDate"> Employment Date</label>
+                            <p-calendar formControlName="employmentDate" [maxDate]="maxHireDate"
+                                [readonlyInput]="true"></p-calendar>
+                        </div>
+                    </div>
+                    <div class="col-md-3" *ngIf="employmentType.value==='CONTRAT'">
+                        <div class="form-group">
+                            <label for="ContractEndDate"> Contract End Date </label>
+                            <p-calendar formControlName="ContractEndDate" [minDate]="maxHireDate"
+                                [readonlyInput]="true"></p-calendar>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="PensionCode"> Pension Code</label>
+                            <input type="string" class="form-control" id="PensionCode" placeholder="PensionCode"
+                                required formControlName="pensionCode">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="TinNumber"> Tin Number</label>
+                            <input type="number" class="form-control" id="TinNumber" placeholder="TinNumber" required
+                                formControlName="tinNumber">
+                        </div>
+                    </div>
                    
 
                 </div>
-                <div class="row mb-3">
 
-
-
-                    <div class="col-md-12">
-                        <div class="row g-3">
-
-
-                           
-                            <div class="col-md-3">
-                                <div class="form-floating"> <input type="string" class="form-control" id="PensionCode"
-                                        placeholder="PensionCode" required formControlName="pensionCode">
-                                    <label for="PensionCode"> Pension Code</label>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="form-floating"> <input type="number" class="form-control" id="TinNumber"
-                                        placeholder="TinNumber" required formControlName="tinNumber">
-                                    <label for="TinNumber"> Tin Number</label>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="form-floating mb-3">
-                                    <select class="form-select" id="bankId" formControlName="bankId"
-                                        aria-label="State">
-                                        <option></option>
-                                        <option *ngFor="let bank of bankLists" [value]="bank.id">{{
-                                            bank.name }}</option>
-                                    </select>
-                                    <label for="bankId">Bank</label>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-floating"> <input type="number" class="form-control" id="BankAccountNo"
-                                        placeholder="BankAccountNo" required formControlName="bankAccountNo">
-                                    <label for="BankAccountNo"> Bank Account No</label>
-                                </div>
-                            </div>
-
-
-                           
-                            <div class="col-md-3">
-                                <div class="form-floating mb-3">
-                                    <select class="form-select" id="countryId" #country formControlName="countryId"
-                                        (change)="getRegions(country.value)" aria-label="State">
-                                        <option></option>
-                                        <option *ngFor="let country of countries" [value]="country.id">{{
-                                            country.name }}</option>
-                                    </select>
-                                    <label for="countryId">Country</label>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-floating mb-3">
-                                    <select class="form-select" (change)="getZones(region.value)" #region formControlName="regionId" id="regionId" 
-                                        aria-label="State">
-                                        <option></option>
-                                        <option *ngFor="let region of regions" [value]="region.id">{{
-                                            region.name }}</option>
-                                    </select>
-                                    <label for="countryId">Region</label>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="form-floating mb-3">
-                                    <select class="form-select" id="zoneId" formControlName="zoneId"
-                                        aria-label="State">
-                                        <option></option>
-                                        <option *ngFor="let zone of zones" [value]="zone.id">{{
-                                            zone.name }}</option>
-                                    </select>
-                                    <label for="zoneId"> Zone</label>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="form-floating"> <input type="text" class="form-control" id="woreda"
-                                        placeholder="woreda" required formControlName="woreda">
-                                    <label for="woreda"> Woreda</label>
-                                </div>
-                            </div>
-
-
-                            <!-- Existing code for the remaining fields -->
-                        </div>
-                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" (click)="closeModal()">Close</button>
+                    <button type="button" type="submit" [disabled]="!EmployeeForm.valid"
+                        class="btn btn-outline-primary">Save changes</button>
                 </div>
-
-
-
-                <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
-                        (click)="closeModal()">Close</button> <button type="button" type="submit"
-                        [disabled]="!EmployeeForm.valid" class="btn btn-outline-warning">Update
-                        </button></div>
             </form>
-
         </div>
     </div>
 </div>

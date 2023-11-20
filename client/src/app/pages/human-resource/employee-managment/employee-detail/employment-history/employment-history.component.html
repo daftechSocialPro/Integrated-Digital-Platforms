@@ -1,6 +1,6 @@
 <div class="row p-2">
     <div class="col-lg-12 text-end ">
-        <button type="button" class="btn btn-outline-primary" (click)="addEmploymentHistory()"><i class="bi bi-plus me-1"></i>
+        <button type="button" class="btn btn-outline-primary" *ngIf="employmentStatus == 'ACTIVE'" (click)="addEmploymentHistory()"><i class="bi bi-plus me-1"></i>
             History</button>
     </div>
 </div>
@@ -36,7 +36,7 @@
                             <td>{{ history.remark}}</td>
 
                             <td>
-                                <div class="filter">
+                                <div class="filter" *ngIf="employmentStatus == 'ACTIVE' && history.rowStatus == 'ACTIVE'">
                                     <a class="icon" href="#" data-bs-toggle="dropdown"> <i class="bi bi-three-dots-vertical"></i></a>
                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                        <li *ngIf="history.sourceOfSalary=='PROJECT'"><a class="dropdown-item" (click)="addProjectSalary(history)"  > <i class="bi bi-plus"></i>Add Project Salary</a></li>

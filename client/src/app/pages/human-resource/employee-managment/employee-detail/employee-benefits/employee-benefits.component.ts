@@ -14,6 +14,7 @@ export class EmployeeBenefitsComponent implements OnInit {
 
 
   @Input() employeeId!: string;
+  @Input() employmentStatus!: string;
   benefits!: EmployeeBenefitListDto[]
   position: string = 'center';
 

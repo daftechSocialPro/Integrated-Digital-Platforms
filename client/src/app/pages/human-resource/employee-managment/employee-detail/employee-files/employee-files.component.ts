@@ -17,6 +17,7 @@ export class EmployeeFilesComponent implements OnInit {
 
 
   @Input() employeeId!: string;
+  @Input() employmentStatus!: string;
   files!: EmployeeFileGetDto[]
   position: string = 'center';
 

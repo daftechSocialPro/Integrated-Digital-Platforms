@@ -54,13 +54,13 @@
                                 <td class="employee-details">
                                     <img [src]="getImagePath(employee.imagePath)" width="40" alt="user png" class="rounded-circle">
                                     <div class="employee-info">
-                                        <div class="employee-name">{{ employee.employeeName }}</div>
+                                        <div class="employee-name">{{ employee.fullName }}</div>
                                         <div class="employee-code">{{ employee.employeeCode.toUpperCase() }}</div>
                                     </div>
                                 </td>
                                 <td>{{ employee.gender }}</td>
                                 <td>{{ employee.birthDate | date:"MMM dd, YYY"}} </td>
-                                <td>{{ employee.maritalStatus }}</td>
+                                <td>{{ employee.martialStatus }}</td>
                                 <td>{{ employee.employmentType }}</td>
                                 <td>{{ employee.employmentDate | date:"MMM dd, YYY" }}</td>
                                 <td>{{ employee.employmentStatus }}</td>

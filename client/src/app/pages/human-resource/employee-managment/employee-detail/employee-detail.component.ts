@@ -8,6 +8,8 @@ import { UpdateEmployeeComponent } from '../update-employee/update-employee.comp
 import { TerminateEmployeeComponent } from '../employee-termination/terminate-employee/terminate-employee.component';
 import { UserService } from 'src/app/services/user.service';
 import { ConfirmEventType, ConfirmationService, MessageService } from 'primeng/api';
+import { RehireEmployeeComponent } from './rehire-employee/rehire-employee.component';
+import { EmployeeSupervisorsDto } from 'src/app/model/HRM/IEmployeeSupervisorDto';
 
 @Component({
   selector: 'app-employee-detail',
@@ -18,9 +20,12 @@ export class EmployeeDetailComponent implements OnInit {
 
   employeeId!: string;
   employee!: EmployeeGetDto
+  supervisor!: EmployeeSupervisorsDto;
+
   ngOnInit(): void {
     this.employeeId = this.router.snapshot.paramMap.get('employeeId')!
     this.getEmployee()
+    this.getSupervisorsByEmployee();
   }
 
   constructor(
@@ -34,13 +39,21 @@ export class EmployeeDetailComponent implements OnInit {
     private commonService: CommonService) { }
 
   getEmployee() {
-
     this.hrmService.getEmployee(this.employeeId).subscribe({
       next: (res) => {
         this.employee = res
       }
-    })
+    });
   }
+
+getSupervisorsByEmployee(){
+  this.hrmService.getSupervisorsByEmployee(this.employeeId).subscribe({
+    next: (res) => {
+      this.supervisor = res
+    }
+  });
+}
+
   getImagePath(url: string) {
 
     return this.commonService.createImgPath(url)
@@ -72,13 +85,21 @@ export class EmployeeDetailComponent implements OnInit {
     modalRef.componentInstance.empId = empId
 
     modalRef.result.then (()=>{
+      this.getEmployee();
+    });
+  }
 
-      this.getEmployee()
-    })
+  rehireEmployee(empId:string){
+    let modalRef = this.modalService.open(RehireEmployeeComponent, { size: 'lg', backdrop: 'static' })
+    modalRef.componentInstance.empId = empId
+    modalRef.result.then (()=>{
+      this.getEmployee();
+    });
   }
 
   roleMatch(value: string[]) {
-    return this.userService.roleMatch(value)
+    let newReturn = this.userService.roleMatch(value)
+    return newReturn
   }
 
   approveEmployee(){

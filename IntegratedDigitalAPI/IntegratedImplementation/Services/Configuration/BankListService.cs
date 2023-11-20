@@ -66,7 +66,7 @@ namespace IntegratedImplementation.Services.Configuration
         public async Task<ResponseMessage> UpdateBank(UpdateBankDto updateBank)
         {
             var currentBank = await _dbContext.BankLists.FirstOrDefaultAsync(x => x.Id == updateBank.Id);
-            if (currentBank != null)
+            if (currentBank == null)
                 return new ResponseMessage { Success = false, Message = "Could not find Bank" };
 
             var bankExists = await _dbContext.BankLists.AnyAsync(x => x.BankName == updateBank.BankName && x.Id != currentBank.Id);

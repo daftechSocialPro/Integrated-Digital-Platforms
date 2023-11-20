@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { EmployeeGetDto } from 'src/app/model/HRM/IEmployeeDto';
+import {  EmployeeListDto } from 'src/app/model/HRM/IEmployeeDto';
 import { HrmService } from 'src/app/services/hrm.service';
 import { AddEmployeeComponent } from './add-employee/add-employee.component';
 import { Router } from '@angular/router';
@@ -14,7 +14,7 @@ import { Table } from 'primeng/table';
 })
 export class EmployeeManagmentComponent implements OnInit {
 
-  employees!: EmployeeGetDto[]
+  employees!: EmployeeListDto[]
   ngOnInit(): void {
 
     this.getEmployees()

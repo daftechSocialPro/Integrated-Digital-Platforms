@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 import { DepartmentGetDto, DepartmentPostDto } from '../model/HRM/IDepartmentDto';
 import { ResponseMessage } from '../model/ResponseMessage.Model';
 import { PositionGetDto, PositionPostDto } from '../model/HRM/IPositionDto';
-import { EmployeeEducationGetDto, EmployeeEducationPostDto, EmployeeFamilyGetDto, EmployeeFamilyPostDto, EmployeeFileGetDto, EmployeeFilePostDto, EmployeeGetDto, EmployeeHistoryDto, EmployeeHistoryPostDto, EmployeePostDto, EmployeeSalaryGetDto, EmployeeSalryPostDto, EmployeeSuertyGetDto, VolunterGetDto, VolunterPostDto } from '../model/HRM/IEmployeeDto';
+import { EmployeeEducationGetDto, EmployeeEducationPostDto, EmployeeFamilyGetDto, EmployeeFamilyPostDto, EmployeeFileGetDto, EmployeeFilePostDto, EmployeeGetDto, EmployeeHistoryDto, EmployeeHistoryPostDto, EmployeeListDto, EmployeePostDto, EmployeeSalaryGetDto, EmployeeSalryPostDto, EmployeeSuertyGetDto, VolunterGetDto, VolunterPostDto } from '../model/HRM/IEmployeeDto';
 import { SelectList } from '../model/common';
 import { AppliedLeavesGetDto, LeaveBalanceGetDto, LeaveBalancePostDto, LeavePlanSettingGetDto, LeavePlanSettingPostDto, LeavePlanSettingUpdateDto, LeaveRequestPostDto, LeaveTypeGetDto, LeaveTypePostDto } from '../model/HRM/ILeaveDto';
 import { HrmSettingDto } from '../model/HRM/IHrmSettingDto';
@@ -21,6 +21,7 @@ import { AddDisciplinaryCaseDto, ApproveDisciplinaryCase, DisciplinaryCaseListDt
 import { ContractLetterDto } from '../model/PrintOuts/IContractLetter.Model';
 import { AddBenefitListDto, BenefitListDto } from '../model/HRM/IBenefitListDto';
 import { AddEmployeeBenefitDto, EmployeeBenefitListDto } from '../model/HRM/IEmployeeBenefitDto';
+import { RehireEmployeeDto } from '../model/HRM/IRehireEmployeeDto';
 
 export interface toastPayload {
     message: string;
@@ -138,7 +139,7 @@ export class HrmService {
     // employees 
 
     getEmployees() {
-        return this.http.get<EmployeeGetDto[]>(this.baseUrl + "/Employee/GetEmployees")
+        return this.http.get<EmployeeListDto[]>(this.baseUrl + "/Employee/GetEmployees")
     }
     
     approveEmployee(employeeId : string ){
@@ -164,7 +165,6 @@ export class HrmService {
     }
     getEmployee(employeeId: string) {
         return this.http.get<EmployeeGetDto>(this.baseUrl + "/Employee/GetEmployee?employeeId=" + employeeId)
-
     }
     // employee History 
     getEmployeeHistory(employeeId: string) {
@@ -384,6 +384,10 @@ export class HrmService {
 
     }
 
+    rehireEmployee(rehirePost: RehireEmployeeDto) {
+        return this.http.post<ResponseMessage>(this.baseUrl + `/EmployementDetail/RehireEmployee`, rehirePost)
+    }
+
     /// Employee Supervisors
     getEmployeeSupervisors() {
         return this.http.get<EmployeeSupervisorsDto[]>(this.baseUrl + "/EmployementDetail/GetEmployeeSupervisors")
@@ -391,6 +395,10 @@ export class HrmService {
 
     getToBeSupervisedEmployees() {
         return this.http.get<SelectList[]>(this.baseUrl + "/EmployementDetail/GetToBeSupervisedEmployees")
+    }
+
+    getSupervisorsByEmployee(employeeId: string) {
+        return this.http.get<EmployeeSupervisorsDto>(this.baseUrl + "/EmployementDetail/GetSupervisorsByEmployee?employeeId=" + employeeId)
     }
 
     assignSupervisor(assignSupervisor: AssignSupervisorDto) {

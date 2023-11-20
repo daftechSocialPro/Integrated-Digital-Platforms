@@ -20,7 +20,7 @@ namespace IntegratedDigitalAPI.Controllers.HRM
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(EmployeeGetDto), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(EmployeeListDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetEmployees()
         {
             return Ok(await _employeeService.GetEmployees());
