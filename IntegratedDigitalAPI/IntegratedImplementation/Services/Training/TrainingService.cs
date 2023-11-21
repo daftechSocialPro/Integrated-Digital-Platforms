@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Implementation.Helper;
+using IntegratedImplementation.DTOS.Configuration;
 using IntegratedImplementation.DTOS.Training;
 using IntegratedImplementation.Helper;
 using IntegratedImplementation.Interfaces.Configuration;
@@ -78,6 +80,29 @@ namespace IntegratedImplementation.Services.Training
 
             return results;
 
+        }
+
+        public async Task<List<TrainingGetDto>>GetTrainingList()
+        {
+            var results = await _dbContext.ActivityTrainings
+                 .Include(x => x.Training)
+                 .Include(x => x.Activity).Select(x => new TrainingGetDto
+                 {
+                     Id = x.TrainingId,
+                     ActivityNumber = x.Activity.ActivityNumber,
+                     Title = x.Training.Title,
+                     NameofOrganizaton = x.Training.NameofOrganizaton,
+                     TypeofOrganization = x.Training.TypeofOrganization,
+                     CourseVenue = x.Training.CourseVenue,
+                     StartDate = x.Training.StartDate,
+                     EndDate = x.Training.EndDate,
+                     Project = x.Training.Project,
+                     ReportStatus = x.Training.ReportStatus.ToString(),
+                     TraineeListStatus = x.Training.TraineeListStatus.ToString()
+
+                 }).ToListAsync();
+
+            return results;
         }
 
         public async Task<ResponseMessage> AddTraining(TrainingPostDto trainingPostDto)
@@ -261,21 +286,52 @@ namespace IntegratedImplementation.Services.Training
         }
 
 
-       public async Task<ResponseMessage> SendEmailTrainer(TrainerEmailDto trainerEmail)
+       public async Task<ResponseMessage> SendEmailTrainer(TrainerEmailDto trainerEmail,string type )
         {
             try
             {
+                var url = type == "report" ? "http://localhost:4200/trainee-form/training-report-form/" : "http://localhost:4200/trainee-form/";
 
                 var email = new EmailMetadata
                   (trainerEmail.Email, "Trainees List",
-                      $"Dear {trainerEmail.FullName},\n\n by clicking the link below you can add the trainees http://localhost:4200/trainee-form/{trainerEmail.TrainingId}.\n\nSincerely,\nEMIA");
+                      $"Dear {trainerEmail.FullName},\n\n by clicking the link below you can add the trainees {url}{trainerEmail.TrainingId}.\n\nSincerely,\nEMIA");
                var result =  await _emailService.Send(email);
 
-                return new ResponseMessage
+                if (result.Success)
                 {
-                    Success = true,
-                    Message = $"Email send to {trainerEmail.FullName} Sucessfully !!!"
-                };
+
+
+                    var training = await _dbContext.Trainings.FindAsync(trainerEmail.TrainingId);
+
+                    if (training != null)
+                    {
+
+                        if (type == "report")
+                        {
+                            training.ReportStatus = ReportStatus.SENT;
+                        }
+                        else
+                        {
+                            training.TraineeListStatus = TraineeListStatus.SENT;
+                        }
+
+                        await _dbContext.SaveChangesAsync();
+                    }
+
+
+                    return new ResponseMessage
+                    {
+                        Success = true,
+                        Message = $"Email send to {trainerEmail.FullName} Sucessfully !!!"
+                    };
+                }else
+                {
+                    return new ResponseMessage
+                    {
+                        Success = false,
+                        Message = result.Message
+                    };
+                }
 
             }catch  (Exception ex)
             {
@@ -290,5 +346,145 @@ namespace IntegratedImplementation.Services.Training
 
 
         }
+
+
+        //training report 
+
+       public async Task<TrainingReportGetDto> GetTrainingReport(Guid TainingId)
+        {
+
+            var result = await _dbContext.TrainingReports.Where(x=>x.TrainingId==TainingId)
+                .AsNoTracking().
+                ProjectTo<TrainingReportGetDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
+
+            return result;
+
+        }
+        public async Task<ResponseMessage> AddTrainingReport(TrainingReportPostDto trainingPostDto)
+        {
+            try
+            {
+                var trainingReport =await  _dbContext.TrainingReports.Where(x => x.TrainingId == trainingPostDto.TrainingId).FirstOrDefaultAsync();
+
+                if (trainingReport == null)
+                {
+                    var TrainingPost = new TrainingReport
+                    {
+                        Id = Guid.NewGuid(),
+                        TrainingId = trainingPostDto.TrainingId,
+                        Objective = trainingPostDto.Objective,
+                        Contribution = trainingPostDto.Contribution,
+                        TraineesDescription = trainingPostDto.TraineesDescription,
+                        TopicsCoverd = trainingPostDto.TopicsCoverd,
+                        Challenges = trainingPostDto.Challenges,
+                        LessonsLearned = trainingPostDto.LessonsLearned,
+                        Summary = trainingPostDto.Summary,
+                        PrePostSummary = trainingPostDto.PrePostSummary,
+                        CreatedDate = DateTime.Now,
+                        CreatedById = "18eef146-fc48-4074-94e7-e5dd4a3be236",
+                    };
+
+                    await _dbContext.TrainingReports.AddAsync(TrainingPost);
+                    await _dbContext.SaveChangesAsync();
+
+
+
+                   
+
+                    var training = _dbContext.Trainings.Find(trainingPostDto.TrainingId);
+
+                    if (training != null)
+                    {
+                        training.ReportStatus = Enum.Parse<ReportStatus>(trainingPostDto.ReportStatus);
+
+                        await _dbContext.SaveChangesAsync();
+
+
+                    }
+
+                    return new ResponseMessage
+                    {
+                        Success = true,
+                        Message = "Training Report Successfully Added !!!"
+
+                    };
+                }
+                else
+                {
+
+                    var trainingReport2 = await _dbContext.TrainingReports.FindAsync(trainingPostDto.Id);
+                    trainingReport2.Challenges = trainingPostDto.Challenges;
+                    trainingReport2.Objective = trainingPostDto.Objective;
+                    trainingReport2.Contribution = trainingPostDto.Contribution;
+                    trainingReport2.TraineesDescription = trainingPostDto.TraineesDescription;
+                    trainingReport2.TopicsCoverd = trainingPostDto.TopicsCoverd;
+                    trainingReport2.LessonsLearned = trainingPostDto.LessonsLearned;
+                    trainingReport2.Summary = trainingPostDto.Summary;
+                    trainingReport2.PrePostSummary = trainingPostDto.PrePostSummary;
+                    await _dbContext.SaveChangesAsync();
+
+                    var training = _dbContext.Trainings.Find(trainingPostDto.TrainingId);
+
+                    if (training != null)
+                    {
+                        training.ReportStatus = Enum.Parse<ReportStatus>(trainingPostDto.ReportStatus);
+
+                        await _dbContext.SaveChangesAsync();
+
+
+                    }
+
+                    return new ResponseMessage
+                    {
+                        Success = true,
+                        Message = "Training Report Successfully Updated !!!"
+
+                    };
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return new ResponseMessage
+                {
+                    Success = false,
+                    Message = ex.Message
+                };
+
+            }
+
+        }
+
+
+        public async Task<ResponseMessage> ChangeTraineesStatus(string Status, Guid trainingId)
+        {
+
+
+            var training = await _dbContext.Trainings.FindAsync(trainingId);
+            if (training != null)
+            {
+
+                training.TraineeListStatus = Enum.Parse<TraineeListStatus>(Status);
+
+                await _dbContext.SaveChangesAsync();
+                return new ResponseMessage
+                {
+                    Success = true ,
+                    Message = " Successfully Submitted !!!"
+                };
+
+            }
+            else
+            {
+
+                return new ResponseMessage
+                {
+                    Success = false,
+                    Message = "training not found"
+                };
+            }
+        }
     }
+
+
 }

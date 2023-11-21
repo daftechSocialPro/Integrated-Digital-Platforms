@@ -234,6 +234,7 @@ import { EmployeeBenefitsComponent } from './pages/human-resource/employee-manag
 import { AddEmployeeBenefitComponent } from './pages/human-resource/employee-managment/employee-detail/employee-benefits/add-employee-benefit/add-employee-benefit.component';
 import { BankListComponent } from './pages/configuration/bank-list/bank-list.component';
 import { AddBankListComponent } from './pages/configuration/bank-list/add-bank-list/add-bank-list.component';
+import { TrainingDashboardComponent } from './pages/training/training-dashboard/training-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -524,7 +525,8 @@ import { AddBankListComponent } from './pages/configuration/bank-list/add-bank-l
     EmployeeBenefitsComponent,
     AddEmployeeBenefitComponent,
     BankListComponent,
-    AddBankListComponent
+    AddBankListComponent,
+    TrainingDashboardComponent
     
 
 

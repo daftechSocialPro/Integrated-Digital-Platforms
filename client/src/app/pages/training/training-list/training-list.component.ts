@@ -5,6 +5,7 @@ import { TrainingService } from 'src/app/services/training.service';
 import { AddTrainingListComponent } from '../add-training-list/add-training-list.component';
 import { TrainerListComponent } from '../trainer-list/trainer-list.component';
 import { TraineesFormComponent } from '../trainees-form/trainees-form.component';
+import { TrainingReportFormComponenT } from '../training-report-form/training-report-form.component';
 
 @Component({
   selector: 'app-training-list',
@@ -53,6 +54,12 @@ export class TrainingListComponent implements OnInit {
   }
   viewTrainees(trainingId:string,trainingTitle:string){
     let modalRef = this.modalService.open(TraineesFormComponent,{size:'xl',backdrop:'static'})
+    modalRef.componentInstance.traininggId =trainingId
+    modalRef.componentInstance.TrainingTitle = trainingTitle
+  }
+
+  viewTrainingReport(trainingId:string,trainingTitle:string){
+    let modalRef = this.modalService.open(TrainingReportFormComponenT,{size:'xl',backdrop:'static'})
     modalRef.componentInstance.traininggId =trainingId
     modalRef.componentInstance.TrainingTitle = trainingTitle
   }

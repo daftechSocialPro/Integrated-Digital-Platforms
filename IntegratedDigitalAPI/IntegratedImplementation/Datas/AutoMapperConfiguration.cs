@@ -13,6 +13,8 @@ using IntegratedInfrustructure.Model.Vacancy;
 using IntegratedImplementation.DTOS.Vacancy;
 using IntegratedInfrustructure.Model.Configuration;
 using IntegratedImplementation.DTOS.Configuration;
+using IntegratedInfrustructure.Model.Training;
+using IntegratedImplementation.DTOS.Training;
 
 namespace IntegratedImplementation.Datas
 {
@@ -107,6 +109,8 @@ namespace IntegratedImplementation.Datas
             .ForMember(x => x.Name, e => e.MapFrom(mfg => mfg.GeneralSetting.ToString()));
 
             CreateMap<ProjectFundSource, ProjectFundSourceGetDto>();
+
+            CreateMap<TrainingReport, TrainingReportGetDto>();  
 
         }
     }

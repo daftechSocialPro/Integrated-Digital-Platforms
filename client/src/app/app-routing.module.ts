@@ -43,6 +43,7 @@ import { StaffWeeklyPlanComponent } from './pages/project-managment/progress-rep
 import { WeeklyPlanPerformanceComponent } from './pages/project-managment/progress-report/weekly-plan-performance/weekly-plan-performance.component';
 import { TraineesFormComponent } from './pages/training/trainees-form/trainees-form.component';
 import { TrainingReportFormComponenT } from './pages/training/training-report-form/training-report-form.component';
+import { TrainingDashboardComponent } from './pages/training/training-dashboard/training-dashboard.component';
 
 
 
@@ -76,6 +77,8 @@ const routes: Routes = [
 
 
   { path: 'pm/projectTeam', canActivate: [AuthGuard], component: ComittesComponent },
+  { path: 'pm/training-dashboard', canActivate: [AuthGuard], component: TrainingDashboardComponent },
+ 
 
   { path: 'HRM/employeeMangment', canActivate: [AuthGuard], component: EmployeeManagmentComponent, data: { permittedRoles: ['EMPLOYEE-MANAGEMENT', 'USER-MANAGER'] } },
   { path: 'HRM/volunters', canActivate: [AuthGuard], component: VolunterComponent, data: { permittedRoles: ['EMPLOYEE-MANAGEMENT', 'USER-MANAGER'] } },
@@ -100,8 +103,8 @@ const routes: Routes = [
 //trainee
 
 {path:'trainee-form/:trainingId',component:TraineesFormComponent},
-{path:'trainee-form/training-report-form/:trainingId',component:TrainingReportFormComponenT}
-  { path: 'printout', loadChildren: () => import('./pages/print-out/print-out.module').then(m => m.PrintOutModule) }
+{path:'trainee-form/training-report-form/:trainingId',component:TrainingReportFormComponenT},
+{ path: 'printout', loadChildren: () => import('./pages/print-out/print-out.module').then(m => m.PrintOutModule) }
 ];
 
 @NgModule({

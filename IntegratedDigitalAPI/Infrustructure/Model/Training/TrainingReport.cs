@@ -12,6 +12,8 @@ namespace IntegratedInfrustructure.Model.Training
         public Guid TrainingId { get; set; }
         public Training Training { get; set; }
 
+        public string Objective { get; set; }
+
         public string Contribution { get; set; }
 
         public string TraineesDescription { get; set; }
@@ -23,6 +25,8 @@ namespace IntegratedInfrustructure.Model.Training
         public string LessonsLearned { get; set; }
 
         public string Summary { get; set; }
+
+        public string PrePostSummary { get; set; }
 
     }
 }
