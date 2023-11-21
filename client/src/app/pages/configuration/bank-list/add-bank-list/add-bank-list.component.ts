@@ -21,15 +21,17 @@ export class AddBankListComponent  implements OnInit {
   totDigit: number = 0;
 
   ngOnInit(): void {
+    debugger;
     this.user = this.userService.getCurrentUser();
     if (this.bank != null) {
+      this.totDigit = this.bank.bankDigitNumber;
       this.bankFormGroup = this.formBuilder.group({
         bankName: [this.bank.bankName, Validators.required],
         amharicName: [this.bank.amharicName],
         address: [this.bank.address],
-        amharicAdress: [this.bank.amharicAddress],
+        amharicAddress: [this.bank.amharicAddress],
         bankDigitNumber: [this.bank.bankDigitNumber, Validators.required],
-        accountNumber: [this.bank.accountNumber, Validators.required , Validators.minLength(this.totDigit), Validators.maxLength(this.totDigit)],
+        accountNumber: [this.bank.accountNumber, Validators.required ],
       });
     }
     else {
@@ -37,8 +39,8 @@ export class AddBankListComponent  implements OnInit {
         bankName: ['', Validators.required],
         amharicName: [''],
         address: [''],
-        amharicAdress: [''],
-        bankDigitNumber: [null, Validators.required],
+        amharicAddress: [''],
+        bankDigitNumber: [null, Validators.required,,Validators.maxLength(this.totDigit), Validators.minLength(this.totDigit)],
         accountNumber: [null, Validators.required],
       });
     }
@@ -59,7 +61,7 @@ export class AddBankListComponent  implements OnInit {
 
     if (this.bankFormGroup.valid) {
       var bank: AddBankDto = {
-        bankName: this.bankFormGroup.value.name,
+        bankName: this.bankFormGroup.value.bankName,
         amharicName: this.bankFormGroup.value.amharicName,
         address: this.bankFormGroup.value.address,
         amharicAddress: this.bankFormGroup.value.amharicAddress,
@@ -67,7 +69,6 @@ export class AddBankListComponent  implements OnInit {
         bankDigitNumber: this.bankFormGroup.value.bankDigitNumber,
         createdById: this.user.userId
       }
-
       if (this.bank != null) {
         bank.id = this.bank.id;
         this.configService.updateBank(bank).subscribe({
@@ -105,6 +106,6 @@ export class AddBankListComponent  implements OnInit {
   }
 
   OnDigitChange(value: any){
-    this.totDigit = value;
+    this.totDigit = value.value;
   }
 }

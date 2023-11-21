@@ -20,8 +20,11 @@ namespace IntegratedImplementation.Interfaces.HRM
         public Task<ResponseMessage> TerminateEmployee(Guid employementDetailId, string remark, bool blacListed);
         public Task<List<TerminatedEmployeesDto>> TerminatedEmployeesList();
 
+        public Task<ResponseMessage> RehireEmployee(RehireEmployeeDto rehireEmployee);
+
         public Task<List<EmployeeSupervisorsDto>> GetEmployeeSupervisors();
         public Task<List<SelectListDto>> GetToBeSupervisedEmployees();
+        public Task<EmployeeSupervisorsDto> GetSupervisorsByEmployee(Guid employeeId);
         public Task<ResponseMessage> AssignSupervisor(AssignSupervisorDto assignSupervisor);
         public Task<ResponseMessage> DeleteSupervisee(Guid employeeId);
 

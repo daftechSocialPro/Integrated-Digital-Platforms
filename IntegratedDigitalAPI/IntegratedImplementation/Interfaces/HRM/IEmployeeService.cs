@@ -13,7 +13,7 @@ namespace IntegratedImplementation.Interfaces.HRM
     public interface IEmployeeService
     {
 
-        Task<List<EmployeeGetDto>> GetEmployees();
+        Task<List<EmployeeListDto>> GetEmployees();
         Task<ResponseMessage> AddEmployee(EmployeePostDto addEmployee);
         Task<ResponseMessage> UpdateEmployee(EmployeePostDto addEmployee);
         Task<ResponseMessage> UpdateEmployeeData(EmployeeUpdateDto updateEmployee);

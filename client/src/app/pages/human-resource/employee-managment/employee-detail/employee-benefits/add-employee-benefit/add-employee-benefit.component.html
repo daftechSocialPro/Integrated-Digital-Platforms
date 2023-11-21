@@ -12,22 +12,20 @@
                     <form class="" [formGroup]="employeeBenefitForm" (ngSubmit)="submit()">
                         <div class="modal-body">
                             <div class="row g-3">
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-floating mb-3">
                                         <p-dropdown [options]="benefitsDropDown" formControlName="benefitListId"
-                                            optionLabel="name" optionValue="Id" [filter]="true" filterBy="name"
+                                            optionLabel="name" optionValue="id" [filter]="true" filterBy="name"
                                             [showClear]="true" placeholder="Select Benefit">
                                         </p-dropdown>
-                                        <label for="benefitListId">Benefit</label>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-floating mb-3">
                                         <p-dropdown [options]="typeOfBenefitList" formControlName="typeOfBenefit"
                                             optionLabel="name" optionValue="value" [showClear]="true"
                                             placeholder="Select Type of Benefit">
                                         </p-dropdown>
-                                        <label for="typeOfBenefit">Type of Benefit</label>
                                     </div>
                                 </div>
 
@@ -43,9 +41,8 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-secondary"
                                 (click)="closeModal()">Close</button>
-                            <button type="button" type="submit" [disabled]="!employeeBenefitForm.valid"
-                                class="btn btn-outline-primary">Save
-                                changes</button>
+                            <button type="button" type="submit" 
+                                class="btn btn-outline-primary">Save  changes</button>
                         </div>
                     </form>
                 </div>

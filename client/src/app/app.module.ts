@@ -116,6 +116,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { AutocompleteComponent } from './components/autocomplete/autocomplete.component';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { TimelineModule } from 'primeng/timeline';
+
 
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { UpdateRolesComponent } from './pages/configuration/user-management/update-roles/update-roles.component';
@@ -217,7 +219,6 @@ import { ActivityLocationComponent } from './pages/project-managment/progress-re
 import { ActivityMapComponent } from './pages/project-managment/progress-report/activity-location/activity-map/activity-map.component';
 import { StaffWeeklyPlanComponent } from './pages/project-managment/progress-report/staff-weekly-plan/staff-weekly-plan.component';
 import { WeeklyPlanPerformanceComponent } from './pages/project-managment/progress-report/weekly-plan-performance/weekly-plan-performance.component';
-import { ContractAgreementComponent } from './pages/print-out/HRM/contract-agreement/contract-agreement.component';
 import { ReportingPeriodComponent } from './pages/project-managment/pm-configuration/reporting-period/reporting-period.component';
 import { BudgetYearComponent } from './pages/project-managment/pm-configuration/budget-year/budget-year.component';
 import { AddReportPeriodComponent } from './pages/project-managment/pm-configuration/reporting-period/add-report-period/add-report-period.component';
@@ -235,6 +236,9 @@ import { AddEmployeeBenefitComponent } from './pages/human-resource/employee-man
 import { BankListComponent } from './pages/configuration/bank-list/bank-list.component';
 import { AddBankListComponent } from './pages/configuration/bank-list/add-bank-list/add-bank-list.component';
 import { TrainingDashboardComponent } from './pages/training/training-dashboard/training-dashboard.component';
+import { InputMaskModule } from 'primeng/inputmask';
+import { DatePipe } from '@angular/common';
+import { RehireEmployeeComponent } from './pages/human-resource/employee-managment/employee-detail/rehire-employee/rehire-employee.component';
 
 @NgModule({
   declarations: [
@@ -526,11 +530,8 @@ import { TrainingDashboardComponent } from './pages/training/training-dashboard/
     AddEmployeeBenefitComponent,
     BankListComponent,
     AddBankListComponent,
-    TrainingDashboardComponent
-    
-
-
-
+    TrainingDashboardComponent,
+    RehireEmployeeComponent
     //  AddMeasurementComponent,
     //  UpdateMeasurmentComponent
   ],
@@ -560,6 +561,8 @@ import { TrainingDashboardComponent } from './pages/training/training-dashboard/
     InputSwitchModule,
     ConfirmPopupModule,
     ListboxModule,
+    InputMaskModule,
+    TimelineModule ,
     ToastrModule.forRoot({
       preventDuplicates: true,
     })
@@ -572,7 +575,8 @@ import { TrainingDashboardComponent } from './pages/training/training-dashboard/
     },
     ConfirmationService,
     MessageService,
-    DialogService
+    DialogService,
+    DatePipe
 
   ],
   bootstrap: [AppComponent]

@@ -33,7 +33,6 @@ namespace IntegratedImplementation.DTOS.HRM
         public DateTime EmploymentDate { get; set; }
         public DateTime? TerminatedDate { get; set; }
         public bool IsPension { get; set; }
-        public string EmploymentStatus { get; set; } = null!;
         public string? PensionCode { get; set; } = null!;
         public string? TinNumber { get; set; } = null!;
         public string? BankAccountNo { get; set; } = null!;
@@ -46,6 +45,22 @@ namespace IntegratedImplementation.DTOS.HRM
         public Guid BankId { get; set; }
     }
 
+    public class EmployeeListDto
+    {
+        public Guid Id { get; set; }
+        public string EmployeeCode { get; set; } = null!;
+        public string FullName { get; set; } = null!;
+        public string? ImagePath { get; set; }
+        public string EmploymentType { get; set; } = null!;
+        public string Gender { get; set; } = null!;
+        public DateTime BirthDate { get; set; }
+        public string MartialStatus { get; set; } = null!;
+        public DateTime EmploymentDate { get; set; }
+        public string EmploymentStatus { get; set; } = null!;
+
+    }
+
+
     public class EmployeeGetDto
     {
         public Guid Id { get; set; }
@@ -54,9 +69,13 @@ namespace IntegratedImplementation.DTOS.HRM
         public string FirstName { get; set; } = null!;
         public string MiddleName { get; set; } = null!;
         public string LastName { get; set; } = null!;
-        public string AmharicName { get; set; } = null!;
+        public string AmharicFirstName { get; set; } = null!;
+        public string AmharicMiddleName { get; set; } = null!;
+        public string AmharicLastName { get; set; } = null!;
         public string PhoneNumber { get; set; } = null!;
         public string Email { get; set; } = null!;
+        public Guid DepartmentId { get; set; }
+        public Guid PositionId { get; set; }
         public string DepartmentName { get; set; } = null!;
         public string PostionName { get; set; } = null!;
         public string Nationality { get; set; } = null!;
@@ -83,6 +102,7 @@ namespace IntegratedImplementation.DTOS.HRM
         public string? BankAccountNo { get; set; } = null!;
         public bool ExistingEmployee { get; set; }
         public bool IsApproved { get; set; }
+        public Guid BankId { get; set; }
     }
 
     public record EmployeeUpdateDto
@@ -116,12 +136,13 @@ namespace IntegratedImplementation.DTOS.HRM
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 
-        public string SourceOfSalary { get; set; }
+        public string SourceOfSalary { get; set; } = null!;
 
         public Guid EmployeeId { get; set; }
 
-        public string Remark { get; set; }
-        public List<EmployeeSalaryGetDto> EmployeeSalaries { get; set; }
+        public string Remark { get; set; } = null!;
+        public string RowStatus { get; set; } = null!;
+        public List<EmployeeSalaryGetDto> EmployeeSalaries { get; set; } = null!;
 
     }
 

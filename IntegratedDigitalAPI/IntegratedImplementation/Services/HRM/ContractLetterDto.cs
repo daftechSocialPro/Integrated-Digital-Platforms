@@ -22,10 +22,15 @@ namespace IntegratedImplementation.Services.HRM
         public string ReportingTo { get; set; } = null!;
         public double GrossSalary { get; set; }
         public string GrossSalaryInWord { get; set; } = null!;
-        public double TransportAllowance { get; set; }
-        public string TransportAllowanceInWord { get; set; } = null!;
-        public double MobileAllowance { get; set; }
-        public string MobileAllowanceInWord { get; set; } = null!;
+        public List<ContractAllowances> AllowanceInWor { get; set; } = null!;
        
+    }
+
+
+    public class ContractAllowances
+    {
+        public string AllowanceName { get; set; } = null!;
+        public double Allowance { get; set; }
+        public string AllowanceInWord { get; set; } = null!;
     }
 }

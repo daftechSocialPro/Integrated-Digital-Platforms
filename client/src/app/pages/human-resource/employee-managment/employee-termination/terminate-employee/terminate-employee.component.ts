@@ -50,10 +50,8 @@ export class TerminateEmployeeComponent implements OnInit {
         
         employementDetailId : this.empId,
         remark : this.terminateForm.value.remark,
-        blacListed:this.terminateForm.value.blacListed
-
+        blacListed: Boolean(this.terminateForm.value.blacListed)
       }
-      console.log(terminatePost)
 
       this.hrmService.terminateRequest(terminatePost).subscribe({
         next:(res)=>{

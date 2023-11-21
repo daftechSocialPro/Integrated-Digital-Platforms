@@ -40,6 +40,7 @@ export class AddLeaveRequestComponent implements OnInit {
     private formBuilder: FormBuilder,
     private hrmService: HrmService,
     private messageService: MessageService,
+    private dropDownService: DropDownService,
     private userService: UserService) {
 
     this.LeaveRequestForm = this.formBuilder.group({
@@ -60,13 +61,9 @@ export class AddLeaveRequestComponent implements OnInit {
   }
   getEmployees() {
 
-    this.hrmService.getEmployees().subscribe({
+    this.dropDownService.GetEmployeeDropDown().subscribe({
       next: (res) => {
-        this.employeeList = res.map(item => ({
-          id: item.id,
-          name: `${item.firstName} ${item.middleName}`
-        }));
-
+        this.employeeList = res
       }
       , error: (err) => {
         console.error(err)

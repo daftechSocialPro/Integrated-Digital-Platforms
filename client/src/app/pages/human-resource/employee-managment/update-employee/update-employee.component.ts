@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -30,6 +31,9 @@ export class UpdateEmployeeComponent implements OnInit {
   regions!: SelectList[];
   zones ! : SelectList[];
   bankLists!: BankSelectList[];
+  maxBirthDate: Date = new Date();
+  maxHireDate: Date = new Date();
+  bankDigit!: number ;
 
   fileGH! : File;
 
@@ -41,17 +45,18 @@ export class UpdateEmployeeComponent implements OnInit {
     private hrmService: HrmService,
     private configurationService: ConfigurationService,
     private commonService : CommonService,
-    private dropService: DropDownService) {
+    private dropService: DropDownService,
+    private datePipe: DatePipe) {
 
    
   }
 
   ngOnInit(): void {
-
-    console.log(this.selectedEmployee.birthDate)
+    this.maxBirthDate.setFullYear(this.maxBirthDate.getFullYear() - 18);
     this.user = this.userService.getCurrentUser();
-
+    console.log(this.selectedEmployee);
     this.getCountries();
+    this.getBankList();
     this.EmployeeForm = this.formBuilder.group({
 
       firstName: [this.selectedEmployee.firstName, Validators.required],
@@ -63,12 +68,12 @@ export class UpdateEmployeeComponent implements OnInit {
       email: [this.selectedEmployee.email, Validators.required],
       phoneNumber: [this.selectedEmployee.phoneNumber, Validators.required],
       gender: [this.selectedEmployee.gender, Validators.required],
-      birthDate: [this.selectedEmployee.birthDate.toString().split(' ')[0], Validators.required],
+      birthDate: [new Date(this.selectedEmployee.birthDate), Validators.required],
       maritalStatus: [this.selectedEmployee.maritalStatus, Validators.required],
       employmentType: [this.selectedEmployee.employmentType, Validators.required],
       paymentType: [this.selectedEmployee.paymentType, Validators.required],
-      employmentDate: [this.selectedEmployee.employmentDate.toString().split('T')[0], Validators.required],
-      ContractEndDate: [this.selectedEmployee.contractEndDate!.toString().split('T')[0]],
+      employmentDate: [new Date(this.selectedEmployee.employmentDate), Validators.required],
+      ContractEndDate: [this.selectedEmployee.contractEndDate],
       pensionCode: [this.selectedEmployee.pensionCode],
       tinNumber: [this.selectedEmployee.tinNumber],
       bankAccountNo: [this.selectedEmployee.bankAccountNo],
@@ -82,6 +87,9 @@ export class UpdateEmployeeComponent implements OnInit {
     this.getZones(this.selectedEmployee.regionId)
   }
 
+ 
+
+ 
 
   getCountries() {
 
@@ -131,6 +139,17 @@ export class UpdateEmployeeComponent implements OnInit {
     myReader.readAsDataURL(file);
   }
 
+
+  changeDateTime(date: any){
+       const changableDate = date ? new Date(date as string) : null;
+     
+       if (changableDate != null) {
+        const convertedDate = this.datePipe.transform(changableDate, 'yyyy-MM-dd');
+        return convertedDate as unknown as Date;
+      }
+      return null;
+  }
+
   submit() {
     
     if (this.EmployeeForm.valid) {
@@ -141,28 +160,28 @@ export class UpdateEmployeeComponent implements OnInit {
         middleName: this.EmployeeForm.value.middleName,
         lastName: this.EmployeeForm.value.lastName,
         amharicFirstName: this.EmployeeForm.value.amharicfirstName,
-        amharicMiddleName: this.EmployeeForm.value.middleName,
-        amharicLastName: this.EmployeeForm.value.lastName,
+        amharicMiddleName: this.EmployeeForm.value.amharicmiddleName,
+        amharicLastName: this.EmployeeForm.value.amhariclastName,
         phoneNumber: this.EmployeeForm.value.phoneNumber,
         email: this.EmployeeForm.value.email,
         gender: this.EmployeeForm.value.gender,
-        birthDate: this.EmployeeForm.value.birthDate,
+        birthDate:this.changeDateTime(this.EmployeeForm.value.birthDate),
         maritalStatus: this.EmployeeForm.value.maritalStatus,
         employmentType: this.EmployeeForm.value.employmentType,
         employmentStatus: this.EmployeeForm.value.employmentStatus,
-      
         paymentType: this.EmployeeForm.value.paymentType,
-        employmentDate: this.EmployeeForm.value.employmentDate,
-        ContractEndDate: this.EmployeeForm.value.ContractEndDate,
+        employmentDate: this.changeDateTime(this.EmployeeForm.value.employmentDate),
         pensionCode: this.EmployeeForm.value.pensionCode.toString(),
         tinNumber: this.EmployeeForm.value.tinNumber.toString(),
         bankAccountNo: this.EmployeeForm.value.bankAccountNo.toString(),
-              
         zoneId: this.EmployeeForm.value.zoneId,
         woreda: this.EmployeeForm.value.woreda,
         imagePath: this.fileGH,
         createdById: this.user.userId,
         bankId: this.EmployeeForm.value.bankId.toString()
+      }
+      if(this.EmployeeForm.value.ContractEndDate){
+        employeePost.ContractEndDate = this.changeDateTime(this.EmployeeForm.value.ContractEndDate);
       }
 
       var formData = new FormData();
@@ -214,6 +233,10 @@ export class UpdateEmployeeComponent implements OnInit {
       return 'assets/img/company.jpg'
     }
   }
+
+  changeBankDigit(digitNumber: any){
+    this.bankDigit =  Number(this.bankLists.find(X => X.id == digitNumber.value)?.bankDigit);
+ }
 
 }
 

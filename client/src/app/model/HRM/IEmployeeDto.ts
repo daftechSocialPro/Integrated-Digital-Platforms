@@ -1,3 +1,17 @@
+export interface EmployeeListDto {
+     id: string;
+     imagePath: string;
+     fullName: string;
+     employeeCode: string;
+     gender: string;
+     martialStatus: string;
+     birthDate:Date;
+     employmentDate: Date;
+     employmentType: string;
+     employmentStatus: string;
+}
+
+
 export interface EmployeePostDto {
      id?: string;
      firstName: string;
@@ -7,12 +21,12 @@ export interface EmployeePostDto {
      amharicMiddleName: string;
      amharicLastName: string;
      gender: string;
-     birthDate: Date;
+     birthDate: Date | null;
      maritalStatus: Number;
      imagePath: File | Blob;
      employmentType: string;
      paymentType: string;
-     employmentDate: Date;
+     employmentDate: Date| null;
      salary?: Number,
      isPension?: boolean
      employmentStatus: string;
@@ -20,9 +34,7 @@ export interface EmployeePostDto {
      tinNumber?: string;
      bankAccountNo?: string;
      phoneNumber: string;
-     departmentId?: string;
-     positionId?: string;
-     ContractEndDate?: Date
+     ContractEndDate?: Date | null;
      createdById: string;
      email: string;
      zoneId: string;
@@ -58,6 +70,8 @@ export interface EmployeeGetDto {
      tinNumber?: string;
      bankAccountNo?: string;
      email: string;
+     departmentId?: string;
+     positionId?: string;
      departmentName: string;
      postionName: string;
      countryId: string
@@ -68,9 +82,9 @@ export interface EmployeeGetDto {
      zoneName: string
      woreda: string;
      nationalityId: string;
-     isApproved:boolean;
+     isApproved:boolean | false;
      bankId: string;
-
+     salary?: Number,
 
 }
 
@@ -87,6 +101,7 @@ export interface EmployeeHistoryDto {
      positionId: string;
      remark?: string;
      sourceOfSalary: string
+     rowStatus: string;
 }
 export interface EmployeeHistoryPostDto {
 

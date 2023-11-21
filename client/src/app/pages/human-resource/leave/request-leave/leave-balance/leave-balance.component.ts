@@ -4,6 +4,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
 import { LeaveBalancePostDto } from 'src/app/model/HRM/ILeaveDto';
 import { SelectList } from 'src/app/model/common';
+import { DropDownService } from 'src/app/services/dropDown.service';
 import { HrmService } from 'src/app/services/hrm.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -27,6 +28,7 @@ export class LeaveBalanceComponent implements OnInit {
     private formBuilder: FormBuilder,
     private userService : UserService,
     private hrmService : HrmService,
+    private dropDownService: DropDownService,
     private messageService : MessageService){
 
     this.LeaveBalanceForm = this.formBuilder.group({     
@@ -52,13 +54,9 @@ export class LeaveBalanceComponent implements OnInit {
   }
   getEmployees() {
 
-    this.hrmService.getEmployees().subscribe({
+    this.dropDownService.GetEmployeeDropDown().subscribe({
       next: (res) => {
-        this.employeeList = res.map(item => ({
-          id: item.id,
-          name: `${item.firstName} ${item.middleName}`
-        }));
-
+        this.employeeList = res
       }
       , error: (err) => {
         console.error(err)

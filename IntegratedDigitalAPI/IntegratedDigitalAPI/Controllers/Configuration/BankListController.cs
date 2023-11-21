@@ -28,7 +28,7 @@ namespace IntegratedDigitalAPI.Controllers.Configuration
 
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> AddBank([FromForm] AddBankDto addBank)
+        public async Task<IActionResult> AddBank([FromBody] AddBankDto addBank)
         {
             if (ModelState.IsValid)
             {
@@ -43,7 +43,7 @@ namespace IntegratedDigitalAPI.Controllers.Configuration
 
         [HttpPut]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> UpdateBank([FromForm] UpdateBankDto updateBank)
+        public async Task<IActionResult> UpdateBank([FromBody] UpdateBankDto updateBank)
         {
             if (ModelState.IsValid)
             {

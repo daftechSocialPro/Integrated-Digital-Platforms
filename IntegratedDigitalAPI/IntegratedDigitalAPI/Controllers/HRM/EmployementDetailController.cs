@@ -97,6 +97,21 @@ namespace IntegratedDigitalAPI.Controllers.HRM
             }
         }
 
+
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> RehireEmployee([FromBody] RehireEmployeeDto rehireEmp)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _employementDetailService.RehireEmployee(rehireEmp));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
         [HttpGet]
         [ProducesResponseType(typeof(EmployeeSupervisorsDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetEmployeeSupervisors()
@@ -109,6 +124,13 @@ namespace IntegratedDigitalAPI.Controllers.HRM
         public async Task<IActionResult> GetToBeSupervisedEmployees()
         {
             return Ok(await _employementDetailService.GetToBeSupervisedEmployees());
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(EmployeeSupervisorsDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetSupervisorsByEmployee(Guid employeeId)
+        {
+            return Ok(await _employementDetailService.GetSupervisorsByEmployee(employeeId));
         }
 
         [HttpPost]

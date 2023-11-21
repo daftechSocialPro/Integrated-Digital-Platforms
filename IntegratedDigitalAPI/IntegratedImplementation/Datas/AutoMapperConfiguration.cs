@@ -33,11 +33,12 @@ namespace IntegratedImplementation.Datas
                .ForMember(a => a.NationalityId, e => e.MapFrom(mfg => mfg.Zone.Region.Country.Id))
                .ForMember(a => a.DepartmentName, e => e.MapFrom(mfg => mfg.EmployeeDetail.FirstOrDefault(x => x.Rowstatus == RowStatus.ACTIVE)!.Department.DepartmentName))
                .ForMember(a => a.PostionName, e => e.MapFrom(mfg => mfg.EmployeeDetail.FirstOrDefault(x => x.Rowstatus == RowStatus.ACTIVE)!.Position.PositionName))
+                .ForMember(a => a.DepartmentId, e => e.MapFrom(mfg => mfg.EmployeeDetail.FirstOrDefault(x => x.Rowstatus == RowStatus.ACTIVE)!.DepartmentId))
+               .ForMember(a => a.PositionId, e => e.MapFrom(mfg => mfg.EmployeeDetail.FirstOrDefault(x => x.Rowstatus == RowStatus.ACTIVE)!.PositionId))
                .ForMember(a => a.EmploymentStatus, e => e.MapFrom(mfg => mfg.EmploymentStatus.ToString()))
                .ForMember(a => a.CountryId, e => e.MapFrom(mfg => mfg.Zone.Region.CountryId))
+               .ForMember(a =>  a.IsApproved, e => e.MapFrom(mfg => mfg.IsApproved))
                .ForMember(a => a.RegionId, e => e.MapFrom(mfg => mfg.Zone.RegionId));
-
-
 
 
             CreateMap<Volunter, VolunterGetDto>()
@@ -54,6 +55,7 @@ namespace IntegratedImplementation.Datas
 
             CreateMap<EmploymentDetail, EmployeeHistoryDto>()
                 .ForMember(a => a.DepartmentName, e => e.MapFrom(mfg => mfg.Department.DepartmentName))
+                .ForMember(a => a.RowStatus, e => e.MapFrom(mfg => mfg.Rowstatus.ToString()))
                 .ForMember(a => a.PositionName, e => e.MapFrom(mfg => mfg.Position.PositionName));
 
             CreateMap<EmployeeSalary, EmployeeSalaryGetDto>()

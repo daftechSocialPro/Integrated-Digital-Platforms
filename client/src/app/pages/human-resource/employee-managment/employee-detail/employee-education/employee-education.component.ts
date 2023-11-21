@@ -15,6 +15,7 @@ export class EmployeeEducationComponent implements OnInit {
 
 
   @Input() employeeId!: string;
+  @Input() employmentStatus!: string;
   educations : any 
   position: string = 'center';
 

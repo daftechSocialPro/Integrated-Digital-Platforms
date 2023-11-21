@@ -15,8 +15,10 @@ export class EmployeeFamilyComponent implements OnInit {
 
 
   @Input() employeeId!: string;
+  @Input() employmentStatus!: string;
   families : any 
   position: string = 'center';
+  
 
   ngOnInit(): void {
     this.getEmployeeFamily()

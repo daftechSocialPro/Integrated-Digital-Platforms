@@ -18,6 +18,7 @@ export class EmploymentHistoryComponent implements OnInit {
 
 
   @Input() employeeId!: string;
+  @Input() employmentStatus!: string;
   histories!: EmployeeHistoryDto[]
   position: string = 'center';
 

@@ -15,6 +15,7 @@ import { UpdateEmployeeSuretyComponent } from './update-employee-surety/update-e
 export class EmployeeSuretyComponent implements OnInit {
 
   @Input() employeeId!: string;
+  @Input() employmentStatus!: string;
   employeeSurity!: EmployeeSuertyGetDto
   constructor(
     private commonService: CommonService,

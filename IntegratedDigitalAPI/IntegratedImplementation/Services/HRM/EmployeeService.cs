@@ -79,7 +79,6 @@ namespace IntegratedImplementation.Services.HRM
                     Woreda = addEmployee.Woreda,
                     Email = addEmployee.Email,
                     ZoneId = addEmployee.ZoneId,
-                    EmploymentStatus = Enum.Parse<EmploymentStatus>(addEmployee.EmploymentStatus),
                     EmploymentType = Enum.Parse<EmploymentType>(addEmployee.EmploymentType),
                     FirstName = addEmployee.FirstName,
                     MiddleName = addEmployee.MiddleName,
@@ -101,7 +100,7 @@ namespace IntegratedImplementation.Services.HRM
                     ContractEndDate = addEmployee.ContractEndDate,
                     Rowstatus = RowStatus.ACTIVE,
                     ExistingEmployee = addEmployee.ExistingEmployee,
-                    //BankId = addEmployee.BankId
+                    BankId = addEmployee.BankId
                 };
                 await _dbContext.Employees.AddAsync(employee);
                 await _dbContext.SaveChangesAsync();
@@ -214,10 +213,7 @@ namespace IntegratedImplementation.Services.HRM
                     {
                         employee.EmploymentType = Enum.Parse<EmploymentType>(addEmployee.EmploymentType);
                     }
-                    if (addEmployee.EmploymentStatus != null)
-                    {
-                        employee.EmploymentStatus = Enum.Parse<EmploymentStatus>(addEmployee.EmploymentStatus);
-                    }
+                
                     if (addEmployee.PaymentType != null)
                     {
                         employee.PaymentType = Enum.Parse<PaymentType>(addEmployee.PaymentType);
@@ -234,7 +230,7 @@ namespace IntegratedImplementation.Services.HRM
                     employee.BankAccountNo = addEmployee.BankAccountNo;
                     employee.BirthDate = addEmployee.BirthDate;
                     employee.Woreda = addEmployee.Woreda;
-                    //employee.BankId = addEmployee.BankId;
+                    employee.BankId = addEmployee.BankId;
 
                     await _dbContext.SaveChangesAsync();
 
@@ -339,11 +335,22 @@ namespace IntegratedImplementation.Services.HRM
 
 
         }
-        public async Task<List<EmployeeGetDto>> GetEmployees()
+        public async Task<List<EmployeeListDto>> GetEmployees()
         {
             var employeeList = await _dbContext.Employees.AsNoTracking().OrderByDescending(x => x.CreatedDate)
-                                    .ProjectTo<EmployeeGetDto>(_mapper.ConfigurationProvider)
-                                    .ToListAsync();
+                                    .Select(x =>  new EmployeeListDto
+                                    {
+                                        Id = x.Id,
+                                        EmployeeCode = x.EmployeeCode,
+                                        ImagePath = x.ImagePath,
+                                        FullName = $"{x.FirstName} {x.MiddleName} {x.LastName}",
+                                        Gender = x.Gender.ToString(),
+                                        BirthDate = x.BirthDate,
+                                        EmploymentDate = x.EmploymentDate,
+                                        EmploymentType = x.EmploymentType.ToString(),
+                                        EmploymentStatus = x.EmploymentStatus.ToString(),
+                                        MartialStatus = x.MaritalStatus.ToString()
+                                    }).ToListAsync();
             return employeeList;
         }
         public async Task<EmployeeGetDto> GetEmployee(Guid employeeId)
@@ -378,6 +385,10 @@ namespace IntegratedImplementation.Services.HRM
                 {
                     employee.IsApproved = true;
                     await _dbContext.SaveChangesAsync();
+
+                    var userExists = await _dbContext.Users.AnyAsync(x => x.EmployeeId == employee.Id);
+                    if (userExists)
+                        return new ResponseMessage { Success = true, Message = "Approved Employee Succesfully" };
 
                     AddUSerDto currentUser = new AddUSerDto
                     {
@@ -599,7 +610,8 @@ namespace IntegratedImplementation.Services.HRM
         //history
         public async Task<List<EmployeeHistoryDto>> GetEmployeeHistory(Guid employeeId)
         {
-            var employeeHistories = await _dbContext.EmploymentDetails.Where(x => x.EmployeeId == employeeId).Include(x => x.Department).Include(x => x.Position).AsNoTracking()
+            var employeeHistories = await _dbContext.EmploymentDetails.Where(x => x.EmployeeId == employeeId).Include(x => x.Department).Include(x => x.Position)
+                                          .OrderByDescending(x => x.CreatedDate).AsNoTracking()
                                 .ProjectTo<EmployeeHistoryDto>(_mapper.ConfigurationProvider)
                                 .ToListAsync();
             return employeeHistories;

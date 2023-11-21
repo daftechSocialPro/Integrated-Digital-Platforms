@@ -29,6 +29,9 @@ export class AddEmployeeComponent implements OnInit {
   regions!: SelectList[];
   zones ! : SelectList[];
   fileGH! : File;
+  maxBirthDate: Date = new Date();
+  maxHireDate: Date = new Date();
+  bankDigit!: number ;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -50,7 +53,7 @@ export class AddEmployeeComponent implements OnInit {
       email: [null, Validators.required],
       phoneNumber: [null, Validators.required],
       gender: [null, Validators.required],
-      birthDate: [null, Validators.required],
+      birthDate: [this.maxBirthDate, Validators.required],
       maritalStatus: [null, Validators.required],
       employmentType: [null, Validators.required],
       paymentType: [null, Validators.required],
@@ -58,7 +61,6 @@ export class AddEmployeeComponent implements OnInit {
       departmentId: [null, Validators.required],
       positionId: [null, Validators.required],
       ContractEndDate: [''],
-      salary:['',Validators.required],
       pensionCode: [''],
       tinNumber: [''],
       bankAccountNo: [''],
@@ -72,8 +74,7 @@ export class AddEmployeeComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.userService.getCurrentUser();
-    this.getDepartments();
-    this.getPositions();
+    this.maxBirthDate.setFullYear(this.maxBirthDate.getFullYear() - 18);
     this.getCountries();
     this.getBankList();
   }
@@ -114,24 +115,7 @@ export class AddEmployeeComponent implements OnInit {
   }
 
 
-  getDepartments() {
-    this.dropService.getDepartmentsDropdown().subscribe({
-      next: (res) => {
-        this.departments = res
-
-      }
-    })
-  }
-
-
-
-  getPositions() {
-    this.dropService.getPositionsDropdown().subscribe({
-      next: (res) => {
-        this.positions = res
-      }
-    })
-  }
+ 
 
   onUpload(event: any) {
 
@@ -179,8 +163,6 @@ export class AddEmployeeComponent implements OnInit {
         pensionCode: this.EmployeeForm.value.pensionCode.toString(),
         tinNumber: this.EmployeeForm.value.tinNumber.toString(),
         bankAccountNo: this.EmployeeForm.value.bankAccountNo.toString(),
-        departmentId: this.EmployeeForm.value.departmentId,
-        positionId: this.EmployeeForm.value.positionId,
         zoneId: this.EmployeeForm.value.zoneId,
         woreda: this.EmployeeForm.value.woreda,
         imagePath: this.fileGH,
@@ -221,6 +203,11 @@ export class AddEmployeeComponent implements OnInit {
     }
 
   }
+
+  changeBankDigit(digitNumber: any){
+     this.bankDigit =  Number(this.bankLists.find(X => X.id == digitNumber.value)?.bankDigit);
+  }
+
   closeModal() {
     this.activeModal.close()
   }
