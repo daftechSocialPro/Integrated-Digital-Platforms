@@ -26,6 +26,8 @@ export class AddVacancyComponent implements OnInit{
   departments: SelectList[] = [];
   educationalFields: SelectList[] = [];
   educationalLevels: SelectList[] = [];
+  today: Date = new Date();
+  minDate: Date = new Date();
   vacancyTypes: any[] = [
     { value: 0, name: "INTERNAL" },
     { value: 1, name: "EXTERNAL" },
@@ -130,6 +132,10 @@ export class AddVacancyComponent implements OnInit{
     });
   }
 
+  getminEndDate(date: any){
+      debugger;
+      this.minDate = date;
+  }
 
   closeModal() {
     this.activeModal.close()
