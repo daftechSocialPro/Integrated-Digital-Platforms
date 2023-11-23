@@ -29,49 +29,49 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="FirstName"> First Name</label>
-                                    <input type="text" class="form-control" id="FirstName" required
-                                        formControlName="firstName">
+                                    <input pInputText  pattern="[A-Za-z]" [class]="firstName != null  ? 'ng-valid'  :'ng-invalid ng-dirty'"
+                                     #firstName formControlName="firstName" id="FirstName" required />
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="MiddleName"> Middle Name</label>
-                                    <input type="text" class="form-control" id="MiddleName" required
-                                        formControlName="middleName">
+                                    <input pInputText  pattern="[A-Za-z]" [class]="middleName ? 'ng-valid'  :'ng-invalid ng-dirty'"
+                                    #middleName formControlName="middleName" id="middleName" required />
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="LastName"> Last Name</label>
-                                    <input type="text" class="form-control" id="LastName" required
-                                        formControlName="lastName">
+                                    <input pInputText  pattern="[A-Za-z]" [class]="lastName ? 'ng-valid'  :'ng-invalid ng-dirty'"
+                                    #lastName formControlName="lastName" id="lastName" required />
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="FirstName">Amharic First Name</label>
-                                    <input type="text" class="form-control" id="amharicFirstName" required
-                                        formControlName="amharicfirstName">
+                                    <input pInputText  pattern="[A-Za-z]" [class]="amharicfirstName ? 'ng-valid'  :'ng-invalid ng-dirty'"
+                                    #amharicfirstName formControlName="amharicfirstName" id="amharicfirstName" required />
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="MiddleName">Amharic Middle Name</label>
-                                    <input type="text" class="form-control" id="amharicMiddleName" required
-                                        formControlName="amharicmiddleName">
+                                    <input pInputText  pattern="[A-Za-z]" [class]="amharicmiddleName ? 'ng-valid'  :'ng-invalid ng-dirty'"
+                                    #amharicmiddleName formControlName="amharicmiddleName" id="amharicmiddleName" required />
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="LastName">Amharic Last Name</label>
-                                    <input type="text" class="form-control" id="amharicLastName" required
-                                        formControlName="amhariclastName">
+                                    <input pInputText  pattern="[A-Za-z]" [class]="amhariclastName ? 'ng-valid'  :'ng-invalid ng-dirty'"
+                                    #amhariclastName formControlName="amhariclastName" id="amhariclastName" required />
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="Gender">Gender</label>
-                                    <select class="form-select" id="Gender" formControlName="gender" aria-label="State">
+                                    <select class="form-select" id="Gender" #gender  [class]="gender ? 'ng-valid'  :'ng-invalid ng-dirty'" formControlName="gender" aria-label="State">
                                         <option></option>
                                         <option value="MALE">MALE</option>
                                         <option value="FEMALE">FEMALE</option>
@@ -81,14 +81,14 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="BirthDate"> Birth Date</label>
-                                    <p-calendar formControlName="birthDate" [maxDate]="maxBirthDate"
+                                    <p-calendar formControlName="birthDate" #birthDate  [class]="birthDate ? 'ng-valid'  :'ng-invalid ng-dirty'" [maxDate]="maxBirthDate"
                                         [readonlyInput]="true"></p-calendar>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="MaritalStatus">Marital Status</label>
-                                    <select class="form-select" id="MaritalStatus" formControlName="maritalStatus"
+                                    <select class="form-select" id="MaritalStatus" #MaritalStatus  [class]="MaritalStatus ? 'ng-valid'  :'ng-invalid ng-dirty'" formControlName="maritalStatus"
                                         aria-label="State">
                                         <option></option>
                                         <option value="SINGLE">SINGLE</option>
@@ -105,7 +105,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="countryId">Country</label>
-                            <select class="form-select" id="countryId" formControlName="countryId" #country (change)="getRegions(country.value)"
+                            <select class="form-select" id="countryId" formControlName="countryId" #country   [class]="country ? 'ng-valid'  :'ng-invalid ng-dirty'" (change)="getRegions(country.value)"
                                 aria-label="State">
                                 <option></option>
                                 <option *ngFor="let country of countries" [value]="country.id">{{
@@ -116,7 +116,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="countryId">Region</label>
-                            <select class="form-select"  formControlName="regionId" (change)="getZones(region.value)" #region id="regionId"
+                            <select class="form-select" #regionId   [class]="regionId ? 'ng-valid'  :'ng-invalid ng-dirty'"  formControlName="regionId" (change)="getZones(region.value)" #region id="regionId"
                                 aria-label="State">
                                 <option></option>
                                 <option *ngFor="let region of regions" [value]="region.id">{{
@@ -128,7 +128,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="zoneId"> Zone</label>
-                            <select class="form-select" id="zoneId" formControlName="zoneId" aria-label="State">
+                            <select class="form-select" id="zoneId" #zoneId   [class]="zoneId ? 'ng-valid'  :'ng-invalid ng-dirty'" formControlName="zoneId" aria-label="State">
                                 <option></option>
                                 <option *ngFor="let zone of zones" [value]="zone.id">{{
                                     zone.name }}</option>
@@ -138,21 +138,20 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="woreda"> Woreda</label>
-                            <input type="text" class="form-control" id="woreda" placeholder="woreda" required
-                                formControlName="woreda">
+                            <input pInputText  formControlName="woreda" id="woreda" required />
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="PhoneNumber"> Phone Number</label>
                             <p-inputMask mask="(999) 999-999999" formControlName="phoneNumber"
-                                placeholder="(999) 999-999999"></p-inputMask>
+                                placeholder="(999) 999-999999" ></p-inputMask>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="email"> Email</label>
-                            <input type="text" class="form-control" id="email" required>
+                            <label for="email"> Email</label><br/>
+                            <input pInputText #email   [class]="email ? 'ng-valid'  :'ng-invalid ng-dirty'"   formControlName="email" id="email" required />
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -170,7 +169,7 @@
                         <div class="form-group">
                             <label for="BankAccountNo"> Bank Account No</label>
                             <input type="text" class="form-control" id="BankAccountNo" placeholder="BankAccountNo"
-                                required [minlength]="bankDigit" [maxlength]="bankDigit"
+                                required pattern="[0-9]" [minlength]="bankDigit" [maxlength]="bankDigit"
                                 formControlName="bankAccountNo">
                         </div>
                     </div>
@@ -222,7 +221,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="TinNumber"> Tin Number</label>
-                            <input type="number" class="form-control" id="TinNumber" placeholder="TinNumber" required
+                            <input type="text" pattern="[0-9]" class="form-control" id="TinNumber" placeholder="TinNumber" required
                                 formControlName="tinNumber">
                         </div>
                     </div>
