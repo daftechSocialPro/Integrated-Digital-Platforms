@@ -29,7 +29,7 @@ namespace IntegratedImplementation.DTOS.Training
         public string FullName { get; set; }
         public string Email { get; set; }
 
-        public string TrainingId { get; set; }  
+        public Guid TrainingId { get; set; }  
     }
 
  

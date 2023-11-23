@@ -1,14 +1,30 @@
 <div class="p-4">
   <div class="modal-header" *ngIf="traininggId">
-    
+
     <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
-</div>
+  </div>
   <div class="card p-4">
     <div class="text-center">
       <img src="../../../../assets/logo.png" height="80px" />
       <h1>Ethiopian Midwives Association</h1>
       <h2>Training Quality Evaluation tools</h2>
-      <p>Dear trainers: Please add the trainees for <span style="font-size: 20px;color:#1b419f">{{TrainingTitle}}</span> on the table below</p>
+      <p>Dear trainers: Please add the trainees for <span style="font-size: 20px;color:#1b419f">{{TrainingTitle}}</span>
+        on the table below</p>
+
+      <div class="row col-12 text-end"   *ngIf="!traininggId&&(training&&training.traineeListStatus!='SUBMITTED')" >
+
+
+      
+          <div class="col-md-4">
+            <button class="btn btn-outline-primary" (click)="changeTraineeReportStatus()">
+              Submit
+            </button>
+          </div>
+
+       
+
+      </div>
+
     </div>
   </div>
   <div class="card p-2">
@@ -38,7 +54,7 @@
         </tr>
 
       </tbody>
-      <tfoot *ngIf="!traininggId">
+      <tfoot *ngIf="!traininggId&&(training&&training.traineeListStatus!='SUBMITTED')" >
 
         <tr>
 

@@ -36,6 +36,15 @@ namespace IntegratedDigitalAPI.Controllers.Training
         }
 
 
+        [HttpGet]
+        [ProducesResponseType(typeof(TrainingGetDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetTrainingAllList()
+        {
+            return Ok(await _trainingService.GetTrainingList());
+        }
+
+
+
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> AddTrainingList(TrainingPostDto trainingPost)
@@ -102,11 +111,11 @@ namespace IntegratedDigitalAPI.Controllers.Training
         }
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> SendEmailTrainer(TrainerEmailDto trainerPost)
+        public async Task<IActionResult> SendEmailTrainer(TrainerEmailDto trainerPost,string type)
         {
             if (ModelState.IsValid)
             {
-                return Ok(await _trainingService.SendEmailTrainer(trainerPost));
+                return Ok(await _trainingService.SendEmailTrainer(trainerPost,type));
             }
             else
             {
@@ -116,6 +125,43 @@ namespace IntegratedDigitalAPI.Controllers.Training
             }
         }
 
-        
+        //training report 
+        [HttpGet]
+        [ProducesResponseType(typeof(TrainingGetDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetTrainingReport(Guid trainingId)
+        {
+            return Ok(await _trainingService.GetTrainingReport(trainingId));
+        }
+
+
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> AddTrainingReport(TrainingReportPostDto trainerPost)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _trainingService.AddTrainingReport(trainerPost));
+            }
+            else
+            {
+                return BadRequest();
+
+            }
+        }
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> ChangeTraineeReportStatus(Guid trainingId, string status )
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _trainingService.ChangeTraineesStatus(status,trainingId));
+            }
+            else
+            {
+                return BadRequest();
+
+            }
+        }
+
     }
 }

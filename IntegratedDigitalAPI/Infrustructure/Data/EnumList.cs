@@ -105,9 +105,9 @@ namespace IntegratedInfrustructure.Data
 
         public enum FamilyRelation
         {
-           PARENT,
-           SPOUSE,
-           CHILD
+            PARENT,
+            SPOUSE,
+            CHILD
         }
         public enum GeneralHrmSetting
         {
@@ -132,7 +132,7 @@ namespace IntegratedInfrustructure.Data
             REJECTED,
             APPROVED
         }
-        
+
         public enum TypeOfLoan
         {
             ADVANCE,
@@ -140,7 +140,7 @@ namespace IntegratedInfrustructure.Data
             OTHER
         }
 
-       
+
 
         public enum LoanStatus
         {
@@ -221,9 +221,10 @@ namespace IntegratedInfrustructure.Data
 
         public enum TraineeListStatus
         {
-                DRAFTED,
-                SUBMITTED     
-        }           
+            NOTSENT,
+            SENT,
+            SUBMITTED
+        }
         public enum TypeOfBenefit
         {
             PERCENTILE,

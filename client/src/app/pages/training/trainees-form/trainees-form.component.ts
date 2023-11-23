@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
 import { ITraineeGetDto, ITraineePostDto } from 'src/app/model/Training/TraineeDto';
+import { ITrainingGetDto } from 'src/app/model/Training/TrainingDto';
 import { SelectList } from 'src/app/model/common';
 import { CommonService } from 'src/app/services/common.service';
 import { DropDownService } from 'src/app/services/dropDown.service';
@@ -12,18 +13,18 @@ import { TrainingService } from 'src/app/services/training.service';
 @Component({
   selector: 'app-trainees-form',
   templateUrl: './trainees-form.component.html',
-  styleUrls: ['./trainees-form.component.css']
+  styleUrls: ['./trainees-form.component.css'],
+  providers:[NgbActiveModal]
 })
 export class TraineesFormComponent implements OnInit {
 
 
   @Input()traininggId !:string
   @Input()TrainingTitle !:string
-
   trainingId!:string
-
   educationalFields:SelectList[]=[]
   educationalLevels:SelectList[]=[]
+  training !: ITrainingGetDto
 
   genders=[    
     {label:"MALE",value:"MALE"},{label:"FEMALE",value:"FEMALE"}
@@ -38,6 +39,14 @@ export class TraineesFormComponent implements OnInit {
     this.getEducationalFields()
     this.getEducationalLevels()
     this.getTrainee()
+
+    if(this.trainingId){
+      this.getSingleTraining(this.trainingId)
+     }
+      else{
+        this.getSingleTraining(this.traininggId)
+        
+      }
   }
 
   constructor(
@@ -47,7 +56,8 @@ export class TraineesFormComponent implements OnInit {
     private messageService : MessageService,
     private trainingService:TrainingService,
     private commonService : CommonService,
-    private activeModal : NgbActiveModal)
+    private activeModal : NgbActiveModal
+   )
     {
     this.traineeForm = this.formBuilder.group({
       fullName: ['', Validators.required],
@@ -70,7 +80,16 @@ export class TraineesFormComponent implements OnInit {
       this.traineeForm.reset();
     }
   }
+  getSingleTraining(trainingId:string) {
 
+    this.trainingService.getSingleTraining(trainingId).subscribe({
+      next: (res) => {
+        this.training = res
+        console.log(res)
+      }
+    })
+
+  }
 
   addTrainee(traineePost: ITraineePostDto)
   {
@@ -135,7 +154,29 @@ export class TraineesFormComponent implements OnInit {
   }
 
   closeModal(){
-    this.activeModal.close()
+   this.activeModal.close()
+  }
+
+  changeTraineeReportStatus(){
+    this.trainingService.changeTraineeReportStatus(this.trainingId,'SUBMITTED').subscribe({
+      next:(res)=>{
+        if (res.success) {
+
+          this.messageService.add({ severity: 'success', summary: `Successfully SUBMITTED`, detail: res.message })
+          window.location.reload()
+        }
+        else {
+          this.messageService.add({ severity: 'error', summary: 'Something went wrong!!! ', detail: res.message })
+
+        }
+
+      }, error: (err) => {
+        this.messageService.add({ severity: 'error', summary: 'Error ', detail: err })
+
+      }
+
+      
+    })
   }
 
 }

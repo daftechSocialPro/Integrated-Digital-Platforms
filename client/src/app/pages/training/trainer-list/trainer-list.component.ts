@@ -5,6 +5,7 @@ import { TrainingService } from 'src/app/services/training.service';
 import { AddTrainerComponent } from '../add-trainer/add-trainer.component';
 import { ITrainerEmailDto } from 'src/app/model/Training/TraineeDto';
 import { MessageService } from 'primeng/api';
+import { ITrainingGetDto } from 'src/app/model/Training/TrainingDto';
 
 @Component({
   selector: 'app-trainer-list',
@@ -16,6 +17,8 @@ export class TrainerListComponent implements OnInit {
   trainerList:ITrainerGetDto[]=[]
   @Input()  trainingId!:string
   @Input()  TrainingTitle!:string
+
+  @Input() Training!: ITrainingGetDto
   constructor(
     private trainingService:TrainingService,
     private activeModal : NgbActiveModal,
@@ -26,6 +29,7 @@ export class TrainerListComponent implements OnInit {
   ngOnInit(): void {
     
     this.getTrainerList()
+    this.getSingleTraining()
   }
 
   getTrainerList(){
@@ -33,6 +37,14 @@ export class TrainerListComponent implements OnInit {
     this.trainingService.getTrainerList(this.trainingId).subscribe({
       next:(res)=>{
         this.trainerList =res 
+      }
+    })
+  }
+
+  getSingleTraining(){
+    this.trainingService.getSingleTraining(this.trainingId).subscribe({
+      next:(res)=>{
+        this.Training = res 
       }
     })
   }
@@ -45,7 +57,7 @@ export class TrainerListComponent implements OnInit {
     })
 
   }
-  sendEmail(trainer:ITrainerGetDto){
+  sendEmail(trainer:ITrainerGetDto,type:string){
 
     let trainerEmail : ITrainerEmailDto={
       Email : trainer.email,
@@ -53,11 +65,12 @@ export class TrainerListComponent implements OnInit {
       TrainingId : this.trainingId
     }
 
-    this.trainingService.sendTrainerEmail(trainerEmail).subscribe({
+    this.trainingService.sendTrainerEmail(trainerEmail,type).subscribe({
       next:(res)=>{
         if(res.success){
           this.messageService.add({ severity: 'success', summary: 'Successfully created.', detail: res.message });
 
+          this.getSingleTraining()
         }
         else {
           this.messageService.add({ severity: 'error', summary: 'Something went wrong.', detail: res.message });

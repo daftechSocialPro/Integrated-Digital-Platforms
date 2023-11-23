@@ -1,7 +1,7 @@
 <div class="modal-content">
     <div class="modal-header">
         <h5 class="modal-title">View Trainings for
-            <span style="color:brown;"> activity {{trainingList&&trainingList[0].activityNumber}}</span>
+            <span style="color:brown;"> activity {{trainingList&&trainingList[0]&&trainingList[0].activityNumber}}</span>
         </h5>
         <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
     </div>
@@ -69,6 +69,18 @@
                                     <i class="bi bi-eye text-primary"></i> <span>
                                         Trainees
                                     </span> </a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+
+                                    <li *ngIf="training.reportStatus=='SUBMITTED'||training.reportStatus=='DRAFTED'"> <a class="dropdown-item d-flex align-items-center"
+                                        (click)="viewTrainingReport(training.id,training.title)">
+                                        <i class="bi bi-eye text-primary"></i> <span>
+                                            Training Report
+                                        </span> </a></li>
+
+
+                                    
                             </ul>
                         </li>
                     </td>

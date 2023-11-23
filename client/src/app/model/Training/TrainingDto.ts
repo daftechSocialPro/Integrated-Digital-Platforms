@@ -1,7 +1,7 @@
 export interface ITrainingGetDto {
 
  
-    Id:string
+    id:string
     project:string
     endDate:Date
     startDate:Date

@@ -6,6 +6,7 @@ import { ResponseMessage } from "../model/ResponseMessage.Model";
 import { UserService } from "./user.service";
 import { ITrainerGetDto, ITrainerPostDto } from "../model/Training/TrainerDto";
 import { ITraineeGetDto, ITraineePostDto, ITrainerEmailDto } from "../model/Training/TraineeDto";
+import { ITrainingReportGetDto, ITrainingReportPostDto } from "../model/Training/TrainingReportDto";
 
 @Injectable({
     providedIn: 'root'
@@ -30,6 +31,10 @@ export class TrainingService {
 
         return this.http.get<ITrainingGetDto[]>(this.BaseURI + "GetTrainingList?activityId=" + activityId)
     }
+    getTrainingLists() {
+
+        return this.http.get<ITrainingGetDto[]>(this.BaseURI + "GetTrainingAllList")
+    }
 
     createTrainer(trainer: ITrainerPostDto) {
 
@@ -53,8 +58,25 @@ export class TrainingService {
     }
 
 
-    sendTrainerEmail(trainerEmail: ITrainerEmailDto) {
-        return this.http.post<ResponseMessage>(`${this.BaseURI}SendEmailTrainer`, trainerEmail)
+    sendTrainerEmail(trainerEmail: ITrainerEmailDto,type:string) {
+        return this.http.post<ResponseMessage>(`${this.BaseURI}SendEmailTrainer?type=${type}`, trainerEmail)
+    }
+
+
+    //add
+
+    createTrainingReport(trainingReport: ITrainingReportPostDto) {
+       return this.http.post<ResponseMessage>(`${this.BaseURI}AddTrainingReport`, trainingReport)
+    }
+
+    getTrainingReport(trainingId: string) {
+        return this.http.get<ITrainingReportGetDto>(this.BaseURI + "GetTrainingReport?trainingId=" + trainingId)
+    }
+
+
+    changeTraineeReportStatus(trainingID:string,status : string ){
+
+        return this.http.post<ResponseMessage>(this.BaseURI+`ChangeTraineeReportStatus?trainingId=${trainingID}&status=${status}`,{})
     }
 
 

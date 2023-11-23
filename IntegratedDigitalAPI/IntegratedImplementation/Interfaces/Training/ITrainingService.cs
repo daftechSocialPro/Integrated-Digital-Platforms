@@ -11,7 +11,8 @@ namespace IntegratedImplementation.Interfaces.Training
 {
     public interface ITrainingService
     {
-        Task<List<TrainingGetDto>> GetTrainingList(Guid activityId);    
+        Task<List<TrainingGetDto>> GetTrainingList(Guid activityId);
+        Task<List<TrainingGetDto>> GetTrainingList();
 
         Task<TrainingGetDto> GetSingleTraining(Guid TrainingId);
         Task<ResponseMessage> AddTraining(TrainingPostDto trainingPostDto);
@@ -28,7 +29,15 @@ namespace IntegratedImplementation.Interfaces.Training
         Task<ResponseMessage> AddTrainee(TraineePostDto trainingPostDto);
 
 
-        Task<ResponseMessage> SendEmailTrainer(TrainerEmailDto trainerEmail);
+        Task<ResponseMessage> SendEmailTrainer(TrainerEmailDto trainerEmail, string type);
+
+        // trainer report 
+
+        Task<TrainingReportGetDto> GetTrainingReport(Guid TainingId);
+        Task<ResponseMessage> AddTrainingReport(TrainingReportPostDto trainingPostDto);
+
+        Task<ResponseMessage> ChangeTraineesStatus(string Status, Guid trainingId);
+
 
 
     }

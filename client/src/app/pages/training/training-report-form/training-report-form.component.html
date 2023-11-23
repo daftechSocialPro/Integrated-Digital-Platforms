@@ -8,95 +8,79 @@
             <img src="../../../../assets/logo.png" height="80px" />
             <h1>Ethiopian Midwives Association</h1>
             <h2>Training Quality Evaluation tools</h2>
-            <p>Title: {{training&&training.title}}</p>
-            <p>Duration: {{training&&training.startDate|date:"dd MMM yyyy"}} -- {{training&&training.endDate|date:"dd MMM yyyy"}}</p>
-            <p>Venue of the training: {{training&&training.courseVenue}}</p>
-            <p>Name of the trainers: <span *ngFor="let item of trainers">{{item.fullName}} ,</span></p>
-            
-        	
+            <p class="mt-2">Title: <span>{{training&&training.title}} </span></p>
+            <p>Duration: <span>{{training&&training.startDate|date:"dd MMM yyyy"}} -- {{training&&training.endDate|date:"dd MMM yyyy"}}</span></p>
+            <p>Venue of the training: <span> {{training&&training.courseVenue}} </span></p>
+            <p>Name of the trainers: <span *ngFor="let item of trainers; let last = last">{{item.fullName}}{{last ? '' :
+                    ', '}}</span></p>
+
         </div>
     </div>
-    <div class="card p-2">
-        <form >
-            <div class="card-body">
-                <h5 class="card-title">Training Detail</h5>
-                <hr />
-    
-                <div class="row mt-2">
-    
-                    
-    
-                    <div class="col-md-4">
-                        <div class="form-floating">
-                            <input type="text" formControlName="Project" class="form-control" id="Project"
-                                placeholder="Project">
-                            <label for="Project">Project </label>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-floating">
-                            <input type="text" formControlName="Title" class="form-control" id="Title"
-                                placeholder="Title">
-                            <label for="Title">Title </label>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-floating">
-                            <input type="text" formControlName="NameofOrganizaton" class="form-control" id="NameofOrganizaton"
-                                placeholder="NameofOrganizaton">
-                            <label for="NameofOrganizaton">Name of Organizaton </label>
-                        </div>
-                    </div>
-            
-    
-                </div>
-    
-                <div class="row mt-2">
-                    <div class="col-md-6">
-                        <div class="form-floating">
-                            <input type="text" formControlName="TypeofOrganization" class="form-control" id="TypeofOrganization"
-                                placeholder="TypeofOrganization">
-                            <label for="TypeofOrganization">Type of Organization </label>
-                        </div>
-                    </div>
-    
-                    <div class="col-md-6">
-                        <div class="form-floating">
-                            <input type="text" formControlName="CourseVenue" class="form-control" id="CourseVenue"
-                                placeholder="CourseVenue">
-                            <label for="CourseVenue">Course Venue </label>
-                        </div>
-                    </div>
-                
-    
-                </div>
-    
-                <div class="row mt-2">
-                    <div class="col-md-6">
-                        <div class="form-floating">
-                            <input type="date" formControlName="StartDate" class="form-control" id="StartDate"
-                                placeholder="StartDate">
-                            <label for="StartDate">Start Date</label>
-                        </div>
-                    </div>
-    
-                    <div class="col-md-6">
-                        <div class="form-floating">
-                            <input type="date" formControlName="EndDate" class="form-control" id="EndDate"
-                                placeholder="EndDate">
-                            <label for="EndDate">End Date</label>
-                        </div>
-                    </div>
-                </div>
-    
+ 
+        <div class="container card">
+            <div class=" row justify-content-center">
+              <div class="col-md-8">
+                <form [formGroup]="trainingReportForm"  class="card-body">
+                  <h5 class="card-title">Training Report Detail</h5>
+                  <hr />
+          
+               
+          
+                  <div class="form-group">
+                    <label for="Objective">• Objective of the training</label>
+                    <textarea type="text" formControlName="Objective" [readOnly]="training&&training.reportStatus=='SUBMITTED'" style="height: 120px;" class="form-control"
+                      id="Objective" placeholder="Objective"></textarea>
+                  </div>
+          
+                  <div class="form-group mt-4">
+                    <label for="Contribution">•	Contribution of the training towards achieving the project’s objectives</label>
+                    <textarea type="text" formControlName="Contribution" [readOnly]="training&&training.reportStatus=='SUBMITTED'" style="height: 120px;" class="form-control"
+                      id="Contribution" placeholder="Contribution"></textarea>
+                  </div>
+          
+                  <div class="form-group mt-4">
+                    <label for="TraineesDescription">•	Short description of the trainees: Who are they? Where they come from? How many trainees dis-aggregated by gender, Profession, Level of education, types of organization</label>
+                    <textarea type="text" formControlName="TraineesDescription" [readOnly]="training&&training.reportStatus=='SUBMITTED'" style="height: 120px;" class="form-control"
+                      id="TraineesDescription" placeholder="Trainees Description"></textarea>
+                  </div>
+          
+                  <div class="form-group mt-4">
+                    <label for="TopicsCovered">•	What topics were covered during the training?</label>
+                    <textarea type="text" formControlName="TopicsCovered" [readOnly]="training&&training.reportStatus=='SUBMITTED'" style="height: 120px;" class="form-control"
+                      id="TopicsCovered" placeholder="Topics Covered"></textarea>
+                  </div>
+          
+                  <div class="form-group  mt-4">
+                    <label for="Challenges"> •	What were the challenges?</label>
+                    <textarea type="text" formControlName="Challenges" [readOnly]="training&&training.reportStatus=='SUBMITTED'" style="height: 120px;" class="form-control"
+                      id="Challenges" placeholder="Challenges"></textarea>
+                  </div>
+          
+                  <div class="form-group  mt-4">
+                    <label for="LessonsLearned">•	What were the lessons learned?</label>
+                    <textarea type="text" formControlName="LessonsLearned" [readOnly]="training&&training.reportStatus=='SUBMITTED'" style="height: 120px;" class="form-control"
+                      id="LessonsLearned" placeholder="Lessons Learned"></textarea>
+                  </div>
+          
+                  <div class="form-group  mt-4">
+                    <label for="Summary">•	Short summary of the training daily evaluation</label>
+                    <textarea type="text" formControlName="Summary" [readOnly]="training&&training.reportStatus=='SUBMITTED'" style="height: 120px;" class="form-control"
+                      id="Summary" placeholder="Summary"></textarea>
+                  </div>
+                  <div class="form-group  mt-4">
+                    <label for="Summary">•  Summary of the pre and post training evaluation result </label>
+                    <textarea type="text" formControlName="PrePostSummary" [readOnly]="training&&training.reportStatus=='SUBMITTED'" style="height: 120px;" class="form-control"
+                      id="PrePostSummary" placeholder="Pre and Post Summary"></textarea>
+                  </div>
+          
+                  <div class="modal-footer" *ngIf="!(training&&training.reportStatus=='SUBMITTED')">
+                    <button type="button" class="btn btn-outline-secondary" (click)="submit('DRAFTED')" >Draft</button>
+                    <button type="button" type="submit" (click)="submit('SUBMITTED')" class="btn btn-outline-primary">Create</button>
+                  </div>
+                </form>
+              </div>
             </div>
-            <div class="modal-footer"> 
-                         
-                <button type="button"  class="btn btn-outline-secondary" (click)="closeModal()"> Close</button>
-                <button type="button" type="submit"    class="btn btn-outline-primary">Create</button>
-    
-            </div>
-        </form>
-    </div>
+          </div>
+
 
 </div>
