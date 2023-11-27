@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -39,6 +40,7 @@ export class AddEmployeeComponent implements OnInit {
     private activeModal: NgbActiveModal,
     private messageService : MessageService,
     private hrmService: HrmService,
+    private datePipe: DatePipe,
     private configurationService: ConfigurationService,
     private dropService: DropDownService) {
 
@@ -57,9 +59,8 @@ export class AddEmployeeComponent implements OnInit {
       maritalStatus: [null, Validators.required],
       employmentType: [null, Validators.required],
       paymentType: [null, Validators.required],
-      employmentDate: [null, Validators.required],
-      departmentId: [null, Validators.required],
-      positionId: [null, Validators.required],
+      employmentDate: [Date.now, Validators.required],
+   
       ContractEndDate: [''],
       pensionCode: [''],
       tinNumber: [''],
@@ -128,8 +129,19 @@ export class AddEmployeeComponent implements OnInit {
     myReader.readAsDataURL(file);
   }
 
+  changeDateTime(date: any){
+    const changableDate = date ? new Date(date as string) : null;
+  
+    if (changableDate != null) {
+     const convertedDate = this.datePipe.transform(changableDate, 'yyyy-MM-dd');
+     return convertedDate as unknown as Date;
+   }
+   return null;
+}
+
   submit() {
 
+    console.log(this.EmployeeForm.value)
     
     if (this.imagePath === null) {
      
@@ -146,20 +158,19 @@ export class AddEmployeeComponent implements OnInit {
         firstName: this.EmployeeForm.value.firstName,
         middleName: this.EmployeeForm.value.middleName,
         lastName: this.EmployeeForm.value.lastName,
-        amharicFirstName:this.EmployeeForm.value.amharicName,
+        amharicFirstName:this.EmployeeForm.value.amharicfirstName,
         amharicMiddleName:this.EmployeeForm.value.amharicmiddleName,
         amharicLastName:this.EmployeeForm.value.amhariclastName,
         phoneNumber: this.EmployeeForm.value.phoneNumber,
         email: this.EmployeeForm.value.email,
         gender: this.EmployeeForm.value.gender,
-        birthDate: this.EmployeeForm.value.birthDate,
+        birthDate: this.changeDateTime(this.EmployeeForm.value.birthDate),
         maritalStatus: this.EmployeeForm.value.maritalStatus,
-        employmentType: this.EmployeeForm.value.employmentType,
-        employmentStatus: this.EmployeeForm.value.employmentStatus,
+        employmentType: this.EmployeeForm.value.employmentType,       
         paymentType: this.EmployeeForm.value.paymentType,
-        salary: this.EmployeeForm.value.salary,
-        employmentDate: this.EmployeeForm.value.employmentDate,
-        ContractEndDate: this.EmployeeForm.value.ContractEndDate,
+       
+        employmentDate: this.changeDateTime(this.EmployeeForm.value.employmentDate),
+        ContractEndDate: this.changeDateTime(this.EmployeeForm.value.ContractEndDate),
         pensionCode: this.EmployeeForm.value.pensionCode.toString(),
         tinNumber: this.EmployeeForm.value.tinNumber.toString(),
         bankAccountNo: this.EmployeeForm.value.bankAccountNo.toString(),
@@ -170,6 +181,8 @@ export class AddEmployeeComponent implements OnInit {
         bankId: this.EmployeeForm.value.bankId
 
       }
+
+   
 
       var formData = new FormData();
       for (let key in employeePost) {
@@ -201,6 +214,9 @@ export class AddEmployeeComponent implements OnInit {
         }
       )
     }
+
+
+
 
   }
 

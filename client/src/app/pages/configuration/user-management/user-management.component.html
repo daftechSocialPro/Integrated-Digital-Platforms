@@ -12,10 +12,17 @@
 
     <div class="row">
         <div class="col-lg-3">
-            <input type="text" #name (input)="searchUsers(name.value)" class="form-control"
-                placeholder="Search">
+            <input type="text" #name (input)="searchUsers(name.value)" class="form-control" placeholder="Search">
 
         </div>
+
+        <div class="col-lg-12 text-end">
+            <button class="btn btn-outline-primary" (click)="addUser()">addUser</button>
+
+        </div>
+
+
+
 
     </div>
     <section class="section profile">
@@ -28,7 +35,7 @@
 
                     <div class="row p-2 align-items-center">
                         <div class="col-4  text-center">
-                            <img [src]="getPath(user.imagePath)" height="120px"  alt="Profile" class="rounded-circle">
+                            <img [src]="getPath(user.imagePath)" height="120px" alt="Profile" class="rounded-circle">
                         </div>
                         <div class="col-8 ">
                             <h6>{{user.userName}} ({{user.email}})</h6>

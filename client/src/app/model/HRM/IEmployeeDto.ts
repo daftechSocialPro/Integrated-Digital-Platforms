@@ -29,7 +29,7 @@ export interface EmployeePostDto {
      employmentDate: Date| null;
      salary?: Number,
      isPension?: boolean
-     employmentStatus: string;
+ 
      pensionCode?: string;
      tinNumber?: string;
      bankAccountNo?: string;

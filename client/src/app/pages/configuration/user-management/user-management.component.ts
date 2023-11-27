@@ -56,4 +56,8 @@ export class UserManagementComponent implements OnInit {
       user.phoneNumber.includes(value)
     );
   }
+
+  addUser (){
+    let modalRef = this.modalService.open(AddUserComponent,{size:'lg',backdrop:'static'})
+  }
 }

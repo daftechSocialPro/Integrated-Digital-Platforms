@@ -31,10 +31,7 @@ namespace IntegratedImplementation.Datas
                .ForMember(a => a.RegionName, e => e.MapFrom(mfg => mfg.Zone.Region.RegionName))
                .ForMember(a => a.Nationality, e => e.MapFrom(mfg => mfg.Zone.Region.Country.Nationality))
                .ForMember(a => a.NationalityId, e => e.MapFrom(mfg => mfg.Zone.Region.Country.Id))
-               .ForMember(a => a.DepartmentName, e => e.MapFrom(mfg => mfg.EmployeeDetail.FirstOrDefault(x => x.Rowstatus == RowStatus.ACTIVE)!.Department.DepartmentName))
-               .ForMember(a => a.PostionName, e => e.MapFrom(mfg => mfg.EmployeeDetail.FirstOrDefault(x => x.Rowstatus == RowStatus.ACTIVE)!.Position.PositionName))
-                .ForMember(a => a.DepartmentId, e => e.MapFrom(mfg => mfg.EmployeeDetail.FirstOrDefault(x => x.Rowstatus == RowStatus.ACTIVE)!.DepartmentId))
-               .ForMember(a => a.PositionId, e => e.MapFrom(mfg => mfg.EmployeeDetail.FirstOrDefault(x => x.Rowstatus == RowStatus.ACTIVE)!.PositionId))
+
                .ForMember(a => a.EmploymentStatus, e => e.MapFrom(mfg => mfg.EmploymentStatus.ToString()))
                .ForMember(a => a.CountryId, e => e.MapFrom(mfg => mfg.Zone.Region.CountryId))
                .ForMember(a =>  a.IsApproved, e => e.MapFrom(mfg => mfg.IsApproved))

@@ -168,7 +168,7 @@ export class UpdateEmployeeComponent implements OnInit {
         birthDate:this.changeDateTime(this.EmployeeForm.value.birthDate),
         maritalStatus: this.EmployeeForm.value.maritalStatus,
         employmentType: this.EmployeeForm.value.employmentType,
-        employmentStatus: this.EmployeeForm.value.employmentStatus,
+      
         paymentType: this.EmployeeForm.value.paymentType,
         employmentDate: this.changeDateTime(this.EmployeeForm.value.employmentDate),
         pensionCode: this.EmployeeForm.value.pensionCode.toString(),

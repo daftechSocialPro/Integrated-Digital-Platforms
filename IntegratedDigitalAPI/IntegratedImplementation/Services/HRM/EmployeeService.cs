@@ -105,20 +105,20 @@ namespace IntegratedImplementation.Services.HRM
                 await _dbContext.Employees.AddAsync(employee);
                 await _dbContext.SaveChangesAsync();
 
-                EmploymentDetail employmentDetail = new EmploymentDetail()
-                {
-                    Id = Guid.NewGuid(),
-                    CreatedById = addEmployee.CreatedById,
-                    CreatedDate = DateTime.Now,
-                    EmployeeId = employee.Id,
-                    EmploymentStatus = EmploymentStatus.ACTIVE,
-                    DepartmentId = addEmployee.DepartmentId,
-                    PositionId = addEmployee.PositionId,
-                    StartDate = addEmployee.EmploymentDate,
-                    Salary = addEmployee.Salary
-                };
-                await _dbContext.EmploymentDetails.AddAsync(employmentDetail);
-                await _dbContext.SaveChangesAsync();
+                //EmploymentDetail employmentDetail = new EmploymentDetail()
+                //{
+                //    Id = Guid.NewGuid(),
+                //    CreatedById = addEmployee.CreatedById,
+                //    CreatedDate = DateTime.Now,
+                //    EmployeeId = employee.Id,
+                //    EmploymentStatus = EmploymentStatus.ACTIVE,
+                //    DepartmentId = addEmployee.DepartmentId,
+                //    PositionId = addEmployee.PositionId,
+                //    StartDate = addEmployee.EmploymentDate,
+                //    Salary = addEmployee.Salary
+                //};
+                //await _dbContext.EmploymentDetails.AddAsync(employmentDetail);
+                //await _dbContext.SaveChangesAsync();
 
                 var employeeApprovers = _dbContext.UserRoles.Where(x => x.RoleId == "6").Select(x => x.UserId).ToList();
 
@@ -355,6 +355,9 @@ namespace IntegratedImplementation.Services.HRM
         }
         public async Task<EmployeeGetDto> GetEmployee(Guid employeeId)
         {
+
+            var employees = await _dbContext.Employees
+                .Where(x => x.Id == employeeId).ToListAsync();
             var employee = await _dbContext.Employees
                 .Where(x => x.Id == employeeId)
                 .AsNoTracking()
@@ -619,6 +622,15 @@ namespace IntegratedImplementation.Services.HRM
         public async Task<ResponseMessage> AddEmployeeHistory(EmployeeHistoryPostDto addEmployeeHistory)
         {
 
+
+            var currentHistories = await _dbContext.EmploymentDetails.Where(x => x.Rowstatus == RowStatus.ACTIVE && x.EmployeeId == addEmployeeHistory.EmployeeId).ToListAsync();
+
+            currentHistories.ForEach(x =>
+            {
+                x.Rowstatus = RowStatus.INACTIVE;
+            });
+
+            await _dbContext.SaveChangesAsync();
 
             EmploymentDetail employmentDetail = new EmploymentDetail()
             {
