@@ -13,16 +13,19 @@
                         <div class="modal-body">
                             <div class="row g-3">
                                 <div class="col-md-6">
-                                    <app-autocomplete *ngIf="employeeList.length > 0" [data]="employeeList"
+                                    <label>Employee</label>
+                                    <app-autocomplete  *ngIf="employeeList.length > 0" [isDisabled]="isDisabled" [data]="employeeList"
                                         [selectedId]="selectEmployeee"
                                         (selectedItem)="selectEmployee($event)"></app-autocomplete>
                                 </div>
                                 <div class="col-md-6">
+                                    <label>Immediate  Supervisor</label>
                                     <app-autocomplete *ngIf="supervisorList.length > 0" [data]="supervisorList"
                                         [selectedId]="selectSupervisor" 
                                         (selectedItem)="selectSupervisorEvent($event)"></app-autocomplete>
                                 </div>
                                 <div class="col-md-6">
+                                    <label>Second Supervisor</label>
                                     <app-autocomplete *ngIf="secondSupervisorList.length > 0" 
                                         [data]="secondSupervisorList" [selectedId]="selectSecondSupervisor"
                                         (selectedItem)="selectSecondSupervisorEvent($event)"></app-autocomplete>

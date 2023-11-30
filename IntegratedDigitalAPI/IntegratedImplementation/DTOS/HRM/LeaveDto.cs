@@ -10,7 +10,7 @@ namespace IntegratedImplementation.DTOS.HRM
     public record  LeaveTypePostDto
     {
         public string Name { get; set; } = null!;
-
+        public string AmharicName { get; set; } = null!;
         public string LeaveCategory { get; set; } = null!;
 
         public int MinDate { get; set; }
@@ -25,7 +25,8 @@ namespace IntegratedImplementation.DTOS.HRM
     {
         public Guid Id { get; set; }
         public string Name { get; set; } = null!;
-
+        public string AmharicName { get; set; } = null!;
+        public string? Remark { get; set; }
         public string LeaveCategory { get; set; } = null!;
 
         public int MinDate { get; set; }

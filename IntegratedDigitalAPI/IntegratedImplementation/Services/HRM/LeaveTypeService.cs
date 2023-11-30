@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using static IntegratedInfrustructure.Data.EnumList;
@@ -29,10 +30,25 @@ namespace IntegratedImplementation.Services.HRM
             try
             {
 
+                var exists = await _dbContext.LeaveTypes.AnyAsync(x => x.Name == LeaveTypePost.Name);
+
+                if (exists)
+                    return new ResponseMessage { Success = false, Message = "Leave Type already exists" };
+
+                if (Enum.Parse<LeaveCategory>(LeaveTypePost.LeaveCategory) == LeaveCategory.ANNUAL)
+                {
+                    var anualExist = await _dbContext.LeaveTypes.AnyAsync(x => x.LeaveCategory == LeaveCategory.ANNUAL);
+
+                    if (anualExist)
+                        return new ResponseMessage { Success = false, Message = "Leave Type already exists" };
+                }
+
+
                 LeaveType LeaveType = new LeaveType
                 {
                     Id = Guid.NewGuid(),
                     Name = LeaveTypePost.Name,
+                    AmharicName = LeaveTypePost.AmharicName,
                     LeaveCategory = Enum.Parse<LeaveCategory>(LeaveTypePost.LeaveCategory),
                     MinDate = LeaveTypePost.MinDate,
                     MaxDate = LeaveTypePost.MaxDate,
@@ -69,6 +85,7 @@ namespace IntegratedImplementation.Services.HRM
             {
                 Id = x.Id,
                 Name = x.Name,
+                AmharicName = x.AmharicName,
                 LeaveCategory = x.LeaveCategory.ToString(),
                 MinDate = x.MinDate,
                 MaxDate = x.MaxDate,
@@ -87,11 +104,27 @@ namespace IntegratedImplementation.Services.HRM
 
             try
             {
+
+                var exists = await _dbContext.LeaveTypes.AnyAsync(x => x.Name == LeaveType.Name && x.Id != LeaveType.Id);
+
+                if (exists)
+                    return new ResponseMessage { Success = false, Message = "Leave Type already exists" };
+
+
+                if (Enum.Parse<LeaveCategory>(LeaveType.LeaveCategory) == LeaveCategory.ANNUAL)
+                {
+                    var anualExist = await _dbContext.LeaveTypes.AnyAsync(x => x.LeaveCategory == LeaveCategory.ANNUAL && x.Id != LeaveType.Id);
+
+                    if (anualExist)
+                        return new ResponseMessage { Success = false, Message = "Leave Type already exists" };
+                }
+
                 var currentLeaveType = await _dbContext.LeaveTypes.FirstOrDefaultAsync(x => x.Id.Equals(LeaveType.Id));
 
                 if (currentLeaveType != null)
                 {
                     currentLeaveType.Name = LeaveType.Name;
+                    currentLeaveType.AmharicName = LeaveType.AmharicName;
                     currentLeaveType.LeaveCategory = Enum.Parse<LeaveCategory>(LeaveType.LeaveCategory);
                     currentLeaveType.MinDate = LeaveType.MinDate;
                     currentLeaveType.MaxDate = LeaveType.MaxDate;

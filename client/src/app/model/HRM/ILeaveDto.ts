@@ -3,6 +3,7 @@ export interface LeaveTypePostDto {
 
 
     name: string,
+    amharicName: string;
     leaveCategory: string,
     minDate: number,
     maxDate: number,
@@ -14,6 +15,7 @@ export interface LeaveTypeGetDto {
 
     id: string,
     name: string,
+    amharicName: string;
     leaveCategory: string,
     minDate: number,
     maxDate: number,

@@ -45,14 +45,34 @@ namespace IntegratedImplementation.Services.HRM
                 GrossSalary = employmentDetail.Salary,
                 EmployeerAddress = companyName.Address,
                 EmployerName = companyName.CompanyName,
-                GrossSalaryInWord = NumberExtensions.toWords(employmentDetail.Salary),
                 JobTitle = employmentDetail.Position.PositionName,
                 PhoneNumber = employmentDetail.Employee.PhoneNumber,
                 PlaceOfWork = "",
-                ReportingTo = imediateSupervisor != null ? $"{imediateSupervisor.Supervisor.FirstName} {imediateSupervisor.Supervisor.MiddleName} {imediateSupervisor.Supervisor.LastName}" : " ",
-                SourceOfFund = "",
+                ReportingTo = imediateSupervisor != null ? $"{imediateSupervisor.Supervisor.FirstName} {imediateSupervisor.Supervisor.MiddleName} {imediateSupervisor.Supervisor.LastName}" : "",
+                SourceOfFund = employmentDetail.SourceOfSalary.ToString(),
                 TypeOfEmployement = employmentDetail.Employee.EmploymentType.ToString()
             };
+
+            currentContract.GrossSalaryInWord = NumberExtensions.toWords(employmentDetail.Salary);
+
+            var currentAllowances = await _dbContext.EmployeeBenefits.Include(x => x.Benefit)
+                                            .Where(x => x.EmployeeId ==
+                                            employmentDetail.EmployeeId && 
+                                            x.Rowstatus == EnumList.RowStatus.ACTIVE 
+                                            && x.Benefit.AddOnContract).ToListAsync();
+            currentContract.AllowanceList = new List<ContractAllowances>();
+            foreach (var items in currentAllowances)
+            {
+                var currAllowance  = new ContractAllowances
+                {
+                    Allowance = items.Amount,
+                    AllowanceName = items.Benefit.Name,
+                    AllowanceInWord = NumberExtensions.toWords(items.Amount)
+                };
+
+                currentContract.AllowanceList.Add(currAllowance);
+
+            }
 
             return currentContract;
         }

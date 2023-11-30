@@ -29,6 +29,8 @@ namespace IntegratedImplementation.Interfaces.Configuration
         Task<List<SelectListDto>> GetBenefitDropDowns();
         Task<List<BankSelectList>> GetBankDropDowns();
 
+        Task<List<SelectListDto>> GetShiftDropDown();
+
 
     }
 }

@@ -38,8 +38,7 @@ export class AddHrmSettingComponent implements OnInit {
 
       this.hrmSettingForm = this.formBuilder.group({
         generalSetting: ['', Validators.required],
-        value: ['']
-        
+        value: ['', Validators.required]
     })
   
   

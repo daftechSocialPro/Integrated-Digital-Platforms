@@ -213,5 +213,15 @@ namespace IntegratedImplementation.Services.Configuration
                             BankDigit = x.BankDigitNumber  
                          }).ToListAsync();
         }
+
+        public async Task<List<SelectListDto>> GetShiftDropDown()
+        {
+            var shiftList = await _dbContext.ShiftLists.AsNoTracking().Select(x => new SelectListDto
+            {
+                Id = x.Id,
+                Name = x.ShiftName
+            }).ToListAsync();
+            return shiftList;
+        }
     }
 }

@@ -57,21 +57,24 @@
                                         <label for="salary"> Salary</label>
                                     </div>
                                 </div>
+
+
                                 <div class="col-md-4">
-                                    <div class="form-floating"> <input type="date" class="form-control" id="startDate"
-                                            placeholder="startDate" required formControlName="startDate">
-                                        <label for="startDate"> Start Date</label>
+                                    <div class="form-floating">
+                                        <p-calendar formControlName="startDate" [minDate]="today" [required]= "true"
+                                        [readonlyInput]="true" (onSelect)="getminEndDate($event)" placeholder="Start Date"></p-calendar>
+                                      
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="form-floating"> <input type="date" class="form-control" id="endDate"
-                                            placeholder="endDate" required formControlName="endDate">
-                                        <label for="endDate"> End Date</label>
+                                    <div class="form-floating"> 
+                                        <p-calendar formControlName="endDate" [minDate]="minDate"
+                                        [readonlyInput]="true"  placeholder="End date"></p-calendar>
                                     </div>
                                 </div>
 
                                 <div class="col-12">
-                                    <div class="form-floating"><textarea required class="form-control"
+                                    <div class="form-floating"><textarea  class="form-control"
                                             formControlName="remark" placeholder="remark" id="remark"
                                             style="height: 100px;"></textarea><label for="remark">Remark</label>
                                     </div>

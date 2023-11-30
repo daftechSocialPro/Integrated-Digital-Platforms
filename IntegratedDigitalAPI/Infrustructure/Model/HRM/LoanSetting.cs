@@ -11,6 +11,7 @@ namespace IntegratedInfrustructure.Model.HRM
     public class LoanSetting : WithIdModel
     {
         public string LoanName { get; set; } = null!;
+        public string AmharicName { get; set; } = null!;
         public TypeOfLoan TypeOfLoan { get; set; }
         public double MaxLoanAmmount { get; set; }
         public int PaymentYear { get; set; }

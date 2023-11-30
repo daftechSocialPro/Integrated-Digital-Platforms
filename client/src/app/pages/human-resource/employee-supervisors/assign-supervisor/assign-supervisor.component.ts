@@ -1,5 +1,5 @@
 import { identifierName } from '@angular/compiler';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
@@ -17,9 +17,11 @@ import { UserService } from 'src/app/services/user.service';
 export class AssignSupervisorComponent implements OnInit {
 
 
+  @Input() employeeId! : string 
+
   @Output() result = new EventEmitter<boolean>();
 
-  isDisabled: boolean = true
+  isDisabled: boolean = false
 
 
   employeeList: SelectList[] = [];
@@ -37,6 +39,18 @@ export class AssignSupervisorComponent implements OnInit {
     this.selectEmployeee = this.userService.getCurrentUser().employeeId
     this.getEmployees()
 
+
+    if (this.employeeId){
+      this.isDisabled= true
+      this.selectEmployeee = this.employeeId
+   
+    }
+    this.supervisorForm = this.formBuilder.group({
+      selectEmployeee: ['', Validators.required],
+      selectSupervisor: ['', Validators.required],
+      selectSecondSupervisor: ['', Validators.required],
+    })
+
   }
   constructor(
     private dopdownService: DropDownService,
@@ -46,11 +60,7 @@ export class AssignSupervisorComponent implements OnInit {
     private messageService: MessageService,
     private userService: UserService) {
 
-    this.supervisorForm = this.formBuilder.group({
-      selectEmployeee: ['', Validators.required],
-      selectSupervisor: ['', Validators.required],
-      selectSecondSupervisor: ['', Validators.required],
-    })
+   
   }
 
 

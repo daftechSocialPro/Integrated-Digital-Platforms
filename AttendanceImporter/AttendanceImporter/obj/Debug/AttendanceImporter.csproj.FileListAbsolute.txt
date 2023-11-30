@@ -1,0 +1,156 @@
+C:\Users\HILMIKHA PC3\documents\visual studio 2015\Projects\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.exe.config
+C:\Users\HILMIKHA PC3\documents\visual studio 2015\Projects\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.exe
+C:\Users\HILMIKHA PC3\documents\visual studio 2015\Projects\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.pdb
+C:\Users\HILMIKHA PC3\documents\visual studio 2015\Projects\AttendanceImporter\AttendanceImporter\bin\Debug\IMPData.dll
+C:\Users\HILMIKHA PC3\documents\visual studio 2015\Projects\AttendanceImporter\AttendanceImporter\bin\Debug\Interop.zkemkeeper.dll
+C:\Users\HILMIKHA PC3\documents\visual studio 2015\Projects\AttendanceImporter\AttendanceImporter\bin\Debug\IMPData.pdb
+C:\Users\HILMIKHA PC3\documents\visual studio 2015\Projects\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.csprojResolveAssemblyReference.cache
+C:\Users\HILMIKHA PC3\documents\visual studio 2015\Projects\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.Form1.resources
+C:\Users\HILMIKHA PC3\documents\visual studio 2015\Projects\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.Properties.Resources.resources
+C:\Users\HILMIKHA PC3\documents\visual studio 2015\Projects\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.csproj.GenerateResource.Cache
+C:\Users\HILMIKHA PC3\documents\visual studio 2015\Projects\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.exe
+C:\Users\HILMIKHA PC3\documents\visual studio 2015\Projects\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.pdb
+C:\Users\hermi\Desktop\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.exe
+C:\Users\hermi\Desktop\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.exe.config
+C:\Users\hermi\Desktop\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.exe.manifest
+C:\Users\hermi\Desktop\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.application
+C:\Users\hermi\Desktop\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.pdb
+C:\Users\hermi\Desktop\AttendanceImporter\AttendanceImporter\bin\Debug\IMPData.dll
+C:\Users\hermi\Desktop\AttendanceImporter\AttendanceImporter\bin\Debug\Interop.zkemkeeper.dll
+C:\Users\hermi\Desktop\AttendanceImporter\AttendanceImporter\bin\Debug\IMPData.pdb
+C:\Users\hermi\Desktop\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.csprojResolveAssemblyReference.cache
+C:\Users\hermi\Desktop\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.Form1.resources
+C:\Users\hermi\Desktop\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.Properties.Resources.resources
+C:\Users\hermi\Desktop\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.csproj.GenerateResource.Cache
+C:\Users\hermi\Desktop\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.exe.manifest
+C:\Users\hermi\Desktop\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.application
+C:\Users\hermi\Desktop\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.exe
+C:\Users\hermi\Desktop\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.pdb
+D:\hilmika\z farm\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.exe
+D:\hilmika\z farm\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.exe.config
+D:\hilmika\z farm\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.exe.manifest
+D:\hilmika\z farm\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.application
+D:\hilmika\z farm\AttendanceImporter\AttendanceImporter\bin\Debug\IMPData.dll
+D:\hilmika\z farm\AttendanceImporter\AttendanceImporter\bin\Debug\Interop.zkemkeeper.dll
+D:\hilmika\z farm\AttendanceImporter\AttendanceImporter\bin\Debug\IMPData.pdb
+D:\hilmika\z farm\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.csprojResolveAssemblyReference.cache
+D:\hilmika\z farm\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.Form1.resources
+D:\hilmika\z farm\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.Properties.Resources.resources
+D:\hilmika\z farm\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.csproj.GenerateResource.Cache
+D:\hilmika\z farm\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.exe.manifest
+D:\hilmika\z farm\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.application
+D:\hilmika\z farm\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.exe
+D:\hilmika\z farm\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.pdb
+D:\hilmika\z farm\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.pdb
+E:\old\hermi\hilmika\z farm\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.exe.config
+E:\old\hermi\hilmika\z farm\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.exe.manifest
+E:\old\hermi\hilmika\z farm\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.application
+E:\old\hermi\hilmika\z farm\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.exe
+E:\old\hermi\hilmika\z farm\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.pdb
+E:\old\hermi\hilmika\z farm\AttendanceImporter\AttendanceImporter\bin\Debug\IMPData.dll
+E:\old\hermi\hilmika\z farm\AttendanceImporter\AttendanceImporter\bin\Debug\Interop.zkemkeeper.dll
+E:\old\hermi\hilmika\z farm\AttendanceImporter\AttendanceImporter\bin\Debug\IMPData.pdb
+E:\old\hermi\hilmika\z farm\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.csprojResolveAssemblyReference.cache
+E:\old\hermi\hilmika\z farm\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.Form1.resources
+E:\old\hermi\hilmika\z farm\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.Properties.Resources.resources
+E:\old\hermi\hilmika\z farm\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.csproj.GenerateResource.Cache
+E:\old\hermi\hilmika\z farm\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.exe.manifest
+E:\old\hermi\hilmika\z farm\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.application
+E:\old\hermi\hilmika\z farm\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.exe
+E:\old\hermi\hilmika\z farm\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.pdb
+E:\New Projects\old\hermi\hilmika\z farm\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.exe.config
+E:\New Projects\old\hermi\hilmika\z farm\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.exe
+E:\New Projects\old\hermi\hilmika\z farm\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.pdb
+E:\New Projects\old\hermi\hilmika\z farm\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.exe.manifest
+E:\New Projects\old\hermi\hilmika\z farm\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.application
+E:\New Projects\old\hermi\hilmika\z farm\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.exe
+E:\New Projects\old\hermi\hilmika\z farm\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.pdb
+E:\New Projects\old\hermi\hilmika\z farm\AttendanceImporter\AttendanceImporter\bin\Debug\IMPData.dll
+E:\New Projects\old\hermi\hilmika\z farm\AttendanceImporter\AttendanceImporter\bin\Debug\Interop.zkemkeeper.dll
+E:\New Projects\old\hermi\hilmika\z farm\AttendanceImporter\AttendanceImporter\bin\Debug\IMPData.pdb
+E:\New Projects\old\hermi\hilmika\z farm\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.csprojResolveAssemblyReference.cache
+E:\New Projects\old\hermi\hilmika\z farm\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.Form1.resources
+E:\New Projects\old\hermi\hilmika\z farm\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.Properties.Resources.resources
+E:\New Projects\old\hermi\hilmika\z farm\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.csproj.GenerateResource.Cache
+E:\New Projects\old\hermi\hilmika\z farm\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.exe.manifest
+E:\New Projects\old\hermi\hilmika\z farm\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.application
+D:\Projects\ERP\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.exe.config
+D:\Projects\ERP\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.exe.manifest
+D:\Projects\ERP\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.application
+D:\Projects\ERP\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.exe
+D:\Projects\ERP\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.pdb
+D:\Projects\ERP\AttendanceImporter\AttendanceImporter\bin\Debug\IMPData.dll
+D:\Projects\ERP\AttendanceImporter\AttendanceImporter\bin\Debug\Interop.zkemkeeper.dll
+D:\Projects\ERP\AttendanceImporter\AttendanceImporter\bin\Debug\IMPData.pdb
+D:\Projects\ERP\AttendanceImporter\AttendanceImporter\bin\Debug\IMPData.dll.config
+D:\Projects\ERP\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.csproj.AssemblyReference.cache
+D:\Projects\ERP\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.csproj.SuggestedBindingRedirects.cache
+D:\Projects\ERP\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.Form1.resources
+D:\Projects\ERP\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.Properties.Resources.resources
+D:\Projects\ERP\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.csproj.GenerateResource.cache
+D:\Projects\ERP\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.csproj.CoreCompileInputs.cache
+D:\Projects\ERP\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.exe.manifest
+D:\Projects\ERP\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.application
+D:\Projects\ERP\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.csproj.CopyComplete
+D:\Projects\ERP\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.exe
+D:\Projects\ERP\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.pdb
+D:\Projects\ERP\Main\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.exe.config
+D:\Projects\ERP\Main\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.exe.manifest
+D:\Projects\ERP\Main\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.application
+D:\Projects\ERP\Main\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.exe
+D:\Projects\ERP\Main\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.pdb
+D:\Projects\ERP\Main\AttendanceImporter\AttendanceImporter\bin\Debug\IMPData.dll
+D:\Projects\ERP\Main\AttendanceImporter\AttendanceImporter\bin\Debug\Interop.zkemkeeper.dll
+D:\Projects\ERP\Main\AttendanceImporter\AttendanceImporter\bin\Debug\IMPData.pdb
+D:\Projects\ERP\Main\AttendanceImporter\AttendanceImporter\bin\Debug\IMPData.dll.config
+D:\Projects\ERP\Main\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.csproj.AssemblyReference.cache
+D:\Projects\ERP\Main\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.csproj.SuggestedBindingRedirects.cache
+D:\Projects\ERP\Main\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.Form1.resources
+D:\Projects\ERP\Main\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.Properties.Resources.resources
+D:\Projects\ERP\Main\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.csproj.GenerateResource.cache
+D:\Projects\ERP\Main\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.csproj.CoreCompileInputs.cache
+D:\Projects\ERP\Main\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.exe.manifest
+D:\Projects\ERP\Main\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.application
+D:\Projects\ERP\Main\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.csproj.CopyComplete
+D:\Projects\ERP\Main\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.exe
+D:\Projects\ERP\Main\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.pdb
+D:\Projects\ERP\Main\OccasionERP\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.exe.config
+D:\Projects\ERP\Main\OccasionERP\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.exe.manifest
+D:\Projects\ERP\Main\OccasionERP\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.application
+D:\Projects\ERP\Main\OccasionERP\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.exe
+D:\Projects\ERP\Main\OccasionERP\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.pdb
+D:\Projects\ERP\Main\OccasionERP\AttendanceImporter\AttendanceImporter\bin\Debug\IMPData.dll
+D:\Projects\ERP\Main\OccasionERP\AttendanceImporter\AttendanceImporter\bin\Debug\Interop.zkemkeeper.dll
+D:\Projects\ERP\Main\OccasionERP\AttendanceImporter\AttendanceImporter\bin\Debug\IMPData.pdb
+D:\Projects\ERP\Main\OccasionERP\AttendanceImporter\AttendanceImporter\bin\Debug\IMPData.dll.config
+D:\Projects\ERP\Main\OccasionERP\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.csproj.AssemblyReference.cache
+D:\Projects\ERP\Main\OccasionERP\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.csproj.SuggestedBindingRedirects.cache
+D:\Projects\ERP\Main\OccasionERP\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.Form1.resources
+D:\Projects\ERP\Main\OccasionERP\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.Properties.Resources.resources
+D:\Projects\ERP\Main\OccasionERP\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.csproj.GenerateResource.cache
+D:\Projects\ERP\Main\OccasionERP\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.csproj.CoreCompileInputs.cache
+D:\Projects\ERP\Main\OccasionERP\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.exe.manifest
+D:\Projects\ERP\Main\OccasionERP\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.application
+D:\Projects\ERP\Main\OccasionERP\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.csproj.CopyComplete
+D:\Projects\ERP\Main\OccasionERP\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.exe
+D:\Projects\ERP\Main\OccasionERP\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.pdb
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.csproj.AssemblyReference.cache
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.csproj.SuggestedBindingRedirects.cache
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.Form1.resources
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.Properties.Resources.resources
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.csproj.GenerateResource.cache
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.csproj.CoreCompileInputs.cache
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.exe
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.pdb
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.exe.config
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.exe.manifest
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.application
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.exe
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.pdb
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\bin\Debug\IMPData.dll
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\bin\Debug\Interop.zkemkeeper.dll
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\bin\Debug\IMPData.pdb
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\bin\Debug\IMPData.dll.config
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.exe.manifest
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.application
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.csproj.CopyComplete

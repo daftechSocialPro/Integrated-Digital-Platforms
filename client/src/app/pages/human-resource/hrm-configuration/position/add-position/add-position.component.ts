@@ -32,7 +32,7 @@ private messageService : MessageService,
 
       this.PositionForm = this.formBuilder.group({
         PositionName: ['', Validators.required],
-        JobTitle: ['']
+        amharicName: ['', Validators.required]
         
     })
   
@@ -48,7 +48,7 @@ private messageService : MessageService,
       var PositionPost : PositionPostDto ={
         
         positionName : this.PositionForm.value.PositionName,
-        jobTitle : this.PositionForm.value.JobTitle,
+        amharicName : this.PositionForm.value.amharicName,
         createdById : this.user.userId
 
       }

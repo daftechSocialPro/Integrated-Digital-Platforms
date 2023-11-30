@@ -23,7 +23,7 @@ export class UpdatePositionComponent implements OnInit {
 
     this.PositionForm = this.formBuilder.group({
       PositionName: [this.Position.positionName, Validators.required],
-      JobTitle: [this.Position.jobTitle]      
+      amharicName: [this.Position.amharicName, Validators.required]      
   })
   }
 
@@ -45,7 +45,7 @@ export class UpdatePositionComponent implements OnInit {
       var PositionUpdate : PositionGetDto ={
         
         positionName : this.PositionForm.value.PositionName,
-        jobTitle : this.PositionForm.value.JobTitle,
+        amharicName : this.PositionForm.value.amharicName,
         id : this.Position.id
       }
 

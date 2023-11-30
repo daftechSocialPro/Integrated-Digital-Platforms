@@ -18,6 +18,7 @@ export class AddLeaveTypeComponent implements OnInit {
  
   LeaveTypeForm!: FormGroup;
   user !: UserView
+  leaveCategory: string = "";
   ngOnInit(): void {
     this.user  = this.userService.getCurrentUser()   
   }
@@ -32,11 +33,11 @@ export class AddLeaveTypeComponent implements OnInit {
 
       this.LeaveTypeForm = this.formBuilder.group({
         name: ['', Validators.required],
+        amharicName: ['', Validators.required],
         leaveCategory: ['',Validators.required],
-        minDate: ['',Validators.required],
-        maxDate: ['',Validators.required],
-        incrementValue: ['',Validators.required],
-        
+        minDate: [''],
+        maxDate: [''],
+        incrementValue: [''],
     })
   
   }
@@ -49,14 +50,13 @@ export class AddLeaveTypeComponent implements OnInit {
     if (this.LeaveTypeForm.valid){
 
       var LeaveTypePost : LeaveTypePostDto ={
-        
         name : this.LeaveTypeForm.value.name ,
+        amharicName: this.LeaveTypeForm.value.amharicName,
         leaveCategory : this.LeaveTypeForm.value.leaveCategory,
         minDate : this.LeaveTypeForm.value.minDate,
-        maxDate : this.LeaveTypeForm.value.maxDate,
-        incrementValue : this.LeaveTypeForm.value.incrementValue,
+        maxDate : Number(this.LeaveTypeForm.value.maxDate),
+        incrementValue : Number(this.LeaveTypeForm.value.incrementValue),
         createdById : this.user.userId
-
       }
 
       this.hrmService.addLeaveType(LeaveTypePost).subscribe({
@@ -78,6 +78,12 @@ export class AddLeaveTypeComponent implements OnInit {
 
     }
 
+
+  }
+
+  
+  changeLeaveCategory(value: any){
+      this.leaveCategory = value.target.value;
   }
 
 }

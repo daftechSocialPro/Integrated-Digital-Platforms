@@ -15,11 +15,13 @@ export class UpdateLeaveTypeComponent implements OnInit {
   @Input() LeaveType !: LeaveTypeGetDto
 
   LeaveTypeForm!: FormGroup;
+  leaveCategory: string = "";
 
   ngOnInit(): void {
 
     this.LeaveTypeForm = this.formBuilder.group({
       name: [this.LeaveType.name, Validators.required],
+      amharicName: [this.LeaveType.amharicName, Validators.required],
       leaveCategory: [this.LeaveType.leaveCategory,Validators.required],
       minDate: [this.LeaveType.minDate,Validators.required],
       maxDate: [this.LeaveType.maxDate,Validators.required],
@@ -47,6 +49,7 @@ export class UpdateLeaveTypeComponent implements OnInit {
       var LeaveTypeUpdate: LeaveTypeGetDto = {
 
         name : this.LeaveTypeForm.value.name ,
+        amharicName: this.LeaveTypeForm.value.amharicName,
         leaveCategory : this.LeaveTypeForm.value.leaveCategory,
         minDate : this.LeaveTypeForm.value.minDate,
         maxDate : this.LeaveTypeForm.value.maxDate,
@@ -74,6 +77,12 @@ export class UpdateLeaveTypeComponent implements OnInit {
     }
 
   }
+
+
+    
+  changeLeaveCategory(value: any){
+    this.leaveCategory = value.target.value;
+}
 
 }
 

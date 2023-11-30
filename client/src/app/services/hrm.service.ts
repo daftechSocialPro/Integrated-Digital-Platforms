@@ -22,6 +22,9 @@ import { ContractLetterDto } from '../model/PrintOuts/IContractLetter.Model';
 import { AddBenefitListDto, BenefitListDto } from '../model/HRM/IBenefitListDto';
 import { AddEmployeeBenefitDto, EmployeeBenefitListDto } from '../model/HRM/IEmployeeBenefitDto';
 import { RehireEmployeeDto } from '../model/HRM/IRehireEmployeeDto';
+import { DeviceSettingDto } from '../model/HRM/IDeviceSettingDto';
+import { AddEmployeeFingerPrintDto, EmployeeFingerPrintListDto } from '../model/HRM/IEmployeeFingerPrintDto';
+import { BindShiftDto, ShiftListDto } from '../model/HRM/IShiftSettingDto';
 
 export interface toastPayload {
     message: string;
@@ -111,6 +114,18 @@ export class HrmService {
 
     updateBenefitList(updateBenefitList: AddBenefitListDto) {
         return this.http.put<ResponseMessage>(this.baseUrl + "/HrmSetting/UpdateBenefitList", updateBenefitList)
+    }
+
+    /// Device Settings
+
+    getDeviceSettingList() {
+        return this.http.get<DeviceSettingDto[]>(this.baseUrl + "/HrmSetting/GetDeviceSettingList")
+    }
+    addDeviceSetting(addDevice: DeviceSettingDto) {
+        return this.http.post<ResponseMessage>(this.baseUrl + "/HrmSetting/AddDeviceSetting", addDevice)
+    }
+    updateDeviceSetting(updateDevice: DeviceSettingDto) {
+        return this.http.put<ResponseMessage>(this.baseUrl + "/HrmSetting/UpdateDeviceSetting", updateDevice)
     }
 
     //GetEmployeeswithContractend
@@ -476,5 +491,34 @@ export class HrmService {
         return this.http.post<ResponseMessage>(this.baseUrl + "/EmployementDetail/AddEmployeeBenefit", addBenefit);
     }
 
+
+    /// Employee Finger PRint
+
+    getFingerPrintEmployees() {
+        return this.http.get<EmployeeFingerPrintListDto[]>(this.baseUrl + "/EmployeeAttencance/GetFingerPrintEmployees")
+    }
+
+    addFingerPrint(addFingerPrint: AddEmployeeFingerPrintDto) {
+        return this.http.post<ResponseMessage>(this.baseUrl + "/EmployeeAttencance/AddFingerPrint", addFingerPrint)
+    }
+
+
+    getShiftLists() {
+        return this.http.get<ShiftListDto[]>(this.baseUrl + "/EmployeeAttencance/GetShiftLists")
+    }
+
+    addShift(addShift: ShiftListDto) {
+        return this.http.post<ResponseMessage>(this.baseUrl + "/EmployeeAttencance/AddShift", addShift)
+    }
+
+
+    bindShift(bindShift: BindShiftDto) {
+        return this.http.post<ResponseMessage>(this.baseUrl + "/EmployeeAttencance/BindShift", bindShift)
+    }
+
+    updateShift(updateDevice: ShiftListDto) {
+        return this.http.put<ResponseMessage>(this.baseUrl + "/EmployeeAttencance/UpdateShift", updateDevice)
+    }
     
+
 }

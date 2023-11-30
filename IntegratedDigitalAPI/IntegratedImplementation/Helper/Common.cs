@@ -234,7 +234,7 @@ namespace IntegratedImplementation.Helper
     {
         public static string toWords(this double ammount)
         {
-            string[] newNumber = ammount.ToString().Split('0');
+            string[] newNumber = ammount.ToString().Split('.');
 
             int number = Convert.ToInt32(newNumber[0]);
             int fraction = newNumber.Length > 1 ? Convert.ToInt32(newNumber[1]) : 0;
@@ -362,6 +362,23 @@ namespace IntegratedImplementation.Helper
             {
                 words += (number / 100).toWordsInt().TrimEnd() + " Hundred ";
                 number %= 100;
+            }
+            if (number > 0)
+            {
+                if (words != "")
+                    words += "and ";
+
+                var unitsMap = new[] { "Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen" };
+                var tensMap = new[] { "Zero", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety" };
+
+                if (number < 20)
+                    words += unitsMap[number];
+                else
+                {
+                    words += tensMap[number / 10];
+                    if ((number % 10) > 0)
+                        words += "-" + unitsMap[number % 10];
+                }
             }
 
             return words;

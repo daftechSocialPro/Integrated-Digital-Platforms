@@ -23,7 +23,9 @@ export class AddEmploymentHistoryComponent implements OnInit {
   HistoryForm !: FormGroup;
   departments!: SelectList[];
   positions!: SelectList[];
-  user ! : UserView
+  user ! : UserView;
+  today: Date = new Date();
+  minDate: Date = new Date();
   
   ngOnInit(): void {
     this.user = this.userService.getCurrentUser()
@@ -45,7 +47,7 @@ export class AddEmploymentHistoryComponent implements OnInit {
         positionId: [null, Validators.required],
         salary: [null, Validators.required],
         startDate: [null, Validators.required],
-        endDate: [null, Validators.required],
+        endDate: [null],
         sourceOfSalary:[null,Validators.required],
         remark : [null,Validators.required]
       })
@@ -107,5 +109,9 @@ export class AddEmploymentHistoryComponent implements OnInit {
     }
 
   }
+
+  getminEndDate(date: any){
+    this.minDate = date;
+}
 
 }

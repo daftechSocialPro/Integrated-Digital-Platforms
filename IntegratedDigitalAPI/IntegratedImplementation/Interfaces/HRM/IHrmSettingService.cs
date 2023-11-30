@@ -20,6 +20,13 @@ namespace IntegratedImplementation.Interfaces.HRM
         Task<ResponseMessage> AddBenefitList(AddBenefitListDto addBenefitList);
         Task<ResponseMessage> UpdateBenefitList(UpdateBenefitListDto updateBenefitList);
 
+
+        Task<List<DeviceSettingDto>> GetDeviceSettingList();
+        Task<List<DeviceLitsDto>> GetDeviceList();
+        Task<ResponseMessage> AddDeviceSetting(DeviceSettingDto deviceSettingDto);
+        Task<ResponseMessage> UpdateDeviceSetting(DeviceSettingDto deviceSettingDto);
+
+
         Task<List<PerformanceSettingDto>> GetPerformanceSettings();
         Task<ResponseMessage> AddPerformanceSetting(PerformanceSettingDto performanceSetting);
     }

@@ -356,12 +356,18 @@ namespace IntegratedImplementation.Services.HRM
         public async Task<EmployeeGetDto> GetEmployee(Guid employeeId)
         {
 
-            var employees = await _dbContext.Employees
-                .Where(x => x.Id == employeeId).ToListAsync();
+            //var employees = await _dbContext.Employees
+            //    .Where(x => x.Id == employeeId).ToListAsync();
             var employee = await _dbContext.Employees
                 .Where(x => x.Id == employeeId)
                 .AsNoTracking()
                 .ProjectTo<EmployeeGetDto>(_mapper.ConfigurationProvider).FirstAsync();
+
+            var currentShift = await _dbContext.EmployeeShifts.Include(x => x.ShiftList).FirstOrDefaultAsync(x => x.EmployeeId == employeeId);
+            if (currentShift != null)
+            {
+                employee.Shift = currentShift.ShiftList.ShiftName;
+            }
 
             return employee;
         }
@@ -373,6 +379,7 @@ namespace IntegratedImplementation.Services.HRM
                 .AsNoTracking()
                 .ProjectTo<VolunterGetDto>(_mapper.ConfigurationProvider).FirstAsync();
 
+         
             return employee;
         }
 
@@ -405,7 +412,7 @@ namespace IntegratedImplementation.Services.HRM
                     if (response.Success)
                     {
                         var email = new EmailMetadata
-                        (employee.Email, "Account Registration\n\n",
+                        (employee.Email, "Account Registration",
                             $"Dear {employee.FirstName} {employee.MiddleName} {employee.LastName} , Your account has been registerd." +
                             $"\n\n Your user name is {employee.Email}" +
                             $"\n\n and your password is {currentUser.Password}\n\n Regards,\nEMIA");

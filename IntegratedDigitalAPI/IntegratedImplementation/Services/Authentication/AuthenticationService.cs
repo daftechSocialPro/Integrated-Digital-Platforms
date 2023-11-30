@@ -2,6 +2,8 @@
 
 using Implementation.Helper;
 using Implementation.Interfaces.Authentication;
+using IntegratedImplementation.Helper;
+using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedInfrustructure.Data;
 using IntegratedInfrustructure.Model.Authentication;
 using Microsoft.AspNetCore.Identity;
@@ -23,12 +25,16 @@ namespace Implementation.Services.Authentication
         private UserManager<ApplicationUser> _userManager;
         private SignInManager<ApplicationUser> _signinManager;
         private readonly ApplicationDbContext _dbContext;
+        private readonly IGeneralConfigService _generalConfig;
+        private readonly IEmailService _emailService;
 
-        public AuthenticationService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signinManager, ApplicationDbContext dbContext)
+        public AuthenticationService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signinManager, ApplicationDbContext dbContext, IGeneralConfigService generalConfig, IEmailService emailService)
         {
             _userManager = userManager;
             _signinManager = signinManager;
             _dbContext = dbContext;
+            _generalConfig = generalConfig;
+            _emailService = emailService;
         }
 
       
@@ -103,6 +109,69 @@ namespace Implementation.Services.Authentication
                 };
             }
 
+        }
+
+
+        public async Task<ResponseMessage> ForgetPassword(string email)
+        {
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(email);
+
+
+                if (user != null)
+                {
+                    if (user.RowStatus == RowStatus.INACTIVE)
+                        return new ResponseMessage()
+                        {
+                            Success = false,
+                            Message = "Error!! please contact Your Adminstrator"
+                        };
+
+                    var generatedPass = _generalConfig.GeneratePassword();
+
+                    var result = await _userManager.RemovePasswordAsync(user);
+                    if (result.Succeeded)
+                    {
+                        var changeResult = await _userManager.AddPasswordAsync(user, generatedPass);
+
+                        if (changeResult.Succeeded)
+                        {
+                            var employee = await _dbContext.Employees.FirstOrDefaultAsync(x => x.Id == user.EmployeeId);
+
+                            if (employee == null)
+                                return new ResponseMessage { Success = false, Message = "Could Not Find Employee" };
+
+                            var sendEmail = new EmailMetadata
+                             (user.Email, "Forgot Password",
+                          $"Dear {employee.FirstName} {employee.MiddleName} {employee.LastName} , " +
+                          $"\n\n and your password is {generatedPass}\n\n Please Dont share Your password to " +
+                          $"anyone and change the password as soon as you login to the system. \n\n\n Regards,\nEMIA");
+                            await _emailService.Send(sendEmail);
+
+
+                            return new ResponseMessage { Success = true, Message = "Please Check Your Email for further details" };
+                        }
+
+                        return new ResponseMessage { Success = false, Message = "Error has Occured Please Try again" };
+                    }
+                    return new ResponseMessage { Success = false, Message = "Error has Occured Please Try again" };
+                }
+                else
+                    return new ResponseMessage()
+                    {
+                        Success = false,
+                        Message = "Enterd Email is not correct"
+                    };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseMessage()
+                {
+                    Success = false,
+                    Message = ex.Message
+                };
+            }
         }
 
         public async Task<List<UserListDto>> GetUserList()

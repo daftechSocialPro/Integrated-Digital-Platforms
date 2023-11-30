@@ -60,9 +60,9 @@
       <h6 style="text-align: center;">Payment of salary and allowance </h6>
       
         2.1 The employee shall be paid a monthly gross salary of Birr {{contractLetter.grossSalary}}
-        (<u>{{contractLetter.grossSalaryInWord}}</u>) with {{contractLetter.transportAllowance}}
-        (<u>{{contractLetter.transportAllowanceInWord}}</u>) Transport Allowance,{{contractLetter.mobileAllowance}}
-        (<u>{{contractLetter.mobileAllowanceInWord}}</u>) mobile allowance.
+        (<u>{{contractLetter.grossSalaryInWord}}</u>) with <span *ngFor="let item of contractLetter.allowanceList">
+           {{item.allowance}}  (<u>{{item.allowanceInWord}}</u>) {{item.allowanceName}}
+        </span>
         <br />
         2.2. All legal income tax, other taxes authorized by the law, and other liabilities shall be deducted according
         to the
@@ -102,8 +102,8 @@
       <h6 style="text-align: center;">Part III</h6>
       <h6 style="text-align: center;">Duties and Obligation of the Employee</h6>
     
-      <ol style="text-align: justify;">
-        <li value="3.1">
+      <ol start="a" style="text-align: justify;">
+        <li>
           The employee is obliged to devote all his/her time energy and ability to his/her work and undertake to
           discharge
           his duties and responsibilities conscientiously and diligently so that the objectives and aims of EMwA must be
@@ -156,7 +156,6 @@
           project budget.
         </li>
         <li>
-          value="3.1"
         </li>
         
       </ol>

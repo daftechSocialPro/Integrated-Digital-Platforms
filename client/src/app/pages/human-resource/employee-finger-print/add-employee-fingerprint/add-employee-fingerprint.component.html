@@ -1,0 +1,44 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Add Finger Print</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Finger Print Detail</h5>
+            <div class="row">
+                <div class="col-lg-12">
+                    <form class="" [formGroup]="fingerPrintForm" (ngSubmit)="submit()">
+                        <div class="modal-body">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="DepartmentName">Employee Name</label>
+                                        <app-autocomplete *ngIf="employeeList.length>0"  [data]="employeeList" [selectedId]="selectEmployeee"
+                                            (selectedItem)="selectEmployee($event)" required></app-autocomplete>
+                    
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="fingerPrint">Finger Print Code</label>
+                                        <input type="number" min="0" class="form-control" id="fingerPrint" placeholder="Finger Print Code"
+                                            formControlName="fingerPrint" required>
+                                       
+                                    </div>
+                                </div>
+                                                                                    
+                            </div>
+                        </div>
+                        <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
+                            (click)="closeModal()">Close</button>
+                        <button type="button" type="submit"  [disabled]="!fingerPrintForm.valid"
+                            class="btn btn-outline-primary">Create</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

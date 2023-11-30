@@ -239,6 +239,14 @@ import { TrainingDashboardComponent } from './pages/training/training-dashboard/
 import { InputMaskModule } from 'primeng/inputmask';
 import { DatePipe } from '@angular/common';
 import { RehireEmployeeComponent } from './pages/human-resource/employee-managment/employee-detail/rehire-employee/rehire-employee.component';
+import { DeviceSettingComponent } from './pages/human-resource/hrm-configuration/device-setting/device-setting.component';
+import { AddDeviceSettingsComponent } from './pages/human-resource/hrm-configuration/device-setting/add-device-settings/add-device-settings.component';
+import { EmployeeFingerPrintComponent } from './pages/human-resource/employee-finger-print/employee-finger-print.component';
+import { AddEmployeeFingerprintComponent } from './pages/human-resource/employee-finger-print/add-employee-fingerprint/add-employee-fingerprint.component';
+import { ForgetPasswordComponent } from './auth/pages-login/forget-password/forget-password.component';
+import { ShiftSettingComponent } from './pages/human-resource/hrm-configuration/shift-setting/shift-setting.component';
+import { AddShiftSettingComponent } from './pages/human-resource/hrm-configuration/shift-setting/add-shift-setting/add-shift-setting.component';
+import { BindShiftComponent } from './pages/human-resource/employee-managment/employee-detail/bind-shift/bind-shift.component';
 
 @NgModule({
   declarations: [
@@ -531,7 +539,15 @@ import { RehireEmployeeComponent } from './pages/human-resource/employee-managme
     BankListComponent,
     AddBankListComponent,
     TrainingDashboardComponent,
-    RehireEmployeeComponent
+    RehireEmployeeComponent,
+    DeviceSettingComponent,
+    AddDeviceSettingsComponent,
+    EmployeeFingerPrintComponent,
+    AddEmployeeFingerprintComponent,
+    ForgetPasswordComponent,
+    ShiftSettingComponent,
+    AddShiftSettingComponent,
+    BindShiftComponent
     //  AddMeasurementComponent,
     //  UpdateMeasurmentComponent
   ],

@@ -10,6 +10,8 @@ import { UserService } from 'src/app/services/user.service';
 import { ConfirmEventType, ConfirmationService, MessageService } from 'primeng/api';
 import { RehireEmployeeComponent } from './rehire-employee/rehire-employee.component';
 import { EmployeeSupervisorsDto } from 'src/app/model/HRM/IEmployeeSupervisorDto';
+import { BindShiftComponent } from './bind-shift/bind-shift.component';
+import { AssignSupervisorComponent } from '../../employee-supervisors/assign-supervisor/assign-supervisor.component';
 
 @Component({
   selector: 'app-employee-detail',
@@ -141,6 +143,30 @@ getSupervisorsByEmployee(){
     },
     key: 'positionDialog'
   });
+  }
+
+  BindShift(employeeId:string){
+
+    let modalRef = this.modalService.open(BindShiftComponent,{size:'lg',backdrop:'static'})
+
+    modalRef.componentInstance.employeeId= employeeId
+
+    modalRef.result.then(()=>{
+      this.getEmployee();
+      this.getSupervisorsByEmployee();
+    })
+
+  }
+
+  BindSupervisor(employeeId:string){
+    let modalRef = this.modalService.open(AssignSupervisorComponent,{size:'lg',backdrop:'static'})
+
+    modalRef.componentInstance.employeeId= employeeId
+
+    modalRef.result.then(()=>{
+      this.getEmployee();
+      this.getSupervisorsByEmployee();
+    })
   }
 
 

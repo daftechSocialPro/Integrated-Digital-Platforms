@@ -44,6 +44,8 @@ import { WeeklyPlanPerformanceComponent } from './pages/project-managment/progre
 import { TraineesFormComponent } from './pages/training/trainees-form/trainees-form.component';
 import { TrainingReportFormComponenT } from './pages/training/training-report-form/training-report-form.component';
 import { TrainingDashboardComponent } from './pages/training/training-dashboard/training-dashboard.component';
+import { EmployeeFingerPrintComponent } from './pages/human-resource/employee-finger-print/employee-finger-print.component';
+import { ForgetPasswordComponent } from './auth/pages-login/forget-password/forget-password.component';
 
 
 
@@ -85,6 +87,7 @@ const routes: Routes = [
 
   { path: 'HRM/employeeTermination', canActivate: [AuthGuard], component: EmployeeTerminationComponent, data: { permittedRoles: ['EMPLOYEE-MANAGEMENT'] } },
   { path: 'HRM/employeeDetail', canActivate: [AuthGuard], component: EmployeeDetailComponent, data: { permittedRoles: ['EMPLOYEE-MANAGEMENT', 'USER-MANAGER'] } },
+  { path: 'HRM/empFingerPrint', canActivate: [AuthGuard], component: EmployeeFingerPrintComponent, data: { permittedRoles: ['EMPLOYEE-MANAGEMENT', 'USER-MANAGER'] } },
   { path: 'HRM/volunterDetail', canActivate: [AuthGuard], component: VolunterDetailComponent, data: { permittedRoles: ['EMPLOYEE-MANAGEMENT', 'USER-MANAGER'] } },
   { path: 'HRM/configuration', canActivate: [AuthGuard], component: HrmConfigurationComponent, data: { permittedRoles: ['HRM-CONFIGURATION'] } },
   { path: 'HRM/vacancyList', canActivate: [AuthGuard], component: VacancyListComponent, data: { permittedRoles: ['VACANCY-POST', 'VACANCY-APPROVER', 'VACANCY-2ND-APPROVER'] } },
@@ -104,6 +107,8 @@ const routes: Routes = [
 
 {path:'trainee-form/:trainingId',component:TraineesFormComponent},
 {path:'trainee-form/training-report-form/:trainingId',component:TrainingReportFormComponenT},
+{path:'forgetPassword',component:ForgetPasswordComponent},
+
 { path: 'printout', loadChildren: () => import('./pages/print-out/print-out.module').then(m => m.PrintOutModule) }
 ];
 
