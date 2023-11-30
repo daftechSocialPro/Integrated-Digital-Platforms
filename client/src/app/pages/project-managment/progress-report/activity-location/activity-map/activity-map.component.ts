@@ -50,8 +50,7 @@ export class ActivityMapComponent implements OnInit {
     this.activtYMaps.forEach(element => {
       const greenIcon = L.icon({
         iconUrl: 'assets/marker-icon-green.png',
-        //shadowUrl: 'assets/marker-shadow.png',
-      
+        //shadowUrl: 'assets/marker-shadow.png',      
         iconSize: [41, 35],
         iconAnchor: [12, 41],
         popupAnchor: [1, -34],
