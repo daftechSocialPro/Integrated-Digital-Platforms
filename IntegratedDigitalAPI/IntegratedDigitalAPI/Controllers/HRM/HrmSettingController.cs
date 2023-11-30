@@ -117,5 +117,48 @@ namespace IntegratedDigitalAPI.Controllers.HRM
             }
         }
 
+
+        [HttpGet]
+        [ProducesResponseType(typeof(DeviceSettingDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetDeviceSettingList()
+        {
+            return Ok(await _hrmSettingService.GetDeviceSettingList());
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(DeviceLitsDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetDeviceList()
+        {
+            return Ok(await _hrmSettingService.GetDeviceList());
+        }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> AddDeviceSetting(DeviceSettingDto deviceSettingDto)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _hrmSettingService.AddDeviceSetting(deviceSettingDto));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPut]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> UpdateDeviceSetting(DeviceSettingDto deviceSettingDto)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _hrmSettingService.UpdateDeviceSetting(deviceSettingDto));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
     }
 }

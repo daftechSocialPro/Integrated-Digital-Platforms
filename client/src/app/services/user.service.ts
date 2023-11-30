@@ -38,6 +38,10 @@ export class UserService {
   }
 
 
+  forgetPassword(email: string){
+    return this.http.post<ResponseMessage>(this.BaseURI + `/Authentication/ForgetPassword?email=${email}`, email);
+  }
+
   // getUserProfile() {
   //   return this.http.get(this.BaseURI + '/UserProfile');
   // }

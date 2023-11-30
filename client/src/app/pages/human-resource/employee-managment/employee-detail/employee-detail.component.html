@@ -11,7 +11,7 @@
         <div class="card" *ngIf="employee">
            
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <div class="employee-details">
                         <img [src]="getImagePath(employee.imagePath!)" height="150" alt="user png" style="border-radius: 10px;
                                 border: 10px solid #f4f4f4;">
@@ -43,18 +43,26 @@
                                         (click)="rehireEmployee(employee.id)"><i class="bi bi-plus me-1"></i>Rehire</button>
                                 </span>
                             </div>
+                            
                         </div>
                 </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div *ngIf="roleMatch(['EMPLOYEE-APPROVER'])" class="col-lg-12 text-end p-2">
                         <button type="button" class="btn btn-outline-success"
                             *ngIf="!employee.isApproved && employee.employmentStatus == 'ACTIVE'" (click)="approveEmployee()"><i
                                 class="pi pi-check-circle me-1"></i> Approve
                         </button>
                     </div>
-                    <h3>Supervisors</h3>
-                    <p *ngIf="supervisor"> {{ supervisor.immidiateSupervisor }} and {{ supervisor.secondSupervisor }}</p>
+                    <div class="mt-2 col-lg-12 text-end p-2" *ngIf="employee.employmentStatus == 'ACTIVE'">
+                        
+                        <button type="button" class="btn btn-outline-success" (click)="BindShift(employee.id)"><i
+                                class="bi bi-plus me-1"></i>Bind Shift</button>
+                    
+                    </div>
+                    <button *ngIf="!supervisor.immidiateSupervisor&&employee.employmentStatus == 'ACTIVE'" class="btn btn-outline-success" (click)="BindSupervisor(employee.id)">Bind Supervisor</button>
+                    <h3 *ngIf="supervisor.immidiateSupervisor">Supervisors</h3>
+                    <p *ngIf="supervisor.immidiateSupervisor"> {{ supervisor.immidiateSupervisor }} and {{ supervisor.secondSupervisor }}</p>
                 </div>
             </div>
             
@@ -72,6 +80,7 @@
                                 <th class="text-center">Email</th>                              
                                 <th class="text-center">Hired Date</th>
                                 <th class="text-center">Contract End Date</th>
+                                <th class="text-center">Shift</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -83,6 +92,7 @@
                                 <td class="text-center">{{employee.email}}</td>                               
                                 <td class="text-center">{{employee.employmentDate | date:"MMM dd, YYYY" }}</td>
                                 <td class="text-center">{{employee.contractEndDate | date:"MMM dd, YYYY" }}</td>
+                                <td class="text-center">{{employee.shift}}</td>        
                             </tr>
                         </tbody>
                     </table>

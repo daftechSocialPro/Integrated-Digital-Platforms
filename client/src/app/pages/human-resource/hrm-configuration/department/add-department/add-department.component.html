@@ -14,9 +14,16 @@
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="DepartmentName" placeholder="DepartmentName"
-                                            formControlName="DepartmentName">
+                                        <input type="text" class="form-control" pattern="^[a-zA-Z ]+" id="DepartmentName" placeholder="DepartmentName"
+                                            formControlName="DepartmentName" required>
                                         <label for="DepartmentName">Department Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="amharicName" placeholder="Amharic Name"
+                                            formControlName="amharicName" required>
+                                        <label for="amharicName">Amharic Name</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">

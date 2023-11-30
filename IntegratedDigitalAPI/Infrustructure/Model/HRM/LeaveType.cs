@@ -11,13 +11,11 @@ namespace IntegratedInfrustructure.Model.HRM
     public class LeaveType :WithIdModel
     {
         public string Name { get; set; } = null!;
-
+        public string AmharicName { get; set; } = null!;
         public LeaveCategory LeaveCategory { get; set; }
-
         public int MinDate { get; set; }
-
         public int? MaxDate { get; set; }    
-
         public int? IncrementValue { get; set; }
+
     }
 }

@@ -133,7 +133,6 @@ export class AddVacancyComponent implements OnInit{
   }
 
   getminEndDate(date: any){
-      debugger;
       this.minDate = date;
   }
 

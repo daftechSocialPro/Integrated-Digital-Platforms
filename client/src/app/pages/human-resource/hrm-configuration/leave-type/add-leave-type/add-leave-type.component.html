@@ -15,13 +15,20 @@
                                 <div class="col-md-6">
                                     <div class="form-floating">
                                         <input type="text" class="form-control" id="name" placeholder="name"
-                                            formControlName="name">
+                                            formControlName="name" required>
                                         <label for="name">Leave Type Name</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="amharicName" placeholder="amharicName"
+                                            formControlName="amharicName" required>
+                                        <label for="amharicName">Amharic Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
                                     <div class="form-floating mb-3">
-                                        <select class="form-select" id="leaveCategory" formControlName="leaveCategory"
+                                        <select class="form-select" id="leaveCategory" (change)="changeLeaveCategory($event)" formControlName="leaveCategory" required
                                             aria-label="State">
     
                                             <option></option>
@@ -35,18 +42,18 @@
                                 <div class="col-md-4">
                                     <div class="form-floating">
                                         <input type="number" step="0" min="0" class="form-control" id="minDate" placeholder="minDate"
-                                            formControlName="minDate">
-                                        <label for="minDate">Min Date</label>
+                                            formControlName="minDate" required>
+                                        <label for="minDate">Date</label>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4" *ngIf="leaveCategory == 'ANNUAL'">
                                     <div class="form-floating">
                                         <input type="number" step="0" min="0"  class="form-control" id="maxDate" placeholder="maxDate"
                                             formControlName="maxDate">
                                         <label for="maxDate">Max Date</label>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4" *ngIf="leaveCategory == 'ANNUAL'">
                                     <div class="form-floating">
                                         <input type="number" step="0" min="0"  class="form-control" id="incrementValue" placeholder="incrementValue"
                                             formControlName="incrementValue">

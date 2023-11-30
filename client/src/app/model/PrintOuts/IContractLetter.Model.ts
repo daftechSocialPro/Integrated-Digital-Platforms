@@ -13,8 +13,12 @@ export interface ContractLetterDto{
     ReportingTo: string;
     grossSalary: number;
     grossSalaryInWord: string;
-    transportAllowance: number;
-    transportAllowanceInWord: string;
-    mobileAllowance: number;
-    mobileAllowanceInWord: string;
+    allowanceList: AllowanceListPrintOut[];
+
+}
+
+export interface AllowanceListPrintOut {
+    allowance: number;
+    allowanceInWord: string;
+    allowanceName: string;
 }

@@ -6,6 +6,7 @@ namespace Implementation.Interfaces.Authentication
     public interface IAuthenticationService
     {
         Task<ResponseMessage> Login(LoginDto login);
+        Task<ResponseMessage> ForgetPassword(string email);
         Task<List<UserListDto>> GetUserList();
         Task<List<RoleDropDown>> GetRoleCategory();
         Task<List<RoleDropDown>> GetNotAssignedRole(string userId, int categoryId);

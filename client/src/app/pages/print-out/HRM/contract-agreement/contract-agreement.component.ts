@@ -21,15 +21,12 @@ export class ContractAgreementComponent implements OnInit{
       grossSalary: 0,
       grossSalaryInWord: "",
       jobTitle: "",
-      mobileAllowance: 0,
-      mobileAllowanceInWord: "",
       phoneNumber: "",
       placeOfWork: "",
       ReportingTo: "",
       sourceOfFund: "",
-      transportAllowance: 0,
-      transportAllowanceInWord: "",
-      typeOfEmployement : ""
+      typeOfEmployement : "",
+      allowanceList: []
   };
 
   constructor(private hrmService: HrmService,
@@ -43,7 +40,9 @@ export class ContractAgreementComponent implements OnInit{
     if (historyId) {
       this.hrmService.getContractLetter(historyId).subscribe({
         next: (res) => {
-          this.contractLetter = {... res};
+          this.contractLetter = res;
+          console.log(this.contractLetter)
+
         }
       });
       setTimeout(() => {

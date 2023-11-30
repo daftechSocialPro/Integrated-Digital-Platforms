@@ -24,6 +24,7 @@ export class UpdateDepartmentComponent implements OnInit {
 
     this.departmentForm = this.formBuilder.group({
       DepartmentName: [this.department.departmentName, Validators.required],
+      amharicName: [this.department.amharicName, Validators.required],
       Remark: [this.department.remark]
     })
   }
@@ -44,8 +45,8 @@ export class UpdateDepartmentComponent implements OnInit {
     if (this.departmentForm.valid) {
 
       var departmentUpdate: DepartmentGetDto = {
-
         departmentName: this.departmentForm.value.DepartmentName,
+        amharicName: this.departmentForm.value.amharicName,
         remark: this.departmentForm.value.Remark,
         id: this.department.id
       }
@@ -54,12 +55,10 @@ export class UpdateDepartmentComponent implements OnInit {
         next:(res)=>{
           if (res.success){
             this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });              
-          
             this.closeModal();
           }
           else {
             this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: res.message });              
-          
           }
         },
         error:(err)=>{

@@ -141,6 +141,15 @@ namespace IntegratedDigitalAPI.Controllers.Configuration
 
 
 
+        [HttpGet]
+        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetShiftDropDown()
+        {
+            return Ok(await _DropDownService.GetShiftDropDown());
+        }
+
+
+
 
 
 

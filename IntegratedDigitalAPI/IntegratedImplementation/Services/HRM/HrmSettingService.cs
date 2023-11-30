@@ -5,6 +5,7 @@ using IntegratedImplementation.DTOS.Configuration;
 using IntegratedImplementation.DTOS.HRM;
 using IntegratedImplementation.Interfaces.HRM;
 using IntegratedInfrustructure.Data;
+using IntegratedInfrustructure.Model.Configuration;
 using IntegratedInfrustructure.Model.HRM;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -162,5 +163,77 @@ namespace IntegratedImplementation.Services.HRM
 
             return new ResponseMessage { Success = true, Message = "Updated Succesfully" };
         }
+
+        public async Task<ResponseMessage> AddDeviceSetting(DeviceSettingDto deviceSettingDto)
+        {
+            DeviceSetting deviceSetting = new DeviceSetting
+            {
+                Id = Guid.NewGuid(),
+                CreatedById = deviceSettingDto.CreatedById,
+                Com = deviceSettingDto.Com,
+                Ip = deviceSettingDto.Ip,
+                Model = deviceSettingDto.Model,
+                Name = deviceSettingDto.Name,
+                Port = deviceSettingDto.Port,
+                CreatedDate = DateTime.Now,
+                Rowstatus = RowStatus.ACTIVE
+            };
+
+            await _dbContext.DeviceSettings.AddAsync(deviceSetting);
+            await _dbContext.SaveChangesAsync();
+
+            return new ResponseMessage
+            {
+                Data = deviceSetting,
+                Message = "Added Successfully",
+                Success = true
+            };
+        }
+
+        public async Task<List<DeviceSettingDto>> GetDeviceSettingList()
+        {
+            var deviceSettings = await _dbContext.DeviceSettings.AsNoTracking().Select(y => new DeviceSettingDto
+            {
+                Id = y.Id.ToString(),
+                Com = y.Com,
+                Ip = y.Ip,
+                Model = y.Model,
+                Name = y.Name,
+                Port = y.Port,
+            }).ToListAsync();
+            return deviceSettings;
+        }
+
+        public async Task<List<DeviceLitsDto>> GetDeviceList()
+        {
+            var deviceSettings = await _dbContext.DeviceSettings.AsNoTracking().Select(y => new DeviceLitsDto
+            {
+                Id = y.Id.ToString(),
+                Ip = y.Ip,
+                Port = y.Port,
+            }).ToListAsync();
+            return deviceSettings;
+        }
+
+        public async Task<ResponseMessage> UpdateDeviceSetting(DeviceSettingDto deviceSettingDto)
+        {
+            var currentDevice = await _dbContext.DeviceSettings.FirstOrDefaultAsync(x => x.Id.Equals(deviceSettingDto.Id));
+            if (currentDevice != null)
+            {
+                currentDevice.Ip = deviceSettingDto.Ip;
+                currentDevice.Model = deviceSettingDto.Model;
+                currentDevice.Name = deviceSettingDto.Name;
+                currentDevice.Port = deviceSettingDto.Port;
+                currentDevice.Com = deviceSettingDto.Com;
+
+                await _dbContext.SaveChangesAsync();
+                return new ResponseMessage { Data = currentDevice, Success = true, Message = "Device Setting Updated Successfully" };
+            }
+
+            return new ResponseMessage { Success = false, Message = "Device Setting Could Not be Found" };
+        }
+
+
+
     }
 }

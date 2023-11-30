@@ -25,12 +25,18 @@ namespace IntegratedImplementation.Services.HRM
 
         public async Task<ResponseMessage> AddDepartment(DepartmentPostDto departmentPost)
         {
-          
+            var currDepartment = await _dbContext.Departments.AnyAsync(x => x.DepartmentName == departmentPost.DepartmentName);
+            if (currDepartment)
+            {
+                return new ResponseMessage { Success = false, Message = "Department Already Exists!!" };
+            }
+
 
             Department department = new Department
             {
                 Id = Guid.NewGuid(),
-                DepartmentName = departmentPost.DepartmentName,             
+                DepartmentName = departmentPost.DepartmentName,  
+                AmharicName = departmentPost.AmharicName,
                 Remark = departmentPost.Remark,
                 CreatedById = departmentPost.CreatedById,
                 Rowstatus = RowStatus.ACTIVE
@@ -54,6 +60,7 @@ namespace IntegratedImplementation.Services.HRM
             {
                 Id = x.Id.ToString(),
                 DepartmentName =x.DepartmentName,
+                AmharicName = x.AmharicName,
                 Remark = x.Remark,
             }).ToListAsync();
 
@@ -64,9 +71,16 @@ namespace IntegratedImplementation.Services.HRM
         {
             var currentDepartment = await _dbContext.Departments.FirstOrDefaultAsync(x => x.Id.Equals(Guid.Parse(department.Id)));
 
+            var exists = await _dbContext.Departments.AnyAsync(x => x.DepartmentName == department.DepartmentName && x.Id != Guid.Parse(department.Id));
+            if (exists)
+            {
+                return new ResponseMessage { Success = false, Message = "Department Already Exists!!" };
+            }
+
             if (currentDepartment != null)
             {
                 currentDepartment.DepartmentName = department.DepartmentName;
+                currentDepartment.AmharicName = department.AmharicName;
                 currentDepartment.Remark = department.Remark;
                 await _dbContext.SaveChangesAsync();
                 return new ResponseMessage { Data = currentDepartment, Success = true,Message = "Updated Successfully" };

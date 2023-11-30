@@ -85,6 +85,7 @@ export interface EmployeeGetDto {
      isApproved:boolean | false;
      bankId: string;
      salary?: Number,
+     shift: string;
 
 }
 

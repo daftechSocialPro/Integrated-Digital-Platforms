@@ -41,6 +41,21 @@ namespace ERPSystems.Controllers.Authentication
         }
 
 
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> ForgetPassword(string email)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _authenticationService.ForgetPassword(email));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+
         [HttpGet]
         [ProducesResponseType(typeof(UserListDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetUserList()

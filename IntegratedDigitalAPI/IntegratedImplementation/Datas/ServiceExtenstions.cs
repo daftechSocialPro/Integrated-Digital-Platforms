@@ -50,6 +50,7 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<ILoanSettingService, LoanSettingService>();
             services.AddScoped<ILoanManagementService, LoanManagementService>();
             services.AddScoped<IHrmLetterService, HrmLetterService>();
+            services.AddScoped<IEmployeeAttendanceService, EmployeeAttendanceService>();
             #endregion
 
             #region Vacancy

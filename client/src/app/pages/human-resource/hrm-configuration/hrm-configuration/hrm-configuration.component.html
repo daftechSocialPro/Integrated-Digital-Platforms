@@ -15,36 +15,49 @@
             <div class="card-body">
                 <h5 class="card-title">HRM Configuration</h5>
                 <ul class="nav nav-tabs nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item" role="presentation"> <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
-                            data-bs-target="#home" type="button" role="tab" aria-controls="home"
+                    <li class="nav-item" role="presentation"> <button class="nav-link active" id="home-tab"
+                            data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home"
                             aria-selected="true">Department</button></li>
-                    <li class="nav-item" role="presentation"> <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
-                            data-bs-target="#profile" type="button" role="tab" aria-controls="profile"
-                            aria-selected="false">Position</button></li>
-                    <li class="nav-item" role="presentation"> <button class="nav-link" id="contact-tab" data-bs-toggle="tab"
-                            data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Leave
+                    <li class="nav-item" role="presentation"> <button class="nav-link" id="profile-tab"
+                            data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab"
+                            aria-controls="profile" aria-selected="false">Position</button></li>
+                    <li class="nav-item" role="presentation"> <button class="nav-link" id="contact-tab"
+                            data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab"
+                            aria-controls="contact" aria-selected="false">Leave
                             Type</button></li>
-                
                     <li class="nav-item" role="presentation"> <button class="nav-link" id="hrm-tab" data-bs-toggle="tab"
                             data-bs-target="#hrm" type="button" role="tab" aria-controls="hrm" aria-selected="false">HRM
                             Setting</button></li>
-                    <li class="nav-item" role="presentation"> <button class="nav-link" id="loanSetting-tab" data-bs-toggle="tab"
-                            data-bs-target="#loanSetting" type="button" role="tab" aria-controls="loanSetting"
-                            aria-selected="false">Loan
+                    <li class="nav-item" role="presentation"> <button class="nav-link" id="loanSetting-tab"
+                            data-bs-toggle="tab" data-bs-target="#loanSetting" type="button" role="tab"
+                            aria-controls="loanSetting" aria-selected="false">Loan
                             Setting</button></li>
                     <li class="nav-item" role="presentation"> <button class="nav-link" id="hrm-tab" data-bs-toggle="tab"
-                            data-bs-target="#performanceSetting" type="button" role="tab" aria-controls="hrm" aria-selected="false">
+                            data-bs-target="#performanceSetting" type="button" role="tab" aria-controls="hrm"
+                            aria-selected="false">
                             Performance Setting
                         </button></li>
                     <li class="nav-item" role="presentation"> <button class="nav-link" id="hrm-tab" data-bs-toggle="tab"
-                            data-bs-target="#performancePlan" type="button" role="tab" aria-controls="hrm" aria-selected="false">
+                            data-bs-target="#performancePlan" type="button" role="tab" aria-controls="hrm"
+                            aria-selected="false">
                             Performance Plan
                         </button></li>
                     <li class="nav-item" role="presentation"> <button class="nav-link" id="hrm-tab" data-bs-toggle="tab"
-                            data-bs-target="#benefitList" type="button" role="tab" aria-controls="hrm" aria-selected="false">
+                            data-bs-target="#benefitList" type="button" role="tab" aria-controls="hrm"
+                            aria-selected="false">
                             Benefit List
                         </button></li>
-                
+                    <li class="nav-item" role="presentation"> <button class="nav-link" id="hrm-tab" data-bs-toggle="tab"
+                            data-bs-target="#deviceSetting" type="button" role="tab" aria-controls="hrm"
+                            aria-selected="false">
+                            Device Setting
+                        </button></li>
+                    <li class="nav-item" role="presentation"> <button class="nav-link" id="hrm-tab" data-bs-toggle="tab"
+                            data-bs-target="#shiftSetting" type="button" role="tab" aria-controls="hrm"
+                            aria-selected="false">
+                            Shift Setting
+                        </button></li>
+
                 </ul>
                 <div class="tab-content pt-2" id="myTabContent">
                     <div class="tab-pane fade show active p-2" id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -70,13 +83,17 @@
                         aria-labelledby="performancePlan-tab">
                         <app-performance-plan />
                     </div>
-                    <div class="tab-pane fade" id="benefitList" role="tabpanel"
-                    aria-labelledby="benefitList-tab">
-                    <app-benefit-lists />
-                </div>
+                    <div class="tab-pane fade" id="benefitList" role="tabpanel" aria-labelledby="benefitList-tab">
+                        <app-benefit-lists />
+                    </div>
+                    <div class="tab-pane fade" id="deviceSetting" role="tabpanel" aria-labelledby="deviceSetting-tab">
+                        <app-device-setting />
+                    </div>
+                    <div class="tab-pane fade" id="shiftSetting" role="tabpanel" aria-labelledby="shiftSetting-tab">
+                        <app-shift-setting />
+                    </div>
                 </div>
             </div>
         </div>
-
     </section>
 </main>

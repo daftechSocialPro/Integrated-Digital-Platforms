@@ -34,8 +34,8 @@ export class AddDepartmentComponent implements OnInit {
 
       this.departmentForm = this.formBuilder.group({
         DepartmentName: ['', Validators.required],
+        amharicName: ['', Validators.required],
         Remark: ['']
-        
     })
   
   }
@@ -50,6 +50,7 @@ export class AddDepartmentComponent implements OnInit {
       var departmentPost : DepartmentPostDto ={
         
         DepartmentName : this.departmentForm.value.DepartmentName,
+        AmharicName: this.departmentForm.value.amharicName,
         Remark : this.departmentForm.value.Remark,
         CreatedById : this.user.userId
 

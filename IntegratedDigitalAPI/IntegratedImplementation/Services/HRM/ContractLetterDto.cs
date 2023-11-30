@@ -22,7 +22,7 @@ namespace IntegratedImplementation.Services.HRM
         public string ReportingTo { get; set; } = null!;
         public double GrossSalary { get; set; }
         public string GrossSalaryInWord { get; set; } = null!;
-        public List<ContractAllowances> AllowanceInWor { get; set; } = null!;
+        public List<ContractAllowances> AllowanceList { get; set; } = null!;
        
     }
 

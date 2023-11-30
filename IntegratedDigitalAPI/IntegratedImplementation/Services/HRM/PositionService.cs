@@ -25,13 +25,16 @@ namespace IntegratedImplementation.Services.HRM
 
         public async Task<ResponseMessage> AddPosition(PositionPostDto PositionPost)
         {
+            var exists = await _dbContext.Positions.AnyAsync(x => x.PositionName == PositionPost.PositionName);
 
+            if (exists)
+                return new ResponseMessage { Message = "Position Already Exists", Success = false };
 
             Position Position = new Position
             {
                 Id = Guid.NewGuid(),
                 PositionName = PositionPost.PositionName,
-                JobTitle = PositionPost.JobTitle,
+                AmharicName = PositionPost.AmharicName,
                 CreatedById = PositionPost.CreatedById,
                 Rowstatus = RowStatus.ACTIVE
             };
@@ -54,7 +57,7 @@ namespace IntegratedImplementation.Services.HRM
             {
                 Id = x.Id.ToString(),
                 PositionName = x.PositionName,
-                JobTitle = x.JobTitle,
+                AmharicName = x.AmharicName,
             }).ToListAsync();
 
             return PositionList;
@@ -62,12 +65,17 @@ namespace IntegratedImplementation.Services.HRM
         
         public async Task<ResponseMessage> UpdatePosition(PositionGetDto Position)
         {
+
+            var exists = await _dbContext.Positions.AnyAsync(x => x.PositionName == Position.PositionName && x.Id != Guid.Parse(Position.Id));
+            if (exists)
+                return new ResponseMessage { Message = "Position Already Exists", Success = false };
+
             var currentPosition = await _dbContext.Positions.FirstOrDefaultAsync(x => x.Id.Equals(Guid.Parse(Position.Id)));
 
             if (currentPosition != null)
             {
                 currentPosition.PositionName = Position.PositionName;
-                currentPosition.JobTitle = Position.JobTitle;
+                currentPosition.AmharicName = Position.AmharicName;
                 await _dbContext.SaveChangesAsync();
                 return new ResponseMessage { Message="Position Updated Successfully", Success = true };
             }

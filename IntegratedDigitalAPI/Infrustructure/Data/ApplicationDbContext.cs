@@ -80,8 +80,14 @@ namespace IntegratedInfrustructure.Data
         public DbSet<Volunter> Volunters { get; set; }
         public DbSet<BenefitList> BenefitLists { get; set; }
         public DbSet<EmployeeBenefits> EmployeeBenefits { get; set; }
+        public DbSet<EmployeeFingerPrint> EmployeeFingerPrints { get; set; }
+        public DbSet<DeviceSetting> DeviceSettings { get; set; }
+        public DbSet<AttendanceLogFile> AttendanceLogFiles { get; set; }
+        public DbSet<EmployeeAttendance> EmployeeAttendances { get; set; }
+        public DbSet<OverTime> OverTimes { get; set; }
+        public DbSet<ShiftList> ShiftLists { get; set; }
+        public DbSet<EmployeeShift> EmployeeShifts { get; set; }
       
-
         #endregion
 
         #region Vacancy
@@ -163,7 +169,6 @@ namespace IntegratedInfrustructure.Data
             modelBuilder.Entity<GeneralCodes>()
                .HasIndex(b => b.GeneralCodeType).IsUnique();
             modelBuilder.Entity<Country>().HasIndex(b=>b.CountryName).IsUnique();
-            modelBuilder.Entity<Country>().HasIndex(b=>b.Nationality).IsUnique();
             modelBuilder.Entity<EducationalField>().HasIndex(b=>b.EducationalFieldName).IsUnique();
             modelBuilder.Entity<EducationalLevel>().HasIndex(b=>b.EducationalLevelName).IsUnique();
             modelBuilder.Entity<Region>().HasIndex(b=>b.RegionName).IsUnique();

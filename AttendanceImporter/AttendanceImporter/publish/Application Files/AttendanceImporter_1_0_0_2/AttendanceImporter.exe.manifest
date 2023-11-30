@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
+  <asmv1:assemblyIdentity name="AttendanceImporter.exe" version="1.0.0.2" publicKeyToken="f3720afbd0de970b" language="neutral" processorArchitecture="msil" type="win32" />
+  <application />
+  <entryPoint>
+    <assemblyIdentity name="AttendanceImporter" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+    <commandLine file="AttendanceImporter.exe" parameters="" />
+  </entryPoint>
+  <trustInfo>
+    <security>
+      <applicationRequestMinimum>
+        <PermissionSet Unrestricted="true" ID="Custom" SameSite="site" />
+        <defaultAssemblyRequest permissionSetReference="Custom" />
+      </applicationRequestMinimum>
+      <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
+        <!--
+          UAC Manifest Options
+          If you want to change the Windows User Account Control level replace the 
+          requestedExecutionLevel node with one of the following.
+
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
+        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
+
+         If you want to utilize File and Registry Virtualization for backward 
+         compatibility then delete the requestedExecutionLevel node.
+    -->
+        <requestedExecutionLevel level="asInvoker" uiAccess="false" />
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+  <dependency>
+    <dependentOS>
+      <osVersionInfo>
+        <os majorVersion="5" minorVersion="1" buildNumber="2600" servicePackMajor="0" />
+      </osVersionInfo>
+    </dependentOS>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.Windows.CommonLanguageRuntime" version="4.0.30319.0" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="AttendanceImporter.exe" size="188928">
+      <assemblyIdentity name="AttendanceImporter" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>Svo9EjowkSYvorHha7amgb7Pi39MLFhNzbNACPDAgbQ=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="IMPData.dll" size="9216">
+      <assemblyIdentity name="IMPData" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>/e/1c2WV7tXnQSUJpb+CZ57wApyx7x0/L/MRdgxHYOA=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Interop.zkemkeeper.dll" size="65536">
+      <assemblyIdentity name="Interop.zkemkeeper" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>0gX6jQVTVhcuulIpHU4w9YCfjaXu2+8/TbuJoYH8ZzY=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <file name="AttendanceImporter.exe.config" size="539">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>WIzblyR029iLGa8bsnsHA9exY8hM8sQUWzfeCrh5umA=</dsig:DigestValue>
+    </hash>
+  </file>
+<publisherIdentity name="CN=DESKTOP-BQ3FRU9\hermi" issuerKeyHash="162c2e02979d39b425a54914d6d45c73a6e08baf" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>b0XiUdGMapwqvlHcVnfO5AGj6xIXqruNTAiG831MPnQ=</DigestValue></Reference></SignedInfo><SignatureValue>d5RvECmTSB5oXDX4qBTj4RIOHQVS44pjBu/H31QKhr+8IZe73xFnmHNsWyNGjAYOvj6/PmhfgN4NJv6/9iYefYafyYJ3NAvSByyB9SLpYDKLSL9sgRoT1wOvslkUlHRC94CPuiGwrz/Sm2ydgiIxeQ1k/Qop9XizeJYhyfln9B4=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>pVvAuJYtBmXe/rTwZne10eLH/eOv47u4pb5/c/XiN3pfUOklXnNI4JZ83nKgfe4t3XCQzhcfEG28T4GIzGuBfDVxgKS5rpdmr8fvOLR34/0LzTtk5tTe2hV0dt2ClIApdcG28jaKVe82Ec+QuU/diySN7yf5FeGm4lCKeDqmIUE=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="743e4c7df386084c8dbbaa1712eba301e4ce7756dc51be2a9c6a8cd151e2456f" Description="" Url=""><as:assemblyIdentity name="AttendanceImporter.exe" version="1.0.0.2" publicKeyToken="f3720afbd0de970b" language="neutral" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=DESKTOP-BQ3FRU9\hermi</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>h64OeG04UZEJGpg5go1mzfBz0zCKgBZiHcMhUd6m9oM=</DigestValue></Reference></SignedInfo><SignatureValue>fhXC1i6d3OYcBGg7BQdlNV6tVYqA2Fw3pdva1KXNPv02o8ODMI/0kDSH9ZNUmwXMq6nB1NVSt+56WT5qBwFGIRlATbWWB2GnhCUG5ct4ZblGsnJDZsqoE8GZeSO2bOAfLO62Va4eL4ftjWPNcL44AJAFtM56+eNjEIIa4HRuSmg=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>pVvAuJYtBmXe/rTwZne10eLH/eOv47u4pb5/c/XiN3pfUOklXnNI4JZ83nKgfe4t3XCQzhcfEG28T4GIzGuBfDVxgKS5rpdmr8fvOLR34/0LzTtk5tTe2hV0dt2ClIApdcG28jaKVe82Ec+QuU/diySN7yf5FeGm4lCKeDqmIUE=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB7TCCAVagAwIBAgIQW8g2UzaxSIREGQutiHXJbTANBgkqhkiG9w0BAQsFADA1MTMwMQYDVQQDHioARABFAFMASwBUAE8AUAAtAEIAUQAzAEYAUgBVADkAXABoAGUAcgBtAGkwHhcNMTgwMjI4MDgwMjE4WhcNMTkwMjI4MTQwMjE4WjA1MTMwMQYDVQQDHioARABFAFMASwBUAE8AUAAtAEIAUQAzAEYAUgBVADkAXABoAGUAcgBtAGkwgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAKVbwLiWLQZl3v608GZ3tdHix/3jr+O7uKW+f3P14jd6X1DpJV5zSOCWfN5yoH3uLd1wkM4XHxBtvE+BiMxrgXw1cYCkua6XZq/H7zi0d+P9C807ZObU3toVdHbdgpSAKXXBtvI2ilXvNhHPkLlP3Yskje8n+RXhpuJQing6piFBAgMBAAEwDQYJKoZIhvcNAQELBQADgYEAcQ/J3uokwezqbzpftldUFoj7HVMz4FMp1+42lF8IRIOAhA46skx3GFurvJc/p9XzOW52mzeFX8hLVo4fFi1BQVqkfNNzgd+Qf3CARUQe8+6Bse9oU8BP4YCCnzIcl5yfoXwrFMW0F8fweUfWeiBZcK+SiXcy0jfM9hXEBT/Hwno=</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>

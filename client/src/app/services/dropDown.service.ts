@@ -74,6 +74,8 @@ export class DropDownService {
         return this.http.get<BankSelectList[]>(this.baseUrl+"/DropDown/GetBankDropDowns")
     }
     
-    
+    getShiftDropDown(){
+        return this.http.get<BankSelectList[]>(this.baseUrl+"/DropDown/GetShiftDropDown")
+    }
   
 }

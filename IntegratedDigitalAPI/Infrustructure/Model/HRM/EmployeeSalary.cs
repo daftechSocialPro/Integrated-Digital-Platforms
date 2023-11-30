@@ -10,12 +10,9 @@ namespace IntegratedInfrustructure.Model.HRM
     public class EmployeeSalary :WithIdModel
     {
 
-        
         public Guid EmploymentDetailId { get; set; }
-        public virtual EmploymentDetail EmploymentDetail { get; set; }
-        public string ProjectName { get; set; } 
+        public virtual EmploymentDetail EmploymentDetail { get; set; } = null!;
+        public string ProjectName { get; set; } = null!;
         public double Amount { get; set;}       
-
-
     }
 }

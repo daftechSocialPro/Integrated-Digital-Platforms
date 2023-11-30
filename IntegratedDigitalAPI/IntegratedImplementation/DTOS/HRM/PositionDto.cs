@@ -9,7 +9,7 @@ namespace IntegratedImplementation.DTOS.HRM
     public class PositionPostDto
     {
         public string PositionName { get; set; } = null!;
-        public string JobTitle { get; set; } = null!;
+        public string AmharicName { get; set; } = null!;
         public string CreatedById { get; set; } = null!;
     }
 
@@ -17,6 +17,6 @@ namespace IntegratedImplementation.DTOS.HRM
     {
         public string? Id { get; set; } = null!;
         public string PositionName { get; set; } = null!;
-        public string JobTitle { get; set; } = null!;
+        public string AmharicName { get; set; } = null!;
     }
 }
