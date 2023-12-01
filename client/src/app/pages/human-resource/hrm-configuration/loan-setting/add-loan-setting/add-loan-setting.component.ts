@@ -21,8 +21,21 @@ export class AddLoanSettingComponent implements OnInit {
 
   ngOnInit(): void {
     this.user  = this.userService.getCurrentUser();
+    if (this.loanSetting){
+      this.LoanSettingForm = this.formBuilder.group({
+        loanName: [this.loanSetting.loanName, Validators.required],
+        amharicName:[this.loanSetting.amharicName,Validators.required],
+        typeOfLoan:[this.loanSetting.typeOfLoan, Validators.required],
+        maxLoanAmmount:[this.loanSetting.maxLoanAmmount, Validators.required],
+        paymentYear:[this.loanSetting.paymentYear, Validators.required],
+        minDeductedPercent:[this.loanSetting.minDeductedPercent, Validators.required],
+        maxDeductedPercent:[this.loanSetting.maxDeductedPercent, Validators.required],
+        remark:[this.loanSetting.remark],
+    });
+    }else{
     this.LoanSettingForm = this.formBuilder.group({
       loanName: ['', Validators.required],
+      amharicName:['',Validators.required],
       typeOfLoan:[0, Validators.required],
       maxLoanAmmount:[null, Validators.required],
       paymentYear:[null, Validators.required],
@@ -30,6 +43,7 @@ export class AddLoanSettingComponent implements OnInit {
       maxDeductedPercent:[null, Validators.required],
       remark:[null],
   });
+}
   }
 
   constructor(
@@ -48,6 +62,7 @@ export class AddLoanSettingComponent implements OnInit {
     if (this.LoanSettingForm.valid){
       var loanSetting : AddLoanSettingDto ={
         loanName : this.LoanSettingForm.value.loanName,
+        amharicName : this.LoanSettingForm.value.amharicName,
         typeOfLoan: parseInt(this.LoanSettingForm.value.typeOfLoan),
         maxDeductedPercent: this.LoanSettingForm.value.maxDeductedPercent,
         minDeductedPercent: this.LoanSettingForm.value.minDeductedPercent,
@@ -56,6 +71,25 @@ export class AddLoanSettingComponent implements OnInit {
         remark: this.LoanSettingForm.value.remark,
         createdById : this.user.userId
       }
+      if(this.loanSetting){
+        loanSetting.id  = this.loanSetting.id
+
+        this.hrmService.updateLoanSetting(loanSetting).subscribe({
+          next:(res)=>{
+            if (res.success){
+              this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });              
+              this.closeModal();
+            }
+            else {
+              this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: res.message });
+            }
+          },
+          error:(err)=>{
+            this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail:err });
+          }
+        });
+      }
+      else{
       this.hrmService.addLoanSetting(loanSetting).subscribe({
         next:(res)=>{
           if (res.success){
@@ -70,6 +104,7 @@ export class AddLoanSettingComponent implements OnInit {
           this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail:err });
         }
       });
+    }
     }
   }
 }

@@ -10,7 +10,7 @@ import { AddBenefitListComponent } from './add-benefit-list/add-benefit-list.com
   styleUrls: ['./benefit-lists.component.css']
 })
 export class BenefitListsComponent implements OnInit {
-  
+  filterValue!:string
   benefitLists! : BenefitListDto[]
 
   ngOnInit(): void {
@@ -46,7 +46,21 @@ export class BenefitListsComponent implements OnInit {
     });
   }
 
-
+  get filteredBenfitList(): any[] {
+    if (!this.filterValue) {
+        return this.benefitLists;
+    }
+    
+    const filterText = this.filterValue.toLowerCase();
+    
+    return this.benefitLists.filter((department: any) => {
+        const name = department.name.toLowerCase();
+      
+        
+        
+        return name.includes(filterText) ;
+    });
+  }
 
 
 }

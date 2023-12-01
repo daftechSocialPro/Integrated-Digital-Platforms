@@ -55,11 +55,11 @@ namespace IntegratedInfrustructure.Migrations
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Countries_Nationality",
-                table: "Countries",
-                column: "Nationality",
-                unique: true);
+            //migrationBuilder.CreateIndex(
+            //    name: "IX_Countries_Nationality",
+            //    table: "Countries",
+            //    column: "Nationality",
+            //    unique: true);
         }
     }
 }

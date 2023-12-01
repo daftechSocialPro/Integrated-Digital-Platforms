@@ -11,6 +11,7 @@ namespace IntegratedImplementation.DTOS.HRM
     {
         public Guid Id { get; set; }
         public string LoanName { get; set; } = null!;
+        public string AmharicName { get; set; } = null!;
         public string TypeOfLoan { get; set; } = null!;
         public double MaxLoanAmmount { get; set; }
         public int PaymentYear { get; set; }
@@ -23,6 +24,7 @@ namespace IntegratedImplementation.DTOS.HRM
     {
         public string? CreatedById { get; set; }
         public string LoanName { get; set; } = null!;
+        public string AmharicName { get; set; } = null!;
         public TypeOfLoan TypeOfLoan { get; set; }
         public double MaxLoanAmmount { get; set; }
         public int PaymentYear { get; set; }

@@ -12,6 +12,7 @@ import { AddDeviceSettingsComponent } from './add-device-settings/add-device-set
 
 export class DeviceSettingComponent implements OnInit {
 
+  filterValue!:string
   deviceSettings!: DeviceSettingDto[]
 
 
@@ -50,7 +51,21 @@ export class DeviceSettingComponent implements OnInit {
     });
   }
 
-
+  get filteredDeviceSettings(): any[] {
+    if (!this.filterValue) {
+        return this.deviceSettings;
+    }
+    
+    const filterText = this.filterValue.toLowerCase();
+    
+    return this.deviceSettings.filter((department: any) => {
+        const name = department.name.toLowerCase();
+        const model = department.model.toLowerCase()
+        
+        
+        return name.includes(filterText)||model.includes(filterText) ;
+    });
+  }
 
 
 }

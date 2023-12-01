@@ -12,6 +12,7 @@ import { UpdatePositionComponent } from './update-position/update-position.compo
 })
 export class PositionComponent implements OnInit {
   
+  filterValue!:string
   positions! : PositionGetDto[]
 
   ngOnInit(): void {
@@ -54,7 +55,19 @@ export class PositionComponent implements OnInit {
 
   }
 
-
-
+  get filteredPositions(): any[] {
+    if (!this.filterValue) {
+        return this.positions;
+    }
+    
+    const filterText = this.filterValue.toLowerCase();
+    
+    return this.positions.filter((department: any) => {
+        const departmentName = department.positionName.toLowerCase();
+        
+        
+        return departmentName.includes(filterText) ;
+    });
+  }
 
 }
