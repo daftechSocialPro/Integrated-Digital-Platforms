@@ -1,6 +1,6 @@
 <div class="modal-content">
     <div class="modal-header">
-        <h5 class="modal-title">Loan Settng</h5>
+        <h5 class="modal-title">{{loanSetting?"Update":"Add"}}Loan Settng</h5>
         <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
     </div>
 
@@ -19,6 +19,15 @@
                                         <label for="name">Name</label>
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="AmharicName" placeholder="AmharicName"
+                                            formControlName="amharicName">
+                                        <label for="AmharicName">Amharic Name</label>
+                                    </div>
+                                </div>
+
+                                
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3">
                                         <select class="form-select" id="typeOfLoan" formControlName="typeOfLoan"
@@ -72,7 +81,7 @@
                         <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
                                 (click)="closeModal()">Close</button>
                             <button type="button" type="submit" [disabled]="!LoanSettingForm.valid"
-                                class="btn btn-outline-primary">Create</button>
+                                class="btn btn-outline-primary">{{loanSetting?"Update":"Create"}}</button>
                         </div>
                     </form>
                 </div>

@@ -11,7 +11,7 @@ import { AddShiftSettingComponent } from './add-shift-setting/add-shift-setting.
 })
 export class ShiftSettingComponent implements OnInit {
 
-
+  filterValue!:string
   shiftLists!: ShiftListDto[]
 
 
@@ -49,6 +49,21 @@ export class ShiftSettingComponent implements OnInit {
     });
   }
 
+  get filteredShiftSettings(): any[] {
+    if (!this.filterValue) {
+        return this.shiftLists;
+    }
+    
+    const filterText = this.filterValue.toLowerCase();
+    
+    return this.shiftLists.filter((department: any) => {
+        const shiftName = department.shiftName.toLowerCase();
+      
+        
+        
+        return shiftName.includes(filterText) ;
+    });
+  }
 
 
 

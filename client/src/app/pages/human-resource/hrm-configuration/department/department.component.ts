@@ -13,6 +13,7 @@ import { UpdateDepartmentComponent } from './update-department/update-department
 })
 export class DepartmentComponent implements OnInit {
   
+  filterValue!:string
   departments! : DepartmentGetDto[]
 
   ngOnInit(): void {
@@ -54,6 +55,19 @@ export class DepartmentComponent implements OnInit {
   }
 
 
-
+  get filteredDepartments(): any[] {
+    if (!this.filterValue) {
+        return this.departments;
+    }
+    
+    const filterText = this.filterValue.toLowerCase();
+    
+    return this.departments.filter((department: any) => {
+        const departmentName = department.departmentName.toLowerCase();
+        const amharicName = department.amharicName.toLowerCase();
+        
+        return departmentName.includes(filterText) || amharicName.includes(filterText);
+    });
+}
 
 }

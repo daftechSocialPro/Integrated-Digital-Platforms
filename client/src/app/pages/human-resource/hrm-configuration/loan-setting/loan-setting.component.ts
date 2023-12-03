@@ -11,6 +11,7 @@ import { AddLoanSettingComponent } from './add-loan-setting/add-loan-setting.com
 })
 export class LoanSettingComponent implements OnInit {
 
+  filterValue!:string
   loanSettings!: LoanSettingDto[]
 
   ngOnInit(): void {
@@ -46,6 +47,22 @@ export class LoanSettingComponent implements OnInit {
     modalRef.componentInstance.loanSetting = loanSetting
     modalRef.result.then(() => {
       this.getSetting();
+    });
+  }
+
+  get filteredLoanSettings(): any[] {
+    if (!this.filterValue) {
+        return this.loanSettings;
+    }
+    
+    const filterText = this.filterValue.toLowerCase();
+    
+    return this.loanSettings.filter((department: any) => {
+        const departmentName = department.typeOfLoan.toLowerCase();
+        const loanname = department.loanName.toLowerCase()
+        
+        
+        return departmentName.includes(filterText)||loanname.includes(filterText) ;
     });
   }
 

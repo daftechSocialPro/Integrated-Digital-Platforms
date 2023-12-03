@@ -31,6 +31,8 @@ namespace IntegratedImplementation.Services.HRM
                 CreatedDate = DateTime.Now,
                 CreatedById = addLoanSetting.CreatedById,
                 LoanName = addLoanSetting.LoanName,
+                
+                AmharicName = addLoanSetting.AmharicName,
                 MaxDeductedPercent = addLoanSetting.MaxDeductedPercent,
                 MaxLoanAmmount = addLoanSetting.MaxLoanAmmount,
                 MinDeductedPercent = addLoanSetting.MinDeductedPercent,
@@ -52,7 +54,8 @@ namespace IntegratedImplementation.Services.HRM
             {
                 Id = x.Id,
                 LoanName = x.LoanName,
-                MaxDeductedPercent= x.MaxDeductedPercent,
+                AmharicName =x.AmharicName,
+                MaxDeductedPercent = x.MaxDeductedPercent,
                 MaxLoanAmmount= x.MaxLoanAmmount,
                 MinDeductedPercent = x.MinDeductedPercent,
                 PaymentYear = x.PaymentYear,
@@ -69,6 +72,7 @@ namespace IntegratedImplementation.Services.HRM
 
             currentSetting.TypeOfLoan = updateLoanSetting.TypeOfLoan;
             currentSetting.LoanName = updateLoanSetting.LoanName;
+            currentSetting.AmharicName = updateLoanSetting.AmharicName;
             currentSetting.MaxDeductedPercent = updateLoanSetting.MaxDeductedPercent;
             currentSetting.MinDeductedPercent = updateLoanSetting.MinDeductedPercent;
             currentSetting.MaxLoanAmmount = updateLoanSetting.MaxLoanAmmount;

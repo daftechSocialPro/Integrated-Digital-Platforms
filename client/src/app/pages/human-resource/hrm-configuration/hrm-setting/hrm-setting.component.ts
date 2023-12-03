@@ -12,6 +12,7 @@ import { UpdateHrmSettingComponent } from './update-hrm-setting/update-hrm-setti
 })
 export class HrmSettingComponent implements OnInit  {
 
+  filterValue!:string
   hrmSettings!: HrmSettingDto[]
   constructor(private hrmService: HrmService,private modalService: NgbModal){}
   ngOnInit(): void {
@@ -43,6 +44,21 @@ export class HrmSettingComponent implements OnInit  {
     modalRef.result.then(()=>{
       this.getHrmSettings()
     })
+  }
+
+  get filteredHrmSettings(): any[] {
+    if (!this.filterValue) {
+        return this.hrmSettings;
+    }
+    
+    const filterText = this.filterValue.toLowerCase();
+    
+    return this.hrmSettings.filter((department: any) => {
+        const departmentName = department.generalSetting.toLowerCase();
+        
+        
+        return departmentName.includes(filterText) ;
+    });
   }
 
 }

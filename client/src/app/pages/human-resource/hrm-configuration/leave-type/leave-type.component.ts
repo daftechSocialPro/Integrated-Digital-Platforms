@@ -11,7 +11,7 @@ import { UpdateLeaveTypeComponent } from './update-leave-type/update-leave-type.
   styleUrls: ['./leave-type.component.css']
 })
 export class LeaveTypeComponent implements OnInit {
-  
+  filterValue!:string
   LeaveTypes! : LeaveTypeGetDto[]
 
   ngOnInit(): void {
@@ -55,6 +55,22 @@ export class LeaveTypeComponent implements OnInit {
       this.getLeaveTypes()
     })
 
+  }
+
+  get filteredLeaveTypes(): any[] {
+    if (!this.filterValue) {
+        return this.LeaveTypes;
+    }
+    
+    const filterText = this.filterValue.toLowerCase();
+    
+    return this.LeaveTypes.filter((department: any) => {
+        const leaveTypeName = department.name.toLowerCase();
+        const leaveCategory = department.leaveCategory.toLowerCase();
+        
+        
+        return leaveTypeName.includes(filterText)||leaveCategory.includes(filterText) ;
+    });
   }
 
 

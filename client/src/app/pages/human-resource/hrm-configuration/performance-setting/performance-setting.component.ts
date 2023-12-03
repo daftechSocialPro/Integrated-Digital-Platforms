@@ -11,6 +11,7 @@ import { AddPerformanceSettingComponent } from './add-performance-setting/add-pe
 })
 export class PerformanceSettingComponent implements OnInit  {
 
+  filterValue!:string
   performanceSettings!: PerformanceSettingDto[]
   constructor(private hrmService: HrmService,private modalService: NgbModal){}
   ngOnInit(): void {
@@ -33,6 +34,21 @@ export class PerformanceSettingComponent implements OnInit  {
 
   }
 
+  get filteredPerformanceSettings(): any[] {
+    if (!this.filterValue) {
+        return this.performanceSettings;
+    }
+    
+    const filterText = this.filterValue.toLowerCase();
+    
+    return this.performanceSettings.filter((department: any) => {
+        const performanceMonth = department.performanceMonth.toLowerCase();
+       
+        
+        
+        return performanceMonth.includes(filterText);
+    });
+  } 
   
 
 }

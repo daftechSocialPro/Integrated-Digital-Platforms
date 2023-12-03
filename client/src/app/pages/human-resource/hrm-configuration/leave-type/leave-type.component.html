@@ -1,5 +1,12 @@
 <div class="card">
     <div class="row p-2">
+        <div class="col-md-3">
+            <div class="form-floating">
+                <input type="text" class="form-control" [(ngModel)]="filterValue"  placeholder="Search Here..."
+                    >
+                <label for="filter">Filter</label>
+            </div>
+        </div>
         <div class="col-lg-12 text-end ">
             <button type="button" class="btn btn-outline-primary" (click)="addLeaveType()"><i
                     class="bi bi-plus me-1"></i>
@@ -12,7 +19,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Leave Types</h5>
 
-                    <p-table [value]="LeaveTypes" [paginator]="true" [rows]="5" [showCurrentPageReport]="true"
+                    <p-table [value]="filteredLeaveTypes" [paginator]="true" [rows]="5" [showCurrentPageReport]="true"
                         [tableStyle]="{ 'min-width': '50rem' }"
                         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                         [rowsPerPageOptions]="[5, 25, 50]" styleClass="p-datatable-sm">
