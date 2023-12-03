@@ -47,11 +47,11 @@ namespace IMPData
             //        port = Convert.ToInt32(item.Split(' ')[1]);
             //}
 
-            SqlConnection con = new SqlConnection(@"Data Source=SQL5102.site4now.net;Initial Catalog=db_a95b05_erpsystems;User ID=db_a95b05_erpsystems_admin;Password=P@ssw0rd");
+            SqlConnection con = new SqlConnection(@"Data Source=.;Initial Catalog=IntegratedDigitalH;User ID=sa;Password=P@ssw0rd");
             con.Open();
             SqlCommand cmd = new SqlCommand("SELECT * FROM DeviceSettings", con);
             SqlDataReader red = cmd.ExecuteReader();
-            SqlConnection con2 = new SqlConnection(@"Data Source=SQL5102.site4now.net;Initial Catalog=db_a95b05_erpsystems;User ID=db_a95b05_erpsystems_admin;Password=P@ssw0rd");
+            SqlConnection con2 = new SqlConnection(@"Data Source=.;Initial Catalog=IntegratedDigitalH;User ID=sa;Password=P@ssw0rd");
             SqlCommand cmd2 = new SqlCommand();
             cmd2.Connection = con2;
 
@@ -62,7 +62,7 @@ namespace IMPData
                 devNo = red.GetGuid(0).ToString();
 
                 bIsConnected = axCZKEM1.Connect_Net(ip, port);
-
+                log += Environment.NewLine + "Goes Here";
                 if (bIsConnected == true)
                 {
                     log += Environment.NewLine + "Current State:Connected";
@@ -148,7 +148,7 @@ namespace IMPData
                 else
                 {
                     axCZKEM1.GetLastError(ref idwErrorCode);
-                    log += Environment.NewLine + "Unable to connect the device,ErrorCode=" + idwErrorCode.ToString();
+                    log += Environment.NewLine + "Unable to connect to device,ErrorCode=" + idwErrorCode.ToString();
                 }
 
                 File.AppendAllText("Log.txt", log);

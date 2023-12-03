@@ -4,6 +4,7 @@ using IntegratedImplementation.Interfaces.HRM;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using System.Xml.Serialization;
 
 namespace IntegratedDigitalAPI.Controllers.HRM
 {
@@ -84,6 +85,21 @@ namespace IntegratedDigitalAPI.Controllers.HRM
             if (ModelState.IsValid)
             {
                 return Ok(await _attendanceService.UpdateShift(shiftListDto));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> ImportAttendance()
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _attendanceService.ImportAttendance());
             }
             else
             {

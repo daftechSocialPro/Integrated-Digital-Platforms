@@ -1,5 +1,7 @@
 ﻿using Implementation.Helper;
 using IntegratedImplementation.DTOS.HRM;
+using IntegratedImplementation.Helper;
+using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedImplementation.Interfaces.HRM;
 using IntegratedInfrustructure.Data;
 using IntegratedInfrustructure.Model.HRM;
@@ -17,9 +19,12 @@ namespace IntegratedImplementation.Services.HRM
     {
         private readonly ApplicationDbContext _dbContext;
 
+        
+
         public EmployeeAttendanceService(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
+           
         }
 
 
@@ -151,6 +156,14 @@ namespace IntegratedImplementation.Services.HRM
 
                 return new ResponseMessage { Success = true, Message = "Updated Shift Successfully" };
             }
+        }
+
+        public Task<ResponseMessage> ImportAttendance()
+        {
+            // var curVal = _attendanceDevice.GetAttendanceLog();
+
+            throw new NotImplementedException();
+          //  return curVal;
         }
     }
 }

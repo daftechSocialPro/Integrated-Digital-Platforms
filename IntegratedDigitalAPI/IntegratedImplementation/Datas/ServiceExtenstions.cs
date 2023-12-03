@@ -30,7 +30,7 @@ namespace IntegratedImplementation.Datas
     {
         public static IServiceCollection AddCoreBusiness(this IServiceCollection services)
         {
-
+           
             #region Hrm Service
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IHolidayService, HolidayService>();

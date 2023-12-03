@@ -134,14 +134,6 @@ D:\Projects\ERP\Main\OccasionERP\AttendanceImporter\AttendanceImporter\obj\Debug
 D:\Projects\ERP\Main\OccasionERP\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.csproj.CopyComplete
 D:\Projects\ERP\Main\OccasionERP\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.exe
 D:\Projects\ERP\Main\OccasionERP\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.pdb
-D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.csproj.AssemblyReference.cache
-D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.csproj.SuggestedBindingRedirects.cache
-D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.Form1.resources
-D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.Properties.Resources.resources
-D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.csproj.GenerateResource.cache
-D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.csproj.CoreCompileInputs.cache
-D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.exe
-D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.pdb
 D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.exe.config
 D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.exe.manifest
 D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\bin\Debug\AttendanceImporter.application
@@ -151,6 +143,14 @@ D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\Attendan
 D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\bin\Debug\Interop.zkemkeeper.dll
 D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\bin\Debug\IMPData.pdb
 D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\bin\Debug\IMPData.dll.config
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.csproj.AssemblyReference.cache
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.csproj.SuggestedBindingRedirects.cache
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.Form1.resources
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.Properties.Resources.resources
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.csproj.GenerateResource.cache
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.csproj.CoreCompileInputs.cache
 D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.exe.manifest
 D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.application
 D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.csproj.CopyComplete
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.exe
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\AttendanceImporter\obj\Debug\AttendanceImporter.pdb

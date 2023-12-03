@@ -49,19 +49,19 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>WwD/gNhmpcBV92dPYYE3PsKSzgxG0uwrS5fR6tYlxgw=</dsig:DigestValue>
+        <dsig:DigestValue>fKURhwyCNGThSw+e2QAHav1A2F4LKInIrpJfb034lrg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="IMPData.dll" size="9216">
-      <assemblyIdentity name="IMPData" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <assemblyIdentity name="IMPData" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>FSNzdQpXkVlCezmlUbEMM6qpsVoEsTVNVAAFcUgTpHE=</dsig:DigestValue>
+        <dsig:DigestValue>5uLQ7OKTxU8xYWEdWQuh3iLTrGS1q+aZnU51IcBzxsg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

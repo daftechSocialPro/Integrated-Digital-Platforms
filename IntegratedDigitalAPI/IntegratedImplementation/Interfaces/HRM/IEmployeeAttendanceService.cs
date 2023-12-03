@@ -16,5 +16,6 @@ namespace IntegratedImplementation.Interfaces.HRM
         Task<ResponseMessage> AddShift(ShiftListDto addShiftDto);
         Task<ResponseMessage> BindShift(BindShiftDto bindShift);
         Task<ResponseMessage> UpdateShift(ShiftListDto shiftListDto);
+        Task<ResponseMessage> ImportAttendance();
     }
 }
