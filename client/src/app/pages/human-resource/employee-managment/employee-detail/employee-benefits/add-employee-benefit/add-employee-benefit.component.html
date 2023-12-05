@@ -13,7 +13,8 @@
                         <div class="modal-body">
                             <div class="row g-3">
                                 <div class="col-md-6">
-                                    <div class="form-floating mb-3">
+                                    <div class="form-group mb-3">
+                                        <label for="ammount" class="col-12">Benefit</label>
                                         <p-dropdown [options]="benefitsDropDown" formControlName="benefitListId"
                                             optionLabel="name" optionValue="id" [filter]="true" filterBy="name"
                                             [showClear]="true" placeholder="Select Benefit">
@@ -21,7 +22,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-floating mb-3">
+                                    <div class="form-group mb-3">
+                                        <label for="ammount" class="col-12">Type of Benefit</label>
                                         <p-dropdown [options]="typeOfBenefitList" formControlName="typeOfBenefit"
                                             optionLabel="name" optionValue="value" [showClear]="true"
                                             placeholder="Select Type of Benefit">
@@ -30,10 +32,24 @@
                                 </div>
 
                                 <div class="col-md-6">
-                                    <div class="form-floating">
+                                    <div class="form-group">
+                                        <label for="ammount" class="col-12">Ammount</label>
                                         <input type="number" class="form-control" [min]="0" id="ammount"
                                             placeholder="ammount" required formControlName="ammount">
-                                        <label for="ammount">Ammount</label>
+                               
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="name" class="col-12">Recursive</label>
+                                        <p-inputSwitch  formControlName="recursive"></p-inputSwitch>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="BirthDate" class="col-12"> Allowance End Date</label>
+                                        <p-calendar formControlName="allowanceEndDate" #allowanceEndDate [minDate]="today"
+                                            [readonlyInput]="true"></p-calendar>
                                     </div>
                                 </div>
                             </div>

@@ -60,17 +60,12 @@ export class AddEmployeeComponent implements OnInit {
       employmentType: [null, Validators.required],
       paymentType: [null, Validators.required],
       employmentDate: [Date.now, Validators.required],
-   
-      ContractEndDate: [''],
+      ContractEndDate: [null],
       pensionCode: [''],
       tinNumber: [''],
-      bankAccountNo: [''],
       woreda: [null, Validators.required],
-      zoneId: [null, Validators.required],
-      bankId: [null, Validators.required]
-
-
-    })
+      zoneId: [null, Validators.required]
+    });
   }
 
   ngOnInit(): void {
@@ -168,21 +163,19 @@ export class AddEmployeeComponent implements OnInit {
         maritalStatus: this.EmployeeForm.value.maritalStatus,
         employmentType: this.EmployeeForm.value.employmentType,       
         paymentType: this.EmployeeForm.value.paymentType,
-       
         employmentDate: this.changeDateTime(this.EmployeeForm.value.employmentDate),
-        ContractEndDate: this.changeDateTime(this.EmployeeForm.value.ContractEndDate),
         pensionCode: this.EmployeeForm.value.pensionCode.toString(),
         tinNumber: this.EmployeeForm.value.tinNumber.toString(),
-        bankAccountNo: this.EmployeeForm.value.bankAccountNo.toString(),
         zoneId: this.EmployeeForm.value.zoneId,
         woreda: this.EmployeeForm.value.woreda,
         imagePath: this.fileGH,
         createdById: this.user.userId,
-        bankId: this.EmployeeForm.value.bankId
-
       }
 
-   
+      if (this.EmployeeForm.value.ContractEndDate != null) {
+        employeePost.ContractEndDate = this.changeDateTime(this.EmployeeForm.value.ContractEndDate);
+      }
+
 
       var formData = new FormData();
       for (let key in employeePost) {
@@ -215,14 +208,9 @@ export class AddEmployeeComponent implements OnInit {
       )
     }
 
-
-
-
   }
 
-  changeBankDigit(digitNumber: any){
-     this.bankDigit =  Number(this.bankLists.find(X => X.id == digitNumber.value)?.bankDigit);
-  }
+ 
 
   closeModal() {
     this.activeModal.close()

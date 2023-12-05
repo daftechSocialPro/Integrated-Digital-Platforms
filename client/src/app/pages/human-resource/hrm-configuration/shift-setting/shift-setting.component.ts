@@ -3,6 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ShiftListDto } from 'src/app/model/HRM/IShiftSettingDto';
 import { HrmService } from 'src/app/services/hrm.service';
 import { AddShiftSettingComponent } from './add-shift-setting/add-shift-setting.component';
+import { AddShiftDetailComponent } from './add-shift-detail/add-shift-detail.component';
 
 @Component({
   selector: 'app-shift-setting',
@@ -41,6 +42,14 @@ export class ShiftSettingComponent implements OnInit {
     })
   }
 
+  addNewDetail(shiftId: string){
+    let modalRef = this.modalService.open(AddShiftDetailComponent, { size: 'lg', backdrop: 'static' })
+    modalRef.componentInstance.shiftId = shiftId
+    modalRef.result.then(() => {
+      this.getDevices()
+    });
+  }
+
   update(shiftSetting: ShiftListDto) {
     let modalRef = this.modalService.open(AddShiftSettingComponent, { size: 'lg', backdrop: 'static' })
     modalRef.componentInstance.shiftSetting = shiftSetting
@@ -55,12 +64,8 @@ export class ShiftSettingComponent implements OnInit {
     }
     
     const filterText = this.filterValue.toLowerCase();
-    
     return this.shiftLists.filter((department: any) => {
         const shiftName = department.shiftName.toLowerCase();
-      
-        
-        
         return shiftName.includes(filterText) ;
     });
   }

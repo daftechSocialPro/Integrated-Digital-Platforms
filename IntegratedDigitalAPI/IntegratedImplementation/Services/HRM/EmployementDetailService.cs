@@ -335,7 +335,9 @@ namespace IntegratedImplementation.Services.HRM
                                 Id = x.Id,
                                 TypeofBenefit = x.TypeOfBenefit.ToString(),
                                 BenefitName = x.Benefit.Name,
-                                Amount = x.Amount
+                                Amount = x.Amount,
+                                Recursive = x.Recursive,
+                                AllowanceEndDate = x.AllowanceEndDate
                             }).ToListAsync();
         }
 
@@ -360,7 +362,10 @@ namespace IntegratedImplementation.Services.HRM
                 Amount = addBenefit.Ammount,
                 BenefitId = addBenefit.BenefitListId,
                 TypeOfBenefit = addBenefit.TypeOfBenefit,
-                Rowstatus = RowStatus.ACTIVE
+                Recursive = addBenefit.Recursive,
+                AllowanceEndDate = addBenefit.AllowanceEndDate,
+                Rowstatus = RowStatus.ACTIVE,
+               
             };
 
             await _dbContext.EmployeeBenefits.AddAsync(emp);

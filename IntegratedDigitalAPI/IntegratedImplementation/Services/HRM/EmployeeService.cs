@@ -91,7 +91,6 @@ namespace IntegratedImplementation.Services.HRM
                     IsPension = addEmployee.IsPension,
                     MaritalStatus = Enum.Parse<MaritalStatus>(addEmployee.MaritalStatus),
                     PaymentType = Enum.Parse<PaymentType>(addEmployee.PaymentType),
-                    BankAccountNo = addEmployee.BankAccountNo,
                     EmploymentDate = addEmployee.EmploymentDate,
                     ImagePath = path,
                     PhoneNumber = addEmployee.PhoneNumber,
@@ -100,7 +99,6 @@ namespace IntegratedImplementation.Services.HRM
                     ContractEndDate = addEmployee.ContractEndDate,
                     Rowstatus = RowStatus.ACTIVE,
                     ExistingEmployee = addEmployee.ExistingEmployee,
-                    BankId = addEmployee.BankId
                 };
                 await _dbContext.Employees.AddAsync(employee);
                 await _dbContext.SaveChangesAsync();
@@ -227,10 +225,8 @@ namespace IntegratedImplementation.Services.HRM
                     employee.ContractEndDate = addEmployee.ContractEndDate;
                     employee.PensionCode = addEmployee.PensionCode;
                     employee.TinNumber = addEmployee.TinNumber;
-                    employee.BankAccountNo = addEmployee.BankAccountNo;
                     employee.BirthDate = addEmployee.BirthDate;
                     employee.Woreda = addEmployee.Woreda;
-                    employee.BankId = addEmployee.BankId;
 
                     await _dbContext.SaveChangesAsync();
 
@@ -616,6 +612,50 @@ namespace IntegratedImplementation.Services.HRM
 
 
         }
+
+        public async Task<List<EmployeeBankListDto>> EmployeeBanks(Guid employeeId)
+        {
+            var bankLists = await _dbContext.EmployeeBanks.AsNoTracking().Include(x => x.Bank).Where(x => x.EmployeeId == employeeId)
+                                   .Select(x => new EmployeeBankListDto
+                                   {
+                                     Id = x.Id,
+                                     AccountNumber = x.BankAccountNo,
+                                     BankName = x.Bank.BankName
+                                   }).ToListAsync();
+
+            return bankLists;
+        }
+
+        public async Task<ResponseMessage> AddEmployeeBank(AddEmployeeBankDto employeeBank)
+        {
+            var currentBank = await _dbContext.BankLists.FirstOrDefaultAsync(x => x.Id == employeeBank.BankId);
+            if (currentBank == null)
+                return new ResponseMessage { Success = false, Message = "Could not find account number" };
+
+            if (employeeBank.AccountNumber.Length != currentBank.BankDigitNumber)
+                return new ResponseMessage { Success = false, Message = "Please correct the digit number" };
+
+            var empBank = await _dbContext.EmployeeBanks.AnyAsync(x => x.BankId == employeeBank.BankId);
+            if(empBank)
+                return new ResponseMessage { Success = false, Message = "Bank Already exists" };
+
+            EmployeeBank bank = new EmployeeBank()
+            {
+                Id = Guid.NewGuid(),
+                CreatedDate = DateTime.Now,
+                CreatedById = employeeBank.CreatedById,
+                BankAccountNo = employeeBank.AccountNumber,
+                BankId = employeeBank.BankId,
+                EmployeeId = employeeBank.EmployeeId,
+                Rowstatus = RowStatus.ACTIVE,
+            };
+
+            await _dbContext.EmployeeBanks.AddAsync(bank);
+            await _dbContext.SaveChangesAsync();
+
+            return new ResponseMessage { Success = true, Message = "Added Successfully!!" };
+        }
+
 
         //history
         public async Task<List<EmployeeHistoryDto>> GetEmployeeHistory(Guid employeeId)

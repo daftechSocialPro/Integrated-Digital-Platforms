@@ -24,7 +24,9 @@ import { AddEmployeeBenefitDto, EmployeeBenefitListDto } from '../model/HRM/IEmp
 import { RehireEmployeeDto } from '../model/HRM/IRehireEmployeeDto';
 import { DeviceSettingDto } from '../model/HRM/IDeviceSettingDto';
 import { AddEmployeeFingerPrintDto, EmployeeFingerPrintListDto } from '../model/HRM/IEmployeeFingerPrintDto';
-import { BindShiftDto, ShiftListDto } from '../model/HRM/IShiftSettingDto';
+import { AddShiftDetail, BindShiftDto, ShiftDetailDto, ShiftListDto } from '../model/HRM/IShiftSettingDto';
+import { AddPenaltyDto, PenaltyListDto } from '../model/HRM/IPenaltyListDto';
+import { AddEmployeeBankDto, EmployeeBankListDto } from '../model/HRM/IEmployeeBankDto';
 
 export interface toastPayload {
     message: string;
@@ -511,6 +513,9 @@ export class HrmService {
         return this.http.post<ResponseMessage>(this.baseUrl + "/EmployeeAttencance/AddShift", addShift)
     }
 
+    addShiftDetail(addShift: AddShiftDetail) {
+        return this.http.post<ResponseMessage>(this.baseUrl + "/EmployeeAttencance/AddShiftDetail", addShift)
+    }
 
     bindShift(bindShift: BindShiftDto) {
         return this.http.post<ResponseMessage>(this.baseUrl + "/EmployeeAttencance/BindShift", bindShift)
@@ -518,6 +523,27 @@ export class HrmService {
 
     updateShift(updateDevice: ShiftListDto) {
         return this.http.put<ResponseMessage>(this.baseUrl + "/EmployeeAttencance/UpdateShift", updateDevice)
+    }
+
+
+    getPenaltyLists(){
+        return this.http.get<PenaltyListDto[]>(this.baseUrl + '/EmployeeAttencance/GetPenaltyLists');
+      }
+    
+      addPenalty(addPenalty: AddPenaltyDto){
+        return this.http.post<ResponseMessage>(this.baseUrl + '/EmployeeAttencance/AddPenalty', addPenalty);
+      }
+    
+      changeStatusofPenalty(penaltyId: string){
+        return this.http.put<ResponseMessage>(this.baseUrl + `/EmployeeAttencance/ChangeStatusofPenalty?penaltyId=${penaltyId}`, penaltyId);
+      }
+
+    employeeBanks(employeeId: string) {
+        return this.http.get<EmployeeBankListDto[]>(this.baseUrl + `/Employee/EmployeeBanks?employeeId=${employeeId}`);
+    }
+
+    addEmployeeBank(addEmployeeBank: AddEmployeeBankDto) {
+        return this.http.post<ResponseMessage>(this.baseUrl + "/Employee/AddEmployeeBank", addEmployeeBank);
     }
     
 

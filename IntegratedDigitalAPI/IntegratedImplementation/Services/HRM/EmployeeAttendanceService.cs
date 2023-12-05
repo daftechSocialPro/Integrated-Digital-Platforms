@@ -80,7 +80,6 @@ namespace IntegratedImplementation.Services.HRM
                 Id = Guid.NewGuid(),
                 CreatedDate = DateTime.Now,
                 CreatedById = addShiftDto.CreatedById,
-                BreakTime = addShiftDto.BreakTime,
                 CheckIn = addShiftDto.CheckIn,
                 CheckOut = addShiftDto.CheckOut,
                 ShiftName = addShiftDto.ShiftName,
@@ -93,7 +92,7 @@ namespace IntegratedImplementation.Services.HRM
             return new ResponseMessage { Success = true, Message = "Saved Successfully", Data = shift.Id };
         }
 
-      
+
 
         public async Task<List<ShiftListDto>> GetShiftLists()
         {
@@ -104,7 +103,12 @@ namespace IntegratedImplementation.Services.HRM
                 AmharicShiftName = x.AmharicShiftName,
                 CheckIn = x.CheckIn,
                 CheckOut = x.CheckOut,
-                BreakTime = x.BreakTime
+                ShiftDetails = _dbContext.ShiftDetails.Where(z => z.ShiftId == x.Id).Select(y => new ShiftDetailDto
+                {
+                    Id = y.Id,
+                    BreakTime = y.BreakTime,
+                    WeekDays = y.WeekDays
+                }).ToList()
             }).ToListAsync();
             return shiftList;
         }
@@ -115,7 +119,6 @@ namespace IntegratedImplementation.Services.HRM
 
             if (shifts != null)
             {
-                shifts.BreakTime = shiftListDto.BreakTime;
                 shifts.CheckIn = shiftListDto.CheckIn;
                 shifts.CheckOut = shiftListDto.CheckOut;
                 shifts.ShiftName = shiftListDto.ShiftName;
@@ -125,6 +128,28 @@ namespace IntegratedImplementation.Services.HRM
             }
 
             return new ResponseMessage { Success = false, Message = "Shift Could Not be found!!" };
+        }
+
+        public async Task<ResponseMessage> AddShiftDetail(AddShiftDetail addShiftDetail)
+        {
+            var currentShift = await _dbContext.ShiftDetails.AnyAsync(X => X.ShiftId == addShiftDetail.ShiftId && X.WeekDays == addShiftDetail.WeekDays);
+            if (currentShift)
+                return new ResponseMessage { Success = false, Message = "Data already exists" };
+
+            ShiftDetail detail = new ShiftDetail()
+            {
+                Id = Guid.NewGuid(),
+                CreatedDate = DateTime.Now,
+                CreatedById = addShiftDetail.CreatedById,
+                BreakTime = addShiftDetail.BreakTime,
+                WeekDays = addShiftDetail.WeekDays,
+                ShiftId = addShiftDetail.ShiftId,
+                Rowstatus = RowStatus.ACTIVE,
+            };
+            _dbContext.ShiftDetails.Add(detail);
+            await _dbContext.SaveChangesAsync();
+
+            return new ResponseMessage { Success = true, Message = "Saved Successfully" };
         }
 
         public async Task<ResponseMessage> BindShift(BindShiftDto bindShift)
@@ -158,12 +183,85 @@ namespace IntegratedImplementation.Services.HRM
             }
         }
 
-        public Task<ResponseMessage> ImportAttendance()
+        public async Task<List<PenaltyListDto>> GetPenaltyLists()
         {
-            // var curVal = _attendanceDevice.GetAttendanceLog();
-
-            throw new NotImplementedException();
-          //  return curVal;
+            var penalty = await _dbContext.EmployeePenalty.AsNoTracking().Where(x => x.Employee.EmploymentStatus == EmploymentStatus.ACTIVE).Include(x => x.Employee)
+                            .Select(x =>
+                              new PenaltyListDto
+                              {
+                                  Id = x.Id.ToString(),
+                                  FullName = $"{x.Employee.FirstName} {x.Employee.MiddleName} {x.Employee.LastName}",
+                                  Amount = x.Amount,
+                                  PenalityendDate = x.PenalityendDate,
+                                  PenaltyDate = x.PenaltyDate,
+                                  PenaltyType = x.PenaltyType.ToString(),
+                                  Recursive = x.Recursive,
+                                  Remark = x.Remark,
+                                  FromSalary = x.FromSalary,
+                                  TotNumber = x.TotNumber,
+                                  Approved = x.Rowstatus == RowStatus.ACTIVE ? true : false
+                              }).OrderByDescending(x => x.PenaltyDate).ToListAsync();
+            return penalty;
         }
+
+        public async Task<ResponseMessage> AddPenalty(AddPenaltyDto addPenalty)
+        {
+            var currSalary = await _dbContext.EmployeeSalaries.Include(x => x.EmploymentDetail).FirstOrDefaultAsync(x => x.EmploymentDetail.EmployeeId.Equals(Guid.Parse(addPenalty.EmployeeId)) && x.Rowstatus == RowStatus.ACTIVE);
+
+            if (currSalary == null)
+                return new ResponseMessage { Success = false, Message = "Please set sallary first!!" };
+
+            EmployeePenalty penalty = new EmployeePenalty()
+            {
+                Id = Guid.NewGuid(),
+                Amount = addPenalty.Amount,
+                CreatedById = addPenalty.CreatedById,
+                CreatedDate = DateTime.Now,
+                EmployeeId = Guid.Parse(addPenalty.EmployeeId),
+                PenalityendDate = addPenalty.PenalityendDate,
+                FromSalary = addPenalty.FromSalary,
+                TotNumber = addPenalty.TotNumber,
+                PenaltyDate = addPenalty.PenaltyDate.AddDays(1),
+                PenaltyType = addPenalty.PenaltyType,
+                Recursive = addPenalty.Recursive,
+                Remark = addPenalty.Remark,
+                Rowstatus = RowStatus.ACTIVE
+            };
+
+            if (addPenalty.FromSalary)
+            {
+                if (addPenalty.PenaltyType == PenaltyType.ABSENT)
+                {
+                    var TotAmount = (currSalary.Amount / 26.0) * addPenalty.TotNumber;
+                    penalty.Amount = TotAmount;
+                }
+                else if (addPenalty.PenaltyType == PenaltyType.LATE)
+                {
+                    var TotAmount = (currSalary.Amount / 208) * addPenalty.TotNumber;
+                    penalty.Amount = TotAmount;
+                }
+            }
+
+            await _dbContext.EmployeePenalty.AddAsync(penalty);
+            await _dbContext.SaveChangesAsync();
+
+            return new ResponseMessage { Success = true, Message = "Created Successully!!", Data = penalty.Id };
+        }
+
+        public async Task<ResponseMessage> ChangeStatusofPenalty(string penaltyId)
+        {
+            var penalty = await _dbContext.EmployeePenalty.FindAsync(Guid.Parse(penaltyId));
+            if (penalty != null)
+            {
+                penalty.Rowstatus = penalty.Rowstatus == RowStatus.ACTIVE ? RowStatus.INACTIVE : RowStatus.ACTIVE;
+
+                await _dbContext.SaveChangesAsync();
+
+                return new ResponseMessage { Success = true, Message = "Updated Successfully" };
+            }
+
+            return new ResponseMessage { Success = false, Message = "Penality Not Found" };
+        }
+
     }
 }

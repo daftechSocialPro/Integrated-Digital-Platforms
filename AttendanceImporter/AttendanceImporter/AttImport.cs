@@ -225,7 +225,13 @@ namespace AttendanceImporter
                                             attend2.AttencanceType = "EP";
                                     }
                                     context.SubmitChanges();
-                                    double breaktime =  (ots - qb.First().BreakTime * 60) / 60;
+
+
+                                   var currentDay = DateTime.Now.DayOfWeek;
+
+                                var currentBreakTime = context.ShiftDetails.FirstOrDefault(X => X.ShiftId == qb.First().Id && X.WeekDays == currentDay.ToString());
+                                    
+                                    double breaktime =  (ots - currentBreakTime.BreakTime * 60) / 60;
 
                                     if (breaktime > 8)
                                     {

@@ -13,6 +13,5 @@ namespace IntegratedInfrustructure.Model.HRM
         public string AmharicShiftName { get; set; } = null!;
         public TimeSpan CheckIn { get; set; }
         public TimeSpan CheckOut { get; set; }
-        public int BreakTime { get; set; }
     }
 }

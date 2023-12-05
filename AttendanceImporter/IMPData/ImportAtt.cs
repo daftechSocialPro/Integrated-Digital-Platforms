@@ -47,11 +47,11 @@ namespace IMPData
             //        port = Convert.ToInt32(item.Split(' ')[1]);
             //}
 
-            SqlConnection con = new SqlConnection(@"Data Source=.;Initial Catalog=IntegratedDigitalH;User ID=sa;Password=P@ssw0rd");
+            SqlConnection con = new SqlConnection(@"Data Source=192.168.0.47;Initial Catalog=IntegratedDigital;User ID=sa;Password=P@ssw0rd");
             con.Open();
             SqlCommand cmd = new SqlCommand("SELECT * FROM DeviceSettings", con);
             SqlDataReader red = cmd.ExecuteReader();
-            SqlConnection con2 = new SqlConnection(@"Data Source=.;Initial Catalog=IntegratedDigitalH;User ID=sa;Password=P@ssw0rd");
+            SqlConnection con2 = new SqlConnection(@"Data Source=192.168.0.47;Initial Catalog=IntegratedDigital;User ID=sa;Password=P@ssw0rd");
             SqlCommand cmd2 = new SqlCommand();
             cmd2.Connection = con2;
 

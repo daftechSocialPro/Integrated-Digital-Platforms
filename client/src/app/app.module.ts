@@ -247,6 +247,10 @@ import { ForgetPasswordComponent } from './auth/pages-login/forget-password/forg
 import { ShiftSettingComponent } from './pages/human-resource/hrm-configuration/shift-setting/shift-setting.component';
 import { AddShiftSettingComponent } from './pages/human-resource/hrm-configuration/shift-setting/add-shift-setting/add-shift-setting.component';
 import { BindShiftComponent } from './pages/human-resource/employee-managment/employee-detail/bind-shift/bind-shift.component';
+import { EmployeePenaltyComponent } from './pages/human-resource/employee-penalty/employee-penalty.component';
+import { AddEmployeePenaltyComponent } from './pages/human-resource/employee-penalty/add-employee-penalty/add-employee-penalty.component';
+import { EmployeeBanksComponent } from './pages/human-resource/employee-managment/employee-detail/employee-banks/employee-banks.component';
+import { AddShiftDetailComponent } from './pages/human-resource/hrm-configuration/shift-setting/add-shift-detail/add-shift-detail.component';
 
 @NgModule({
   declarations: [
@@ -547,7 +551,11 @@ import { BindShiftComponent } from './pages/human-resource/employee-managment/em
     ForgetPasswordComponent,
     ShiftSettingComponent,
     AddShiftSettingComponent,
-    BindShiftComponent
+    BindShiftComponent,
+    EmployeePenaltyComponent,
+    AddEmployeePenaltyComponent,
+    EmployeeBanksComponent,
+    AddShiftDetailComponent
     //  AddMeasurementComponent,
     //  UpdateMeasurmentComponent
   ],

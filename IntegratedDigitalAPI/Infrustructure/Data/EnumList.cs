@@ -231,5 +231,12 @@ namespace IntegratedInfrustructure.Data
             NUMBER,
         }
 
+        public enum PenaltyType
+        {
+            ABSENT,
+            LATE,
+            OTHER
+        }
+
     }
 }

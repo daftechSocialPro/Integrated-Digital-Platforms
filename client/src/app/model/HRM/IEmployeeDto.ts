@@ -27,19 +27,16 @@ export interface EmployeePostDto {
      employmentType: string;
      paymentType: string;
      employmentDate: Date| null;
-     salary?: Number,
-     isPension?: boolean
- 
+     salary?: Number;
+     isPension?: boolean;
      pensionCode?: string;
      tinNumber?: string;
-     bankAccountNo?: string;
      phoneNumber: string;
      ContractEndDate?: Date | null;
      createdById: string;
      email: string;
      zoneId: string;
      woreda: string;
-     bankId: string;
 
 }
 

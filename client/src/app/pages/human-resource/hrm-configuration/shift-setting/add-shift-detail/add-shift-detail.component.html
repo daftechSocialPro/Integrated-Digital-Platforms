@@ -1,0 +1,53 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title"> Shift detail</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Shift detail</h5>
+            <div class="row">
+                <div class="col-lg-12">
+                    <form class="" [formGroup]="shiftFormGroup" (ngSubmit)="submit()">
+                        <div class="modal-body">
+                            <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="breakTime">Week Day</label>
+                                    <select pInputText class="form-control" id="MaritalStatus" #MaritalStatus formControlName="weekDays"
+                                        aria-label="State">
+                                        <option></option>
+                                        <option value="MONDAY">MONDAY</option>
+                                        <option value="TUESDAY">TUESDAY</option>
+                                        <option value="WEDENSDAY">WEDENSDAY</option>
+                                        <option value="THURSDAY">THURSDAY</option>
+                                        <option value="FRIDAY">FRIDAY</option>
+                                        <option value="SATURDAY">SATURDAY</option>
+                                        <option value="SUNDAY">SUNDAY</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="breakTime">Break Time</label>
+                                    <input type="number" min="0" class="form-control" id="com" placeholder="breakTime" formControlName="breakTime"
+                                        required>
+                                   
+                                </div>
+                            </div>
+                                                                                   
+                            </div>
+                        </div>
+                        <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
+                            (click)="closeModal()">Close</button>
+                        <button type="button" type="submit"  [disabled]="!shiftFormGroup.valid"
+                            class="btn btn-outline-primary">Save</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

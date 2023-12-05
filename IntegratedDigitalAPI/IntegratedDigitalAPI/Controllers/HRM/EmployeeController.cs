@@ -137,6 +137,29 @@ namespace IntegratedDigitalAPI.Controllers.HRM
             }
         }
 
+
+        [HttpGet]
+        [ProducesResponseType(typeof(EmployeeBankListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> EmployeeBanks(Guid employeeId)
+        {
+            return Ok(await _employeeService.EmployeeBanks(employeeId));
+        }
+
+
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> AddEmployeeBank(AddEmployeeBankDto employeeBank)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _employeeService.AddEmployeeBank(employeeBank));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
         //history
 
         [HttpGet]
@@ -159,6 +182,7 @@ namespace IntegratedDigitalAPI.Controllers.HRM
                 return BadRequest();
             }
         }
+
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> UpdateEmployeeHistory(EmployeeHistoryPostDto employeeHistory)

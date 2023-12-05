@@ -13,10 +13,11 @@ namespace IntegratedInfrustructure.Model.HRM
         public string LoanName { get; set; } = null!;
         public string AmharicName { get; set; } = null!;
         public TypeOfLoan TypeOfLoan { get; set; }
-        public double MaxLoanAmmount { get; set; }
-        public int PaymentYear { get; set; }
-        public double MinDeductedPercent { get; set; }
-        public double MaxDeductedPercent { get; set; }
+        public int? NumberOfMonths { get; set; }
+        public double? MaxLoanAmmount { get; set; }
+        public int? PaymentYear { get; set; }
+        public double? MinDeductedPercent { get; set; }
+        public double? MaxDeductedPercent { get; set; }
         public string? Remark { get; set; }
     }
 }

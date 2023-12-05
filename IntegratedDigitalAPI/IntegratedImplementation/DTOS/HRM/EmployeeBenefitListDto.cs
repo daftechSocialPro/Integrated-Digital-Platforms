@@ -14,6 +14,8 @@ namespace IntegratedImplementation.DTOS.HRM
         public string BenefitName { get; set; } = null!;
         public string TypeofBenefit { get; set; } = null!;
         public double Amount { get; set; }
+        public bool Recursive { get; set; }
+        public DateTime? AllowanceEndDate { get; set; }
     }
 
     public class AddEmployeeBenefitDto
@@ -23,5 +25,7 @@ namespace IntegratedImplementation.DTOS.HRM
         public Guid BenefitListId { get; set; }
         public TypeOfBenefit TypeOfBenefit { get; set; }
         public double Ammount { get; set; }
+        public bool Recursive { get; set; }
+        public DateTime? AllowanceEndDate { get; set; }
     }
 }

@@ -26,30 +26,8 @@ namespace AttendanceImporter.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=SQL5102.site4now.net;Initial Catalog=db_a95b05_erpsystems;User ID=db_" +
-            "a95b05_erpsystems_admin;Password=P@ssw0rd")]
-        public string Setting {
-            get {
-                return ((string)(this["Setting"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=SQL5102.site4now.net;Initial Catalog=db_a95b05_erpsystems;User ID=db_" +
-            "a95b05_erpsystems_admin;Password=P@ssw0rd")]
-        public string db_a95b05_erpsystemsConnectionString {
-            get {
-                return ((string)(this["db_a95b05_erpsystemsConnectionString"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-DUIHOS9;Initial Catalog=IntegratedDigitalH;Integrated Securit" +
-            "y=True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=192.168.0.47;Initial Catalog=IntegratedDigital;Integrated Security=Tr" +
+            "ue")]
         public string IntegratedDigitalHConnectionString {
             get {
                 return ((string)(this["IntegratedDigitalHConnectionString"]));

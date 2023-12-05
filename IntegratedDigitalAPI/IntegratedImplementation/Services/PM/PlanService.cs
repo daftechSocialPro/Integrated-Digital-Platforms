@@ -3,7 +3,6 @@ using IntegratedDigitalAPI.DTOS.PM;
 using IntegratedDigitalAPI.Services.PM.Plan;
 using IntegratedImplementation.DTOS.Configuration;
 using IntegratedInfrustructure.Data;
-using IntegratedInfrustructure.Migrations;
 using IntegratedInfrustructure.Model.PM;
 using Microsoft.EntityFrameworkCore;
 using static IntegratedInfrustructure.Data.EnumList;

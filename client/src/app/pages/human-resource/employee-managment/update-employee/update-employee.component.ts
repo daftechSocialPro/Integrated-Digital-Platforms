@@ -76,12 +76,10 @@ export class UpdateEmployeeComponent implements OnInit {
       ContractEndDate: [this.selectedEmployee.contractEndDate],
       pensionCode: [this.selectedEmployee.pensionCode],
       tinNumber: [this.selectedEmployee.tinNumber],
-      bankAccountNo: [this.selectedEmployee.bankAccountNo],
       woreda: [this.selectedEmployee.woreda, Validators.required],
       countryId : [this.selectedEmployee.countryId],     
       regionId : [this.selectedEmployee.regionId],
       zoneId: [this.selectedEmployee.zoneId, Validators.required],
-      bankId: [this.selectedEmployee.bankId, Validators.required]
     })
     this.getRegions(this.selectedEmployee.countryId)
     this.getZones(this.selectedEmployee.regionId)
@@ -173,12 +171,10 @@ export class UpdateEmployeeComponent implements OnInit {
         employmentDate: this.changeDateTime(this.EmployeeForm.value.employmentDate),
         pensionCode: this.EmployeeForm.value.pensionCode.toString(),
         tinNumber: this.EmployeeForm.value.tinNumber.toString(),
-        bankAccountNo: this.EmployeeForm.value.bankAccountNo.toString(),
         zoneId: this.EmployeeForm.value.zoneId,
         woreda: this.EmployeeForm.value.woreda,
         imagePath: this.fileGH,
         createdById: this.user.userId,
-        bankId: this.EmployeeForm.value.bankId.toString()
       }
       if(this.EmployeeForm.value.ContractEndDate){
         employeePost.ContractEndDate = this.changeDateTime(this.EmployeeForm.value.ContractEndDate);

@@ -18,6 +18,8 @@
                             <th>Benefit Name</th>
                             <th>Type Of Benefit</th>
                             <th>Ammount</th>
+                            <th>Recursive</th>
+                            <th>Allowance End Date</th>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-benefit>
@@ -25,6 +27,12 @@
                             <td>{{ benefit.benefitName }}</td>
                             <td>{{ benefit.typeofBenefit }}</td>
                             <td>{{ benefit.amount }}</td>
+                            <td>
+                                <i class="pi" [ngClass]="{ 'text-green-500 pi-check-circle': 
+                                benefit.recursive, 'text-red-500 pi-times-circle': 
+                               !benefit.recursive }"></i>
+                            </td>
+                            <td>{{ benefit.allowanceEndDate | date : 'yyyy, MM, dd' }}</td>
                         </tr>
                     </ng-template>
                 </p-table>

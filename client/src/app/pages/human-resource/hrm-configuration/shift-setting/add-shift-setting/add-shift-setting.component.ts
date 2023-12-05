@@ -32,8 +32,7 @@ export class AddShiftSettingComponent implements OnInit {
         shiftName: [this.shiftSetting.shiftName, Validators.required],
         amharicShiftName: [this.shiftSetting.amharicShiftName, Validators.required],
         checkIn: [this.shiftSetting.checkIn.split(':').slice(0, 2).join(':'), Validators.required],
-        checkOut: [this.shiftSetting.checkOut.split(':').slice(0, 2).join(':'), Validators.required],
-        breakTime: [this.shiftSetting.breakTime, Validators.required],
+        checkOut: [this.shiftSetting.checkOut.split(':').slice(0, 2).join(':'), Validators.required]
       });
 
     }
@@ -43,8 +42,7 @@ export class AddShiftSettingComponent implements OnInit {
         shiftName: ['', Validators.required],
         amharicShiftName: ['', Validators.required],
         checkIn: ['', Validators.required],
-        checkOut: ['', Validators.required],
-        breakTime: ['', Validators.required],
+        checkOut: ['', Validators.required]
       });
     }
   }
@@ -77,9 +75,7 @@ export class AddShiftSettingComponent implements OnInit {
           shiftName: this.shiftFormGroup.value.shiftName,
           amharicShiftName: this.shiftFormGroup.value.amharicShiftName,
           checkIn: this.datePipe.transform(this.shiftFormGroup.value.checkIn, 'hh:mm:ss'),
-          checkOut: this.datePipe.transform(this.shiftFormGroup.value.checkOut, 'hh:mm:ss'),
-          breakTime: this.shiftFormGroup.value.breakTime,
-       
+          checkOut: this.datePipe.transform(this.shiftFormGroup.value.checkOut, 'hh:mm:ss')
         }
 
   
@@ -108,7 +104,6 @@ export class AddShiftSettingComponent implements OnInit {
           amharicShiftName: this.shiftFormGroup.value.amharicShiftName,
           checkIn: this.datePipe.transform(this.shiftFormGroup.value.checkIn, 'hh:mm:ss'),
           checkOut: this.datePipe.transform(this.shiftFormGroup.value.checkOut, 'hh:mm:ss'),
-          breakTime: this.shiftFormGroup.value.breakTime,
           createdById:this.user.userId
          
         }

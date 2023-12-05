@@ -92,14 +92,48 @@ namespace IntegratedDigitalAPI.Controllers.HRM
             }
         }
 
-
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> ImportAttendance()
+        public async Task<IActionResult> AddShiftDetail([FromBody] AddShiftDetail addShiftDetail)
         {
             if (ModelState.IsValid)
             {
-                return Ok(await _attendanceService.ImportAttendance());
+                return Ok(await _attendanceService.AddShiftDetail(addShiftDetail));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(PenaltyListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetPenaltyLists()
+        {
+            return Ok(await _attendanceService.GetPenaltyLists());
+        }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> AddPenalty(AddPenaltyDto penalty)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _attendanceService.AddPenalty(penalty));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPut]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> ChangeStatusofPenalty(string penaltyId)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _attendanceService.ChangeStatusofPenalty(penaltyId));
             }
             else
             {

@@ -3,11 +3,13 @@ using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedImplementation.Interfaces.HRM;
 using IntegratedInfrustructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static IntegratedInfrustructure.Data.EnumList;
 
 namespace IntegratedImplementation.Services.HRM
 {
@@ -33,8 +35,14 @@ namespace IntegratedImplementation.Services.HRM
             if (employmentDetail == null)
                 return new ContractLetterDto();
 
-            var imediateSupervisor = await _dbContext.EmployeeSupervisors.Include(x => x.Supervisor).FirstOrDefaultAsync(x => x.EmployeeId == employmentDetail.EmployeeId);
-         
+            var imediateSupervisor = await _dbContext.EmployeeSupervisors.Include(x => x.Supervisor.EmployeeDetail)
+                                           .ThenInclude(x => x.Department).FirstOrDefaultAsync(x => x.EmployeeId == employmentDetail.EmployeeId);
+            string reportingTo = "";
+
+            if(imediateSupervisor != null && imediateSupervisor.Employee.EmployeeDetail.Any(x => x.Rowstatus == RowStatus.ACTIVE))
+            {
+                reportingTo = imediateSupervisor.Employee.EmployeeDetail.First(x => x.Rowstatus == RowStatus.ACTIVE).Department.DepartmentName;
+            }
 
             var currentContract = new ContractLetterDto
             {
@@ -48,7 +56,7 @@ namespace IntegratedImplementation.Services.HRM
                 JobTitle = employmentDetail.Position.PositionName,
                 PhoneNumber = employmentDetail.Employee.PhoneNumber,
                 PlaceOfWork = "",
-                ReportingTo = imediateSupervisor != null ? $"{imediateSupervisor.Supervisor.FirstName} {imediateSupervisor.Supervisor.MiddleName} {imediateSupervisor.Supervisor.LastName}" : "",
+                ReportingTo = reportingTo,
                 SourceOfFund = employmentDetail.SourceOfSalary.ToString(),
                 TypeOfEmployement = employmentDetail.Employee.EmploymentType.ToString()
             };

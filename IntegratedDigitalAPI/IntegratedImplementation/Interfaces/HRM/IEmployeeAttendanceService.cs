@@ -16,6 +16,10 @@ namespace IntegratedImplementation.Interfaces.HRM
         Task<ResponseMessage> AddShift(ShiftListDto addShiftDto);
         Task<ResponseMessage> BindShift(BindShiftDto bindShift);
         Task<ResponseMessage> UpdateShift(ShiftListDto shiftListDto);
-        Task<ResponseMessage> ImportAttendance();
+        Task<ResponseMessage> AddShiftDetail(AddShiftDetail addShiftDetail);
+
+        Task<List<PenaltyListDto>> GetPenaltyLists();
+        Task<ResponseMessage> AddPenalty(AddPenaltyDto addPenalty);
+        Task<ResponseMessage> ChangeStatusofPenalty(string penaltyId);
     }
 }

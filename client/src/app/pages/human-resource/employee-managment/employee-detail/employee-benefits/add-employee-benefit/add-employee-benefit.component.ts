@@ -24,7 +24,8 @@ export class AddEmployeeBenefitComponent implements OnInit {
   typeOfBenefitList: any[] = [
     {value: 0, name : "Percentile"},
     {value: 1, name : "Number"},
-  ]
+  ];
+  today: Date = new Date();
 
   user !: UserView
 
@@ -42,6 +43,8 @@ export class AddEmployeeBenefitComponent implements OnInit {
       benefitListId: [null, Validators.required],
       typeOfBenefit: [null, Validators.required],
       ammount: [null, Validators.required],
+      recursive: [false],
+      allowanceEndDate: [null],
     });
   }
 
@@ -63,7 +66,6 @@ export class AddEmployeeBenefitComponent implements OnInit {
   }
 
   submit() {
-    debugger;
     if (this.employeeBenefitForm.valid) {
 
       var employeeBenefit: AddEmployeeBenefitDto = {
@@ -72,8 +74,13 @@ export class AddEmployeeBenefitComponent implements OnInit {
         typeOfBenefit: this.employeeBenefitForm.value.typeOfBenefit,
         ammount: this.employeeBenefitForm.value.ammount,
         createdById: this.user.userId,
-        employeeId: this.employeeId
+        employeeId: this.employeeId,
+        recursive: this.employeeBenefitForm.value.recursive,
       }
+      if(this.employeeBenefitForm.value.allowanceEndDate != null){
+        employeeBenefit.allowanceEndDate = this.employeeBenefitForm.value.allowanceEndDate;
+      }
+
       this.hrmService.addEmployeeBenefit(employeeBenefit).subscribe(
         {
           next: (res) => {

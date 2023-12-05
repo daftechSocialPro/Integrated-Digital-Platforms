@@ -86,7 +86,12 @@ namespace IntegratedInfrustructure.Data
         public DbSet<EmployeeAttendance> EmployeeAttendances { get; set; }
         public DbSet<OverTime> OverTimes { get; set; }
         public DbSet<ShiftList> ShiftLists { get; set; }
+        public DbSet<ShiftDetail> ShiftDetails { get; set; }
+        
         public DbSet<EmployeeShift> EmployeeShifts { get; set; }
+        public DbSet<EmployeePenalty> EmployeePenalty { get; set; }
+        public DbSet<LeaveTypeDetails> LeaveTypeDetails { get; set; }
+        public DbSet<EmployeeBank> EmployeeBanks { get; set; }
       
         #endregion
 

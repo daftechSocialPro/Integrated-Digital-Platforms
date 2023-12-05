@@ -12,6 +12,7 @@ import { RehireEmployeeComponent } from './rehire-employee/rehire-employee.compo
 import { EmployeeSupervisorsDto } from 'src/app/model/HRM/IEmployeeSupervisorDto';
 import { BindShiftComponent } from './bind-shift/bind-shift.component';
 import { AssignSupervisorComponent } from '../../employee-supervisors/assign-supervisor/assign-supervisor.component';
+import { EmployeeBanksComponent } from './employee-banks/employee-banks.component';
 
 @Component({
   selector: 'app-employee-detail',
@@ -167,6 +168,15 @@ getSupervisorsByEmployee(){
       this.getEmployee();
       this.getSupervisorsByEmployee();
     })
+  }
+
+  banks(employeeId: string, employmentStatus: string) {
+    let modalRef = this.modalService.open(EmployeeBanksComponent, { size: 'lg', backdrop: 'static' })
+    modalRef.componentInstance.employeeId = employeeId
+    modalRef.componentInstance.employmentStatus = employmentStatus
+    modalRef.result.then(() => {
+      this.getEmployee()
+    });
   }
 
 

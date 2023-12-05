@@ -88,6 +88,8 @@ namespace IntegratedImplementation.Services.HRM
 
             }
 
+            //int currentyear 
+
             EmployeeLoan loan = new EmployeeLoan()
             {
                 Id = Guid.NewGuid(),
@@ -98,7 +100,7 @@ namespace IntegratedImplementation.Services.HRM
                 ApprovedById = approveinitial.ApproverId,
                 LoanStatus = LoanStatus.PENDING,
                 PaymentStartDate = DateTime.Now,
-                PaymentEndDate = DateTime.Now.AddYears(currentRequest.LoanSetting.PaymentYear),
+               // PaymentEndDate = DateTime.Now.AddYears(currentRequest.LoanSetting.PaymentYear),
                 Rowstatus = RowStatus.ACTIVE
             };
 

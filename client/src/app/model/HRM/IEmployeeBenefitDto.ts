@@ -3,6 +3,8 @@ export interface EmployeeBenefitListDto {
     benefitName: string;
     typeofBenefit: string;
     amount: number;
+    recursive: boolean;
+    allowanceEndDate: string;
 }
 
 export interface AddEmployeeBenefitDto {
@@ -11,4 +13,6 @@ export interface AddEmployeeBenefitDto {
     benefitListId: string;
     typeOfBenefit: number;
     ammount: number;
+    recursive: boolean;
+    allowanceEndDate?: string;
 }

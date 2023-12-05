@@ -43,11 +43,9 @@ namespace IntegratedInfrustructure.Model.HRM
         public EmploymentStatus EmploymentStatus { get; set; }
         public string? PensionCode { get; set; } = null!;
         public string? TinNumber { get; set; } = null!;
-        public string? BankAccountNo { get; set; } = null!;
         public bool ExistingEmployee { get; set; }
+        public bool IdGenerated { get; set; }
         public bool IsApproved { get; set; }
-        public Guid BankId { get; set; }
-        public virtual BankList Bank { get; set; }
 
         [InverseProperty(nameof(EmploymentDetail.Employee))]
         public ICollection<EmploymentDetail> EmployeeDetail { get; set; }

@@ -12,11 +12,11 @@ namespace IntegratedInfrustructure.Model.HRM
     {
 
         public Guid EmployeeId { get; set; }
-        public virtual EmployeeList Employee { get; set; }
+        public virtual EmployeeList Employee { get; set; } = null!;
         public DateTime ToDate { get; set; }
         public DateTime FromDate { get; set; }
         public LeavePlanSettingStatus LeavePlanSettingStatus { get; set; }
-        public string ? Rejectedremark { get; set; }
+        public string? Rejectedremark { get; set; }
          
 
     }

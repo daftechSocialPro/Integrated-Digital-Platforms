@@ -22,6 +22,10 @@ namespace IntegratedImplementation.Interfaces.HRM
         Task<List<SelectListDto>> GetEmployeeswithContractend();
         Task<ResponseMessage> ApproveEmployee(Guid employeeId);
 
+        Task<List<EmployeeBankListDto>> EmployeeBanks(Guid employeeId);
+        Task<ResponseMessage> AddEmployeeBank(AddEmployeeBankDto employeeBank);
+      
+
         //history
         Task<List<EmployeeHistoryDto>> GetEmployeeHistory(Guid employeeId);
         Task<ResponseMessage> AddEmployeeHistory(EmployeeHistoryPostDto addEmployeeHistory);

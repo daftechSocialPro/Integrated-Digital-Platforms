@@ -32,7 +32,7 @@ namespace IntegratedImplementation.Services.Configuration
             var curentCode = await _dbContext.GeneralCodes.FirstOrDefaultAsync(x => x.GeneralCodeType == GeneralCodeType);
             if (curentCode != null)
             {
-                var generatedCode = $"{curentCode.InitialName}-{curentCode.CurrentNumber.ToString().PadLeft(curentCode.Pad, '0')}";
+                var generatedCode = $"{curentCode.InitialName}/{curentCode.CurrentNumber.ToString().PadLeft(curentCode.Pad, '0')}/{DateTime.Now.Year}";
 
                 curentCode.CurrentNumber += 1;
                 await _dbContext.SaveChangesAsync();

@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="AttendanceImporter.exe" size="127488">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="AttendanceImporter.exe" size="133632">
       <assemblyIdentity name="AttendanceImporter" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>fKURhwyCNGThSw+e2QAHav1A2F4LKInIrpJfb034lrg=</dsig:DigestValue>
+        <dsig:DigestValue>mLHOmVynvQVmPCgEU8N4rRZ+yl77MB8yDTGrKF2244E=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -61,7 +61,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>5uLQ7OKTxU8xYWEdWQuh3iLTrGS1q+aZnU51IcBzxsg=</dsig:DigestValue>
+        <dsig:DigestValue>nWZpOmInFn6J71wZAaJeixcRGwgr9hdEccg1Kvbw1Gk=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -77,13 +77,13 @@
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="AttendanceImporter.exe.config" size="1116">
+  <file name="AttendanceImporter.exe.config" size="544">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>BHDElPa9NhkXpJPcx1DfM/WL4zOkJo18t6E3tAzUjsM=</dsig:DigestValue>
+      <dsig:DigestValue>t+4hazshBKUs9Fc/jKogoXCEnxPp7sWKqmaQxWC8CpQ=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

@@ -15,6 +15,8 @@ namespace IntegratedInfrustructure.Model.HRM
         public Guid BenefitId { get; set; }
         public virtual BenefitList Benefit { get; set; } = null!;
         public TypeOfBenefit TypeOfBenefit { get; set; }
+        public bool Recursive { get; set; }
+        public DateTime? AllowanceEndDate { get; set; }
         public double Amount { get; set; }
     }
 }
