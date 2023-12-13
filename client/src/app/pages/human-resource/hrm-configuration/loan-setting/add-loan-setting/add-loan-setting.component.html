@@ -30,10 +30,9 @@
                                 
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3">
-                                        <select class="form-select" id="typeOfLoan" formControlName="typeOfLoan"
+                                        <select class="form-select" (change)="changeLoan($event)" id="typeOfLoan" formControlName="typeOfLoan"
                                             aria-label="State">
-
-                                            <option></option>
+                                            <option value="-1"></option>
                                             <option value="0">ADVANCE</option>
                                             <option value="1">LOAN</option>
                                             <option value="2">OTHER</option>
@@ -41,21 +40,28 @@
                                         <label for="typeOfLoan">Type of loan</label>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6" *ngIf="isAdvance">
+                                    <div class="form-floating">
+                                        <input type="number" class="form-control" id="numberOfMonths"
+                                            placeholder="numberOfMonths" formControlName="numberOfMonths">
+                                        <label for="numberOfMonths">Number of months</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" *ngIf="!isAdvance">
                                     <div class="form-floating">
                                         <input type="number" class="form-control" id="maxLoanAmmount"
                                             placeholder="maxLoanAmmount" formControlName="maxLoanAmmount">
                                         <label for="maxLoanAmmount">max Loan Ammount</label>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4" *ngIf="!isAdvance">
                                     <div class="form-floating">
                                         <input type="number" class="form-control" id="minDeductedPercent"
                                             placeholder="minDeductedPercent" formControlName="minDeductedPercent">
                                         <label for="minDeductedPercent">Min Deducted %</label>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4" *ngIf="!isAdvance">
                                     <div class="form-floating">
                                         <input type="number" class="form-control" id="maxDeductedPercent"
                                             placeholder="maxDeductedPercent" formControlName="maxDeductedPercent">

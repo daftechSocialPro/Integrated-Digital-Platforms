@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
-import { AddEmployeeFingerPrintDto } from 'src/app/model/HRM/IEmployeeFingerPrintDto';
+import { AddEmployeeFingerPrintDto, EmployeeFingerPrintListDto } from 'src/app/model/HRM/IEmployeeFingerPrintDto';
 import { SelectList } from 'src/app/model/common';
 import { UserView } from 'src/app/model/user';
 import { DropDownService } from 'src/app/services/dropDown.service';
@@ -16,7 +16,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class AddEmployeeFingerprintComponent implements OnInit {
 
-
+  @Input() fingerPrint !: EmployeeFingerPrintListDto;
   fingerPrintForm!: FormGroup;
   user !: UserView;
   employeeList: SelectList[] = [];
@@ -25,6 +25,19 @@ export class AddEmployeeFingerprintComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.userService.getCurrentUser();
     this.getEmployees();
+
+    if(this.fingerPrint){
+      this.fingerPrintForm = this.formBuilder.group({
+        employeeId: [this.employeeList.find(x => x.name == this.fingerPrint.fullName)?.id],
+        fingerPrint: [this.fingerPrint.fingerPrint, Validators.required]
+      });
+    }
+  else{
+    this.fingerPrintForm = this.formBuilder.group({
+      employeeId: [''],
+      fingerPrint: ['', Validators.required]
+    });
+  }
   }
 
   constructor(
@@ -35,10 +48,8 @@ export class AddEmployeeFingerprintComponent implements OnInit {
     private userService: UserService,
     private messageService: MessageService) {
 
-    this.fingerPrintForm = this.formBuilder.group({
-      employeeId: [''],
-      fingerPrint: ['', Validators.required]
-    });
+     
+    
 
   }
 
@@ -62,6 +73,7 @@ export class AddEmployeeFingerprintComponent implements OnInit {
 
     if (this.fingerPrintForm.valid) {
 
+      
 
       var fingerPrintPost: AddEmployeeFingerPrintDto = {
         employeeId: this.selectEmployeee,
@@ -72,20 +84,40 @@ export class AddEmployeeFingerprintComponent implements OnInit {
         this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: "Employee is Required" });
       }
       else {
-        this.hrmService.addFingerPrint(fingerPrintPost).subscribe({
-          next: (res) => {
-            if (res.success) {
-              this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });
-              this.closeModal();
+        if(this.fingerPrint.id){
+          fingerPrintPost.id = this.fingerPrint.id;
+          this.hrmService.updateFingerPrint(fingerPrintPost).subscribe({
+            next: (res) => {
+              if (res.success) {
+                this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });
+                this.closeModal();
+              }
+              else {
+                this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: res.message });
+              }
+            },
+            error: (err) => {
+              this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: err });
             }
-            else {
-              this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: res.message });
+          });
+        }
+        else{
+          this.hrmService.addFingerPrint(fingerPrintPost).subscribe({
+            next: (res) => {
+              if (res.success) {
+                this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });
+                this.closeModal();
+              }
+              else {
+                this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: res.message });
+              }
+            },
+            error: (err) => {
+              this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: err });
             }
-          },
-          error: (err) => {
-            this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: err });
-          }
-        })
+          });
+        }
+        
       }
     }
   }

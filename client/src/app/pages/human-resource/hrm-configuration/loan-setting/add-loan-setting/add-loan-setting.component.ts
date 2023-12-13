@@ -17,7 +17,8 @@ export class AddLoanSettingComponent implements OnInit {
 
   LoanSettingForm!: FormGroup;
   user !: UserView
-  @Input() loanSetting !: LoanSettingDto 
+  @Input() loanSetting !: LoanSettingDto;
+  isAdvance: boolean = false;
 
   ngOnInit(): void {
     this.user  = this.userService.getCurrentUser();
@@ -26,6 +27,7 @@ export class AddLoanSettingComponent implements OnInit {
         loanName: [this.loanSetting.loanName, Validators.required],
         amharicName:[this.loanSetting.amharicName,Validators.required],
         typeOfLoan:[this.loanSetting.typeOfLoan, Validators.required],
+        numberOfMonths:[this.loanSetting.numberOfMonths, Validators.required],
         maxLoanAmmount:[this.loanSetting.maxLoanAmmount, Validators.required],
         paymentYear:[this.loanSetting.paymentYear, Validators.required],
         minDeductedPercent:[this.loanSetting.minDeductedPercent, Validators.required],
@@ -37,10 +39,11 @@ export class AddLoanSettingComponent implements OnInit {
       loanName: ['', Validators.required],
       amharicName:['',Validators.required],
       typeOfLoan:[0, Validators.required],
-      maxLoanAmmount:[null, Validators.required],
-      paymentYear:[null, Validators.required],
-      minDeductedPercent:[null, Validators.required],
-      maxDeductedPercent:[null, Validators.required],
+      numberOfMonths:[null,],
+      maxLoanAmmount:[null, ],
+      paymentYear:[null, ],
+      minDeductedPercent:[null, ],
+      maxDeductedPercent:[null, ],
       remark:[null],
   });
 }
@@ -57,6 +60,15 @@ export class AddLoanSettingComponent implements OnInit {
   closeModal() {
     this.activeModal.close();
   }
+
+  changeLoan(value: any){
+    this.isAdvance = false;
+   if( value.target.value == 0){
+    this.isAdvance = true;
+   }
+      
+  }
+
   submit (){
 
     if (this.LoanSettingForm.valid){

@@ -97,6 +97,9 @@
                         <li *ngIf="roleMatch(['EMPLOYEE-MANAGEMENT'])"> <a routerLink="/HRM/empFingerPrint"
                                     routerLinkActive="active"> <i class="bi bi-circle"></i><span>Employee FingerPrint</span> </a>
                         </li>
+                        <li *ngIf="roleMatch(['EMPLOYEE-MANAGEMENT'])"> <a routerLink="/HRM/contractEndEmployees"
+                                    routerLinkActive="active"> <i class="bi bi-circle"></i><span>Contract End Employees</span> </a>
+                        </li>
                         <li *ngIf="roleMatch(['EMPLOYEE-MANAGEMENT'])"> <a routerLink="/HRM/employee-penalty"
                               routerLinkActive="active"> <i class="bi bi-circle"></i><span>Employee Penalty</span> </a>
                   </li>

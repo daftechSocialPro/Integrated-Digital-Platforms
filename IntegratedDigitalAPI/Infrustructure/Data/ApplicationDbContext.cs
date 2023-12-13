@@ -26,6 +26,7 @@ namespace IntegratedInfrustructure.Data
     {
   
         public DbSet<RoleCategory> RoleCategories { get; set; }
+     
               
         #region configuration
 

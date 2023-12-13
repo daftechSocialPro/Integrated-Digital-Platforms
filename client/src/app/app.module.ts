@@ -173,7 +173,6 @@ import { VolunterComponent } from './pages/human-resource/volunter/volunter.comp
 import { AddVolunterComponent } from './pages/human-resource/volunter/add-volunter/add-volunter.component';
 import { UpdateVolunterComponent } from './pages/human-resource/volunter/update-volunter/update-volunter.component';
 import { VolunterDetailComponent } from './pages/human-resource/volunter/volunter-detail/volunter-detail.component';
-import { RequestLoanComponent } from './pages/users-profile/request-loan/request-loan.component';
 import { LoanManagementComponent } from './pages/human-resource/loan-management/loan-management.component';
 import { LoanRequestsComponent } from './pages/human-resource/loan-management/loan-requests/loan-requests.component';
 import { EmployeeLoanComponent } from './pages/human-resource/loan-management/employee-loan/employee-loan.component';
@@ -251,6 +250,10 @@ import { EmployeePenaltyComponent } from './pages/human-resource/employee-penalt
 import { AddEmployeePenaltyComponent } from './pages/human-resource/employee-penalty/add-employee-penalty/add-employee-penalty.component';
 import { EmployeeBanksComponent } from './pages/human-resource/employee-managment/employee-detail/employee-banks/employee-banks.component';
 import { AddShiftDetailComponent } from './pages/human-resource/hrm-configuration/shift-setting/add-shift-detail/add-shift-detail.component';
+import { MyLoansComponent } from './pages/human-resource/loan-management/my-loans/my-loans.component';
+import { RequestLoanComponent } from './pages/human-resource/loan-management/my-loans/request-loan/request-loan.component';
+import { AddLeaveTypeDetailComponent } from './pages/human-resource/hrm-configuration/leave-type/add-leave-type-detail/add-leave-type-detail.component';
+import { ContractEndEmployeesComponent } from './pages/human-resource/contract-end-employees/contract-end-employees.component';
 
 @NgModule({
   declarations: [
@@ -479,7 +482,6 @@ import { AddShiftDetailComponent } from './pages/human-resource/hrm-configuratio
     AddVolunterComponent,
     UpdateVolunterComponent,
     VolunterDetailComponent,
-    RequestLoanComponent,
     LoanManagementComponent,
     LoanRequestsComponent,
     EmployeeLoanComponent,
@@ -555,7 +557,11 @@ import { AddShiftDetailComponent } from './pages/human-resource/hrm-configuratio
     EmployeePenaltyComponent,
     AddEmployeePenaltyComponent,
     EmployeeBanksComponent,
-    AddShiftDetailComponent
+    AddShiftDetailComponent,
+    MyLoansComponent,
+    RequestLoanComponent,
+    AddLeaveTypeDetailComponent,
+    ContractEndEmployeesComponent
     //  AddMeasurementComponent,
     //  UpdateMeasurmentComponent
   ],

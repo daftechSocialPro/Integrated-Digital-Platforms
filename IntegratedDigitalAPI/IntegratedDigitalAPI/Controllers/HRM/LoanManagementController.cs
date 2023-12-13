@@ -26,6 +26,13 @@ namespace IntegratedDigitalAPI.Controllers.HRM
             return Ok(await _loanManagementService.EmployeesLoanAmmount(employeeId));
         }
 
+        [HttpGet]
+        [ProducesResponseType(typeof(EmployeeLoanDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetMyLoans(Guid employeeId)
+        {
+            return Ok(await _loanManagementService.GetMyLoans(employeeId));
+        }
+
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> RequestLoan([FromBody] RequestLoanDto requestLoan)

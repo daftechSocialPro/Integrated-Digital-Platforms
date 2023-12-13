@@ -11,6 +11,7 @@ namespace IntegratedImplementation.Interfaces.HRM
     public interface ILoanManagementService
     {
         Task<LoanInfoDto> EmployeesLoanAmmount(Guid employeeId);
+        Task<List<EmployeeLoanDto>> GetMyLoans(Guid employeeId);
 
         Task<ResponseMessage> RequestLoan(RequestLoanDto requestLoan);
 

@@ -2,8 +2,7 @@
     <div class="row p-2">
         <div class="col-md-3">
             <div class="form-floating">
-                <input type="text" class="form-control" [(ngModel)]="filterValue"  placeholder="Search Here..."
-                    >
+                <input type="text" class="form-control" [(ngModel)]="filterValue" placeholder="Search Here...">
                 <label for="filter">Filter</label>
             </div>
         </div>
@@ -19,43 +18,74 @@
                 <div class="card-body">
                     <h5 class="card-title">Leave Types</h5>
 
-                    <p-table [value]="filteredLeaveTypes" [paginator]="true" [rows]="5" [showCurrentPageReport]="true"
-                        [tableStyle]="{ 'min-width': '50rem' }"
-                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                        [rowsPerPageOptions]="[5, 25, 50]" styleClass="p-datatable-sm">
+                    <p-table [value]="filteredLeaveTypes" dataKey="name" [tableStyle]="{'min-width': '60rem'}">
                         <ng-template pTemplate="header">
                             <tr>
+                                <th></th>
                                 <th>LeaveType Name</th>
                                 <th>Leave Category </th>
                                 <th>Min Date </th>
                                 <th>Max Date </th>
                                 <th>Increment Value </th>
                                 <th>Action</th>
-
                             </tr>
                         </ng-template>
-                        <ng-template pTemplate="body" let-LeaveType>
+                        <ng-template pTemplate="body" let-lvtyp let-expanded="expanded">
                             <tr>
-                                <td>{{ LeaveType.name }}</td>
-                                <td>{{ LeaveType.leaveCategory }}</td>
-                                <td>{{ LeaveType.minDate }}</td>
-                                <td>{{ LeaveType.maxDate }}</td>
-                                <td>{{ LeaveType.incrementValue }}</td>
+                                <td>
+                                    <button type="button" pButton pRipple [pRowToggler]="lvtyp"
+                                        class="p-button-text p-button-rounded p-button-plain"
+                                        [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                                </td>
+                                <td>{{ lvtyp.name }}</td>
+                                <td>{{ lvtyp.leaveCategory }}</td>
+                                <td>{{ lvtyp.minDate }}</td>
+                                <td>{{ lvtyp.maxDate }}</td>
+                                <td>{{ lvtyp.incrementValue }}</td>
                                 <td>
 
-                                    <button type="button" (click)="updateLeaveType(LeaveType)"
+                                    <button type="button" (click)="updateLeaveType(lvtyp)"
                                         class="btn btn-outline-warning"><i class="bi bi-pencil "></i> </button>
                                 </td>
-
                             </tr>
                         </ng-template>
+                        <ng-template pTemplate="rowexpansion" let-lvtyp>
+                            <tr>
+                                <td colspan="7">
+                                    <div class="p-3">
+                                        <p-table [value]="lvtyp.leaveDetailLists" dataKey="id">
+                                            <ng-template pTemplate="header">
+                            <tr>
+                                <th>Leave Type</th>
+                                <th>Order</th>
+                                <th>
+                                    <button type="button" class="btn btn-outline-primary"
+                                        (click)="addNewDetail(lvtyp.id)"><i class="bi bi-plus me-1"></i>
+                                        Add Detail</button>
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-detail>
+                            <tr>
 
-
+                                <td>{{detail.leaveType}}</td>
+                                <td>{{detail.order}}</td>
+                                <td></td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                            <tr>
+                                <td colspan="6">There are no list yet.</td>
+                            </tr>
+                        </ng-template>
                     </p-table>
-
-
                 </div>
+                </td>
+                </tr>
+                </ng-template>
+                </p-table>
             </div>
         </div>
     </div>
+</div>
 </div>

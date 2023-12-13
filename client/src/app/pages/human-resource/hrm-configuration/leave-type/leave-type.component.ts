@@ -4,6 +4,7 @@ import { LeaveTypeGetDto } from 'src/app/model/HRM/ILeaveDto';
 import { HrmService } from 'src/app/services/hrm.service';
 import { AddLeaveTypeComponent } from './add-leave-type/add-leave-type.component';
 import { UpdateLeaveTypeComponent } from './update-leave-type/update-leave-type.component';
+import { AddLeaveTypeDetailComponent } from './add-leave-type-detail/add-leave-type-detail.component';
 
 @Component({
   selector: 'app-leave-type',
@@ -74,6 +75,13 @@ export class LeaveTypeComponent implements OnInit {
   }
 
 
+  addNewDetail(leaveTypeId: string){
+    let modalRef = this.modalService.open(AddLeaveTypeDetailComponent, { size: 'lg', backdrop: 'static' })
+    modalRef.componentInstance.leaveTypeId = leaveTypeId
+    modalRef.result.then(() => {
+      this.getLeaveTypes()
+    });
+  }
 
 
 }

@@ -27,7 +27,31 @@ namespace IntegratedImplementation.Services.HRM
             return new LoanInfoDto { BorrowedAmount = currentBalance.ApprovedAmmount };
         }
 
-       
+        public async Task<List<EmployeeLoanDto>> GetMyLoans(Guid employeeId)
+        {
+            return await _dbContext.EmployeeLoans.Include(x => x.LoanRequest.Requester)
+                             .Include(x => x.LoanRequest.LoanSetting)
+                              .Include(x => x.ApprovedBy).Include(x => x.SecondApprover)
+                              .AsNoTracking()
+                              .Where(x => x.LoanRequest.RequesterId == employeeId)
+                              .Select(x => new EmployeeLoanDto
+                              {
+                                  RequestId = x.Id,
+                                  EmployeeName = $"{x.LoanRequest.Requester.FirstName} {x.LoanRequest.Requester.MiddleName} {x.LoanRequest.Requester.LastName}",
+                                  DeductionPercent = x.LoanRequest.DeductionRequest,
+                                  LoanTypeName = x.LoanRequest.LoanSetting.LoanName,
+                                  RequestedAmount = x.ApprovedAmmount,
+                                  ApproverName = $"{x.ApprovedBy.FirstName} {x.ApprovedBy.MiddleName} {x.ApprovedBy.LastName}",
+                                  PaymentStart = x.PaymentStartDate,
+                                  PaymentEnd = x.PaymentEndDate,
+                                  SecondApproverName = $"{x.SecondApprover.FirstName} {x.SecondApprover.MiddleName} {x.SecondApprover.LastName}",
+                                  RequestedDate = x.CreatedDate,
+                                  CurrentStatus = x.LoanStatus.ToString()
+                              }).ToListAsync();
+           
+        }
+
+
         public async Task<ResponseMessage> RequestLoan(RequestLoanDto requestLoan)
         {
             var loanSetting = await _dbContext.LoanSettings.FirstOrDefaultAsync(x => x.Id == requestLoan.LoanSettingId);

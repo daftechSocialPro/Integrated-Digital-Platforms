@@ -6,6 +6,7 @@ export interface EmployeeFingerPrintListDto {
 }
 
 export interface AddEmployeeFingerPrintDto {
+    id?:string;
     employeeId: string;
     createdById: string;
     fingerPrint: number;

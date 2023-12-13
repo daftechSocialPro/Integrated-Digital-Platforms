@@ -58,6 +58,36 @@ namespace IntegratedDigitalAPI.Controllers.HRM
         }
 
 
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> AddLeaveDetail([FromBody] AddLeaveDetailDto leaveDetail)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _LeaveTypeService.AddLeaveDetail(leaveDetail));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+
+        [HttpPut]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> UpdateLeaveDetail(UpdateLeaveDetailDto updateLeaveDetail)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _LeaveTypeService.UpdateLeaveDetail(updateLeaveDetail));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+
         [HttpGet]
         [ProducesResponseType(typeof(LeavePlanSettingGetDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetEmployeeLeavePlan(Guid employeeId)

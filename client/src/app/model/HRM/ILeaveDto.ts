@@ -19,9 +19,27 @@ export interface LeaveTypeGetDto {
     leaveCategory: string,
     minDate: number,
     maxDate: number,
-    incrementValue: number
+    incrementValue: number,
+    leaveDetailLists?: LeaveDetailListDto[]
 
 }
+
+export interface LeaveDetailListDto {
+    id: string;
+    order: number;
+    leaveType: string;
+}
+
+
+export interface AddLeaveDetailDto {
+    id?: string;
+    createdById: string;
+    leaveTypeId: string;
+    order: string;
+    takeFromLeaveTypeId: string;
+}
+
+
 
 export interface LeaveRequestPostDto {
 
@@ -72,8 +90,8 @@ export interface LeavePlanSettingGetDto {
     fromDate: Date,
     leavePlanSettingStatus: string
     rejectedremark?: string
-    employeeName:string
-    department:string
+    employeeName: string
+    department: string
 
 
 }
@@ -91,7 +109,7 @@ export interface LeavePlanSettingPostDto {
     leavePlanSettingStatus?: string
     rejectedremark?: string
     createdById?: string
-    employeeId:string
+    employeeId: string
 }
 
 

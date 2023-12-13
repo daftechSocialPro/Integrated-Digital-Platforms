@@ -47,6 +47,7 @@ import { TrainingDashboardComponent } from './pages/training/training-dashboard/
 import { EmployeeFingerPrintComponent } from './pages/human-resource/employee-finger-print/employee-finger-print.component';
 import { ForgetPasswordComponent } from './auth/pages-login/forget-password/forget-password.component';
 import { EmployeePenaltyComponent } from './pages/human-resource/employee-penalty/employee-penalty.component';
+import { ContractEndEmployeesComponent } from './pages/human-resource/contract-end-employees/contract-end-employees.component';
 
 
 
@@ -105,6 +106,7 @@ const routes: Routes = [
   { path: 'HRM/loan-managment', canActivate: [AuthGuard], component: LoanManagementComponent },
   { path: 'HRM/disciplinary-case', canActivate: [AuthGuard], component: DisciplinaryCasesComponent, data: { permittedRoles: ['EVALUATER'] } },
   { path: 'HRM/employee-penalty', canActivate: [AuthGuard], component: EmployeePenaltyComponent, data: { permittedRoles: ['EMPLOYEE-MANAGEMENT'] } },
+  { path: 'HRM/contractEndEmployees', canActivate: [AuthGuard], component: ContractEndEmployeesComponent, data: { permittedRoles: ['EMPLOYEE-MANAGEMENT'] } },
 //trainee
 
 {path:'trainee-form/:trainingId',component:TraineesFormComponent},

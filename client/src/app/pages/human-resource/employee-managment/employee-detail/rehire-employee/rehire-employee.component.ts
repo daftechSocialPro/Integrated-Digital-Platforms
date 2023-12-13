@@ -79,11 +79,14 @@ export class RehireEmployeeComponent implements OnInit {
          createdById: this.user.userId,
          employmentDate: this.rehireForm.value.employmentDate,
          employmentType: Number(this.rehireForm.value.employmentType),
-         contractEndDate: this.rehireForm.value.contractEndDate,
          positionId: this.rehireForm.value.positionId,
          departmentId: this.rehireForm.value.departmentId,
          salary: Number(this.rehireForm.value.salary),
          sourceOfSalary: Number(this.rehireForm.value.sourceOfSalary),
+       }
+
+       if(this.rehireForm.value.contractEndDate){
+        rehirePost.contractEndDate = this.rehireForm.value.contractEndDate;
        }
        
        this.hrmService.rehireEmployee(rehirePost).subscribe({

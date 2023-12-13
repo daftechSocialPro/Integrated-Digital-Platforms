@@ -8,7 +8,7 @@ import { ResponseMessage } from '../model/ResponseMessage.Model';
 import { PositionGetDto, PositionPostDto } from '../model/HRM/IPositionDto';
 import { EmployeeEducationGetDto, EmployeeEducationPostDto, EmployeeFamilyGetDto, EmployeeFamilyPostDto, EmployeeFileGetDto, EmployeeFilePostDto, EmployeeGetDto, EmployeeHistoryDto, EmployeeHistoryPostDto, EmployeeListDto, EmployeePostDto, EmployeeSalaryGetDto, EmployeeSalryPostDto, EmployeeSuertyGetDto, VolunterGetDto, VolunterPostDto } from '../model/HRM/IEmployeeDto';
 import { SelectList } from '../model/common';
-import { AppliedLeavesGetDto, LeaveBalanceGetDto, LeaveBalancePostDto, LeavePlanSettingGetDto, LeavePlanSettingPostDto, LeavePlanSettingUpdateDto, LeaveRequestPostDto, LeaveTypeGetDto, LeaveTypePostDto } from '../model/HRM/ILeaveDto';
+import { AddLeaveDetailDto, AppliedLeavesGetDto, LeaveBalanceGetDto, LeaveBalancePostDto, LeavePlanSettingGetDto, LeavePlanSettingPostDto, LeavePlanSettingUpdateDto, LeaveRequestPostDto, LeaveTypeGetDto, LeaveTypePostDto } from '../model/HRM/ILeaveDto';
 import { HrmSettingDto } from '../model/HRM/IHrmSettingDto';
 import { UserService } from './user.service';
 import { ResignationRequestDto, TerminationGetDto, TerminationRequesterDto } from '../model/HRM/IResignationDto';
@@ -27,6 +27,7 @@ import { AddEmployeeFingerPrintDto, EmployeeFingerPrintListDto } from '../model/
 import { AddShiftDetail, BindShiftDto, ShiftDetailDto, ShiftListDto } from '../model/HRM/IShiftSettingDto';
 import { AddPenaltyDto, PenaltyListDto } from '../model/HRM/IPenaltyListDto';
 import { AddEmployeeBankDto, EmployeeBankListDto } from '../model/HRM/IEmployeeBankDto';
+import { ContractEndEmployeesDto } from '../model/HRM/IContractEndEmployeesDto';
 
 export interface toastPayload {
     message: string;
@@ -81,6 +82,15 @@ export class HrmService {
     updateLeaveType(LeaveTypeUpdate: LeaveTypeGetDto) {
         return this.http.put<ResponseMessage>(this.baseUrl + "/LeaveType/UpdateLeaveType", LeaveTypeUpdate)
     }
+
+    addLeaveDetail(leaveDetail: AddLeaveDetailDto) {
+        return this.http.post<ResponseMessage>(this.baseUrl + "/LeaveType/AddLeaveDetail", leaveDetail)
+    }
+
+    updateLeaveDetail(updateLeaveDetail: AddLeaveDetailDto) {
+        return this.http.put<ResponseMessage>(this.baseUrl + "/LeaveType/UpdateLeaveDetail", updateLeaveDetail)
+    }
+
     //hrmsettings 
 
     getHrmSettings() {
@@ -136,6 +146,11 @@ export class HrmService {
             return this.http.get<SelectList[]>(this.baseUrl + "/Employee/GetEmployeeswithContractend")
         
     }
+
+    getContractEndEmployees() {
+        return this.http.get<ContractEndEmployeesDto[]>(this.baseUrl + "/EmployementDetail/GetContractEndEmployees")
+    }
+
 
     //volunter
     
@@ -457,6 +472,10 @@ export class HrmService {
         return this.http.get<RequestedLoanListDto[]>(this.baseUrl + `/LoanManagement/LoanRequestList`)
     }
 
+    getMyLoans(employeeId: string) {
+        return this.http.get<EmployeeLoanDto[]>(this.baseUrl + `/LoanManagement/GetMyLoans?employeeId=${employeeId}`)
+    }
+
     approveInitialRequest(initialRequest: ApproveInitialRequestDto) {
         return this.http.post<ResponseMessage>(this.baseUrl + "/LoanManagement/ApproveInitialRequest", initialRequest)
     }
@@ -503,6 +522,11 @@ export class HrmService {
     addFingerPrint(addFingerPrint: AddEmployeeFingerPrintDto) {
         return this.http.post<ResponseMessage>(this.baseUrl + "/EmployeeAttencance/AddFingerPrint", addFingerPrint)
     }
+
+    updateFingerPrint(addFingerPrint: AddEmployeeFingerPrintDto) {
+        return this.http.post<ResponseMessage>(this.baseUrl + "/EmployeeAttencance/UpdateFingerPrint", addFingerPrint)
+    }
+
 
 
     getShiftLists() {

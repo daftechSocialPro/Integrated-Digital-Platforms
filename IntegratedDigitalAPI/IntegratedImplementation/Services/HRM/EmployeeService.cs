@@ -635,9 +635,9 @@ namespace IntegratedImplementation.Services.HRM
             if (employeeBank.AccountNumber.Length != currentBank.BankDigitNumber)
                 return new ResponseMessage { Success = false, Message = "Please correct the digit number" };
 
-            var empBank = await _dbContext.EmployeeBanks.AnyAsync(x => x.BankId == employeeBank.BankId);
-            if(empBank)
-                return new ResponseMessage { Success = false, Message = "Bank Already exists" };
+            //var empBank = await _dbContext.EmployeeBanks.AnyAsync(x => x.BankId == employeeBank.BankId);
+            //if(empBank)
+            //    return new ResponseMessage { Success = false, Message = "Bank Already exists" };
 
             EmployeeBank bank = new EmployeeBank()
             {

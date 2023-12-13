@@ -216,5 +216,12 @@ namespace IntegratedDigitalAPI.Controllers.HRM
                 return BadRequest();
             }
         }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(ContractEndEmployeesDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetContractEndEmployees()
+        {
+            return Ok(await _employementDetailService.GetContractEndEmployees());
+        }
     }
 }

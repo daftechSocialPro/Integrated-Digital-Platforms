@@ -13,6 +13,7 @@ namespace IntegratedInfrustructure.Data
         {
             ADMIN,
             USER,
+            PERFORMANCE
         }
         public enum RowStatus
         {

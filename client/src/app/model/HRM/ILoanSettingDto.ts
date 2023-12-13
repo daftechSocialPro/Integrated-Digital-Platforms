@@ -3,6 +3,7 @@ export interface LoanSettingDto {
     loanName: string,
     amharicName:string
     typeOfLoan: string,
+    numberOfMonths?: number,
     maxLoanAmmount: string,
     paymentYear: number,
     minDeductedPercent: number,
@@ -10,16 +11,19 @@ export interface LoanSettingDto {
     remark: string,
 }
 
+
+
 export interface AddLoanSettingDto {
     id?: string,
     createdById?: string,
     loanName: string,
     amharicName:string
     typeOfLoan: number,
-    maxLoanAmmount: number,
+    numberOfMonths?: number,
+    maxLoanAmmount?: number,
     paymentYear: number,
-    minDeductedPercent: number,
-    maxDeductedPercent: number,
+    minDeductedPercent?: number,
+    maxDeductedPercent?: number,
     remark?: string;
 }
 

@@ -89,7 +89,13 @@ namespace IntegratedImplementation.Services.HRM
                 LeaveCategory = x.LeaveCategory.ToString(),
                 MinDate = x.MinDate,
                 MaxDate = x.MaxDate,
-                IncrementValue = x.IncrementValue
+                IncrementValue = x.IncrementValue,
+                LeaveDetailLists = _dbContext.LeaveTypeDetails.Include(t => t.TakeFromLeaveType).Where(y => y.LeaveTypeId == x.Id).Select(z => new LeaveDetailListDto
+                {
+                    Id = z.Id,
+                    LeaveType = z.TakeFromLeaveType.Name,
+                    Order = z.order
+                }).ToList()
 
             }).ToListAsync();
 
@@ -145,6 +151,54 @@ namespace IntegratedImplementation.Services.HRM
             }
         }
 
+
+        public async Task<ResponseMessage> AddLeaveDetail(AddLeaveDetailDto addLeaveDetail)
+        {
+            if(addLeaveDetail.LeaveTypeId == addLeaveDetail.TakeFromLeaveTypeId)
+                return new ResponseMessage { Success = false, Message = "You can not take from the same leave type" };
+
+            var currentDetail = await _dbContext.LeaveTypeDetails.AnyAsync(x => x.LeaveTypeId == addLeaveDetail.LeaveTypeId && (x.order == addLeaveDetail.Order || x.TakeFromLeaveTypeId == addLeaveDetail.TakeFromLeaveTypeId));
+            if (currentDetail)
+                return new ResponseMessage { Success = false, Message = "Order or leave type already exists" };
+
+            LeaveTypeDetails leaveType = new LeaveTypeDetails()
+            {
+                Id = Guid.NewGuid(),
+                CreatedById = addLeaveDetail.CreatedById,
+                CreatedDate = DateTime.Now,
+                LeaveTypeId = addLeaveDetail.LeaveTypeId,
+                TakeFromLeaveTypeId = addLeaveDetail.TakeFromLeaveTypeId,
+                order = addLeaveDetail.Order,
+                Rowstatus = RowStatus.ACTIVE
+            };
+
+            await _dbContext.LeaveTypeDetails.AddAsync(leaveType);
+            await _dbContext.SaveChangesAsync();
+
+            return new ResponseMessage { Success = true, Message = "Added Successfully!!" };
+        }
+
+        public async Task<ResponseMessage> UpdateLeaveDetail(UpdateLeaveDetailDto updateLeaveDetail)
+        {
+            if (updateLeaveDetail.LeaveTypeId == updateLeaveDetail.TakeFromLeaveTypeId)
+                return new ResponseMessage { Success = false, Message = "You can not take from the same leave type" };
+
+            var currentLeave = await _dbContext.LeaveTypeDetails.FirstOrDefaultAsync(x => x.Id == updateLeaveDetail.Id);
+            if (currentLeave == null)
+                return new ResponseMessage { Success = false, Message = "Could not find leave detail" };
+
+            var exists = await _dbContext.LeaveTypeDetails.AnyAsync(x => x.LeaveTypeId == currentLeave.LeaveTypeId && x.order == updateLeaveDetail.Order && x.Id != currentLeave.Id);
+            if (exists)
+                return new ResponseMessage { Success = false, Message = "Order already exists" };
+
+            currentLeave.TakeFromLeaveTypeId = updateLeaveDetail.TakeFromLeaveTypeId;
+            currentLeave.order = updateLeaveDetail.Order;
+
+            await _dbContext.SaveChangesAsync();
+
+            return new ResponseMessage { Success = true, Message = "Updated Successfully" };
+           
+        }
 
         public async Task<List<LeavePlanSettingGetDto>> GetEmployeeLeavePlan(Guid employeeId)
         {
@@ -246,5 +300,7 @@ namespace IntegratedImplementation.Services.HRM
             }
             return new ResponseMessage { Success = false, Message = "Unable To Find Employee Leave Plan !!!" };
         }
+
+      
     }
 }

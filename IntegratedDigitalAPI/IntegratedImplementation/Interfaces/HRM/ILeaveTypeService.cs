@@ -15,6 +15,9 @@ namespace IntegratedImplementation.Interfaces.HRM
         Task<ResponseMessage> AddLeaveType(LeaveTypePostDto LeaveTypePost);
         Task<ResponseMessage> UpdateLeaveType(LeaveTypeGetDto LeaveTypeUpdate);
 
+        Task<ResponseMessage> AddLeaveDetail(AddLeaveDetailDto addLeaveDetail);
+        Task<ResponseMessage> UpdateLeaveDetail(UpdateLeaveDetailDto updateLeaveDetail);
+
         //
 
         Task<List<LeavePlanSettingGetDto>> GetEmployeeLeavePlan(Guid employeeId);

@@ -38,4 +38,12 @@ export class EmployeeFingerPrintComponent implements OnInit {
     });
   }
 
+  edit(fingerPrint:EmployeeFingerPrintListDto){
+    let modalRef = this.modalService.open(AddEmployeeFingerprintComponent, { size: 'lg', backdrop: 'static' })
+    modalRef.componentInstance.fingerPrint = fingerPrint
+    modalRef.result.then(() => {
+      this.getFingerPrints();
+    });
+  }
+
 }

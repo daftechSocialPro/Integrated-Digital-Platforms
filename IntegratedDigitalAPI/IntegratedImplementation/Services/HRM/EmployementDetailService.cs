@@ -419,6 +419,20 @@ namespace IntegratedImplementation.Services.HRM
 
         }
 
-       
+        public async Task<List<ContractEndEmployeesDto>> GetContractEndEmployees()
+        {
+            var currentEmps = await _dbContext.EmploymentDetails.Include(x => x.Employee)
+                                    .AsNoTracking().Where(x => DateTime.Now.AddMonths(1) >= x.EndDate && x.Rowstatus == RowStatus.ACTIVE)
+                                    .Select(x => new ContractEndEmployeesDto
+                                    {
+                                        EmployeeId = x.EmployeeId,
+                                        StartDate = x.StartDate,
+                                        EndDate = x.EndDate,
+                                        FullName = $"{x.Employee.FirstName} {x.Employee.MiddleName} {x.Employee.LastName}",
+                                        RemainingDays = x.EndDate.HasValue ? Convert.ToInt32(x.EndDate.Value.Subtract(DateTime.Now).TotalDays) : 0
+                                    }).ToListAsync();
+
+            return currentEmps;
+        }
     }
 }

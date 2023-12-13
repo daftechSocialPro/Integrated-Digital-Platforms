@@ -7,6 +7,9 @@ using static IntegratedInfrustructure.Data.EnumList;
 
 namespace IntegratedImplementation.DTOS.HRM
 {
+
+ 
+
     public class LoanInfoDto
     {
         public double BorrowedAmount { get; set; }
