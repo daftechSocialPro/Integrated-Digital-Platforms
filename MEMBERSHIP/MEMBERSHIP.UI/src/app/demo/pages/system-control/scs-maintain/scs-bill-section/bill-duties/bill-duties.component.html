@@ -1,0 +1,67 @@
+<div class="col-md-12 p-4">
+  <div class="row" style="display: flex; justify-content: space-between;">
+    <div class="row col-lg-6 text-end">
+      <div class="col-lg-4 text-end"><span class="ms-2">Items per page:</span></div>
+      <div class="col-lg-4 text-end">
+        <select class="form-select form-select-sm ms-2" [(ngModel)]="itemsPerPage">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+        <option value="50">100</option>
+      </select></div>
+    </div>
+    
+  <div class="col-lg-4 text-end p-2 mr-autho">
+    <button type="button" class="btn btn-outline-success" (click)="addBillEmpDuties()"><i
+            class="pi pi-plus me-1" style="font-size: 12px;"></i>
+            Bill Officer Duty</button>
+</div>
+  </div>
+  <table class="custom-table">
+    <thead>
+      <tr>
+        <th>Employee Id</th>
+        <th>Name</th>
+        <th>Duty</th>
+
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of getPaginatedBillDuties(); let i = index">
+        <td>{{ item.empID }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.duties }}</td>
+        <td>
+          <button type="button" (click)="updateBillEmpDuties(item.recordno)"
+          class="btn btn-outline-warning btn-sm"><i class="ti ti-pencil"></i></button>
+      |
+      <button type="button" (click)="removeBillEmpDuties(item.recordno)"
+          class="btn btn-outline-danger btn-sm"><i class="ti ti-trash"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Pagination -->
+  <div class="d-flex justify-content-center mt-4">
+    <nav aria-label="Page navigation">
+      <ul class="pagination">
+        <li class="page-item" [class.disabled]="currentPage == 1">
+          <button class="page-link" (click)="previousPage()" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </button>
+        </li>
+        <li class="page-item" *ngFor="let page of getPaginationArray()">
+          <button class="page-link" [class.active]="page === currentPage" (click)="goToPage(page)">{{ page }}</button>
+        </li>
+        <li class="page-item" [class.disabled]="currentPage == getTotalPages()">
+          <button class="page-link" (click)="nextPage()" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>

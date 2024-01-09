@@ -16,12 +16,12 @@ export class TrainerListComponent implements OnInit {
 
   trainerList:ITrainerGetDto[]=[]
   @Input()  trainingId!:string
-  @Input()  TrainingTitle!:string
+
 
   @Input() Training!: ITrainingGetDto
   constructor(
     private trainingService:TrainingService,
-    private activeModal : NgbActiveModal,
+   
     private messageService : MessageService,
     private modalService:NgbModal){}
 
@@ -87,7 +87,7 @@ export class TrainerListComponent implements OnInit {
 
   closeModal(){
 
-    this.activeModal.close()
+   
   }
 
 }

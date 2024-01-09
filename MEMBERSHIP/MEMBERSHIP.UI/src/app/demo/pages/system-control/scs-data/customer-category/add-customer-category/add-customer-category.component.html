@@ -1,0 +1,43 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">{{CustomerCategory?"Update":"Add"}} Customer Category</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" data-bs-dismiss="modal"
+            aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <form class="" [formGroup]="CustomerCategoryForm" (ngSubmit)="CustomerCategory?update():submit()">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" [readOnly]="CustomerCategory" formControlName="recordno" id="floatingInput" />
+                            <label for="floatingInput">Record Number</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" formControlName="custCategoryName" id="floatingInput" />
+                            <label for="floatingInput">Customer Category Name </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" formControlName="custCategoryCode" id="floatingInput" />
+                            <label for="floatingInput">Customer Category Code </label>
+                        </div>
+                    </div>
+
+                </div>
+
+            <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
+                (click)="closeModal()">Close</button> <button type="button" type="submit"
+                [disabled]="!CustomerCategoryForm.valid"   
+                class="btn btn-outline-success">{{CustomerCategory?"Update":"Create"}}</button></div>
+            </form>
+    </div>
+</div>
+
+</div>

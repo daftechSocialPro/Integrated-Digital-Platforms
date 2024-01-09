@@ -1,0 +1,157 @@
+<div class="page-header ng-star-inserted">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-12">
+                <div class="page-header-title"><!----><!---->
+                    <h5 class="mb-2 ng-star-inserted"> System Control </h5>
+                </div>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a _>Configuration</a></li>
+                    <li class="breadcrumb-item ng-star-inserted">
+                        <a href="javascript:">
+                            Maintain
+                        </a>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card ">
+
+    <ul class="nav nav-tabs" id="list-tab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="list-mailtab-1" data-bs-toggle="tab" style="font-size: 15px;" href="#list-mail-1" role="tab"
+                aria-controls="list-mail-1" aria-selected="true">
+                 Interfaces
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link " id="list-mailtab-2" data-bs-toggle="tab" style="font-size: 15px;" href="#list-mail-2" role="tab"
+                aria-controls="list-mail-2" aria-selected="true">
+                 Rate Settings
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link " id="list-mailtab-3" data-bs-toggle="tab" style="font-size: 15px;" href="#list-mail-3" role="tab"
+                aria-controls="list-mail-3" aria-selected="true">
+                 Kebele Settings
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link " id="list-mailtab-4" data-bs-toggle="tab" style="font-size: 15px;" href="#list-mail-11" role="tab"
+                aria-controls="list-mail-11" aria-selected="true">
+                 Month Settings
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link " id="list-mailtab-5" data-bs-toggle="tab" style="font-size: 15px;" href="#list-mail-5" role="tab"
+                aria-controls="list-mail-5" aria-selected="true">
+                Bill Officers
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link " id="list-mailtab-6" data-bs-toggle="tab" style="font-size: 15px;" href="#list-mail-6" role="tab"
+                aria-controls="list-mail-3" aria-selected="true">
+                 Users Settings
+            </a>
+        </li>
+       
+        <!-- Add more tabs here -->
+    </ul>
+
+    
+
+    <div class="mail-content tab-content">
+        <div class="tab-pane fade show active" id="list-mail-1" role="tabpanel" aria-labelledby="list-mailtab-1">
+            <div class="card table-card">
+                <app-interface-config/>
+            </div>
+        </div>
+        <div class="tab-pane fade show " id="list-mail-2" role="tabpanel" aria-labelledby="list-mailtab-2">
+            <div class="card table-card">
+               <app-scs-rate/>
+            </div>
+        </div>
+        <div class="tab-pane fade show " id="list-mail-3" role="tabpanel" aria-labelledby="list-mailtab-3">
+            <div class="card table-card">
+                <app-kebeles/>
+            </div>
+        </div>
+        <div class="tab-pane fade show " id="list-mail-11" role="tabpanel" aria-labelledby="list-mailtab-11">
+            <div class="card table-card">
+               <app-scs-months/>
+            </div>
+        </div>
+        <div class="tab-pane fade show " id="list-mail-5" role="tabpanel" aria-labelledby="list-mailtab-5">
+            <div class="card table-card">
+               <app-scs-bill-section/>
+            </div>
+        </div>
+        <div class="tab-pane fade show " id="list-mail-6" role="tabpanel" aria-labelledby="list-mailtab-6">
+            <div class="card table-card">
+               <app-scs-users/>
+            </div>
+        </div>
+        
+        <!-- Add more tab panes here -->
+    </div>
+
+
+
+
+
+
+
+
+
+
+    <!-- <p-tabView styleClass="tabview-custom">
+        <p-tabPanel>
+            <ng-template pTemplate="header">
+
+                <span>Customer </span>
+            </ng-template>
+           <app-customer-category></app-customer-category>
+        </p-tabPanel>
+        <p-tabPanel header="Header II">
+            <ng-template pTemplate="header">
+
+                <span>Meter</span>
+            </ng-template>
+
+
+            <app-meter-config></app-meter-config>
+
+
+
+
+        </p-tabPanel>
+        <p-tabPanel header="Header III">
+            <ng-template pTemplate="header">
+
+                <span>Bill</span>
+
+            </ng-template>
+
+        </p-tabPanel>
+        <p-tabPanel header="Header III">
+            <ng-template pTemplate="header">
+
+                <span>Payment</span>
+
+            </ng-template>
+
+        </p-tabPanel>
+        <p-tabPanel header="Header III">
+            <ng-template pTemplate="header">
+
+                <span>Reason</span>
+
+            </ng-template>
+
+        </p-tabPanel>
+    </p-tabView> -->
+</div>

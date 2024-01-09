@@ -23,7 +23,7 @@ import { AddBenefitListDto, BenefitListDto } from '../model/HRM/IBenefitListDto'
 import { AddEmployeeBenefitDto, EmployeeBenefitListDto } from '../model/HRM/IEmployeeBenefitDto';
 import { RehireEmployeeDto } from '../model/HRM/IRehireEmployeeDto';
 import { DeviceSettingDto } from '../model/HRM/IDeviceSettingDto';
-import { AddEmployeeFingerPrintDto, EmployeeFingerPrintListDto } from '../model/HRM/IEmployeeFingerPrintDto';
+import { AddEmployeeFingerPrintDto, EmployeeFingerPrintListDto, UpdateEmployeeFingerPrintDto } from '../model/HRM/IEmployeeFingerPrintDto';
 import { AddShiftDetail, BindShiftDto, ShiftDetailDto, ShiftListDto } from '../model/HRM/IShiftSettingDto';
 import { AddPenaltyDto, PenaltyListDto } from '../model/HRM/IPenaltyListDto';
 import { AddEmployeeBankDto, EmployeeBankListDto } from '../model/HRM/IEmployeeBankDto';
@@ -523,8 +523,8 @@ export class HrmService {
         return this.http.post<ResponseMessage>(this.baseUrl + "/EmployeeAttencance/AddFingerPrint", addFingerPrint)
     }
 
-    updateFingerPrint(addFingerPrint: AddEmployeeFingerPrintDto) {
-        return this.http.post<ResponseMessage>(this.baseUrl + "/EmployeeAttencance/UpdateFingerPrint", addFingerPrint)
+    updateFingerPrint(addFingerPrint: UpdateEmployeeFingerPrintDto) {
+        return this.http.put<ResponseMessage>(this.baseUrl + "/EmployeeAttencance/UpdateFingerPrint", addFingerPrint)
     }
 
 

@@ -102,9 +102,9 @@ namespace IntegratedDigitalAPI.Services.PM
                 if (task.HasActivityParent)
                 {
                     activityViewDtos = (from a in _dBContext.ActivitiesParents.Where(x => x.TaskId == taskId)
-                                        join e in _dBContext.Activities.
+                                        join e in _dBContext.Activities.OrderBy(x=>x.CreatedDate).
                                         Include(x=>x.Zone).ThenInclude(x=>x.Region).ThenInclude(x=>x.Country)
-                                        .Include(x => x.UnitOfMeasurement) on a.Id equals e.ActivityParentId
+                                     on a.Id equals e.ActivityParentId
                                         // join ae in _dBContext.EmployeesAssignedForActivities.Include(x=>x.Employee) on e.Id equals ae.ActivityId
                                         select new ActivityViewDto
                                         {
@@ -119,7 +119,7 @@ namespace IntegratedDigitalAPI.Services.PM
                                             ActivityNumber = e.ActivityNumber,
                                             Begining = e.Begining,
                                             Target = e.Goal,
-                                            UnitOfMeasurment = e.UnitOfMeasurement.Name,
+                                            UnitOfMeasurment = e.Indicator,
                                             OverAllPerformance = 0,
                                             StartDate = e.ShouldStat.ToString(),
                                             EndDate = e.ShouldEnd.ToString(),
@@ -145,6 +145,7 @@ namespace IntegratedDigitalAPI.Services.PM
                                                 Order = y.Order,
                                                 Planned = y.Target,
                                                 Actual = activityProgress.Where(x => x.QuarterId == y.Id).Sum(x => x.ActualWorked),
+                                                PlannedBudget = y.TargetBudget,
                                                 Percentage = y.Target != 0 ? (activityProgress.Where(x => x.QuarterId == y.Id && x.IsApprovedByDirector == EnumList.ApprovalStatus.APPROVED && x.IsApprovedByFinance == EnumList.ApprovalStatus.APPROVED && x.IsApprovedByManager == EnumList.ApprovalStatus.APPROVED).Sum(x => x.ActualWorked) / y.Target) * 100 : 0
 
                                             }).ToList(),
@@ -156,7 +157,7 @@ namespace IntegratedDigitalAPI.Services.PM
                 }
                 else
                 {
-                    activityViewDtos = (from e in _dBContext.Activities.Include(x => x.UnitOfMeasurement)
+                    activityViewDtos = (from e in _dBContext.Activities.OrderBy(x=>x.CreatedDate)
                                          .Include(x => x.Zone).ThenInclude(x => x.Region).ThenInclude(x => x.Country)
                                         where e.TaskId == task.Id
                                         // join ae in _dBContext.EmployeesAssignedForActivities.Include(x=>x.Employee) on e.Id equals ae.ActivityId
@@ -173,7 +174,7 @@ namespace IntegratedDigitalAPI.Services.PM
                                             ActivityNumber =e.ActivityNumber,
                                             Begining = e.Begining,
                                             Target = e.Goal,
-                                            UnitOfMeasurment = e.UnitOfMeasurement.Name,
+                                            UnitOfMeasurment = e.Indicator,
                                             OverAllPerformance = 0,
                                             StartDate = e.ShouldStat.ToString(),
                                             EndDate = e.ShouldEnd.ToString(),
@@ -198,6 +199,7 @@ namespace IntegratedDigitalAPI.Services.PM
                                                 Id = y.Id,
                                                 Order = y.Order,
                                                 Planned = y.Target,
+                                                PlannedBudget = y.TargetBudget,
                                                 Actual = activityProgress.Where(x => x.QuarterId == y.Id).Sum(x => x.ActualWorked),
                                                 Percentage = y.Target != 0 ? (activityProgress.Where(x => x.QuarterId == y.Id && x.IsApprovedByDirector == EnumList.ApprovalStatus.APPROVED && x.IsApprovedByFinance == EnumList.ApprovalStatus.APPROVED && x.IsApprovedByManager == EnumList.ApprovalStatus.APPROVED).Sum(x => x.ActualWorked) / y.Target) * 100 : 0
 
@@ -263,8 +265,8 @@ namespace IntegratedDigitalAPI.Services.PM
 
                     var activityProgress = _dBContext.ActivityProgresses;
 
-                    var activityViewDtos = (from e in _dBContext.Activities.
-                                            Include(x => x.UnitOfMeasurement).Include(x=>x.Zone).ThenInclude(x=>x.Region).ThenInclude(x=>x.Country)
+                    var activityViewDtos = (from e in _dBContext.Activities.OrderBy(x=>x.CreatedDate).
+                                           Include(x=>x.Zone).ThenInclude(x=>x.Region).ThenInclude(x=>x.Country)
                                             where e.PlanId == plan.Id
                                             // join ae in _dBContext.EmployeesAssignedForActivities.Include(x=>x.Employee) on e.Id equals ae.ActivityId
                                             select new ActivityViewDto
@@ -280,7 +282,7 @@ namespace IntegratedDigitalAPI.Services.PM
                                                 IsTraining = e.IsTraining,
                                                 Begining = e.Begining,
                                                 Target = e.Goal,
-                                                UnitOfMeasurment = e.UnitOfMeasurement.Name,
+                                                UnitOfMeasurment = e.Indicator,
                                                 OverAllPerformance = 0,
                                                 StartDate = e.ShouldStat.ToString(),
                                                 EndDate = e.ShouldEnd.ToString(),

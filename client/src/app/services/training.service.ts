@@ -65,7 +65,7 @@ export class TrainingService {
 
     //add
 
-    createTrainingReport(trainingReport: ITrainingReportPostDto) {
+    createTrainingReport(trainingReport: FormData) {
        return this.http.post<ResponseMessage>(`${this.BaseURI}AddTrainingReport`, trainingReport)
     }
 

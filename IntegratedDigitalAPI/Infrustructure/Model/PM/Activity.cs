@@ -44,8 +44,11 @@ namespace IntegratedInfrustructure.Models.PM
 
         public Guid? ProjectTeamId { get; set; }
         public virtual ProjectTeam Commitee { get; set; } = null!;
-        public Guid UnitOfMeasurementId { get; set; }
-        public virtual UnitOfMeasurment UnitOfMeasurement { get; set; } = null!;
+      
+
+        public string Indicator { get; set; }
+
+        public bool IsPercentage { get; set; }
 
         public float Weight { get; set; }
 

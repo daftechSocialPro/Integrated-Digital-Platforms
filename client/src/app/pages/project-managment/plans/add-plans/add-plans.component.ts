@@ -152,8 +152,8 @@ private messageService: MessageService,
         projectManagerId: this.ProjectManagerId.id,
         goal: this.planForm.value.Goal,
         objective :this.planForm.value.Objective,
-        startDate : this.planForm.value.StartDate.getFullYear(),
-        endDate : this.planForm.value.EndDate.getFullYear(),
+        startDate : this.planForm.value.StartDate,
+        endDate : this.planForm.value.EndDate,
         projectNumber:this.planForm.value.ProjectNumber,
         projectFunds:this.planForm.value.SelectedProjectFunds
       }

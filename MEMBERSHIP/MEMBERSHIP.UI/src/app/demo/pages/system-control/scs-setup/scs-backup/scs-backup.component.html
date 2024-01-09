@@ -1,0 +1,47 @@
+<div class="container mt-4 mb-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6 p-4 boarder-darker shadow" style="border: 1px solid #e1d8f1;
+      border-radius: 10px;">
+            <form (ngSubmit)="backupDatabase()">
+                <div class="form-group">
+                    <label for="backupPath">Backup Path:</label>
+                    <div class="input-group mt-2">
+                        <input type="text" class="form-control me-4" disabled="" id="backupPath" [value]="backUpPath"
+                            name="backupPath" required>
+                        <button type="button" class="btn btn-outline-primary" (click)=" copyText()"> <i
+                                class="ti ti-copy" style="font-size: 25px;"></i></button>
+                    </div>
+
+
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <div class="form-check" *ngFor="let db of databases.slice(0, 3)">
+                            <input type="checkbox" class="form-check-input" [(ngModel)]="selectedDatabases[db]"
+                                id="{{db}}" name="databases">
+                            <label class="form-check-label" for="{{db}}">{{db}}</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-check" *ngFor="let db of databases.slice(3)">
+                            <input type="checkbox" class="form-check-input" [(ngModel)]="selectedDatabases[db]"
+                                id="{{db}}" name="databases">
+                            <label class="form-check-label" for="{{db}}">{{db}}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 p-4 text-center">
+                    <button type="submit" class="btn btn-outline-primary">Backup Databases</button>
+                </div>
+            </form>
+            <span *ngIf="progress > 0">{{counter}} out of {{selectedDatabaseCount}}
+                Databases Backed up </span>
+            <div class="progress mt-3" *ngIf="progress > 0">
+                <div class="progress-bar" role="progressbar" [style.width.%]="progress" aria-valuemin="0"
+                    aria-valuemax="100">
+                    {{progress}}%
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

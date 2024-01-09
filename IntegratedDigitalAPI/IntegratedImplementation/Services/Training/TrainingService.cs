@@ -11,6 +11,7 @@ using IntegratedInfrustructure.Model.Training;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,11 +27,14 @@ namespace IntegratedImplementation.Services.Training
 
         private readonly IMapper _mapper;
 
-        public TrainingService(ApplicationDbContext dbContext, IMapper mapper,IEmailService emailService)
+        private readonly IGeneralConfigService _generalConfig;
+
+        public TrainingService(ApplicationDbContext dbContext, IMapper mapper,IEmailService emailService, IGeneralConfigService generalConfig)
         {
             _dbContext = dbContext;
             _mapper = mapper;
             _emailService = emailService;
+            _generalConfig = generalConfig;
         }
 
 
@@ -43,8 +47,7 @@ namespace IntegratedImplementation.Services.Training
                           Id = x.Id,
                           //ActivityNumber = x.Activity.ActivityNumber,
                           Title = x.Title,
-                          NameofOrganizaton = x.NameofOrganizaton,
-                          TypeofOrganization = x.TypeofOrganization,
+                
                           CourseVenue = x.CourseVenue,
                           StartDate = x.StartDate,
                           EndDate = x.EndDate,
@@ -60,21 +63,20 @@ namespace IntegratedImplementation.Services.Training
         public async Task<List<TrainingGetDto>> GetTrainingList(Guid activityId)
         {
 
-            var results = await _dbContext.ActivityTrainings.Where(x => x.ActivityId == activityId)
-                        .Include(x => x.Training)
+            var results = await _dbContext.Trainings.Where(x => x.ActivityId == activityId)                       
                         .Include(x => x.Activity).Select(x => new TrainingGetDto
                         {
-                            Id = x.TrainingId,
+                            Id = x.Id,
                             ActivityNumber = x.Activity.ActivityNumber,
-                            Title = x.Training.Title,
-                            NameofOrganizaton = x.Training.NameofOrganizaton,
-                            TypeofOrganization = x.Training.TypeofOrganization,
-                            CourseVenue = x.Training.CourseVenue,
-                            StartDate = x.Training.StartDate,
-                            EndDate = x.Training.EndDate,
-                            Project = x.Training.Project,
-                            ReportStatus = x.Training.ReportStatus.ToString(),
-                            TraineeListStatus = x.Training.TraineeListStatus.ToString()
+                            Title = x.Title,
+                            ActivityId = x.ActivityId,
+           
+                            CourseVenue = x.CourseVenue,
+                            StartDate = x.StartDate,
+                            EndDate = x.EndDate,
+                            Project = x.Project,
+                            ReportStatus = x.ReportStatus.ToString(),
+                            TraineeListStatus = x.TraineeListStatus.ToString()
 
                         }).ToListAsync();
 
@@ -84,21 +86,21 @@ namespace IntegratedImplementation.Services.Training
 
         public async Task<List<TrainingGetDto>>GetTrainingList()
         {
-            var results = await _dbContext.ActivityTrainings
-                 .Include(x => x.Training)
+            var results = await _dbContext.Trainings
+                 
                  .Include(x => x.Activity).Select(x => new TrainingGetDto
                  {
-                     Id = x.TrainingId,
+                     Id = x.Id,
                      ActivityNumber = x.Activity.ActivityNumber,
-                     Title = x.Training.Title,
-                     NameofOrganizaton = x.Training.NameofOrganizaton,
-                     TypeofOrganization = x.Training.TypeofOrganization,
-                     CourseVenue = x.Training.CourseVenue,
-                     StartDate = x.Training.StartDate,
-                     EndDate = x.Training.EndDate,
-                     Project = x.Training.Project,
-                     ReportStatus = x.Training.ReportStatus.ToString(),
-                     TraineeListStatus = x.Training.TraineeListStatus.ToString()
+                     Title = x.Title,
+                     ActivityId = x.ActivityId,                   
+                   
+                     CourseVenue = x.CourseVenue,
+                     StartDate = x.StartDate,
+                     EndDate = x.EndDate,
+                     Project = x.Project,
+                     ReportStatus = x.ReportStatus.ToString(),
+                     TraineeListStatus = x.TraineeListStatus.ToString()
 
                  }).ToListAsync();
 
@@ -115,8 +117,8 @@ namespace IntegratedImplementation.Services.Training
                     Id = Guid.NewGuid(),
                     CreatedDate = DateTime.Now,
                     Title = trainingPostDto.Title,
-                    NameofOrganizaton = trainingPostDto.NameofOrganizaton,
-                    TypeofOrganization = trainingPostDto.TypeofOrganization,
+                    ActivityId = trainingPostDto.ActivityId,
+               
                     CourseVenue = trainingPostDto.CourseVenue,
                     StartDate = trainingPostDto.StartDate,
                     EndDate = trainingPostDto.EndDate,
@@ -128,18 +130,7 @@ namespace IntegratedImplementation.Services.Training
                 await _dbContext.SaveChangesAsync();
 
 
-                var activityTraining = new ActivityTraining
-                {
-                   Id = Guid.NewGuid(),
-                   CreatedDate = DateTime.Now,
-                   CreatedById = trainingPostDto.CreatedById,
-                   ActivityId = trainingPostDto.ActivityId,
-                   TrainingId = TrainingPost.Id
-
-                };
-
-                await _dbContext.ActivityTrainings.AddAsync(activityTraining);
-                await _dbContext.SaveChangesAsync();
+           
                 
 
 
@@ -227,16 +218,22 @@ namespace IntegratedImplementation.Services.Training
 
             var results = await _dbContext.Trainees
                 .Include(x=>x.EducationalLevel)
-                .Include(x=>x.EducationalField).Where(x => x.TrainingId == TainingId)
+                .Where(x => x.TrainingId == TainingId).OrderBy(x => x.FullName)
                        .Select(x => new TraineeGetDto
                        {
                            FullName = x.FullName,
                            Email = x.Email,
                            PhoneNumber = x.PhoneNumber,
-                           BirthDate = x.BirthDate,
+                           Age = x.Age,
                            Gender = x.Gender.ToString(),
-                           EducationalField = x.EducationalField.EducationalFieldName,
-                           EducationalLevel = x.EducationalLevel.EducationalLevelName
+                           EducationalField = x.EducationalField,
+                           EducationalLevel = x.EducationalLevel.EducationalLevelName,
+                           Region = x.Region.RegionName,
+                           Zone = x.Zone,
+                           Woreda = x.Woreda,
+                           Profession =x.Profession,
+                           TypeofOrganization = x.TypeofOrganization,
+                           NameofOrganizaton = x.NameofOrganizaton,
                        }).ToListAsync();
 
             return results;
@@ -251,15 +248,21 @@ namespace IntegratedImplementation.Services.Training
                 {
                     Id = Guid.NewGuid(),
                     TrainingId = trainerPostDto.TraningId,
-                    CreatedDate = DateTime.Now,
+                  
                     FullName = trainerPostDto.FullName,
-                    EducationalFieldId = trainerPostDto.EducationalFieldId,
+                    EducationalField = trainerPostDto.EducationalField,
                     EducationalLevelId = trainerPostDto.EducationalLevelId,
                     PhoneNumber = trainerPostDto.PhoneNumber,
                     Email = trainerPostDto.Email,
-                    BirthDate = trainerPostDto.BirthDate,
+                    Age = trainerPostDto.Age,
                     Gender = Enum.Parse<Gender>( trainerPostDto.Gender),
-                    CreatedById = "18eef146-fc48-4074-94e7-e5dd4a3be236",
+                    RegionId = trainerPostDto.RegionId,
+                    Zone = trainerPostDto.Zone,
+                    Woreda  = trainerPostDto.Woreda,
+                    NameofOrganizaton = trainerPostDto.NameofOrganizaton,
+                    TypeofOrganization = trainerPostDto.TypeofOrganization,
+                    Profession = trainerPostDto.Profession
+                    
                 };
 
                 await _dbContext.Trainees.AddAsync(TraineePost);
@@ -353,9 +356,29 @@ namespace IntegratedImplementation.Services.Training
        public async Task<TrainingReportGetDto> GetTrainingReport(Guid TainingId)
         {
 
-            var result = await _dbContext.TrainingReports.Where(x=>x.TrainingId==TainingId)
-                .AsNoTracking().
-                ProjectTo<TrainingReportGetDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
+            var result = await _dbContext.TrainingReports.Include(x=>x.ReportAttachments).Where(x=>x.TrainingId==TainingId)
+                               
+                               .Select(tr=>  new TrainingReportGetDto
+                               {
+                                   Id = tr.Id,
+                                   Objective = tr.Objective,
+                                   Contribution = tr.Contribution,
+                                   TraineesDescription = tr.TraineesDescription,
+                                   Challenges = tr.Challenges,
+                                   LessonsLearned = tr.LessonsLearned,
+                                   Summary = tr.Summary,
+                                   TopicsCoverd = tr .TopicsCoverd,
+                                   PrePostSummary = tr.PrePostSummary,
+                                   Attachments = tr.ReportAttachments.Where(x=>x.FileType==FileType.ATTACHMENT).Select(x=>x.FilePath).ToList(),
+
+                                   Images = tr.ReportAttachments.Where(x => x.FileType == FileType.IMAGES).Select(x => x.FilePath).ToList(),
+
+
+
+
+
+                               }).FirstOrDefaultAsync();
+
 
             return result;
 
@@ -381,11 +404,11 @@ namespace IntegratedImplementation.Services.Training
                         Summary = trainingPostDto.Summary,
                         PrePostSummary = trainingPostDto.PrePostSummary,
                         CreatedDate = DateTime.Now,
-                        CreatedById = "18eef146-fc48-4074-94e7-e5dd4a3be236",
+                       
                     };
 
                     await _dbContext.TrainingReports.AddAsync(TrainingPost);
-                    await _dbContext.SaveChangesAsync();
+                    await _dbContext.SaveChangesAsync();                   
 
 
 
@@ -401,6 +424,81 @@ namespace IntegratedImplementation.Services.Training
 
 
                     }
+
+
+
+                    if (trainingPostDto.Images != null)
+                    {
+
+                        foreach (var image in trainingPostDto.Images)
+                        {
+
+                            var path = "";
+                            var Id = Guid.NewGuid();
+
+                            if (image != null)
+                                path = _generalConfig.UploadFiles(image, Id.ToString(), $"Trainner/{training.Title}/").Result.ToString();
+
+
+                            var reportAttachemnts = new TrainingReportAttachment
+                            {
+
+                                Id = Id,
+                                TrainingReportId = TrainingPost.Id,
+                                FileType = FileType.IMAGES,
+                                FilePath = path
+
+
+                            };
+
+
+
+                            await _dbContext.TrainingReportAttachments.AddAsync(reportAttachemnts);
+                            await _dbContext.SaveChangesAsync();
+
+
+                        }
+                    }
+                    if (trainingPostDto.Attachments != null)
+                    {
+
+                        foreach (var image in trainingPostDto.Attachments)
+                        {
+
+                            var path = "";
+                            var Id = Guid.NewGuid();
+
+                            if (image != null)
+                                path = _generalConfig.UploadFiles(image, Id.ToString(), $"Trainner/{training.Title}/Attachment").Result.ToString();
+
+
+                            var reportAttachemnts = new TrainingReportAttachment
+                            {
+
+                                Id = Id,
+                                TrainingReportId = TrainingPost.Id,
+                                FileType = FileType.ATTACHMENT,
+                                FilePath = path
+
+
+                            };
+
+
+
+                            await _dbContext.TrainingReportAttachments.AddAsync(reportAttachemnts);
+                            await _dbContext.SaveChangesAsync();
+
+
+                        }
+                    }
+
+
+
+
+
+
+
+
 
                     return new ResponseMessage
                     {
@@ -431,6 +529,71 @@ namespace IntegratedImplementation.Services.Training
 
                         await _dbContext.SaveChangesAsync();
 
+
+                    }
+
+                    if (trainingPostDto.Images != null)
+                    {
+                        foreach (var image in trainingPostDto.Images)
+                        {
+
+                            var path = "";
+                            var Id = Guid.NewGuid();
+
+                            if (image != null)
+                                path = _generalConfig.UploadFiles(image, Id.ToString(), $"Trainner/{training.Title}/").Result.ToString();
+
+
+                            var reportAttachemnts = new TrainingReportAttachment
+                            {
+
+                                Id = Id,
+                                TrainingReportId = trainingReport2.Id,
+                                FileType = FileType.IMAGES,
+                                FilePath = path
+
+
+                            };
+
+
+
+                            await _dbContext.TrainingReportAttachments.AddAsync(reportAttachemnts);
+                            await _dbContext.SaveChangesAsync();
+
+
+                        }
+                    }
+
+                    if (trainingPostDto.Attachments != null)
+                    {
+                        foreach (var image in trainingPostDto.Attachments)
+                        {
+
+                            var path = "";
+                            var Id = Guid.NewGuid();
+
+                            if (image != null)
+                                path = _generalConfig.UploadFiles(image, Id.ToString(), $"Trainner/{training.Title}/Attachment").Result.ToString();
+
+
+                            var reportAttachemnts = new TrainingReportAttachment
+                            {
+
+                                Id = Id,
+                                TrainingReportId = trainingReport2.Id,
+                                FileType = FileType.ATTACHMENT,
+                                FilePath = path
+
+
+                            };
+
+
+
+                            await _dbContext.TrainingReportAttachments.AddAsync(reportAttachemnts);
+                            await _dbContext.SaveChangesAsync();
+
+
+                        }
 
                     }
 

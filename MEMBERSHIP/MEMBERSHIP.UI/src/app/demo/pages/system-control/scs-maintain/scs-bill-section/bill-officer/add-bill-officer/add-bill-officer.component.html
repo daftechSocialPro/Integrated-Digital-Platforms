@@ -1,0 +1,31 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title"> Bill Officer</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" data-bs-dismiss="modal"
+            aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <form class="" [formGroup]="billSectionForm" (ngSubmit)="submit()">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <select class="form-control"  formControlName="empID" id="floatingInput">
+                              
+                                <option  *ngFor="let item of employees ;" [value]="item.empId"    > {{item.empId}}  {{item.name}}</option>
+                            </select>
+                            <label for="floatingInput">Employee Id</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
+                        (click)="closeModal()">Close</button> <button type="button" type="submit"
+                        [disabled]="!billSectionForm.valid"
+                        class="btn btn-outline-success">Save</button>
+                    </div>
+                </div>
+            </form>
+    </div>
+</div>
+
+</div>

@@ -1,0 +1,99 @@
+<div class="mail-wrapper">
+
+    <div id="mail-menulist" class="show collapse collapse-horizontal me-2">
+        <div class="mail-menulist">
+            <div class="card">
+                <div class="card-body">
+
+                </div>
+                <div class="scroll-block" style="max-height: 350px;overflow-y: scroll;">
+                    <div class="card-body pt-0">
+                        <div class="list-group list-group-flush nav nav-tabs" id="list-tab" role="tablist">
+                            <li class="nav-item">
+                            <a class="list-group-item list-group-item-action nav-link active" id="list-mailtab-6"
+                                    data-bs-toggle="tab" href="#list-mail-6" role="tab">
+                                    <span> Interface
+                                    </span>
+                                    <span class="avtar avtar-xs"><i class="ti ti-dashboard"></i></span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="list-group-item list-group-item-action nav-link mt-2" id="list-mailtab-7"
+                                    data-bs-toggle="tab" href="#list-mail-7" role="tab">
+                                    <span> Field Name
+                                    </span>
+                                    <span class="avtar avtar-xs"><i class="ti ti-dashboard"></i></span>
+                                </a>
+                            </li>
+                            <a class="list-group-item list-group-item-action mt-2" id="list-mailtab-8"
+                                data-bs-toggle="list" href="#list-mail-8" role="tab">
+                                <span> User Message
+                                </span>
+                                <span class="avtar avtar-xs"><i class="ti ti-dashboard"></i></span>
+                            </a>
+                            <a class="list-group-item list-group-item-action mt-2" id="list-mailtab-87"
+                                data-bs-toggle="list" href="#list-mail-87" role="tab">
+                                <span> Report Tiltles
+                                </span>
+                                <span class="avtar avtar-xs"><i class="ti ti-dashboard"></i></span>
+                            </a>
+                            <a class="list-group-item list-group-item-action mt-2" id="list-mailtab-18"
+                                data-bs-toggle="list" href="#list-mail-18" role="tab">
+                                <span> Bill Interface
+                                </span>
+                                <span class="avtar avtar-xs"><i class="ti ti-dashboard"></i></span>
+                            </a>
+                            <a class="list-group-item list-group-item-action mt-2" id="list-mailtab-21"
+                                data-bs-toggle="list" href="#list-mail-21" role="tab">
+                                <span> Application Interface
+                                </span>
+                                <span class="avtar avtar-xs"><i class="ti ti-dashboard"></i></span>
+                            </a>
+                           
+                            <hr class="my-3">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="mail-content tab-content">
+        <div class="tab-pane fade show active" id="list-mail-6" role="tabpanel" aria-labelledby="list-mailtab-6">
+            <div class="card table-card">
+                <app-interface/>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="list-mail-7" role="tabpanel" aria-labelledby="list-mailtab-7">
+            <div class="card table-card">
+                <app-field-name></app-field-name>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="list-mail-8" role="tabpanel" aria-labelledby="list-mailtab-8">
+            <div class="card table-card">
+                <app-user-message></app-user-message>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="list-mail-87" role="tabpanel" aria-labelledby="list-mailtab-87">
+            <div class="card table-card">
+                <app-report-titles></app-report-titles>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="list-mail-18" role="tabpanel" aria-labelledby="list-mailtab-18">
+            <div class="card table-card">
+                <app-bill-interface></app-bill-interface>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="list-mail-21" role="tabpanel" aria-labelledby="list-mailtab-21">
+            <div class="card table-card">
+                <app-app-interface></app-app-interface>
+            </div>
+        </div>
+
+        <!-- Add more tab panes here -->
+    </div>
+
+
+</div>

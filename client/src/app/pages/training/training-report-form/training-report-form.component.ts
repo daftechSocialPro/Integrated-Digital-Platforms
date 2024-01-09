@@ -1,11 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import { ConfirmEventType, ConfirmationService, MessageService } from 'primeng/api';
 import { ITraineeGetDto } from 'src/app/model/Training/TraineeDto';
 import { ITrainerGetDto } from 'src/app/model/Training/TrainerDto';
 import { ITrainingGetDto } from 'src/app/model/Training/TrainingDto';
 import { ITrainingReportGetDto, ITrainingReportPostDto } from 'src/app/model/Training/TrainingReportDto';
+import { CommonService } from 'src/app/services/common.service';
 import { TrainingService } from 'src/app/services/training.service';
 
 @Component({
@@ -14,6 +15,8 @@ import { TrainingService } from 'src/app/services/training.service';
   styleUrls: ['./training-report-form.component.css'],
 
 })
+
+
 export class TrainingReportFormComponenT implements OnInit {
 
   @Input() traininggId !: string
@@ -25,17 +28,20 @@ export class TrainingReportFormComponenT implements OnInit {
   trainingReportForm !: FormGroup
 
   trainingReport !: ITrainingReportGetDto
-
-
+  uploadedFiles: File[] = []
+  uploadedFiles2: File[] = []
+  imageUrls: string[] = [];
+  imageObject: Array<object> = [];
   ngOnInit(): void {
 
     this.trainingId = this.route.snapshot.paramMap.get('trainingId')!
 
-    if(this.trainingId){
-    this.getSingleTraining(this.trainingId)
-    this.getTrainer(this.trainingId)
-    this.getTrainingreport(this.trainingId)}
-    else{
+    if (this.trainingId) {
+      this.getSingleTraining(this.trainingId)
+      this.getTrainer(this.trainingId)
+      this.getTrainingreport(this.trainingId)
+    }
+    else {
       this.getSingleTraining(this.traininggId)
       this.getTrainer(this.traininggId)
       this.getTrainingreport(this.traininggId)
@@ -46,6 +52,8 @@ export class TrainingReportFormComponenT implements OnInit {
     private trainingService: TrainingService,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
+    private commonService: CommonService,
+    private confirmationService: ConfirmationService,
     private messageService: MessageService) {
 
     this.trainingReportForm = this.formBuilder.group({
@@ -67,7 +75,7 @@ export class TrainingReportFormComponenT implements OnInit {
   closeModal() { }
 
 
-  getSingleTraining(trainingId:string) {
+  getSingleTraining(trainingId: string) {
 
     this.trainingService.getSingleTraining(trainingId).subscribe({
       next: (res) => {
@@ -78,7 +86,7 @@ export class TrainingReportFormComponenT implements OnInit {
 
   }
 
-  getTrainer(trainingId:string) {
+  getTrainer(trainingId: string) {
     this.trainingService.getTrainerList(trainingId).subscribe({
       next: (res) => {
         this.trainers = res
@@ -88,11 +96,12 @@ export class TrainingReportFormComponenT implements OnInit {
     })
   }
 
-  getTrainingreport(trainingId:string) {
+  getTrainingreport(trainingId: string) {
     this.trainingService.getTrainingReport(trainingId).subscribe({
       next: (res) => {
         if (res) {
 
+          console.log(res)
           this.trainingReport = res
           this.trainingReportForm.controls['Objective'].setValue(res.objective)
           this.trainingReportForm.controls['Contribution'].setValue(res.contribution)
@@ -103,6 +112,7 @@ export class TrainingReportFormComponenT implements OnInit {
           this.trainingReportForm.controls['Summary'].setValue(res.summary)
           this.trainingReportForm.controls['PrePostSummary'].setValue(res.prePostSummary)
 
+          this.getAttachemnt(res.images)
         }
       }
     })
@@ -123,13 +133,81 @@ export class TrainingReportFormComponenT implements OnInit {
         PrePostSummary: this.trainingReportForm.value.PrePostSummary,
         TrainingId: this.trainingId,
         ReportStatus: reportStatus,
-        Id: this.trainingReport && this.trainingReport.id
+
+
+      }
+      const formData = new FormData();
+
+      for (let key in trainingReport) {
+        formData.append(key, (trainingReport as any)[key]);
+      }
+      for (let key in this.uploadedFiles) {
+
+        formData.append("Attachments", (this.uploadedFiles as any)[key])
+      }
+      for (let key in this.uploadedFiles2) {
+        formData.append("Images", (this.uploadedFiles2 as any)[key])
 
       }
 
 
-      console.log(trainingReport)
-      this.trainingService.createTrainingReport(trainingReport).subscribe({
+      if (this.trainingReport) {
+        formData.append("Id", this.trainingReport.id)
+      }
+
+
+      console.log(formData)
+
+if (reportStatus=='SUBMITTED'){
+
+  
+
+    this.confirmationService.confirm({
+      message: 'Do you want to Sumbit this training report Form?',
+      header: 'Training Report Form status !',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.trainingService.createTrainingReport(formData).subscribe({
+
+          next: (res) => {
+            if (res.success) {
+  
+              this.messageService.add({ severity: 'success', summary: `Successfully ${reportStatus}ed`, detail: res.message })
+              window.location.reload()
+            }
+            else {
+              this.messageService.add({ severity: 'error', summary: 'Something went wrong!!! ', detail: res.message })
+  
+            }
+  
+          }, error: (err) => {
+            this.messageService.add({ severity: 'error', summary: 'Error ', detail: err })
+  
+          }
+  
+        })
+
+      },
+      reject: (type: ConfirmEventType) => {
+        switch (type) {
+          case ConfirmEventType.REJECT:
+            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
+            break;
+          case ConfirmEventType.CANCEL:
+            this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
+            break;
+        }
+      },
+      key: 'positionDialog'
+    });
+  
+
+
+
+}else{
+
+
+      this.trainingService.createTrainingReport(formData).subscribe({
 
         next: (res) => {
           if (res.success) {
@@ -148,11 +226,97 @@ export class TrainingReportFormComponenT implements OnInit {
         }
 
       })
+    }
 
     }
   }
 
+  onUpload(event: any): void {
+    const files = event.target.files;
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      this.uploadedFiles.push(file);
+    }
+  }
+
+  removeFile(file: File): void {
+    const index = this.uploadedFiles.indexOf(file);
+    if (index !== -1) {
+      this.uploadedFiles.splice(index, 1);
+    }
+  }
+  
+  onUpload2(event: any): void {
+    const files = event.target.files;
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      this.uploadedFiles2.push(file);
+      this.getImageDataUrl(file);
+    }
+  }
+
+  removeFile2(file: File): void {
+    const index = this.uploadedFiles2.indexOf(file);
+    if (index !== -1) {
+      this.uploadedFiles2.splice(index, 1);
+      this.imageUrls.splice(index, 1);
+    }
+  }
+ 
   
 
 
+
+  getImage(url: string) {
+
+
+    return this.commonService.createImgPath(url)
+  }
+
+
+
+
+
+  getAttachemnt(attachments: string[]) {
+
+
+    var id = this.generateRandomId()
+
+    attachments.forEach(element => {
+
+      var imageArray = {
+        image: this.getImage(element),
+        thumbImage: this.getImage(element),
+        alt: id,
+        title: id,
+
+      }
+      this.imageObject.push(imageArray)
+    }
+
+    );
+
+  }
+  generateRandomId(): string {
+    const array = new Uint32Array(1);
+    window.crypto.getRandomValues(array);
+    return array[0].toString(16);
+  }
+
+  getImageDataUrl(file: File): void {
+    const reader = new FileReader();
+    reader.onload = (event: any) => {
+      const imageUrl = event.target.result;
+      this.imageUrls.push(imageUrl);
+    };
+    reader.readAsDataURL(file);
+  }
+
+  getImageUrl(image: File): string {
+    const index = this.uploadedFiles2.indexOf(image);
+    if (index !== -1) {
+      return this.imageUrls[index];
+    }
+    return '';
+  }
 }

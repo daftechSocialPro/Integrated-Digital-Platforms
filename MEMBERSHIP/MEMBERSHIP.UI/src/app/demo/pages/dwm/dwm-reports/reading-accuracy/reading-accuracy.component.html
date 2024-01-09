@@ -1,0 +1,67 @@
+
+
+<div class="col-md-12 p-4 ">
+    <div class="row">
+
+
+        <div class="col-3">
+    
+            <div class="form-floating mb-3">
+                <input class="form-control" [(ngModel)]="year" />
+                <label for="floatingInput">Year</label>
+            </div>
+        </div>
+        <div class="col-3">
+    
+            <div class="form-floating mb-3">
+                <select class="form-control" [(ngModel)]="selectedMonth">
+                    <option *ngFor="let item of months" [value]="item.monthIndex">{{item.monthnamelocal}}</option>
+    
+                </select>
+    
+                <label for="floatingInput">Month</label>
+            </div>
+        </div>
+    
+        <div class="col-2">
+            <button [hidden]="!year||!selectedMonth" class="btn btn-outline-primary" (click)="filter()"
+                [disabled]="!year&&!selectedMonth"> Generate</button>
+        </div>
+    </div>
+    <table class="custom-table">
+        <thead>
+            <tr>
+
+                <th>Reader Name </th>
+                <th>User Name</th>
+                <th>Above AVG</th>
+                <th>Below AVG</th>
+                <th>Normal</th>
+               
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of paginatedAcurracyReadings ;let i = index">
+
+                <td>{{item.readerName}}</td>
+                <td>{{item.userName}}</td>
+                <td>{{item.aboveAVG}}</td>
+                <td>{{item.belowAVG}}</td>
+                <td>{{item.normal}}</td>
+      
+          
+
+            </tr>
+
+        </tbody>
+
+    </table>
+    <div class="card flex justify-content-center">
+        <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows"
+            [totalRecords]="AcurracyReadings&&AcurracyReadings.length" [rowsPerPageOptions]="[5, 10, 15]"></p-paginator>
+    </div>
+
+
+
+</div>

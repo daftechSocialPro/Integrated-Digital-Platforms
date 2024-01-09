@@ -47,6 +47,8 @@ namespace IntegratedDigitalAPI.DTOS.PM
         public float Planned { get; set; }
         public float Actual { get; set; }
         public float Percentage { get; set; }
+
+        public float PlannedBudget { get; set; }
     }
 
 

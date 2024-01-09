@@ -12,6 +12,7 @@ export interface ITrainingGetDto {
     activityNumber:string
     reportStatus:string
     traineeListStatus:string
+    activityId:string
 
 }
 
@@ -23,8 +24,8 @@ export interface ITrainingPostDto{
     EndDate:Date
     StartDate:Date
     CourseVenue:string
-    TypeofOrganization:string
-    NameofOrganizaton:string
+    // TypeofOrganization:string
+    // NameofOrganizaton:string
     Title:string
     ActivityId:string
 

@@ -48,6 +48,10 @@ import { EmployeeFingerPrintComponent } from './pages/human-resource/employee-fi
 import { ForgetPasswordComponent } from './auth/pages-login/forget-password/forget-password.component';
 import { EmployeePenaltyComponent } from './pages/human-resource/employee-penalty/employee-penalty.component';
 import { ContractEndEmployeesComponent } from './pages/human-resource/contract-end-employees/contract-end-employees.component';
+import { PlanDetailComponent } from './pages/project-managment/plans/plan-detail/plan-detail.component';
+import { ActivityDetailComponent } from './pages/project-managment/plans/activity-detail/activity-detail.component';
+import { TrainingDetailComponent } from './pages/training/training-detail/training-detail.component';
+import { WeeklyActivitiesComponent } from './pages/project-managment/weekly-activities/weekly-activities.component';
 
 
 
@@ -63,6 +67,9 @@ const routes: Routes = [
   { path: 'pm/activityparent', canActivate: [AuthGuard], component: ActivityParentsComponent },
   { path: 'pm/assignedactivities', canActivate: [AuthGuard], component: AssignedActivitiesComponent },
   { path: 'pm/actForApproval', canActivate: [AuthGuard], component: ActivityforapprovalComponent },
+
+  { path: 'pm/planDetail/:planId', canActivate: [AuthGuard], component: PlanDetailComponent },
+  { path: 'pm/activityDetail/:actId/:planId', canActivate: [AuthGuard], component: ActivityDetailComponent },
   //report
 
   
@@ -82,7 +89,9 @@ const routes: Routes = [
 
   { path: 'pm/projectTeam', canActivate: [AuthGuard], component: ComittesComponent },
   { path: 'pm/training-dashboard', canActivate: [AuthGuard], component: TrainingDashboardComponent },
- 
+  { path: 'pm/training-detail/:id/:actId/:planId', canActivate: [AuthGuard], component: TrainingDetailComponent },
+   
+ {path:'pm/weekly-activity',canActivate:[AuthGuard],component:WeeklyActivitiesComponent},
 
   { path: 'HRM/employeeMangment', canActivate: [AuthGuard], component: EmployeeManagmentComponent, data: { permittedRoles: ['EMPLOYEE-MANAGEMENT', 'USER-MANAGER'] } },
   { path: 'HRM/volunters', canActivate: [AuthGuard], component: VolunterComponent, data: { permittedRoles: ['EMPLOYEE-MANAGEMENT', 'USER-MANAGER'] } },

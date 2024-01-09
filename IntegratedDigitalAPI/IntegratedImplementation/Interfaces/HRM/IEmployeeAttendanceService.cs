@@ -18,6 +18,8 @@ namespace IntegratedImplementation.Interfaces.HRM
         Task<ResponseMessage> UpdateShift(ShiftListDto shiftListDto);
         Task<ResponseMessage> AddShiftDetail(AddShiftDetail addShiftDetail);
 
+        Task<ResponseMessage> UpdateFingerPrint(UpdateEmployeeFingerPrintDto fingerPrintDto);
+
         Task<List<PenaltyListDto>> GetPenaltyLists();
         Task<ResponseMessage> AddPenalty(AddPenaltyDto addPenalty);
         Task<ResponseMessage> ChangeStatusofPenalty(string penaltyId);

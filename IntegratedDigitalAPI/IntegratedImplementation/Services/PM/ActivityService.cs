@@ -75,8 +75,9 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                 activity.Goal = item.Goal;
                 activity.OfficeWork = item.OfficeWork;
                 activity.PlanedBudget = item.PlannedBudget;
-                activity.UnitOfMeasurementId = item.UnitOfMeasurement;
-                
+                activity.IsPercentage = item.IsPercentage;
+                activity.Indicator = item.UnitOfMeasurement;
+               
                 activity.ShouldStat =  DateTime.Parse(item.StartDate);
                 activity.ShouldEnd = DateTime.Parse(item.EndDate);
                 activity.StrategicPlanId = item.StrategicPlanId;
@@ -166,8 +167,10 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
             activity.Goal = activityDetail.Goal;
             activity.OfficeWork = activityDetail.OfficeWork;
             activity.PlanedBudget = activityDetail.PlannedBudget;
-            activity.UnitOfMeasurementId = activityDetail.UnitOfMeasurement;
-           
+
+            activity.IsPercentage = activityDetail.IsPercentage;
+            activity.Indicator = activityDetail.UnitOfMeasurement;
+
             activity.StrategicPlanId = activityDetail.StrategicPlanId;
             activity.ZoneId = activityDetail.ZoneId;
             activity.Woreda = activityDetail.Woreda;
@@ -566,8 +569,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                                       {
                                           Id = p.Id,
                                           ActalWorked = p.ActualWorked,
-                                          UsedBudget = p.ActualBudget,
-                                        
+                                          UsedBudget = p.ActualBudget,                                        
                                           IsApprovedByManager = p.IsApprovedByManager.ToString(),
                                           IsApprovedByFinance = p.IsApprovedByFinance.ToString(),
                                           IsApprovedByDirector = p.IsApprovedByDirector.ToString(),
@@ -622,7 +624,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
             var activityProgress = _dBContext.ActivityProgresses;
             List<ActivityViewDto> assignedActivities =
                 await (from e in _dBContext.Activities
-                       .Include(x => x.UnitOfMeasurement)
+                       
                         .Include(x => x.Zone).ThenInclude(x => x.Region).ThenInclude(x => x.Country)
                        .Include(x=>x.Commitee).ThenInclude(x=>x.Employees)
                        .Where(x=>x.ActualEnd==null)
@@ -641,7 +643,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                            
                            Begining = e.Begining,
                            Target = e.Goal,
-                           UnitOfMeasurment = e.UnitOfMeasurement.Name,
+                           UnitOfMeasurment = e.Indicator,
                            OverAllPerformance = 0,
                            StartDate = e.ShouldStat.ToString(),
                            EndDate = e.ShouldEnd.ToString(),
@@ -732,7 +734,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                                                 ProjectLocationLat = e.Activity.Latitude,
                                                 Begining = e.Activity.Begining,
                                                 Target = e.Activity.Goal,
-                                                UnitOfMeasurment = e.Activity.UnitOfMeasurement.Name,
+                                                UnitOfMeasurment = e.Activity.Indicator,
                                                 OverAllPerformance = 0,
                                                 StartDate = e.Activity.ShouldStat.ToString(),
                                                 EndDate = e.Activity.ShouldEnd.ToString(),
@@ -863,6 +865,69 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
 
             return response;
 
+        }
+
+        public async Task<ActivityViewDto> GetSingleActivity(Guid actId)
+        {
+
+            var employeeAssigned = _dBContext.EmployeesAssignedForActivities.Where(x => x.ActivityId== actId).Select(x => x.ActivityId).ToList();
+
+
+
+            var activityProgress = _dBContext.ActivityProgresses;
+            ActivityViewDto assignedActivities =
+                await (from e in _dBContext.Activities.Where(x=>x.Id==actId)
+                        .Include(x => x.Zone).ThenInclude(x => x.Region).ThenInclude(x => x.Country)
+                       .Include(x => x.Commitee).ThenInclude(x => x.Employees)
+                       .Where(x => x.ActualEnd == null)
+    
+                       select new ActivityViewDto
+                       {
+                           Id = e.Id,
+                           Name = e.ActivityDescription,
+                           PlannedBudget = e.PlanedBudget,
+                           ActivityType = e.ActivityType.ToString(),
+                           ProjectLocation = $"{e.Woreda}-{e.Zone.ZoneName}-{e.Zone.Region.RegionName}-{e.Zone.Region.Country.CountryName}",
+                           IsTraining = e.IsTraining,
+                           ProjectLocationLng = e.Longtude,
+                           ProjectLocationLat = e.Latitude,
+                           ActivityNumber = e.ActivityNumber,
+
+                           Begining = e.Begining,
+                           Target = e.Goal,
+                           UnitOfMeasurment = e.Indicator,
+                           OverAllPerformance = 0,
+                           StartDate = e.ShouldStat.ToString(),
+                           EndDate = e.ShouldEnd.ToString(),
+                           Members = _dBContext.EmployeesAssignedForActivities.Include(x => x.Employee).Where(x => x.ActivityId == e.Id).Select(y => new SelectListDto
+                           {
+                               Id = y.Id,
+                               Name = $"{y.Employee.FirstName} {y.Employee.LastName}",
+                               Photo = y.Employee.ImagePath,
+                               EmployeeId = y.EmployeeId.ToString(),
+
+                           }).ToList(),
+                           MonthPerformance = _dBContext.ActivityTargetDivisions.Where(x => x.ActivityId == e.Id).OrderBy(x => x.Order).Select(y => new MonthPerformanceViewDto
+                           {
+                               Id = y.Id,
+                               Order = y.Order,
+                               Planned = y.Target,
+                               Actual = activityProgress.Where(x => x.QuarterId == y.Id).Sum(mp => mp.ActualWorked),
+                               Percentage = y.Target != 0 ? (activityProgress.Where(x => x.QuarterId == y.Id && x.IsApprovedByDirector == ApprovalStatus.APPROVED && x.IsApprovedByFinance == ApprovalStatus.APPROVED && x.IsApprovedByManager == ApprovalStatus.APPROVED).Sum(x => x.ActualWorked) / y.Target) * 100 : 0
+
+
+                           }).ToList()
+
+
+
+
+                       }
+                          ).FirstOrDefaultAsync();
+
+
+
+
+            return assignedActivities;
         }
     }
 }

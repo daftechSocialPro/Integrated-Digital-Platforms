@@ -14,7 +14,7 @@
       </button>
    </div>
 
- <div class="card">
+ <!-- <div class="card">
    <table>
       <thead>
           <tr>
@@ -49,18 +49,18 @@
         
       </tfoot>
   </table>
- </div>
+ </div> -->
  
    <section class="section profile">
       <div class="row">
 
-         <div class="col-lg-6" *ngFor="let plan of Plans" style="cursor: pointer;" (click)="tasks(plan)">
+         <div class="col-lg-6" *ngFor="let plan of Plans" style="cursor: pointer;" >
 
             <div class="card">
                <div class="card-header">
 
                   <div>
-                     <div>
+                     <div (click)="tasks(plan)">
                         {{plan.planName}} ({{plan.projectNumber}})
                      </div>
                      <div style="text-align: right!important;">
@@ -78,7 +78,7 @@
                         </div>
                         <div class="col-md-6  text-end">
 
-                           {{plan.startDate}} - {{plan.endDate}}
+                           {{plan.startDate |date:'dd MMM YYYY'}} - {{plan.endDate |date:'dd MMM YYYY'}}
                         </div>
                         <!-- <div class="col-md-2" style="text-align: right!important;">
                            {{plan.ProjectType}}
@@ -86,36 +86,43 @@
                      </div>
                   </h5>
 
-                  <div class="text-center" style="color: #798eb3;">
+                  <div class="text-left" style="color: #798eb3;">
                      <span class="card-title"> Planned Budegt :</span>
-                     {{plan.plandBudget}} ETB &nbsp;
-                     <span class="card-title"> Remaining Budegt : </span>
-                     {{plan.remainingBudget}} ETB <br />
+                     {{plan.plandBudget |number:'1.0-2'}} ETB <br/>
+                     <!-- <span class="card-title"> Remaining Budegt : </span>
+                     {{plan.remainingBudget |number:'1.0-2'}} ETB <br /> -->
                      <div class="mt-2">
 
                      </div>
-                     {{plan.projectManager}} - Project Manager <br />
-                     {{plan.director}} - Director <br />
+                     <span class="card-title">Project Manager :</span>
+                     {{plan.projectManager}} <br />
+                     <span *ngIf="plan.director" class="card-title">Project Manager :</span>
+                     {{plan.director}}  <br />
 
-                     <span *ngFor="let item of plan.projectFunds">{{item}},</span>
+                     <!-- <span *ngFor="let item of plan.projectFunds">{{item}},</span> -->
 
                   </div>
-                  <div class="mt-2">
+                  <!-- <div class="mt-2">
                      <span class="card-title"> Goal :</span>
                      {{plan.goal}} <br />
                      <span class="card-title"> Objective :</span>
                      {{plan.objective}} &nbsp;
 
-                  </div>
+                  </div> -->
 
 
                </div>
                <div class="card-footer">
 
                   <div class="row">
-                     <div class="col-lg-12">
+                     <div class="col-lg-6">
                         Tasks: {{plan.numberOfTask}} &nbsp;&nbsp;
                         Actvities : {{plan.numberOfActivities}}
+
+                     </div>
+                     <div class="col-lg-6 text-end">
+
+                        <button class="btn btn-sm btn-outline-primary" (click)="viewDetail(plan.id)"> View Detail</button>
 
                      </div>
 

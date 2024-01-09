@@ -1,9 +1,9 @@
 <div class="modal-content">
     <div class="modal-header">
-        <h5 class="modal-title">View Trainings for
-            <span style="color:brown;"> activity {{trainingList&&trainingList[0]&&trainingList[0].activityNumber}}</span>
+        <h5 class="modal-title">Trainings
+            <!-- <span style="color:brown;"> activity {{trainingList&&trainingList[0]&&trainingList[0].activityNumber}}</span> -->
         </h5>
-        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    
     </div>
 
     <div class="card p-4">
@@ -25,8 +25,8 @@
 
                     <th class="text-center">Project</th>
                     <th class="text-center">Title</th>
-                    <th class="text-center">Organization</th>
-                    <th class="text-center">Organization Type</th>
+                    <!-- <th class="text-center">Organization</th>
+                    <th class="text-center">Organization Type</th> -->
                     <th class="text-center">Course Venue</th>
                     <th class="text-center">Start Date</th>
                     <th class="text-center">End Date</th>
@@ -44,15 +44,17 @@
 
                     <td>{{ training.project }}</td>
                     <td>{{ training.title }}</td>
-                    <td>{{ training.nameofOrganizaton }}</td>
-                    <td>{{ training.typeofOrganization }}</td>
+                    <!-- <td>{{ training.nameofOrganizaton }}</td>
+                    <td>{{ training.typeofOrganization }}</td> -->
                     <td>{{ training.courseVenue }}</td>
                     <td>{{ training.startDate | date:"dd MMM yyyy"}}</td>
                     <td>{{ training.endDate | date:"dd MMM yyyy" }}</td>
                     <td>{{ training.reportStatus }}</td>
                     
                     <td>
-                        <li style="list-style: none; text-align: right;">
+
+                        <button class="btn btn-sm btn-outline-primary" (click)="toTrainingDetail(training.id)">View Detail</button>
+                        <!-- <li style="list-style: none; text-align: right;">
                             <a class="nav-link nav-profile  pe-0" href="#" data-bs-toggle="dropdown"> <span
                                     class="d-none d-md-block dropdown-toggle ps-2">Action </span> </a>
                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
@@ -82,7 +84,7 @@
 
                                     
                             </ul>
-                        </li>
+                        </li> -->
                     </td>
 
                 </tr>

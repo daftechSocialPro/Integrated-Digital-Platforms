@@ -39,6 +39,20 @@ namespace IntegratedDigitalAPI.Controllers.HRM
             }
         }
 
+        [HttpPut]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> UpdateFingerPrint(UpdateEmployeeFingerPrintDto fintePrintDto)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _attendanceService.UpdateFingerPrint(fintePrintDto));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
 
 
         [HttpGet]

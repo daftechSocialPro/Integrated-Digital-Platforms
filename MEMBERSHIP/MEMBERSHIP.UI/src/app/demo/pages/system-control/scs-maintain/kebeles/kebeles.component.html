@@ -1,0 +1,57 @@
+<div class="mail-wrapper">
+
+    <div id="mail-menulist" class="show collapse collapse-horizontal me-2">
+        <div class="mail-menulist">
+            <div class="card">
+                <div class="card-body">
+
+                </div>
+                <div class="scroll-block" style="max-height: 350px;overflow-y: scroll;">
+                    <div class="card-body pt-0">
+                        <div class="list-group list-group-flush nav nav-tabs" id="list-tab" role="tablist">
+                            <li class="nav-item">
+                            <a class="list-group-item list-group-item-action nav-link active" id="list-mailtab-24"
+                                    data-bs-toggle="tab" href="#list-mail-24" role="tab">
+                                    <span> Kebele INFO
+                                    </span>
+                                    <span class="avtar avtar-xs"><i class="ti ti-dashboard"></i></span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="list-group-item list-group-item-action nav-link mt-2" id="list-mailtab-26"
+                                    data-bs-toggle="tab" href="#list-mail-26" role="tab">
+                                    <span> Ketena
+                                    </span>
+                                    <span class="avtar avtar-xs"><i class="ti ti-dashboard"></i></span>
+                                </a>
+                            </li>
+                            
+                           
+                            <hr class="my-3">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="mail-content tab-content">
+        <div class="tab-pane fade show active" id="list-mail-24" role="tabpanel" aria-labelledby="list-mailtab-24">
+            <div class="card table-card">
+                <app-kebele-info/>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="list-mail-26" role="tabpanel" aria-labelledby="list-mailtab-26">
+            <div class="card table-card">
+                <app-ketena/>
+            </div>
+        </div>
+       
+
+        <!-- Add more tab panes here -->
+    </div>
+
+
+</div>

@@ -280,9 +280,9 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                         progwithStu.StrutureName = stItems.DepartmentName;
                         progwithStu.StructurePlans = new List<StructurePlan>();
                         var plansinStruc = _dBContext.Projects
-                            .Include(x => x.Tasks).ThenInclude(x => x.ActivitiesParents).ThenInclude(x => x.Activities).ThenInclude(x => x.UnitOfMeasurement)
-                            .Include(x => x.Tasks).ThenInclude(x => x.Activities).ThenInclude(x => x.UnitOfMeasurement)
-                            .Include(x => x.Activities).ThenInclude(x => x.UnitOfMeasurement)
+                            .Include(x => x.Tasks).ThenInclude(x => x.ActivitiesParents).ThenInclude(x => x.Activities)
+                            .Include(x => x.Tasks).ThenInclude(x => x.Activities)
+                            .Include(x => x.Activities)
                             .Include(x => x.Tasks).ThenInclude(x => x.ActivitiesParents).ThenInclude(x => x.Activities).ThenInclude(x => x.ActivityTargetDivisions)
                             .Include(x => x.Tasks).ThenInclude(x => x.Activities).ThenInclude(x => x.ActivityTargetDivisions)
                             .Include(x => x.Activities).ThenInclude(x => x.ActivityTargetDivisions)
@@ -317,7 +317,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                                                     {
                                                         actSub.Weight = subActs.Weight;
                                                         actSub.Target = subActs.Goal;
-                                                        actSub.UnitOfMeasurement = subActs.UnitOfMeasurement.Name;
+                                                        actSub.UnitOfMeasurement = subActs.Indicator;
                                                         actSub.subActivityTargetDivision = new List<ActivityTargetDivisionReport>();
                                                         foreach (var tp in subActs.ActivityTargetDivisions)
                                                         {
@@ -343,7 +343,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                                                 if (PActTarDiv != null)
                                                 {
                                                     taskActivity.Weight = PActTarDiv.Weight;
-                                                    taskActivity.UnitOfMeasurement = PActTarDiv.UnitOfMeasurement.Name;
+                                                    taskActivity.UnitOfMeasurement = PActTarDiv.Indicator;
                                                     taskActivity.Target = PActTarDiv.Goal;
                                                     foreach (var tp in PActTarDiv.ActivityTargetDivisions)
                                                     {
@@ -368,7 +368,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                                         if (tasTarDiv != null)
                                         {
                                             pT.Weight = tasTarDiv.Weight;
-                                            pT.UnitOfMeasurement = tasTarDiv.UnitOfMeasurement.Name;
+                                            pT.UnitOfMeasurement = tasTarDiv.Indicator;
                                             pT.Target = tasTarDiv.Goal;
                                             foreach (var tp in tasTarDiv.ActivityTargetDivisions)
                                             {
@@ -393,7 +393,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                                 if (targetDiv != null)
                                 {
                                     StrPlan.Weight = targetDiv.Weight;
-                                    StrPlan.UnitOfMeasurement = targetDiv.UnitOfMeasurement.Name;
+                                    StrPlan.UnitOfMeasurement = targetDiv.Indicator;
                                     StrPlan.Target = targetDiv.Goal;
                                     foreach (var tP in targetDiv.ActivityTargetDivisions)
                                     {
@@ -567,7 +567,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
 
                 var activities = await _dBContext.Activities
                     .Include(x => x.ActivityTargetDivisions)
-                    .Include(x => x.UnitOfMeasurement)
+                   
 
                     .Where(x => x.StrategicPlanId == strategicPlanId).ToListAsync();
 
@@ -585,7 +585,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                         plns.PlanName = $"{Pocu.ActivityDescription} {Pocu.ActivityNumber}";
                         plns.Target = Pocu.Goal;
                         plns.ActualWorked = Pocu.ActualWorked;
-                        plns.MeasurementUnit = Pocu.UnitOfMeasurement.Name;
+                        plns.MeasurementUnit = Pocu.Indicator;
                         plns.Begining = Pocu.Begining;
                         var byQuarter = Pocu.ActivityTargetDivisions.OrderBy(x => x.Order).ToList();
                         if (!QuarterMonth.Any())
@@ -724,9 +724,9 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
 
 
                 var allPlans = _dBContext.Projects
-                      .Include(x => x.Tasks).ThenInclude(x => x.ActivitiesParents).ThenInclude(x => x.Activities).ThenInclude(x => x.UnitOfMeasurement)
-                                 .Include(x => x.Tasks).ThenInclude(x => x.Activities).ThenInclude(x => x.UnitOfMeasurement)
-                                 .Include(x => x.Activities).ThenInclude(x => x.UnitOfMeasurement)
+                      .Include(x => x.Tasks).ThenInclude(x => x.ActivitiesParents).ThenInclude(x => x.Activities)
+                                 .Include(x => x.Tasks).ThenInclude(x => x.Activities)
+                                 .Include(x => x.Activities)
                                  .Include(x => x.Tasks).ThenInclude(x => x.ActivitiesParents).ThenInclude(x => x.Activities).ThenInclude(x => x.ActivityTargetDivisions)
                                  .Include(x => x.Tasks).ThenInclude(x => x.Activities).ThenInclude(x => x.ActivityTargetDivisions)
                                  .Include(x => x.Activities).ThenInclude(x => x.ActivityTargetDivisions)
@@ -776,7 +776,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                                             ActivityLst lst = new ActivityLst();
                                             lst.ActivityDescription = ActItems.ActivityDescription;
                                             lst.Begining = ActItems.Begining;
-                                            lst.MeasurementUnit = ActItems.UnitOfMeasurement.Name.ToString();
+                                            lst.MeasurementUnit = ActItems.Indicator;
                                             lst.Target = ActItems.Goal;
                                             lst.Weight = ActItems.Weight;
                                             //lst.Remark = ActItems.Remark;
@@ -897,7 +897,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                                         {
                                             actparentlst.Target = Pocu.Goal;
                                             actparentlst.ActualWorked = Pocu.ActualWorked;
-                                            actparentlst.MeasurementUnit = Pocu.UnitOfMeasurement.Name;
+                                            actparentlst.MeasurementUnit = Pocu.Indicator;
                                             actparentlst.Begining = Pocu.Begining;
                                             var byQuarter = Pocu.ActivityTargetDivisions.OrderBy(x => x.Order).ToList();
                                             if (!QuarterMonth.Any())
@@ -1019,7 +1019,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                                 if (Acti != null)
                                 {
                                     taskLst.Begining = Acti.Begining;
-                                    taskLst.MeasurementUnit = Acti.UnitOfMeasurement.Name;
+                                    taskLst.MeasurementUnit = Acti.Indicator;
                                     taskLst.Target = Acti.Goal;
                                     List<PlanOcc> planOccs = new List<PlanOcc>();
                                     var byQuarter = Acti.ActivityTargetDivisions.OrderBy(x => x.Order).ToList();
@@ -1139,7 +1139,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                         {
                             plns.Target = Pocu.Goal;
                             plns.ActualWorked = Pocu.ActualWorked;
-                            plns.MeasurementUnit = Pocu.UnitOfMeasurement.Name;
+                            plns.MeasurementUnit = Pocu.Indicator;
                             plns.Begining = Pocu.Begining;
                             var byQuarter = Pocu.ActivityTargetDivisions.OrderBy(x => x.Order).ToList();
                             if (!QuarterMonth.Any())
@@ -1273,7 +1273,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
             var activityProgress = _dBContext.ActivityProgresses;
             List<ActivityViewDto> assignedActivities =
                 await (from e in _dBContext.Activities
-                       .Include(x => x.UnitOfMeasurement)
+                      
                         .Include(x => x.Zone).ThenInclude(x => x.Region).ThenInclude(x => x.Country)
                        .Include(x => x.Commitee).ThenInclude(x => x.Employees)
                        .Where(x => x.ZoneId == LocationId &&
@@ -1294,7 +1294,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
 
                            Begining = e.Begining,
                            Target = e.Goal,
-                           UnitOfMeasurment = e.UnitOfMeasurement.Name,
+                           UnitOfMeasurment = e.Indicator,
                            OverAllPerformance = 0,
                            StartDate = e.ShouldStat.ToString(),
                            EndDate = e.ShouldEnd.ToString(),
@@ -2083,9 +2083,9 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                 if (selectStructureId != null)
                 {
                     var allPlans = _dBContext.Projects
-                          .Include(x => x.Tasks).ThenInclude(x => x.ActivitiesParents).ThenInclude(x => x.Activities).ThenInclude(x => x.UnitOfMeasurement)
-                                 .Include(x => x.Tasks).ThenInclude(x => x.Activities).ThenInclude(x => x.UnitOfMeasurement)
-                                 .Include(x => x.Activities).ThenInclude(x => x.UnitOfMeasurement)
+                          .Include(x => x.Tasks).ThenInclude(x => x.ActivitiesParents).ThenInclude(x => x.Activities)
+                                 .Include(x => x.Tasks).ThenInclude(x => x.Activities)
+                                 .Include(x => x.Activities)
                                  .Include(x => x.Tasks).ThenInclude(x => x.ActivitiesParents).ThenInclude(x => x.Activities).ThenInclude(x => x.ActivityTargetDivisions)
                                  .Include(x => x.Tasks).ThenInclude(x => x.Activities).ThenInclude(x => x.ActivityTargetDivisions)
                                  .Include(x => x.Activities).ThenInclude(x => x.ActivityTargetDivisions)
@@ -2138,7 +2138,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                                                 ActivityLst lst = new ActivityLst();
                                                 lst.ActivityDescription = ActItems.ActivityDescription;
                                                 lst.Begining = ActItems.Begining;
-                                                lst.MeasurementUnit = ActItems.UnitOfMeasurement.Name;
+                                                lst.MeasurementUnit = ActItems.Indicator;
                                                 lst.Target = ActItems.Goal;
                                                 lst.Weight = ActItems.Weight;
                                                 //lst.Remark = ActItems.Remark;
@@ -2294,7 +2294,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                                             if (TaskOcs != null)
                                             {
                                                 actparent.Begining = TaskOcs.Begining;
-                                                actparent.MeasurementUnit = TaskOcs.UnitOfMeasurement.Name;
+                                                actparent.MeasurementUnit = TaskOcs.Indicator;
                                                 actparent.Target = TaskOcs.Goal;
                                                 actparent.ActParentWeight = TaskOcs.Weight;
                                                 actparent.ActualWorked = (float)Math.Round(TaskOcs.ActualWorked, 2);
@@ -2432,7 +2432,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                                     if (TaskOcs != null)
                                     {
                                         taskLst.Begining = TaskOcs.Begining;
-                                        taskLst.MeasurementUnit = TaskOcs.UnitOfMeasurement.Name;
+                                        taskLst.MeasurementUnit = TaskOcs.Indicator;
                                         taskLst.Target = TaskOcs.Goal;
                                         taskLst.TaskWeight = TaskOcs.Weight;
                                         taskLst.ActualWorked = (float)Math.Round(TaskOcs.ActualWorked, 2);
@@ -2566,7 +2566,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                             if (PlanDivOcs != null)
                             {
                                 plns.Begining = PlanDivOcs.Begining;
-                                plns.MeasurementUnit = PlanDivOcs.UnitOfMeasurement.Name;
+                                plns.MeasurementUnit = PlanDivOcs.Indicator;
                                 plns.Target = PlanDivOcs.Goal;
                                 plns.Weight = PlanDivOcs.Weight;
                                 plns.ActualWorked = (float)Math.Round(PlanDivOcs.ActualWorked, 2);

@@ -1,102 +1,88 @@
-<div class="p-4">
-  <div class="modal-header" *ngIf="traininggId">
 
-    <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
-  </div>
-  <div class="card p-4">
+<div class="p-4">
+
+  <div *ngIf="!traininggId" class="card p-4">
     <div class="text-center">
       <img src="../../../../assets/logo.png" height="80px" />
-      <h1>Ethiopian Midwives Association</h1>
-      <h2>Training Quality Evaluation tools</h2>
-      <p>Dear trainers: Please add the trainees for <span style="font-size: 20px;color:#1b419f">{{TrainingTitle}}</span>
+      <h3>Ethiopian Midwives Association</h3>
+      
+      <p class="mt-2"><b>Title: </b><span>{{training&&training.title}} </span></p>
+      <p><b>Duration: </b><span>{{training&&training.startDate|date:"dd MMM yyyy"}} --- {{training&&training.endDate|date:"dd MMM yyyy"}}</span></p>
+      <p><b>Venue of the training: </b><span> {{training&&training.courseVenue}} </span></p>
+     
+      <p><b>Dear trainers: </b> Please add the trainees for <span style="font-size: 20px;color:#1b419f">{{TrainingTitle}}</span>
         on the table below</p>
 
-      <div class="row col-12 text-end"   *ngIf="!traininggId&&(training&&training.traineeListStatus!='SUBMITTED')" >
-
-
-      
-          <div class="col-md-4">
-            <button class="btn btn-outline-primary" (click)="changeTraineeReportStatus()">
-              Submit
-            </button>
-          </div>
-
-       
-
-      </div>
-
+          <button *ngIf="!traininggId&&(training&&training.traineeListStatus!='SUBMITTED')" class="btn btn-outline-primary text-end" (click)="changeTraineeReportStatus()">
+            Submit
+          </button>
+    
     </div>
   </div>
-  <div class="card p-2">
-    <table class="custom-table">
+  <div class="table-container ">
+    <div class="table-wrapper ">
+    <table class="table table-bordered">
       <thead>
         <tr>
-          <th class="text-center" style="width: 5%;">#</th>
-          <th class="text-center">Full Name</th>
-          <th class="text-center" style="width: 10%;">Phone Number</th>
-          <th class="text-center" style="width: 15%;">Email</th>
-          <th class="text-center" style="width: 10%;">Birth Date</th>
-          <th class="text-center" style="width: 10%;">Gender</th>
-          <th class="text-center" style="width: 15%;">Profession</th>
-          <th class="text-center" style="width: 20%;">Level of Education</th>
+          <th>#</th>
+          <th>Full Name</th>
+          <th>Gender</th>
+          <th>Profession</th>
+          <th>Phone Number</th>
+          <th>Email</th>
+          <th>Age</th>
+          <th>Region</th>
+          <th>Zone</th>
+          <th>Woreda</th>
+          <th>Level of Education</th>
+          <th>Educational Field</th>
+          <th>Organization</th>
+          <th>Type Of Organization</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let row of traineeData; let i = index">
           <td>{{ i + 1 }}</td>
-          <td class="text-center">{{ row.fullName }}</td>
-          <td class="text-center">{{ row.phoneNumber }}</td>
-          <td class="text-center">{{ row.email }}</td>
-          <td class="text-center">{{ row.birthDate | date:"dd MMM yyyy" }} | {{getAge(row.birthDate)}}</td>
-          <td class="text-center">{{ row.gender }}</td>
-          <td class="text-center">{{ row.educationalField }}</td>
-          <td class="text-center">{{ row.educationalLevel }}</td>
+          <td>{{ row.fullName }}</td>
+          <td>{{ row.gender }}</td>
+          <td>{{ row.profession }}</td>
+          <td>{{ row.phoneNumber }}</td>
+          <td>{{ row.email }}</td>
+          <td>{{ row.age }}</td>
+          <td>{{ row.region }}</td>
+          <td>{{ row.zone }}</td>
+          <td>{{ row.woreda }}</td>
+          <td>{{ row.educationalLevel }}</td>
+          <td>{{ row.educationalField }}</td>
+          <td>{{ row.nameofOrganizaton }}</td>
+          <td>{{ row.typeofOrganization }}</td>
         </tr>
-
       </tbody>
-      <tfoot *ngIf="!traininggId&&(training&&training.traineeListStatus!='SUBMITTED')" >
-
-        <tr>
-
-          <td colspan="8">
-            <form [formGroup]="traineeForm">
-          <td>
-
-            <input pInputText type="text" placeholder="Full Name" formControlName="fullName" />
-          </td>
-          <td>
-            <input pInputText type="text" placeholder="Phone Number" formControlName="phoneNumber" />
-          </td>
-          <td>
-            <input pInputText type="email" placeholder="Email" formControlName="email" />
-
-
-          <td>
-
-            <input pInputText type="date" formControlName="birthDate" />
-
-
-          </td>
-          <td width="15%">
-            <p-dropdown formControlName="gender" [options]="genders" optionLabel="label" optionValue="value"
-              placeholder="Select Gender"></p-dropdown>
-          </td>
-          <td width="15%">
-            <p-dropdown formControlName="educationLevel" [options]="educationalLevels" optionLabel="name"
-              optionValue="id" placeholder="Select Educational Level" [filter]="true"></p-dropdown>
-
-          </td>
-          <td width="15%">
-            <p-dropdown formControlName="profession" [options]="educationalFields" optionLabel="name" optionValue="id"
-              placeholder="Select Educational Fields" [filter]="true"></p-dropdown>
-
-          </td>
-          <td> <button type="button" [disabled]="!traineeForm.valid" class="btn btn-outline-primary"
-              (click)="addRow()">+</button></td>
-          </form>
-          </td>
-        </tr>
-      </tfoot>
     </table>
   </div>
-</div>
+  
+    <div class="form-container" *ngIf="!traininggId && (training && training.traineeListStatus != 'SUBMITTED')">
+      <form [formGroup]="traineeForm">
+        <!-- Form inputs go here -->
+        <input pInputText type="text" placeholder="Full Name" formControlName="fullName" />&nbsp;
+        <p-dropdown formControlName="gender" [options]="genders" optionLabel="label" optionValue="value"
+          placeholder="Select Gender"></p-dropdown>&nbsp;
+        <input pInputText type="text" placeholder="Profession" formControlName="profession" />&nbsp;
+        <input pInputText type="text" placeholder="Phone Number" formControlName="phoneNumber" />&nbsp;
+        <input pInputText type="email" placeholder="Email" formControlName="email" />&nbsp;
+        <input pInputText type="number" formControlName="age" />&nbsp;
+        <p-dropdown formControlName="region" class="mt-2"  [options]="regions" optionLabel="name"
+        optionValue="id" placeholder="Select Region" [filter]="true"></p-dropdown>&nbsp;
+   
+        <input pInputText class="mt-2" type="text" placeholder="Zone" formControlName="zone" />&nbsp;
+        <input pInputText class="mt-2"  type="text" placeholder="Woreda" formControlName="woreda" />&nbsp;
+        <p-dropdown formControlName="educationalLevel" class="mt-2"  [options]="educationalLevels" optionLabel="name"
+          optionValue="id" placeholder="Select Educational Level" [filter]="true"></p-dropdown>&nbsp;
+        <input pInputText type="text" class="mt-2"  placeholder="Educational Field" formControlName="educationalField" />&nbsp;
+        <input pInputText type="text" class="mt-2"  placeholder="Name of Organization" formControlName="nameofOrganizaton" />&nbsp;
+        <input pInputText type="text" class="mt-2"  placeholder="Type of Organization" formControlName="typeofOrganization" />&nbsp;
+        <button type="button" class="mt-2"  [disabled]="!traineeForm.valid" class="btn btn-outline-primary" (click)="addRow()">+</button>
+      </form>
+    </div>
+  </div>
+  

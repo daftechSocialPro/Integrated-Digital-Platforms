@@ -164,6 +164,10 @@ export class ViewActivtiesComponent implements OnInit {
   }
 
   getMonthName(monthIndex: number): string {
+
+    if (monthIndex>12){
+      monthIndex-=12
+    }
     const monthNames = [
       'January', 'February', 'March', 'April', 'May', 'June',
       'July', 'August', 'September', 'October', 'November', 'December'

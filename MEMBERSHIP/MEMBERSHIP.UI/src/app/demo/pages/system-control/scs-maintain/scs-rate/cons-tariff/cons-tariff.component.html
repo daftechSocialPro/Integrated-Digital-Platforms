@@ -1,0 +1,65 @@
+<div class="card-body   p-4">
+    <div class="col-md-6">
+
+        <div class="form-floating mb-3">
+            <select class="form-control" id="floatingInput" #search (change)="filter(search.value)" >
+
+                <option *ngFor="let item of distinctRentGroupCodes" [value]="item">
+                    {{item}}</option>
+
+            </select>
+            <label for="floatingInput"> Meter Rate / Group code</label>
+        </div>
+    </div>
+
+    <div class="col-lg-12 text-end p-2" *ngIf="!isFromDashboard && !isFromCurrentMeterTariff">
+        <button type="button" class="btn btn-outline-success" (click)="addConsumptionTariff()"><i
+                class="pi pi-plus me-1" style="font-size: 12px;"></i>
+            Consumptioin Tarif Rate</button>
+    </div>
+
+
+
+    <table class="custom-table">
+        <thead>
+            <tr>
+                
+                <th>Group Code</th>
+                <th>Levels</th>
+                <th>Cons Range</th>
+                <th>Consumptioin</th>
+                <th>Rate </th>
+                <th>Customer Category</th>
+                <th *ngIf="!isFromDashboard && !isFromCurrentMeterTariff">Action</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of paginationconstariff;let i = index">
+                <td>{{item.rateGroupCode}}</td>
+                <td>{{item.consLevels}}</td>
+                <td>{{item.consRanges}}</td>
+                <td>{{item.consumption}}</td>
+                <td>{{item.tariffRate}}</td>
+                <td>{{item.custCategoryCode}}</td>
+                <td *ngIf="!isFromDashboard && !isFromCurrentMeterTariff">
+                    <button type="button" (click)="updateConsumptionTariff(item.recordno)"
+                        class="btn btn-outline-warning btn-sm"><i class="ti ti-pencil"></i></button>
+                    |
+                    <button type="button" (click)="removeConsumptionTariff(item.recordno)"
+                        class="btn btn-outline-danger btn-sm"><i class="ti ti-trash"></i></button>
+
+
+                </td>
+
+            </tr>
+
+        </tbody>
+    </table>
+    <div class="card flex justify-content-center">
+        <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows" [totalRecords]="totlRecords"
+            [rowsPerPageOptions]="[5, 10, 15]"></p-paginator>
+    </div>
+</div>
+
+<!-- </div> -->

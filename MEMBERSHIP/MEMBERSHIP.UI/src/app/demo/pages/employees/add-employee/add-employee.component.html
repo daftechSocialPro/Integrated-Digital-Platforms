@@ -1,0 +1,110 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Add Employee</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" data-bs-dismiss="modal"
+            aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+    <form [formGroup]="EmployeeForm" (submit)="onSubmit()">
+
+        <div class="row">
+            <div class="col-md-3 ">
+                <img [src]="imagePath ? imagePath : 'assets/images/profile.jpg'" alt="Profile"
+                    style="width: 100%;">
+                <input #file (change)="onUpload($event)" type="file" style="display: none;" accept="image/*" />
+                <div class="pt-2">
+                    <a (click)="file.click()" style="width: 100%;" class="btn btn-outline-primary btn-sm"
+                        title="Upload new profile image">
+                        <i class="bi bi-upload"></i> Upload Image
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-9">  <div class="row">
+                <div class="col-md-4">
+                  <div class="form-floating mb-3">
+                    <input type="text" class="form-control" formControlName="FirstName" id="floatingInput"  />
+                    <label for="floatingInput">First Name</label>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput" formControlName="LastName"  />
+                    <label for="floatingInput">Last Name</label>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-floating mb-3">
+                      <input type="date" class="form-control" formControlName="BirthDate" id="floatingInput"  />
+                      <label for="floatingInput">Birth Date</label>
+                    </div>
+                  </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput" formControlName="PhoneNumber"  />
+                    <label for="floatingInput">Phonenumber</label>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput" formControlName="EmploymentPosition"  />
+                    <label for="floatingInput">Employee Position</label>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-floating mb-3">
+                      <input type="date" class="form-control" id="floatingInput" formControlName="EmploymentDate"  />
+                      <label for="floatingInput">Hired Date</label>
+                    </div>
+                  </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                    <div class="form-floating mb-3">
+                      <input type="email" class="form-control" id="floatingInput" formControlName="Email"  />
+                      <label for="floatingInput">Email</label>
+                    </div>
+                  </div>
+                <div class="col-md-4">
+                  <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput" formControlName="Address"  />
+                    <label for="floatingInput">Address</label>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-floating mb-3">
+    
+    
+                    <select class="form-control"  id="floatingInput"  formControlName="Gender" aria-label="State">
+    
+                        <option></option>
+                        <option value="MALE">MALE</option>
+                        <option value="FEMALE">FEMALE</option>
+    
+    
+                    </select>
+                    <label for="floatingInput">Gender</label>
+    
+                  
+                  </div>
+                </div>
+            
+              </div>
+            </div>
+        </div>
+
+      
+          
+          <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
+            (click)="closeModal()">Close</button> <button type="button" type="submit"
+            [disabled]="!EmployeeForm.valid" class="btn btn-outline-primary">Save
+            changes</button></div>
+       
+    </form>
+</div>
+</div>
+</div>

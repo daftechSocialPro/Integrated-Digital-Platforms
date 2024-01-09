@@ -1,0 +1,61 @@
+<div class="card-body   p-4">
+
+    <div class="col-md-6">
+
+        <div class="form-floating mb-3">
+            <select class="form-control" id="floatingInput" #search (change)="filter(search.value)" >
+
+                <option *ngFor="let item of distinctRentGroupCodes" [value]="item">
+                    {{item}}</option>
+
+            </select>
+            <label for="floatingInput"> Meter Rate / Group code</label>
+        </div>
+    </div>
+
+<div *ngIf="!isFromDashboard" class="col-lg-12 text-end p-2">
+    <button *ngIf="!isFromCurrentMeterRate" type="button" class="btn btn-outline-success" (click)="addMeterRate()"><i class="pi pi-plus me-1"
+            style="font-size: 12px;"></i>
+       Meter Rate</button>
+</div>
+
+
+
+<table class="custom-table">
+    <thead>
+        <tr>
+            <th>Group Code</th>
+            <th>Meter Size Code</th>
+            <th>Meter Size</th>
+            <th>Rate</th>
+            <th>Customer Category </th>
+            <th *ngIf="!isFromDashboard && !isFromCurrentMeterRate">Action</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of paginationMeterRate;let i = index">
+            <td>{{item.rentGroupCode}}</td>
+            <td>{{item.meterSizeCode}}</td>
+            <td>{{item.meterSize}}</td>
+            <td>{{item.meterRent}}</td>
+            <td>{{item.custCategoryCode}}</td>
+            <td *ngIf="!isFromDashboard && !isFromCurrentMeterRate">
+                <button type="button" (click)="updateMeterRate(item.recordno)" class="btn btn-outline-warning btn-sm"><i
+                        class="ti ti-pencil"></i></button>
+                |
+                <button type="button" (click)="removeMeterRate(item.recordno)" class="btn btn-outline-danger btn-sm"><i
+                        class="ti ti-trash"></i></button>
+
+
+            </td>
+
+        </tr>
+
+    </tbody>
+</table>
+<div class="card flex justify-content-center">
+    <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows" [totalRecords]="totlRecords"
+        [rowsPerPageOptions]="[5, 10, 15]"></p-paginator>
+</div>
+</div>

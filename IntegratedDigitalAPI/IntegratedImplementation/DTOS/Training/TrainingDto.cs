@@ -11,8 +11,7 @@ namespace IntegratedImplementation.DTOS.Training
 
         public Guid ActivityId { get;set; }
         public string Title { get; set; } = null!;
-        public string NameofOrganizaton { get; set; } = null!;
-        public string TypeofOrganization { get; set; } = null!;
+
         public string CourseVenue { get; set; } = null!;
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
@@ -23,6 +22,8 @@ namespace IntegratedImplementation.DTOS.Training
     public record TrainingGetDto
     {
         public Guid Id { get; set; }
+
+        public Guid ActivityId { get; set; }
 
         public string ActivityNumber { get; set; } = null!;
         public string Title { get; set; } = null!;

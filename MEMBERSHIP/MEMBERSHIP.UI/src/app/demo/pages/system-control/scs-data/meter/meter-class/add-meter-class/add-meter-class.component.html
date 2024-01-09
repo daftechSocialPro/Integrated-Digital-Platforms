@@ -1,0 +1,31 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">{{MeterClass?"Update":"Add"}} Meter Class</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" data-bs-dismiss="modal"
+            aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <form class="" [formGroup]="MeterClassForm" (ngSubmit)="MeterClass?update():submit()">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" formControlName="name" id="floatingInput" />
+                            <label for="floatingInput">Name</label>
+                        </div>
+                    </div>
+
+               
+                </div>
+
+            <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
+                (click)="closeModal()">Close</button> <button type="button" type="submit"
+                [disabled]="!MeterClassForm.valid"   
+                class="btn btn-outline-success">{{MeterClass?"Update":"Create"}}</button></div>
+            </form>
+    </div>
+</div>
+
+</div>

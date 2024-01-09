@@ -254,7 +254,16 @@ import { MyLoansComponent } from './pages/human-resource/loan-management/my-loan
 import { RequestLoanComponent } from './pages/human-resource/loan-management/my-loans/request-loan/request-loan.component';
 import { AddLeaveTypeDetailComponent } from './pages/human-resource/hrm-configuration/leave-type/add-leave-type-detail/add-leave-type-detail.component';
 import { ContractEndEmployeesComponent } from './pages/human-resource/contract-end-employees/contract-end-employees.component';
-
+import { PlanDetailComponent } from './pages/project-managment/plans/plan-detail/plan-detail.component';
+import { ActivityDetailComponent } from './pages/project-managment/plans/activity-detail/activity-detail.component';
+import { TrainingDetailComponent } from './pages/training/training-detail/training-detail.component';
+import { FileUploadModule } from 'primeng/fileupload';
+import { NgImageSliderModule } from 'ng-image-slider';
+import { WeeklyActivitiesComponent } from './pages/project-managment/weekly-activities/weekly-activities.component';
+import { RequestWeeklyPlanComponent } from './pages/project-managment/weekly-activities/request-weekly-plan/request-weekly-plan.component';
+import { AddWeeklyPlanComponent } from './pages/project-managment/weekly-activities/request-weekly-plan/add-weekly-plan/add-weekly-plan.component';
+import { ActivityRequestsComponent } from './pages/project-managment/weekly-activities/request-weekly-plan/activity-requests/activity-requests.component';
+import { ActivityStatusComponent } from './pages/project-managment/weekly-activities/request-weekly-plan/activity-status/activity-status.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -561,7 +570,15 @@ import { ContractEndEmployeesComponent } from './pages/human-resource/contract-e
     MyLoansComponent,
     RequestLoanComponent,
     AddLeaveTypeDetailComponent,
-    ContractEndEmployeesComponent
+    ContractEndEmployeesComponent,
+    PlanDetailComponent,
+    ActivityDetailComponent,
+    TrainingDetailComponent,
+    WeeklyActivitiesComponent,
+    RequestWeeklyPlanComponent,
+    AddWeeklyPlanComponent,
+    ActivityRequestsComponent,
+    ActivityStatusComponent
     //  AddMeasurementComponent,
     //  UpdateMeasurmentComponent
   ],
@@ -592,6 +609,8 @@ import { ContractEndEmployeesComponent } from './pages/human-resource/contract-e
     ConfirmPopupModule,
     ListboxModule,
     InputMaskModule,
+    FileUploadModule,
+    NgImageSliderModule,
     TimelineModule ,
     ToastrModule.forRoot({
       preventDuplicates: true,

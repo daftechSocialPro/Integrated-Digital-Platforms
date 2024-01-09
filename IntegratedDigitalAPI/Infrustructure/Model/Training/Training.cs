@@ -1,4 +1,5 @@
 ﻿using IntegratedInfrustructure.Model.Authentication;
+using IntegratedInfrustructure.Models.PM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,12 +12,13 @@ namespace IntegratedInfrustructure.Model.Training
     public class Training : WithIdModel
     {
 
+        public Guid ActivityId { get; set; }
+
+        public Activity Activity { get; set; }
+
         public string Title { get; set; }
 
-        public string NameofOrganizaton { get; set; }
-
-        public string TypeofOrganization { get; set; }
-
+      
         public string CourseVenue { get; set; }
 
         public DateTime StartDate { get; set; }

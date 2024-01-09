@@ -13,14 +13,18 @@
 
         <div class="card">
 
-            <div class="col-12">
-                    <p-calendar [(ngModel)]="rangeDates"  selectionMode="range" [readonlyInput]="true"></p-calendar> &nbsp;
-                    <button type="button" pButton pRipple lable="Find" icon="pi pi-search" (click)="Search()" class="mr-2"></button> 
-            </div>
+            <div class="col-lg-4 p-4">
+                <label for="filterOption" class="form-label">Filter Option:</label>
+                <select id="filterOption" class="form-control" [(ngModel)]="selectedFilterOption" (change)="filterTable()">
+                  <option value="all">All</option>
+                  <option value="weekly">Weekly</option>
+                  <option value="monthly">Monthly</option>
+                </select>
+              </div>
         </div>
         
         <div class="card">
-            <p-table #dt [value]="staffWeeklyPlanDto" rowGroupMode="rowspan" groupRowsBy="responsible"
+            <p-table #dt [value]="filterdPlans" rowGroupMode="rowspan" groupRowsBy="responsible"
                 sortField="responsible" sortMode="single" [tableStyle]="{'min-width': '75rem'}">
                 <ng-template pTemplate="caption">
                     <div class="flex">
@@ -30,20 +34,20 @@
                 <ng-template pTemplate="header">
                     <tr>
                         <th style="width:3rem">S.N</th>
-                        <th>Activity Number</th>
+                        
                         <th>Activity</th>
                         <th>Place Of Work</th>
-                        <th>Execution Date</th>
+                        <th>From Date</th>
+                        <th>To Date</th>
                         <th>Responsible</th>
+                        <th>Work Status</th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-acts let-rowIndex="rowIndex" let-rowgroup="rowgroup"
                     let-rowspan="rowspan">
                     <tr>
                         <td>{{rowIndex + 1}}</td>
-                        <td>
-                            {{acts.activityNo}}
-                        </td>
+                     
                         <td>
                             {{acts.activity}}
                         </td>
@@ -51,10 +55,16 @@
                             {{acts.placeOfWork}}
                         </td>
                         <td>
-                            {{acts.executionDate | date : 'dd, MMMM, yyyy'}}
+                            {{acts.fromDate | date : 'dd, MMMM, yyyy'}}
                         </td>
-                        <td *ngIf="rowgroup" [attr.rowspan]="rowspan">
-                            {{acts.responsible}}
+                        <td>
+                            {{acts.toDate | date : 'dd, MMMM, yyyy'}}
+                        </td>
+                        <td >
+                            {{acts.employeeName}}
+                        </td>
+                        <td>
+                            {{acts.workStatus}}
                         </td>
                     </tr>
                 </ng-template>

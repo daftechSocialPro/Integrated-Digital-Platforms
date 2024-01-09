@@ -1,0 +1,47 @@
+<div style="display: flex;justify-content: center;">
+
+
+    <div class="col-md-10 p-4 ">
+        <div class="col-lg-12 text-end p-2">
+            <button type="button" class="btn btn-outline-success" (click)="addEducationalLevel()"><i
+                    class="pi pi-plus me-1" style="font-size: 12px;"></i>
+                EducationalLevel</button>
+        </div>
+        <table class="custom-table">
+            <thead>
+                <tr>
+
+                   
+                    <th>EducationalLevel Name</th>
+                    <th>Remark</th>
+                    <th>ACtion</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of paginatedEducationalLevel ;let i = index">
+
+                    <td>{{item.educationalLevelName}}</td>
+                    <td>{{item.remark}}</td>
+                   
+                    <td>
+                        <button type="button" (click)="updateEducationalLevel(item)"
+                            class="btn btn-outline-warning btn-sm"><i class="ti ti-pencil"></i></button> |
+                        <button type="button" (click)="removeEducationalLevel(item.id)"
+                            class="btn btn-outline-danger btn-sm"><i class="ti ti-trash"></i></button>
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+        
+        </table>
+        <div class="card flex justify-content-center">
+            <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows" [totalRecords]="EducationalLevel&&EducationalLevel.length" [rowsPerPageOptions]="[5, 10, 15]"></p-paginator>
+        </div>
+
+
+
+    </div>
+</div>

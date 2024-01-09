@@ -30,8 +30,8 @@ namespace IntegratedInfrustructure.Model.PM
         public string ProjectNumber { get; set; } = null!;
         public Guid DepartmentId { get; set; }
         public virtual Department Department { get; set; } = null!;
-        public int PeriodStartAt { get; set; }
-        public int PeriodEndAt { get; set; }
+        public DateTime PeriodStartAt { get; set; }
+        public DateTime PeriodEndAt { get; set; }
         public Guid ProjectManagerId { get; set; }
         public virtual EmployeeList ProjectManager { get; set; } = null!;
   

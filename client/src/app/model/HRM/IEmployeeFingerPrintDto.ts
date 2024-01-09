@@ -11,3 +11,11 @@ export interface AddEmployeeFingerPrintDto {
     createdById: string;
     fingerPrint: number;
 }
+
+export interface  UpdateEmployeeFingerPrintDto{
+
+    id?:string
+    FingerPrintCode:number
+    employeeId:string
+}
+

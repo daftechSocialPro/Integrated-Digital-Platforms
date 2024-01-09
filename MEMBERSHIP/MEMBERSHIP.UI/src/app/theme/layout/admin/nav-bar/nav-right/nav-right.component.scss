@@ -1,0 +1,9 @@
+.me-0 {
+  margin: 0 0 0 16px !important;
+}
+.description {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

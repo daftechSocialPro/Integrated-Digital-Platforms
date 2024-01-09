@@ -1,0 +1,44 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">{{ConsumptionLevel?"Update":"Add"}} Consumption Level</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" data-bs-dismiss="modal"
+            aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <!-- <form class="" [formGroup]="ConsumptionLevelForm" (ngSubmit)="ConsumptionLevel?update():submit()"> -->
+                <form class="" [formGroup]="ConsumptionLevelForm"(ngSubmit)="ConsumptionLevel?update():submit()">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" formControlName="recordno" id="floatingInput" />
+                            <label for="floatingInput">Record Number</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" formControlName="name" id="floatingInput" />
+                            <label for="floatingInput">Consumption Level (en)</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" formControlName="nameLocal" id="floatingInput" />
+                            <label for="floatingInput">Consumption Level (Local)</label>
+                        </div>
+                    </div>
+
+               
+                </div>
+
+            <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
+                (click)="closeModal()">Close</button> <button type="button" type="submit"
+                [disabled]="!ConsumptionLevelForm.valid"   
+                class="btn btn-outline-success">{{ConsumptionLevel?"Update":"Create"}}</button></div>
+            </form>
+    </div>
+</div>
+
+</div>

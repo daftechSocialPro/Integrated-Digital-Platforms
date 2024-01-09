@@ -29,7 +29,7 @@ namespace IntegratedDigitalAPI.Controllers.Configuration
         {
             if (ModelState.IsValid)
             {
-                return Ok(_unitOfMeasurmentService.CreateUnitOfMeasurment(unitOfMeasurment));
+                return Ok(await _unitOfMeasurmentService.CreateUnitOfMeasurment(unitOfMeasurment));
             }
             else
             {

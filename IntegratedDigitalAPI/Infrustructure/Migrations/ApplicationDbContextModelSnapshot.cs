@@ -2485,11 +2485,11 @@ namespace IntegratedInfrustructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PeriodEndAt")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("PeriodEndAt")
+                        .HasColumnType("datetime2");
 
-                    b.Property<int>("PeriodStartAt")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("PeriodStartAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<float>("PlannedBudget")
                         .HasColumnType("real");
@@ -2673,14 +2673,15 @@ namespace IntegratedInfrustructure.Migrations
                     b.ToTable("Tasks");
                 });
 
-            modelBuilder.Entity("IntegratedInfrustructure.Model.Training.ActivityTraining", b =>
+            modelBuilder.Entity("IntegratedInfrustructure.Model.PM.WeeklyReport", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ActivityId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Activity")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedById")
                         .HasColumnType("nvarchar(450)");
@@ -2688,21 +2689,41 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("FromDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PlaceOfWork")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReasonForNotDone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Remark")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Rowstatus")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("TrainingId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<DateTime>("ToDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WeeklyPlanStatus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WorkStatus")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ActivityId");
-
                     b.HasIndex("CreatedById");
 
-                    b.HasIndex("TrainingId");
+                    b.HasIndex("EmployeeId");
 
-                    b.ToTable("ActivityTrainings");
+                    b.ToTable("WeeklyReports");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Training.Trainee", b =>
@@ -2711,17 +2732,12 @@ namespace IntegratedInfrustructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("BirthDate")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("Age")
+                        .HasColumnType("int");
 
-                    b.Property<string>("CreatedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("EducationalFieldId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("EducationalField")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("EducationalLevelId")
                         .HasColumnType("uniqueidentifier");
@@ -2737,23 +2753,41 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<int>("Gender")
                         .HasColumnType("int");
 
+                    b.Property<string>("NameofOrganizaton")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Rowstatus")
-                        .HasColumnType("int");
+                    b.Property<string>("Profession")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("RegionId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("TrainingId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("TypeofOrganization")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Woreda")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Zone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("EducationalFieldId");
-
                     b.HasIndex("EducationalLevelId");
+
+                    b.HasIndex("RegionId");
 
                     b.HasIndex("TrainingId");
 
@@ -2839,6 +2873,9 @@ namespace IntegratedInfrustructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("ActivityId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("CourseVenue")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -2851,10 +2888,6 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("NameofOrganizaton")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Project")
                         .IsRequired()
@@ -2876,11 +2909,9 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<int>("TraineeListStatus")
                         .HasColumnType("int");
 
-                    b.Property<string>("TypeofOrganization")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("ActivityId");
 
                     b.HasIndex("CreatedById");
 
@@ -2901,9 +2932,6 @@ namespace IntegratedInfrustructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CreatedById")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -2918,9 +2946,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<string>("PrePostSummary")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Rowstatus")
-                        .HasColumnType("int");
 
                     b.Property<string>("Summary")
                         .IsRequired()
@@ -2939,11 +2964,32 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
-
                     b.HasIndex("TrainingId");
 
                     b.ToTable("TrainingReports");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Model.Training.TrainingReportAttachment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("FileType")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("TrainingReportId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TrainingReportId");
+
+                    b.ToTable("TrainingReportAttachments");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Vacancy.ApplcantDocuments", b =>
@@ -3380,6 +3426,13 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<float>("Goal")
                         .HasColumnType("real");
 
+                    b.Property<string>("Indicator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsPercentage")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsTraining")
                         .HasColumnType("bit");
 
@@ -3422,9 +3475,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<Guid?>("TaskId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UnitOfMeasurementId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<float>("Weight")
                         .HasColumnType("real");
 
@@ -3453,8 +3503,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasIndex("StrategicPlanId");
 
                     b.HasIndex("TaskId");
-
-                    b.HasIndex("UnitOfMeasurementId");
 
                     b.HasIndex("ZoneId");
 
@@ -5098,60 +5146,46 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("Project");
                 });
 
-            modelBuilder.Entity("IntegratedInfrustructure.Model.Training.ActivityTraining", b =>
+            modelBuilder.Entity("IntegratedInfrustructure.Model.PM.WeeklyReport", b =>
                 {
-                    b.HasOne("IntegratedInfrustructure.Models.PM.Activity", "Activity")
-                        .WithMany()
-                        .HasForeignKey("ActivityId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedById");
 
-                    b.HasOne("IntegratedInfrustructure.Model.Training.Training", "Training")
+                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "Employee")
                         .WithMany()
-                        .HasForeignKey("TrainingId")
+                        .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("Activity");
-
                     b.Navigation("CreatedBy");
 
-                    b.Navigation("Training");
+                    b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Training.Trainee", b =>
                 {
-                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
-
-                    b.HasOne("IntegratedInfrustructure.Model.Configuration.EducationalField", "EducationalField")
-                        .WithMany()
-                        .HasForeignKey("EducationalFieldId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("IntegratedInfrustructure.Model.Configuration.EducationalLevel", "EducationalLevel")
                         .WithMany()
                         .HasForeignKey("EducationalLevelId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("IntegratedInfrustructure.Model.Configuration.Region", "Region")
+                        .WithMany()
+                        .HasForeignKey("RegionId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("IntegratedInfrustructure.Model.Training.Training", "Training")
                         .WithMany()
                         .HasForeignKey("TrainingId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("CreatedBy");
-
-                    b.Navigation("EducationalField");
-
                     b.Navigation("EducationalLevel");
+
+                    b.Navigation("Region");
 
                     b.Navigation("Training");
                 });
@@ -5192,28 +5226,41 @@ namespace IntegratedInfrustructure.Migrations
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Training.Training", b =>
                 {
+                    b.HasOne("IntegratedInfrustructure.Models.PM.Activity", "Activity")
+                        .WithMany()
+                        .HasForeignKey("ActivityId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedById");
+
+                    b.Navigation("Activity");
 
                     b.Navigation("CreatedBy");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Training.TrainingReport", b =>
                 {
-                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
-
                     b.HasOne("IntegratedInfrustructure.Model.Training.Training", "Training")
                         .WithMany()
                         .HasForeignKey("TrainingId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("CreatedBy");
-
                     b.Navigation("Training");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Model.Training.TrainingReportAttachment", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.Training.TrainingReport", "TrainingReport")
+                        .WithMany("ReportAttachments")
+                        .HasForeignKey("TrainingReportId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("TrainingReport");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Vacancy.ApplcantDocuments", b =>
@@ -5419,12 +5466,6 @@ namespace IntegratedInfrustructure.Migrations
                         .WithMany("Activities")
                         .HasForeignKey("TaskId");
 
-                    b.HasOne("IntegratedInfrustructure.Models.Common.UnitOfMeasurment", "UnitOfMeasurement")
-                        .WithMany()
-                        .HasForeignKey("UnitOfMeasurementId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("IntegratedInfrustructure.Model.Configuration.Zone", "Zone")
                         .WithMany()
                         .HasForeignKey("ZoneId")
@@ -5444,8 +5485,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("StrategicPlan");
 
                     b.Navigation("Task");
-
-                    b.Navigation("UnitOfMeasurement");
 
                     b.Navigation("Zone");
                 });
@@ -5786,6 +5825,11 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("TaskMember");
 
                     b.Navigation("TaskMemos");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Model.Training.TrainingReport", b =>
+                {
+                    b.Navigation("ReportAttachments");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Vacancy.VacancyList", b =>

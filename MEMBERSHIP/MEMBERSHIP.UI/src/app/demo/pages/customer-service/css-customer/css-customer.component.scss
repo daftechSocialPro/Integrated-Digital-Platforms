@@ -1,0 +1,38 @@
+.btn-custom{
+// background-color: rgba(128, 128, 128, 0.779);
+border: 2px solid rgba(212, 206, 206, 0.587);
+color: rgba(0, 0, 0, 0.653);
+font-weight: bold;
+border-radius: 5px;
+font-size: 0.9rem;
+padding:5px;}
+.bg-button{
+    background-color: rgba(255, 255, 255, 0.418);
+}
+
+.bg-button:hover{
+    // font-size: 1.2rem;
+    color: white;
+    background-color: rgba(128, 128, 128, 0.927);
+   
+}
+.bg-add{
+    background-color: rgba(255, 255, 255, 0.82);  
+}
+.pointer{
+    cursor: pointer;
+}
+.custom-modal-width .modal-dialog {
+    width: 1500px; /* Adjust the width value as needed */
+  }
+  .focus-green{
+   outline: green
+  }
+  .custom-modal-width .modal-dialog {
+    max-width: 1500px; /* Adjust the width value as needed */
+  }
+  .larger-text {
+    font-size: 16px; /* Adjust the font size as needed */
+  }
+
+  

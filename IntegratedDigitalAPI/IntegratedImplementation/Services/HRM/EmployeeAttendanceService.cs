@@ -73,6 +73,21 @@ namespace IntegratedImplementation.Services.HRM
             return new ResponseMessage { Success = true, Message = "Success", Data = empFinger.Id };
         }
 
+
+        public async Task<ResponseMessage> UpdateFingerPrint(UpdateEmployeeFingerPrintDto fingerPrintDto)
+        {
+            var fingerPrint = await _dbContext.EmployeeFingerPrints.FirstOrDefaultAsync(x => x.Id.Equals(fingerPrintDto.Id));
+
+            if (fingerPrint != null)
+            {
+                fingerPrint.FingerPrintCode = fingerPrintDto.FingerPrintCode;
+
+                await _dbContext.SaveChangesAsync();
+                return new ResponseMessage { Success = true, Message = "Updated Successfully" };
+            }
+
+            return new ResponseMessage { Success = false, Message = "FingerPrint Could Not be found!!" };
+        }
         public async Task<ResponseMessage> AddShift(ShiftListDto addShiftDto)
         {
             var shift = new ShiftList()

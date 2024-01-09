@@ -26,4 +26,7 @@ export interface ITrainingReportGetDto {
     summary:string
     prePostSummary:string
 
+    images:string []
+    attachments:string []
+
 }

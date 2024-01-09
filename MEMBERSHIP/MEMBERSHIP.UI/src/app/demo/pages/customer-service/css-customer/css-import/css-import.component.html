@@ -1,0 +1,84 @@
+<!-- <div class=" card-body card">
+    <div class="row">
+        <div class="col-lg-2 card-body border-dark ">
+            <div class="year">
+                <div class="d-flex align-items-center">
+                    <i class="ti ti-calendar me-2"></i>
+                    <span class="d-block fs-4 fw-bold text-primary">{{accountPeriod &&
+                        accountPeriod.fiscalYear}}</span>
+                </div>
+            </div>
+            <hr>
+            <hr>
+            <div class="month">
+                <div class="d-flex align-items-center">
+                    <i class="ti ti-calendar me-2"></i>
+                    <span class="d-block fs-4 fw-bold text-primary">{{monthName}}</span>
+                </div>
+            </div>
+        </div>
+       
+    </div> -->
+
+    <div class=" modal-content p-4">
+    
+        <div class="modal-header">
+            <h4 class="modal-title  text-center text-muted"> Upload Excel File </h4>
+            <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" data-bs-dismiss="modal"
+                aria-label="Close"></button>
+        </div>
+        <div class="card">
+        <div class="  p-2">
+        <form class="displaycontent card p-2">
+
+            <div class=" displaycontent">
+                <form class="displaycontent">
+
+                    <div class="row col-lg-18">
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex">
+                                <div class="form-group me-2">
+                                    <input type="file" class="form-control" id="fileUpload" name="fileUpload"
+                                        placeholder="...">
+                                </div>
+                                <!-- <button class="btn btn-outline-success">Add</button> -->
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <button type="submit" class="btn btn-outline-warning">Import</button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+        <div class="p-2 ">
+            <hr/>
+            <form class="displaycontent  ">
+                
+                <div class="checckbox ">
+                    <div class="">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="Previousrecord">
+                            <label class="form-check-label" for="billCheckbox">Previous record and penalty</label>
+                        </div>
+                    </div>
+                    <div class="">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="lntialReding">
+                            <label class="form-check-label" for="locationCheckbox">Initial reading</label>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+            <hr/>
+<h4 class="text-muted text-center">your file here....</h4>
+        </div>
+    </div>
+</div>
+</div>

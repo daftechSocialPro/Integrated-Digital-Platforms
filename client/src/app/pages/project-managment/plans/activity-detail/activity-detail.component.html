@@ -1,0 +1,237 @@
+<main id="main" class="main">
+
+    <div class="iconcontainer" (click)="planDetail()">
+        <i class="bi bi-arrow-left-short"></i>
+        <div>Back to Plan </div>
+    </div>
+
+    <section>
+
+        <div class="card" *ngIf="actView">
+
+            <div *ngIf="actView.isTraining" class="ribbon ribbon-top-left">
+                <span class="bg-info">
+                    Training
+                </span>
+            </div>
+
+            <div class="card-header">
+                <div class="card-title" style="margin-left: 80px;">
+
+                    <!-- <li style="list-style: none; text-align: right;">
+                        <a class="nav-link nav-profile  pe-0" href="#" data-bs-toggle="dropdown"> <span
+                                class="d-none d-md-block dropdown-toggle ps-2">Action </span> </a>
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                            <li> <a class="dropdown-item d-flex align-items-center"
+                                    *ngIf="(actView.monthPerformance!.length===0)" style="cursor: pointer;"
+                                    (click)="AssignTarget()"> <i class="bi bi-calendar-date text-primary"></i>
+                                    <span>Assign
+                                        Target</span> </a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li> <a class="dropdown-item d-flex align-items-center" *ngIf="(isMember)"
+                                    style="cursor: pointer;" (click)="AddProgress()"> <i
+                                        class="bi bi-plus text-primary"></i> <span>Add Progress</span>
+                                </a></li>
+                            <hr class="dropdown-divider">
+
+                            <li> <a class="dropdown-item d-flex align-items-center" *ngIf="(isMember)"
+                                    style="cursor: pointer;" (click)="FinalizeProgress()"> <i
+                                        class="bi bi-list-check text-primary"></i> <span>Finalize
+                                        Progress</span> </a></li>
+                            <hr class="dropdown-divider">
+                            <li> <a class="dropdown-item d-flex align-items-center"
+                                    *ngIf="(isMember||actView.isDirector || actView.isFinance ||actView.isProjectManager)"
+                                    style="cursor: pointer;" (click)="ViewProgress()"> <i
+                                        class="bi bi-eye text-primary"></i>
+                                    <span>View Progress</span>
+                                </a></li>
+                            <hr class="dropdown-divider">
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" *ngIf="actView.isTraining"
+                                    (click)="viewTrainings(actView.id)" style="cursor: pointer;"> <i
+                                        class="bi bi-eye text-primary"></i>
+                                    <span>View Trainings</span>
+                                </a>
+                            </li>
+
+
+
+                        </ul>
+                    </li> -->
+                    {{actView.name}}({{actView.activityNumber}})
+
+                </div>
+
+
+
+
+            </div>
+            <div class="card-body">
+
+                <div class="d-flex  col-12  mt-2">
+
+                    <table class="table table-bordered table-responsive">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Planned Budget
+                                </th>
+                                <th>
+                                    Activity Type
+                                </th>
+                                <th>
+                                    Baseline
+                                </th>
+                                <th>
+                                    Target
+                                </th>
+                                <th>
+                                    Indicator
+                                </th>
+                                <th>
+                                    Project Location
+                                </th>
+                                <th>
+                                    Map
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{actView.plannedBudget}} ETB</td>
+                                <td>{{actView.activityType}} </td>
+
+                                <td>{{actView.begining}}</td>
+                                <td>{{actView.target}}</td>
+                                <td>{{actView.unitOfMeasurment}}</td>
+                                <td>{{actView.projectLocation}} </td>
+                                <td> <button class="btn btn-outline-primary" (click)="Showonmap(
+            actView.projectLocationLat,actView.projectLocationLng,actView.projectLocation)">View
+                                    </button></td>
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <div style="overflow-x:auto;">
+                    <div class="card" *ngIf="actView.monthPerformance!.length>0">
+                        <div class=" mb-2" style="font-size: 18px; font-weight: 500;  color: #1a3c9d;">
+                            Progress
+                        </div>
+                        <table class="table table-bordered table-responsive">
+                            <thead>
+                                <tr>
+                                    <!-- <th class="text-center" colspan="3">
+                              July (ሃምሌ)
+                          </th> -->
+                                    <th *ngFor="let month of monthsArray; let i = index"
+                                        [attr.colspan]="i === 0 ? 3 : 4">
+                                        {{ month.name }}
+                                    </th>
+
+
+                                </tr>
+                                <tr>
+
+
+                                    <th> p</th>
+                                    <th>A</th>
+                                    <th style="background-color:#E2EFDA">P(%) </th>
+                                    <ng-container *ngFor="let month of monthsArray; let i = index">
+                                        <ng-container *ngIf="i >= 1">
+                                            <th>p</th>
+                                            <th>A</th>
+                                            <th>P(%)</th>
+                                            <th style="background-color:#E2EFDA">Upto {{ month.name }}</th>
+                                        </ng-container>
+                                    </ng-container>
+
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr>
+                                    <ng-container *ngFor="let perform of actView.monthPerformance ;let i= index;">
+                                        <ng-container *ngIf="i==0">
+                                            <td>{{perform.planned}} </td>
+                                            <td>{{perform.actual}} </td>
+                                            <td style="background-color:#E2EFDA">{{perform.percentage}} %</td>
+                                        </ng-container>
+                                        <ng-container *ngIf="i!=0">
+                                            <td>{{perform.planned}} </td>
+                                            <td>{{perform.actual}} </td>
+                                            <td>{{perform.percentage}} %</td>
+                                            <td style="background-color:#E2EFDA">{{getUpTo(i,actView.monthPerformance!)
+                                                |
+                                                number:'1.2-2'}} %</td>
+                                        </ng-container>
+
+                                    </ng-container>
+
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+
+
+                    </div>
+
+                </div>
+
+                <div class="card" *ngIf="actView.isTraining">
+                
+
+                    <app-training-list [activityId]="actView.id" [planId]="planId"/>
+                </div>
+
+
+
+
+
+
+
+
+            </div>
+            <div class="card-footer">
+                <span>
+                    Activity Overall Performance
+                </span>
+                : {{getUpTo(12,actView.monthPerformance!) | number:'1.2-2'}} %
+                <div class="progress mt-3">
+                    <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar"
+                        [ngStyle]="applyStyles(getUpTo(12,actView.monthPerformance!))" aria-valuenow="25"
+                        aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <br />
+
+                <span> <i class="bi bi-calendar-check"></i> Start Date: {{actView.startDate | date:'fullDate'}}
+                    <span style="font-size: 25px;font-weight:bold;"> - </span>
+                    <i class="bi bi-calendar-check"></i> End Date:
+                    {{actView.endDate | date:'fullDate'}}</span>
+
+
+
+                <div style="text-align: right!important;">
+
+                    <img style="width: 40px;margin:10px; cursor: pointer;" data-bs-toggle="tooltip"
+                        data-bs-placement="top" title={{emp.name}} *ngFor="let emp of actView.members"
+                        [src]="getImage(emp.photo!)" alt="Profile" class="rounded-circle">
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </section>

@@ -15,6 +15,7 @@ import { ConfigurationService } from 'src/app/services/configuration.service';
 import { DropDownService } from 'src/app/services/dropDown.service';
 import { MessageService } from 'primeng/api';
 import { AddProjectLocationComponent } from '../../pm-configuration/project-location/add-project-location/add-project-location.component';
+import { TaskService } from 'src/app/services/task.service';
 declare const $: any
 
 @Component({
@@ -43,7 +44,7 @@ export class AddActivitiesComponent implements OnInit {
 
   strategicPlans:SelectList[]=[]
   projectLocations:SelectList[]=[]
-
+  Employees: SelectList[] = [];
   minDate!: Date;
 
     maxDate!: Date ;
@@ -60,7 +61,8 @@ export class AddActivitiesComponent implements OnInit {
     private messageService : MessageService,
     private modalService : NgbModal,
     private dropService: DropDownService,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private taskService : TaskService
   ) {
 
     this.activityForm = this.formBuilder.group({
@@ -73,14 +75,15 @@ export class AddActivitiesComponent implements OnInit {
       OfficeWork: [0, Validators.required],
       FieldWork: [0, Validators.required],
       UnitOfMeasurement: ['', Validators.required],
-      PreviousPerformance: [0, [Validators.required,Validators.max(100),Validators.min(0)]],
-      Goal: [0,[Validators.required,Validators.max(100),Validators.min(0)]],
+      PreviousPerformance: [0, [Validators.required,Validators.min(0)]],
+      Goal: [0,[Validators.required,Validators.min(0)]],
       WhomToAssign: [''],
       TeamId: [null],
       CommiteeId: [null],
       AssignedEmployee: [],
       StrategicPlan:[],
       IsTraining:[false,Validators.required],
+      IsPercentage:[false,Validators.required],
       ZoneId:['',Validators.required],
       Woreda:['',Validators.required]
 
@@ -93,6 +96,7 @@ export class AddActivitiesComponent implements OnInit {
 
     this.getCountries()
 
+    this.ListofEmployees()
     this.GetStrategicPlans()
     this.pmService.getComitteeSelectList().subscribe({
       next: (res) => {
@@ -144,6 +148,18 @@ export class AddActivitiesComponent implements OnInit {
 
   }
 
+  ListofEmployees() {
+
+    this.taskService.getEmployeeNoTaskMembers(this.task.id!).subscribe({
+      next: (res) => {
+        this.Employees = res
+      }
+      , error: (err) => {
+        console.error(err)
+      }
+    })
+
+  }
   getCountries() {
 
     this.dropService.getContriesDropdown().subscribe({
@@ -246,7 +262,8 @@ export class AddActivitiesComponent implements OnInit {
         StrategicPlanId:this.activityForm.value.StrategicPlan,
         ZoneId:this.activityForm.value.ZoneId,
         Woreda:this.activityForm.value.Woreda ,
-        IsTraining:this.activityForm.value.IsTraining      
+        IsTraining:this.activityForm.value.IsTraining,      
+        IsPercentage:this.activityForm.value.IsPercentage
         
       }
       if(this.requestFrom == "PLAN"){
@@ -307,6 +324,7 @@ export class AddActivitiesComponent implements OnInit {
         ZoneId:this.activityForm.value.ZoneId,
         Woreda :this.activityForm.value.Woreda,
         IsTraining:this.activityForm.value.IsTraining,   
+        IsPercentage:this.activityForm.value.IsPercentage,
         longtude: this.lng,
         latitude: this.lat,
       }

@@ -1,0 +1,28 @@
+.boarder-both{
+    background-color: red !important;
+}
+.card-calendr{
+    width: 300px;
+    height: 80px;
+    border: 1px solid grey;
+    border-radius: 20px;
+}
+.displaycontent{
+    display: flex;
+    justify-content: center;
+    // gap: 80px;
+    // align-items: center;
+}
+.checckbox{
+    max-width: 1000px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+gap: 60px;
+}
+.formcheck{
+    display: flex;
+justify-content: space-between;
+align-items: center;
+gap: 60px;
+}

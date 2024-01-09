@@ -17,6 +17,7 @@ import { ResponseMessage } from '../model/ResponseMessage.Model';
 import { FilterDateCriteriaDto, PlanPerformanceListDto, StaffWeeklyPlanDto } from '../model/PM/StaffWeeklyPlanDto';
 import { IBudgetYearDto, IReportingPeriodGetDto, IReportingPeriodPostDto } from '../model/PM/ITimePeriodDto';
 import { UserService } from './user.service';
+import { IWeeklyPlanDto } from '../model/PM/WeeklyPlanDto';
 
 
 @Injectable({
@@ -243,4 +244,30 @@ export class PMService {
         budgetYear.createdById = this.userService.getCurrentUser().userId
         return this.http.put<ResponseMessage>(this.BaseURI + "/TimePeriod/UpdateBudgetYear", budgetYear)
     }
+
+
+
+    //wekly plan 
+
+    addWeeklyPlan (weekluPlanPost :IWeeklyPlanDto){
+        return this.http.post<ResponseMessage>(this.BaseURI+"/WeekllyPlan/AddWeklyPlan",weekluPlanPost)
+    }
+    getWeeklyPlan(employeeId : string ){
+
+        return this.http.get<IWeeklyPlanDto[]>(this.BaseURI+`/WeekllyPlan/GetWeeklyPlans?employeeId=${employeeId}`)
+    }
+    getWeeklyPlans( ){
+
+        return this.http.get<IWeeklyPlanDto[]>(this.BaseURI+`/WeekllyPlan/GetWeeklyPlanss`)
+    }
+    getWeeklyRequestedPlans(){
+
+        return this.http.get<IWeeklyPlanDto[]>(this.BaseURI+"/WeekllyPlan/GetWeeklyRequestedPlans")
+    }
+
+    updateStatusWeeklyPlan(weeklyPlanId:string,remark:string,weeklyPlanStatus:string){
+
+        return this.http.put<ResponseMessage>(this.BaseURI+`/WeekllyPlan/UpdateStatusWeeklyPlan?weeklyPlanId=${weeklyPlanId}&remark=${remark}&weeklyPlanStatus=${weeklyPlanStatus}`,{})
+    }
+  
 }

@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
-import { AddEmployeeFingerPrintDto, EmployeeFingerPrintListDto } from 'src/app/model/HRM/IEmployeeFingerPrintDto';
+import { AddEmployeeFingerPrintDto, EmployeeFingerPrintListDto, UpdateEmployeeFingerPrintDto } from 'src/app/model/HRM/IEmployeeFingerPrintDto';
 import { SelectList } from 'src/app/model/common';
 import { UserView } from 'src/app/model/user';
 import { DropDownService } from 'src/app/services/dropDown.service';
@@ -29,8 +29,11 @@ export class AddEmployeeFingerprintComponent implements OnInit {
     if(this.fingerPrint){
       this.fingerPrintForm = this.formBuilder.group({
         employeeId: [this.employeeList.find(x => x.name == this.fingerPrint.fullName)?.id],
+        
         fingerPrint: [this.fingerPrint.fingerPrint, Validators.required]
       });
+
+
     }
   else{
     this.fingerPrintForm = this.formBuilder.group({
@@ -56,8 +59,10 @@ export class AddEmployeeFingerprintComponent implements OnInit {
 
   getEmployees() {
     this.dropDownService.GetEmployeeDropDown().subscribe({
-      next: (res) => {
+      next: (res) => {        
         this.employeeList = res
+        console.log(this.employeeList)
+        this.selectEmployeee = this.employeeList.find(x => x.name == this.fingerPrint.fullName)?.id!
       }
       , error: (err) => {
         console.error(err)
@@ -84,9 +89,18 @@ export class AddEmployeeFingerprintComponent implements OnInit {
         this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: "Employee is Required" });
       }
       else {
-        if(this.fingerPrint.id){
-          fingerPrintPost.id = this.fingerPrint.id;
-          this.hrmService.updateFingerPrint(fingerPrintPost).subscribe({
+        if(this.fingerPrint){
+
+
+var updateFinger:UpdateEmployeeFingerPrintDto={
+  id:this.fingerPrint.id,
+  FingerPrintCode:this.fingerPrintForm.value.fingerPrint,
+  employeeId: this.selectEmployeee
+}
+
+
+     
+          this.hrmService.updateFingerPrint(updateFinger).subscribe({
             next: (res) => {
               if (res.success) {
                 this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });

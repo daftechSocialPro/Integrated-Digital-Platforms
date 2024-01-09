@@ -14,8 +14,8 @@ export interface Plan {
     projectNumber:string
     goal:string;
     objective :string 
-    startDate : number 
-    endDate :number 
+    startDate : Date 
+    endDate :Date 
     projectFunds:string
     createdById ?:string
     
@@ -28,9 +28,9 @@ export interface PlanView {
 
     id : string,
     planName: String,
-    planWeight: Number,
-    plandBudget: Number,
-    remainingBudget: Number,
+    planWeight: number,
+    plandBudget: number,
+    remainingBudget: number,
     projectManager: String,
     financeManager: string,
     director: string,
@@ -51,13 +51,15 @@ export interface PlanView {
 }
 
 export interface PlanSingleview {
-    id:String,
-    planName:String,
+    id:string,
+    planName:string,
     planWeight:number,
     remainingWeight:number,
     plannedBudget:number,
     remainingBudget:number,
     startDate:Date,
+    donor:string,
+    projectNumber:string
     endDate:Date
     tasks :TaskView[]
 

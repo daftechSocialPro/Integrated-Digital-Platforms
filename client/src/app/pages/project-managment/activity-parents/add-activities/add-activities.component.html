@@ -98,19 +98,26 @@
                                         <label for="FieldWOrk">Field WOrk</label>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-8">
                                     <div class="form-floating mb-3">
-                                        <select class="form-select" id="UnitofMeasurment"
+                                        <!-- <select class="form-select" id="UnitofMeasurment"
                                             formControlName="UnitOfMeasurement">
                                             <option *ngFor="let um of unitMeasurments" value={{um.id}}>{{um.name}}
                                             </option>
-                                        </select>
+                                        </select> -->
+                                        <input type="text" class="form-control" id="UnitOfMeasurement" placeholder="UnitOfMeasurement"
+                                        formControlName="UnitOfMeasurement">
                                         <label for="UnitofMeasurment">Indicators </label>
                                     </div>
                                 </div>
-
-
                                 <div class="col-md-4">
+                                    <div class="form-check" style="font-size: 30px;"> <input class="form-check-input" formControlName="IsPercentage"
+                                            type="checkbox" id="gridCheck"> <label class="form-check-label" style="font-size: 20px;font-weight: bold;"
+                                            for="gridCheck">Is Percentage </label></div>
+                                </div>
+
+
+                                <div class="col-md-8">
                                     <div class="form-floating mb-3">
                                         <select class="form-select" id="strategicPlans" formControlName="StrategicPlan">
 
@@ -125,7 +132,7 @@
 
                                 <div class="col-md-4">
                                     <div class="form-check" style="font-size: 30px;"> <input class="form-check-input" formControlName="IsTraining"
-                                            type="checkbox" id="gridCheck"> <label class="form-check-label" style="font-size: 28px;font-weight: bold;"
+                                            type="checkbox" id="gridCheck"> <label class="form-check-label" style="font-size: 20px;font-weight: bold;"
                                             for="gridCheck">Is Training </label></div>
                                 </div>
 
@@ -244,7 +251,7 @@
 
                                             <select class="form-select" formControlName="AssignedEmployee"
                                                 id="employees" multiple>
-                                                <option *ngFor="let emp of task.taskMembers" value={{emp.employeeId}}>
+                                                <option *ngFor="let emp of Employees" value={{emp.employeeId}}>
                                                     {{emp.name}}</option>
                                             </select>
 
@@ -268,11 +275,11 @@
                         <div class="modal-body" *ngIf="task">
                             <div class="card-title text-center">{{task.taskName!}}</div>
                             <div class="text-center">
-                                <span class="card-title" *ngIf="dateAndTime"> {{dateAndTime.fromDate}} -
-                                    {{dateAndTime.endDate}} </span> <br />
+                                <span class="card-title" *ngIf="dateAndTime"> {{dateAndTime.fromDate|date:"dd MM YYYY"}} -
+                                    {{dateAndTime.endDate |date:"dd MM YYYY"}} </span> <br />
 
-                                <span class="card-title"> Task Budget : {{task.plannedBudget!}} ETB</span> <br />
-                                <span class="card-title"> Remaining Task Budget : {{task.remainingBudget}} ETB</span>
+                                <span class="card-title"> Task Budget : {{task.plannedBudget!|number:'1.0-2'}} ETB</span> <br />
+                                <span class="card-title"> Remaining Task Budget : {{task.remainingBudget |number:'1.0-2'}} ETB</span>
                                 <br />
                                 <!-- <span class="card-title">Remaining Task Weight :{{task.remianingWeight}} %</span> -->
                             </div>

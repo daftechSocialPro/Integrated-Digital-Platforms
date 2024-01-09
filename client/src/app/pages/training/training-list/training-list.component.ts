@@ -6,6 +6,7 @@ import { AddTrainingListComponent } from '../add-training-list/add-training-list
 import { TrainerListComponent } from '../trainer-list/trainer-list.component';
 import { TraineesFormComponent } from '../trainees-form/trainees-form.component';
 import { TrainingReportFormComponenT } from '../training-report-form/training-report-form.component';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-training-list',
@@ -15,6 +16,7 @@ import { TrainingReportFormComponenT } from '../training-report-form/training-re
 export class TrainingListComponent implements OnInit {
 
   @Input() activityId! : string 
+  @Input() planId !:string
   trainingList :ITrainingGetDto[]=[]
 
   ngOnInit(): void {
@@ -25,7 +27,8 @@ export class TrainingListComponent implements OnInit {
   constructor(
     private trainingService : TrainingService,
     private modalService : NgbModal,
-    private activeModal : NgbActiveModal){}
+    private router : Router
+   ){}
 
   getTrainingList (){
 
@@ -66,8 +69,9 @@ export class TrainingListComponent implements OnInit {
 
 
 
-  closeModal(){
-    this.activeModal.close()
+  toTrainingDetail(trainingId : string ){
+   
+    this.router.navigate(['pm/training-detail',trainingId,this.activityId,this.planId])
   }
 
 }

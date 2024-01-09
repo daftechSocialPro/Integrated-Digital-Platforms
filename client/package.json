@@ -25,6 +25,7 @@
     "file-saver": "^2.0.5",
     "jspdf": "^2.5.1",
     "leaflet": "^1.9.4",
+    "ng-image-slider": "^7.0.0",
     "ngx-pagination": "^6.0.3",
     "ngx-toastr": "^16.0.2",
     "primeicons": "^6.0.1",
@@ -32,6 +33,7 @@
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "xlsx": "^0.18.5",
+    "xlsx-style": "^0.8.13",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {

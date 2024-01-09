@@ -24,8 +24,8 @@ export class AddTrainingListComponent implements OnInit {
 
     this.trainingForm = this.formBuilder.group({
       Title: ['', Validators.required],
-      NameofOrganizaton: ['', Validators.required],
-      TypeofOrganization: ['', Validators.required],
+      // NameofOrganizaton: ['', Validators.required],
+      // TypeofOrganization: ['', Validators.required],
       CourseVenue: ['', Validators.required],
       StartDate: ['', Validators.required],
       EndDate: ['', Validators.required],
@@ -51,8 +51,8 @@ export class AddTrainingListComponent implements OnInit {
         Project: this.trainingForm.value.Project,
         ActivityId: this.activityId,
         Title: this.trainingForm.value.Title,
-        NameofOrganizaton: this.trainingForm.value.NameofOrganizaton,
-        TypeofOrganization: this.trainingForm.value.TypeofOrganization,
+        // NameofOrganizaton: this.trainingForm.value.NameofOrganizaton,
+        // TypeofOrganization: this.trainingForm.value.TypeofOrganization,
         CourseVenue: this.trainingForm.value.CourseVenue,
         StartDate: this.trainingForm.value.StartDate,
         EndDate: this.trainingForm.value.EndDate

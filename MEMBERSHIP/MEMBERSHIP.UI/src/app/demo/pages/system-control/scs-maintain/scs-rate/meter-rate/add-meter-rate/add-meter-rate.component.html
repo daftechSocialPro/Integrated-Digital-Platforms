@@ -1,0 +1,78 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">{{MeterRate?"Update":"Add"}} Meter Size Rent</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" data-bs-dismiss="modal"
+            aria-label="Close"></button>
+    </div>
+    
+    <div class="card">
+        <div class="card-body">
+            <form class="" [formGroup]="MeterRateForm" (ngSubmit)="MeterRate?update():submit()">
+
+                <div class="row">
+                    <div class="col-md-6">
+
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" formControlName="recordno"  [readonly]="recordNo"  id="floatingInput" />
+                            <label for="floatingInput">Recordno</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <select class="form-control" formControlName="custCategoryCode" id="floatingInput">
+
+                                <option *ngFor="let item of customerCategories" [value]="item.custCategoryCode">
+                                    {{item.custCategoryName}}</option>
+                            </select>
+                            <label for="floatingInput">Customer Category</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+
+                        <div class="form-floating mb-3">
+                            <!-- <label>Select Rent Goup <Code></Code></label> -->
+                            <select class="form-control" formControlName="rentGroupCode" id="floatingInput">
+
+                                <option *ngFor="let item of meterRents" [value]="item.inputValues">{{item.inputValues}}
+                                </option>
+
+                            </select>
+                            <label for="floatingInput">Rent Group Code</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+
+                        <div class="form-floating mb-3">
+                            <!-- <label>Select Meter Size</label> -->
+                            <select class="form-control" formControlName="meterSizeCode" id="floatingInput">
+
+                                <option *ngFor="let item of meterSizes" [value]="item.meterSizeCode">
+                                    {{item.meterSizeName}}</option>
+
+                            </select>
+                            <label for="floatingInput"> Meter Size</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+
+                        <div class="form-floating mb-3">
+                            <!-- <label >Select Meter Rate</label> -->
+                            <input type="number" class="form-control" formControlName="meterRent" id="floatingInput" />
+
+                            <label for="floatingInput">Meter Rent</label>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
+                        (click)="closeModal()">Close</button> <button type="button" type="submit"
+                        [disabled]="!MeterRateForm.valid"
+                        class="btn btn-outline-success">{{MeterRate?"Update":"Create"}}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

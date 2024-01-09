@@ -136,7 +136,7 @@ namespace IntegratedDigitalAPI.Controllers.Training
 
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> AddTrainingReport(TrainingReportPostDto trainerPost)
+        public async Task<IActionResult> AddTrainingReport([FromForm]TrainingReportPostDto trainerPost)
         {
             if (ModelState.IsValid)
             {

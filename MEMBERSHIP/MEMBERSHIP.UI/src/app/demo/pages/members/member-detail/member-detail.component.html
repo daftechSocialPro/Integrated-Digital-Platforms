@@ -1,0 +1,174 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Member: <span class="text-success"
+                style="font-size: 18px;font-weight: bolder;">{{member&&member.fullName.toUpperCase()}}</span> detail
+        </h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" data-bs-dismiss="modal"
+            aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+
+        <div class="card p-4">
+
+            <form [formGroup]="updateProfileForm" (submit)="submit()">
+
+                <div class="row">
+
+                    <div class="col-3">
+
+
+
+                        <img [src]="getImage2()" alt="Profile" style="width: 100%;">
+                        <input #file (change)="onUpload($event)" type="file" style="display: none;" accept="image/*" />
+                        <div class="pt-2">
+                            <a (click)="file.click()" style="width: 100%;" class="btn btn-outline-primary btn-sm"
+                                title="Upload new profile image">
+                                <i class="bi bi-upload"></i> Upload Image
+                            </a>
+                        </div>
+
+
+                    </div>
+                    <div class="col-9">
+
+
+                        <hr />
+
+                        <div class="row mt-2">
+                            <div class="col-md-4">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" formControlName="fullName" id="fullName" />
+                                    <label for="fullName">Full Name </label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" formControlName="phoneNumber"
+                                        id="phoneNumber" />
+                                    <label for="phoneNumber">Phonenumber </label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" disabled readonly
+                                        [value]="member&&member.memberId" id="memberId" />
+                                    <label for="memberId">MemberId </label>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-floating mb-3">
+                                    <input type="email" class="form-control" formControlName="email" id="memberId" />
+                                    <label for="memberId">Email </label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-floating mb-3">
+                                    <select class="form-control" formControlName="educationalLevelId">
+
+                                        <option></option>
+                                        <option *ngFor="let item of educationalLelvels" [value]="item.id">
+                                            {{item.name}}
+                                        </option>
+
+                                    </select>
+                                    <label for="educationalLeevels">Educational Levels</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" formControlName="educationalField"
+                                        id="email" />
+
+                                    <label for="educationalFieldId">Educational Field</label>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-floating mb-3">
+
+                                    <select class="form-control" formControlName="gender">
+
+                                        <option></option>
+                                        <option value="MALE">MALE
+                                        </option>
+                                        <option value="FEMALE">FEMALE
+                                        </option>
+
+                                    </select>
+                                    <label for="educationalLeevels">Gender</label>
+
+
+                                </div>
+
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" formControlName="woreda" id="woreda" />
+                                    <label for="woreda">Woreda </label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" formControlName="institute"
+                                        id="institute" />
+                                    <label for="institute">Inistitution Name</label>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" formControlName="instituteRole"
+                                        id="instituteRole" />
+                                    <label for="instituteRole">Inistitute Position</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-floating mb-3">
+                                    <input type="date" class="form-control" formControlName="birthDate"
+                                        id="birthDate" />
+                                    <label for="birthDate">Birth Date</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 text-end mt-4">
+                            <button type="submit" [disabled]="!updateProfileForm.valid"
+                                class="btn btn-outline-warning">Update</button>
+
+
+
+                        </div>
+
+                    </div>
+
+
+
+
+
+
+                </div>
+
+
+
+                <hr />
+            </form>
+
+        </div>
+    </div>

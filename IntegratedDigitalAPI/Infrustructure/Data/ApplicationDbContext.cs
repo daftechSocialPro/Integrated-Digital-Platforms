@@ -134,14 +134,18 @@ namespace IntegratedInfrustructure.Data
 
         #region 
         public DbSet<Training> Trainings { get; set; }
-        public DbSet<ActivityTraining> ActivityTrainings { get; set; }
+
         public DbSet<Trainee> Trainees { get; set; }
 
         public DbSet<TraineesPicture> TraineesPictures { get; set; }
         public DbSet<Trainers> Trainers { get; set; }
         public DbSet<TrainingReport> TrainingReports { get; set; }
 
-         
+        public DbSet<WeeklyReport> WeeklyReports { get; set; }
+
+        public DbSet<TrainingReportAttachment> TrainingReportAttachments { get; set; }
+
+
         #endregion
 
 

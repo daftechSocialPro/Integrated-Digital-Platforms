@@ -1,0 +1,83 @@
+<div class="page-header ng-star-inserted">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-12">
+                <div class="page-header-title"><!----><!---->
+                    <h5 class="mb-2 ng-star-inserted"> System Control </h5>
+                </div>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a _>Configuration</a></li>
+                    <li class="breadcrumb-item ng-star-inserted">
+                        <a href="javascript:">
+                            Data
+                        </a>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card ">
+
+    <ul class="nav nav-tabs" id="list-tab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="list-mailtab-1" data-bs-toggle="tab" style="font-size: 15px;" href="#list-mail-1" role="tab"
+                aria-controls="list-mail-1" aria-selected="true">
+                Customer 
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link " id="list-mailtab-2" data-bs-toggle="tab" href="#list-mail-2" role="tab"
+                aria-controls="list-mail-2" aria-selected="false">
+                Meter 
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="list-mailtab-3" data-bs-toggle="tab" href="#list-mail-3" role="tab"
+                aria-controls="list-mail-3" aria-selected="false">
+                Bill
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="list-mailtab-4" data-bs-toggle="tab" href="#list-mail-4" role="tab"
+                aria-controls="list-mail-4" aria-selected="false">
+                Payment
+            </a>
+        </li>
+      
+        <!-- Add more tabs here -->
+    </ul>
+
+    
+
+    <div class="mail-content tab-content">
+        <div class="tab-pane fade show active" id="list-mail-1" role="tabpanel" aria-labelledby="list-mailtab-1">
+            <div class="card table-card">
+                <app-customer-category></app-customer-category>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="list-mail-2" role="tabpanel" aria-labelledby="list-mailtab-2">
+            <div class="card table-card">
+                <app-meter-config></app-meter-config>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="list-mail-3" role="tabpanel" aria-labelledby="list-mailtab-3">
+            <div class="card table-card">
+               <app-bill-config/>
+            </div>
+        </div>
+        
+        <div class="tab-pane fade" id="list-mail-4" role="tabpanel" aria-labelledby="list-mailtab-4">
+            <div class="card table-card">
+               <app-scs-payment/>
+            </div>
+        </div>
+        
+       
+    </div>
+
+
+</div>

@@ -1,0 +1,121 @@
+<div class="mail-wrapper">
+
+    <div id="mail-menulist" class="show collapse collapse-horizontal me-2">
+        <div class="mail-menulist">
+            <div class="card">
+                <div class="card-body">
+
+                </div>
+                <div class="scroll-block" style="max-height: 350px;overflow-y: scroll;">
+                    <div class="card-body pt-0">
+                        <div class="list-group list-group-flush nav nav-tabs" id="list-tab" role="tablist">
+                            <li class="nav-item">
+                                <a class="list-group-item list-group-item-action nav-link active" id="list-mailtab-6"
+                                    data-bs-toggle="tab" href="#list-mail-6" role="tab">
+                                    <span> Meter Size
+                                    </span>
+                                    <span class="avtar avtar-xs"><i class="ti ti-dashboard"></i></span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="list-group-item list-group-item-action nav-link mt-2" id="list-mailtab-7"
+                                    data-bs-toggle="tab" href="#list-mail-7" role="tab">
+                                    <span> Village
+                                    </span>
+                                    <span class="avtar avtar-xs"><i class="ti ti-dashboard"></i></span>
+                                </a>
+                            </li>
+                            <a class="list-group-item list-group-item-action mt-2" id="list-mailtab-8"
+                                data-bs-toggle="list" href="#list-mail-8" role="tab">
+                                <span> Bill Cycle
+                                </span>
+                                <span class="avtar avtar-xs"><i class="ti ti-dashboard"></i></span>
+                            </a>
+                            <a class="list-group-item list-group-item-action mt-2" id="list-mailtab-87"
+                                data-bs-toggle="list" href="#list-mail-87" role="tab">
+                                <span> Country Origin
+                                </span>
+                                <span class="avtar avtar-xs"><i class="ti ti-dashboard"></i></span>
+                            </a>
+                            <a class="list-group-item list-group-item-action mt-2" id="list-mailtab-18"
+                                data-bs-toggle="list" href="#list-mail-18" role="tab">
+                                <span> Meter Class
+                                </span>
+                                <span class="avtar avtar-xs"><i class="ti ti-dashboard"></i></span>
+                            </a>
+                            <a class="list-group-item list-group-item-action mt-2" id="list-mailtab-21"
+                                data-bs-toggle="list" href="#list-mail-21" role="tab">
+                                <span> Meter Digit
+                                </span>
+                                <span class="avtar avtar-xs"><i class="ti ti-dashboard"></i></span>
+                            </a>
+                            <a class="list-group-item list-group-item-action mt-2" id="list-mailtab-19"
+                                data-bs-toggle="list" href="#list-mail-19" role="tab">
+                                <span> Meter Type
+                                </span>
+                                <span class="avtar avtar-xs"><i class="ti ti-dashboard"></i></span>
+                            </a>
+                            <a class="list-group-item list-group-item-action mt-2" id="list-mailtab-20"
+                                data-bs-toggle="list" href="#list-mail-20" role="tab">
+                                <span> Meter Model
+                                </span>
+                                <span class="avtar avtar-xs"><i class="ti ti-dashboard"></i></span>
+                            </a>
+
+                            <hr class="my-3">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="mail-content tab-content">
+        <div class="tab-pane fade show active" id="list-mail-6" role="tabpanel" aria-labelledby="list-mailtab-6">
+            <div class="card table-card">
+                <app-meter-size></app-meter-size>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="list-mail-7" role="tabpanel" aria-labelledby="list-mailtab-7">
+            <div class="card table-card">
+                <app-village></app-village>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="list-mail-8" role="tabpanel" aria-labelledby="list-mailtab-8">
+            <div class="card table-card">
+                <app-bill-cycle></app-bill-cycle>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="list-mail-21" role="tabpanel" aria-labelledby="list-mailtab-21">
+            <div class="card table-card">
+                <app-meter-digit></app-meter-digit>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="list-mail-20" role="tabpanel" aria-labelledby="list-mailtab-20">
+            <div class="card table-card">
+                <app-meter-model></app-meter-model>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="list-mail-87" role="tabpanel" aria-labelledby="list-mailtab-87">
+            <div class="card table-card">
+                <app-country-origin />
+            </div>
+        </div>
+        <div class="tab-pane fade" id="list-mail-19" role="tabpanel" aria-labelledby="list-mailtab-19">
+            <div class="card table-card">
+                <app-meter-type></app-meter-type>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="list-mail-18" role="tabpanel" aria-labelledby="list-mailtab-18">
+            <div class="card table-card">
+                <app-meter-class></app-meter-class>
+            </div>
+        </div>
+
+        <!-- Add more tab panes here -->
+    </div>
+
+
+</div>

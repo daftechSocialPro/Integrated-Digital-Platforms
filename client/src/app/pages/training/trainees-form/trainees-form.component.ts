@@ -1,12 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { MessageService } from 'primeng/api';
+
+import { ConfirmEventType, ConfirmationService, MessageService } from 'primeng/api';
+
 import { ITraineeGetDto, ITraineePostDto } from 'src/app/model/Training/TraineeDto';
 import { ITrainingGetDto } from 'src/app/model/Training/TrainingDto';
 import { SelectList } from 'src/app/model/common';
 import { CommonService } from 'src/app/services/common.service';
+
 import { DropDownService } from 'src/app/services/dropDown.service';
 import { TrainingService } from 'src/app/services/training.service';
 
@@ -14,22 +16,26 @@ import { TrainingService } from 'src/app/services/training.service';
   selector: 'app-trainees-form',
   templateUrl: './trainees-form.component.html',
   styleUrls: ['./trainees-form.component.css'],
-  providers:[NgbActiveModal]
+ 
+  
 })
 export class TraineesFormComponent implements OnInit {
 
 
   @Input()traininggId !:string
-  @Input()TrainingTitle !:string
+  @Input()TrainingTitle :string=""
   trainingId!:string
   educationalFields:SelectList[]=[]
   educationalLevels:SelectList[]=[]
   training !: ITrainingGetDto
 
+  regions:SelectList[]=[]
+
   genders=[    
     {label:"MALE",value:"MALE"},{label:"FEMALE",value:"FEMALE"}
   ]
 
+  
 
   traineeForm!:FormGroup;
   traineeData: ITraineeGetDto[] = [];  
@@ -39,6 +45,7 @@ export class TraineesFormComponent implements OnInit {
     this.getEducationalFields()
     this.getEducationalLevels()
     this.getTrainee()
+    this.getRegions()
 
     if(this.trainingId){
       this.getSingleTraining(this.trainingId)
@@ -56,17 +63,25 @@ export class TraineesFormComponent implements OnInit {
     private messageService : MessageService,
     private trainingService:TrainingService,
     private commonService : CommonService,
-    private activeModal : NgbActiveModal
+    private confirmationService : ConfirmationService,
+   
    )
     {
     this.traineeForm = this.formBuilder.group({
       fullName: ['', Validators.required],
-      phoneNumber: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      birthDate: ['', Validators.required],
       gender: ['', Validators.required],
       profession: ['', Validators.required],
-      educationLevel: ['', Validators.required],
+      phoneNumber: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      age: ['', Validators.required],
+      region: ['', Validators.required],
+      zone: ['', Validators.required],
+      woreda: ['', Validators.required],  
+      
+      educationalLevel: ['', Validators.required],
+      educationalField: ['', Validators.required],
+      nameofOrganizaton: ['', Validators.required],
+      typeofOrganization: ['', Validators.required]
     });
   }
 
@@ -79,6 +94,15 @@ export class TraineesFormComponent implements OnInit {
       this.addTrainee(newRow)
       this.traineeForm.reset();
     }
+  }
+
+  getRegions (){
+    this.dropdownService.getRegionsDropdown('18EEF146-FC48-4074-94E7-E5DD4A3BE242').subscribe({
+      next:(res)=>{
+
+        this.regions =res 
+      }
+    })
   }
   getSingleTraining(trainingId:string) {
 
@@ -93,8 +117,8 @@ export class TraineesFormComponent implements OnInit {
 
   addTrainee(traineePost: ITraineePostDto)
   {
-    traineePost.EducationalFieldId= this.traineeForm.value.profession
-    traineePost.EducationalLevelId= this.traineeForm.value.educationLevel
+   traineePost.regionId = this.traineeForm.value.region
+    traineePost.EducationalLevelId= this.traineeForm.value.educationalLevel
     traineePost.TraningId = this.trainingId
     this.trainingService.createTrainee(traineePost).subscribe({
       next:(res)=>{
@@ -153,30 +177,54 @@ export class TraineesFormComponent implements OnInit {
 
   }
 
-  closeModal(){
-   this.activeModal.close()
-  }
 
   changeTraineeReportStatus(){
-    this.trainingService.changeTraineeReportStatus(this.trainingId,'SUBMITTED').subscribe({
-      next:(res)=>{
-        if (res.success) {
 
-          this.messageService.add({ severity: 'success', summary: `Successfully SUBMITTED`, detail: res.message })
-          window.location.reload()
-        }
-        else {
-          this.messageService.add({ severity: 'error', summary: 'Something went wrong!!! ', detail: res.message })
-
-        }
-
-      }, error: (err) => {
-        this.messageService.add({ severity: 'error', summary: 'Error ', detail: err })
-
-      }
-
+    this.confirmationService.confirm({
+      message: 'Do you want to Submit this trainee list form?',
+      header: 'Trainee Report Status',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.trainingService.changeTraineeReportStatus(this.trainingId,'SUBMITTED').subscribe({
+          next:(res)=>{
+            if (res.success) {
+    
+              this.messageService.add({ severity: 'success', summary: `Successfully SUBMITTED`, detail: res.message })
+              window.location.reload()
+            }
+            else {
+              this.messageService.add({ severity: 'error', summary: 'Something went wrong!!! ', detail: res.message })
+    
+            }
+    
+          }, error: (err) => {
+            this.messageService.add({ severity: 'error', summary: 'Error ', detail: err })
+    
+          }
+    
+          
+        })
       
-    })
+      },
+      reject: (type: ConfirmEventType) => {
+        switch (type) {
+          case ConfirmEventType.REJECT:
+            this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
+            break;
+          case ConfirmEventType.CANCEL:
+            this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
+            break;
+        }
+      },
+      key: 'positionDialog'
+    });
+   
+
+  
+
+  
   }
+
+  
 
 }

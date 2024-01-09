@@ -29,6 +29,7 @@ export interface SubActivityDetailDto {
     CreatedBy?:string,
     StrategicPlanId:String,
     IsTraining:boolean
+    IsPercentage:boolean
     ZoneId:string,
     Woreda:string,
     longtude: number,

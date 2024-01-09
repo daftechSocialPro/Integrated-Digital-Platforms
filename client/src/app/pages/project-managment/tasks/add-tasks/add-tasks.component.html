@@ -28,7 +28,7 @@
                                             formControlName="PlannedBudget">
                                         <label for="PlannedBudget">Planned Budget</label>
 
-                                        <small style="color: red;">Remaining Budget : {{plan.remainingBudget}} ETB </small>
+                                        <small style="color: red;">Remaining Budget : {{plan.remainingBudget|number:'1.0-2'}} ETB </small>
                                     </div>
                                 </div>
 
@@ -62,9 +62,9 @@
                                 <span>{{plan.startDate|date:"MMMM d, YYYY"}}</span> - <span>{{plan.startDate|date:"MMMM d, YYYY"}}</span>
                              </div>
                              <div class="text-center">
-                                <span class="card-title"> Planned Budget : {{plan.plannedBudget!}} ETB</span> <br />
-                                <span class="card-title"> Remaining Budget : {{plan.remainingBudget!}} ETB</span> <br />
-                                <span class="card-title"> Remaining Weight : {{plan.remainingWeight!}} %</span>
+                                <span class="card-title"> Planned Budget : {{plan.plannedBudget! | number:'1.0-2'}} ETB</span> <br />
+                                <span class="card-title"> Remaining Budget : {{plan.remainingBudget! |number:'1.0-2'}} ETB</span> <br />
+                             
                              </div>
                          </div>
                     </div>

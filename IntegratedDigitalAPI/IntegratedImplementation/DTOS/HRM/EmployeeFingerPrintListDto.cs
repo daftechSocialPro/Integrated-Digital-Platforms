@@ -21,4 +21,12 @@ namespace IntegratedImplementation.DTOS.HRM
         public int FingerPrint { get; set; }
     }
 
+    public class UpdateEmployeeFingerPrintDto
+    {
+        public Guid Id { get; set; }
+        public int FingerPrintCode { get; set; }
+
+        public Guid EmployeeId { get; set; }
+    }
+
 }

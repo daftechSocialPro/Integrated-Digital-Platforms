@@ -36,6 +36,7 @@ export interface MonthPerformanceView {
     planned: number,
     actual: number,
     percentage: number
+    plannedBudget:number
 }
 
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,11 +25,16 @@ namespace IntegratedImplementation.DTOS.Training
         public string Summary { get; set; }
 
         public string PrePostSummary { get; set; }
+
+
+        public List<string> Attachments { get; set; }
+
+        public List<string> Images { get; set; }
     }
 
     public record TrainingReportPostDto
     {
-      public  Guid? Id { get; set; }
+        public  Guid? Id { get; set; }
         public Guid TrainingId { get; set; }
         public string Objective { get; set; }
 
@@ -49,6 +55,14 @@ namespace IntegratedImplementation.DTOS.Training
         
 
         public string ReportStatus { get; set; }
+
+
+
+
+
+        public IFormFile[]? Attachments { get; set; }
+
+        public IFormFile[]? Images { get; set; }
 
     }
 

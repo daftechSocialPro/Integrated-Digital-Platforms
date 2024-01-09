@@ -22,8 +22,8 @@ namespace IntegratedDigitalAPI.DTOS.PM
 
         public string Objective { get; set; }
 
-        public int StartDate { get; set; }
-        public int EndDate { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
 
         public List<Guid> ProjectFunds { get;set; } 
 
@@ -42,8 +42,8 @@ namespace IntegratedDigitalAPI.DTOS.PM
 
         public string ProjectNumber { get; set; }
 
-        public int StartDate { get; set; }
-        public int EndDate { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
         public string Director { get; set; }
         public string StructureName { get; set; }
         public string ProjectType { get; set; }
@@ -66,6 +66,10 @@ namespace IntegratedDigitalAPI.DTOS.PM
         public Guid Id { get; set; }
         public string PlanName { get; set; }
         public float? PlanWeight { get; set; }
+
+        public string Donor { get; set; }   
+
+        public string ProjectNumber { get; set; }
 
         public float RemainingWeight { get; set; }
         public float PlannedBudget { get; set; }

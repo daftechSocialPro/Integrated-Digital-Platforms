@@ -5,6 +5,7 @@ using IntegratedImplementation.DTOS.Configuration;
 using IntegratedInfrustructure.Data;
 using IntegratedInfrustructure.Model.PM;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Dynamic.Core;
 using static IntegratedInfrustructure.Data.EnumList;
 
 namespace IntegratedDigitalAPI.Services.PM
@@ -133,7 +134,7 @@ namespace IntegratedDigitalAPI.Services.PM
         {
 
 
-            var tasks = (from t in _dBContext.Tasks.Where(x => x.ProjectId == planId)
+            var tasks = (from t in _dBContext.Tasks.Where(x => x.ProjectId == planId).OrderBy(x=>x.CreatedDate)
                         select new TaskVIewDto
                         {
                             Id= t.Id,
@@ -150,6 +151,7 @@ namespace IntegratedDigitalAPI.Services.PM
                             NumberOfMembers = _dBContext.TaskMembers.Count(x=>x.TaskId == t.Id),
                          
                             RemianingWeight = 100 - _dBContext.Activities.Sum(x => x.Weight),
+                            RemainingBudget = t.PlanedBudget - _dBContext.Activities.Sum(x=>x.PlanedBudget),
                             NumberofActivities = _dBContext.Activities.Include(x => x.ActivityParent).Count(x => x.TaskId == t.Id || x.ActivityParent.TaskId == t.Id),
                             NumberOfFinalized = _dBContext.Activities.Include(x => x.ActivityParent).Count(x => x.Status == Status.FINALIZED && ( x.TaskId == t.Id || x.ActivityParent.TaskId == t.Id)),
                             NumberOfTerminated = _dBContext.Activities.Include(x => x.ActivityParent).Count(x => x.Status == Status.TERMINATED &&( x.TaskId == t.Id || x.ActivityParent.TaskId == t.Id))
@@ -160,13 +162,15 @@ namespace IntegratedDigitalAPI.Services.PM
             float taskweightSum = tasks.Sum(x => x.TaskWeight ?? 0); 
 
      
-                return await( from p in _dBContext.Projects.Where(x=>x.Id == planId)
+                return await( from p in _dBContext.Projects.Include(x=>x.ProjectFunds).Where(x=>x.Id == planId)
                        select new PlanSingleViewDto
                        {
                            Id = p.Id,
                            PlanName = p.ProjectName,
                            Goal = p.Goal,
                            Objective = p.Objective,
+                           ProjectNumber = p.ProjectNumber,
+                           Donor = string.Join(", ",  p.ProjectFunds.Select(x=>x.ProjectSourceFund.Name)),
 
                            PlannedBudget = p.PlannedBudget,
                            RemainingBudget = p.PlannedBudget - taskBudgetsum,
@@ -201,9 +205,9 @@ namespace IntegratedDigitalAPI.Services.PM
 
         public class GetStartEndDate
         {
-            public int FromDate { get; set; }
+            public DateTime FromDate { get; set; }
 
-            public int EndDate { get; set; }
+            public DateTime EndDate { get; set; }
         }
 
 

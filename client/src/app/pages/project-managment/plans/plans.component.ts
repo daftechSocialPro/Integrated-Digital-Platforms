@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -6,6 +6,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddPlansComponent } from './add-plans/add-plans.component';
 import { PlanService } from '../../../services/plan.service';
 import { PlanView } from '../../../model/PM/PlansDto';
+import { PlanDetailComponent } from './plan-detail/plan-detail.component';
 
 @Component({
   selector: 'app-plans',
@@ -13,7 +14,7 @@ import { PlanView } from '../../../model/PM/PlansDto';
   styleUrls: ['./plans.component.css']
 })
 export class PlansComponent implements OnInit {
-
+  
   programId!: string;
   Plans: PlanView[] = []
   constructor(
@@ -32,7 +33,7 @@ export class PlansComponent implements OnInit {
 
   listPlans() {
 
-    this.planService.getPlans(this.programId).subscribe({
+    this.planService.getPlans().subscribe({
       next: (res) => {
         console.log("projects", res)
         this.Plans = res
@@ -71,5 +72,12 @@ export class PlansComponent implements OnInit {
     const styles = { 'width': percentage + "%" };
     return styles;
   }
+
+  viewDetail(planId : string){
+
+    this.router.navigate(['/pm/planDetail/',planId])
+   
+  }
+
 
 }

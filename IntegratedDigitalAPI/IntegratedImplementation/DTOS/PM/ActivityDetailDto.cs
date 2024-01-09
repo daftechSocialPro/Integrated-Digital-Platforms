@@ -32,7 +32,9 @@ namespace IntegratedDigitalAPI.DTOS.PM
         public int ActivityType { get; set; }
         public float OfficeWork { get; set; }
         public float FieldWork { get; set; }
-        public Guid UnitOfMeasurement { get; set; }
+        public string UnitOfMeasurement { get; set; }
+
+        public bool IsPercentage { get; set; }
         public float PreviousPerformance { get; set; }
         public float Goal { get; set; }
         public Guid? TeamId { get; set; }

@@ -1,0 +1,78 @@
+<div class="page-header ng-star-inserted">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-12">
+                <div class="page-header-title"><!----><!---->
+                    <h5 class="mb-2 ng-star-inserted"> DWM </h5>
+                </div>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a _>Configuration</a></li>
+                    <li class="breadcrumb-item ng-star-inserted">
+                        <a href="javascript:">
+                            Generate QR Code
+                        </a>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+
+
+    <div class="col-lg-12 text-end p-2">
+        <button type="button" class="btn btn-outline-success"  (click)="generateQrCode()"><i
+                class="pi pi-qrcode me-1" style="font-size: 12px;"></i>
+                Generate QR Code</button>
+    </div>
+    <table class="custom-table ">
+
+        <thead>
+            <tr>
+                <th>
+                    <input type="checkbox" [(ngModel)]="selectAll" (change)="selectAllItems()"/>
+                </th>
+                <th>Contract No.</th>
+                <th>Customer Name</th>
+                <th>Register Month</th>
+                <th>Register Fiscal</th>
+                <th>Customer Category</th>
+                <th>Meter Size</th>
+
+
+            </tr>
+        </thead>
+        <tbody *ngIf="paginationCustomer.length > 0; else noResults">
+            <tr *ngFor="let item of paginationCustomer;let i = index">
+
+                <td>
+                    <input type="checkbox" [(ngModel)]="item.selected" />
+                </td>
+                <td>{{item.contractNo}}</td>
+                <td>{{item.customerName}}</td>
+                <td>{{item.regMonthIndex}}</td>
+                <td>{{item.regFiscalYear}}</td>
+                <td>{{item.custCategoryCode}}</td>
+                <td>{{item.meterSizeCode}}</td>
+
+            </tr>
+
+        </tbody>
+        <ng-template #noResults>
+            <tr>
+                <td colspan="4" class="text-center text-danger font-weight-bold bg-light p-3">No results found</td>
+            </tr>
+        </ng-template>
+    </table>
+    <ng-template #noResults>
+        <tr>
+            <td colspan="4" class="text-center text-danger font-weight-bold bg-light p-3">No results found</td>
+        </tr>
+    </ng-template>
+
+    <div class="card flex justify-content-center">
+        <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows" [totalRecords]="totlRecords"
+            [rowsPerPageOptions]="[5, 10, 15,40,60,100]">
+        </p-paginator>
+    </div>
+</div>

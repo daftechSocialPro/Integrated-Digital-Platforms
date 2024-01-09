@@ -147,5 +147,11 @@ namespace IntegratedDigitalAPI.Controllers.PM
 
         }
 
+        [HttpGet("getSingleActivity")]
+        public async Task<ActivityViewDto> GetSingleActivity(Guid actId)
+        {
+            return await _activityService.GetSingleActivity(actId);
+        }
+
     }
 }

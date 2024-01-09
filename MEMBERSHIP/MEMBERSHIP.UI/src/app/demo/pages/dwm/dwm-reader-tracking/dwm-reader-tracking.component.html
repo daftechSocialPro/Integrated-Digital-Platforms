@@ -1,0 +1,83 @@
+<div class="page-header ng-star-inserted">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-12">
+                <div class="page-header-title"><!----><!---->
+                    <h5 class="mb-2 ng-star-inserted"> DWM </h5>
+                </div>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a _>Configuration</a></li>
+                    <li class="breadcrumb-item ng-star-inserted">
+                        <a href="javascript:">
+                            Reader Tracking
+                        </a>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="col-md-12 p-4 ">
+
+
+        <div class="row">
+
+
+            <div class="col-3">
+
+                <div class="form-floating mb-3">
+                    <select class="form-control" [(ngModel)]="searchBy">
+                        <option></option>
+                        <option value="0">Username & Date</option>
+                        <option value="1">Contact Number</option>
+                    </select>
+                    <label for="floatingInput">Search By</label>
+                </div>
+            </div>
+
+
+            <div class="col-3" *ngIf="searchBy=='0'">
+
+                <div class="form-floating mb-3">
+                    <select class="form-control" [(ngModel)]="userName">
+                        <option></option>
+                        <option *ngFor="let item of mobileUsers" [value]="item.userName">{{item.fullName}} | {{item.userName}}</option>
+
+                    </select>
+
+                    <label for="floatingInput">Username | Reader</label>
+                </div>
+            </div>
+            <div class="col-2" *ngIf="searchBy=='0'">
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" type="date" [(ngModel)]="date" />
+                    <label for="floatingInput">Entry Date</label>
+                </div>
+            </div>
+            <div class="col-2" *ngIf="searchBy=='1'">
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" [(ngModel)]="contractNumber" />
+                    <label for="floatingInput">Contract Number</label>
+                </div>
+            </div>
+
+            <div class="col-2">
+                <button class="btn btn-outline-primary" (click)="filter()" [hidden]="!contractNumber&&!userName&&!date">
+                     <i class="ti ti-search"  ></i> Populate</button>
+            </div>
+        </div>
+
+
+
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <div id="map" style="height: 500px;"></div>
+
+        </div>
+
+    </div>
+</div>

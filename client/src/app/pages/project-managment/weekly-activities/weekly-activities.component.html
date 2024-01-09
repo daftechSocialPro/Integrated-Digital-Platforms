@@ -1,0 +1,43 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Weekly Activity</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+                <li class="breadcrumb-item active">Weekly Activity</li>
+            </ol>
+        </nav>
+    </div>
+    <section class="section ">
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Weekly Plan</h5>
+                <ul class="nav nav-tabs nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation"> <button class="nav-link active" id="home-tab"
+                            data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home"
+                            aria-selected="true">Request Activity Plan</button></li>
+                    <li    class="nav-item" role="presentation"> <button class="nav-link" id="profile-tab"
+                            data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab"
+                            aria-controls="profile" aria-selected="false">Activity Requests</button></li>
+
+                  
+
+
+                </ul>
+                <div class="tab-content pt-2" id="myTabContent">
+                    <div class="tab-pane fade show active p-2 " style="background-color: #f6f9ff;" id="home"
+                        role="tabpanel" aria-labelledby="home-tab">
+                        <app-request-weekly-plan />
+                    </div>
+                    <div class="tab-pane fade p-2" style="background-color: #f6f9ff;" id="profile" role="tabpanel"
+                        aria-labelledby="profile-tab">
+                       <app-activity-requests/>
+                    </div>
+                  
+
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

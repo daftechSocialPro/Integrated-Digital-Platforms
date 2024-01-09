@@ -1,0 +1,71 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">{{PenalityRate?"Update":"Add"}} Penality Rate</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" data-bs-dismiss="modal"
+            aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <form class="" [formGroup]="PenalityRateForm" (ngSubmit)="PenalityRate?update():submit()">
+
+                <div class="row">
+                    <div class="col-md-6">
+
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" formControlName="recordno" id="floatingInput" />
+                            <label for="floatingInput">Record No</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" formControlName="noOfMonth" id="floatingInput" />
+                            <label for="floatingInput">No.Unsold Bill/No.Month</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" formControlName="penalityAmount"
+                                id="floatingInput" />
+
+                            <label for="floatingInput">Penality Amount</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <select class="form-control" formControlName="custCategoryCode" id="floatingInput">
+
+                                <option *ngFor="let item of customerCategories" [value]="item.custCategoryCode">
+                                    {{item.custCategoryName}}</option>
+                            </select>
+                            <label for="floatingInput">Customer Category</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <select class="form-control" formControlName="penalityGroupCode" id="floatingInput">
+
+                                <option *ngFor="let item of MeterSizeRents" [value]="item.recordno">{{item.rentGroupCode}}
+                                </option>
+
+                            </select>
+                            <label for="floatingInput">Group Code</label>
+                        </div>
+                    </div>           
+
+                </div>
+
+
+                <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
+                        (click)="closeModal()">Close</button> <button type="button" type="submit"
+                        [disabled]="!PenalityRateForm.valid"
+                        class="btn btn-outline-success">{{PenalityRate?"Update":"Create"}}</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>

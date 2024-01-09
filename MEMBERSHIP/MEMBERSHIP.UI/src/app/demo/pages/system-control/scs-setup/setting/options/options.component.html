@@ -1,0 +1,500 @@
+<div class="card pt-4">
+    <p-steps [model]="items" [readonly]="false" [activeIndex]="activeIndex"
+        (activeIndexChange)="onActiveIndexChange($event)"></p-steps>
+</div>
+<form [formGroup]="optionForm">
+    <div class="card">
+        <div *ngIf="activeIndex === 0">
+            <div class="card-body p-4">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-floating mb-3">
+
+                            <select class="form-control" formControlName="option01">
+                                <option value="en">English, Afan Oromo, Somaligna ...</option>
+                                <option value="am"> አማርኛ, ትግረኛ</option>
+                            </select>
+                            <label for="floatingInput">Local Language (font)</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+
+                            <textarea class="form-control" name="" id="" formControlName="option05"
+                                style="height: 100px"></textarea>
+                            <label for="floatingInput">Current Month Message For</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+
+                        <div class="form-floating mb-3">
+
+                            <textarea class="form-control" name="" id="" formControlName="option06"
+                                style="height: 100px"></textarea>
+                            <label for="floatingInput">Contact Message and Telephone Printed on Bill</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6  mt-2 form-group form-check">
+
+                        <input type="checkbox" class="form-check-input" formControlName="option07" for
+                            id="exampleCheck1">
+                        <label for="exampleCheck1">Use company name as bill background</label>
+
+                    </div>
+
+                    <div class="col-md-6  mt-2
+                ">
+                        <div class="form-group row mb-2">
+                            <label class="col-7 col-form-label"> Include Penality in produced bill </label>
+                            <div class="col-5">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" for type="radio" name="group5" value="NO"
+                                        id="customCheckinlh1">
+                                    <label class="form-check-label" for="customCheckinlh1">Yes </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="group5" value="YES"
+                                        id="customCheckinlh2">
+                                    <label class="form-check-label" for="customCheckinlh2"> No </label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-2">
+                            <label class="col-7 col-form-label"> Checking on Consumption on Entry </label>
+                            <div class="col-5">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="group5" value="NO"
+                                        id="customCheckinlh1">
+                                    <label class="form-check-label" for="customCheckinlh1">Yes </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="group5" value="YES"
+                                        id="customCheckinlh2">
+                                    <label class="form-check-label" for="customCheckinlh2"> No </label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div *ngIf="activeIndex === 1">
+            <div class="card-body p-4">
+                <h4>Amharic Title </h4>
+                <div class="row" style="
+               border: 1px solid #e1d8f1;
+  border-radius: 10px;
+  padding: 20px;margin-bottom: 20px;
+                ">
+
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+
+                            <select class="form-control" formControlName="option01">
+                                <option value="NO">No</option>
+                                <option value="YESBYKEBELE">YES BY KEBELE</option>
+                                <option value="YESBYCATEGORY">YES BY CATEGORY</option>
+                                <option value="YESBYOFFICE">YES BY OFFICE</option>
+                            </select>
+                            <label for="floatingInput">Contract No</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+
+                            <select class="form-control" formControlName="option01">
+                                <option value="NO">No</option>
+                                <option value="YESBYKEBELE">YES BY KEBELE</option>
+                                <option value="YESBYCATEGORY">YES BY CATEGORY</option>
+                                <option value="YESBYOFFICE">YES BY OFFICE</option>
+                            </select>
+                            <label for="floatingInput">Ordinary No</label>
+                        </div>
+                    </div>
+                </div>
+                <h4>Check unique and/or allow null value </h4>
+                <div class="row" style="            
+            border: 1px solid #e1d8f1;
+  border-radius: 10px;
+  padding: 20px;margin-bottom: 10px;">
+
+                    <div class="form-group row mb-2">
+                        <label class="col-4 col-form-label"> Meter No </label>
+                        <div class="col-3">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" for type="radio" name="group5" value="NO"
+                                    id="customCheckinlh1">
+                                <label class="form-check-label" for="customCheckinlh1">Yes </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="group5" value="YES"
+                                    id="customCheckinlh2">
+                                <label class="form-check-label" for="customCheckinlh2"> No </label>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group row mb-2">
+                        <label class="col-4 col-form-label"> Contract No </label>
+                        <div class="col-3">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" for type="radio" name="group5" value="NO"
+                                    id="customCheckinlh1">
+                                <label class="form-check-label" for="customCheckinlh1">Yes </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="group5" value="YES"
+                                    id="customCheckinlh2">
+                                <label class="form-check-label" for="customCheckinlh2"> No </label>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group row mb-2">
+                        <label class="col-4 col-form-label"> Ordinary No </label>
+                        <div class="col-3">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" for type="radio" name="group5" value="NO"
+                                    id="customCheckinlh1">
+                                <label class="form-check-label" for="customCheckinlh1">Yes </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="group5" value="YES"
+                                    id="customCheckinlh2">
+                                <label class="form-check-label" for="customCheckinlh2"> No </label>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+
+                            <input class="form-control" />
+
+                            <label for="floatingInput">Last Export Dto</label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div *ngIf="activeIndex === 2">
+
+            <div class="card-body p-4">
+                <div class="row ">
+                    <div class="col-6 ml-2">
+                        <h4>Setting Rate / Tarif Rate Group </h4>
+                        <div class="row" style="
+            border: 1px solid #e1d8f1;
+border-radius: 10px;
+padding: 20px;margin-bottom: 20px;
+             ">
+
+                            <div class="col-md-12">
+                                <div class="form-floating mb-3">
+
+                                    <select class="form-control" formControlName="option01">
+                                        <option value="NO">No</option>
+                                        <option value="YESBYKEBELE">YES BY KEBELE</option>
+                                        <option value="YESBYCATEGORY">YES BY CATEGORY</option>
+                                        <option value="YESBYOFFICE">YES BY OFFICE</option>
+                                    </select>
+                                    <label for="floatingInput">Meter Rate Code</label>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-floating mb-3">
+
+                                    <select class="form-control" formControlName="option01">
+                                        <option value="NO">No</option>
+
+                                    </select>
+                                    <label for="floatingInput">Tariff Rate Code</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-floating mb-3">
+
+                                    <select class="form-control" formControlName="option01">
+                                        <option value="NO">No</option>
+
+                                    </select>
+                                    <label for="floatingInput">Penality Rate Code</label>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-floating mb-3">
+
+                                    <input class="form-control" />
+
+                                    <label for="floatingInput">Number of Block (Default 5) </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h4>Service Charge </h4>
+                        <div class="row">
+
+                            <div class="col-md-6">
+
+                                <div class="form-floating mb-3">
+
+                                    <input class="form-control" />
+
+                                    <label for="floatingInput">Amount</label>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+
+                                    <select class="form-control" formControlName="option01">
+                                        <option value="NO">No</option>
+                                        <option value="YESBYKEBELE">YES BY KEBELE</option>
+                                        <option value="YESBYCATEGORY">YES BY CATEGORY</option>
+                                        <option value="YESBYOFFICE">YES BY OFFICE</option>
+                                    </select>
+                                    <label for="floatingInput">Calculations</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h4>Dry Waste/Sewerage Disposal Tariff (per 1m3) </h4>
+                        <div class="row">
+
+                            <div class="col-md-6">
+
+                                <div class="form-floating mb-3">
+
+                                    <input class="form-control" />
+
+                                    <label for="floatingInput">Amount</label>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+
+                                    <select class="form-control" formControlName="option01">
+                                        <option value="NO">No</option>
+                                        <option value="YESBYKEBELE">YES BY KEBELE</option>
+                                        <option value="YESBYCATEGORY">YES BY CATEGORY</option>
+                                        <option value="YESBYOFFICE">YES BY OFFICE</option>
+                                    </select>
+                                    <label for="floatingInput">Calculations</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+
+                            <select class="form-control" formControlName="option01">
+                                <option value="NO">No</option>
+                                <option value="YESBYKEBELE">YES BY KEBELE</option>
+                                <option value="YESBYCATEGORY">YES BY CATEGORY</option>
+                                <option value="YESBYOFFICE">YES BY OFFICE</option>
+                            </select>
+                            <label for="floatingInput">No of Months For Disconncted Unpaid bill</label>
+                        </div>
+                        <div class="form-group row mb-2">
+                            <label class="col-7 col-form-label"> Is Receipet is Include with Bill ?</label>
+                            <div class="col-5">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" for type="radio" name="group5" value="NO"
+                                        id="customCheckinlh1">
+                                    <label class="form-check-label" for="customCheckinlh1">Yes </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="group5" value="YES"
+                                        id="customCheckinlh2">
+                                    <label class="form-check-label" for="customCheckinlh2"> No </label>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-group row mb-2">
+                            <label class="col-7 col-form-label"> Display logo on BIll ?</label>
+                            <div class="col-5">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" for type="radio" name="group5" value="NO"
+                                        id="customCheckinlh1">
+                                    <label class="form-check-label" for="customCheckinlh1">Yes </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="group5" value="YES"
+                                        id="customCheckinlh2">
+                                    <label class="form-check-label" for="customCheckinlh2"> No </label>
+                                </div>
+
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-12">
+                            <div class="form-floating mb-3">
+
+                                <input type="type" class="form-control" />
+
+                                <label for="floatingInput">Minimum Consumption for ZERO Reading</label>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-6 mr-2">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-floating mb-3">
+
+                                    <input type="number" class="form-control" />
+
+                                    <label for="floatingInput">Over Consumption (%)</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h4>BIll Invoice </h4>
+                        <div class="row">
+
+                            <div class="col-md-12">
+                                <div class="form-floating mb-3">
+
+                                    <select class="form-control" formControlName="option01">
+                                        <option value="NO">No</option>
+
+                                    </select>
+                                    <label for="floatingInput">Prefix</label>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-floating mb-3">
+
+                                    <select class="form-control" formControlName="option01">
+                                        <option value="NO">No</option>
+
+                                    </select>
+                                    <label for="floatingInput">No Digigt</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-floating mb-3">
+
+                                    <select class="form-control" formControlName="option01">
+                                        <option value="NO">No</option>
+
+                                    </select>
+                                    <label for="floatingInput">Invoice Generate</label>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <h4>Penality </h4>
+                        <div class="row" style="
+                        border: 1px solid #e1d8f1;
+           border-radius: 10px;
+           padding: 20px;margin-bottom: 20px;
+                         ">
+
+                            <div class="col-md-12">
+                                <div class="form-floating mb-3">
+
+                                    <select class="form-control" formControlName="option01">
+                                        <option value="NO">No</option>
+
+                                    </select>
+                                    <label for="floatingInput">Calculation Type</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-floating mb-3">
+
+                                    <input type="number" class="form-control" />
+
+                                    <label for="floatingInput">Over Consumption (%)</label>
+                                </div>
+                            </div>
+
+
+
+
+
+                        </div>
+                        <h4>Misc Cost </h4>
+                        <div class="row" style="
+                        border: 1px solid #e1d8f1;
+           border-radius: 10px;
+           padding: 20px;margin-bottom: 20px;
+                         ">
+
+                            <div class="col-md-12">
+                                <div class="form-floating mb-3">
+
+                                    <input type="number" class="form-control" />
+
+                                    <label for="floatingInput">Amount</label>
+                                </div>
+                            </div>
+
+                        
+
+                            <div class="col-md-12">
+                                <div class="form-floating mb-3">
+
+                                    <select class="form-control" formControlName="option01">
+                                        <option value="NO">No</option>
+                                        <option value="YESBYKEBELE">YES BY KEBELE</option>
+                                        <option value="YESBYCATEGORY">YES BY CATEGORY</option>
+                                        <option value="YESBYOFFICE">YES BY OFFICE</option>
+                                    </select>
+                                    <label for="floatingInput">Calculation</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-floating mb-3">
+
+                                    <input type="type" class="form-control" />
+
+                                    <label for="floatingInput">Name</label>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+    <div class="col-lg-12 text-end p-2">
+        <button type="button" class="btn btn-outline-success">
+            OK</button>
+    </div>
+
+</form>
