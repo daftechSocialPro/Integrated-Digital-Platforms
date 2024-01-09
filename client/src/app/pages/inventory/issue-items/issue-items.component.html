@@ -1,0 +1,68 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Issue Items</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+                <li class="breadcrumb-item">Inventory</li>
+                <li class="breadcrumb-item active">Issue Items</li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="card">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <p-table #dt [value]="requestItems" responsiveLayout="scroll" [rows]="10"
+                [globalFilterFields]="['itemName','requestNumber']" [rows]="10" [paginator]="true"
+                [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" selectionMode="multiple"
+                [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                    <div class="flex">
+                        <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="dt.exportCSV()"
+                            class="p-button-success mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th *ngFor="let col of cols">
+                            {{col.header}}
+                        </th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-requests>
+                    <tr>
+                        <td>
+                            {{requests.requestNumber}}
+                        </td>
+                        <td>
+                            {{requests.itemName}}
+                        </td>
+                        <td>
+                            {{requests.approvedQuantity}}
+                        </td>
+                        <td>
+                            {{requests.measurementUnitName}}
+                        </td>
+                        <td>
+                            {{requests.requesterEmployee}}
+                        </td>
+                        <td>
+                            {{requests.approverEmployee}}
+                        </td>
+                        <td>
+                            <p-toast></p-toast>
+                            <button (click)="confirm2($event,requests.id,requests.approvedQuantity)" pButton icon="pi pi-check"
+                                label="Issue"></button>
+                            <p-confirmPopup key="confirm2"></p-confirmPopup>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+
+    </div>
+</main>

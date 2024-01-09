@@ -1,0 +1,64 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Vendor Details</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Vendor Details</h5>
+            <div class="row">
+                <div class="col-lg-12">
+                    <form class="" #registerForm="ngForm" (ngSubmit)="saveVendor()">
+                        <div class="modal-body">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="countryId">Country</label><br />
+                                    <select class="form-control" [(ngModel)]="addVendor.countryId" id="countryId"
+                                        required name="countryId">
+                                        <option></option>
+                                        <option *ngFor="let country of countryList" [value]="country.id">{{
+                                            country.countryName }}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="name">Name</label><br />
+                                    <input type="text" id="name" [(ngModel)]="addVendor.name" required
+                                        class="form-control" name="name" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="name">Phone Number</label><br />
+                                    <p-inputMask mask="(999) 999-999999" [(ngModel)]="addVendor.phoneNumber" [required]
+                                        placeholder="(999) 999-999999" name="phoneNumber"></p-inputMask>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="name">Email</label><br />
+                                    <input type="email" class="form-control" id="name" [(ngModel)]="addVendor.email"
+                                        name="email" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="tinNumber">Tin Number</label><br />
+                                    <input type="text" class="form-control" name="tinNumber" id="name"
+                                        [(ngModel)]="addVendor.tinNumber" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="name">Address</label><br />
+                                    <input type="text" name="address" pInputText id="name" class="form-control"
+                                        [(ngModel)]="addVendor.address" required />
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary"
+                                (click)="closeModal()">Close</button>
+                            <button type="button" type="submit" [disabled]="!registerForm.valid"
+                                class="btn btn-outline-primary">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

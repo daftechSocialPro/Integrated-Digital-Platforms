@@ -1,9 +1,12 @@
 ﻿using IntegratedImplementation.DTOS.Configuration;
+using IntegratedImplementation.DTOS.Inventory;
 using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedImplementation.Services.Configuration;
+using IntegratedInfrustructure.Models.Inventory;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using static IntegratedInfrustructure.Data.EnumList;
 
 namespace IntegratedDigitalAPI.Controllers.Configuration
 {
@@ -148,9 +151,40 @@ namespace IntegratedDigitalAPI.Controllers.Configuration
             return Ok(await _DropDownService.GetShiftDropDown());
         }
 
+        [HttpGet]
+        [ProducesResponseType(typeof(ItemDropDownDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetItemDropDown()
+        {
+            return Ok(await _DropDownService.GetItemDropDown());
+        }
 
+        [HttpGet]
+        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetPurchaseRequestByItem(string ItemId)
+        {
+            return Ok(await _DropDownService.GetPurchaseRequestByItem(ItemId));
+        }
 
+        [HttpGet]
+        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetStoreRequestDropDown()
+        {
+            return Ok(await _DropDownService.GetStoreRequestDropDown());
+        }
 
+        [HttpGet]
+        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetVendorDropDown()
+        {
+            return Ok(await _DropDownService.GetVendorDropDown());
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetMeasurementListByType(MeasurementType measurementType)
+        {
+            return Ok(await _DropDownService.GetMeasurementListByType(measurementType));
+        }
 
 
     }

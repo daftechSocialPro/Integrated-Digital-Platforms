@@ -211,11 +211,6 @@ namespace IntegratedDigitalAPI.Services.PM
                                           ).ToList();
                 }
 
-
-
-
-
-
                 return new TaskVIewDto
                 {
 

@@ -64,7 +64,14 @@ namespace IntegratedInfrustructure.Data
 
         public enum GeneralCodeType
         {
-            EMPLOYEEPREFIX
+            EMPLOYEEPREFIX,
+            ITEM,
+            PRODUCT,
+            PURCHASEREQUEST,
+            STOREREQUEST,
+            STOREITEMS,
+            VENDOR,
+            PURCHASEITEMS
         }
 
         public enum ApplicantStatus
@@ -152,10 +159,17 @@ namespace IntegratedInfrustructure.Data
             PAID
         }
 
-        public enum MeasurmentType
+        public enum TypeOfIndicator
         {
             PERCENT,
-            NUMBER
+            NUMBER,
+        }
+        public enum MeasurementType
+        {
+            LENGTH,
+            MASS,
+            VOLUME,
+            PIECE
         }
 
         public enum ActivityType
@@ -239,5 +253,46 @@ namespace IntegratedInfrustructure.Data
             OTHER
         }
 
+
+        public enum CategoryType
+        {
+            RAW_MATERIAL,
+            ASSET,
+            OTHER
+        }
+
+        public enum StateType
+        {
+            SOLID,
+            LIQUID,
+            GAS
+        }
+
+        public enum ItemReceivedStatus
+        {
+            PENDING,
+            RECIVED
+        }
+
+        public enum AdjustmentReason
+        {
+            UNKNOWN,
+            LOST,
+            MAINTAINABLE,
+            BROKEN,
+            DAMAGED
+        }
+
+
+        public enum UsedItemsStatus
+        {
+            USED,
+            SOLD,
+            LOST,
+            BROKEEN,
+            DAMAGED,
+            MAINTAINABLE,
+            RETURNED
+        }
     }
 }

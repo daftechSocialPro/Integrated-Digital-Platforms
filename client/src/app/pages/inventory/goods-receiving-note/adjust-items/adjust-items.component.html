@@ -1,0 +1,100 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Adjust Items</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+                <li class="breadcrumb-item">Inventory</li>
+                <li class="breadcrumb-item active">Adjust Items</li>
+            </ol>
+        </nav>
+    </div>
+
+
+    <div class="card">
+        <div class="row p-2">
+
+            <div class="col-lg-12 text-end ">
+                <button pButton pRipple icon="pi pi-angle-double-left" class="p-button-success mr-2"
+                    (click)="goBack()"></button>
+                <h5 class="m-0">Product Adjustment</h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <p-table #dt [value]="productList" [columns]="cols" responsiveLayout="scroll" [rows]="10"
+                    [globalFilterFields]="['itemName']" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]"
+                    [showCurrentPageReport]="true"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                    [(selection)]="selectedItems" selectionMode="multiple" [rowHover]="true" dataKey="id">
+                    <ng-template pTemplate="caption">
+                        <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                            <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="dt.exportCSV()"
+                                class="p-button-success mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+                            <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-success mr-2"
+                                (click)="SavePopUP()"></button>
+                            <span class="block mt-2 md:mt-0 p-input-icon-left">
+                                <i class="pi pi-search"></i>
+                                <input pInputText type="text" (input)="onGlobalFilter(dt, $event)"
+                                    placeholder="Search..." class="w-full sm:w-auto" />
+                            </span>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 3rem">
+                                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                            </th>
+                            <th *ngFor="let col of cols">
+                                {{col.header}}
+                            </th>
+                            <th>Current Quantity</th>
+                            <th>Adjustment Reason</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-products>
+                        <tr>
+                            <td>
+                                <p-tableCheckbox [value]="products"></p-tableCheckbox>
+                            </td>
+                            <td>
+                                {{products.itemName}}
+                            </td>
+                            <td>
+                                {{products.itemDetailName}}
+                            </td>
+                            <td>
+                                {{products.measurementUnit}}
+                            </td>
+                            <td>
+                                {{products.remainingQuantity}}
+                            </td>
+                            <td>
+                                <input type="number" min="0" pInputText id="name" [(ngModel)]="products.currentQuantity"
+                                    autofocus />
+                            </td>
+                            <td>
+                                <p-dropdown [options]="adjustmentReason" [(ngModel)]="products.adjustmentReason"
+                                    optionValue="value" optionLabel="name" placeholder="Select Reason"
+                                    [showClear]="true" appendTo="body"></p-dropdown>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+        <p-dialog [(visible)]="approveCurrentDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span>Are you sure you want to Update selected products?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+                    (click)="approveCurrentDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes"
+                    (click)="confirmUpdateSelected()"></button>
+            </ng-template>
+        </p-dialog>
+    </div>
+
+</main>

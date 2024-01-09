@@ -2434,6 +2434,77 @@ namespace IntegratedInfrustructure.Migrations
                     b.ToTable("Volunters");
                 });
 
+            modelBuilder.Entity("IntegratedInfrustructure.Model.Inventory.MeasurmentUnit", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AmharicName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("MeasurementType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.Property<double>("ToSIUnit")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.ToTable("MeasurmentUnits");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Model.Inventory.UsedItems", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("ItemReceivalId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Remark")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.Property<double>("TotalItems")
+                        .HasColumnType("float");
+
+                    b.Property<int>("UsedItemStatus")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.ToTable("UsedItems");
+                });
+
             modelBuilder.Entity("IntegratedInfrustructure.Model.PM.BudgetYear", b =>
                 {
                     b.Property<Guid>("Id")
@@ -3343,7 +3414,7 @@ namespace IntegratedInfrustructure.Migrations
                     b.ToTable("VacancyStatuses");
                 });
 
-            modelBuilder.Entity("IntegratedInfrustructure.Models.Common.UnitOfMeasurment", b =>
+            modelBuilder.Entity("IntegratedInfrustructure.Models.Common.Indicator", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -3373,7 +3444,574 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("UnitOfMeasurment");
+                    b.ToTable("Indicators");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.AdjustmentHistory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("AdjustmentReason")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("From")
+                        .HasColumnType("float");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Remark")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.Property<double>("To")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("AdjustmentHistories");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.Category", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("CategoryType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.Item", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsExpirable")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ItemCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MeasurementType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Remark")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ReorderPoint")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StateType")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.ToTable("Items");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.ItemReceival", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ReceivedStatus")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("ReceiverEmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("RemainingItems")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("StoreRequestListId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("TotalCost")
+                        .HasColumnType("float");
+
+                    b.Property<double>("TotalItems")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("ReceiverEmployeeId");
+
+                    b.HasIndex("StoreRequestListId");
+
+                    b.ToTable("ItemReceivals");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.ItemReceivalDetail", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("IssuedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("ItemReceivalId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("MeasurementUnitId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("Quantity")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.Property<double>("UnitPrice")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("ItemReceivalId");
+
+                    b.HasIndex("MeasurementUnitId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ItemReceivalDetails");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.MaintainableItems", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("FromStore")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("IssueDetailId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("ReturnedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("SentDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.ToTable("MaintainableItems");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.Product", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Cartoon")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ColumnName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DetailCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ExpireDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsPurchaseRequest")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ItemDetailName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ItemId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("ManufactureDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("MeasurementUnitId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Packet")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("PurchaseRequestId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("Quantiy")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("RecivingDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("RemainingQuantity")
+                        .HasColumnType("float");
+
+                    b.Property<string>("RowName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.Property<double>("SinglePrice")
+                        .HasColumnType("float");
+
+                    b.Property<Guid>("VendorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("ItemId");
+
+                    b.HasIndex("MeasurementUnitId");
+
+                    b.HasIndex("PurchaseRequestId");
+
+                    b.HasIndex("VendorId");
+
+                    b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.PurchaseRequest", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsStoreRequested")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("RequestNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("RequesterEmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("StoreRequestId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("RequesterEmployeeId");
+
+                    b.HasIndex("StoreRequestId");
+
+                    b.ToTable("PurchaseRequests");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.PurchaseRequestList", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double?>("APrrovedQuantity")
+                        .HasColumnType("float");
+
+                    b.Property<int>("ApprovalStatus")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("ApproverEmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("ItemId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ItemRequestNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("MeasurementUnitId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PurchaseRequestId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("Quantity")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.Property<double>("SinglePrice")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApproverEmployeeId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("ItemId");
+
+                    b.HasIndex("MeasurementUnitId");
+
+                    b.HasIndex("PurchaseRequestId");
+
+                    b.ToTable("PurchaseRequestLists");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.StoreRequest", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("RequesterEmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StoreRequestNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("RequesterEmployeeId");
+
+                    b.ToTable("StoreRequests");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.StoreRequestList", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("ApprovalStatus")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("ApproverEmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsIssued")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("ItemId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("MeasurementUnitId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("Quantity")
+                        .HasColumnType("float");
+
+                    b.Property<string>("RequestNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("StoreRequestId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApproverEmployeeId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("ItemId");
+
+                    b.HasIndex("MeasurementUnitId");
+
+                    b.HasIndex("StoreRequestId");
+
+                    b.ToTable("StoreRequestLists");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.Vendor", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("CountryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SupplierCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TinNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.ToTable("Vendors");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.PM.Activity", b =>
@@ -3432,6 +4070,8 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.Property<bool>("IsPercentage")
                         .HasColumnType("bit");
+                    b.Property<Guid>("IndicatorId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsTraining")
                         .HasColumnType("bit");
@@ -3495,6 +4135,8 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasIndex("CreatedById");
 
                     b.HasIndex("EmployeeId");
+
+                    b.HasIndex("IndicatorId");
 
                     b.HasIndex("PlanId");
 
@@ -5054,6 +5696,24 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("Zone");
                 });
 
+            modelBuilder.Entity("IntegratedInfrustructure.Model.Inventory.MeasurmentUnit", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.Navigation("CreatedBy");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Model.Inventory.UsedItems", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.Navigation("CreatedBy");
+                });
+
             modelBuilder.Entity("IntegratedInfrustructure.Model.PM.BudgetYear", b =>
                 {
                     b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
@@ -5425,11 +6085,291 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("ApplicantVacancy");
                 });
 
-            modelBuilder.Entity("IntegratedInfrustructure.Models.Common.UnitOfMeasurment", b =>
+            modelBuilder.Entity("IntegratedInfrustructure.Models.Common.Indicator", b =>
                 {
                     b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedById");
+
+                    b.Navigation("CreatedBy");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.AdjustmentHistory", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("IntegratedInfrustructure.Models.Inventory.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.Category", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.Navigation("CreatedBy");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.Item", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Models.Inventory.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.Navigation("Category");
+
+                    b.Navigation("CreatedBy");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.ItemReceival", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "ReceiverEmployee")
+                        .WithMany()
+                        .HasForeignKey("ReceiverEmployeeId");
+
+                    b.HasOne("IntegratedInfrustructure.Models.Inventory.StoreRequestList", "StoreRequestList")
+                        .WithMany()
+                        .HasForeignKey("StoreRequestListId");
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("ReceiverEmployee");
+
+                    b.Navigation("StoreRequestList");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.ItemReceivalDetail", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("IntegratedInfrustructure.Models.Inventory.ItemReceival", "ItemReceival")
+                        .WithMany()
+                        .HasForeignKey("ItemReceivalId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("IntegratedInfrustructure.Model.Inventory.MeasurmentUnit", "MeasurementUnit")
+                        .WithMany()
+                        .HasForeignKey("MeasurementUnitId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("IntegratedInfrustructure.Models.Inventory.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("ItemReceival");
+
+                    b.Navigation("MeasurementUnit");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.MaintainableItems", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.Navigation("CreatedBy");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.Product", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("IntegratedInfrustructure.Models.Inventory.Item", "Item")
+                        .WithMany()
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("IntegratedInfrustructure.Model.Inventory.MeasurmentUnit", "MeasurementUnit")
+                        .WithMany()
+                        .HasForeignKey("MeasurementUnitId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("IntegratedInfrustructure.Models.Inventory.PurchaseRequest", "PurchaseRequest")
+                        .WithMany()
+                        .HasForeignKey("PurchaseRequestId");
+
+                    b.HasOne("IntegratedInfrustructure.Models.Inventory.Vendor", "Vendor")
+                        .WithMany()
+                        .HasForeignKey("VendorId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("Item");
+
+                    b.Navigation("MeasurementUnit");
+
+                    b.Navigation("PurchaseRequest");
+
+                    b.Navigation("Vendor");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.PurchaseRequest", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "RequesterEmployee")
+                        .WithMany()
+                        .HasForeignKey("RequesterEmployeeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("IntegratedInfrustructure.Models.Inventory.StoreRequest", "StoreRequest")
+                        .WithMany()
+                        .HasForeignKey("StoreRequestId");
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("RequesterEmployee");
+
+                    b.Navigation("StoreRequest");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.PurchaseRequestList", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "ApproverEmployee")
+                        .WithMany()
+                        .HasForeignKey("ApproverEmployeeId");
+
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("IntegratedInfrustructure.Models.Inventory.Item", "Item")
+                        .WithMany()
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("IntegratedInfrustructure.Model.Inventory.MeasurmentUnit", "MeasurementUnit")
+                        .WithMany()
+                        .HasForeignKey("MeasurementUnitId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("IntegratedInfrustructure.Models.Inventory.PurchaseRequest", "PurchaseRequest")
+                        .WithMany("PurchaseRequestLists")
+                        .HasForeignKey("PurchaseRequestId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("ApproverEmployee");
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("Item");
+
+                    b.Navigation("MeasurementUnit");
+
+                    b.Navigation("PurchaseRequest");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.StoreRequest", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "RequesterEmployee")
+                        .WithMany()
+                        .HasForeignKey("RequesterEmployeeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("RequesterEmployee");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.StoreRequestList", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "ApproverEmployee")
+                        .WithMany()
+                        .HasForeignKey("ApproverEmployeeId");
+
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("IntegratedInfrustructure.Models.Inventory.Item", "Item")
+                        .WithMany()
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("IntegratedInfrustructure.Model.Inventory.MeasurmentUnit", "MeasurementUnit")
+                        .WithMany()
+                        .HasForeignKey("MeasurementUnitId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("IntegratedInfrustructure.Models.Inventory.StoreRequest", "StoreRequest")
+                        .WithMany("StoreRequestLists")
+                        .HasForeignKey("StoreRequestId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("ApproverEmployee");
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("Item");
+
+                    b.Navigation("MeasurementUnit");
+
+                    b.Navigation("StoreRequest");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.Vendor", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.Configuration.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.Navigation("Country");
 
                     b.Navigation("CreatedBy");
                 });
@@ -5447,6 +6387,12 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "Employee")
                         .WithMany()
                         .HasForeignKey("EmployeeId");
+
+                    b.HasOne("IntegratedInfrustructure.Models.Common.Indicator", "Indicator")
+                        .WithMany()
+                        .HasForeignKey("IndicatorId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("IntegratedInfrustructure.Model.PM.Project", "Plan")
                         .WithMany("Activities")
@@ -5479,6 +6425,8 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("CreatedBy");
 
                     b.Navigation("Employee");
+
+                    b.Navigation("Indicator");
 
                     b.Navigation("Plan");
 
@@ -5835,6 +6783,16 @@ namespace IntegratedInfrustructure.Migrations
             modelBuilder.Entity("IntegratedInfrustructure.Model.Vacancy.VacancyList", b =>
                 {
                     b.Navigation("VaccancyDocuments");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.PurchaseRequest", b =>
+                {
+                    b.Navigation("PurchaseRequestLists");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.StoreRequest", b =>
+                {
+                    b.Navigation("StoreRequestLists");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.PM.Activity", b =>

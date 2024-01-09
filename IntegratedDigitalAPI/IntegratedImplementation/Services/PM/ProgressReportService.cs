@@ -3682,27 +3682,22 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
 
         public class StructurePlan
         {
-            public string PlanName { get; set; }
+            public string PlanName { get; set; } = null!;
             public float? Weight { get; set; }
-
-            public string UnitOfMeasurement { get; set; }
-
+            public string IndicatorName { get; set; } = null!;
             public float? Target { get; set; }
-            public List<PlanTask> PlanTasks { get; set; }
-            public List<ActivityTargetDivisionReport> PlanTargetDivision { get; set; }
+            public List<PlanTask> PlanTasks { get; set; } = null!;
+            public List<ActivityTargetDivisionReport> PlanTargetDivision { get; set; } = null!;
         }
 
         public class PlanTask
         {
-            public string TaskName { get; set; }
+            public string TaskName { get; set; } = null!;
             public float? Weight { get; set; }
-
-            public string UnitOfMeasurement { get; set; }
-
+            public string IndicatorName { get; set; } = null!;
             public float? Target { get; set; }
-
-            public List<TaskActivity> TaskActivities { get; set; }
-            public List<ActivityTargetDivisionReport> TaskTargetDivision { get; set; }
+            public List<TaskActivity> TaskActivities { get; set; } = null!;
+            public List<ActivityTargetDivisionReport> TaskTargetDivision { get; set; } = null!;
         }
 
         public class TaskActivity
@@ -3710,7 +3705,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
             public string ActivityName { get; set; }
             public float? Weight { get; set; }
 
-            public string UnitOfMeasurement { get; set; }
+            public string IndicatorName { get; set; }
 
             public float? Target { get; set; }
             public List<ActSubActivity> ActSubActivity { get; set; }
@@ -3724,7 +3719,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
             public string SubActivityDescription { get; set; }
             public float Weight { get; set; }
 
-            public string UnitOfMeasurement { get; set; }
+            public string IndicatorName { get; set; }
 
             public float Target { get; set; }
 
@@ -3755,64 +3750,59 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
         }
         public class PlansLst
         {
-            public string PlanName { get; set; }
+            public string PlanName { get; set; } = null!;
             public float Weight { get; set; }
-            public string PlRemark { get; set; }
+            public string PlRemark { get; set; } = null!;
             public bool HasTask { get; set; }
             public float? Begining { get; set; }
             public float? Target { get; set; }
             public float? ActualWorked { get; set; }
             public float? Progress { get; set; }
-            public string MeasurementUnit { get; set; }
-
-            public List<TaskLst> taskLsts { get; set; }
-            public List<PlanOcc> PlanDivision { get; set; }
+            public string IndicatorName { get; set; } = null!;
+            public List<TaskLst> taskLsts { get; set; } = null!;
+            public List<PlanOcc> PlanDivision { get; set; } = null!;
         }
 
         public class TaskLst
         {
-            public string TaskDescription { get; set; }
+            public string TaskDescription { get; set; } = null!;
             public float? TaskWeight { get; set; }
-            public string TRemark { get; set; }
+            public string TRemark { get; set; } = null!;
             public bool HasActParent { get; set; }
             public float? Begining { get; set; }
             public float? Target { get; set; }
             public float? ActualWorked { get; set; }
-            public string MeasurementUnit { get; set; }
+            public string IndicatorName { get; set; } = null!;
             public float? Progress { get; set; }
-            public List<ActParentLst> ActParentLst { get; set; }
-            public List<PlanOcc> TaskDivisions { get; set; }
+            public List<ActParentLst> ActParentLst { get; set; } = null!;
+            public List<PlanOcc> TaskDivisions { get; set; } = null!;
         }
 
         public class ActParentLst
         {
-            public string ActParentDescription { get; set; }
+            public string ActParentDescription { get; set; } = null!;
             public float? ActParentWeight { get; set; }
-            public string ActpRemark { get; set; }
-            public string MeasurementUnit { get; set; }
+            public string ActpRemark { get; set; } = null!;
+            public string IndictorName { get; set; } = null!;
 
             public float? Begining { get; set; }
             public float? Target { get; set; }
             public float? ActualWorked { get; set; }
             public float? Progress { get; set; }
-            public List<ActivityLst> activityLsts { get; set; }
-            public List<PlanOcc> ActDivisions { get; set; }
+            public List<ActivityLst> activityLsts { get; set; } = null!;
+            public List<PlanOcc> ActDivisions { get; set; } = null!;
         }
         public class ActivityLst
         {
-            public string ActivityDescription { get; set; }
+            public string ActivityDescription { get; set; } = null!;
             public float Weight { get; set; }
-            public string MeasurementUnit { get; set; }
-
+            public string IndicatorName { get; set; } = null!;
             public float Begining { get; set; }
             public float Target { get; set; }
-
-            public string Remark { get; set; }
-
+            public string? Remark { get; set; }
             public float ActualWorked { get; set; }
             public float Progress { get; set; }
-
-            public List<PlanOcc> Plans { get; set; }
+            public List<PlanOcc> Plans { get; set; } = null!;
         }
 
         public class PlanOcc

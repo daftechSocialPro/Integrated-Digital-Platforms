@@ -1,9 +1,11 @@
 ﻿using IntegratedImplementation.DTOS.Configuration;
+using IntegratedImplementation.DTOS.Inventory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static IntegratedInfrustructure.Data.EnumList;
 
 namespace IntegratedImplementation.Interfaces.Configuration
 {
@@ -31,6 +33,10 @@ namespace IntegratedImplementation.Interfaces.Configuration
 
         Task<List<SelectListDto>> GetShiftDropDown();
 
-
+        Task<List<ItemDropDownDto>> GetItemDropDown();
+        Task<List<SelectListDto>> GetMeasurementListByType(MeasurementType measurmentType);
+        Task<List<SelectListDto>> GetPurchaseRequestByItem(string itemId);
+        Task<List<SelectListDto>> GetStoreRequestDropDown();
+        Task<List<SelectListDto>> GetVendorDropDown();
     }
 }

@@ -77,3 +77,10 @@ export interface IEvoCalanderDto {
     type: string
     everyYear: boolean
 }
+
+export class ItemDropDownDto {
+    id: string;
+    name: string;
+    measurementType: number;
+    isExpirable: number;
+}

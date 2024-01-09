@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment";
-import { BankSelectList, SelectList } from "../model/common";
+import { BankSelectList, ItemDropDownDto, SelectList } from "../model/common";
 
 @Injectable({
     providedIn: 'root',
@@ -40,42 +40,58 @@ export class DropDownService {
         return this.http.get<SelectList[]>(this.baseUrl + "/DropDown/GetPositionDropdownList")
     }
 
-    getDepartmentsDropdown(){
+    getDepartmentsDropdown() {
         return this.http.get<SelectList[]>(this.baseUrl + "/DropDown/GetDepartmentDropdownList")
     }
 
-    getGeneralHrmSettings(){
+    getGeneralHrmSettings() {
 
-        return this.http.get<SelectList[]>(this.baseUrl+"/DropDown/GetHrmSettingDropDownList")
-    }
-
-    getLoanTypeDropDown(){
-        return this.http.get<SelectList[]>(this.baseUrl+"/DropDown/GetLoanTypeDropDown")
-    }
-    GetEmployeeDropDown(){
-        return this.http.get<SelectList[]>(this.baseUrl+"/DropDown/GetEmployeeDropDown")
-    }
-    GetUnitOfMeasurment(){
-        return this.http.get<SelectList[]>(this.baseUrl+"/DropDown/GetUnitOfMeasurment")
+        return this.http.get<SelectList[]>(this.baseUrl + "/DropDown/GetHrmSettingDropDownList")
     }
 
-    getStrategicPlans(){
-        return this.http.get<SelectList[]>(this.baseUrl+"/DropDown/GetStrategicPlans")
+    getLoanTypeDropDown() {
+        return this.http.get<SelectList[]>(this.baseUrl + "/DropDown/GetLoanTypeDropDown")
     }
-    getProjectFundSourcess(){
-        return this.http.get<SelectList[]>(this.baseUrl+"/DropDown/GetProjectFundSources")
+    GetEmployeeDropDown() {
+        return this.http.get<SelectList[]>(this.baseUrl + "/DropDown/GetEmployeeDropDown")
+    }
+    GetUnitOfMeasurment() {
+        return this.http.get<SelectList[]>(this.baseUrl + "/DropDown/GetUnitOfMeasurment")
     }
 
-    getBenefitDropDowns(){
-        return this.http.get<SelectList[]>(this.baseUrl+"/DropDown/GetBenefitDropDowns")
+    getStrategicPlans() {
+        return this.http.get<SelectList[]>(this.baseUrl + "/DropDown/GetStrategicPlans")
     }
-    
-    getBankDropDowns(){
-        return this.http.get<BankSelectList[]>(this.baseUrl+"/DropDown/GetBankDropDowns")
+    getProjectFundSourcess() {
+        return this.http.get<SelectList[]>(this.baseUrl + "/DropDown/GetProjectFundSources")
     }
-    
-    getShiftDropDown(){
-        return this.http.get<BankSelectList[]>(this.baseUrl+"/DropDown/GetShiftDropDown")
+
+    getBenefitDropDowns() {
+        return this.http.get<SelectList[]>(this.baseUrl + "/DropDown/GetBenefitDropDowns")
     }
-  
+
+    getBankDropDowns() {
+        return this.http.get<BankSelectList[]>(this.baseUrl + "/DropDown/GetBankDropDowns")
+    }
+
+    getShiftDropDown() {
+        return this.http.get<BankSelectList[]>(this.baseUrl + "/DropDown/GetShiftDropDown")
+    }
+
+    getMeasurementUnitByType(measurementType: number) {
+        return this.http.get<SelectList[]>(this.baseUrl + `/DropDown/GetMeasurementListByType?measurementType=${measurementType}`);
+    }
+
+    getVendorDropDown() {
+        return this.http.get<SelectList[]>(this.baseUrl + '/DropDown/GetVendorDropDown');
+    }
+
+    getItemsDropDown() {
+        return this.http.get<ItemDropDownDto[]>(this.baseUrl + '/DropDown/GetItemDropDown');
+    }
+
+    getPurchaseRequestDropDown(itemId: string) {
+        return this.http.get<SelectList[]>(this.baseUrl + `/DropDown/GetPurchaseRequestByItem?ItemId=${itemId}`);
+    }
+
 }
