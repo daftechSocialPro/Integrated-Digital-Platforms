@@ -113,7 +113,8 @@ const routes: Routes = [
 {path:'trainee-form/training-report-form/:trainingId',component:TrainingReportFormComponenT},
 {path:'forgetPassword',component:ForgetPasswordComponent},
 
-{ path: 'printout', loadChildren: () => import('./pages/print-out/print-out.module').then(m => m.PrintOutModule) }
+{ path: 'printout', loadChildren: () => import('./pages/print-out/print-out.module').then(m => m.PrintOutModule) },
+{ path: 'inventory', loadChildren: () => import('./pages/inventory/inventory.module').then(m => m.InventoryModule) }
 ];
 
 @NgModule({

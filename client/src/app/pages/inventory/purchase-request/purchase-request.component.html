@@ -1,0 +1,106 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Purchase Request</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+                <li class="breadcrumb-item">Inventory</li>
+                <li class="breadcrumb-item active">Purchase</li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="card">
+        <div class="col-12">
+            <p-toast></p-toast>
+            <div class="card">
+                <div class="row">
+                    <div class="col-md-2">
+                        <label htmlFor="lastname2">Is Store Requested</label> <br />
+                        <p-inputSwitch [(ngModel)]="addPurchaseRequest.isStoreRequested" name="isStoreRequested"
+                            (onChange)="isStoreChecked($event)"></p-inputSwitch>
+                    </div>
+                    <div *ngIf="addPurchaseRequest.isStoreRequested" class="col-md-2">
+                        <label htmlFor="lastname2">Store Request</label>
+                        <p-dropdown [options]="storeRequestDropdown" optionLabel="name" name="storeRequestId"
+                            optionValue="id" [(ngModel)]="addPurchaseRequest.storeRequestId"
+                            placeholder="Select Store Request" [filter]="true" filterBy="name"
+                            [showClear]="true"></p-dropdown>
+                    </div>
+                </div>
+            </div>
+            <form #itemsForm="ngForm">
+                <div class="row">
+                <div class="col-md-2">
+                    <label class="col-md-12" htmlFor="lastname2">Item</label> 
+                    <select  class="form-control" (change)="changeItem($event.target)" [(ngModel)]="items" id="itemId" required
+                    name="itemId">
+                   <option></option>
+                   <option *ngFor="let it of itemsDropDown" [value]="it.id">{{it.name}}</option>
+               </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="col-md-12" htmlFor="lastname2">Measurement Unit</label>
+                    <select  class="form-control" (onChange)="changeItem($event)"   [(ngModel)]="addPurchaseRequestList.measurementUnitId" id="measurementUnitId" required
+                    name="measurementUnitId">
+                   <option></option>
+                   <option *ngFor="let it of measurementUnitDropDown" [value]="it.id">{{it.name}}</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label htmlFor="lastname2">Quantity</label>
+                    <input class="form-control" type="number" min="0" name="quantity" required [(ngModel)]="addPurchaseRequestList.quantity">
+                </div>
+                <div class="col-md-2">
+                    <label htmlFor="lastname2">Single Price</label>
+                    <input class="form-control" type="number" min="0" name="singlePrice" required
+                        [(ngModel)]="addPurchaseRequestList.singlePrice">
+                </div>
+                <div class="col-md-1">
+                    <label></label> <br />
+                    <button pButton type="button" icon="pi pi-plus" [disabled]="!itemsForm.valid" class="ui-button-info"
+                        (click)="newRow()"></button>
+                </div>
+            </div>
+            </form>
+            <div class="p-fluid p-formgrid grid">
+                <p-table #dt [value]="purchaserequesList" responsiveLayout="scroll">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>Item</th>
+                            <th>Measurement Unit</th>
+                            <th>Quantity</th>
+                            <th>Single Price</th>
+                            <th style="width:8em"></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-purchaseRequest>
+                        <tr>
+                            <td>
+                                {{purchaseRequest.itemName}}
+                            </td>
+                            <td>
+                                {{purchaseRequest.measurementUnit}}
+                            </td>
+                            <td>
+                                {{purchaseRequest.quantity}}
+                            </td>
+                            <td>
+                                {{purchaseRequest.singlePrice}}
+                            </td>
+                            <td style="text-align:center">
+                                <button pButton type="button" icon="pi pi-times" class="ui-button-danger"
+                                    (click)="removeData(purchaseRequest.itemId)"></button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+            <hr />
+            <div class="p-fluid p-formgrid grid col-4">
+                <button pButton type="button" label="Add Request" icon="pi pi-plus" class="ui-button-success"
+                    (click)="savePurchase()"></button>
+            </div>
+        </div>
+    </div>
+</main>

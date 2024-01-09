@@ -75,8 +75,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                 activity.Goal = item.Goal;
                 activity.OfficeWork = item.OfficeWork;
                 activity.PlanedBudget = item.PlannedBudget;
-                activity.UnitOfMeasurementId = item.UnitOfMeasurement;
-                
+                activity.IndicatorId = item.IndicatorId;
                 activity.ShouldStat =  DateTime.Parse(item.StartDate);
                 activity.ShouldEnd = DateTime.Parse(item.EndDate);
                 activity.StrategicPlanId = item.StrategicPlanId;
@@ -166,7 +165,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
             activity.Goal = activityDetail.Goal;
             activity.OfficeWork = activityDetail.OfficeWork;
             activity.PlanedBudget = activityDetail.PlannedBudget;
-            activity.UnitOfMeasurementId = activityDetail.UnitOfMeasurement;
+            activity.IndicatorId = activityDetail.IndicatorId;
            
             activity.StrategicPlanId = activityDetail.StrategicPlanId;
             activity.ZoneId = activityDetail.ZoneId;
@@ -622,7 +621,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
             var activityProgress = _dBContext.ActivityProgresses;
             List<ActivityViewDto> assignedActivities =
                 await (from e in _dBContext.Activities
-                       .Include(x => x.UnitOfMeasurement)
+                       .Include(x => x.Indicator)
                         .Include(x => x.Zone).ThenInclude(x => x.Region).ThenInclude(x => x.Country)
                        .Include(x=>x.Commitee).ThenInclude(x=>x.Employees)
                        .Where(x=>x.ActualEnd==null)
@@ -641,7 +640,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                            
                            Begining = e.Begining,
                            Target = e.Goal,
-                           UnitOfMeasurment = e.UnitOfMeasurement.Name,
+                           IndicatorName = e.Indicator.Name,
                            OverAllPerformance = 0,
                            StartDate = e.ShouldStat.ToString(),
                            EndDate = e.ShouldEnd.ToString(),
@@ -732,7 +731,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                                                 ProjectLocationLat = e.Activity.Latitude,
                                                 Begining = e.Activity.Begining,
                                                 Target = e.Activity.Goal,
-                                                UnitOfMeasurment = e.Activity.UnitOfMeasurement.Name,
+                                                IndicatorName = e.Activity.Indicator.Name,
                                                 OverAllPerformance = 0,
                                                 StartDate = e.Activity.ShouldStat.ToString(),
                                                 EndDate = e.Activity.ShouldEnd.ToString(),

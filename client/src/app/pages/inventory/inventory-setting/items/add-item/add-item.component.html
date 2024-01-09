@@ -1,0 +1,74 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Item Details</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Item Details</h5>
+            <div class="row">
+                <div class="col-lg-12">
+                    <form class="" #registerForm="ngForm" (ngSubmit)="saveItem()">
+                        <div class="modal-body">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="col-md-12" for="categoryId">Category</label>
+                                    <select class="form-control" [(ngModel)]="addItem.categoryId" id="categoryId"
+                                    required name="categoryId">
+                                    <option></option>
+                                    <option *ngFor="let cat of category" [value]="cat.id">{{
+                                        cat.name }}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="col-md-12" for="name">Name</label>
+                                    <input type="text" class="form-control" id="name" [(ngModel)]="addItem.name" name="name" required />
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="col-md-12" for="stateType">State Type</label>
+                                    <select class="form-control" [(ngModel)]="addItem.stateType" id="stateType"
+                                    required name="stateType">
+                                    <option></option>
+                                    <option *ngFor="let state of stateType" [value]="state.value">{{
+                                        state.name }}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="col-md-12" for="measurementType">Measurement Type</label>
+                                    <select class="form-control" [(ngModel)]="addItem.measurementType" id="measurementType"
+                                    required name="measurementType">
+                                    <option></option>
+                                    <option *ngFor="let mes of measurementType" [value]="mes.value">{{
+                                        mes.name }}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="col-md-12" for="isExpirable">Is Expirable</label>
+                                    <p-inputSwitch [(ngModel)]="addItem.isExpirable"></p-inputSwitch>
+                                </div>
+                                <div class="col-md-6">
+                                    <label  class="col-md-12" for="reorderPoint">Reorder Point</label>
+                                    <input type="number" min="0"  id="reorderPoint" name="reorderPoint"
+                                        [(ngModel)]="addItem.reorderPoint" class="form-control" required />
+                                </div>
+                                <div class="col-md-8">
+                                    <label class="col-md-12" for="remark">Remark</label>
+                                    <textarea type="text" min="0" rows="5" cols="35" pInputText id="name" [(ngModel)]="addItem.remark"
+                                        required > </textarea>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary"
+                                (click)="closeModal()">Close</button>
+                            <button type="button" type="submit" [disabled]="!registerForm.valid"
+                                class="btn btn-outline-primary">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

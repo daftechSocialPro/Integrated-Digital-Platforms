@@ -1,5 +1,7 @@
 ﻿using Implementation.Interfaces.Authentication;
+using Implementation.Interfaces.Inventory;
 using Implementation.Services.Authentication;
+using Implementation.Services.Inventory;
 using IntegratedDigitalAPI.Services.PM;
 using IntegratedDigitalAPI.Services.PM.Activity;
 using IntegratedDigitalAPI.Services.PM.Commite;
@@ -7,12 +9,14 @@ using IntegratedDigitalAPI.Services.PM.Plan;
 using IntegratedDigitalAPI.Services.PM.ProgressReport;
 using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedImplementation.Interfaces.HRM;
+using IntegratedImplementation.Interfaces.Inventory;
 using IntegratedImplementation.Interfaces.Notification;
 using IntegratedImplementation.Interfaces.PM;
 using IntegratedImplementation.Interfaces.Training;
 using IntegratedImplementation.Interfaces.Vacancy;
 using IntegratedImplementation.Services.Configuration;
 using IntegratedImplementation.Services.HRM;
+using IntegratedImplementation.Services.Inventory;
 using IntegratedImplementation.Services.Notification;
 using IntegratedImplementation.Services.PM;
 using IntegratedImplementation.Services.Training;
@@ -68,11 +72,10 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<IDropDownService, DropDownService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IProjectFundSourceService, ProjectFundSourceService>();
-         
             services.AddScoped<IBankListService, BankListService>();
 
             #region PM
-            services.AddScoped<IUnitOfMeasurmentService, UnitOfMeasurmentService>();
+            services.AddScoped<IIndicatorService, IndicatorService>();
             services.AddScoped<IStrategicPlanService, StrategicPlanService>();
             services.AddScoped<IActivityService, ActivityService>();
             services.AddScoped<ICommiteService, CommiteService>();
@@ -85,10 +88,21 @@ namespace IntegratedImplementation.Datas
 
             #endregion
 
-            #region
+            #region Training
             services.AddScoped<ITrainingService, TrainingService>();
             #endregion
 
+            #region Inventory
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IItemService, ItemService>();
+            services.AddScoped<IVendorService, VendorService>();
+            services.AddScoped<IMeasurementService, MeasurementService>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IPurchaseRequestService, PurchaseRequestService>();
+            services.AddScoped<IStoreRequestService, StoreRequestService>();
+            services.AddScoped<IStoreReceivalService, StoreReceivalService>();
+            services.AddScoped<IInventoryReportService, InventoryReportService>();
+            #endregion
 
 
             return services;

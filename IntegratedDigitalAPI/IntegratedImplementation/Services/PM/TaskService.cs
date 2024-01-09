@@ -104,7 +104,7 @@ namespace IntegratedDigitalAPI.Services.PM
                     activityViewDtos = (from a in _dBContext.ActivitiesParents.Where(x => x.TaskId == taskId)
                                         join e in _dBContext.Activities.
                                         Include(x=>x.Zone).ThenInclude(x=>x.Region).ThenInclude(x=>x.Country)
-                                        .Include(x => x.UnitOfMeasurement) on a.Id equals e.ActivityParentId
+                                        .Include(x => x.Indicator) on a.Id equals e.ActivityParentId
                                         // join ae in _dBContext.EmployeesAssignedForActivities.Include(x=>x.Employee) on e.Id equals ae.ActivityId
                                         select new ActivityViewDto
                                         {
@@ -119,7 +119,7 @@ namespace IntegratedDigitalAPI.Services.PM
                                             ActivityNumber = e.ActivityNumber,
                                             Begining = e.Begining,
                                             Target = e.Goal,
-                                            UnitOfMeasurment = e.UnitOfMeasurement.Name,
+                                            IndicatorName = e.Indicator.Name,
                                             OverAllPerformance = 0,
                                             StartDate = e.ShouldStat.ToString(),
                                             EndDate = e.ShouldEnd.ToString(),
@@ -156,7 +156,7 @@ namespace IntegratedDigitalAPI.Services.PM
                 }
                 else
                 {
-                    activityViewDtos = (from e in _dBContext.Activities.Include(x => x.UnitOfMeasurement)
+                    activityViewDtos = (from e in _dBContext.Activities.Include(x => x.Indicator)
                                          .Include(x => x.Zone).ThenInclude(x => x.Region).ThenInclude(x => x.Country)
                                         where e.TaskId == task.Id
                                         // join ae in _dBContext.EmployeesAssignedForActivities.Include(x=>x.Employee) on e.Id equals ae.ActivityId
@@ -173,7 +173,7 @@ namespace IntegratedDigitalAPI.Services.PM
                                             ActivityNumber =e.ActivityNumber,
                                             Begining = e.Begining,
                                             Target = e.Goal,
-                                            UnitOfMeasurment = e.UnitOfMeasurement.Name,
+                                            IndicatorName = e.Indicator.Name,
                                             OverAllPerformance = 0,
                                             StartDate = e.ShouldStat.ToString(),
                                             EndDate = e.ShouldEnd.ToString(),
@@ -208,11 +208,6 @@ namespace IntegratedDigitalAPI.Services.PM
                                         }
                                           ).ToList();
                 }
-
-
-
-
-
 
                 return new TaskVIewDto
                 {
@@ -264,7 +259,7 @@ namespace IntegratedDigitalAPI.Services.PM
                     var activityProgress = _dBContext.ActivityProgresses;
 
                     var activityViewDtos = (from e in _dBContext.Activities.
-                                            Include(x => x.UnitOfMeasurement).Include(x=>x.Zone).ThenInclude(x=>x.Region).ThenInclude(x=>x.Country)
+                                            Include(x => x.Indicator).Include(x=>x.Zone).ThenInclude(x=>x.Region).ThenInclude(x=>x.Country)
                                             where e.PlanId == plan.Id
                                             // join ae in _dBContext.EmployeesAssignedForActivities.Include(x=>x.Employee) on e.Id equals ae.ActivityId
                                             select new ActivityViewDto
@@ -280,7 +275,7 @@ namespace IntegratedDigitalAPI.Services.PM
                                                 IsTraining = e.IsTraining,
                                                 Begining = e.Begining,
                                                 Target = e.Goal,
-                                                UnitOfMeasurment = e.UnitOfMeasurement.Name,
+                                                IndicatorName = e.Indicator.Name,
                                                 OverAllPerformance = 0,
                                                 StartDate = e.ShouldStat.ToString(),
                                                 EndDate = e.ShouldEnd.ToString(),

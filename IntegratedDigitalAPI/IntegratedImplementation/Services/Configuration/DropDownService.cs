@@ -1,4 +1,6 @@
-﻿using IntegratedImplementation.DTOS.Configuration;
+﻿using AutoMapper.QueryableExtensions;
+using IntegratedImplementation.DTOS.Configuration;
+using IntegratedImplementation.DTOS.Inventory;
 using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedInfrustructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -151,12 +153,14 @@ namespace IntegratedImplementation.Services.Configuration
             return loanRequestList;
         }
 
+
+
         public async Task<List<SelectListDto>> GetUnitofMeasurment()
         {
-            var loanRequestList = await _dbContext.UnitOfMeasurment.AsNoTracking().Select(x => new SelectListDto
+            var loanRequestList = await _dbContext.MeasurmentUnits.AsNoTracking().Select(x => new SelectListDto
             {
                 Id = x.Id,
-                Name = $"{x.Name} ({x.LocalName})",
+                Name = $"{x.Name} ({x.AmharicName})",
             }).ToListAsync();
 
             return loanRequestList;
@@ -222,6 +226,65 @@ namespace IntegratedImplementation.Services.Configuration
                 Name = x.ShiftName
             }).ToListAsync();
             return shiftList;
+        }
+
+        public async Task<List<SelectListDto>> GetPurchaseRequestByItem(string itemId)
+        {
+            var requests = await _dbContext.PurchaseRequestLists.AsNoTracking()
+                                 .Where(x => x.ItemId.Equals(Guid.Parse(itemId)))
+                                 .Select(x => new SelectListDto
+                                 {
+                                     Id= x.Id,
+                                     Name = x.ItemRequestNo
+                                 }).ToListAsync();
+            return requests;
+        }
+
+        public async Task<List<SelectListDto>> GetStoreRequestDropDown()
+        {
+            var requests = await _dbContext.StoreRequests.AsNoTracking().Select(x => new SelectListDto
+            {
+                Id = x.Id,
+                Name = x.StoreRequestNumber
+            }).ToListAsync();
+            return requests;
+        }
+
+        public async Task<List<SelectListDto>> GetVendorDropDown()
+        {
+            var vendors = await _dbContext.Vendors.AsNoTracking()
+                .Select(x => new SelectListDto
+                {
+                    Id = x.Id,
+                    Name = x.Name
+                }).ToListAsync();
+            return vendors;
+        }
+
+        public async Task<List<SelectListDto>> GetMeasurementListByType(MeasurementType measurementType)
+        {
+            var measurements = await _dbContext.MeasurmentUnits.AsNoTracking()
+                                       .Where(x => x.MeasurementType.Equals(measurementType))
+                                       .Select(x => new SelectListDto
+                                       {
+                                           Id = x.Id,
+                                           Name = x.Name,
+                                       }).ToListAsync();
+            return measurements;
+        }
+
+        public async Task<List<ItemDropDownDto>> GetItemDropDown()
+        {
+            var items = await _dbContext.Items.AsNoTracking()
+                       .Include(x => x.Category).
+                       Select(x => new ItemDropDownDto
+                       {
+                           Id = x.Id,
+                           isExpirable = x.IsExpirable,
+                           MeasurementType = (int)x.MeasurementType,
+                           Name = x.Name
+                       }).ToListAsync();
+            return items;
         }
     }
 }

@@ -17,6 +17,8 @@ using Activity = IntegratedInfrustructure.Models.PM.Activity;
 using IntegratedInfrustructure.Model.PM;
 using IntegratedInfrustructure.Models.Common;
 using IntegratedInfrustructure.Model.Training;
+using IntegratedInfrustructure.Models.Inventory;
+using IntegratedInfrustructure.Model.Inventory;
 
 namespace IntegratedInfrustructure.Data
 {
@@ -41,9 +43,9 @@ namespace IntegratedInfrustructure.Data
         public DbSet<ProjectFundSource> ProjectFundSources { get; set; }
         public DbSet<Project_Fund> Project_Funds { get; set; }
 
+        public DbSet<Indicator> Indicators { get; set; }
         
-        
-        public DbSet<UnitOfMeasurment> UnitOfMeasurment { get; set; }
+       
         public DbSet<BankList> BankLists { get; set; }
         #endregion
 
@@ -141,11 +143,25 @@ namespace IntegratedInfrustructure.Data
         public DbSet<Trainers> Trainers { get; set; }
         public DbSet<TrainingReport> TrainingReports { get; set; }
 
-         
+
         #endregion
 
-
-
+        #region Inventory
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<MeasurmentUnit> MeasurmentUnits { get; set; }
+        public DbSet<Item> Items { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<PurchaseRequest> PurchaseRequests { get; set; }
+        public DbSet<PurchaseRequestList> PurchaseRequestLists { get; set; }
+        public DbSet<StoreRequest> StoreRequests { get; set; }
+        public DbSet<StoreRequestList> StoreRequestLists { get; set; }
+        public DbSet<Vendor> Vendors { get; set; }
+        public DbSet<AdjustmentHistory> AdjustmentHistories { get; set; }
+        public DbSet<ItemReceival> ItemReceivals { get; set; }
+        public DbSet<ItemReceivalDetail> ItemReceivalDetails { get; set; }
+        public DbSet<MaintainableItems> MaintainableItems { get; set; }
+        public DbSet<UsedItems> UsedItems { get; set; }
+        #endregion
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }

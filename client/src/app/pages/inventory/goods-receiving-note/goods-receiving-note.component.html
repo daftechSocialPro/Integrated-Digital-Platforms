@@ -1,0 +1,93 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Approve Purchase Request</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+                <li class="breadcrumb-item">Inventory</li>
+                <li class="breadcrumb-item active">Approve Purchase</li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="card">
+        <div class="row p-2">
+
+            <div class="col-lg-12 text-end ">
+                <div class="my-2">
+                    <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"
+                        (click)="openNew()"></button>
+                    &nbsp;&nbsp;
+                    <button pButton pRipple label="Adjustment" icon="pi pi-minus" class="p-button-success mr-2"
+                        (click)="Adjustment()"></button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <p-table #dt [value]="productList" responsiveLayout="scroll" [rows]="10"
+                    [globalFilterFields]="['itemName','itemDetailName']" [rows]="10" [paginator]="true"
+                    [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowHover]="true"
+                    dataKey="id">
+                    <ng-template pTemplate="caption">
+                        <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                            <h5 class="m-0">Goods Reciving Note</h5>
+                            <span class="block mt-2 md:mt-0 p-input-icon-left">
+                                <i class="pi pi-search"></i>
+                                <input pInputText type="text" (input)="onGlobalFilter(dt, $event)"
+                                    placeholder="Search..." class="w-full sm:w-auto" />
+                            </span>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>Expire Date </th>
+                            <th>Item Name</th>
+                            <th>Detail Name </th>
+                            <th>Measurement Unit </th>
+                            <th>Single Price </th>
+                            <th>Quantity </th>
+                            <th>Remaining Quantity </th>
+                            <th></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-product>
+                        <tr>
+                            <td>
+                                {{product.expireDateTime | date: 'dd MMMM, yyyy'}}
+                            </td>
+                            <td>
+                                {{product.itemName}}
+                            </td>
+                            <td>
+                                {{product.itemDetailName}}
+                            </td>
+                            <td>
+                                {{product.measurementUnit}}
+                            </td>
+                            <td>
+                                {{product.singlePrice}}
+                            </td>
+                            <td>
+                                {{product.quantity}}
+                            </td>
+                            <td>
+                                {{product.remainingQuantity}}
+                            </td>
+                            <td>
+                                <div class="flex">
+                                    <button pButton pRipple icon="pi pi-pencil"
+                                        class="p-button-rounded p-button-success mr-2"
+                                        (click)="editProduct(product.id)"></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+
+    </div>
+
+</main>

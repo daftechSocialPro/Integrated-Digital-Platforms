@@ -12,24 +12,24 @@ namespace IntegratedDigitalAPI.Controllers.Configuration
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UnitOfMeasurmentController : ControllerBase
+    public class IndicatorController : ControllerBase
     {
 
-        private readonly IUnitOfMeasurmentService _unitOfMeasurmentService;
-        public UnitOfMeasurmentController(IUnitOfMeasurmentService unitOfMeasurmentService)
+        private readonly IIndicatorService _indicatorService;
+        public IndicatorController(IIndicatorService indicatorService)
         {
 
-            _unitOfMeasurmentService = unitOfMeasurmentService;
+            _indicatorService = indicatorService;
 
         }
 
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> AddUnitOfMeasurment([FromBody] UnitOfMeasurmentPostDto unitOfMeasurment)
+        public async Task<IActionResult> CreateIndicator([FromBody] IndicatorPostDto indicator)
         {
             if (ModelState.IsValid)
             {
-                return Ok(_unitOfMeasurmentService.CreateUnitOfMeasurment(unitOfMeasurment));
+                return  Ok(await _indicatorService.CreateIndicator(indicator));
             }
             else
             {
@@ -38,20 +38,20 @@ namespace IntegratedDigitalAPI.Controllers.Configuration
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(RegionGetDto), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetUnitOfMeasurment()
+        [ProducesResponseType(typeof(IndicatorGetDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetIndicator()
         {
-            return Ok(await _unitOfMeasurmentService.GetUnitOfMeasurment());
+            return Ok(await _indicatorService.GetIndicator());
         }   
 
 
         [HttpPut]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> UpdateUnitOfMeasurment(UnitOfMeasurmentGetDto unitOfMeasurment)
+        public async Task<IActionResult> UpdateIndicator(IndicatorGetDto indicator)
         {
             if (ModelState.IsValid)
             {
-                return Ok(await _unitOfMeasurmentService.UpdateUnitOfMeasurment(unitOfMeasurment));
+                return Ok(await _indicatorService.UpdateIndicator(indicator));
             }
             else
             {

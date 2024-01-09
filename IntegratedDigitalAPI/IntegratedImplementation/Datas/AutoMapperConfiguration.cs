@@ -15,6 +15,8 @@ using IntegratedInfrustructure.Model.Configuration;
 using IntegratedImplementation.DTOS.Configuration;
 using IntegratedInfrustructure.Model.Training;
 using IntegratedImplementation.DTOS.Training;
+using IntegratedImplementation.DTOS.Inventory;
+using IntegratedInfrustructure.Models.Inventory;
 
 namespace IntegratedImplementation.Datas
 {
@@ -108,7 +110,50 @@ namespace IntegratedImplementation.Datas
 
             CreateMap<ProjectFundSource, ProjectFundSourceGetDto>();
 
-            CreateMap<TrainingReport, TrainingReportGetDto>();  
+            CreateMap<TrainingReport, TrainingReportGetDto>();
+
+
+            #region Inventory
+            CreateMap<Vendor, VendorListDto>()
+              .ForMember(a => a.CountryName, e => e.MapFrom(mfg => mfg.Country.CountryName));
+            CreateMap<Vendor, SelectListDto>();
+
+            CreateMap<Item, ItemListDto>()
+              .ForMember(a => a.CategoryName, e => e.MapFrom(mfg => mfg.Category.Name))
+              .ForMember(a => a.MeasurementType, e => e.MapFrom(mfg => mfg.MeasurementType.ToString()))
+              .ForMember(a => a.StateType, e => e.MapFrom(mfg => mfg.StateType.ToString()));
+
+            CreateMap<Item, ItemDropDownDto>()
+             .ForMember(a => a.MeasurementType, e => e.MapFrom(mfg => (int)mfg.MeasurementType));
+
+            CreateMap<Product, ProductListDto>()
+            .ForMember(a => a.Id, e => e.MapFrom(mfg => mfg.Id.ToString()))
+            .ForMember(a => a.ItemName, e => e.MapFrom(mfg => mfg.Item.Name))
+            .ForMember(a => a.Quantity, e => e.MapFrom(mfg => mfg.Quantiy * mfg.Cartoon * mfg.Packet))
+            .ForMember(a => a.MeasurementUnit, e => e.MapFrom(mfg => mfg.MeasurementUnit.Name));
+
+            CreateMap<Product, UpdateProductDto>()
+             .ForMember(a => a.Id, e => e.MapFrom(mfg => mfg.Id.ToString()))
+             .ForMember(a => a.Quantity, e => e.MapFrom(mfg => mfg.Quantiy));
+
+            CreateMap<Product, AdjustmentDetailDto>()
+            .ForMember(a => a.Id, e => e.MapFrom(mfg => mfg.Id.ToString()))
+            .ForMember(a => a.ItemName, e => e.MapFrom(mfg => mfg.Item.Name))
+            .ForMember(a => a.ItemDetailName, e => e.MapFrom(mfg => mfg.ItemDetailName))
+            .ForMember(a => a.RemainingQuantity, e => e.MapFrom(mfg => mfg.RemainingQuantity))
+            .ForMember(a => a.MeasurementUnit, e => e.MapFrom(mfg => mfg.MeasurementUnit.Name));
+
+            CreateMap<PurchaseRequestList, SelectListDto>()
+                .ForMember(a => a.Name, e => e.MapFrom(mfg => mfg.ItemRequestNo));
+
+            CreateMap<PurchaseRequestList, PurchaseRequestListDto>()
+                .ForMember(a => a.ItemName, e => e.MapFrom(mfg => mfg.Item.Name))
+                .ForMember(a => a.ItemCode, e => e.MapFrom(mfg => mfg.ItemRequestNo))
+                .ForMember(a => a.SinglePrice, e => e.MapFrom(mfg => (double)mfg.SinglePrice))
+                .ForMember(a => a.RequesterEmployee, e => e.MapFrom(mfg => $"{mfg.PurchaseRequest.RequesterEmployee.FirstName} {mfg.PurchaseRequest.RequesterEmployee.MiddleName} {mfg.PurchaseRequest.RequesterEmployee.LastName} "))
+                .ForMember(a => a.MeasurementUnitName, e => e.MapFrom(mfg => mfg.MeasurementUnit.Name));
+          
+            #endregion
 
         }
     }

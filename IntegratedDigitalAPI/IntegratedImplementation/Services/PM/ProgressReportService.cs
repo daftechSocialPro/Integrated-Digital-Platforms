@@ -280,9 +280,9 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                         progwithStu.StrutureName = stItems.DepartmentName;
                         progwithStu.StructurePlans = new List<StructurePlan>();
                         var plansinStruc = _dBContext.Projects
-                            .Include(x => x.Tasks).ThenInclude(x => x.ActivitiesParents).ThenInclude(x => x.Activities).ThenInclude(x => x.UnitOfMeasurement)
-                            .Include(x => x.Tasks).ThenInclude(x => x.Activities).ThenInclude(x => x.UnitOfMeasurement)
-                            .Include(x => x.Activities).ThenInclude(x => x.UnitOfMeasurement)
+                            .Include(x => x.Tasks).ThenInclude(x => x.ActivitiesParents).ThenInclude(x => x.Activities).ThenInclude(x => x.Indicator)
+                            .Include(x => x.Tasks).ThenInclude(x => x.Activities).ThenInclude(x => x.Indicator)
+                            .Include(x => x.Activities).ThenInclude(x => x.Indicator)
                             .Include(x => x.Tasks).ThenInclude(x => x.ActivitiesParents).ThenInclude(x => x.Activities).ThenInclude(x => x.ActivityTargetDivisions)
                             .Include(x => x.Tasks).ThenInclude(x => x.Activities).ThenInclude(x => x.ActivityTargetDivisions)
                             .Include(x => x.Activities).ThenInclude(x => x.ActivityTargetDivisions)
@@ -317,7 +317,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                                                     {
                                                         actSub.Weight = subActs.Weight;
                                                         actSub.Target = subActs.Goal;
-                                                        actSub.UnitOfMeasurement = subActs.UnitOfMeasurement.Name;
+                                                        actSub.IndicatorName = subActs.Indicator.Name;
                                                         actSub.subActivityTargetDivision = new List<ActivityTargetDivisionReport>();
                                                         foreach (var tp in subActs.ActivityTargetDivisions)
                                                         {
@@ -343,7 +343,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                                                 if (PActTarDiv != null)
                                                 {
                                                     taskActivity.Weight = PActTarDiv.Weight;
-                                                    taskActivity.UnitOfMeasurement = PActTarDiv.UnitOfMeasurement.Name;
+                                                    taskActivity.IndicatorName = PActTarDiv.Indicator.Name;
                                                     taskActivity.Target = PActTarDiv.Goal;
                                                     foreach (var tp in PActTarDiv.ActivityTargetDivisions)
                                                     {
@@ -368,7 +368,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                                         if (tasTarDiv != null)
                                         {
                                             pT.Weight = tasTarDiv.Weight;
-                                            pT.UnitOfMeasurement = tasTarDiv.UnitOfMeasurement.Name;
+                                            pT.IndicatorName = tasTarDiv.Indicator.Name;
                                             pT.Target = tasTarDiv.Goal;
                                             foreach (var tp in tasTarDiv.ActivityTargetDivisions)
                                             {
@@ -393,7 +393,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                                 if (targetDiv != null)
                                 {
                                     StrPlan.Weight = targetDiv.Weight;
-                                    StrPlan.UnitOfMeasurement = targetDiv.UnitOfMeasurement.Name;
+                                    StrPlan.IndicatorName = targetDiv.Indicator.Name;
                                     StrPlan.Target = targetDiv.Goal;
                                     foreach (var tP in targetDiv.ActivityTargetDivisions)
                                     {
@@ -567,8 +567,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
 
                 var activities = await _dBContext.Activities
                     .Include(x => x.ActivityTargetDivisions)
-                    .Include(x => x.UnitOfMeasurement)
-
+                    .Include(x => x.Indicator)
                     .Where(x => x.StrategicPlanId == strategicPlanId).ToListAsync();
 
                 List<PlanOcc> planoccPlan = new List<PlanOcc>();
@@ -585,7 +584,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                         plns.PlanName = $"{Pocu.ActivityDescription} {Pocu.ActivityNumber}";
                         plns.Target = Pocu.Goal;
                         plns.ActualWorked = Pocu.ActualWorked;
-                        plns.MeasurementUnit = Pocu.UnitOfMeasurement.Name;
+                        plns.IndicatorName = Pocu.Indicator.Name;
                         plns.Begining = Pocu.Begining;
                         var byQuarter = Pocu.ActivityTargetDivisions.OrderBy(x => x.Order).ToList();
                         if (!QuarterMonth.Any())
@@ -724,9 +723,9 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
 
 
                 var allPlans = _dBContext.Projects
-                      .Include(x => x.Tasks).ThenInclude(x => x.ActivitiesParents).ThenInclude(x => x.Activities).ThenInclude(x => x.UnitOfMeasurement)
-                                 .Include(x => x.Tasks).ThenInclude(x => x.Activities).ThenInclude(x => x.UnitOfMeasurement)
-                                 .Include(x => x.Activities).ThenInclude(x => x.UnitOfMeasurement)
+                      .Include(x => x.Tasks).ThenInclude(x => x.ActivitiesParents).ThenInclude(x => x.Activities).ThenInclude(x => x.Indicator)
+                                 .Include(x => x.Tasks).ThenInclude(x => x.Activities).ThenInclude(x => x.Indicator)
+                                 .Include(x => x.Activities).ThenInclude(x => x.Indicator)
                                  .Include(x => x.Tasks).ThenInclude(x => x.ActivitiesParents).ThenInclude(x => x.Activities).ThenInclude(x => x.ActivityTargetDivisions)
                                  .Include(x => x.Tasks).ThenInclude(x => x.Activities).ThenInclude(x => x.ActivityTargetDivisions)
                                  .Include(x => x.Activities).ThenInclude(x => x.ActivityTargetDivisions)
@@ -776,7 +775,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                                             ActivityLst lst = new ActivityLst();
                                             lst.ActivityDescription = ActItems.ActivityDescription;
                                             lst.Begining = ActItems.Begining;
-                                            lst.MeasurementUnit = ActItems.UnitOfMeasurement.Name.ToString();
+                                            lst.IndicatorName = ActItems.Indicator.Name.ToString();
                                             lst.Target = ActItems.Goal;
                                             lst.Weight = ActItems.Weight;
                                             //lst.Remark = ActItems.Remark;
@@ -897,7 +896,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                                         {
                                             actparentlst.Target = Pocu.Goal;
                                             actparentlst.ActualWorked = Pocu.ActualWorked;
-                                            actparentlst.MeasurementUnit = Pocu.UnitOfMeasurement.Name;
+                                            actparentlst.IndictorName = Pocu.Indicator.Name;
                                             actparentlst.Begining = Pocu.Begining;
                                             var byQuarter = Pocu.ActivityTargetDivisions.OrderBy(x => x.Order).ToList();
                                             if (!QuarterMonth.Any())
@@ -1019,7 +1018,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                                 if (Acti != null)
                                 {
                                     taskLst.Begining = Acti.Begining;
-                                    taskLst.MeasurementUnit = Acti.UnitOfMeasurement.Name;
+                                    taskLst.IndicatorName = Acti.Indicator.Name;
                                     taskLst.Target = Acti.Goal;
                                     List<PlanOcc> planOccs = new List<PlanOcc>();
                                     var byQuarter = Acti.ActivityTargetDivisions.OrderBy(x => x.Order).ToList();
@@ -1139,7 +1138,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                         {
                             plns.Target = Pocu.Goal;
                             plns.ActualWorked = Pocu.ActualWorked;
-                            plns.MeasurementUnit = Pocu.UnitOfMeasurement.Name;
+                            plns.IndicatorName = Pocu.Indicator.Name;
                             plns.Begining = Pocu.Begining;
                             var byQuarter = Pocu.ActivityTargetDivisions.OrderBy(x => x.Order).ToList();
                             if (!QuarterMonth.Any())
@@ -1273,7 +1272,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
             var activityProgress = _dBContext.ActivityProgresses;
             List<ActivityViewDto> assignedActivities =
                 await (from e in _dBContext.Activities
-                       .Include(x => x.UnitOfMeasurement)
+                       .Include(x => x.Indicator)
                         .Include(x => x.Zone).ThenInclude(x => x.Region).ThenInclude(x => x.Country)
                        .Include(x => x.Commitee).ThenInclude(x => x.Employees)
                        .Where(x => x.ZoneId == LocationId &&
@@ -1294,7 +1293,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
 
                            Begining = e.Begining,
                            Target = e.Goal,
-                           UnitOfMeasurment = e.UnitOfMeasurement.Name,
+                           IndicatorName = e.Indicator.Name,
                            OverAllPerformance = 0,
                            StartDate = e.ShouldStat.ToString(),
                            EndDate = e.ShouldEnd.ToString(),
@@ -2083,9 +2082,9 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                 if (selectStructureId != null)
                 {
                     var allPlans = _dBContext.Projects
-                          .Include(x => x.Tasks).ThenInclude(x => x.ActivitiesParents).ThenInclude(x => x.Activities).ThenInclude(x => x.UnitOfMeasurement)
-                                 .Include(x => x.Tasks).ThenInclude(x => x.Activities).ThenInclude(x => x.UnitOfMeasurement)
-                                 .Include(x => x.Activities).ThenInclude(x => x.UnitOfMeasurement)
+                          .Include(x => x.Tasks).ThenInclude(x => x.ActivitiesParents).ThenInclude(x => x.Activities).ThenInclude(x => x.Indicator)
+                                 .Include(x => x.Tasks).ThenInclude(x => x.Activities).ThenInclude(x => x.Indicator)
+                                 .Include(x => x.Activities).ThenInclude(x => x.Indicator)
                                  .Include(x => x.Tasks).ThenInclude(x => x.ActivitiesParents).ThenInclude(x => x.Activities).ThenInclude(x => x.ActivityTargetDivisions)
                                  .Include(x => x.Tasks).ThenInclude(x => x.Activities).ThenInclude(x => x.ActivityTargetDivisions)
                                  .Include(x => x.Activities).ThenInclude(x => x.ActivityTargetDivisions)
@@ -2138,7 +2137,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                                                 ActivityLst lst = new ActivityLst();
                                                 lst.ActivityDescription = ActItems.ActivityDescription;
                                                 lst.Begining = ActItems.Begining;
-                                                lst.MeasurementUnit = ActItems.UnitOfMeasurement.Name;
+                                                lst.IndicatorName = ActItems.Indicator.Name;
                                                 lst.Target = ActItems.Goal;
                                                 lst.Weight = ActItems.Weight;
                                                 //lst.Remark = ActItems.Remark;
@@ -2294,7 +2293,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                                             if (TaskOcs != null)
                                             {
                                                 actparent.Begining = TaskOcs.Begining;
-                                                actparent.MeasurementUnit = TaskOcs.UnitOfMeasurement.Name;
+                                                actparent.IndictorName = TaskOcs.Indicator.Name;
                                                 actparent.Target = TaskOcs.Goal;
                                                 actparent.ActParentWeight = TaskOcs.Weight;
                                                 actparent.ActualWorked = (float)Math.Round(TaskOcs.ActualWorked, 2);
@@ -2432,7 +2431,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                                     if (TaskOcs != null)
                                     {
                                         taskLst.Begining = TaskOcs.Begining;
-                                        taskLst.MeasurementUnit = TaskOcs.UnitOfMeasurement.Name;
+                                        taskLst.IndicatorName = TaskOcs.Indicator.Name;
                                         taskLst.Target = TaskOcs.Goal;
                                         taskLst.TaskWeight = TaskOcs.Weight;
                                         taskLst.ActualWorked = (float)Math.Round(TaskOcs.ActualWorked, 2);
@@ -2566,7 +2565,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                             if (PlanDivOcs != null)
                             {
                                 plns.Begining = PlanDivOcs.Begining;
-                                plns.MeasurementUnit = PlanDivOcs.UnitOfMeasurement.Name;
+                                plns.IndicatorName = PlanDivOcs.Indicator.Name;
                                 plns.Target = PlanDivOcs.Goal;
                                 plns.Weight = PlanDivOcs.Weight;
                                 plns.ActualWorked = (float)Math.Round(PlanDivOcs.ActualWorked, 2);
@@ -3682,27 +3681,22 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
 
         public class StructurePlan
         {
-            public string PlanName { get; set; }
+            public string PlanName { get; set; } = null!;
             public float? Weight { get; set; }
-
-            public string UnitOfMeasurement { get; set; }
-
+            public string IndicatorName { get; set; } = null!;
             public float? Target { get; set; }
-            public List<PlanTask> PlanTasks { get; set; }
-            public List<ActivityTargetDivisionReport> PlanTargetDivision { get; set; }
+            public List<PlanTask> PlanTasks { get; set; } = null!;
+            public List<ActivityTargetDivisionReport> PlanTargetDivision { get; set; } = null!;
         }
 
         public class PlanTask
         {
-            public string TaskName { get; set; }
+            public string TaskName { get; set; } = null!;
             public float? Weight { get; set; }
-
-            public string UnitOfMeasurement { get; set; }
-
+            public string IndicatorName { get; set; } = null!;
             public float? Target { get; set; }
-
-            public List<TaskActivity> TaskActivities { get; set; }
-            public List<ActivityTargetDivisionReport> TaskTargetDivision { get; set; }
+            public List<TaskActivity> TaskActivities { get; set; } = null!;
+            public List<ActivityTargetDivisionReport> TaskTargetDivision { get; set; } = null!;
         }
 
         public class TaskActivity
@@ -3710,7 +3704,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
             public string ActivityName { get; set; }
             public float? Weight { get; set; }
 
-            public string UnitOfMeasurement { get; set; }
+            public string IndicatorName { get; set; }
 
             public float? Target { get; set; }
             public List<ActSubActivity> ActSubActivity { get; set; }
@@ -3724,7 +3718,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
             public string SubActivityDescription { get; set; }
             public float Weight { get; set; }
 
-            public string UnitOfMeasurement { get; set; }
+            public string IndicatorName { get; set; }
 
             public float Target { get; set; }
 
@@ -3755,64 +3749,59 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
         }
         public class PlansLst
         {
-            public string PlanName { get; set; }
+            public string PlanName { get; set; } = null!;
             public float Weight { get; set; }
-            public string PlRemark { get; set; }
+            public string PlRemark { get; set; } = null!;
             public bool HasTask { get; set; }
             public float? Begining { get; set; }
             public float? Target { get; set; }
             public float? ActualWorked { get; set; }
             public float? Progress { get; set; }
-            public string MeasurementUnit { get; set; }
-
-            public List<TaskLst> taskLsts { get; set; }
-            public List<PlanOcc> PlanDivision { get; set; }
+            public string IndicatorName { get; set; } = null!;
+            public List<TaskLst> taskLsts { get; set; } = null!;
+            public List<PlanOcc> PlanDivision { get; set; } = null!;
         }
 
         public class TaskLst
         {
-            public string TaskDescription { get; set; }
+            public string TaskDescription { get; set; } = null!;
             public float? TaskWeight { get; set; }
-            public string TRemark { get; set; }
+            public string TRemark { get; set; } = null!;
             public bool HasActParent { get; set; }
             public float? Begining { get; set; }
             public float? Target { get; set; }
             public float? ActualWorked { get; set; }
-            public string MeasurementUnit { get; set; }
+            public string IndicatorName { get; set; } = null!;
             public float? Progress { get; set; }
-            public List<ActParentLst> ActParentLst { get; set; }
-            public List<PlanOcc> TaskDivisions { get; set; }
+            public List<ActParentLst> ActParentLst { get; set; } = null!;
+            public List<PlanOcc> TaskDivisions { get; set; } = null!;
         }
 
         public class ActParentLst
         {
-            public string ActParentDescription { get; set; }
+            public string ActParentDescription { get; set; } = null!;
             public float? ActParentWeight { get; set; }
-            public string ActpRemark { get; set; }
-            public string MeasurementUnit { get; set; }
+            public string ActpRemark { get; set; } = null!;
+            public string IndictorName { get; set; } = null!;
 
             public float? Begining { get; set; }
             public float? Target { get; set; }
             public float? ActualWorked { get; set; }
             public float? Progress { get; set; }
-            public List<ActivityLst> activityLsts { get; set; }
-            public List<PlanOcc> ActDivisions { get; set; }
+            public List<ActivityLst> activityLsts { get; set; } = null!;
+            public List<PlanOcc> ActDivisions { get; set; } = null!;
         }
         public class ActivityLst
         {
-            public string ActivityDescription { get; set; }
+            public string ActivityDescription { get; set; } = null!;
             public float Weight { get; set; }
-            public string MeasurementUnit { get; set; }
-
+            public string IndicatorName { get; set; } = null!;
             public float Begining { get; set; }
             public float Target { get; set; }
-
-            public string Remark { get; set; }
-
+            public string? Remark { get; set; }
             public float ActualWorked { get; set; }
             public float Progress { get; set; }
-
-            public List<PlanOcc> Plans { get; set; }
+            public List<PlanOcc> Plans { get; set; } = null!;
         }
 
         public class PlanOcc
