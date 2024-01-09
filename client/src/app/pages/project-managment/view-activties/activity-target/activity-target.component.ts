@@ -21,6 +21,9 @@ export class ActivityTargetComponent implements OnInit {
   targetForm !: FormGroup;
   user!: UserView;
 
+  remainingTarget:number=0
+  remainingBudget:number=0
+
   actTargets = new FormArray([
     new FormGroup({
       monthName: new FormControl({ value: 'January', disabled: true }),
@@ -55,6 +58,11 @@ export class ActivityTargetComponent implements OnInit {
   ngOnInit(): void {
     this.addTargetForm();
     this.user = this.userService.getCurrentUser();
+
+    if(this.activity){
+      this.remainingBudget = this.activity.plannedBudget
+      this.remainingTarget  = this.activity.target- this.activity.begining
+    }
 
     console.log('activity', this.activity)
   }
@@ -109,6 +117,18 @@ export class ActivityTargetComponent implements OnInit {
 
     }
   }
+
+  onTargetChange(){
+    var sumOfTarget = 0
+    var sumOfBudget = 0
+    for (let formValue of this.actTargets.value) {
+      sumOfTarget += Number(formValue.Target)
+      sumOfBudget += Number(formValue.Budget)
+  }
+
+  this.remainingTarget = (this.activity.target - this.activity.begining)-sumOfTarget
+  this.remainingBudget = this.activity.plannedBudget-sumOfBudget
+}
 
   submitTarget() {
 

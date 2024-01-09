@@ -13,28 +13,42 @@
                         <div class="modal-body">
                             <div class="row g-3">
                                 <div class="col-md-6">
-                                    <label for="categoryType">Category</label>
-                                    <select  class="form-control" [(ngModel)]="addCategory.categoryType" id="categoryType" required
-                                         name="categoryType">
-                                        <option></option>
-                                        <option value=0>Raw Material</option>
-                                        <option value=1>ASSET</option>
-                                        <option value=2>OTHER</option>
-                                    </select>
+
+                                    <div class="form-floating mb-3">
+
+                                        <select class="form-select" [(ngModel)]="addCategory.categoryType"
+                                            id="categoryType" required name="categoryType">
+                                            <option></option>
+                                            <option value=0>Raw Material</option>
+                                            <option value=1>ASSET</option>
+                                            <option value=2>OTHER</option>
+                                        </select>
+                                        <label for="form-label">Category</label>
+
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="name">Name</label>
-                                    <input type="text" id="name" [(ngModel)]="addCategory.name" required name="name" class="form-control" />
+                                    <div class="form-floating mb-3">
+
+                                        <input type="text" id="name" [(ngModel)]="addCategory.name" required name="name"
+                                            class="form-control" />
+                                        <label for="name">Name</label>
+                                    </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="name">Description</label>
-                                    <textarea id="description" class="form-control" name="description" [(ngModel)]="addCategory.description" rows="3"
-                                        cols="20"></textarea>
+                                <div class="col-md-12">
+                                    <div class="form-floating mb-3">
+
+
+                                        <textarea id="description" class="form-control" name="description"
+                                            [(ngModel)]="addCategory.description" rows="3" cols="20"></textarea>
+
+                                        <label for="name">Description</label>
+                                    </div>
                                 </div>
                             </div>
-                    
+
                         </div>
-                        <div class="modal-footer"> 
+                        <div class="modal-footer">
                             <button type="button" class="btn btn-outline-secondary"
                                 (click)="closeModal()">Close</button>
                             <button type="button" type="submit" [disabled]="!registerForm.valid"

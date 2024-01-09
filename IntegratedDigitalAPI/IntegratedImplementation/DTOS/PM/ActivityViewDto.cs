@@ -22,7 +22,7 @@ namespace IntegratedDigitalAPI.DTOS.PM
 
         public float Begining { get; set; }
         public float Target { get; set; }
-        public string IndicatorName { get; set; } = null!;
+        public string UnitOfMeasurment { get; set; } 
         public float OverAllPerformance { get; set; }
         public string StartDate { get; set; } = null!;
         public string EndDate { get; set; } = null!;

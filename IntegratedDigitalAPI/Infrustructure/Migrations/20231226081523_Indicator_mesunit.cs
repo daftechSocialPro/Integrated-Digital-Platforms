@@ -11,9 +11,9 @@ namespace IntegratedInfrustructure.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Activities_UnitOfMeasurment_UnitOfMeasurementId",
-                table: "Activities");
+            //migrationBuilder.DropForeignKey(
+            //    name: "FK_Activities_UnitOfMeasurment_UnitOfMeasurementId",
+            //    table: "Activities");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_ItemReceivalDetails_UnitOfMeasurment_MeasurementUnitId",
@@ -34,15 +34,15 @@ namespace IntegratedInfrustructure.Migrations
             migrationBuilder.DropTable(
                 name: "UnitOfMeasurment");
 
-            migrationBuilder.RenameColumn(
-                name: "UnitOfMeasurementId",
-                table: "Activities",
-                newName: "IndicatorId");
+            //migrationBuilder.RenameColumn(
+            //    name: "UnitOfMeasurementId",
+            //    table: "Activities",
+            //    newName: "IndicatorId");
 
-            migrationBuilder.RenameIndex(
-                name: "IX_Activities_UnitOfMeasurementId",
-                table: "Activities",
-                newName: "IX_Activities_IndicatorId");
+            //migrationBuilder.RenameIndex(
+            //    name: "IX_Activities_UnitOfMeasurementId",
+            //    table: "Activities",
+            //    newName: "IX_Activities_IndicatorId");
 
             migrationBuilder.CreateTable(
                 name: "Indicators",
@@ -100,12 +100,12 @@ namespace IntegratedInfrustructure.Migrations
                 table: "MeasurmentUnits",
                 column: "CreatedById");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_Activities_Indicators_IndicatorId",
-                table: "Activities",
-                column: "IndicatorId",
-                principalTable: "Indicators",
-                principalColumn: "Id");
+            //migrationBuilder.AddForeignKey(
+            //    name: "FK_Activities_Indicators_IndicatorId",
+            //    table: "Activities",
+            //    column: "IndicatorId",
+            //    principalTable: "Indicators",
+            //    principalColumn: "Id");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_ItemReceivalDetails_MeasurmentUnits_MeasurementUnitId",
@@ -139,9 +139,9 @@ namespace IntegratedInfrustructure.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Activities_Indicators_IndicatorId",
-                table: "Activities");
+            //migrationBuilder.DropForeignKey(
+            //    name: "FK_Activities_Indicators_IndicatorId",
+            //    table: "Activities");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_ItemReceivalDetails_MeasurmentUnits_MeasurementUnitId",
@@ -165,15 +165,15 @@ namespace IntegratedInfrustructure.Migrations
             migrationBuilder.DropTable(
                 name: "MeasurmentUnits");
 
-            migrationBuilder.RenameColumn(
-                name: "IndicatorId",
-                table: "Activities",
-                newName: "UnitOfMeasurementId");
+            //migrationBuilder.RenameColumn(
+            //    name: "IndicatorId",
+            //    table: "Activities",
+            //    newName: "UnitOfMeasurementId");
 
-            migrationBuilder.RenameIndex(
-                name: "IX_Activities_IndicatorId",
-                table: "Activities",
-                newName: "IX_Activities_UnitOfMeasurementId");
+            //migrationBuilder.RenameIndex(
+            //    name: "IX_Activities_IndicatorId",
+            //    table: "Activities",
+            //    newName: "IX_Activities_UnitOfMeasurementId");
 
             migrationBuilder.CreateTable(
                 name: "UnitOfMeasurment",
@@ -204,12 +204,12 @@ namespace IntegratedInfrustructure.Migrations
                 table: "UnitOfMeasurment",
                 column: "CreatedById");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_Activities_UnitOfMeasurment_UnitOfMeasurementId",
-                table: "Activities",
-                column: "UnitOfMeasurementId",
-                principalTable: "UnitOfMeasurment",
-                principalColumn: "Id");
+            //migrationBuilder.AddForeignKey(
+            //    name: "FK_Activities_UnitOfMeasurment_UnitOfMeasurementId",
+            //    table: "Activities",
+            //    column: "UnitOfMeasurementId",
+            //    principalTable: "UnitOfMeasurment",
+            //    principalColumn: "Id");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_ItemReceivalDetails_UnitOfMeasurment_MeasurementUnitId",

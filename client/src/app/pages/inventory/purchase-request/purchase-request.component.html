@@ -10,12 +10,12 @@
         </nav>
     </div>
 
-    <div class="card">
+    <div class="card p-4">
         <div class="col-12">
             <p-toast></p-toast>
-            <div class="card">
+            <div class="card p-2">
                 <div class="row">
-                    <div class="col-md-2">
+                    <div class="col-md-2 ">
                         <label htmlFor="lastname2">Is Store Requested</label> <br />
                         <p-inputSwitch [(ngModel)]="addPurchaseRequest.isStoreRequested" name="isStoreRequested"
                             (onChange)="isStoreChecked($event)"></p-inputSwitch>
@@ -30,7 +30,7 @@
                 </div>
             </div>
             <form #itemsForm="ngForm">
-                <div class="row">
+                <div class="row p-2 mb-2">
                 <div class="col-md-2">
                     <label class="col-md-12" htmlFor="lastname2">Item</label> 
                     <select  class="form-control" (change)="changeItem($event.target)" [(ngModel)]="items" id="itemId" required
@@ -57,8 +57,8 @@
                         [(ngModel)]="addPurchaseRequestList.singlePrice">
                 </div>
                 <div class="col-md-1">
-                    <label></label> <br />
-                    <button pButton type="button" icon="pi pi-plus" [disabled]="!itemsForm.valid" class="ui-button-info"
+                   <label></label><br/>
+                    <button pButton type="button" icon="pi pi-plus" [disabled]="!itemsForm.valid" class="ui-button-info btn-sm"
                         (click)="newRow()"></button>
                 </div>
             </div>
@@ -97,7 +97,7 @@
                 </p-table>
             </div>
             <hr />
-            <div class="p-fluid p-formgrid grid col-4">
+            <div class="p-fluid p-formgrid grid col-3">
                 <button pButton type="button" label="Add Request" icon="pi pi-plus" class="ui-button-success"
                     (click)="savePurchase()"></button>
             </div>

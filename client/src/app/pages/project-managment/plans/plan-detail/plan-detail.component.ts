@@ -25,7 +25,7 @@ export class PlanDetailComponent implements OnInit {
   items2: number[] = Array(8).fill(0);
   planId!: string;
   
-  exportingToExcel = false;
+  exportingToExcel = true;
   Plans!: PlanSingleview
   user!: UserView
   plan!: PlanSingleview

@@ -11,30 +11,46 @@
                     <div class="modal-body">
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <label for="measurementType">Measurement Type</label>
-                                <select class="form-control" [(ngModel)]="addMeasurement.measurementType"
-                                    id="measurementType" required name="measurementType">
-                                    <option></option>
-                                    <option value=0>LENGTH</option>
-                                    <option value=1>MASS</option>
-                                    <option value=2>VOLUME</option>
-                                    <option value=3>PIECE</option>
-                                </select>
+
+                                <div class="form-floating mb-3">
+
+
+                                    <select class="form-select" [(ngModel)]="addMeasurement.measurementType"
+                                        id="measurementType" required name="measurementType">
+                                        <option></option>
+                                        <option value=0>LENGTH</option>
+                                        <option value=1>MASS</option>
+                                        <option value=2>VOLUME</option>
+                                        <option value=3>PIECE</option>
+                                    </select>
+                                    <label for="measurementType">Measurement Type</label>
+                                </div>
                             </div>
                             <div class="col-md-6">
-                                <label for="name">Name</label>
-                                <input type="text" id="name" [(ngModel)]="addMeasurement.name" required name="name"
-                                    class="form-control" />
+                                <div class="form-floating mb-3">
+
+                                    <input type="text" id="name" [(ngModel)]="addMeasurement.name" required name="name"
+                                        class="form-control" />
+                                    <label for="name">Name</label>
+                                </div>
                             </div>
                             <div class="col-md-6">
-                                <label for="amharicName">Amharic Name</label>
-                                <input type="text" id="amharicName" [(ngModel)]="addMeasurement.amharicName" required name="amharicName"
-                                    class="form-control" />
+                                <div class="form-floating mb-3">
+
+                                    <input type="text" id="amharicName" [(ngModel)]="addMeasurement.amharicName"
+                                        required name="amharicName" class="form-control" />
+                                    <label for="amharicName">Amharic Name</label>
+                                </div>
                             </div>
                             <div class="col-md-6">
-                                <label for="toSIUnit">To SI Unit</label>
-                                <input type="text" id="toSIUnit" [(ngModel)]="addMeasurement.toSIUnit" required
-                                    name="toSIUnit" class="form-control" />
+
+                                <div class="form-floating mb-3">
+
+
+                                    <input type="text" id="toSIUnit" [(ngModel)]="addMeasurement.toSIUnit" required
+                                        name="toSIUnit" class="form-control" />
+                                    <label for="toSIUnit">To SI Unit</label>
+                                </div>
                             </div>
 
                         </div>

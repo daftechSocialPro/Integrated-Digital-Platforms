@@ -20,7 +20,7 @@
 
                 </div>
 
-                <div class="col-3 text-end">
+                <div class="col-3 text-end" *ngIf="!exportingToExcel">
                     <label class="form-label">Filter By</label>
                     <select class="form-control " [(ngModel)]="filterBy" (change)="onFilterByChange()">
 
@@ -138,12 +138,12 @@
                                     <button class="btn btn-outline-primary btn-sm" (click)="addActivity(task)"> <i
                                             class="bi bi-plus me-1"></i> {{exportingToExcel?"":"Activity"}} </button>
                                 </td>
-                                <td style="border: 1px solid black;  background-color: #e8ffde;width: 200px;">
+                                <td [attr.colspan]="filterBy==0?38:14"  style="border: 1px solid black;  background-color: #e8ffde;width: 200px;">
                                     {{task.taskName}}
                                 </td>
-                                <ng-container *ngFor="let item of items; index as i">
+                                <!-- <ng-container *ngFor="let item of items; index as i">
                                     <td style="border: 1px solid black; background-color: #eee"></td>
-                                </ng-container>
+                                </ng-container> -->
 
                             </tr>
                         </tbody>

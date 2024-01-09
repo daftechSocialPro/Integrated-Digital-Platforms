@@ -134,7 +134,7 @@ namespace IntegratedDigitalAPI.Services.PM
         {
 
 
-            var tasks = (from t in _dBContext.Tasks.Where(x => x.ProjectId == planId).OrderBy(x=>x.CreatedDate)
+            var tasks = (from t in _dBContext.Tasks.Include(x=>x.Activities).Where(x => x.ProjectId == planId).OrderBy(x=>x.CreatedDate)
                         select new TaskVIewDto
                         {
                             Id= t.Id,
@@ -151,7 +151,7 @@ namespace IntegratedDigitalAPI.Services.PM
                             NumberOfMembers = _dBContext.TaskMembers.Count(x=>x.TaskId == t.Id),
                          
                             RemianingWeight = 100 - _dBContext.Activities.Sum(x => x.Weight),
-                            RemainingBudget = t.PlanedBudget - _dBContext.Activities.Sum(x=>x.PlanedBudget),
+                            RemainingBudget = t.PlanedBudget - t.Activities.Sum(x=>x.PlanedBudget),
                             NumberofActivities = _dBContext.Activities.Include(x => x.ActivityParent).Count(x => x.TaskId == t.Id || x.ActivityParent.TaskId == t.Id),
                             NumberOfFinalized = _dBContext.Activities.Include(x => x.ActivityParent).Count(x => x.Status == Status.FINALIZED && ( x.TaskId == t.Id || x.ActivityParent.TaskId == t.Id)),
                             NumberOfTerminated = _dBContext.Activities.Include(x => x.ActivityParent).Count(x => x.Status == Status.TERMINATED &&( x.TaskId == t.Id || x.ActivityParent.TaskId == t.Id))

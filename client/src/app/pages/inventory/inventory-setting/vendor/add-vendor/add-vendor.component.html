@@ -13,39 +13,58 @@
                         <div class="modal-body">
                             <div class="row g-3">
                                 <div class="col-md-6">
-                                    <label for="countryId">Country</label><br />
-                                    <select class="form-control" [(ngModel)]="addVendor.countryId" id="countryId"
-                                        required name="countryId">
-                                        <option></option>
-                                        <option *ngFor="let country of countryList" [value]="country.id">{{
-                                            country.countryName }}</option>
-                                    </select>
+
+                                    <div class="form-floating mb-3">
+
+                                        <select class="form-select" [(ngModel)]="addVendor.countryId" id="countryId"
+                                            required name="countryId">
+                                            <option></option>
+                                            <option *ngFor="let country of countryList" [value]="country.id">{{
+                                                country.countryName }}</option>
+                                        </select>
+                                        <label for="countryId">Country</label>
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="name">Name</label><br />
-                                    <input type="text" id="name" [(ngModel)]="addVendor.name" required
-                                        class="form-control" name="name" />
+                                    <div class="form-floating mb-3">
+
+                                        <input type="text" id="name" [(ngModel)]="addVendor.name" required
+                                            class="form-control" name="name" />
+                                        <label for="name">Name</label>
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="name">Phone Number</label><br />
-                                    <p-inputMask mask="(999) 999-999999" [(ngModel)]="addVendor.phoneNumber" [required]
-                                        placeholder="(999) 999-999999" name="phoneNumber"></p-inputMask>
+
+
+                                  
+                                    <p-inputMask mask="(999) 999-999999" class="form-control"
+                                        [(ngModel)]="addVendor.phoneNumber" [required] placeholder="(999) 999-999999"
+                                        name="phoneNumber"></p-inputMask>
 
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="name">Email</label><br />
-                                    <input type="email" class="form-control" id="name" [(ngModel)]="addVendor.email"
-                                        name="email" />
+                                    <div class="form-floating mb-3">
+
+                                        <input type="email" class="form-control" id="name" [(ngModel)]="addVendor.email"
+                                            name="email" />
+                                        <label for="name">Email</label>
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="tinNumber">Tin Number</label><br />
-                                    <input type="text" class="form-control" name="tinNumber" id="name"
-                                        [(ngModel)]="addVendor.tinNumber" />
+                                    <div class="form-floating mb-3">
+
+                                        <input type="text" class="form-control" name="tinNumber" id="name"
+                                            [(ngModel)]="addVendor.tinNumber" />
+                                        <label for="tinNumber">Tin Number</label>
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="name">Address</label><br />
-                                    <input type="text" name="address" pInputText id="name" class="form-control"
-                                        [(ngModel)]="addVendor.address" required />
+                                    <div class="form-floating mb-3">
+
+                                        <input type="text" name="address" pInputText id="name" class="form-control"
+                                            [(ngModel)]="addVendor.address" required />
+                                        <label for="name">Address</label>
+                                    </div>
                                 </div>
                             </div>
 

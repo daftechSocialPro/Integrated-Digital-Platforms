@@ -11,8 +11,10 @@
 
             <h5 style="text-align: right!important ;">
                 <b>{{activity.startDate|date:"dd MMMM, yyyy"}} - {{activity.endDate|date:"dd MMMM, yyyy"}}</b><br />
-                Overall Target : <b>{{activity.target - activity.begining}} {{activity.unitOfMeasurment}}</b><br />
+                Overall Target : <b>{{activity.target - activity.begining}} {{activity.unitOfMeasurment}}</b>
+                Remaining Target:<span style="color: red;"> {{remainingTarget}} {{activity.unitOfMeasurment}}</span> <br />
                 Overall Budget : <b> {{activity.plannedBudget}} ETB</b>
+                Remaining Budget : <span style="color:red"> {{remainingBudget}} ETB</span>
 
                 <br />
 
@@ -33,14 +35,14 @@
                             <div class="row mt-2">
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="number" formControlName="Target" class="form-control" id="Target"
+                                        <input type="number" formControlName="Target" class="form-control" id="Target" (change)="onTargetChange()"
                                             placeholder="Target">
                                         <label for="Target">Target</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="number" class="form-control" id="Budget" placeholder="Budget"
+                                        <input type="number" class="form-control" id="Budget" placeholder="Budget" (change)="onTargetChange()"
                                             formControlName="Budget">
                                         <label for="Budget">Budget</label>
                                     </div>

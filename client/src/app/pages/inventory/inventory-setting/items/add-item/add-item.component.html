@@ -13,49 +13,70 @@
                         <div class="modal-body">
                             <div class="row g-3">
                                 <div class="col-md-6">
-                                    <label class="col-md-12" for="categoryId">Category</label>
-                                    <select class="form-control" [(ngModel)]="addItem.categoryId" id="categoryId"
+
+                                    <div class="form-floating mb-3">
+                                  
+                                    <select class="form-select" [(ngModel)]="addItem.categoryId" id="categoryId"
                                     required name="categoryId">
                                     <option></option>
                                     <option *ngFor="let cat of category" [value]="cat.id">{{
                                         cat.name }}</option>
                                     </select>
+                                    <label class="col-md-12" for="categoryId">Category</label>
+                                </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="col-md-12" for="name">Name</label>
+                                    <div class="form-floating mb-3">
+                                   
                                     <input type="text" class="form-control" id="name" [(ngModel)]="addItem.name" name="name" required />
+                                    <label class="col-md-12" for="name">Name</label>
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="col-md-12" for="stateType">State Type</label>
-                                    <select class="form-control" [(ngModel)]="addItem.stateType" id="stateType"
+                                    <div class="form-floating mb-3">
+                                   
+                                    <select class="form-select" [(ngModel)]="addItem.stateType" id="stateType"
                                     required name="stateType">
                                     <option></option>
                                     <option *ngFor="let state of stateType" [value]="state.value">{{
                                         state.name }}</option>
                                     </select>
+                                    <label class="col-md-12" for="stateType">State Type</label>
+                                    </div>
+
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="col-md-12" for="measurementType">Measurement Type</label>
-                                    <select class="form-control" [(ngModel)]="addItem.measurementType" id="measurementType"
+                                    <div class="form-floating mb-3">
+                                  
+                                    <select class="form-select" [(ngModel)]="addItem.measurementType" id="measurementType"
                                     required name="measurementType">
                                     <option></option>
                                     <option *ngFor="let mes of measurementType" [value]="mes.value">{{
                                         mes.name }}</option>
                                     </select>
+                                    <label class="col-md-12" for="measurementType">Measurement Type</label>
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="col-md-12" for="isExpirable">Is Expirable</label>
                                     <p-inputSwitch [(ngModel)]="addItem.isExpirable"></p-inputSwitch>
                                 </div>
                                 <div class="col-md-6">
-                                    <label  class="col-md-12" for="reorderPoint">Reorder Point</label>
+                                    <div class="form-floating mb-3">
+                                  
                                     <input type="number" min="0"  id="reorderPoint" name="reorderPoint"
                                         [(ngModel)]="addItem.reorderPoint" class="form-control" required />
+                                        <label  class="col-md-12" for="reorderPoint">Reorder Point</label>
+                                        </div>
                                 </div>
                                 <div class="col-md-8">
-                                    <label class="col-md-12" for="remark">Remark</label>
-                                    <textarea type="text" min="0" rows="5" cols="35" pInputText id="name" [(ngModel)]="addItem.remark"
+                                   
+
+                                    <div class="form-floating mb-3">
+                                    <textarea type="text" class="form-control" min="0" style="height: 120px;" rows="5" cols="35" pInputText id="name" [(ngModel)]="addItem.remark"
                                         required > </textarea>
+                                        <label class="col-md-12" for="remark">Remark</label>
+                                        </div>
                                 </div>
                             </div>
 

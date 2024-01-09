@@ -52,6 +52,7 @@ export class AddVendorComponent implements OnInit{
         next: (res) => {
           if(res.success){
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Vendor Updated', life: 3000 });
+          this.closeModal()
           }
           else{
             this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error please check your fields', life: 3000 });
@@ -67,6 +68,7 @@ export class AddVendorComponent implements OnInit{
         next: (res) => {
           if(res.success){
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Vendor Created', life: 3000 });
+          this.closeModal()
     
         }
         else{

@@ -44,9 +44,10 @@ export class VendorComponent implements  OnInit  {
 
   openNew() {
     let modalRef = this.modalService.open(AddVendorComponent, { size: 'lg', backdrop: 'static' })
-    modalRef.result.then(() => {
+    modalRef.result.then(()=>{
       this.getVendorList();
-    });
+    })
+
     
   }
 
