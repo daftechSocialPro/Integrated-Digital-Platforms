@@ -21,7 +21,7 @@
                 <h5 class="card-title">Employees</h5>
                 <div class="table-container">
                     <p-table #dt [value]="employees" [rows]="5" [paginator]="true"
-                        [globalFilterFields]="['employeeName', 'employeeCode', 'employmentType', 'employmentStatus']"
+                        [globalFilterFields]="['fullName', 'employeeCode', 'employmentType', 'employmentStatus']"
                         [tableStyle]="{'min-width': '75rem'}" dataKey="id"
                         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                         [showCurrentPageReport]="true">
@@ -45,12 +45,13 @@
 
                                 <th>Employment Date</th>
                                 <th>Employment Status</th>
+                                <th>Action</th>
 
 
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-employee>
-                            <tr class="table-row" (click)="employeeDetail(employee.id)">
+                            <tr class="table-row" >
                                 <td class="employee-details">
                                     <img [src]="getImagePath(employee.imagePath)" width="40" alt="user png" class="rounded-circle">
                                     <div class="employee-info">
@@ -64,6 +65,11 @@
                                 <td>{{ employee.employmentType }}</td>
                                 <td>{{ employee.employmentDate | date:"MMM dd, YYY" }}</td>
                                 <td>{{ employee.employmentStatus }}</td>
+                                <td> <button class="btn btn-sm btn-outline-primary" (click)="employeeDetail(employee.id)">
+                                    <i class="bi bi-eye"></i>  Detail
+                                  </button> | <button class="btn btn-sm btn-outline-danger" (click)="DeleteEmployee(employee.id)">
+                                  <i class="bi bi-trash"></i>  Delete
+                                </button> </td>
                             </tr>
                         </ng-template>
 

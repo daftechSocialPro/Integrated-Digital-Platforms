@@ -146,7 +146,7 @@ namespace IntegratedImplementation.Services.PM
 
             if (currentBudgetYear != null)
             {
-                currentBudgetYear.Year = currentBudgetYear.Year;
+                currentBudgetYear.Year = budgetYear.BudgetYear;
                 currentBudgetYear.Rowstatus = Enum.Parse<RowStatus>(budgetYear.Status);
                 await _dbContext.SaveChangesAsync();
                 return new ResponseMessage { Success = true, Message = "Updated Successfully" };

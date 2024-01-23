@@ -185,6 +185,12 @@ namespace IntegratedDigitalAPI.Controllers.Configuration
         {
             return Ok(await _DropDownService.GetMeasurementListByType(measurementType));
         }
+        [HttpGet]
+        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetFiscalYears()
+        {
+            return Ok(await _DropDownService.GetFiscalYears());
+        }
 
 
     }

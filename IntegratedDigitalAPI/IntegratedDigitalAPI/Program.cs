@@ -15,6 +15,8 @@ using Newtonsoft.Json.Serialization;
 using System.Text.Json.Serialization;
 using System.Text.Json;
 using System.Configuration;
+using System.Net.Mail;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -67,8 +69,25 @@ var host = emailSettings["SMTPSetting:Host"];
 var port = emailSettings.GetValue<int>("SMTPSetting:Port");
 var userName = emailSettings["SMTPSetting:UserName"];
 var password = emailSettings["SMTPSetting:Password"];
+
+
+
+var smtp = new SmtpClient
+{
+    Host =host,
+    Port = port,
+    EnableSsl = true,
+    UseDefaultCredentials = false,
+    DeliveryMethod = SmtpDeliveryMethod.Network,
+    Credentials = new NetworkCredential(userName, password)
+};
+
+
 builder.Services.AddFluentEmail(defaultFromEmail)
-    .AddSmtpSender(host, port, userName, password);
+    .AddSmtpSender(smtp);
+
+
+
 builder.Services.AddCoreBusiness();
 
 

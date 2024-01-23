@@ -38,5 +38,7 @@ namespace IntegratedImplementation.Interfaces.Configuration
         Task<List<SelectListDto>> GetPurchaseRequestByItem(string itemId);
         Task<List<SelectListDto>> GetStoreRequestDropDown();
         Task<List<SelectListDto>> GetVendorDropDown();
+
+        Task<List<SelectListDto>> GetFiscalYears();
     }
 }

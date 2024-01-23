@@ -4,8 +4,10 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { IndividualConfig } from 'ngx-toastr';
 import { MessageService } from 'primeng/api';
 import { IndicatorPostDto } from 'src/app/model/PM/IndicatorsDto';
+import { SelectList } from 'src/app/model/common';
 import { CommonService } from 'src/app/services/common.service';
 import { ConfigurationService } from 'src/app/services/configuration.service';
+import { DropDownService } from 'src/app/services/dropDown.service';
 
 @Component({
   selector: 'app-add-measurement',
@@ -14,6 +16,7 @@ import { ConfigurationService } from 'src/app/services/configuration.service';
 })
 export class AddMeasurementComponent {
 
+  stratgicPlans :SelectList[]
 
 
   @Output() result = new EventEmitter<boolean>();
@@ -22,17 +25,30 @@ export class AddMeasurementComponent {
 
   constructor(private formBuilder: FormBuilder,
      private configurationService:ConfigurationService ,
+     private dropdownService:DropDownService,
      private messageService : MessageService,
     private activeModal: NgbActiveModal) { }
 
   ngOnInit(): void {
 
+    this.getStratgicPlan()
+
     this.measurmentForm = this.formBuilder.group({
       name: ['', Validators.required],
-      localName: ['', Validators.required],
+      stratgicPlanId: ['', Validators.required],
       type: ['', Validators.required],
    
     });
+  }
+
+  getStratgicPlan(){
+    this.dropdownService.getStrategicPlans().subscribe({
+      next:(res)=>{
+
+        this.stratgicPlans=res
+
+      }
+    })
   }
 
   submit() {
@@ -42,7 +58,7 @@ export class AddMeasurementComponent {
     var measurementpost : IndicatorPostDto={
 
       name : this.measurmentForm.value.name,
-      localName: this.measurmentForm.value.localName,
+      stratgicPlanId: this.measurmentForm.value.stratgicPlanId,
       type : this.measurmentForm.value.type
 
     }

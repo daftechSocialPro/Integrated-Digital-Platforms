@@ -264,6 +264,7 @@ renewMembership(){
         if (res.success) {
           this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });
           window.location.href = url;
+          
         } else {
           this.messageService.add({ severity: 'error', summary: 'Authentication failed.', detail: res.message });
         }

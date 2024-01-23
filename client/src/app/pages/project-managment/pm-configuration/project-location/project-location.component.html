@@ -11,8 +11,9 @@
                 <div class="card-body">
                     <h5 class="card-title">Project Fund Sources</h5>
 
-                    <p-table
+                    <p-table #dt
                     [value]="projectLocations"
+                    [globalFilterFields]="['name', 'budget', 'fiscalYear']"
                     [paginator]="true"
                     [rows]="5"
                     [showCurrentPageReport]="true"
@@ -21,10 +22,21 @@
                     [rowsPerPageOptions]="[5, 25, 50]"
                     styleClass="p-datatable-sm"
                 >
+                <ng-template pTemplate="caption">
+                    <div class="flex align-items-center justify-content-between">
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)"
+                                placeholder="Search..." class="w-full sm:w-auto" />
+                        </span>
+                    </div>
+                </ng-template>
                     <ng-template pTemplate="header">
                         <tr>
                             
                             <th scope="col">Name</th>
+                            <th scope="col">Allocated Budget</th>
+                            <th scope="col">Fiscal Year </th>
                                                
                             <th scope="col">Action</th>
                           
@@ -33,7 +45,8 @@
                     <ng-template pTemplate="body" let-location>
                         <tr>
                             <td>{{ location.name }}</td>
-                            
+                            <td>{{ location.budget |number:'1.0-2' }}</td>
+                            <td>{{ location.fiscalYear }}</td>
                             <td>
                              
                                 <button type="button" (click)="updateProjectLocation(location)" class="btn btn-outline-warning"><i

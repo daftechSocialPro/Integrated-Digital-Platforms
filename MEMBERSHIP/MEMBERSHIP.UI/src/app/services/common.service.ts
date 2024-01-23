@@ -12,6 +12,7 @@ export class CommonService {
 
   baseUrl: string = environment.baseUrl + '/common'
   baseUrlPdf : string = environment.baseUrl
+
   constructor( private http: HttpClient,private sanitizer: DomSanitizer) { }
 
 
@@ -114,8 +115,61 @@ export class CommonService {
   }
 
 
+  getRandomCharacter() {
+    const uppercaseLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const lowercaseLetters = 'abcdefghijklmnopqrstuvwxyz';
+    const digits = '0123456789';
+    const specialCharacters = '-.@';
+    
+    const randomIndex = Math.floor(Math.random() * 4); // Randomly select from 4 character sets
+    
+    switch (randomIndex) {
+      case 0:
+        return uppercaseLetters[Math.floor(Math.random() * uppercaseLetters.length)];
+      case 1:
+        return lowercaseLetters[Math.floor(Math.random() * lowercaseLetters.length)];
+      case 2:
+        return digits[Math.floor(Math.random() * digits.length)];
+      case 3:
+        return specialCharacters[Math.floor(Math.random() * specialCharacters.length)];
+      default:
+        return ''
+    }
+  }
+
+  
+  generatePassword(length: number): string {
+    let password = '';
+    const requiredCharacters = ['uppercase', 'lowercase', 'digit', 'special'];
+  
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * requiredCharacters.length);
+      const characterType = requiredCharacters[randomIndex];
+      
+      let character = '';
+      switch (characterType) {
+        case 'uppercase':
+          character = this.getRandomCharacter().toUpperCase();
+          break;
+        case 'lowercase':
+          character = this.getRandomCharacter().toLowerCase();
+          break;
+        case 'digit':
+          character = this.getRandomCharacter();
+          break;
+        case 'special':
+          character = this.getRandomCharacter();
+          break;
+      }
+      
+      password += character;
+    }
+    
+    return password;
+  }
+  
 
 
 
-
+ 
 }

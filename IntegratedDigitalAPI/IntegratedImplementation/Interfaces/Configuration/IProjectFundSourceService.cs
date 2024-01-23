@@ -15,5 +15,8 @@ namespace IntegratedImplementation.Interfaces.Configuration
         Task<ResponseMessage> AddProjectFundSource(ProjectFundSourcePostDto projectFundSourcePost);
         Task<ResponseMessage> UpdateProjectFundSource(ProjectFundSourceGetDto projectFundSourcePut);
         Task<ResponseMessage> DeleteProjectFundSource(Guid projectFundSourceId);
+
+
+        Task<double> GetRemainingBudget( Guid projectFundSourceId);
     }
 }

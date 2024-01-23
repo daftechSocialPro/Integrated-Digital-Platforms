@@ -178,7 +178,7 @@ namespace IntegratedImplementation.Services.Configuration
         }
         public async Task<List<SelectListDto>> GetStrategicPlans()
         {
-            var strategicPlans = await _dbContext.StrategicPlans.AsNoTracking().Select(x => new SelectListDto
+            var strategicPlans = await _dbContext.StrategicPlans.Select(x => new SelectListDto
             {
                 Id = x.Id,
                 Name = x.Name
@@ -261,6 +261,17 @@ namespace IntegratedImplementation.Services.Configuration
             return vendors;
         }
 
+        public async Task<List<SelectListDto>> GetFiscalYears()
+        {
+
+            var fiscalYears = await _dbContext.BudgetYears.AsNoTracking().Select(x => new SelectListDto
+            {
+                Id = x.Id,
+                Name = $"{x.Year.ToString()} ({x.Rowstatus.ToString()})"
+            }).ToListAsync();
+
+            return fiscalYears;
+        }
         public async Task<List<SelectListDto>> GetMeasurementListByType(MeasurementType measurementType)
         {
             var measurements = await _dbContext.MeasurmentUnits.AsNoTracking()

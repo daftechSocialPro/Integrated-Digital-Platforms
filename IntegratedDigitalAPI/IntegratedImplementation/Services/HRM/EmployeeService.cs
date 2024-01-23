@@ -152,6 +152,44 @@ namespace IntegratedImplementation.Services.HRM
             }
         }
 
+
+
+        public async Task<ResponseMessage> DeleteEmployee(Guid employeeId)
+        {
+            var employee = await _dbContext.Employees.FindAsync(employeeId);
+            if (employee != null)
+            {
+                try
+                {
+                    _dbContext.Employees.Remove(employee);
+                    await _dbContext.SaveChangesAsync();
+
+                    return new ResponseMessage
+                    {
+                        Success = true,
+                        Message = "Employee Deleted Successfully!!"
+                    };
+                }
+                catch (Exception ex)
+                {
+                    return new ResponseMessage
+                    {
+                        Success = false,
+                        Message = ex.Message
+                    };
+                }
+            }
+            else
+            {
+                return new ResponseMessage
+                {
+
+                    Success = false,
+                    Message = "Employee not Found !!!"
+                };
+            }
+        }
+
         public async Task<List<SelectListDto>> GetEmployeesNoUserSelectList()
         {
             var emp = _userManager.Users.Select(x => x.EmployeeId).ToList();
@@ -211,7 +249,7 @@ namespace IntegratedImplementation.Services.HRM
                     {
                         employee.EmploymentType = Enum.Parse<EmploymentType>(addEmployee.EmploymentType);
                     }
-                
+
                     if (addEmployee.PaymentType != null)
                     {
                         employee.PaymentType = Enum.Parse<PaymentType>(addEmployee.PaymentType);
@@ -334,7 +372,7 @@ namespace IntegratedImplementation.Services.HRM
         public async Task<List<EmployeeListDto>> GetEmployees()
         {
             var employeeList = await _dbContext.Employees.AsNoTracking().OrderByDescending(x => x.CreatedDate)
-                                    .Select(x =>  new EmployeeListDto
+                                    .Select(x => new EmployeeListDto
                                     {
                                         Id = x.Id,
                                         EmployeeCode = x.EmployeeCode,
@@ -375,7 +413,7 @@ namespace IntegratedImplementation.Services.HRM
                 .AsNoTracking()
                 .ProjectTo<VolunterGetDto>(_mapper.ConfigurationProvider).FirstAsync();
 
-         
+
             return employee;
         }
 
@@ -403,7 +441,7 @@ namespace IntegratedImplementation.Services.HRM
                         Password = _generalConfig.GeneratePassword()
                     };
 
-                   ResponseMessage response = await _authenticationService.AddUser(currentUser);
+                    ResponseMessage response = await _authenticationService.AddUser(currentUser);
 
                     if (response.Success)
                     {
@@ -560,7 +598,7 @@ namespace IntegratedImplementation.Services.HRM
                     {
                         employee.MaritalStatus = Enum.Parse<MaritalStatus>(addEmployee.MaritalStatus);
                     }
-                  
+
                     if (addEmployee.PaymentType != null)
                     {
                         employee.PaymentType = Enum.Parse<PaymentType>(addEmployee.PaymentType);
@@ -618,9 +656,9 @@ namespace IntegratedImplementation.Services.HRM
             var bankLists = await _dbContext.EmployeeBanks.AsNoTracking().Include(x => x.Bank).Where(x => x.EmployeeId == employeeId)
                                    .Select(x => new EmployeeBankListDto
                                    {
-                                     Id = x.Id,
-                                     AccountNumber = x.BankAccountNo,
-                                     BankName = x.Bank.BankName
+                                       Id = x.Id,
+                                       AccountNumber = x.BankAccountNo,
+                                       BankName = x.Bank.BankName
                                    }).ToListAsync();
 
             return bankLists;
@@ -1155,11 +1193,11 @@ namespace IntegratedImplementation.Services.HRM
 
             var employees = await _dbContext.Employees
                 .Where(x => x.ContractEndDate < DateTime.Now || x.ContractEndDate <= tenDaysFromNow)
-                .Select(x=>new SelectListDto
+                .Select(x => new SelectListDto
                 {
                     Id = x.Id,
                     Name = $"{x.FirstName} {x.MiddleName} {x.LastName} / {x.Email}",
-                    Reason= x.ContractEndDate < DateTime.Now?$"Contract expired on {x.ContractEndDate}" :$"Contract Remining days is 10 or less "
+                    Reason = x.ContractEndDate < DateTime.Now ? $"Contract expired on {x.ContractEndDate}" : $"Contract Remining days is 10 or less "
 
                 }).ToListAsync();
 

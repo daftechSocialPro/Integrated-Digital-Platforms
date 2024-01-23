@@ -18,6 +18,7 @@ using MembershipInfrustructure.Model.Authentication;
 using MembershipInfrustructure.Model.Users;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Reporting.NETCore;
 using Microsoft.VisualBasic;
@@ -26,6 +27,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Numerics;
 using System.Reflection;
 using System.Text;
@@ -44,10 +46,12 @@ namespace MembershipImplementation.Services.HRM
         private readonly IAuthenticationService _authenticationService;
         private readonly IMapper _mapper;
         private readonly IEmailService _emailService;
+        private readonly IHttpClientFactory _httpClientFactory;
         public MemberService(ApplicationDbContext dbContext,
             UserManager<ApplicationUser> userManager,
             IAuthenticationService authenticationService,
             IEmailService emailService,
+            IHttpClientFactory httpClientFactory,
             IGeneralConfigService generalConfig, IMapper mapper)
         {
             _dbContext = dbContext;
@@ -56,6 +60,7 @@ namespace MembershipImplementation.Services.HRM
             _mapper = mapper;
             _authenticationService = authenticationService;
             _emailService = emailService;
+            _httpClientFactory = httpClientFactory;
         }
 
         public async Task<ResponseMessage> RegisterMember(MembersPostDto memberPost)
@@ -137,10 +142,6 @@ namespace MembershipImplementation.Services.HRM
                 await _dbContext.SaveChangesAsync();
 
 
-
-
-
-
                 return new ResponseMessage
                 {
                     Data = new MembersGetDto
@@ -183,7 +184,6 @@ namespace MembershipImplementation.Services.HRM
                      PhoneNumber = x.PhoneNumber,
                      Email = x.Email,
                      Zone = x.Zone.ZoneName,
-
                      Woreda = x.Woreda,
                      Inistitute = x.Inistitute
 
@@ -193,6 +193,7 @@ namespace MembershipImplementation.Services.HRM
 
         public async Task<List<MembersGetDto>> GetMembers()
         {
+            var encryption = "2B7E151628AED2A6ABF7158809CF4F3C";
             var members = await (from member in _dbContext.Members
                                  join payment in _dbContext.MemberPayments on member.Id equals payment.MemberId into memberPayments
                                  let latestPayment = memberPayments.OrderByDescending(x => x.LastPaid).FirstOrDefault()
@@ -221,13 +222,19 @@ namespace MembershipImplementation.Services.HRM
                                      EducationalLevelId = member.EducationalLevelId.ToString(),
                                      IdCardStatus = member.IdCardStatus.ToString(),
                                      PaymentStatus = latestPayment != null ? latestPayment.PaymentStatus.ToString() : PaymentStatus.PENDING.ToString(),
-                                     RejectedRemark = member.RejectedRemark
+                                     RejectedRemark = member.RejectedRemark,
+
+                                     MoodleId = member.MoodleId,
+                                     MoodlePassword = member.MoodlePassword!=null? _generalConfig.Decrypt(member.MoodlePassword!, encryption):"",
+                                     MoodleName = member.MoodleUserName,
+                                     MoodleStatus = member.MoodleStatus.ToString()
 
                                  }).ToListAsync();
             return members;
         }
         public async Task<MembersGetDto> GetSingleMember(Guid MemberId)
         {
+            var encryption = "2B7E151628AED2A6ABF7158809CF4F3C";
             var members = await (from member in _dbContext.Members.Where(x => x.Id == MemberId)
                                  join payment in _dbContext.MemberPayments on member.Id equals payment.MemberId into memberPayments
                                  let latestPayment = memberPayments.OrderByDescending(x => x.LastPaid).FirstOrDefault()
@@ -255,7 +262,11 @@ namespace MembershipImplementation.Services.HRM
                                      ExpiredDate = latestPayment!=null? latestPayment.ExpiredDate:DateTime.Now,
                                      PaymentStatus = latestPayment != null ? latestPayment.PaymentStatus.ToString():null,
                                      Amount = member.MembershipType.Money,
-                                     IsBirthDate=member.IsBirthDate
+                                     IsBirthDate=member.IsBirthDate,
+                                     MoodleId = member.MoodleId,
+                                     MoodlePassword = member.MoodlePassword!=null? _generalConfig.Decrypt( member.MoodlePassword!, encryption):"",
+                                     MoodleName = member.MoodleUserName,
+                                     MoodleStatus = member.MoodleStatus.ToString()
 
 
 
@@ -379,7 +390,7 @@ namespace MembershipImplementation.Services.HRM
                 currentPayment.PaymentStatus = PaymentStatus.PAID;
 
                 await _dbContext.SaveChangesAsync();
-                return new ResponseMessage { Success = true, Message = "Payment Completed Successfully" };
+                return new ResponseMessage { Success = true, Message = "Payment Completed Successfully",Data = member  };
             }
             return new ResponseMessage { Success = false, Message = "Unable To Find Payment Refernece" };
 
@@ -480,6 +491,8 @@ namespace MembershipImplementation.Services.HRM
 
         public async Task<List<MembersGetDto>> RequstedIdCards()
         {
+
+            var encryption = "2B7E151628AED2A6ABF7158809CF4F3C";
             var members = await (from member in _dbContext.Members.Include(x => x.Zone.Region).Include(x => x.EducationalLevel).Where(x => x.IdCardStatus == IDCARDSTATUS.REQUESTED)
                                  join payment in _dbContext.MemberPayments on member.Id equals payment.MemberId into memberPayments
                                  from payment in memberPayments.DefaultIfEmpty()
@@ -508,7 +521,11 @@ namespace MembershipImplementation.Services.HRM
                                      EducationalLevelId = member.EducationalLevelId.ToString(),
                                      IdCardStatus = member.IdCardStatus.ToString(),
                                      PaymentStatus = payment != null ? payment.PaymentStatus.ToString() : PaymentStatus.PENDING.ToString(),
-                                     RejectedRemark = member.RejectedRemark
+                                     RejectedRemark = member.RejectedRemark,
+
+                                     MoodleId = member.MoodleId,
+                                     MoodlePassword = _generalConfig.Decrypt(member.MoodlePassword, encryption),
+                                     MoodleName = member.MoodleUserName
 
                                  }).ToListAsync();
 
@@ -673,10 +690,96 @@ namespace MembershipImplementation.Services.HRM
             {
                 payment.PaymentStatus = PaymentStatus.EXPIRED;
                 _dbContext.SaveChangesAsync();
+                var result = await UpdateMoodleSatus(payment.MemberId, "1");
 
             }
 
         }
+
+
+        public async Task<ResponseMessage> UpdateMoodleSatus(Guid memberId,string status)
+        {
+
+            var member = await _dbContext.Members.FindAsync(memberId);
+
+            if (member!=null &&member.MoodleId!= null) { 
+            try
+            {
+                // Create a new HttpClient instance from the factory.
+                HttpClient httpClient = _httpClientFactory.CreateClient();
+
+                // Define the Moodle API endpoint URL.
+                string apiUrl = "https://emwa-elearning.com/webservice/rest/server.php";
+
+                // Create a new FormData object and add the required parameters.
+                var formData = new MultipartFormDataContent();
+                formData.Add(new StringContent("json"), "moodlewsrestformat");
+                formData.Add(new StringContent("core_user_update_users"), "wsfunction");
+                formData.Add(new StringContent("39df265f0c3e1b44eb442be8afe49c50"), "wstoken");
+                formData.Add(new StringContent(member.MoodleId), "users[0][id]");
+                formData.Add(new StringContent(status), "users[0][suspended]");
+
+                // Send the POST request to the Moodle API.
+                HttpResponseMessage response = await httpClient.PostAsync(apiUrl, formData);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Read the response content as a string.
+                    string responseBody = await response.Content.ReadAsStringAsync();
+
+                        member.MoodleStatus = status=="0"? MoodleStatus.NOTSUSPENDED:MoodleStatus.SUSPENDED;
+                        await _dbContext.SaveChangesAsync();
+
+                        // You can process the responseBody as needed.
+
+                        return new ResponseMessage
+                        {
+                            Success = true,
+                            Data = responseBody,
+                            Message = "Successfully Updated"
+
+                        };
+
+                   
+                }
+                else
+                {
+                        // Handle the case where the Moodle API returns an error.
+
+                        return new ResponseMessage
+                        {
+                            Success = false,
+                          
+                            Message = $"{(int)response.StatusCode} API call failed."
+
+                        };
+                     
+                }
+            }
+            catch (Exception ex)
+            {
+                    // Handle exceptions if something goes wrong with the HTTP request.
+                    //  return BadRequest("An error occurred: " + ex.Message);
+                    return new ResponseMessage
+                    {
+                        Success = false,
+                        Message = ex.Message,
+                    };
+                }
+            }
+            else
+            {
+                return new ResponseMessage
+                {
+                    Success = false,
+                    Message = "Member not Found !!"
+                };
+            }
+
+        }
+
+
+
 
         public async Task UpdateBirthDate()
         {
@@ -706,6 +809,41 @@ namespace MembershipImplementation.Services.HRM
 
         }
 
+
+        public async Task<ResponseMessage> UpdateMemberMoodle(MoodleDto moodlePost)
+        {
+            var member = await _dbContext.Members.FindAsync(moodlePost.MemberId);
+            if (member != null)
+            {
+                member.MoodleId = moodlePost.MoodleId;
+                member.MoodleUserName = moodlePost.MoodleName;
+                var encryption = "2B7E151628AED2A6ABF7158809CF4F3C";
+
+                var password =   _generalConfig.Encrypt(moodlePost.MoodlePassword,encryption);
+                member.MoodlePassword = password;
+               
+
+                _dbContext.SaveChangesAsync();
+
+                var result = await UpdateMoodleSatus(member.Id, "0");
+
+                return new ResponseMessage
+                {
+                    Success = true ,
+                    Message = "Member Moodle Updated Successfully"
+                };  
+            }
+            else
+            {
+                return new ResponseMessage
+                {
+                    Success = false,
+                    Message = "Member Not Found!"
+                };
+            }
+
+
+        }
 
 
 

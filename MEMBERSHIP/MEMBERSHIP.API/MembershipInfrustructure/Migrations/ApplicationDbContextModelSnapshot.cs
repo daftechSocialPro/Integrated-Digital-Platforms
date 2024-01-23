@@ -473,6 +473,18 @@ namespace MembershipInfrustructure.Migrations
                     b.Property<Guid>("MembershipTypeId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("MoodleId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MoodlePassword")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("MoodleStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MoodleUserName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");

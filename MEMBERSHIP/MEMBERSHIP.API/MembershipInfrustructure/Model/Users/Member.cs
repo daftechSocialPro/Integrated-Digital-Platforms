@@ -50,6 +50,15 @@ namespace MembershipInfrustructure.Model.Users
         public bool IsBirthDate { get; set; }
 
 
+        public string ? MoodleUserName { get;set; }
+
+        public string ? MoodleId { get; set; }
+
+        public string ? MoodlePassword { get; set; } 
+
+        public MoodleStatus? MoodleStatus { get; set; }
+
+
 
     }
 
@@ -62,4 +71,10 @@ namespace MembershipInfrustructure.Model.Users
         
 
     } 
+
+    public enum MoodleStatus
+    {
+        NOTSUSPENDED,
+        SUSPENDED
+    }
 }

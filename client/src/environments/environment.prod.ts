@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  baseUrl:'http://192.168.0.47:9005/api',
-  assetUrl :'http://192.168.0.47:9005'
+  baseUrl:'https://emwaerp.com/api',
+  assetUrl :'https://emwaerp.com'
 };

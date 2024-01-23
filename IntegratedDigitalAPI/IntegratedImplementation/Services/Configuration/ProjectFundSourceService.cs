@@ -36,7 +36,9 @@ namespace IntegratedImplementation.Services.Configuration
             ProjectFundSource projectFundSource = new ProjectFundSource
             {
                 Id = id,
-                Name = projectFundSourcePost.Name,           
+                Name = projectFundSourcePost.Name,      
+                Budget =projectFundSourcePost.Budget,
+                FiscalYearId = projectFundSourcePost.FiscalYearId,
                 CreatedById = projectFundSourcePost.CreatedById,
                 CreatedDate = DateTime.Now,
               
@@ -57,8 +59,17 @@ namespace IntegratedImplementation.Services.Configuration
 
         public async Task<List<ProjectFundSourceGetDto>> GetProjectFundSource()
         {
-            var project = await _dbContext.ProjectFundSources.AsNoTracking().
-                ProjectTo<ProjectFundSourceGetDto>(_mapper.ConfigurationProvider).ToListAsync();
+            var project = await _dbContext.ProjectFundSources.Include(x=>x.FiscalYear).AsNoTracking().
+                Select(x => new ProjectFundSourceGetDto
+                {
+                    Id=x.Id,
+                    Name = x.Name,
+                    FiscalYear = x.FiscalYear.Year.ToString(),
+                    FiscalYearId =x.FiscalYearId,
+                    Budget=x.Budget,
+                    RemainingBudget =x.ProjectFunds.Sum(x=>x.Amount)
+
+                }).ToListAsync();
 
             return project;
         }
@@ -75,7 +86,10 @@ namespace IntegratedImplementation.Services.Configuration
             {
 
                 currentCompanyProfile.Name = projectFundSourcePut.Name;
-           
+                currentCompanyProfile.Budget = projectFundSourcePut.Budget; 
+                currentCompanyProfile.FiscalYearId = projectFundSourcePut.FiscalYearId;
+
+
 
                 await _dbContext.SaveChangesAsync();
                 return new ResponseMessage { Data = currentCompanyProfile, Success = true, Message = "Company Profile Updated Successfully" };
@@ -105,5 +119,17 @@ namespace IntegratedImplementation.Services.Configuration
             }
         }
 
+        public async Task<double> GetRemainingBudget(Guid projectFundSourceId)
+        {
+
+            var fundSource = await _dbContext.ProjectFundSources.FindAsync(projectFundSourceId);
+            var usedBudget =  _dbContext.Project_Funds.Where(x=>x.ProjectSourceFundId== projectFundSourceId).Sum(x=>x.Amount);
+
+            var remainingBudget = fundSource.Budget - usedBudget;
+
+            return remainingBudget;
+
+
+        }
     }
 }

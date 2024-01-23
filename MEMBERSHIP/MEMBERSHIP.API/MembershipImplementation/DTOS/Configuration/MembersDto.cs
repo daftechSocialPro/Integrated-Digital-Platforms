@@ -44,7 +44,7 @@ namespace MembershipImplementation.DTOS.Configuration
 
         public string? Email { get; set; }
 
-        public string Woreda { get; set; }
+        public string? Woreda { get; set; }
 
         public string InstituteRole { get; set; }
     }
@@ -92,6 +92,16 @@ namespace MembershipImplementation.DTOS.Configuration
         public string RejectedRemark { get; set; }
 
         public bool IsProfileCompleted { get; set; }
+
+
+        public string? MoodleName { get; set; }
+
+        public string? MoodlePassword { get; set;}
+
+        public string? MoodleId { get;set; }
+
+        public string? MoodleStatus { get; set; }
+
     }
 
 

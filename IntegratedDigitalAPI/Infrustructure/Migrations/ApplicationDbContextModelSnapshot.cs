@@ -432,11 +432,17 @@ namespace IntegratedInfrustructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<double>("Budget")
+                        .HasColumnType("float");
+
                     b.Property<string>("CreatedById")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<Guid>("FiscalYearId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -448,6 +454,8 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CreatedById");
+
+                    b.HasIndex("FiscalYearId");
 
                     b.ToTable("ProjectFundSources");
                 });
@@ -3426,10 +3434,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("LocalName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -3437,12 +3441,20 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<int>("Rowstatus")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("StrategicPlanId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("StratgicPlanId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CreatedById");
+
+                    b.HasIndex("StrategicPlanId");
 
                     b.ToTable("Indicators");
                 });
@@ -4070,8 +4082,6 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.Property<bool>("IsPercentage")
                         .HasColumnType("bit");
-                    b.Property<Guid>("IndicatorId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsTraining")
                         .HasColumnType("bit");
@@ -4135,8 +4145,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasIndex("CreatedById");
 
                     b.HasIndex("EmployeeId");
-
-                    b.HasIndex("IndicatorId");
 
                     b.HasIndex("PlanId");
 
@@ -4864,7 +4872,15 @@ namespace IntegratedInfrustructure.Migrations
                         .WithMany()
                         .HasForeignKey("CreatedById");
 
+                    b.HasOne("IntegratedInfrustructure.Model.PM.BudgetYear", "FiscalYear")
+                        .WithMany()
+                        .HasForeignKey("FiscalYearId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.Navigation("CreatedBy");
+
+                    b.Navigation("FiscalYear");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Configuration.Region", b =>
@@ -5761,7 +5777,7 @@ namespace IntegratedInfrustructure.Migrations
                         .IsRequired();
 
                     b.HasOne("IntegratedInfrustructure.Model.Configuration.ProjectFundSource", "ProjectSourceFund")
-                        .WithMany()
+                        .WithMany("ProjectFunds")
                         .HasForeignKey("ProjectSourceFundId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
@@ -6091,7 +6107,15 @@ namespace IntegratedInfrustructure.Migrations
                         .WithMany()
                         .HasForeignKey("CreatedById");
 
+                    b.HasOne("IntegratedInfrustructure.Model.PM.StrategicPlan", "StrategicPlan")
+                        .WithMany()
+                        .HasForeignKey("StrategicPlanId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.Navigation("CreatedBy");
+
+                    b.Navigation("StrategicPlan");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.AdjustmentHistory", b =>
@@ -6388,12 +6412,6 @@ namespace IntegratedInfrustructure.Migrations
                         .WithMany()
                         .HasForeignKey("EmployeeId");
 
-                    b.HasOne("IntegratedInfrustructure.Models.Common.Indicator", "Indicator")
-                        .WithMany()
-                        .HasForeignKey("IndicatorId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("IntegratedInfrustructure.Model.PM.Project", "Plan")
                         .WithMany("Activities")
                         .HasForeignKey("PlanId");
@@ -6425,8 +6443,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("CreatedBy");
 
                     b.Navigation("Employee");
-
-                    b.Navigation("Indicator");
 
                     b.Navigation("Plan");
 
@@ -6727,6 +6743,11 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("Employee");
 
                     b.Navigation("TaskMemo");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Model.Configuration.ProjectFundSource", b =>
+                {
+                    b.Navigation("ProjectFunds");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeList", b =>

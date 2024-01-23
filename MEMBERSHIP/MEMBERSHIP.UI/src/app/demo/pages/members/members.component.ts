@@ -61,6 +61,7 @@ export class MembersComponent implements OnInit {
       return (
         item.fullName.toLowerCase().includes(searchTerm) ||
         item.phoneNumber.toLowerCase().includes(searchTerm) ||
+        (item.memberId&& item.memberId.toLocaleLowerCase().includes(searchTerm))||
         item.membershipType.toLowerCase().includes(searchTerm) ||
         (item.region&&item.region.toLowerCase().includes(searchTerm) )||
         item.inistitute.toLowerCase().includes(searchTerm) ||
@@ -77,7 +78,6 @@ export class MembersComponent implements OnInit {
 
     let modalRef = this.modalService.open(MemberDetailComponent,{size:'xxl',backdrop:'static',windowClass: 'custom-modal-width'})
     modalRef.componentInstance.member = member
-
     modalRef.result.then(()=>{
       this.getMemberss()
     })

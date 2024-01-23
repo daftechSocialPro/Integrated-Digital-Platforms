@@ -49,7 +49,7 @@
                                 <!--  -->
                                 <div class="col-md-4">
                                     <div class="form-floating">
-                                        <input type="number" class="form-control" [min]="0" #budget id="PlandBudget"
+                                        <input type="number" class="form-control" [min]="0"  id="PlandBudget"
                                             placeholder="PlannedBudget" formControlName="PlandBudget">
                                         <label for="PlandBudget">Planned Budget</label>
 
@@ -101,7 +101,7 @@
                                 <div class="col-4">
 
                                     <label htmlFor="ProjectSourceFunds">Project Source Funds</label>
-                                    <select class="form-control" multiple formControlName="SelectedProjectFunds">
+                                    <select class="form-control" multiple formControlName="SelectedProjectFunds" #budget (change)="getRemainingBudget(budget.value)">
                                         
                                         <option *ngFor="let item of projectSourceFunds" [value]="item.id">{{item.name}}</option>
 
@@ -145,8 +145,8 @@
 
 
                             <!-- <div>{{program.ProgramBudgetYear!}}</div>  -->
-                            <span> Project Manager : {{ProjectManagerId&& ProjectManagerId.name}}</span> <br />
-                            <span> Planned Budget : {{budget.value!}} ETB</span> <br />
+                            <span> Project Manager : {{ProjectManagerId && ProjectManagerId.name}}</span> <br />
+                            <span> Planned Budget : {{fundBudget|number:"1.0-2"}} ETB</span> <br />
 
 
 

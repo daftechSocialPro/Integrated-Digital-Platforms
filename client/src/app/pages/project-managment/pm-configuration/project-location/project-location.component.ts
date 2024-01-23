@@ -5,6 +5,7 @@ import { CommonService } from 'src/app/services/common.service';
 import { ConfigurationService } from 'src/app/services/configuration.service';
 import { AddProjectLocationComponent } from './add-project-location/add-project-location.component';
 import { ConfirmEventType, ConfirmationService, MessageService } from 'primeng/api';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-project-location',
@@ -23,7 +24,9 @@ export class ProjectLocationComponent implements OnInit {
     private confirmationService: ConfirmationService) {
 
   }
-
+  onGlobalFilter(table: Table, event: Event) {
+    table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+  }
   ngOnInit(): void {
     this.getProjectLocations();
   }

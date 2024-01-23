@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "crSi8geG3zPs9IcI9ET3y+aNfJM1Vze9/hjMK83Z/gB7QtBzr+v4s6tbBwKCFwrnV/YB4e+fZpfMIcP1OYqUTQ==",
+  "dgSpecHash": "wrMHnyMPR8BwyEG20eSNzfTerbwjAHU1pCJKz8+JVGUas+1QNXlIx9K5xwh4zqPaBdo76IM2QhrpWReiXy7mzw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Hp\\Desktop\\MEMBERSHIP\\MEMBERSHIP.API\\MembershipInfrustructure\\MembershipInfrustructure.csproj",
+  "projectFilePath": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\MEMBERSHIP\\MEMBERSHIP.API\\MembershipInfrustructure\\MembershipInfrustructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Hp\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\Hp\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",

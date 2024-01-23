@@ -6633,11 +6633,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Hp\\Desktop\\MEMBERSHIP\\MEMBERSHIP.API\\MembershipAPI\\MembershipAPI.csproj",
+      "projectUniqueName": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\MEMBERSHIP\\MEMBERSHIP.API\\MembershipAPI\\MembershipAPI.csproj",
       "projectName": "MembershipAPI",
-      "projectPath": "C:\\Users\\Hp\\Desktop\\MEMBERSHIP\\MEMBERSHIP.API\\MembershipAPI\\MembershipAPI.csproj",
+      "projectPath": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\MEMBERSHIP\\MEMBERSHIP.API\\MembershipAPI\\MembershipAPI.csproj",
       "packagesPath": "C:\\Users\\Hp\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Hp\\Desktop\\MEMBERSHIP\\MEMBERSHIP.API\\MembershipAPI\\obj\\",
+      "outputPath": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\MEMBERSHIP\\MEMBERSHIP.API\\MembershipAPI\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Hp\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -6654,11 +6654,11 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "C:\\Users\\Hp\\Desktop\\MEMBERSHIP\\MEMBERSHIP.API\\MembershipImplementation\\MembershipImplementation.csproj": {
-              "projectPath": "C:\\Users\\Hp\\Desktop\\MEMBERSHIP\\MEMBERSHIP.API\\MembershipImplementation\\MembershipImplementation.csproj"
+            "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\MEMBERSHIP\\MEMBERSHIP.API\\MembershipImplementation\\MembershipImplementation.csproj": {
+              "projectPath": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\MEMBERSHIP\\MEMBERSHIP.API\\MembershipImplementation\\MembershipImplementation.csproj"
             },
-            "C:\\Users\\Hp\\Desktop\\MEMBERSHIP\\MEMBERSHIP.API\\MembershipInfrustructure\\MembershipInfrustructure.csproj": {
-              "projectPath": "C:\\Users\\Hp\\Desktop\\MEMBERSHIP\\MEMBERSHIP.API\\MembershipInfrustructure\\MembershipInfrustructure.csproj"
+            "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\MEMBERSHIP\\MEMBERSHIP.API\\MembershipInfrustructure\\MembershipInfrustructure.csproj": {
+              "projectPath": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\MEMBERSHIP\\MEMBERSHIP.API\\MembershipInfrustructure\\MembershipInfrustructure.csproj"
             }
           }
         }

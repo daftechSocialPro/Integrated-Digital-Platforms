@@ -69,5 +69,13 @@ namespace IntegratedDigitalAPI.Controllers.Configuration
                 return BadRequest();
             }
         }
+
+        [HttpGet("GetRemainingBudget")]
+        [ProducesResponseType(typeof(double), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetRemainingBudget(Guid projectFundSourceId)
+        {
+            return Ok(await _ProjectFundSourceService.GetRemainingBudget(projectFundSourceId));
+        }
+
     }
 }

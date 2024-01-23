@@ -10,13 +10,30 @@
             <form class="" [formGroup]="projectLocationForm" (ngSubmit)="submit()">
                 <div class="modal-body">
                     <div class="row g-3">
-                        <div class="col-md-12" *ngIf="calledFrom==0" >
+                        <div class="col-md-6" *ngIf="calledFrom==0" >
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="Name" placeholder="Name"
                                     formControlName="name">
                                 <label for="Name">Name</label>
                             </div>
                         </div>
+                        <div class="col-md-6" *ngIf="calledFrom==0" >
+                            <div class="form-floating">
+                                <input type="number" class="form-control" id="Budget" placeholder="Budget"
+                                    formControlName="budget">
+                                <label for="Budget">Budget</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6" *ngIf="calledFrom==0" >
+                            <div class="form-floating">
+                                <select class="form-select" id="fiscalYearId" formControlName="fiscalYearId">
+                                    <option *ngFor="let item of fiscalYears" [value]="item.id">{{item.name}}</option>
+                                </select>
+                         
+                                <label for="Budget" >Fiscal Year</label>
+                            </div>
+                        </div>
+
 
                         <div class="col-md-12">
                             <div id="map" [hidden]="calledFrom==0" style="height: 300px;"></div>

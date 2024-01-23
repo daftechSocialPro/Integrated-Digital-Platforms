@@ -4,8 +4,10 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { IndividualConfig } from 'ngx-toastr';
 import { MessageService } from 'primeng/api';
 import { IndicatorGetDto } from 'src/app/model/PM/IndicatorsDto';
+import { SelectList } from 'src/app/model/common';
 import { CommonService } from 'src/app/services/common.service';
 import { ConfigurationService } from 'src/app/services/configuration.service';
+import { DropDownService } from 'src/app/services/dropDown.service';
 
 
 @Component({
@@ -15,6 +17,7 @@ import { ConfigurationService } from 'src/app/services/configuration.service';
 })
 export class UpdateMeasurmentComponent {
 
+  stratgicPlans :SelectList[]
 
 
   @Output() result = new EventEmitter<boolean>();
@@ -24,18 +27,34 @@ export class UpdateMeasurmentComponent {
 
   constructor(
     private formBuilder: FormBuilder, 
-    private configurationService: ConfigurationService, 
+    private configurationService: ConfigurationService,
+    private dropdownService:DropDownService, 
     private messageService: MessageService, private activeModal: NgbActiveModal) { }
 
   ngOnInit(): void {
     console.log("measurment", this.measurement)
-
+    this.getStratgicPlan()
     this.measurmentForm = this.formBuilder.group({
       name: [this.measurement.name, Validators.required],
-      localName: [this.measurement.localName, Validators.required],
+      stratgicPlanId: ['', Validators.required],
       type: [this.measurement.type, Validators.required]
     
     });
+
+   
+  }
+
+  
+  getStratgicPlan(){
+    this.dropdownService.getStrategicPlans().subscribe({
+      next:(res)=>{
+
+        this.stratgicPlans=res
+        console.log(res)
+        this.measurmentForm.controls['stratgicPlanId'].setValue(this.measurement.stratgicPlanId)
+
+      }
+    })
   }
 
   submit() {
@@ -45,7 +64,7 @@ export class UpdateMeasurmentComponent {
       var unitmeasure: IndicatorGetDto = {
         id: this.measurement.id,
         name: value.name,
-        localName: value.localName,
+        stratgicPlanId: value.stratgicPlanId,
         type: value.type,
       
       }

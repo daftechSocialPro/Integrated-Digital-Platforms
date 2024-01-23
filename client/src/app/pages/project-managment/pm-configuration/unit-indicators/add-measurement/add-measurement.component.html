@@ -1,12 +1,12 @@
 <div class="modal-content">
     <div class="modal-header">
-        <h5 class="modal-title">Add Unit of Measurment</h5>
+        <h5 class="modal-title">Add Strategic plan Indicator </h5>
         <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
     </div>
 
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Measurment Detail</h5>
+            <h5 class="card-title">Indicator Detail</h5>
             <form class="" [formGroup]="measurmentForm" (ngSubmit)="submit()">
                 <div class="modal-body">
                     <div class="row g-3">
@@ -19,8 +19,12 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="LocalName" placeholder="Local Name"
-                                    formControlName="localName"> <label for="LocalName">Local Name</label>
+                                <select class="form-select" formControlName="stratgicPlanId">
+                                    <option *ngFor="let item of stratgicPlans" [value]="item.id">{{item.name}}</option>
+
+                                </select>
+                                <label for="stratgicPlanId">Strategic Plan</label>
+                              
                             </div>
                         </div>
                         <div class="col-md-6">

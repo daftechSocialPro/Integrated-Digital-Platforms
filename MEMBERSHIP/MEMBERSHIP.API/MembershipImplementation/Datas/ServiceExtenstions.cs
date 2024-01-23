@@ -24,6 +24,7 @@ namespace MembershipImplementation.Datas
             services.AddScoped<IGeneralConfigService, GeneralConfigService>();
             services.AddScoped<IMemberService, MemberService>();
             services.AddScoped<IEmailService, EmailService>();
+            services.AddHttpClient();
 
             #region             
             services.AddScoped<IRegionService, RegionService>();

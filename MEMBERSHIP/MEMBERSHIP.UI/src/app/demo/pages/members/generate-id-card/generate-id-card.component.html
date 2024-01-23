@@ -8,12 +8,12 @@
     <div class="row" id="card">
       <div class="col-6">
         <h5>Front Side</h5>
-        <div id="id-card">
+        <div id="id-card" style="border: 1px solid #000;">
           <div class="id-card material-ui-shadow">
 
             <!-- \\ mugshot -->
             <div class="id-card__mugshot">
-              <img [src]="getImage2()" alt="Profile" id="id-card-mugshot">
+              <img [src]="imagePath" alt="Profile" id="id-card-mugshot">
 
             </div>
             <!-- // mugshot -->
@@ -77,7 +77,7 @@
 
       <div class="col-6">
         <h5>Back Side</h5>
-        <div id="id-card-backside">
+        <div id="id-card-backside" style="border: 1px solid #000;">
           <div class="id-card-backside material-ui-shadow">
 
             <!-- \\ mugshot -->
@@ -86,11 +86,12 @@
 
             <!-- // details -->
             <div class="id-card-backside__details">
-              <div class="id-card-backside__detail">
-                <span class="id-card-backside__detail-label">ETHIOPIAN MIDWIVES ASSOCIATION</span>
+              <div class="id-card-backside__detail text-center">
+                <span class="id-card-backside__detail-label ">ETHIOPIAN MIDWIVES </span> <br/>
+                <span class="id-card-backside__detail-label " >ASSOCIATION</span>
               </div>
 
-              <div class="id-card-backside__detail">
+              <div class="id-card-backside__detail mt-4">
 
                 <span class="id-card-backside__detail-value">Address: Equatorial Guinnea Road, Near Lem hotel </span>
 

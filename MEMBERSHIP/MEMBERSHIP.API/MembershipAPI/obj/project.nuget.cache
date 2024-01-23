@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "A3DNAzG3sVc4gM/Elk5w6CFuWlmwaUyUzM0vGHzR6PqEHtG1k3MLSnmtrNHm1pvFWjjFfyXxu+7oeqcMR+FcBg==",
+  "dgSpecHash": "waUEyLzCkXMxrhkznKGtUuBBD1rZ1G/egPMJDqQRuO0AxFkPwiLOBC+8ljXn/I7PH7vJmOG6uFsKozgojSAmXA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Hp\\Desktop\\MEMBERSHIP\\MEMBERSHIP.API\\MembershipAPI\\MembershipAPI.csproj",
+  "projectFilePath": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\MEMBERSHIP\\MEMBERSHIP.API\\MembershipAPI\\MembershipAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Hp\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\Hp\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

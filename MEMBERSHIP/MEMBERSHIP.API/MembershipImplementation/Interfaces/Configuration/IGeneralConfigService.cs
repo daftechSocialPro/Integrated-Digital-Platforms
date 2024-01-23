@@ -13,5 +13,9 @@ namespace MembershipImplementation.Interfaces.Configuration
         Task<string> GenerateCode(GeneralCodeType GeneralCodeType, string memberType);
         Task<string> UploadFiles(IFormFile formFile, string Name, string FolderName);
         Task<string> GetFiles(string path);
+
+        string Encrypt(string text, string encryptionKey);
+        string Decrypt(string encryptedText, string encryptionKey);
+
     }
 }

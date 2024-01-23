@@ -36,6 +36,14 @@ export interface IMembersGetDto {
   idCardStatus:string
   rejectedRemark:string
   isBirthDate:boolean
+
+  moodleName:string
+  moodlePassword?: string 
+  moodleId :string
+
+  moodleStatus:string
+
+
 }
 export interface ICompletePorfileDto {
   id: string;
@@ -74,5 +82,12 @@ id:string
   membershipTypeId: string;
   url:string
   
+}
+
+export interface MoodleUpdateDto {
+memberId :string
+moodleName:string
+moodlePassword?: string 
+moodleId :string
 }
 

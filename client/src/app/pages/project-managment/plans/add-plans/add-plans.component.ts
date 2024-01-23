@@ -11,6 +11,7 @@ import { HrmService, toastPayload } from 'src/app/services/hrm.service';
 import { SelectList } from 'src/app/model/common';
 import { DropDownService } from 'src/app/services/dropDown.service';
 import { MessageService } from 'primeng/api';
+import { ConfigurationService } from 'src/app/services/configuration.service';
 
 @Component({
   selector: 'app-add-plans',
@@ -34,14 +35,15 @@ export class AddPlansComponent implements OnInit {
   ProjectManagerId!: SelectList;
   FinanceId!: string;
 
-  
+  fundBudget:string
 
 
   constructor(
     private activeModal: NgbActiveModal,
     private formBuilder: FormBuilder,
   
-private messageService: MessageService,
+    private configurationService : ConfigurationService,
+    private messageService: MessageService,
     private planService : PlanService,
     private commonService: CommonService,
     private dorpDownService: DropDownService) { }
@@ -72,7 +74,22 @@ private messageService: MessageService,
 
   }
 
+getRemainingBudget(value:any){
 
+  const selectedValues = this.planForm.get('SelectedProjectFunds').value;
+  this.fundBudget=''
+  selectedValues.map((item)=>{
+
+    this.configurationService.getRemainingBudget(item).subscribe({
+      next:(res)=>{
+        this.fundBudget+= res
+      }
+  
+    })
+
+  })
+
+}
 
   getDepartments(){
 

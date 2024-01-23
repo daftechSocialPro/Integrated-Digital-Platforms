@@ -6,5 +6,6 @@ export const environment = {
   clienUrl:'http://192.168.0.47:4204',
   baseUrl:'http://192.168.0.47:9006/api',
   assetUrl :'http://192.168.0.47:9006',
-  paymentUrl : 'https://node-express-vercel-wine-gamma.vercel.app/'
+  paymentUrl : 'https://node-express-vercel-wine-gamma.vercel.app/',
+  moodleUrl: 'https://emwa-elearning.com/webservice/rest/server.php'
 };

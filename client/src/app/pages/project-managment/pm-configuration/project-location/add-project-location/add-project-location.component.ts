@@ -7,6 +7,8 @@ import { ProjectLocationGetDto, ProjectLocationPostDto } from 'src/app/model/PM/
 import { ConfigurationService } from 'src/app/services/configuration.service';
 
 import * as L from 'leaflet';
+import { DropDownService } from 'src/app/services/dropDown.service';
+import { SelectList } from 'src/app/model/common';
 
 @Component({
   selector: 'app-add-project-location',
@@ -18,6 +20,7 @@ export class AddProjectLocationComponent implements OnInit {
   @Input() lng !: number
   private map!: L.Map;
   marker!: L.Marker;
+  fiscalYears : SelectList[]
   @Input() calledFrom!:number 
 
   projectLocationForm!: FormGroup
@@ -29,14 +32,19 @@ export class AddProjectLocationComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
     private configurationService: ConfigurationService,
+    private dropDownService : DropDownService,
     private messageService: MessageService,
     private activeModal: NgbActiveModal) { }
 
   ngOnInit(): void {
 
+
+    this.getFiscalYears()
     if (this.projectLocation) {
       this.projectLocationForm = this.formBuilder.group({
         name: [this.projectLocation.name, Validators.required],
+        fiscalYearId:[this.projectLocation.fiscalYearId,Validators.required],
+        budget:[this.projectLocation.budget,Validators.required]
 
       });
      
@@ -58,6 +66,8 @@ export class AddProjectLocationComponent implements OnInit {
     else {
       this.projectLocationForm = this.formBuilder.group({
         name: ['', Validators.required],
+        fiscalYearId:['',Validators.required],
+        budget:['',Validators.required]
 
       });
       this.lat = 9.1450
@@ -68,8 +78,18 @@ export class AddProjectLocationComponent implements OnInit {
 
 
 
+
+
   }
 
+  getFiscalYears(){
+
+    this.dropDownService.getFiscalYears().subscribe({
+      next:(res)=>{
+        this.fiscalYears = res 
+      }
+    })
+  }
   submit() {
 
     if(this.projectLocation){
@@ -79,6 +99,8 @@ export class AddProjectLocationComponent implements OnInit {
   
           id:this.projectLocation.id,
           name: this.projectLocationForm.value.name,
+          fiscalYearId: this.projectLocationForm.value.fiscalYearId,
+          budget:this.projectLocationForm.value.budget
          
           // type : this.projectLocationForm.value.type
   
@@ -126,6 +148,8 @@ export class AddProjectLocationComponent implements OnInit {
       var projectLocationpost: ProjectLocationPostDto = {
 
         name: this.projectLocationForm.value.name,
+        fiscalYearId: this.projectLocationForm.value.fiscalYearId,
+        budget:this.projectLocationForm.value.budget
   
         // type : this.projectLocationForm.value.type
 

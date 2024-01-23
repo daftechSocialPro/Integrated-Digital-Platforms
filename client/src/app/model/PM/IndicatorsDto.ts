@@ -2,7 +2,8 @@ export interface IndicatorPostDto {
 
     id ?: String ,
     name: string ,
-    localName : string,
+    stratgicPlanId : string,
+  
     type: string,
     createdById?:string
    
@@ -12,7 +13,8 @@ export interface IndicatorGetDto {
 
     id : String ,
     name: string ,
-    localName : string,
+    stratgicPlanId : string,
+    stratgicPlan ?: string,
     type: string,
    
 

@@ -43,6 +43,10 @@ namespace MembershipImplementation.Interfaces.HRM
         Task UPdateExpiredDateStatus();
         Task UpdateBirthDate();
 
+        Task <ResponseMessage> UpdateMoodleSatus(Guid memberId, string status);
+
+        Task <ResponseMessage> UpdateMemberMoodle(MoodleDto moodlePost);
+
 
         Task<byte[]> MembershipTypeReport();
 

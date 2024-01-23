@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { ResponseMessage, ResponseMessage2 } from 'src/models/ResponseMessage.Model';
-import { IMemberUpdateDto, IMembersGetDto, IMembersPostDto } from 'src/models/auth/membersDto';
+import { IMemberUpdateDto, IMembersGetDto, IMembersPostDto, MoodleUpdateDto } from 'src/models/auth/membersDto';
 import { IMakePayment, IPaymentData } from 'src/models/payment/IPaymentDto';
 
 @Injectable({
@@ -11,6 +11,8 @@ import { IMakePayment, IPaymentData } from 'src/models/payment/IPaymentDto';
 export class MemberService {
   constructor(private http: HttpClient) { }
   readonly BaseURI = environment.baseUrl;
+
+  readonly moodleURI = environment.moodleUrl;
 
   checkIfPhoneNumberExist(phoneNumber: string) {
     return this.http.get<ResponseMessage2>(this.BaseURI + `/Member/CheckIfPhoneNumberExistFromBot?phoneNumber=${phoneNumber}`);
@@ -52,5 +54,24 @@ export class MemberService {
     return this.http.post(this.BaseURI + `/Member/MembershipReport`,{responseType:'Blob'});
   }
 
+
+  callMoodle (formData:FormData){
+
+    return this.http.post<any>(this.moodleURI,formData)
+  }
+  updateMoodle (formData:FormData){
+
+    return this.http.post<any>(this.moodleURI,formData)
+  }
+
+
+  updateMoodleApi (moodle:MoodleUpdateDto){
+    return this.http.put<ResponseMessage>(this.BaseURI+"/Member/UpdateMoodle",moodle)
+  }
+
+  updateMoodleStatus(memberId:string,status:string){
+
+    return this.http.post<ResponseMessage>(this.BaseURI+`/Member/UpdateMoodleStatus?memberId=${memberId}&status=${status}`,{})  
+  }
 
 }

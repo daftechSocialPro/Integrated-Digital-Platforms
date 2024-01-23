@@ -190,6 +190,11 @@ export class HrmService {
         return this.http.put<ResponseMessage>(this.baseUrl + "/Employee/UpdateEmployee", employeePost)
     }
 
+    deleteEmployee(employeeId : string ){
+        return this.http.delete<ResponseMessage>(this.baseUrl + `/Employee/DeleteEmployee?employeeId=${employeeId}`)
+
+    }
+
     updateEmployeeData(employeePost: FormData) {
         return this.http.put<ResponseMessage>(this.baseUrl + "/Employee/UpdateEmployeeData", employeePost)
 

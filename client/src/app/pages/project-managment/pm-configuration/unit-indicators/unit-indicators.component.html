@@ -2,14 +2,14 @@
     <div class="row p-2">
         <div class="col-lg-12 text-end ">
             <button type="button" class="btn btn-outline-primary" (click)="addUnitOfMeasurment()"><i class="bi bi-plus me-1"></i>
-                Indicaotrs</button>
+                Stratgic Plan Indicaotrs</button>
         </div>
     </div>
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Indicators</h5>
+                    <h5 class="card-title">Stratgic Plan Indicators</h5>
 
                     <p-table
                     [value]="unitOfMeasurments"
@@ -25,7 +25,7 @@
                         <tr>
                             
                             <th scope="col">Name</th>
-                            <th scope="col">Local Name</th>
+                            <th scope="col">Stratgic Plan</th>
                             <th scope="col">Measurment Type </th>                       
                             <th scope="col">Action</th>
                           
@@ -34,7 +34,7 @@
                     <ng-template pTemplate="body" let-measurment>
                         <tr>
                             <td>{{ measurment.name }}</td>
-                            <td>{{ measurment.localName }}</td>
+                            <td>{{ measurment.stratgicPlan }}</td>
                             <td>{{ measurment.type }}</td>
                             <td>
                              

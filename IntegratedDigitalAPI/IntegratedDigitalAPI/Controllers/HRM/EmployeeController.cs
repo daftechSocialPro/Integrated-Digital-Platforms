@@ -123,6 +123,21 @@ namespace IntegratedDigitalAPI.Controllers.HRM
         }
 
 
+        [HttpDelete]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> DeleteEmployee(Guid employeeId)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _employeeService.DeleteEmployee(employeeId));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> AddVolunter([FromForm] VolunterPostDto employee)

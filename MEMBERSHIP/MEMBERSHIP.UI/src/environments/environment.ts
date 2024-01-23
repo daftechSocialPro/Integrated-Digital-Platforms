@@ -10,7 +10,8 @@ export const environment = {
   clienUrl:'http://localhost:4200',
   baseUrl:'http://localhost:5267/api',
   assetUrl :'http://localhost:5267',
-  paymentUrl : 'https://node-express-vercel-wine-gamma.vercel.app/'
+  paymentUrl : 'https://node-express-vercel-wine-gamma.vercel.app/',
+  moodleUrl: 'https://emwa-elearning.com/webservice/rest/server.php'
 };
 
 /*

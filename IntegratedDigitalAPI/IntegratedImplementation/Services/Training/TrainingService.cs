@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Implementation.Helper;
+using IntegratedImplementation.DTOS.Authentication;
 using IntegratedImplementation.DTOS.Configuration;
 using IntegratedImplementation.DTOS.Training;
 using IntegratedImplementation.Helper;
@@ -9,6 +10,7 @@ using IntegratedImplementation.Interfaces.Training;
 using IntegratedInfrustructure.Data;
 using IntegratedInfrustructure.Model.Training;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -29,12 +31,15 @@ namespace IntegratedImplementation.Services.Training
 
         private readonly IGeneralConfigService _generalConfig;
 
-        public TrainingService(ApplicationDbContext dbContext, IMapper mapper,IEmailService emailService, IGeneralConfigService generalConfig)
+        private readonly IConfiguration _configuration;
+
+        public TrainingService(ApplicationDbContext dbContext, IMapper mapper,IEmailService emailService, IGeneralConfigService generalConfig, IConfiguration configuration)
         {
             _dbContext = dbContext;
             _mapper = mapper;
             _emailService = emailService;
             _generalConfig = generalConfig;
+            _configuration = configuration;
         }
 
 
@@ -293,7 +298,12 @@ namespace IntegratedImplementation.Services.Training
         {
             try
             {
-                var url = type == "report" ? "http://localhost:4200/trainee-form/training-report-form/" : "http://localhost:4200/trainee-form/";
+                var appSettings = _configuration.GetSection("ApplicationSetting");
+
+                var clientUrl = appSettings["Client_URL"];
+                
+
+                var url = type == "report" ? $"{clientUrl}/trainee-form/training-report-form/" : $"{clientUrl}/trainee-form/";
 
                 var email = new EmailMetadata
                   (trainerEmail.Email, "Trainees List",

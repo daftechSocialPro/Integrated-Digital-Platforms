@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "S4z39P1xRyTzWimMO/76itkBp8ysn1cEk0e+IQc9QQcBPy1MXkvXs4FnwRkm1aLLlClnZrL9OLBpH9gLSlyNgQ==",
+  "dgSpecHash": "jm9EiEDLhOhga0D7BX9i0k98p8bVBdR7t4Vjh3afaSdJTWFE1uxEdA7/G0otpmCZ8CVnm3AI9KVJbUA3t0V3vA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Hp\\Desktop\\MEMBERSHIP\\MEMBERSHIP.API\\MembershipImplementation\\MembershipImplementation.csproj",
+  "projectFilePath": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\MEMBERSHIP\\MEMBERSHIP.API\\MembershipImplementation\\MembershipImplementation.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Hp\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\Hp\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",

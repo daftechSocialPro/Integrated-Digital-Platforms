@@ -1,5 +1,6 @@
 ﻿using Implementation.Helper;
 using MembershipImplementation.DTOS.Configuration;
+using MembershipImplementation.DTOS.HRM;
 using MembershipImplementation.DTOS.Payment;
 using MembershipImplementation.Interfaces.HRM;
 using Microsoft.AspNetCore.Http;
@@ -151,6 +152,33 @@ namespace MembershipDigitalAPI.Controllers.HRM
             return File(report, "application/pdf");
         }
 
+        [HttpPut]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> UpdateMoodle(MoodleDto moodlePost)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _memberService.UpdateMemberMoodle(moodlePost));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> UpdateMoodleStatus(Guid memberId,string status)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _memberService.UpdateMoodleSatus(memberId,status));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
 
 
 

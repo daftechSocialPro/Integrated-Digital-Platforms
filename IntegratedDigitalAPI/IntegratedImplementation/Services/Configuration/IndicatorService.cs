@@ -22,12 +22,13 @@ namespace IntegratedImplementation.Interfaces.Configuration
 
         public async Task<ResponseMessage> CreateIndicator(IndicatorPostDto indicator)
         {
-           
+
+         
             var unitOfMeasurment = new Indicator
             {
                 Id = Guid.NewGuid(),
                 Name = indicator.Name,
-                LocalName = indicator.LocalName,
+                StrategicPlanId  = indicator.StratgicPlanId,
                 Type = Enum.Parse<TypeOfIndicator>(indicator.Type),
                 CreatedDate = DateTime.Now,
                 CreatedById= indicator.CreatedById
@@ -47,11 +48,12 @@ namespace IntegratedImplementation.Interfaces.Configuration
         }
         public async Task<List<IndicatorGetDto>> GetIndicator()
         {
-            return await _dBContext.Indicators.AsNoTracking().Select(x=> new IndicatorGetDto
+            return await _dBContext.Indicators.Include(x=>x.StrategicPlan).AsNoTracking().Select(x=> new IndicatorGetDto
             {
                 Id = x.Id,
                 Name = x.Name,
-                LocalName= x.LocalName,
+                StratgicPlan= x.StrategicPlan.Name,
+                StratgicPlanId = x.StrategicPlanId,
                 Type = x.Type.ToString()
             }).ToListAsync();
         }
@@ -64,7 +66,7 @@ namespace IntegratedImplementation.Interfaces.Configuration
             var unitMeasurment = _dBContext.Indicators.Find(indicator.Id);
 
             unitMeasurment.Name = indicator.Name;
-            unitMeasurment.LocalName= indicator.LocalName;
+            unitMeasurment.StrategicPlanId= indicator.StratgicPlanId;
             unitMeasurment.Type = Enum.Parse<TypeOfIndicator>(indicator.Type);
          
             _dBContext.Entry(unitMeasurment).State = EntityState.Modified;
