@@ -39,5 +39,9 @@ export class TaskService {
     return this.http.post(this.BaseURI + "/TaskMemo", taskMemo)
   }
 
+  updateTask(task: Task){
+    return this.http.put(this.BaseURI ,task)
+  }
+
 
 }

@@ -1,4 +1,5 @@
-﻿using IntegratedDigitalAPI.DTOS.PM;
+﻿using Implementation.Helper;
+using IntegratedDigitalAPI.DTOS.PM;
 using IntegratedImplementation.DTOS.Configuration;
 using IntegratedInfrustructure.Data;
 using IntegratedInfrustructure.Model.PM;
@@ -103,7 +104,7 @@ namespace IntegratedDigitalAPI.Services.PM
                 {
                     activityViewDtos = (from a in _dBContext.ActivitiesParents.Where(x => x.TaskId == taskId)
                                         join e in _dBContext.Activities.OrderBy(x=>x.CreatedDate).
-                                        Include(x=>x.Zone).ThenInclude(x=>x.Region).ThenInclude(x=>x.Country)
+                                        Include(x=>x.Region).ThenInclude(x=>x.Country)
                                      on a.Id equals e.ActivityParentId
                                         // join ae in _dBContext.EmployeesAssignedForActivities.Include(x=>x.Employee) on e.Id equals ae.ActivityId
                                         select new ActivityViewDto
@@ -112,7 +113,7 @@ namespace IntegratedDigitalAPI.Services.PM
                                             Name = e.ActivityDescription,
                                             PlannedBudget = e.PlanedBudget,
                                             ActivityType = e.ActivityType.ToString(),
-                                            ProjectLocation = $"{e.Woreda}-{e.Zone.ZoneName}-{e.Zone.Region.RegionName}-{e.Zone.Region.Country.CountryName}",
+                                            ProjectLocation = $"{e.Woreda}-{e.Zone}-{e.Region.RegionName}-{e.Region.Country.CountryName}",
                                             IsTraining = e.IsTraining,
                                             ProjectLocationLng = e.Longtude,
                                             ProjectLocationLat = e.Latitude,
@@ -158,7 +159,7 @@ namespace IntegratedDigitalAPI.Services.PM
                 else
                 {
                     activityViewDtos = (from e in _dBContext.Activities.OrderBy(x=>x.CreatedDate)
-                                         .Include(x => x.Zone).ThenInclude(x => x.Region).ThenInclude(x => x.Country)
+                                         .Include(x => x.Region).ThenInclude(x => x.Country)
                                         where e.TaskId == task.Id
                                         // join ae in _dBContext.EmployeesAssignedForActivities.Include(x=>x.Employee) on e.Id equals ae.ActivityId
                                         select new ActivityViewDto
@@ -167,7 +168,7 @@ namespace IntegratedDigitalAPI.Services.PM
                                             Name = e.ActivityDescription,
                                             PlannedBudget = e.PlanedBudget,
                                             ActivityType = e.ActivityType.ToString(),
-                                            ProjectLocation = $"{e.Woreda}-{e.Zone.ZoneName}-{e.Zone.Region.RegionName}-{e.Zone.Region.Country.CountryName}",
+                                            ProjectLocation = $"{e.Woreda}-{e.Zone}-{e.Region.RegionName}-{e.Region.Country.CountryName}",
                                             IsTraining = e.IsTraining,
                                             ProjectLocationLng = e.Longtude,
                                             ProjectLocationLat = e.Latitude,
@@ -261,7 +262,7 @@ namespace IntegratedDigitalAPI.Services.PM
                     var activityProgress = _dBContext.ActivityProgresses;
 
                     var activityViewDtos = (from e in _dBContext.Activities.OrderBy(x=>x.CreatedDate).
-                                           Include(x=>x.Zone).ThenInclude(x=>x.Region).ThenInclude(x=>x.Country)
+                                           Include(x=>x.Region).ThenInclude(x=>x.Country)
                                             where e.PlanId == plan.Id
                                             // join ae in _dBContext.EmployeesAssignedForActivities.Include(x=>x.Employee) on e.Id equals ae.ActivityId
                                             select new ActivityViewDto
@@ -270,7 +271,7 @@ namespace IntegratedDigitalAPI.Services.PM
                                                 Name = e.ActivityDescription,
                                                 PlannedBudget = e.PlanedBudget,
                                                 ActivityType = e.ActivityType.ToString(),
-                                                ProjectLocation = $"{e.Woreda}-{e.Zone.ZoneName}-{e.Zone.Region.RegionName}-{e.Zone.Region.Country.CountryName}",
+                                                ProjectLocation = $"{e.Woreda}-{e.Zone}-{e.Region.RegionName}-{e.Region.Country.CountryName}",
                                                 ProjectLocationLng = e.Longtude,
                                                 ProjectLocationLat = e.Latitude,
                                                 ActivityNumber= e.ActivityNumber,
@@ -427,7 +428,89 @@ namespace IntegratedDigitalAPI.Services.PM
         }
 
 
+        public async Task<ResponseMessage> UpdateTask(TaskDto updateTask)
+        {
+            try
+            {
+                var task = await _dBContext.Tasks.FindAsync(updateTask.Id);
 
+                if (task != null)
+                {
+                    task.TaskDescription = updateTask.TaskDescription;
+                    task.PlanedBudget = updateTask.PlannedBudget;
+                    task.HasActivityParent = updateTask.HasActvity;
+
+                    await _dBContext.SaveChangesAsync();
+
+                    return new ResponseMessage
+                    {
+                        Success = true,
+                        Message = "Task Updated Successfully"
+                    };
+                }
+                else
+                {
+                    return new ResponseMessage
+                    {
+                        Success = false,
+                        Message = "Task Not Found"
+                    };
+
+                }
+            }
+            catch(Exception ex)
+            {
+                return new ResponseMessage
+                {
+                    Success = false,
+                    Message = ex.Message
+
+                };
+            }
+            
+
+        }
+
+        public async Task<ResponseMessage> DeleteTask(Guid taskId)
+        {
+            try
+            {
+                var task = await _dBContext.Tasks.FindAsync(taskId);
+
+                if (task != null)
+                {
+                    _dBContext.Tasks.Remove(task);
+
+                    await _dBContext.SaveChangesAsync();
+
+                    return new ResponseMessage
+                    {
+                        Message = "Task Deleted Successfully",
+                        Success = true
+                    };
+
+                }
+                else
+                {
+                   
+                    return new ResponseMessage
+                    {
+                        Success = false,
+                        Message = "Task Not Found"
+                    };
+
+                }
+            }
+            catch(Exception ex) 
+            {
+                return new ResponseMessage
+                {
+                    Success = false,
+                    Message = ex.Message
+
+                };
+            }
+        }
 
     }
 }

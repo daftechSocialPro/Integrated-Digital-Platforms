@@ -8,11 +8,12 @@ import { TaskService } from 'src/app/services/task.service';
 import { UserService } from 'src/app/services/user.service';
 import { AddTasksComponent } from '../../tasks/add-tasks/add-tasks.component';
 import { AddActivitiesComponent } from '../../activity-parents/add-activities/add-activities.component';
-import { TaskView } from 'src/app/model/PM/TaskDto';
+import { Task, TaskView } from 'src/app/model/PM/TaskDto';
 import { GetStartEndDate } from 'src/app/model/common';
 import { ActivityTargetComponent } from '../../view-activties/activity-target/activity-target.component';
 import { ActivityView } from 'src/app/model/PM/ActivityViewDto';
 import { ExcelService } from 'src/app/services/excel.service';
+import { UpdateTasksComponent } from '../../tasks/update-tasks/update-tasks.component';
 
 @Component({
   selector: 'app-plan-detail',
@@ -124,6 +125,16 @@ export class PlanDetailComponent implements OnInit {
   addTask() {
     let modalRef = this.modalService.open(AddTasksComponent, { size: 'xl', backdrop: 'static' })
     modalRef.componentInstance.plan = this.plan
+    modalRef.result.then((res) => {
+      this.getPlans()
+    })
+
+  }
+
+  updateTask(task: Task) {
+    let modalRef = this.modalService.open(UpdateTasksComponent, { size: 'xl', backdrop: 'static' })
+    modalRef.componentInstance.plan = this.plan
+    modalRef.componentInstance.task = task
     modalRef.result.then((res) => {
       this.getPlans()
     })

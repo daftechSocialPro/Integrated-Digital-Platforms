@@ -44,7 +44,8 @@ namespace IntegratedDigitalAPI.DTOS.PM
         public Guid? TaskId { get; set; }
         public string[]? Employees { get; set; }
 
-        public Guid ZoneId { get; set; }
+        //public Guid ZoneId { get; set; }
+        public string? Zone { get; set; }
         public string Woreda { get; set; }
         public Guid StrategicPlanId { get; set; }
 

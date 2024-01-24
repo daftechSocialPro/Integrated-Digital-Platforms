@@ -81,7 +81,8 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                 activity.ShouldStat =  DateTime.Parse(item.StartDate);
                 activity.ShouldEnd = DateTime.Parse(item.EndDate);
                 activity.StrategicPlanId = item.StrategicPlanId;
-                activity.ZoneId = item.ZoneId;
+                //activity.ZoneId = item.ZoneId;
+                activity.Zone = item.Zone;
                 activity.Woreda = item.Woreda;
                 activity.ActivityNumber = item.ActivityNumber;
                 activity.Longtude = item.Longtude;
@@ -172,7 +173,8 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
             activity.Indicator = activityDetail.UnitOfMeasurement;
 
             activity.StrategicPlanId = activityDetail.StrategicPlanId;
-            activity.ZoneId = activityDetail.ZoneId;
+            //activity.ZoneId = activityDetail.ZoneId;
+            activity.Zone = activityDetail.Zone;
             activity.Woreda = activityDetail.Woreda;
             activity.ActivityNumber = activityDetail.ActivityNumber;
 
@@ -625,7 +627,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
             List<ActivityViewDto> assignedActivities =
                 await (from e in _dBContext.Activities
                        
-                        .Include(x => x.Zone).ThenInclude(x => x.Region).ThenInclude(x => x.Country)
+                        .Include(x => x.Region).ThenInclude(x => x.Country)
                        .Include(x=>x.Commitee).ThenInclude(x=>x.Employees)
                        .Where(x=>x.ActualEnd==null)
                        where employeeAssigned.Contains(e.Id)||(e.ProjectTeamId!=null?e.Commitee.Employees.Select(x=>x.EmployeeId).Contains(employeeId):false)
@@ -635,7 +637,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                            Name = e.ActivityDescription,
                            PlannedBudget = e.PlanedBudget,
                            ActivityType = e.ActivityType.ToString(),
-                           ProjectLocation = $"{e.Woreda}-{e.Zone.ZoneName}-{e.Zone.Region.RegionName}-{e.Zone.Region.Country.CountryName}",
+                           ProjectLocation = $"{e.Woreda}-{e.Zone}-{e.Region.RegionName}-{e.Region.Country.CountryName}",
                            IsTraining = e.IsTraining,
                            ProjectLocationLng = e.Longtude,
                            ProjectLocationLat = e.Latitude,
@@ -719,7 +721,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                 foreach (var activitprogress in not)
                 {
 
-                    var activityViewDtos = (from e in _dBContext.ActivityProgresses.Include(x => x.Activity.ActivityParent.Task.Project.Department).Include(x=>x.Activity.Zone.Region.Country).Where(a => a.Id == activitprogress.Id && (a.IsApprovedByManager == ApprovalStatus.PENDING || a.IsApprovedByDirector == ApprovalStatus.PENDING || a.IsApprovedByFinance == ApprovalStatus.PENDING))
+                    var activityViewDtos = (from e in _dBContext.ActivityProgresses.Include(x => x.Activity.ActivityParent.Task.Project.Department).Include(x=>x.Activity.Region.Country).Where(a => a.Id == activitprogress.Id && (a.IsApprovedByManager == ApprovalStatus.PENDING || a.IsApprovedByDirector == ApprovalStatus.PENDING || a.IsApprovedByFinance == ApprovalStatus.PENDING))
                                                 // join ae in _dBContext.EmployeesAssignedForActivities.Include(x=>x.Employee) on e.Id equals ae.ActivityId
                                             select new ActivityViewDto
                                             {
@@ -727,7 +729,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                                                 Name = e.Activity.ActivityDescription,
                                                 PlannedBudget = e.Activity.PlanedBudget,
                                                 ActivityType = e.Activity.ActivityType.ToString(),
-                                                ProjectLocation = $"{e.Activity.Woreda}-{e.Activity.Zone.ZoneName}-{e.Activity.Zone.Region.RegionName}-{e.Activity.Zone.Region.Country.CountryName}",
+                                                ProjectLocation = $"{e.Activity.Woreda}-{e.Activity.Zone}-{e.Activity.Region.RegionName}-{e.Activity.Region.Country.CountryName}",
                                                IsTraining = e.Activity.IsTraining,
 
                                                 ProjectLocationLng = e.Activity.Longtude,
@@ -877,7 +879,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
             var activityProgress = _dBContext.ActivityProgresses;
             ActivityViewDto assignedActivities =
                 await (from e in _dBContext.Activities.Where(x=>x.Id==actId)
-                        .Include(x => x.Zone).ThenInclude(x => x.Region).ThenInclude(x => x.Country)
+                        .Include(x => x.Region).ThenInclude(x => x.Country)
                        .Include(x => x.Commitee).ThenInclude(x => x.Employees)
                        .Where(x => x.ActualEnd == null)
     
@@ -887,7 +889,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                            Name = e.ActivityDescription,
                            PlannedBudget = e.PlanedBudget,
                            ActivityType = e.ActivityType.ToString(),
-                           ProjectLocation = $"{e.Woreda}-{e.Zone.ZoneName}-{e.Zone.Region.RegionName}-{e.Zone.Region.Country.CountryName}",
+                           ProjectLocation = $"{e.Woreda}-{e.Zone}-{e.Region.RegionName}-{e.Region.Country.CountryName}",
                            IsTraining = e.IsTraining,
                            ProjectLocationLng = e.Longtude,
                            ProjectLocationLat = e.Latitude,
