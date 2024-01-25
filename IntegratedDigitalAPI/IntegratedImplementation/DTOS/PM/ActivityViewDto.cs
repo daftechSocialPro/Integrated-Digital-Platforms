@@ -37,6 +37,14 @@ namespace IntegratedDigitalAPI.DTOS.PM
         public bool IsDirector { get; set; }
 
         public bool IsTraining { get; set; }
+        public float? OfficeWork { get;  set; }
+        public float? FieldWork { get;  set; }
+        public Guid? StrategicPlan { get;  set; }
+        public Guid? StrategicPlanIndicator { get;  set; }
+        public bool? IsPercentage { get;  set; }
+        public Guid? RegionId { get;  set; }
+        public string? Zone { get;  set; }
+        public string? Woreda { get; set; }
     }
 
     public class MonthPerformanceViewDto

@@ -3,12 +3,14 @@ namespace IntegratedDigitalAPI.DTOS.PM
 {
     public class ActivityDetailDto
     {
+        public Guid? Id { get; set; }
         public string ActivityDescription { get; set; } = null!;
         public bool HasActivity { get; set; }
         public Guid TaskId { get; set; }
 
-        public Guid ZoneId { get; set; }
-
+        public Guid? RegionId { get; set; }
+        //public Guid ZoneId { get; set; }
+        public string? Zone { get; set; }
         public string? Woreda { get; set; }
 
        
@@ -20,6 +22,7 @@ namespace IntegratedDigitalAPI.DTOS.PM
 
     public class SubActivityDetailDto
     {
+        public Guid? Id { get; set; }
         public Guid CreatedBy { get; set; }
         public string SubActivityDesctiption { get; set; } = null!;
         public string? ActivityNumber { get; set; }
@@ -45,8 +48,11 @@ namespace IntegratedDigitalAPI.DTOS.PM
         public string[]? Employees { get; set; }
 
         //public Guid ZoneId { get; set; }
+        public Guid RegionId { get; set; }
+        
         public string? Zone { get; set; }
         public string Woreda { get; set; }
+        public Guid StrategicPlanIndicatorId { get; set; }
         public Guid StrategicPlanId { get; set; }
 
         public double Longtude { get; set; }

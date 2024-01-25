@@ -1276,9 +1276,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                       
                         .Include(x => x.Region).ThenInclude(x => x.Country)
                        .Include(x => x.Commitee).ThenInclude(x => x.Employees)
-                       .Where(x => x.RegionId == LocationId &&
-                         x.ShouldStat >= budgetYearStart &&
-                    x.ShouldEnd <= budgetYearEnd)
+                       .Where(x => x.RegionId == LocationId &&x.ShouldStat >= budgetYearStart &&x.ShouldEnd <= budgetYearEnd)
 
                        select new ActivityViewDto
                        {

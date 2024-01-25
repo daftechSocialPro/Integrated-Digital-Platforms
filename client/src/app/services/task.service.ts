@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { TaskView, TaskMembers } from '../model/PM/TaskDto';
 import { SelectList } from '../model/common';
 import { Task } from '../model/PM/TaskDto';
+import { ResponseMessage } from '../model/ResponseMessage.Model';
 
 @Injectable({
   providedIn: 'root'
@@ -40,7 +41,11 @@ export class TaskService {
   }
 
   updateTask(task: Task){
-    return this.http.put(this.BaseURI ,task)
+    return this.http.put<ResponseMessage>(this.BaseURI ,task)
+  }
+
+  deleteTask(taskId:string){
+    return this.http.delete<ResponseMessage>(this.BaseURI + "?taskId=" + taskId )
   }
 
 

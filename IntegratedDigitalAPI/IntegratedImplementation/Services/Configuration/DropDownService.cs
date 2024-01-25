@@ -186,6 +186,16 @@ namespace IntegratedImplementation.Services.Configuration
 
             return strategicPlans;
         }
+        public async Task<List<SelectListDto>> GetIndicatorsByStrategicPlanId(Guid strategicPlanId)
+        {
+            var strategicPlanIndicators = await _dbContext.Indicators.Where(x => x.StrategicPlanId == strategicPlanId).Select(x => new SelectListDto
+            {
+                Id = x.Id,
+                Name = x.Name
+            }).ToListAsync();
+
+            return strategicPlanIndicators;
+        }
         public async Task<List<SelectListDto>> GetProjectFundSources()
         {
             var strategicPlans = await _dbContext.ProjectFundSources.AsNoTracking().Select(x => new SelectListDto

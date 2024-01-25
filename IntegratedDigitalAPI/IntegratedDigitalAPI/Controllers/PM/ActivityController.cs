@@ -5,6 +5,7 @@ using IntegratedImplementation.DTOS.HRM;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.SqlServer.Server;
+using System;
 using System.Net;
 using System.Net.Http.Headers;
 
@@ -151,6 +152,35 @@ namespace IntegratedDigitalAPI.Controllers.PM
         public async Task<ActivityViewDto> GetSingleActivity(Guid actId)
         {
             return await _activityService.GetSingleActivity(actId);
+        }
+
+
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateActivityDetail(ActivityDetailDto activityDetail )
+        {
+                
+            if (ModelState.IsValid)
+            {
+                return Ok(await _activityService.UpdateActivityDetails(activityDetail));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteActivity(Guid activityid)
+        {
+            try
+            {
+                return Ok(await _activityService.DeleteActivity(activityid));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
         }
 
     }

@@ -2,6 +2,7 @@
 using IntegratedDigitalAPI.Services.PM;
 using IntegratedImplementation.DTOS.Configuration;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Numerics;
 
 
@@ -142,15 +143,18 @@ namespace IntegratedDigitalAPI.Controllers.PM
         [HttpPut]
         public async Task<IActionResult> UpdateTask(TaskDto task)
         {
-            try
+
+            if (ModelState.IsValid)
             {
                 return Ok(await _taskService.UpdateTask(task));
             }
-            catch (Exception ex)
+            else
             {
-                return StatusCode(500, "Internal Server Error");
+                return BadRequest();
             }
+           
         }
+
 
         [HttpDelete]
         public async Task<IActionResult> DeleteTask(Guid taskId)

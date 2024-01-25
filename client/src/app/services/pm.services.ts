@@ -69,6 +69,10 @@ export class PMService {
         return this.http.post(this.BaseURI + "/Activity/AddSubActivity", activity)
     }
 
+    updateActivityParent(acctivity: ActivityDetailDto) {
+        return this.http.put<ResponseMessage>(this.BaseURI + "/Activity", acctivity)
+    }
+
     addActivityTargetDivision(activityDto: ActivityTargetDivisionDto) {
 
         return this.http.post(this.BaseURI + "/Activity/targetDivision", activityDto)

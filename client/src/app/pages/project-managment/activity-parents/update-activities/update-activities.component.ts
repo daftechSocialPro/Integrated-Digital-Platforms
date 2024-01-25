@@ -1,34 +1,31 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { IndividualConfig } from 'ngx-toastr';
-
-import {  ActivityDetailDto, SubActivityDetailDto } from '../../../../model/PM/add-activities';
+import { MessageService } from 'primeng/api';
 import { TaskView } from 'src/app/model/PM/TaskDto';
+import { SubActivityDetailDto, ActivityDetailDto } from 'src/app/model/PM/add-activities';
 import { GetStartEndDate, SelectList } from 'src/app/model/common';
 import { UserView } from 'src/app/model/user';
 import { CommonService } from 'src/app/services/common.service';
+import { DropDownService } from 'src/app/services/dropDown.service';
 import { toastPayload } from 'src/app/services/hrm.service';
 import { PMService } from 'src/app/services/pm.services';
-import { UserService } from 'src/app/services/user.service';
-import { ConfigurationService } from 'src/app/services/configuration.service';
-import { DropDownService } from 'src/app/services/dropDown.service';
-import { MessageService } from 'primeng/api';
-import { AddProjectLocationComponent } from '../../pm-configuration/project-location/add-project-location/add-project-location.component';
 import { TaskService } from 'src/app/services/task.service';
-declare const $: any
+import { UserService } from 'src/app/services/user.service';
+import { AddProjectLocationComponent } from '../../pm-configuration/project-location/add-project-location/add-project-location.component';
 
 @Component({
-  selector: 'app-add-activities',
-  templateUrl: './add-activities.component.html',
-  styleUrls: ['./add-activities.component.css']
+  selector: 'app-update-activities',
+  templateUrl: './update-activities.component.html',
+  styleUrls: ['./update-activities.component.css']
 })
-export class AddActivitiesComponent implements OnInit {
+export class UpdateActivitiesComponent implements OnInit{
 
   @Input() task!: TaskView;
   @Input() requestFrom!: string;
   @Input() requestFromId!: string;
   @Input() dateAndTime!:GetStartEndDate
+  @Input() activity!: any
 
   countries !: SelectList[];
   regions!: SelectList[];
@@ -66,35 +63,37 @@ export class AddActivitiesComponent implements OnInit {
     private taskService : TaskService
   ) {
 
+    
+  }
+  ngOnInit(): void {
+
     this.activityForm = this.formBuilder.group({
-      StartDate: ['', Validators.required],
-      EndDate: ['', Validators.required],
-      ActivityDescription: ['', Validators.required],
-      ActivityNumber:['',Validators.required],
-      PlannedBudget: ['', [Validators.required,Validators.max(this.task?.remainingBudget!)]],
+      StartDate: [this.activity.startDate, Validators.required],
+      EndDate: [this.activity.endDate.split('T')[0], Validators.required],
+      ActivityDescription: [this.activity.name, Validators.required],
+      ActivityNumber:[this.activity.activityNumber,Validators.required],
+      PlannedBudget: [this.activity.plannedBudget, [Validators.required,Validators.max(this.task?.remainingBudget!)]],
       ActivityType: [''],
       OfficeWork: [0, Validators.required],
       FieldWork: [0, Validators.required],
-      UnitOfMeasurement: ['', Validators.required],
-      PreviousPerformance: [0, [Validators.required,Validators.min(0)]],
-      Goal: [0,[Validators.required,Validators.min(0)]],
+      UnitOfMeasurement: [this.activity.unitOfMeasurment, Validators.required],
+      PreviousPerformance: [this.activity.begining, [Validators.required,Validators.min(0)]],
+      Goal: [this.activity.target,[Validators.required,Validators.min(0)]],
       WhomToAssign: [''],
       TeamId: [null],
       CommiteeId: [null],
       AssignedEmployee: [],
       StrategicPlan:[],
       StrategicPlanIndicatorId:[],
-      IsTraining:[false,Validators.required],
+      IsTraining:[this.activity.isTraining,Validators.required],
       IsPercentage:[false,Validators.required],
       RegionId:['',Validators.required],
       Zone:[''],
       Woreda:['']
 
-
     })
-  }
-  ngOnInit(): void {
-
+    
+    console.log("ACTIVITIYXXXX",this.activity)
     this.user = this.userService.getCurrentUser()
 
     this.getCountries()
@@ -416,6 +415,4 @@ export class AddActivitiesComponent implements OnInit {
 
     
   }
-
-
 }

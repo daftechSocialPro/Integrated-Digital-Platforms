@@ -103,8 +103,8 @@ namespace IntegratedDigitalAPI.Services.PM
                 if (task.HasActivityParent)
                 {
                     activityViewDtos = (from a in _dBContext.ActivitiesParents.Where(x => x.TaskId == taskId)
-                                        join e in _dBContext.Activities.OrderBy(x=>x.CreatedDate).
-                                        Include(x=>x.Region).ThenInclude(x=>x.Country)
+                                        join e in _dBContext.Activities.OrderBy(x=>x.CreatedDate)
+                                        .Include(x=>x.Region).ThenInclude(x=>x.Country)
                                      on a.Id equals e.ActivityParentId
                                         // join ae in _dBContext.EmployeesAssignedForActivities.Include(x=>x.Employee) on e.Id equals ae.ActivityId
                                         select new ActivityViewDto
@@ -151,7 +151,15 @@ namespace IntegratedDigitalAPI.Services.PM
 
                                             }).ToList(),
                                             OverAllProgress = activityProgress.Where(x => x.ActivityId == e.Id && x.IsApprovedByDirector == EnumList.ApprovalStatus.APPROVED && x.IsApprovedByFinance == EnumList.ApprovalStatus.APPROVED && x.IsApprovedByManager == EnumList.ApprovalStatus.APPROVED).Sum(x => x.ActualWorked) * 100 / e.Goal,
-
+                                            OfficeWork = e.OfficeWork,
+                                            FieldWork = e.FieldWork,
+                                            StrategicPlan = e.StrategicPlanId,
+                                            StrategicPlanIndicator = e.StrategicPlanIndicatorId,
+                                            IsPercentage = e.IsPercentage,
+                                            RegionId = e.RegionId,
+                                            Zone = e.Zone,
+                                            Woreda = e.Woreda
+                                            
 
                                         }
                                   ).ToList();
@@ -206,7 +214,14 @@ namespace IntegratedDigitalAPI.Services.PM
 
                                             }).ToList(),
                                             OverAllProgress = activityProgress.Where(x => x.ActivityId == e.Id && x.IsApprovedByDirector == EnumList.ApprovalStatus.APPROVED && x.IsApprovedByFinance == EnumList.ApprovalStatus.APPROVED && x.IsApprovedByManager == EnumList.ApprovalStatus.APPROVED).Sum(x => x.ActualWorked) * 100 / e.Goal,
-
+                                            OfficeWork = e.OfficeWork,
+                                            FieldWork = e.FieldWork,
+                                            StrategicPlan = e.StrategicPlanId,
+                                            StrategicPlanIndicator = e.StrategicPlanIndicatorId,
+                                            IsPercentage = e.IsPercentage,
+                                            RegionId = e.RegionId,
+                                            Zone = e.Zone,
+                                            Woreda = e.Woreda
 
                                         }
                                           ).ToList();
@@ -261,8 +276,8 @@ namespace IntegratedDigitalAPI.Services.PM
 
                     var activityProgress = _dBContext.ActivityProgresses;
 
-                    var activityViewDtos = (from e in _dBContext.Activities.OrderBy(x=>x.CreatedDate).
-                                           Include(x=>x.Region).ThenInclude(x=>x.Country)
+                    var activityViewDtos = (from e in _dBContext.Activities.OrderBy(x=>x.CreatedDate)
+                                           .Include(x=>x.Region).ThenInclude(x=>x.Country)
                                             where e.PlanId == plan.Id
                                             // join ae in _dBContext.EmployeesAssignedForActivities.Include(x=>x.Employee) on e.Id equals ae.ActivityId
                                             select new ActivityViewDto
@@ -300,7 +315,14 @@ namespace IntegratedDigitalAPI.Services.PM
 
                                                 }).ToList(),
                                                 OverAllProgress = activityProgress.Where(x => x.ActivityId == e.Id && x.IsApprovedByDirector == EnumList.ApprovalStatus.APPROVED && x.IsApprovedByFinance == EnumList.ApprovalStatus.APPROVED && x.IsApprovedByManager == EnumList.ApprovalStatus.APPROVED).Sum(x => x.ActualWorked) * 100 / e.Goal,
-
+                                                OfficeWork = e.OfficeWork,
+                                                FieldWork = e.FieldWork,
+                                                StrategicPlan = e.StrategicPlanId,
+                                                StrategicPlanIndicator = e.StrategicPlanIndicatorId,
+                                                IsPercentage = e.IsPercentage,
+                                                RegionId = e.RegionId,
+                                                Zone = e.Zone,
+                                                Woreda = e.Woreda
 
                                             }
                                             ).ToList();
@@ -475,10 +497,21 @@ namespace IntegratedDigitalAPI.Services.PM
         {
             try
             {
+                
                 var task = await _dBContext.Tasks.FindAsync(taskId);
 
                 if (task != null)
                 {
+                    var activitiesParent = await _dBContext.ActivitiesParents.Where(x => x.TaskId == task.Id).ToListAsync();
+                    foreach( var act in activitiesParent)
+                    {
+                        var activities = await _dBContext.Activities.Where(x => x.ActivityParentId== act.Id).ToListAsync();
+                        foreach ( var activity in activities)
+                        {
+                            _dBContext.Activities.Remove(activity);
+                        }
+                        _dBContext.ActivitiesParents.Remove(act);
+                    }
                     _dBContext.Tasks.Remove(task);
 
                     await _dBContext.SaveChangesAsync();
