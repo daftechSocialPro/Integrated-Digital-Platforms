@@ -13,6 +13,7 @@ namespace IntegratedImplementation.Interfaces.Configuration
 
        public Task<List<IndicatorGetDto>> GetIndicator();
 
+        public Task<List<IndicatorGetDto>> GetIndicatorByStrategicPlan(Guid strategicplanId);
 
 
     }

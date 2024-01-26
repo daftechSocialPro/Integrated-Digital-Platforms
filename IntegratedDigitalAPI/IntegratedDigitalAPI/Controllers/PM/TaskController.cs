@@ -2,6 +2,8 @@
 using IntegratedDigitalAPI.Services.PM;
 using IntegratedImplementation.DTOS.Configuration;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Numerics;
 
 
 namespace IntegratedDigitalAPI.Controllers.PM
@@ -137,6 +139,36 @@ namespace IntegratedDigitalAPI.Controllers.PM
                 return StatusCode(500, "Internal Server Error");
             }
         }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateTask(TaskDto task)
+        {
+
+            if (ModelState.IsValid)
+            {
+                return Ok(await _taskService.UpdateTask(task));
+            }
+            else
+            {
+                return BadRequest();
+            }
+           
+        }
+
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteTask(Guid taskId)
+        {
+            try
+            {
+                return Ok(await _taskService.DeleteTask(taskId));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
 
     }
 }

@@ -4,6 +4,7 @@ using IntegratedInfrustructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IntegratedInfrustructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240125082526_activityedit")]
+    partial class activityedit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2840,12 +2843,6 @@ namespace IntegratedInfrustructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PostSummary")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PreSummary")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Profession")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -4110,9 +4107,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<Guid?>("ProjectTeamId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("RegionId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("Rowstatus")
                         .HasColumnType("int");
 
@@ -4128,9 +4122,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<Guid>("StrategicPlanId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("StrategicPlanIndicatorId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid?>("TaskId")
                         .HasColumnType("uniqueidentifier");
 
@@ -4138,10 +4129,6 @@ namespace IntegratedInfrustructure.Migrations
                         .HasColumnType("real");
 
                     b.Property<string>("Woreda")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Zone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -4160,11 +4147,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("ProjectTeamId");
 
-                    b.HasIndex("RegionId");
-
                     b.HasIndex("StrategicPlanId");
-
-                    b.HasIndex("StrategicPlanIndicatorId");
 
                     b.HasIndex("TaskId");
 
@@ -6432,21 +6415,9 @@ namespace IntegratedInfrustructure.Migrations
                         .WithMany()
                         .HasForeignKey("ProjectTeamId");
 
-                    b.HasOne("IntegratedInfrustructure.Model.Configuration.Region", "Region")
-                        .WithMany()
-                        .HasForeignKey("RegionId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("IntegratedInfrustructure.Model.PM.StrategicPlan", "StrategicPlan")
                         .WithMany()
                         .HasForeignKey("StrategicPlanId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("IntegratedInfrustructure.Models.Common.Indicator", "StrategicPlanIndicator")
-                        .WithMany()
-                        .HasForeignKey("StrategicPlanIndicatorId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -6464,11 +6435,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.Navigation("Plan");
 
-                    b.Navigation("Region");
-
                     b.Navigation("StrategicPlan");
-
-                    b.Navigation("StrategicPlanIndicator");
 
                     b.Navigation("Task");
                 });

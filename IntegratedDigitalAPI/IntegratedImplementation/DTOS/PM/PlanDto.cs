@@ -134,7 +134,7 @@ namespace IntegratedDigitalAPI.DTOS.PM
     public class TaskDto
     {
 
-
+        public Guid? Id { get; set; }
         public string TaskDescription { get; set; }
 
         public bool HasActvity { get; set; }

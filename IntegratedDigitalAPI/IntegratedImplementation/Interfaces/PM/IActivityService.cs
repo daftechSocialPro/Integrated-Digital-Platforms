@@ -35,6 +35,9 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
         public Task<ProgressViewDto> ViewDraftProgress(Guid actId);
 
         public Task<ActivityViewDto> GetSingleActivity(Guid actId);
+        public Task<ResponseMessage> UpdateActivityDetails(ActivityDetailDto activityDetail);
+
+        public  Task<ResponseMessage> DeleteActivity(Guid activityId);
 
 
     }

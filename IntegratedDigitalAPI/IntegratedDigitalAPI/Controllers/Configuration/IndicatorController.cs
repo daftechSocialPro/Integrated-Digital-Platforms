@@ -42,8 +42,14 @@ namespace IntegratedDigitalAPI.Controllers.Configuration
         public async Task<IActionResult> GetIndicator()
         {
             return Ok(await _indicatorService.GetIndicator());
-        }   
+        }
 
+        [HttpGet("GetIndicatorByStrategicPlan")]
+        [ProducesResponseType(typeof(IndicatorGetDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetIndicatorByStrategicPlan(Guid strategicPlanId)
+        {
+            return Ok(await _indicatorService.GetIndicatorByStrategicPlan(strategicPlanId));
+        }
 
         [HttpPut]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]

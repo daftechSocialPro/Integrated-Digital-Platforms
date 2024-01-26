@@ -78,10 +78,18 @@ namespace IntegratedInfrustructure.Models.PM
         public Guid StrategicPlanId { get; set; }
         public virtual StrategicPlan StrategicPlan { get; set; }
 
-        public Guid ZoneId { get; set; }
-        public virtual Zone Zone { get; set; } = null!;
+
+        public Guid RegionId { get; set; }
+        public virtual Region Region { get; set; }
+
+       
+        public string Zone { get; set; } = null;
+       
+
         public string Woreda { get; set; } = null!;
 
+        public Guid StrategicPlanIndicatorId { get; set; }
+        public virtual Indicator StrategicPlanIndicator { get; set; }
         //public Guid ProjectLocationId { get; set; }
         //public virtual ProjectLocation ProjectLocation { get; set; }
 

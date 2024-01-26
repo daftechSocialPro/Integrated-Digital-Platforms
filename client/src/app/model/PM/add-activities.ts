@@ -30,8 +30,10 @@ export interface SubActivityDetailDto {
     StrategicPlanId:String,
     IsTraining:boolean
     IsPercentage:boolean
-    ZoneId:string,
-    Woreda:string,
+    RegionId:string,
+    Zone?:string,
+    Woreda?:string,
+    StrategicPlanIndicatorId?:string,
     longtude: number,
     latitude: number
 }

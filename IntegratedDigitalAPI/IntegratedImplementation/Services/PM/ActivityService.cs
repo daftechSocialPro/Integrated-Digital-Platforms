@@ -6,6 +6,7 @@ using IntegratedImplementation.Helper;
 using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedInfrustructure.Data;
 using IntegratedInfrustructure.Model.HRM;
+using IntegratedInfrustructure.Models.Inventory;
 using IntegratedInfrustructure.Models.PM;
 using Microsoft.AspNetCore.Hosting.Server;
 
@@ -81,8 +82,11 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                 activity.ShouldStat =  DateTime.Parse(item.StartDate);
                 activity.ShouldEnd = DateTime.Parse(item.EndDate);
                 activity.StrategicPlanId = item.StrategicPlanId;
-                activity.ZoneId = item.ZoneId;
+                //activity.ZoneId = item.ZoneId;
+                activity.RegionId = item.RegionId;
+                activity.Zone = item.Zone;
                 activity.Woreda = item.Woreda;
+                activity.StrategicPlanIndicatorId = item.StrategicPlanIndicatorId;
                 activity.ActivityNumber = item.ActivityNumber;
                 activity.Longtude = item.Longtude;
                 activity.Latitude = item.Latitude;
@@ -172,7 +176,8 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
             activity.Indicator = activityDetail.UnitOfMeasurement;
 
             activity.StrategicPlanId = activityDetail.StrategicPlanId;
-            activity.ZoneId = activityDetail.ZoneId;
+            //activity.ZoneId = activityDetail.ZoneId;
+            activity.Zone = activityDetail.Zone;
             activity.Woreda = activityDetail.Woreda;
             activity.ActivityNumber = activityDetail.ActivityNumber;
 
@@ -625,7 +630,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
             List<ActivityViewDto> assignedActivities =
                 await (from e in _dBContext.Activities
                        
-                        .Include(x => x.Zone).ThenInclude(x => x.Region).ThenInclude(x => x.Country)
+                        .Include(x => x.Region).ThenInclude(x => x.Country)
                        .Include(x=>x.Commitee).ThenInclude(x=>x.Employees)
                        .Where(x=>x.ActualEnd==null)
                        where employeeAssigned.Contains(e.Id)||(e.ProjectTeamId!=null?e.Commitee.Employees.Select(x=>x.EmployeeId).Contains(employeeId):false)
@@ -635,7 +640,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                            Name = e.ActivityDescription,
                            PlannedBudget = e.PlanedBudget,
                            ActivityType = e.ActivityType.ToString(),
-                           ProjectLocation = $"{e.Woreda}-{e.Zone.ZoneName}-{e.Zone.Region.RegionName}-{e.Zone.Region.Country.CountryName}",
+                           ProjectLocation = $"{e.Woreda}-{e.Zone}-{e.Region.RegionName}-{e.Region.Country.CountryName}",
                            IsTraining = e.IsTraining,
                            ProjectLocationLng = e.Longtude,
                            ProjectLocationLat = e.Latitude,
@@ -719,7 +724,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                 foreach (var activitprogress in not)
                 {
 
-                    var activityViewDtos = (from e in _dBContext.ActivityProgresses.Include(x => x.Activity.ActivityParent.Task.Project.Department).Include(x=>x.Activity.Zone.Region.Country).Where(a => a.Id == activitprogress.Id && (a.IsApprovedByManager == ApprovalStatus.PENDING || a.IsApprovedByDirector == ApprovalStatus.PENDING || a.IsApprovedByFinance == ApprovalStatus.PENDING))
+                    var activityViewDtos = (from e in _dBContext.ActivityProgresses.Include(x => x.Activity.ActivityParent.Task.Project.Department).Include(x=>x.Activity.Region.Country).Where(a => a.Id == activitprogress.Id && (a.IsApprovedByManager == ApprovalStatus.PENDING || a.IsApprovedByDirector == ApprovalStatus.PENDING || a.IsApprovedByFinance == ApprovalStatus.PENDING))
                                                 // join ae in _dBContext.EmployeesAssignedForActivities.Include(x=>x.Employee) on e.Id equals ae.ActivityId
                                             select new ActivityViewDto
                                             {
@@ -727,7 +732,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                                                 Name = e.Activity.ActivityDescription,
                                                 PlannedBudget = e.Activity.PlanedBudget,
                                                 ActivityType = e.Activity.ActivityType.ToString(),
-                                                ProjectLocation = $"{e.Activity.Woreda}-{e.Activity.Zone.ZoneName}-{e.Activity.Zone.Region.RegionName}-{e.Activity.Zone.Region.Country.CountryName}",
+                                                ProjectLocation = $"{e.Activity.Woreda}-{e.Activity.Zone}-{e.Activity.Region.RegionName}-{e.Activity.Region.Country.CountryName}",
                                                IsTraining = e.Activity.IsTraining,
 
                                                 ProjectLocationLng = e.Activity.Longtude,
@@ -877,7 +882,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
             var activityProgress = _dBContext.ActivityProgresses;
             ActivityViewDto assignedActivities =
                 await (from e in _dBContext.Activities.Where(x=>x.Id==actId)
-                        .Include(x => x.Zone).ThenInclude(x => x.Region).ThenInclude(x => x.Country)
+                        .Include(x => x.Region).ThenInclude(x => x.Country)
                        .Include(x => x.Commitee).ThenInclude(x => x.Employees)
                        .Where(x => x.ActualEnd == null)
     
@@ -887,7 +892,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                            Name = e.ActivityDescription,
                            PlannedBudget = e.PlanedBudget,
                            ActivityType = e.ActivityType.ToString(),
-                           ProjectLocation = $"{e.Woreda}-{e.Zone.ZoneName}-{e.Zone.Region.RegionName}-{e.Zone.Region.Country.CountryName}",
+                           ProjectLocation = $"{e.Woreda}-{e.Zone}-{e.Region.RegionName}-{e.Region.Country.CountryName}",
                            IsTraining = e.IsTraining,
                            ProjectLocationLng = e.Longtude,
                            ProjectLocationLat = e.Latitude,
@@ -929,6 +934,284 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
 
             return assignedActivities;
         }
+
+
+
+        public async Task<ResponseMessage> UpdateActivityDetails(ActivityDetailDto activityDetail)
+        {
+
+
+            var activityParent = _dBContext.ActivitiesParents.Where(x => x.Id == activityDetail.Id).FirstOrDefault();
+
+            if (activityParent != null)
+            {
+                //activityParent.CreatedById = activityDetail.CreatedBy.ToString();
+                activityParent.ActivityParentDescription = activityDetail.ActivityDescription;
+                activityParent.HasActivity = activityDetail.HasActivity;
+                //activityParent.TaskId = activityDetail.TaskId;
+
+                await _dBContext.SaveChangesAsync();
+
+                foreach (var item in activityDetail.ActivityDetails)
+                {
+
+
+                    var activity = _dBContext.Activities.Where(x => x.Id == item.Id).FirstOrDefault();
+
+                    if (activity != null)
+                    {
+
+                        //activity.CreatedBy = activityParent.CreatedBy;
+                        //activity.ActivityParentId = activityParent.Id;
+                        activity.ActivityDescription = item.SubActivityDesctiption;
+                        activity.ActivityType = item.ActivityType == 0 ? ActivityType.OFFICE_WORK : ActivityType.FIELD_WORK;
+                        activity.Begining = item.PreviousPerformance;
+                        if (item.CommiteeId != null)
+                        {
+                            activity.ProjectTeamId = item.CommiteeId;
+                        }
+                        activity.FieldWork = item.FieldWork;
+                        activity.Goal = item.Goal;
+                        activity.OfficeWork = item.OfficeWork;
+                        activity.PlanedBudget = item.PlannedBudget;
+                        activity.IsPercentage = item.IsPercentage;
+                        activity.Indicator = item.UnitOfMeasurement;
+
+                        activity.ShouldStat = DateTime.Parse(item.StartDate);
+                        activity.ShouldEnd = DateTime.Parse(item.EndDate);
+                        activity.StrategicPlanId = item.StrategicPlanId;
+                        //activity.ZoneId = item.ZoneId;
+                        activity.RegionId = item.RegionId;
+                        activity.Zone = item.Zone;
+                        activity.Woreda = item.Woreda;
+                        activity.StrategicPlanIndicatorId = item.StrategicPlanIndicatorId;
+                        activity.ActivityNumber = item.ActivityNumber;
+                        activity.Longtude = item.Longtude;
+                        activity.Latitude = item.Latitude;
+                        activity.IsTraining = item.IsTraining;
+
+                        
+                        await _dBContext.SaveChangesAsync();
+
+                        if (item.Employees != null)
+                        {
+                            foreach (var employee in item.Employees)
+                            {
+                                if (!string.IsNullOrEmpty(employee))
+                                {
+                                   
+                                    var existingAssignment = await _dBContext.EmployeesAssignedForActivities
+                                        .FirstOrDefaultAsync(e => e.ActivityId == activity.Id && e.EmployeeId == Guid.Parse(employee));
+
+                                    if (existingAssignment == null)
+                                    {
+                                       
+                                        EmployeesAssignedForActivities EAFA = new EmployeesAssignedForActivities
+                                        {
+                                            CreatedDate = DateTime.Now,
+                                            CreatedBy = activityParent.CreatedBy,
+
+                                            Id = Guid.NewGuid(), 
+
+                                            ActivityId = activity.Id,
+                                            EmployeeId = Guid.Parse(employee),
+                                        };
+
+                                        _dBContext.EmployeesAssignedForActivities.Add(EAFA);
+                                    }
+                                    
+                                    try
+                                    {
+                                        await _dBContext.SaveChangesAsync();
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        
+                                        Console.WriteLine("Error updating assignments: " + ex.Message);
+                                    }
+                                }
+                            }
+
+                            var existingAssignments = await _dBContext.EmployeesAssignedForActivities
+                                                        .Where(e => e.ActivityId == activity.Id)
+                                                        .ToListAsync();
+
+
+                            var assignmentsToRemove = existingAssignments.Where(ea => !item.Employees.Contains(ea.EmployeeId.ToString()));
+
+                            
+                            foreach (var assignmentToRemove in assignmentsToRemove)
+                            {
+                                _dBContext.EmployeesAssignedForActivities.Remove(assignmentToRemove);
+                            }
+
+                            try
+                            {
+                                await _dBContext.SaveChangesAsync();
+                            }
+                            catch (Exception ex)
+                            {
+                                
+                                Console.WriteLine("Error updating assignments: " + ex.Message);
+                            }
+                        }
+
+
+                    }
+                    else
+                    {
+                        return new ResponseMessage
+                        {
+                            Success = false,
+                            Message = "Activity Not Found"
+                        };
+                    }
+
+
+                }
+
+
+
+                var Task = await _dBContext.Tasks.FirstOrDefaultAsync(x => x.Id.Equals(activityDetail.TaskId));
+                if (Task != null)
+                {
+                    var plan = _dBContext.Projects.FirstOrDefaultAsync(x => x.Id.Equals(Task.ProjectId)).Result;
+                    if (plan != null)
+                    {
+                        var ActParent = _dBContext.ActivitiesParents.Find(activityParent.Id);
+                        var Activities = _dBContext.Activities.Where(x => x.ActivityParentId == activityParent.Id);
+                        if (ActParent != null && Activities != null)
+                        {
+                            ActParent.ShouldStartPeriod = Activities.Min(x => x.ShouldStat);
+                            ActParent.ShouldEnd = Activities.Max(x => x.ShouldEnd);
+                            ActParent.Weight = Activities.Sum(x => x.Weight);
+                            _dBContext.SaveChanges();
+                        }
+                        var ActParents = _dBContext.ActivitiesParents.Where(x => x.TaskId == Task.Id).ToList();
+                        if (Task != null && ActParents != null)
+                        {
+                            Task.ShouldStartPeriod = ActParents.Min(x => x.ShouldStartPeriod);
+                            Task.ShouldEnd = ActParents.Max(x => x.ShouldEnd);
+                            Task.Weight = ActParents.Sum(x => x.Weight);
+                            _dBContext.SaveChanges();
+                        }
+                        var tasks = _dBContext.Tasks.Where(x => x.ProjectId == plan.Id).ToList();
+                        //plan.PeriodStartAt = tasks.Min(x => x.ShouldStartPeriod);
+                        //plan.PeriodEndAt = tasks.Max(x => x.ShouldEnd);
+                        _dBContext.SaveChanges();
+                    }
+                }
+
+                return new ResponseMessage
+                {
+                    Success = true,
+                    Message = "Activity Updated Successfully"
+                };
+            }
+            else
+            {
+                return new ResponseMessage
+                {
+                    Success = false,
+                    Message = "Activity Not Found"
+                };
+            }
+
+
+           
+        }
+
+
+        public async Task<ResponseMessage> DeleteActivity(Guid activityId)
+        {
+            try
+            {
+
+               
+                var activitiesParent = await _dBContext.ActivitiesParents.FindAsync(activityId);
+                if (activitiesParent != null)
+                {
+                    var activities = await _dBContext.Activities.FindAsync(activityId);
+
+
+                    if(activities != null)
+                    {
+                        _dBContext.Activities.Remove(activities);
+                    }
+                        
+                    
+                        
+                    _dBContext.ActivitiesParents.Remove(activitiesParent);
+
+                    var existingAssignments = await _dBContext.EmployeesAssignedForActivities
+                                                        .Where(e => e.ActivityId == activityId)
+                                                        .ToListAsync();
+
+
+
+
+                    foreach (var assignmentToRemove in existingAssignments)
+                    {
+                        _dBContext.EmployeesAssignedForActivities.Remove(assignmentToRemove);
+                    }
+                    await _dBContext.SaveChangesAsync();
+
+                    var Task = await _dBContext.Tasks.FirstOrDefaultAsync(x => x.Id.Equals(activitiesParent.TaskId));
+                    if (Task != null)
+                    {
+                        var plan = _dBContext.Projects.FirstOrDefaultAsync(x => x.Id.Equals(Task.ProjectId)).Result;
+                        if (plan != null)
+                        {
+                           
+                            var ActParents = _dBContext.ActivitiesParents.Where(x => x.TaskId == Task.Id).ToList();
+                            if (Task != null && ActParents != null)
+                            {
+                                Task.ShouldStartPeriod = ActParents.Min(x => x.ShouldStartPeriod);
+                                Task.ShouldEnd = ActParents.Max(x => x.ShouldEnd);
+                                Task.Weight = ActParents.Sum(x => x.Weight);
+                                _dBContext.SaveChanges();
+                            }
+                            var tasks = _dBContext.Tasks.Where(x => x.ProjectId == plan.Id).ToList();
+                            //plan.PeriodStartAt = tasks.Min(x => x.ShouldStartPeriod);
+                            //plan.PeriodEndAt = tasks.Max(x => x.ShouldEnd);
+                            _dBContext.SaveChanges();
+                        }
+                    }
+
+
+                    
+
+                    return new ResponseMessage
+                    {
+                        Message = "Activity Deleted Successfully",
+                        Success = true
+                    };
+                }
+
+                else
+                {
+
+                    return new ResponseMessage
+                    {
+                        Success = false,
+                        Message = "Activity Not Found"
+                    };
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return new ResponseMessage
+                {
+                    Success = false,
+                    Message = ex.Message
+
+                };
+            }
+        }
+
+
+
     }
 }
 

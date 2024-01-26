@@ -4,6 +4,7 @@ import { ActivityView } from "./ActivityViewDto"
 
 
 export interface Task {
+    Id?: String, 
     TaskDescription: String,
     HasActvity: Boolean,
     PlannedBudget: Number,
