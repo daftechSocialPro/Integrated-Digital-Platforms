@@ -47,8 +47,8 @@ namespace MembershipImplementation.Interfaces.HRM
 
         Task <ResponseMessage> UpdateMemberMoodle(MoodleDto moodlePost);
 
+        Task<List<MemberRegionRevenueReportDto>> GetRegionRevenueReport ();
 
-        Task<byte[]> MembershipTypeReport();
 
         //Task<List<EmployeeGetDto>> GetEmployees();
         //Task<ResponseMessage> AddEmployee(EmployeePostDto addEmployee);

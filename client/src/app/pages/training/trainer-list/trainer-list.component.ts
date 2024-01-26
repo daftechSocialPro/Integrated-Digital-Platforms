@@ -6,6 +6,8 @@ import { AddTrainerComponent } from '../add-trainer/add-trainer.component';
 import { ITrainerEmailDto } from 'src/app/model/Training/TraineeDto';
 import { MessageService } from 'primeng/api';
 import { ITrainingGetDto } from 'src/app/model/Training/TrainingDto';
+import { ViewChild, ElementRef } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-trainer-list',
@@ -13,6 +15,9 @@ import { ITrainingGetDto } from 'src/app/model/Training/TrainingDto';
   styleUrls: ['./trainer-list.component.css']
 })
 export class TrainerListComponent implements OnInit {
+
+  baseUrl: string = environment.Client_URL 
+  @ViewChild('myInput', { static: false }) myInput: ElementRef;
 
   trainerList:ITrainerGetDto[]=[]
   @Input()  trainingId!:string
@@ -30,6 +35,25 @@ export class TrainerListComponent implements OnInit {
     
     this.getTrainerList()
     this.getSingleTraining()
+  }
+
+  copyToClipboard(): void {
+    const url = `${this.baseUrl}/trainee-form/training-report-form/${this.trainingId}`;
+
+    const inputElement = this.myInput.nativeElement;
+    inputElement.value = url;
+    inputElement.select();
+    document.execCommand('copy');
+    this.messageService.add({severity:'info',summary:'Copied to Clipboard',detail:'Training Report form Url Copied'})
+  }
+  copyToClipboard2(): void {
+  
+    const url=`${this.baseUrl}/trainee-form/${this.trainingId}`
+    const inputElement = this.myInput.nativeElement;
+    inputElement.value = url;
+    inputElement.select();
+    document.execCommand('copy');
+    this.messageService.add({severity:'info',summary:'Copied to Clipboard', detail:'Trainee List Url Copied'})
   }
 
   getTrainerList(){

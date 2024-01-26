@@ -20,19 +20,4 @@
     <ProjectReference Include="..\MembershipInfrustructure\MembershipInfrustructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="DataSet\MembershipDataSet.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>MembershipDataSet.xsd</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="DataSet\MembershipDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>MembershipDataSet.Designer.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-
 </Project>

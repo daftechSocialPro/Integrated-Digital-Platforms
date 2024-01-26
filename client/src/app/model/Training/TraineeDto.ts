@@ -1,5 +1,5 @@
 export interface ITraineeGetDto{
-
+id:string
     fullName:string
     phoneNumber:string
     age:number
@@ -13,12 +13,17 @@ export interface ITraineeGetDto{
     region: string 
     zone : string 
     woreda : string
+    postSummary?:string
+    preSummary?:string
+    educationalLevelId:string
+    regionId:string
 
 
 }
 
 
 export interface ITraineePostDto{
+    Id?:string
     TraningId:string
     FullName:string
     PhoneNumber:string
@@ -33,6 +38,8 @@ export interface ITraineePostDto{
     regionId: string 
     zone : string 
     woreda : string
+    postSummary?:string
+    preSummary?:string
 
 }
 

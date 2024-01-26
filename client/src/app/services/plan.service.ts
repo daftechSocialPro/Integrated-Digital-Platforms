@@ -21,7 +21,12 @@ export class PlanService {
         plan.createdById = this.userService.getCurrentUser().userId
         return this.http.post(this.BaseURI+"/plan", plan)
     }
+    updatePlan(plan: Plan) {
+       
+        return this.http.put(this.BaseURI+"/plan/planUpdate", plan)
+    }
 
+    
     getPlans (programId ?: string){
         if (programId)
         return this.http.get<PlanView[]>(this.BaseURI+"/plan"+"?programId="+programId)

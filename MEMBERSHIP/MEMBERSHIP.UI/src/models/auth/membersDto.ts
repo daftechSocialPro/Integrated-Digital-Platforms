@@ -43,6 +43,8 @@ export interface IMembersGetDto {
 
   moodleStatus:string
 
+  createdByDate:Date
+
 
 }
 export interface ICompletePorfileDto {

@@ -4,6 +4,7 @@ import { TaskView } from "./TaskDto"
 
 export interface Plan {
 
+    id?:string
     hasTask: Boolean
     planName: String
     planWeight: Number
@@ -45,7 +46,11 @@ export interface PlanView {
     startDate : string 
     endDate :string 
     projectNumber:string
-    projectFunds:string
+    projectFunds:string[]
+
+    projectFundIds:string[]
+    projectManagerId:string
+    structureId:string
 
 
 }

@@ -264,6 +264,7 @@ import { RequestWeeklyPlanComponent } from './pages/project-managment/weekly-act
 import { AddWeeklyPlanComponent } from './pages/project-managment/weekly-activities/request-weekly-plan/add-weekly-plan/add-weekly-plan.component';
 import { ActivityRequestsComponent } from './pages/project-managment/weekly-activities/request-weekly-plan/activity-requests/activity-requests.component';
 import { ActivityStatusComponent } from './pages/project-managment/weekly-activities/request-weekly-plan/activity-status/activity-status.component';
+import { UpdateTraineeComponent } from './pages/training/trainees-form/update-trainee/update-trainee.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -578,7 +579,8 @@ import { ActivityStatusComponent } from './pages/project-managment/weekly-activi
     RequestWeeklyPlanComponent,
     AddWeeklyPlanComponent,
     ActivityRequestsComponent,
-    ActivityStatusComponent
+    ActivityStatusComponent,
+    UpdateTraineeComponent
     //  AddMeasurementComponent,
     //  UpdateMeasurmentComponent
   ],

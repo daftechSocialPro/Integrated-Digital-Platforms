@@ -2840,6 +2840,12 @@ namespace IntegratedInfrustructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PostSummary")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PreSummary")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Profession")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -3442,9 +3448,6 @@ namespace IntegratedInfrustructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<Guid>("StrategicPlanId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("StratgicPlanId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Type")

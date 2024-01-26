@@ -27,6 +27,7 @@ namespace IntegratedImplementation.Interfaces.Training
 
         Task<List<TraineeGetDto>> GetTraineeList(Guid TainingId);
         Task<ResponseMessage> AddTrainee(TraineePostDto trainingPostDto);
+        Task<ResponseMessage> UpdateTrainee(TraineePostDto trainerPostDto);
 
 
         Task<ResponseMessage> SendEmailTrainer(TrainerEmailDto trainerEmail, string type);

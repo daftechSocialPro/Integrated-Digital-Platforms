@@ -10,7 +10,7 @@ namespace IntegratedImplementation.DTOS.Training
 {
     public record TraineeGetDto
     {
-
+        public Guid Id { get; set; }
         public string FullName { get; set; }
         public string PhoneNumber { get; set; }
         public int Age { get; set; }
@@ -21,10 +21,16 @@ namespace IntegratedImplementation.DTOS.Training
         public string NameofOrganizaton { get; set; }
         public string TypeofOrganization { get; set; }      
         public string Region { get; set; }
+
+        public Guid ? RegionId { get; set; }
+
+        public Guid ?EducationalLevelId { get; set; }
         public string Zone { get; set; }
         public string Woreda { get; set; }
 
         public string Profession { get; set; }
+        public string? PreSummary { get; set; }
+        public string? PostSummary { get; set; }
 
 
 
@@ -32,6 +38,7 @@ namespace IntegratedImplementation.DTOS.Training
 
     public record TraineePostDto
     {
+        public Guid Id { get; set; }
         public Guid TraningId { get; set; }
         public string FullName { get; set; }
         public string PhoneNumber { get; set; }
@@ -49,6 +56,11 @@ namespace IntegratedImplementation.DTOS.Training
       
         public string Zone { get; set; }
         public string Woreda { get; set; }
+        public string? PreSummary { get; set; }
+        public string? PostSummary { get; set; }
+
+
+
 
 
 

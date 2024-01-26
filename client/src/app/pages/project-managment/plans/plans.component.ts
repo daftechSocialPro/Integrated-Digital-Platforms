@@ -45,6 +45,15 @@ export class PlansComponent implements OnInit {
 
   }
 
+  updatePlan(plan:PlanView){
+
+    let modalRef =this.modalService.open (AddPlansComponent,{size:'xl',backdrop:'static'})
+    modalRef.componentInstance.planView = plan
+
+    modalRef.result.then((res)=>{
+      this.listPlans()
+    })
+  }
 
 
   addPlan() {

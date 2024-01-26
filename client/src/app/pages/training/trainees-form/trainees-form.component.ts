@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ConfirmEventType, ConfirmationService, MessageService } from 'primeng/api';
 
@@ -11,6 +12,7 @@ import { CommonService } from 'src/app/services/common.service';
 
 import { DropDownService } from 'src/app/services/dropDown.service';
 import { TrainingService } from 'src/app/services/training.service';
+import { UpdateTraineeComponent } from './update-trainee/update-trainee.component';
 
 @Component({
   selector: 'app-trainees-form',
@@ -21,7 +23,7 @@ import { TrainingService } from 'src/app/services/training.service';
 })
 export class TraineesFormComponent implements OnInit {
 
-
+  @ViewChild('excelTable', { static: false }) excelTable!: ElementRef;
   @Input()traininggId !:string
   @Input()TrainingTitle :string=""
   trainingId!:string
@@ -30,6 +32,7 @@ export class TraineesFormComponent implements OnInit {
   training !: ITrainingGetDto
 
   regions:SelectList[]=[]
+  
 
   genders=[    
     {label:"MALE",value:"MALE"},{label:"FEMALE",value:"FEMALE"}
@@ -40,6 +43,7 @@ export class TraineesFormComponent implements OnInit {
   traineeForm!:FormGroup;
   traineeData: ITraineeGetDto[] = [];  
   ngOnInit(): void {
+
     
     this.trainingId = this.route.snapshot.paramMap.get('trainingId')!
     this.getEducationalFields()
@@ -62,6 +66,7 @@ export class TraineesFormComponent implements OnInit {
     private formBuilder:FormBuilder,
     private messageService : MessageService,
     private trainingService:TrainingService,
+    private modalService:NgbModal,
     private commonService : CommonService,
     private confirmationService : ConfirmationService,
    
@@ -81,7 +86,10 @@ export class TraineesFormComponent implements OnInit {
       educationalLevel: ['', Validators.required],
       educationalField: ['', Validators.required],
       nameofOrganizaton: ['', Validators.required],
-      typeofOrganization: ['', Validators.required]
+      typeofOrganization: ['', Validators.required],
+      preSummary: ['', Validators.required],
+      postSummary: [''],
+   
     });
   }
 
@@ -181,7 +189,7 @@ export class TraineesFormComponent implements OnInit {
   changeTraineeReportStatus(){
 
     this.confirmationService.confirm({
-      message: 'Do you want to Submit this trainee list form?',
+      message: 'Are you sure you want to Submit this trainee list form, you can not add or update trainee after you submit ?',
       header: 'Trainee Report Status',
       icon: 'pi pi-info-circle',
       accept: () => {
@@ -224,6 +232,31 @@ export class TraineesFormComponent implements OnInit {
 
   
   }
+  editRow(row: any): void {
+   
+    let modalRef= this.modalService.open(UpdateTraineeComponent,{size:'lg',backdrop:'static'})
+    modalRef.componentInstance.row=row
+    modalRef.result.then(()=>{
+
+      this.getTrainee()
+    })
+  }
+
+  exportAsExcel(name:string) {
+   
+    const uri = 'data:application/vnd.ms-excel;base64,';
+    const template = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>`;
+    const base64 = function(s:any) { return window.btoa(unescape(encodeURIComponent(s))) };
+    const format = function(s:any, c:any) { return s.replace(/{(\w+)}/g, function(m:any, p:any) { return c[p]; }) };
+
+    const table = this.excelTable.nativeElement;
+    const ctx = { worksheet: 'Worksheet', table: table.innerHTML };
+
+    const link = document.createElement('a');
+    link.download = `${name}.xls`;
+    link.href = uri + base64(format(template, ctx));
+    link.click();
+}
 
   
 

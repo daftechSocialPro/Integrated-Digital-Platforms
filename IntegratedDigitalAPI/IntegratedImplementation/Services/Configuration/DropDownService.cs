@@ -188,7 +188,7 @@ namespace IntegratedImplementation.Services.Configuration
         }
         public async Task<List<SelectListDto>> GetProjectFundSources()
         {
-            var strategicPlans = await _dbContext.ProjectFundSources.AsNoTracking().Select(x => new SelectListDto
+            var strategicPlans = await _dbContext.ProjectFundSources.Include(x=>x.FiscalYear).Where(x=>x.FiscalYear.Rowstatus==RowStatus.ACTIVE).AsNoTracking().Select(x => new SelectListDto
             {
                 Id = x.Id,
                 Name = x.Name

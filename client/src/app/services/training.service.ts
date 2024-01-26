@@ -53,6 +53,11 @@ export class TrainingService {
         return this.http.post<ResponseMessage>(`${this.BaseURI}AddTraineeList`, trainer)
     }
 
+    updateTrainee(trainer: ITraineePostDto) {
+        return this.http.put<ResponseMessage>(`${this.BaseURI}UpdateTraineeList`, trainer)
+    }
+
+    
     getTraineeList(trainingId: string) {
         return this.http.get<ITraineeGetDto[]>(this.BaseURI + "GetTraineeList?trainingId=" + trainingId)
     }
