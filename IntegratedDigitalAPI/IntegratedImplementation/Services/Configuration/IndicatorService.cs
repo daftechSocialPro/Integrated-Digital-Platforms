@@ -80,5 +80,17 @@ namespace IntegratedImplementation.Interfaces.Configuration
             };
 
         }
+
+        public async Task<List<IndicatorGetDto>> GetIndicatorByStrategicPlan(Guid strategicplanId)
+        {
+            return await _dBContext.Indicators.Where(x => x.StrategicPlanId == strategicplanId).Include(x => x.StrategicPlan).AsNoTracking().Select(x => new IndicatorGetDto
+            {
+                Id = x.Id,
+                Name = x.Name,
+                StratgicPlan = x.StrategicPlan.Name,
+                StratgicPlanId = x.StrategicPlanId,
+                Type = x.Type.ToString()
+            }).ToListAsync();
+        }
     }
 }

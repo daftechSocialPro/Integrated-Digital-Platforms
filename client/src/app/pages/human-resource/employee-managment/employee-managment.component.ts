@@ -68,7 +68,7 @@ export class EmployeeManagmentComponent implements OnInit {
 
     this.confirmationService.confirm({
       message: 'Do you want to Delete this Employee Information ?',
-      header: 'Employee Detele Confirmation !',
+      header: 'Employee Delete Confirmation !',
       icon: 'pi pi-info-circle',
       accept: () => {
         this.hrmService.deleteEmployee(employeeId).subscribe({

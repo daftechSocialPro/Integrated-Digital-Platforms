@@ -63,6 +63,8 @@
                             </th>
                             <th scope="col" [attr.rowspan]="filterBy==0?3:2" style="border: 1px solid black;">Source of
                                 Budget</th>
+                            <th scope="col" [attr.rowspan]="filterBy==0?3:2" style="border: 1px solid black;">Action
+                                </th>
                         </tr>
 
                         <tr>
@@ -140,6 +142,14 @@
                                 </td>
                                 <td [attr.colspan]="filterBy==0?38:14"  style="border: 1px solid black;  background-color: #e8ffde;width: 200px;">
                                     {{task.taskName}}
+                                </td>
+                                <td style="border: 1px solid black; background-color: #e8ffde ">
+                                    
+                                    <button class="btn btn-outline-warning btn-sm" (click)="updateTask(task)"> <i
+                                            class="bi bi-pen me-1"></i> {{exportingToExcel?"":"Update"}} </button> |
+                                    <button class="btn btn-outline-danger btn-sm" (click)="DeleteTask(task.id)"> <i
+                                            class="bi bi-trash me-1"></i> {{exportingToExcel?"":"Delete"}} </button>
+
                                 </td>
                                 <!-- <ng-container *ngFor="let item of items; index as i">
                                     <td style="border: 1px solid black; background-color: #eee"></td>
@@ -265,6 +275,11 @@
 
                                     </td>
                                     <td style="border: 1px solid black;"></td>
+                                    <td style="border: 1px solid black;">
+                                        <button class="btn btn-outline-warning btn-sm" (click)="updateActivity(task,act)"> <i
+                                        class="bi bi-pen me-1"></i> {{exportingToExcel?"":"Update"}} </button> |
+                                        <button class="btn btn-outline-danger btn-sm" (click)="addActivity(task)"> <i
+                                        class="bi bi-trash me-1"></i> {{exportingToExcel?"":"Delete"}} </button></td>
 
 
                                 </tr>

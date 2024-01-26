@@ -1,4 +1,5 @@
 ﻿
+using Implementation.Helper;
 using IntegratedDigitalAPI.DTOS.PM;
 using IntegratedImplementation.DTOS.Configuration;
 
@@ -24,8 +25,8 @@ namespace IntegratedDigitalAPI.Services.PM
 
         public Task<List<SelectListDto>> GetActivitieParentsSelectList(Guid TaskId);
         public Task<List<SelectListDto>> GetActivitiesSelectList(Guid? planId, Guid? taskId, Guid? actParentId);
-
-
+        public Task<ResponseMessage> UpdateTask(TaskDto updateTask);
+        public Task<ResponseMessage> DeleteTask(Guid taskId);
 
 
     }
