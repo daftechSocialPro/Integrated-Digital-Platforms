@@ -16,11 +16,14 @@ export class MembershipReportComponent implements OnInit {
   first: number = 0;
   rows: number = 10;
   Members: IMembersGetDto[];
-  paginatedMembers: IMembersGetDto[];
+  filterdMembers: IMembersGetDto[];
   searchTerm: string = '';
   chapters: SelectList[];
+  memberships:SelectList[]
+  selectedMembership:String =''
 
   @ViewChild('stockReportIframe') stockReportIframe: ElementRef;
+  @ViewChild('excelTable', { static: false }) excelTable!: ElementRef;
 
   selectedChapter: string="";
   selectedGender: string="";
@@ -29,17 +32,16 @@ export class MembershipReportComponent implements OnInit {
   toDate: string
 
   ngOnInit(): void {
-    // this.getMemberss();
-    // this.getChapter()
-    this.getMemberReport()
+     this.getMemberss();
+     
+   // this.getMemberReport()
   }
 
   constructor(
     private modalService: NgbModal,
     private commonService: CommonService,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService,
-    private controlService: MemberService,
+    private messageService: MessageService,  private controlService: MemberService,
     private dropDownService: DropDownService
   ) { }
 
@@ -48,78 +50,124 @@ export class MembershipReportComponent implements OnInit {
       next: (res) => {
         this.Members = res;
 
-        this.paginateMembers();
+       this.filterdMembers = res 
       }
     });
   }
 
-  getChapter() {
-    this.dropDownService.getRegionsDropdown('ETHIOPIAN').subscribe({
+  getChapter(value:string) {
+    this.dropDownService.getRegionsDropdown(value).subscribe({
       next: (res) => {
         this.chapters = res
       }
     })
   }
 
-  onPageChange(event: any) {
-    this.first = event.first;
-    this.rows = event.rows;
-    this.paginateMembers();
-  }
+  
 
   getImagePath(url: string) {
     return this.commonService.createImgPath(url);
   }
 
-  paginateMembers() {
-    this.paginatedMembers = this.Members.slice(this.first, this.first + this.rows);
-  }
+  // paginateMembers() {
+  //   this.paginatedMembers = this.Members.slice(this.first, this.first + this.rows);
+  // }
+  // paginateMembers2() {
+  //   this.paginatedMembers = this.paginatedMembers.slice(this.first, this.first + this.rows);
+  // }
 
   applyFilter() {
 
-    if (this.selectedGender !== "") {
-      const genderSearchTerm = this.selectedGender.toLowerCase();
-      this.paginatedMembers = this.Members.filter((item) => {
-        return item.gender && item.gender.toLowerCase().includes(genderSearchTerm);
-      });
-    }
-    
     if (this.selectedChapter !== "") {
       const chapterSearchTerm = this.selectedChapter.toLowerCase();
-      this.paginatedMembers = this.paginatedMembers.filter((item) => {
+      this.filterdMembers = this.Members.filter((item) => {
         return item.region && item.region.toLowerCase().includes(chapterSearchTerm);
       });
+    
     }
+
+    if (this.selectedGender !== "") {
+      const genderSearchTerm = this.selectedGender.toLowerCase();
+      this.filterdMembers = this.filterdMembers.filter((item) => {
+        return item.gender && (item.gender.toLowerCase()==genderSearchTerm);
+      });
+      
+    }
+    
+ 
     
     if (this.selectedStatus !== "") {
       const statusSearchTerm = this.selectedStatus.toLowerCase();
-      this.paginatedMembers = this.paginatedMembers.filter((item) => {
+      this.filterdMembers = this.filterdMembers.filter((item) => {
         return item.paymentStatus.toLowerCase().includes(statusSearchTerm);
       });
     }
+
+    
+    if (this.selectedMembership !== "") {
+      const statusSearchTerm = this.selectedMembership.toLowerCase();
+      this.filterdMembers = this.filterdMembers.filter((item) => {
+        return item.membershipTypeId.toLowerCase()===statusSearchTerm;
+      });
+    }
+
+    
 
 
     if (this.fromDate !== "" && this.toDate!="") {
       const statusSearchTerm = this.selectedStatus.toLowerCase();
-      this.paginatedMembers = this.paginatedMembers.filter((item) => {
+      this.filterdMembers = this.filterdMembers.filter((item) => {
         return item.paymentStatus.toLowerCase().includes(statusSearchTerm);
       });
+      
     }
 
+
+  
   }
 
+  exportAsExcel(name:string) {
+   
+    const uri = 'data:application/vnd.ms-excel;base64,';
+    const template = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>`;
+    const base64 = function(s:any) { return window.btoa(unescape(encodeURIComponent(s))) };
+    const format = function(s:any, c:any) { return s.replace(/{(\w+)}/g, function(m:any, p:any) { return c[p]; }) };
 
+    const table = this.excelTable.nativeElement;
+    const ctx = { worksheet: 'Worksheet', table: table.innerHTML };
 
-  getMemberReport(){
-    this.controlService.getMembershipReport().subscribe({
+    const link = document.createElement('a');
+    link.download = `${name}.xls`;
+    link.href = uri + base64(format(template, ctx));
+    link.click();
+}
+
+  // getMemberReport(){
+  //   this.controlService.getMembershipReport().subscribe({
      
-        next: (res) => {
+  //       next: (res) => {
 
-          console.log(res)
-          //const pdfUrl = URL.createObjectURL(res);
-          //this.stockReportIframe.nativeElement.src = pdfUrl;
-         }
+  //         console.log(res)
+  //         //const pdfUrl = URL.createObjectURL(res);
+  //         //this.stockReportIframe.nativeElement.src = pdfUrl;
+  //        }
       
-    })
+  //   })
+  // }
+
+  getRegions(countryType: string) { 
+this.getChapter(countryType)
+  }
+
+  getMemberships(category: string) {
+    this.dropDownService.getMembershipDropDown(category).subscribe({
+      next: (res) => {
+        this.memberships = res;
+      }
+    });
+  }
+
+  reset(){
+    this.filterdMembers = this.Members
   }
 }

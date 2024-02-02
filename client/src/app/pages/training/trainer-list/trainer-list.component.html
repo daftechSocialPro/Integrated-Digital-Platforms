@@ -13,7 +13,11 @@
                 <button class="btn btn-outline-primary" (click)="addTrainer()">
                     <i class="bi bi-plus text-primary"></i>
                     Add Trainer
-                </button>
+                </button> |
+                <button class="btn  btn-outline-primary" (click)="copyToClipboard()">
+                   
+                    Copy Trainee Report URL</button> |
+                <button  class="btn  btn-outline-primary" (click)="copyToClipboard2()">Copy Trainee List URL</button>
             </div>
         </div>
 
@@ -42,6 +46,9 @@
                     <td>{{ trainer.phoneNumber }}</td>
 
                     <td>
+
+                        <input #myInput type="text" style="position: absolute; left: -9999px;">
+                       
                         <span *ngIf="Training&&Training.traineeListStatus!='NOTSENT'">Trainee List has been sent</span><br/>
                         <span *ngIf="Training&&Training.reportStatus!='NOTSENT'">Training Report has been sent</span>
                         <li  *ngIf="Training&&Training.reportStatus=='NOTSENT'||Training&&Training.traineeListStatus=='NOTSENT'" style="list-style: none; text-align: right;">

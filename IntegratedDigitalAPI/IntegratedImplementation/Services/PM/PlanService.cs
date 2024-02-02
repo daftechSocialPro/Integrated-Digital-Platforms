@@ -52,6 +52,7 @@ namespace IntegratedDigitalAPI.Services.PM
                         Id = Guid.NewGuid(),
                         ProjectId = Plans.Id,
                         ProjectSourceFundId = fund,
+                        Amount = Plans.PlannedBudget/plan.ProjectFunds.Count(),
                         CreatedDate = DateTime.Now,
                         CreatedById = plan.CreatedById
                     };
@@ -66,6 +67,75 @@ namespace IntegratedDigitalAPI.Services.PM
                     Message="Project Added Successfully"
                 };
             }catch(Exception ex)
+            {
+                return new ResponseMessage
+                {
+                    Success = false,
+                    Message = ex.Message.ToString()
+                };
+            }
+
+        }
+        public async Task<ResponseMessage> UpdatePlan(PlanDto plan)
+        {
+            try
+            {
+                var singlePlan = await _dBContext.Projects.FindAsync(plan.Id);
+
+                if (singlePlan != null)
+                {
+
+
+
+                    singlePlan.HasTask = plan.HasTask;
+                    singlePlan.ProjectName = plan.PlanName;
+                    singlePlan.PeriodStartAt = plan.StartDate;
+                    singlePlan.PeriodEndAt = plan.EndDate;
+                    singlePlan.ProjectNumber = plan.ProjectNumber;
+                    singlePlan.Goal = plan.Goal;
+                    singlePlan.Objective = plan.Objective;
+                    singlePlan.PlannedBudget = plan.PlandBudget;
+                    singlePlan.DepartmentId = plan.StructureId;
+                    singlePlan.ProjectManagerId = plan.ProjectManagerId;
+                  
+
+                     await _dBContext.SaveChangesAsync();
+
+                }
+
+                if (plan.ProjectFunds.Any())
+                {
+                    var projectFunds = _dBContext.Project_Funds.Where(x=>x.ProjectId==plan.Id).ToList();
+
+                     _dBContext.RemoveRange(projectFunds);
+                    await _dBContext.SaveChangesAsync();
+
+                }
+
+
+                foreach (var fund in plan.ProjectFunds)
+                {
+                    var project_Fund = new Project_Fund
+                    {
+                        Id = Guid.NewGuid(),
+                        ProjectId = singlePlan.Id,
+                        ProjectSourceFundId = fund,
+                        Amount = singlePlan.PlannedBudget / plan.ProjectFunds.Count(),
+                        CreatedDate = DateTime.Now,
+                        CreatedById = plan.CreatedById
+                    };
+                    await _dBContext.Project_Funds.AddAsync(project_Fund);
+                    await _dBContext.SaveChangesAsync();
+
+                }
+
+                return new ResponseMessage
+                {
+                    Success = true,
+                    Message = "Project Updated Successfully"
+                };
+            }
+            catch (Exception ex)
             {
                 return new ResponseMessage
                 {
@@ -119,9 +189,14 @@ namespace IntegratedDigitalAPI.Services.PM
                               NumberOfTaskCompleted = _dBContext.Activities.Include(x => x.ActivityParent.Task.Project).Where(x => x.Status == Status.FINALIZED && (x.PlanId == p.Id || x.Task.ProjectId == p.Id || x.ActivityParent.Task.ProjectId == p.Id)).Count(),
                               HasTask = p.HasTask,
                               ProjectFunds = p.ProjectFunds.Select(x=>x.ProjectSourceFund.Name).ToList(),
+                              ProjectFundIds = p.ProjectFunds.Select(x => x.ProjectSourceFund.Id.ToString()).ToList(),
 
                               StartDate = p.PeriodStartAt,
-                              EndDate = p.PeriodEndAt
+                              EndDate = p.PeriodEndAt,
+
+                              StructureId =p.DepartmentId.ToString(),
+                              ProjectManagerId =p.ProjectManagerId.ToString(),
+                            
 
 
                           }).ToListAsync();

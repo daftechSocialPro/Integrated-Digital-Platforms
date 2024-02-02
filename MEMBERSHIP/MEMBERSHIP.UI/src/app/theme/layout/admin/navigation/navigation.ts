@@ -112,7 +112,18 @@ const NavigationItems = [
             role: 'Admin',
             url: '/reports/membership-report',
             breadcrumbs: false
+          },
+          {
+            id: 'total-revune',
+            title : 'Total Revenue',
+            type: 'item',
+            role: 'Admin',
+            url: '/reports/total-revenue',
+            breadcrumbs: false
+            
           }
+     
+          
         ]
       },
       {

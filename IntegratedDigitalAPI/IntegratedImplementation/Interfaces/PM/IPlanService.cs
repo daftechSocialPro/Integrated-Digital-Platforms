@@ -10,6 +10,8 @@ namespace IntegratedDigitalAPI.Services.PM.Plan
     {
         public Task<ResponseMessage> CreatePlan(PlanDto plan);
 
+        public  Task<ResponseMessage> UpdatePlan(PlanDto plan);
+
         public Task<List<PlanViewDto>> GetPlans(Guid? programId);
 
         public Task<List<SelectListDto>> GetPlansSelectList();

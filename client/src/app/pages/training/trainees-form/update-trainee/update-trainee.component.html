@@ -1,0 +1,190 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Update Trainee <b>{{row.fullName}} </b> </h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+
+
+
+
+
+        <form [formGroup]="traineeForm" (ngSubmit)="addRow()">
+            <div class="card-body">
+                <h5 class="card-title">Trainee Detail</h5>
+                <hr />
+
+                <div class="row mt-2">
+
+
+
+                    <div class="col-md-3">
+                        <div class="form-floating">
+                            <input class="form-control" type="text" placeholder="Full Name"
+                                formControlName="fullName" />
+                            <label for="FullName">Full Name </label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-floating">
+                            <select class="form-select" formControlName="gender">
+                                <option *ngFor="let item of genders" [value]="item.label">{{item.value}}</option>
+                            </select>
+
+                            <label for="gender">Gender </label>
+
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-floating">
+                            <input class="form-control" type="text" placeholder="Profession"
+                                formControlName="profession" />
+                            <label for="Profession">Profoession</label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-floating">
+                            <input class="form-control" type="text" placeholder="Phone Number"
+                                formControlName="phoneNumber" />
+
+                            <label for="phoneNumber">Phone Number</label>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row mt-2">
+
+
+                    <div class="col-md-4">
+                        <div class="form-floating">
+                            <input class="form-control" type="email" placeholder="Email" formControlName="email" />
+
+                            <label for="Email">Email </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-floating">
+                            <input class="form-control" type="number" formControlName="age" />
+
+                            <label for="age">Age</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-floating">
+                            <select class="form-select" formControlName="region">
+                                <option *ngFor="let item of regions" [value]="item.id">{{item.name}}</option>
+                            </select>
+
+                            <label for="region">Region </label>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row mt-2">
+
+                    <div class="col-md-3">
+                        <div class="form-floating">
+                            <input class="form-control" type="text" placeholder="Zone" formControlName="zone" />
+
+
+                            <label for="age">Zone</label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-floating">
+                            <input class="form-control" type="text" placeholder="Woreda" formControlName="woreda" />
+
+
+                            <label for="Woreda">Woreda</label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-floating">
+                            <select class="form-select" formControlName="educationalLevel">
+                                <option *ngFor="let item of educationalLevels" [value]="item.id">{{item.name}}</option>
+                            </select>
+
+                            <label for="educationalLevel">Educational Level</label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-floating">
+                            <input class="form-control" type="text" placeholder="Educational Field"
+                                formControlName="educationalField" />
+
+
+
+                            <label for="educationalField">Educational Field</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-2">
+
+
+
+
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input class="form-control" type="text" placeholder="Name of Organization"
+                                formControlName="nameofOrganizaton" />
+                            <label for="nameofOrganizaton">Name of Organization</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input class="form-control" type="text" placeholder="Type of Organization"
+                                formControlName="typeofOrganization" />
+
+
+
+                            <label for="typeofOrganization">Type of Organization</label>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="row mt-2">
+
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <textarea class="form-control" type="text" placeholder="Pre Summary"
+                                formControlName="preSummary"></textarea>
+
+
+                            <label for="preSUmmary">Pre Summary</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <textarea class="form-control" type="text" placeholder="Post Summary"
+                                formControlName="postSummary"></textarea>
+
+                            <label for="postSummary">Post Summary</label>
+                        </div>
+                    </div>
+
+
+
+
+
+                </div>
+
+
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-outline-secondary" (click)="closeModal()"> Close</button>
+                <button type="button" type="submit" [disabled]="!traineeForm.valid"
+                    class="btn btn-outline-warning">Update</button>
+
+            </div>
+        </form>
+
+    </div>
+</div>

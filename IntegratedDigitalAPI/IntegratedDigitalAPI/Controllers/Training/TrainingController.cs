@@ -109,6 +109,25 @@ namespace IntegratedDigitalAPI.Controllers.Training
 
             }
         }
+
+
+        [HttpPut]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> UpdateTraineeList(TraineePostDto trainerPost)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _trainingService.UpdateTrainee(trainerPost));
+            }
+            else
+            {
+                return BadRequest();
+
+
+            }
+        }
+
+
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> SendEmailTrainer(TrainerEmailDto trainerPost,string type)

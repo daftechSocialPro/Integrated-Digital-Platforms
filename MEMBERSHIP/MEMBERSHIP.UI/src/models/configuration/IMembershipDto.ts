@@ -18,3 +18,8 @@ export interface IMembershipTypePostDto {
     description: string;
     membershipCategory: string;
   }
+
+  export interface IRegionRevenueDto {
+    regionRevenue:number,
+    regionName:string
+  }

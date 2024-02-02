@@ -8,7 +8,7 @@ import { ITrainingGetDto } from 'src/app/model/Training/TrainingDto';
 import { ITrainingReportGetDto, ITrainingReportPostDto } from 'src/app/model/Training/TrainingReportDto';
 import { CommonService } from 'src/app/services/common.service';
 import { TrainingService } from 'src/app/services/training.service';
-
+import * as htmlDocx from 'html-docx-js';
 @Component({
   selector: 'app-training-report-form',
   templateUrl: './training-report-form.component.html',
@@ -32,6 +32,8 @@ export class TrainingReportFormComponenT implements OnInit {
   uploadedFiles2: File[] = []
   imageUrls: string[] = [];
   imageObject: Array<object> = [];
+
+  
   ngOnInit(): void {
 
     this.trainingId = this.route.snapshot.paramMap.get('trainingId')!
@@ -163,7 +165,7 @@ if (reportStatus=='SUBMITTED'){
   
 
     this.confirmationService.confirm({
-      message: 'Do you want to Sumbit this training report Form?',
+      message: 'Are you sure you want to Submit this trainee Report form, you can not add or update trainee after you submit ?',
       header: 'Training Report Form status !',
       icon: 'pi pi-info-circle',
       accept: () => {
@@ -318,5 +320,19 @@ if (reportStatus=='SUBMITTED'){
       return this.imageUrls[index];
     }
     return '';
+  }
+
+  downloadAsWord() {
+ const uri = 'data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,';
+const template = `<!DOCTYPE html><html xmlns:w="urn:schemas-microsoft-com:office:word"><head><meta charset="utf-8"><title>Word Document</title></head><body>{content}</body></html>`;
+const base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) };
+
+const content = document.getElementById('reportContent').innerHTML;
+const ctx = { content: content };
+
+const link = document.createElement('a');
+link.download = 'training_report.docx';
+link.href = uri + base64(template.replace('{content}', ctx.content));
+link.click();
   }
 }

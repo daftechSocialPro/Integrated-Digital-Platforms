@@ -4,7 +4,7 @@ using AutoMapper.QueryableExtensions;
 using Implementation.DTOS.Authentication;
 using Implementation.Helper;
 using Implementation.Interfaces.Authentication;
-using MembershipImplementation.DataSet;
+
 using MembershipImplementation.DTOS.Configuration;
 using MembershipImplementation.DTOS.HRM;
 using MembershipImplementation.DTOS.Payment;
@@ -15,6 +15,7 @@ using MembershipImplementation.Services.Configuration;
 using MembershipInfrustructure.Data;
 using MembershipInfrustructure.Migrations;
 using MembershipInfrustructure.Model.Authentication;
+using MembershipInfrustructure.Model.Configuration;
 using MembershipInfrustructure.Model.Users;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -227,7 +228,8 @@ namespace MembershipImplementation.Services.HRM
                                      MoodleId = member.MoodleId,
                                      MoodlePassword = member.MoodlePassword!=null? _generalConfig.Decrypt(member.MoodlePassword!, encryption):"",
                                      MoodleName = member.MoodleUserName,
-                                     MoodleStatus = member.MoodleStatus.ToString()
+                                     MoodleStatus = member.MoodleStatus.ToString(),
+                                     createdByDate = member.CreatedDate
 
                                  }).ToListAsync();
             return members;
@@ -266,7 +268,8 @@ namespace MembershipImplementation.Services.HRM
                                      MoodleId = member.MoodleId,
                                      MoodlePassword = member.MoodlePassword!=null? _generalConfig.Decrypt( member.MoodlePassword!, encryption):"",
                                      MoodleName = member.MoodleUserName,
-                                     MoodleStatus = member.MoodleStatus.ToString()
+                                     MoodleStatus = member.MoodleStatus.ToString(),
+                                     createdByDate = member.CreatedDate
 
 
 
@@ -650,36 +653,6 @@ namespace MembershipImplementation.Services.HRM
             }
         }
 
-        public async Task<byte[]> MembershipTypeReport()
-        {
-           // MembershipDataSet.CompanyProfileDataTable companyProfileRows = new MembershipDataSet.CompanyProfileDataTable();
-
-            MembershipDataSet.MembersDataTable membersReport = new MembershipDataSet.MembersDataTable();
-
-            var members = await _dbContext.Members.Include(x => x.Zone.Region).Select(member =>
-            
-                membersReport.AddMembersRow(member.FullName, member.MemberId, member.PhoneNumber, member.MembershipType.Name, member.Zone.Region.RegionName, member.Inistitute, member.Gender.ToString(), "", "")
-
-            ).ToListAsync();
-
-            
-
-            var currentDirectory = Directory.GetCurrentDirectory();
-            var reportPath = currentDirectory + "\\wwwroot\\Report\\MembershipReport.rdlc";
-            //ReportParameter parameter = new ReportParameter("FromDate", stockReport.FromDate.ToString("dd/MM/yyyy"));
-            //ReportParameter totalEmp = new ReportParameter("ToDate", stockReport.ToDate.ToString("dd/MM/yyyy"));
-            var localReport = new Microsoft.Reporting.NETCore.LocalReport();
-            localReport.ReportPath = reportPath;
-            ReportDataSource daata = new ReportDataSource();
-            daata.Name = "MemberDataset";
-            daata.Value = membersReport;
-            localReport.DataSources.Add(daata);       
-        
-
-            var bytes = localReport.Render("PDF");
-            return bytes;
-        }
-
         public async Task UPdateExpiredDateStatus()
         {
             var todayDate = DateTime.Now;
@@ -843,6 +816,36 @@ namespace MembershipImplementation.Services.HRM
             }
 
 
+        }
+
+        public async Task<List<MemberRegionRevenueReportDto>> GetRegionRevenueReport()
+        {
+            var chapters = await _dbContext.Regions.Where(x=>x.CountryType== CountryType.ETHIOPIAN).ToListAsync();
+
+            var memberPayments = await _dbContext.MemberPayments.Include(x=>x.Member).ThenInclude(x=>x.MembershipType).Include(x => x.Member).ThenInclude(x=>x.Zone).Where(x=>x.Member.ZoneId!=null && x.PaymentStatus==PaymentStatus.PAID).ToListAsync();
+            var memberPaymentsForeigns = await _dbContext.MemberPayments.Include(x => x.Member).ThenInclude(x => x.MembershipType).Include(x => x.Member).ThenInclude(x => x.Zone).Where(x => x.Member.ZoneId == null && x.PaymentStatus == PaymentStatus.PAID).ToListAsync();
+
+            var membersReports = new List<MemberRegionRevenueReportDto>();
+
+            foreach (var chapter in chapters)
+            {
+
+                var memberReport = new MemberRegionRevenueReportDto
+                {
+                    RegionName = chapter.RegionName,
+                    RegionRevenue =  memberPayments.Where(x=>x.Member?.Zone?.RegionId==chapter.Id).Sum(x=>x.MembershipType.Money)
+                };
+
+                membersReports.Add(memberReport);
+
+            }
+            var memberReport2 = new MemberRegionRevenueReportDto
+            {
+                RegionName = CountryType.FOREIGN.ToString(),
+                RegionRevenue = memberPaymentsForeigns.Sum(x => x.MembershipType.Money)
+            };
+            membersReports.Add(memberReport2);
+            return membersReports;
         }
 
 

@@ -61,9 +61,12 @@
 
                   <div>
                      <div (click)="tasks(plan)">
-                        {{plan.planName}} ({{plan.projectNumber}})
+                        
+                        {{plan.planName}} ({{plan.projectNumber}}) 
                      </div>
+                    
                      <div style="text-align: right!important;">
+                       
                         <span *ngIf="plan.hasTask" class="badge bg-success">Has Task</span> <span *ngIf="!plan.hasTask"
                            class="badge bg-danger">Has No Task</span>
                      </div>
@@ -78,7 +81,7 @@
                         </div>
                         <div class="col-md-6  text-end">
 
-                           {{plan.startDate |date:'dd MMM YYYY'}} - {{plan.endDate |date:'dd MMM YYYY'}}
+                           {{plan.startDate |date:'dd MMM yyyy'}} - {{plan.endDate|date:'dd MMM yyyy' }}
                         </div>
                         <!-- <div class="col-md-2" style="text-align: right!important;">
                            {{plan.ProjectType}}
@@ -122,7 +125,8 @@
                      </div>
                      <div class="col-lg-6 text-end">
 
-                        <button class="btn btn-sm btn-outline-primary" (click)="viewDetail(plan.id)"> View Detail</button>
+                        <button class="btn btn-sm btn-outline-primary" (click)="viewDetail(plan.id)"> View Detail</button> |
+                        <button type="button" (click)="updatePlan(plan)"  class="btn btn-sm btn-outline-warning"><i class="bi bi-pencil"></i> Update</button>
 
                      </div>
 

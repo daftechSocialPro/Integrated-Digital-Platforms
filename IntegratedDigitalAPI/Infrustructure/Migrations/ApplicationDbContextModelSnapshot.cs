@@ -2840,6 +2840,12 @@ namespace IntegratedInfrustructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PostSummary")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PreSummary")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Profession")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

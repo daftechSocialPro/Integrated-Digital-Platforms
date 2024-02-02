@@ -226,6 +226,7 @@ namespace IntegratedImplementation.Services.Training
                 .Where(x => x.TrainingId == TainingId).OrderBy(x => x.FullName)
                        .Select(x => new TraineeGetDto
                        {
+                           Id=x.Id,
                            FullName = x.FullName,
                            Email = x.Email,
                            PhoneNumber = x.PhoneNumber,
@@ -233,12 +234,16 @@ namespace IntegratedImplementation.Services.Training
                            Gender = x.Gender.ToString(),
                            EducationalField = x.EducationalField,
                            EducationalLevel = x.EducationalLevel.EducationalLevelName,
+                           EducationalLevelId = x.EducationalLevelId,
+                           RegionId=x.RegionId,
                            Region = x.Region.RegionName,
                            Zone = x.Zone,
                            Woreda = x.Woreda,
                            Profession =x.Profession,
                            TypeofOrganization = x.TypeofOrganization,
                            NameofOrganizaton = x.NameofOrganizaton,
+                           PreSummary =x.PreSummary,
+                           PostSummary  =x.PostSummary,
                        }).ToListAsync();
 
             return results;
@@ -266,7 +271,9 @@ namespace IntegratedImplementation.Services.Training
                     Woreda  = trainerPostDto.Woreda,
                     NameofOrganizaton = trainerPostDto.NameofOrganizaton,
                     TypeofOrganization = trainerPostDto.TypeofOrganization,
-                    Profession = trainerPostDto.Profession
+                    Profession = trainerPostDto.Profession,
+                    PostSummary = trainerPostDto.PostSummary,
+                    PreSummary = trainerPostDto.PreSummary
                     
                 };
 
@@ -292,9 +299,53 @@ namespace IntegratedImplementation.Services.Training
             }
 
         }
+        public async Task<ResponseMessage> UpdateTrainee(TraineePostDto trainerPostDto)
+        {
+            try
+            {
+                var trainee = await _dbContext.Trainees.FindAsync(trainerPostDto.Id);
 
 
-       public async Task<ResponseMessage> SendEmailTrainer(TrainerEmailDto trainerEmail,string type )
+
+                trainee.FullName = trainerPostDto.FullName;
+                trainee.EducationalField = trainerPostDto.EducationalField;
+                trainee.EducationalLevelId = trainerPostDto.EducationalLevelId;
+                trainee.PhoneNumber = trainerPostDto.PhoneNumber;
+                trainee.Email = trainerPostDto.Email;
+                trainee.Age = trainerPostDto.Age;
+                trainee.Gender = Enum.Parse<Gender>(trainerPostDto.Gender);
+                trainee.RegionId = trainerPostDto.RegionId;
+                trainee.Zone = trainerPostDto.Zone;
+                trainee.Woreda = trainerPostDto.Woreda;
+                trainee.NameofOrganizaton = trainerPostDto.NameofOrganizaton;
+                trainee.TypeofOrganization = trainerPostDto.TypeofOrganization;
+                trainee.Profession = trainerPostDto.Profession;
+                trainee.PostSummary = trainerPostDto.PostSummary;
+                trainee.PreSummary = trainerPostDto.PreSummary;
+                await _dbContext.SaveChangesAsync();
+
+                return new ResponseMessage
+                {
+                    Success = true,
+                    Message = "Trainee Successfully Updated !!!"
+
+                };
+
+            }
+            catch (Exception ex)
+            {
+                return new ResponseMessage
+                {
+                    Success = false,
+                    Message = ex.Message
+                };
+
+            }
+
+        }
+
+
+        public async Task<ResponseMessage> SendEmailTrainer(TrainerEmailDto trainerEmail,string type )
         {
             try
             {

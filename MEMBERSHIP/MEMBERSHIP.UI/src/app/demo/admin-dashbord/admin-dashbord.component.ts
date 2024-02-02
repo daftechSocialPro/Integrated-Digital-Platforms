@@ -65,6 +65,8 @@ export default class AdminDashbordComponent {
   revenue: number = 0;
   recivable: number = 0;
 
+  currentYear:number
+
   // Constructor
   constructor(private memberService: MemberService) {
     this.chartOptions1 = {
@@ -92,6 +94,9 @@ export default class AdminDashbordComponent {
 
   // Life cycle events
   ngOnInit(): void {
+
+    const currentDate = new Date();
+    this.currentYear = currentDate.getFullYear();
     setTimeout(() => {
       this.monthChart = new ApexCharts(document.querySelector('#tab-chart-1'), this.monthOptions);
       this.monthChart.render();
@@ -104,58 +109,78 @@ export default class AdminDashbordComponent {
     this.memberService.getMembers().subscribe({
       next: (res) => {
         this.members = res;
+      
+        this.generate(this.currentYear.toString())
         this.getPendingMembers();
-
-        this.chartOptions = {
-          series: [
-            {
-              name: 'Members',
-              data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, this.members && this.members.length]
-            }
-          ],
-          dataLabels: {
-            enabled: false
-          },
-          chart: {
-            type: 'bar',
-            height: 480,
-            stacked: true,
-            toolbar: {
-              show: true
-            }
-          },
-          colors: ['#1e88e5', '#673ab7', '#ede7f6'],
-          responsive: [
-            {
-              breakpoint: 480,
-              options: {
-                legend: {
-                  position: 'bottom',
-                  offsetX: -10,
-                  offsetY: 0
-                }
-              }
-            }
-          ],
-          plotOptions: {
-            bar: {
-              horizontal: false,
-              columnWidth: '50%'
-            }
-          },
-          xaxis: {
-            type: 'category',
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-          },
-          grid: {
-            strokeDashArray: 4
-          },
-          tooltip: {
-            theme: 'dark'
-          }
-        };
+       
       }
     });
+  }
+
+  generate(passedYear:string){
+    const data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        
+    this.members.forEach(member => {
+      const createdDate = new Date(member.createdByDate);
+      const year = createdDate.getFullYear().toString();
+      
+      if (year === passedYear) {
+        const month = createdDate.getMonth();
+        data[month]++;
+      }
+    });
+
+    
+
+    this.chartOptions = {
+      series: [
+        {
+          name: 'Members',
+          data: data
+        }
+      ],
+      dataLabels: {
+        enabled: false
+      },
+      chart: {
+        type: 'bar',
+        height: 480,
+        stacked: true,
+        toolbar: {
+          show: true
+        }
+      },
+      colors: ['#1e88e5', '#673ab7', '#ede7f6'],
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            legend: {
+              position: 'bottom',
+              offsetX: -10,
+              offsetY: 0
+            }
+          }
+        }
+      ],
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '50%'
+        }
+      },
+      xaxis: {
+        type: 'category',
+        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+      },
+      grid: {
+        strokeDashArray: 4
+      },
+      tooltip: {
+        theme: 'dark'
+      }
+    };
+    
   }
   // public Method
   onNavChange(changeEvent: NgbNavChangeEvent) {

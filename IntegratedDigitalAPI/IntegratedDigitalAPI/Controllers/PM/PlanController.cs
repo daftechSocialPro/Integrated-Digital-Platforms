@@ -32,6 +32,22 @@ namespace IntegratedDigitalAPI.Controllers.PM
             }
         }
 
+
+        [HttpPut("planUpdate")]
+        public IActionResult Update([FromBody] PlanDto plan)
+        {
+            try
+            {
+                var response = _planService.UpdatePlan(plan);
+                return Ok(new { response });
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error : {ex}");
+            }
+        }
+
         [HttpGet("GetDateAndTime")]
 
         public async Task<GetStartEndDate> GetDateAndTime(Guid PlanId)

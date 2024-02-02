@@ -129,6 +129,13 @@ namespace MembershipDigitalAPI.Controllers.HRM
             return Ok(await _memberService.RequstedIdCards());
         }
 
+        [HttpGet]
+        [ProducesResponseType(typeof(MemberRegionRevenueReportDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetRegionReportRevenue()
+        {
+            return Ok(await _memberService.GetRegionRevenueReport());
+        }
+
         [HttpPut]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> UpdateProfileFromAdmin([FromForm] MemberUpdateDto memberDto)
@@ -144,13 +151,7 @@ namespace MembershipDigitalAPI.Controllers.HRM
         }
 
 
-        [HttpPost]
-        [ProducesResponseType(typeof(File), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> MembershipReport()
-        {
-            var report = await _memberService.MembershipTypeReport();
-            return File(report, "application/pdf");
-        }
+     
 
         [HttpPut]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]

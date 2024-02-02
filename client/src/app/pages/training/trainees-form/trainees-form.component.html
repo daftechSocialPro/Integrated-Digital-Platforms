@@ -19,43 +19,57 @@
     
     </div>
   </div>
+  <button  *ngIf="traininggId&&(training&&training.traineeListStatus=='SUBMITTED')" class="btn btn-outline-success text-end mb-3" (click)="exportAsExcel(training&&training.title)"><i
+    class="bi bi-file-excel"></i> Export Excel </button>
   <div class="table-container ">
     <div class="table-wrapper ">
-    <table class="table table-bordered">
+    <table class="table table-bordered"  #excelTable>
       <thead>
         <tr>
-          <th>#</th>
-          <th>Full Name</th>
-          <th>Gender</th>
-          <th>Profession</th>
-          <th>Phone Number</th>
-          <th>Email</th>
-          <th>Age</th>
-          <th>Region</th>
-          <th>Zone</th>
-          <th>Woreda</th>
-          <th>Level of Education</th>
-          <th>Educational Field</th>
-          <th>Organization</th>
-          <th>Type Of Organization</th>
+          <th style="border: 1px solid black;" *ngIf="!traininggId && (training && training.traineeListStatus != 'SUBMITTED')"></th>
+          <th style="border: 1px solid black;">#</th>
+          <th style="border: 1px solid black;">Full Name</th>
+          <th style="border: 1px solid black;">Gender</th>
+          <th style="border: 1px solid black;">Profession</th>
+          <th style="border: 1px solid black;">Phone Number</th>
+          <th style="border: 1px solid black;">Email</th>
+          <th style="border: 1px solid black;">Age</th>
+          <th style="border: 1px solid black;">Region</th>
+          <th style="border: 1px solid black;">Zone</th>
+          <th style="border: 1px solid black;">Woreda</th>
+          <th style="border: 1px solid black;">Level of Education</th>
+          <th style="border: 1px solid black;">Educational Field</th>
+          <th style="border: 1px solid black;">Organization</th>
+          <th style="border: 1px solid black;">Type Of Organization</th>
+          <th style="border: 1px solid black;">Pre Training Summary</th>
+          <th style="border: 1px solid black;">Post Training Summary</th>
+          <th style="border: 1px solid black;" *ngIf="traininggId&&(training&&training.traineeListStatus=='SUBMITTED')">Title</th>
+          <th style="border: 1px solid black;" *ngIf="traininggId&&(training&&training.traineeListStatus=='SUBMITTED')">Project</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let row of traineeData; let i = index">
-          <td>{{ i + 1 }}</td>
-          <td>{{ row.fullName }}</td>
-          <td>{{ row.gender }}</td>
-          <td>{{ row.profession }}</td>
-          <td>{{ row.phoneNumber }}</td>
-          <td>{{ row.email }}</td>
-          <td>{{ row.age }}</td>
-          <td>{{ row.region }}</td>
-          <td>{{ row.zone }}</td>
-          <td>{{ row.woreda }}</td>
-          <td>{{ row.educationalLevel }}</td>
-          <td>{{ row.educationalField }}</td>
-          <td>{{ row.nameofOrganizaton }}</td>
-          <td>{{ row.typeofOrganization }}</td>
+          <td style="border: 1px solid black;" *ngIf="!traininggId && (training && training.traineeListStatus != 'SUBMITTED')"><button class="btn btn-sm btn-outline-warning" (click)="editRow(row)">
+            <i class="bi bi-pencil"></i>
+          </button></td>
+          <td style="border: 1px solid black;">{{ i + 1 }} </td>
+          <td style="border: 1px solid black;">{{ row.fullName }}</td>
+          <td style="border: 1px solid black;">{{ row.gender }}</td>
+          <td style="border: 1px solid black;">{{ row.profession }}</td>
+          <td style="border: 1px solid black;">{{ row.phoneNumber }}</td>
+          <td style="border: 1px solid black;">{{ row.email }}</td>
+          <td style="border: 1px solid black;">{{ row.age }}</td>
+          <td style="border: 1px solid black;">{{ row.region }}</td>
+          <td style="border: 1px solid black;">{{ row.zone }}</td>
+          <td style="border: 1px solid black;">{{ row.woreda }}</td>
+          <td style="border: 1px solid black;">{{ row.educationalLevel }}</td>
+          <td style="border: 1px solid black;">{{ row.educationalField }}</td>
+          <td style="border: 1px solid black;">{{ row.nameofOrganizaton }}</td>
+          <td style="border: 1px solid black;">{{ row.typeofOrganization }}</td>
+          <td style="border: 1px solid black;">{{ row.preSummary }}</td>
+          <td style="border: 1px solid black;">{{ row.postSummary }}</td>
+          <td style="border: 1px solid black;" *ngIf="traininggId&&(training&&training.traineeListStatus=='SUBMITTED')">{{ training&&training.title }}</td>
+          <td style="border: 1px solid black;" *ngIf="traininggId&&(training&&training.traineeListStatus=='SUBMITTED')">{{  training&&training.project }}</td>
         </tr>
       </tbody>
     </table>
@@ -81,7 +95,9 @@
         <input pInputText type="text" class="mt-2"  placeholder="Educational Field" formControlName="educationalField" />&nbsp;
         <input pInputText type="text" class="mt-2"  placeholder="Name of Organization" formControlName="nameofOrganizaton" />&nbsp;
         <input pInputText type="text" class="mt-2"  placeholder="Type of Organization" formControlName="typeofOrganization" />&nbsp;
-        <button type="button" class="mt-2"  [disabled]="!traineeForm.valid" class="btn btn-outline-primary" (click)="addRow()">+</button>
+        <textarea pInputText type="text" class="mt-2"  placeholder="Pre Summary" formControlName="preSummary" ></textarea>&nbsp;
+        <textarea pInputText type="text" class="mt-2"  placeholder="Post Summary" formControlName="postSummary" ></textarea>&nbsp;
+        <button type="button"  [disabled]="!traineeForm.valid" class="btn btn-outline-primary" (click)="addRow()">+</button>
       </form>
     </div>
   </div>

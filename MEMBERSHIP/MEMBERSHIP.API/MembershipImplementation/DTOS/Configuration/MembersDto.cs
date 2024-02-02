@@ -24,11 +24,11 @@ namespace MembershipImplementation.DTOS.Configuration
         public string Inistitute { get; set; }
 
         public Guid MembershipTypeId { get; set; }
-        
+
 
     }
 
-    public record  MemberUpdateDto
+    public record MemberUpdateDto
     {
 
         public Guid Id { get; set; }
@@ -50,7 +50,7 @@ namespace MembershipImplementation.DTOS.Configuration
     }
 
 
-    
+
 
 
     public record MembersGetDto
@@ -85,7 +85,7 @@ namespace MembershipImplementation.DTOS.Configuration
 
         public DateTime ExpiredDate { get; set; }
 
-        public string PaymentStatus { get; set;  }
+        public string PaymentStatus { get; set; }
 
         public string IdCardStatus { get; set; }
 
@@ -96,11 +96,13 @@ namespace MembershipImplementation.DTOS.Configuration
 
         public string? MoodleName { get; set; }
 
-        public string? MoodlePassword { get; set;}
+        public string? MoodlePassword { get; set; }
 
-        public string? MoodleId { get;set; }
+        public string? MoodleId { get; set; }
 
         public string? MoodleStatus { get; set; }
+
+        public DateTime createdByDate { get; set; }
 
     }
 
@@ -108,7 +110,7 @@ namespace MembershipImplementation.DTOS.Configuration
     public class MemberTelegramDto
     {
         public Guid Id { get; set; }
-        public string FullName { get; set; }       
+        public string FullName { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public string MemberId { get; set; }
@@ -134,5 +136,14 @@ namespace MembershipImplementation.DTOS.Configuration
         public DateTime BirthDate { get; set; }
 
         public IFormFile Image { get; set; }
+    }
+
+
+    public class MemberRegionRevenueReportDto
+    {
+
+        public string RegionName { get; set; }
+
+        public double RegionRevenue { get; set; }
     }
 }

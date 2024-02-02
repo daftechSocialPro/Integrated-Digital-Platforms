@@ -6,7 +6,7 @@ namespace IntegratedDigitalAPI.DTOS.PM
 {
     public class PlanDto
     {
-
+        public Guid? Id { get; set; }
         public string ProjectNumber { get; set; }
         public bool HasTask { get; set; }
         public string PlanName { get; set; }
@@ -27,7 +27,7 @@ namespace IntegratedDigitalAPI.DTOS.PM
 
         public List<Guid> ProjectFunds { get;set; } 
 
-        public string CreatedById {get;set;}
+        public string? CreatedById {get;set;}
 
     }
 
@@ -39,6 +39,10 @@ namespace IntegratedDigitalAPI.DTOS.PM
         public float PlandBudget { get; set; }
         public float RemainingBudget { get; set; }
         public string ProjectManager { get; set; }
+
+        public string? ProjectManagerId { get; set; }
+        public string? StructureId { get; set; }
+        public string? Remark { get; set; }
 
         public string ProjectNumber { get; set; }
 
@@ -55,6 +59,7 @@ namespace IntegratedDigitalAPI.DTOS.PM
         public bool HasTask { get; set; }
 
         public List<string> ProjectFunds { get; set; }
+        public List<string> ProjectFundIds { get; set; }
 
         public string Goal { get; set; }
         public string Objective { get; set; }

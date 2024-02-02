@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { ResponseMessage, ResponseMessage2 } from 'src/models/ResponseMessage.Model';
 import { IMemberUpdateDto, IMembersGetDto, IMembersPostDto, MoodleUpdateDto } from 'src/models/auth/membersDto';
+import { IRegionRevenueDto } from 'src/models/configuration/IMembershipDto';
 import { IMakePayment, IPaymentData } from 'src/models/payment/IPaymentDto';
 
 @Injectable({
@@ -50,9 +51,9 @@ export class MemberService {
   // report {
 
 
-  getMembershipReport() {
-    return this.http.post(this.BaseURI + `/Member/MembershipReport`,{responseType:'Blob'});
-  }
+  // getMembershipReport() {
+  //   return this.http.post(this.BaseURI + `/Member/MembershipReport`,{responseType:'Blob'});
+  // }
 
 
   callMoodle (formData:FormData){
@@ -72,6 +73,10 @@ export class MemberService {
   updateMoodleStatus(memberId:string,status:string){
 
     return this.http.post<ResponseMessage>(this.BaseURI+`/Member/UpdateMoodleStatus?memberId=${memberId}&status=${status}`,{})  
+  }
+
+  GetRegionReportRevenue(){
+    return this.http.get<IRegionRevenueDto[]>(this.BaseURI+`/Member/GetRegionReportRevenue`)  
   }
 
 }
