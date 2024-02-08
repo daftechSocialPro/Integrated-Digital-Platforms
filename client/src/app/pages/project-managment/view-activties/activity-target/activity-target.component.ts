@@ -76,7 +76,7 @@ export class ActivityTargetComponent implements OnInit {
 
 
 
-    debugger
+    
 
     var monthIndex = new Date(this.activity.startDate).getMonth();
     let total = monthDiffernce + monthIndex
@@ -84,7 +84,7 @@ export class ActivityTargetComponent implements OnInit {
     var i = 0
     while (i < monthDiffernce) {
 
-      debugger
+      
 
       if (monthIndex >= 12) {
         var k = monthIndex - 12

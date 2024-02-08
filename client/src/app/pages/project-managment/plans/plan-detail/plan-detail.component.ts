@@ -9,13 +9,14 @@ import { UserService } from 'src/app/services/user.service';
 import { AddTasksComponent } from '../../tasks/add-tasks/add-tasks.component';
 import { AddActivitiesComponent } from '../../activity-parents/add-activities/add-activities.component';
 import { Task, TaskView } from 'src/app/model/PM/TaskDto';
-import { GetStartEndDate } from 'src/app/model/common';
+import { GetStartEndDate, SelectList } from 'src/app/model/common';
 import { ActivityTargetComponent } from '../../view-activties/activity-target/activity-target.component';
 import { ActivityView } from 'src/app/model/PM/ActivityViewDto';
 import { ExcelService } from 'src/app/services/excel.service';
 import { UpdateTasksComponent } from '../../tasks/update-tasks/update-tasks.component';
 import { ConfirmEventType, ConfirmationService, MessageService } from 'primeng/api';
 import { UpdateActivitiesComponent } from '../../activity-parents/update-activities/update-activities.component';
+import { PMService } from 'src/app/services/pm.services';
 
 @Component({
   selector: 'app-plan-detail',
@@ -34,8 +35,8 @@ export class PlanDetailComponent implements OnInit {
   plan!: PlanSingleview
   planTasks: Map<string, any[]> = new Map<string, any[]>();
   taskActivities: Map<String, any[]> = new Map<String, any[]>();
-
-
+  projectYears: SelectList[] = []
+  selectedYear: number = 1;
   filterBy:number=1
 
   constructor(
@@ -48,7 +49,8 @@ export class PlanDetailComponent implements OnInit {
     private excelService : ExcelService,
     private router: Router,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private pmService: PMService,
 
 
   ) { }
@@ -78,7 +80,7 @@ export class PlanDetailComponent implements OnInit {
       next: (res) => {
         console.log("projects", res)
         this.Plans = res
-
+        this .getProjectYears(res.startDate,res.endDate)
         this.ListTask(this.planId);
 
         console.log('this.planTasks: ', this.planTasks);
@@ -88,6 +90,24 @@ export class PlanDetailComponent implements OnInit {
         console.error(err)
       }
     })
+  }
+
+  getProjectYears(startDate: any, endDate: any) {
+
+    const startYear = new Date(startDate).getFullYear();
+    
+    const endYear = new Date(endDate).getFullYear();
+    
+    
+    let index = 1
+    for (let year = startYear; year <= endYear; year++) {
+      this.projectYears.push({ name: year.toString(), id: index.toString() });
+      index++
+    }
+
+    console.log("startYear" , this.projectYears)
+
+    
   }
 
   getSingleTaskActivities(taskId: String) {
@@ -226,6 +246,48 @@ export class PlanDetailComponent implements OnInit {
   
       }
 
+    DeleteActivity(activityId:string,taskId:string){
+      this.confirmationService.confirm({
+        message: 'Do you want to Delete this Activity Information ?',
+        header: 'Activity Delete Confirmation !',
+        icon: 'pi pi-info-circle',
+        accept: () => {
+          this.pmService.deleteActivity(activityId,taskId).subscribe({
+  
+            next: (res) => {
+              if (res.success) {
+    
+                this.messageService.add({ severity: 'success', summary: `Successfully Delted`, detail: res.message })
+                window.location.reload()
+              }
+              else {
+                this.messageService.add({ severity: 'error', summary: 'Something went wrong!!! ', detail: res.message })
+    
+              }
+    
+            }, error: (err) => {
+              this.messageService.add({ severity: 'error', summary: 'Error ', detail: err })
+    
+            }
+    
+          })
+  
+        },
+        reject: (type: ConfirmEventType) => {
+          switch (type) {
+            case ConfirmEventType.REJECT:
+              this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
+              break;
+            case ConfirmEventType.CANCEL:
+              this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
+              break;
+          }
+        },
+        key: 'positionDialog'
+      });    
+    }
+    
+
 
     
   AssignTarget(actview:ActivityView ) {
@@ -257,6 +319,19 @@ viewDetail (item:ActivityView)
   
   this.router.navigate(['/pm/activityDetail', item.id, this.planId  ]);
 }
+
+
+getGroupValue(order: number): boolean {
+  
+  const groupSize = 12; // Number of months in each group
+
+  return Math.floor((order - 1) / groupSize) + 1 === this.selectedYear;
+}
+
+onProjectYearChange(){
+  console.log("Selected Year",this.selectedYear)
+}
+
 
 
 }

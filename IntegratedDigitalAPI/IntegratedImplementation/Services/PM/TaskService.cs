@@ -158,8 +158,12 @@ namespace IntegratedDigitalAPI.Services.PM
                                             IsPercentage = e.IsPercentage,
                                             RegionId = e.RegionId,
                                             Zone = e.Zone,
-                                            Woreda = e.Woreda
-                                            
+                                            Woreda = e.Woreda,
+                                            CountryId = e.Region.Country.Id,
+                                            Latitude = e.Latitude,
+                                            Longtude = e.Longtude
+
+
 
                                         }
                                   ).ToList();

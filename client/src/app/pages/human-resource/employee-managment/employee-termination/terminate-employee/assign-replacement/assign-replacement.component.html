@@ -1,0 +1,49 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Assign Replacement For Employee</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+
+        <div class="card-body">
+            <h5 class="card-title">Assign Replacement for </h5>
+
+            <div class="row gy-3 gx-3 ">
+
+
+                <div class="col-md-12" *ngFor="let tar of TerminatedEmployeeActivites;let i=index">
+                    <ng-container >
+                        <div style="text-align:center; padding: 25px; background-color : #f6f9ff;">
+                            <div class="col-md-12" >
+                                <div class="form-floating mb-3">
+                                    <div class="mb-4 row">
+                                        <h2>{{tar.activity.name}}</h2>
+
+                                        <select class="form-select" #emp [(ngModel)]="selectedEmployees[i]" 
+                                             multiple>
+                                            <option *ngFor="let emp of tar.replaceEmployees" 
+                                            [ngValue]="{ empId: emp.id, actId: tar.activity.id,terminateEmp:tar.terminatedEmployee.id}">
+                                                {{emp.name}}</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </ng-container>
+                </div>
+
+
+
+
+            </div>
+            <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
+                    (click)="closeModal()">Close</button>
+                <button type="button" type="submit"  class="btn btn-outline-primary"(click)="submit()">Assign
+                    Replacments </button>
+            </div>
+        </div>
+    </div>

@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
 import { TaskView } from 'src/app/model/PM/TaskDto';
@@ -27,9 +27,9 @@ export class UpdateActivitiesComponent implements OnInit{
   @Input() dateAndTime!:GetStartEndDate
   @Input() activity!: any
 
-  countries !: SelectList[];
-  regions!: SelectList[];
-  zones ! : SelectList[];
+  countries : SelectList[]=[];
+  regions: SelectList[]=[];
+  zones  : SelectList[]=[];
 
   activityForm!: FormGroup;
   selectedEmployee: SelectList[] = [];
@@ -45,10 +45,14 @@ export class UpdateActivitiesComponent implements OnInit{
   Employees: SelectList[] = [];
   minDate!: Date;
 
-    maxDate!: Date ;
+  maxDate!: Date ;
 
   lat = 0 
   lng = 0
+
+  commiteeId:string = null
+  employeeId:string[]
+
 
   constructor(
     private activeModal: NgbActiveModal,
@@ -67,36 +71,15 @@ export class UpdateActivitiesComponent implements OnInit{
   }
   ngOnInit(): void {
 
-    this.activityForm = this.formBuilder.group({
-      StartDate: [this.activity.startDate, Validators.required],
-      EndDate: [this.activity.endDate.split('T')[0], Validators.required],
-      ActivityDescription: [this.activity.name, Validators.required],
-      ActivityNumber:[this.activity.activityNumber,Validators.required],
-      PlannedBudget: [this.activity.plannedBudget, [Validators.required,Validators.max(this.task?.remainingBudget!)]],
-      ActivityType: [''],
-      OfficeWork: [0, Validators.required],
-      FieldWork: [0, Validators.required],
-      UnitOfMeasurement: [this.activity.unitOfMeasurment, Validators.required],
-      PreviousPerformance: [this.activity.begining, [Validators.required,Validators.min(0)]],
-      Goal: [this.activity.target,[Validators.required,Validators.min(0)]],
-      WhomToAssign: [''],
-      TeamId: [null],
-      CommiteeId: [null],
-      AssignedEmployee: [],
-      StrategicPlan:[],
-      StrategicPlanIndicatorId:[],
-      IsTraining:[this.activity.isTraining,Validators.required],
-      IsPercentage:[false,Validators.required],
-      RegionId:['',Validators.required],
-      Zone:[''],
-      Woreda:['']
-
-    })
+    this.getCountries()
+    this.GetIndicatorsByStrategicPlanIds(this.activity.strategicPlan)
+    this.getRegions(this.activity.countryId)
     
+
     console.log("ACTIVITIYXXXX",this.activity)
     this.user = this.userService.getCurrentUser()
 
-    this.getCountries()
+    
 
     this.ListofEmployees()
     this.GetStrategicPlans()
@@ -115,19 +98,22 @@ export class UpdateActivitiesComponent implements OnInit{
         console.log(err)
       }
     })
+    this.checkAssignType()
 
 
-    console.log("add",this.dateAndTime)
+    //console.log("add",this.dateAndTime)
     this.minDate = new Date();
-    this.maxDate = new Date();
+    this.maxDate = new Date(this.dateAndTime.endDate);
 
     this.minDate.setDate(1)
     this.minDate.setMonth(1)
     this.minDate.setFullYear(Number(this.dateAndTime.fromDate));
 
-    this.maxDate.setDate(1)
-    this.maxDate.setMonth(1)
-    this.maxDate.setFullYear(Number(this.dateAndTime.endDate));
+    // this.maxDate.setDate(1)
+    // this.maxDate.setMonth(1)
+    // this.maxDate.setFullYear(Number(this.dateAndTime.endDate.split("-")[0]));
+
+    console.log("MAX DATEE",this.maxDate)
     // $('#StartDate').calendarsPicker({
     //   calendar: $.calendars.instance('ethiopian', 'am'),
 
@@ -148,8 +134,60 @@ export class UpdateActivitiesComponent implements OnInit{
 
    // this.GetProjectLocations()
 
+    
+   this.activityForm = this.formBuilder.group({
+    StartDate: [this.activity.startDate.split(' ')[0], Validators.required],
+    EndDate: [this.activity.endDate.split(' ')[0], Validators.required],
+    ActivityDescription: [this.activity.name, Validators.required],
+    ActivityNumber:[this.activity.activityNumber,Validators.required],
+    PlannedBudget: [this.activity.plannedBudget, [Validators.required,Validators.max(this.task?.remainingBudget!)]],
+    ActivityType: [this.checkActivityType()],
+    OfficeWork: [this.activity.officeWork, Validators.required],
+    FieldWork: [this.activity.fieldWork, Validators.required],
+    UnitOfMeasurement: [this.activity.unitOfMeasurment, Validators.required],
+    PreviousPerformance: [this.activity.begining, [Validators.required,Validators.min(0)]],
+    Goal: [this.activity.target,[Validators.required,Validators.min(0)]],
+    WhomToAssign: [this.checkAssignType()],
+    // TeamId: [null],
+    CommiteeId: [this.commiteeId],
+    AssignedEmployee: [this.employeeId],
+    StrategicPlan:[this.activity.strategicPlan],
+    StrategicPlanIndicatorId:[this.activity.strategicPlanIndicator],
+    IsTraining:[this.activity.isTraining,Validators.required],
+    IsPercentage:[this.activity.isPercentage,Validators.required],
+    CountryId:[this.activity.countryId,Validators.required],
+    RegionId:[this.activity.regionId,Validators.required],
+    Zone:[this.activity.zone],
+    Woreda:[this.activity.woreda]
+
+  })
+ 
+  
+
   }
 
+ 
+
+  checkActivityType(){
+    if(this.activity.activityType === "BOTH"){
+      return 0
+    }
+    if(this.activity.activityType === "OFFICE_WORK"){
+      return 1
+    }
+    return 2
+  }
+
+  checkAssignType(){
+    const firstMemberId = this.activity.members?.[0]?.id;
+    if(this.committees.find(x => x.id === firstMemberId)){
+      this.commiteeId = firstMemberId
+      return 0
+    }
+    this.employeeId = this.activity.members?.map(member => member.employeeId) || [];
+    console.log("employeeIds", this.employeeId)
+    return 1
+  }
   ListofEmployees() {
 
     this.taskService.getEmployeeNoTaskMembers(this.task.id!).subscribe({
@@ -195,6 +233,7 @@ export class UpdateActivitiesComponent implements OnInit{
     this.dropDownService.getStrategicPlans().subscribe({
       next:(res)=>{
         this.strategicPlans = res
+        
       }
     })
   }
@@ -204,6 +243,7 @@ export class UpdateActivitiesComponent implements OnInit{
     this.dropDownService.getIndicatorByStrategicPlanId(strategicPlanId).subscribe({
       next:(res)=>{
         this.strategicPlanIndicators = res
+        
       }
     })
   }
@@ -232,79 +272,79 @@ export class UpdateActivitiesComponent implements OnInit{
 
     console.log(this.activityForm.value)
     if(this.requestFrom == "PLAN" || this.requestFrom == "TASK"){
-        this.addSubActivity()
+        // this.addSubActivity()
     }
     else{
           this.addActivityParent()
     }
   }
 
-  addSubActivity(){
+  // addSubActivity(){
 
-    // if(this.lat==0||this.lng==0){
-    //   this.messageService.add({severity:'error',summary:"Location Not Selected",detail:'Please choose a location from map!!'})
-    //   return
-    // }
-    if(this.activityForm.value.Goal<=this.activityForm.value.PreviousPerformance){
-      this.messageService.add({severity:'error',summary:"Baseline Target Error",detail:'Baseline can not be Greater or equal to Target !!'})
-      return
-    }
+  //   // if(this.lat==0||this.lng==0){
+  //   //   this.messageService.add({severity:'error',summary:"Location Not Selected",detail:'Please choose a location from map!!'})
+  //   //   return
+  //   // }
+  //   if(this.activityForm.value.Goal<=this.activityForm.value.PreviousPerformance){
+  //     this.messageService.add({severity:'error',summary:"Baseline Target Error",detail:'Baseline can not be Greater or equal to Target !!'})
+  //     return
+  //   }
 
-    if (this.activityForm.valid) {
-      let actvityP: SubActivityDetailDto = {
-        SubActivityDesctiption: this.activityForm.value.ActivityDescription,
-        StartDate: this.activityForm.value.StartDate,
-        EndDate: this.activityForm.value.EndDate,
-        PlannedBudget: this.activityForm.value.PlannedBudget,
-        ActivityNumber:this.activityForm.value.ActivityNumber,
-        ActivityType: this.activityForm.value.ActivityType,
-        OfficeWork: this.activityForm.value.ActivityType == 0 ? this.activityForm.value.OfficeWork : this.activityForm.value.ActivityType == 1 ? 100 : 0,
-        FieldWork: this.activityForm.value.ActivityType == 0 ? this.activityForm.value.FieldWork : this.activityForm.value.ActivityType == 2 ? 100 : 0,
-        UnitOfMeasurement: this.activityForm.value.UnitOfMeasurement,
-        PreviousPerformance: this.activityForm.value.PreviousPerformance,
-        Goal: this.activityForm.value.Goal,
-        TeamId: this.activityForm.value.TeamId,
-        CommiteeId: this.activityForm.value.CommiteeId,
-        Employees: this.activityForm.value.AssignedEmployee,
-        CreatedBy:this.user.userId,
-        longtude: this.lng,
-        latitude: this.lat,
-        StrategicPlanId:this.activityForm.value.StrategicPlan,
-        RegionId:this.activityForm.value.RegionId,
-        Zone:this.activityForm.value.Zone,
-        Woreda:this.activityForm.value.Woreda ,
-        StrategicPlanIndicatorId:this.activityForm.value.StrategicPlanIndicatorId,
-        IsTraining:this.activityForm.value.IsTraining,      
-        IsPercentage:this.activityForm.value.IsPercentage
+  //   if (this.activityForm.valid) {
+  //     let actvityP: SubActivityDetailDto = {
+  //       SubActivityDesctiption: this.activityForm.value.ActivityDescription,
+  //       StartDate: this.activityForm.value.StartDate,
+  //       EndDate: this.activityForm.value.EndDate,
+  //       PlannedBudget: this.activityForm.value.PlannedBudget,
+  //       ActivityNumber:this.activityForm.value.ActivityNumber,
+  //       ActivityType: this.activityForm.value.ActivityType,
+  //       OfficeWork: this.activityForm.value.ActivityType == 0 ? this.activityForm.value.OfficeWork : this.activityForm.value.ActivityType == 1 ? 100 : 0,
+  //       FieldWork: this.activityForm.value.ActivityType == 0 ? this.activityForm.value.FieldWork : this.activityForm.value.ActivityType == 2 ? 100 : 0,
+  //       UnitOfMeasurement: this.activityForm.value.UnitOfMeasurement,
+  //       PreviousPerformance: this.activityForm.value.PreviousPerformance,
+  //       Goal: this.activityForm.value.Goal,
+  //       TeamId: this.activityForm.value.TeamId,
+  //       CommiteeId: this.activityForm.value.CommiteeId,
+  //       Employees: this.activityForm.value.AssignedEmployee,
+  //       CreatedBy:this.user.userId,
+  //       longtude: this.lng,
+  //       latitude: this.lat,
+  //       StrategicPlanId:this.activityForm.value.StrategicPlan,
+  //       RegionId:this.activityForm.value.RegionId,
+  //       Zone:this.activityForm.value.Zone,
+  //       Woreda:this.activityForm.value.Woreda ,
+  //       StrategicPlanIndicatorId:this.activityForm.value.StrategicPlanIndicatorId,
+  //       IsTraining:this.activityForm.value.IsTraining,      
+  //       IsPercentage:this.activityForm.value.IsPercentage
         
-      }
-      if(this.requestFrom == "PLAN"){
-        actvityP.PlanId = this.requestFromId;
-      }
-      else if(this.requestFrom == "TASK"){
-        actvityP.TaskId = this.requestFromId;
-      }
+  //     }
+  //     if(this.requestFrom == "PLAN"){
+  //       actvityP.PlanId = this.requestFromId;
+  //     }
+  //     else if(this.requestFrom == "TASK"){
+  //       actvityP.TaskId = this.requestFromId;
+  //     }
 
  
-      console.log("sdfsdfd",actvityP)
+  //     console.log("sdfsdfd",actvityP)
 
-      this.pmService.addSubActivity(actvityP).subscribe({
-        next: (res) => {
+  //     this.pmService.addSubActivity(actvityP).subscribe({
+  //       next: (res) => {
 
-          this.messageService.add({ severity: 'success', summary: 'Successfull', detail: 'Activity Successfully Created' });        
+  //         this.messageService.add({ severity: 'success', summary: 'Successfull', detail: 'Activity Successfully Created' });        
     
-          window.location.reload()
-          this.closeModal()
+  //         window.location.reload()
+  //         this.closeModal()
          
-        }, error: (err) => {
+  //       }, error: (err) => {
 
-          this.messageService.add({ severity: 'error', summary: 'Something went wrong.', detail: err.message });        
+  //         this.messageService.add({ severity: 'error', summary: 'Something went wrong.', detail: err.message });        
         
-          console.error(err)
-        }
-      })
-    }
-  }
+  //         console.error(err)
+  //       }
+  //     })
+  //   }
+  // }
 
   addActivityParent(){
     
@@ -318,6 +358,7 @@ export class UpdateActivitiesComponent implements OnInit{
     }
     if (this.activityForm.valid) {
       let actvityP: SubActivityDetailDto = {
+        Id: this.activity.id, 
         SubActivityDesctiption: this.activityForm.value.ActivityDescription,
         StartDate: this.activityForm.value.StartDate,
         EndDate: this.activityForm.value.EndDate,
@@ -356,6 +397,7 @@ export class UpdateActivitiesComponent implements OnInit{
       activityList.push(actvityP);
 
       let addActivityDto: ActivityDetailDto = {
+        Id: this.activity.id, 
         ActivityDescription: this.activityForm.value.ActivityDescription,
         HasActivity: false,
         TaskId: this.task.id!,
@@ -363,15 +405,22 @@ export class UpdateActivitiesComponent implements OnInit{
         ActivityDetails: activityList
       }
       console.log("activity detail", addActivityDto)
-      this.pmService.addActivityParent(addActivityDto).subscribe({
+      this.pmService.updateActivityParent(addActivityDto).subscribe({
         next: (res) => {
       
+          if(res.success)
+          {
+            this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });  
+            this.activityForm.reset();      
+            window.location.reload()
+            this.closeModal()
+          } 
+          else{
+            this.messageService.add({ severity: 'error', summary: 'Something went wrong', detail: res.message });       
 
-          this.messageService.add({ severity: 'success', summary: 'Successfull', detail: 'Activity Successfully Created' });        
-           
-          window.location.reload()
-         
-          this.closeModal()
+          }
+
+          
         }, error: (err) => {
           this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: err.message });        
     
@@ -402,9 +451,12 @@ export class UpdateActivitiesComponent implements OnInit{
   }
 
   addLocation(){
-
+    
+    event.preventDefault()
     let modalRef = this.modalService.open(AddProjectLocationComponent,{size:'lg',backdrop:'static'})
     modalRef.componentInstance.calledFrom=1
+    modalRef.componentInstance.lng = this.activity.projectLocationLng
+    modalRef.componentInstance.lat = this.activity.projectLocationLat
 
     modalRef.result.then((res)=>{
 

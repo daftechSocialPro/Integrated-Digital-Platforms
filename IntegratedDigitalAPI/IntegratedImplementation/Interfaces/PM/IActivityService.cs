@@ -37,7 +37,9 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
         public Task<ActivityViewDto> GetSingleActivity(Guid actId);
         public Task<ResponseMessage> UpdateActivityDetails(ActivityDetailDto activityDetail);
 
-        public  Task<ResponseMessage> DeleteActivity(Guid activityId);
+        public Task<ResponseMessage> DeleteActivity(Guid activityId, Guid taskId);
+        public Task<List<TerminatedEmployeeReplacmentDto>> GetTerminatedEmployeesActivies(Guid empId);
+        public Task<ResponseMessage> ReplaceTerminatedEmployee(List<List<TerminatedEmployeeReplacmentGetDto>> ter, string userId);
 
 
     }
