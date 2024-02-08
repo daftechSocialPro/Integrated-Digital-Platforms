@@ -19,6 +19,8 @@ namespace IntegratedDigitalAPI.Services.PM.Plan
         public Task<PlanSingleViewDto> GetSinglePlan(Guid planId);
 
         public Task<GetStartEndDate> GetDateTime(Guid planId);
+
+        public Task<ResponseMessage> DeleteProject(Guid planId);
         //public Task<int> UpdatePrograms(Programs Programs);
         //public Task<List<ProgramDto>> GetPrograms();
         //public Task<List<SelectListDto>> GetProgramsSelectList();

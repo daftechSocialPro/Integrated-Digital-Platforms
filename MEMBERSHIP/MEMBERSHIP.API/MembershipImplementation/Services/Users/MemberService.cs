@@ -29,6 +29,7 @@ using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -990,8 +991,41 @@ namespace MembershipImplementation.Services.HRM
 
         }
 
+        public async Task<ResponseMessage> DeleteMember(Guid memberId)
+        {
+            var member = await _dbContext.Members.FindAsync(memberId);
+
+            if (member == null)
+            {
+                return new ResponseMessage
+                {
+                   
+                    Message = "Member Not Found!!!",
+                    Success = false
+                };
+            }
+
+            var MemberPayments = await _dbContext.MemberPayments.Where(x => x.MemberId == memberId).ToListAsync();
 
 
+            if (MemberPayments != null)
+            {
+                 _dbContext.MemberPayments.RemoveRange(MemberPayments);
+                await _dbContext.SaveChangesAsync();
+            }
 
+            if (MemberPayments != null)
+            {
+                _dbContext.Members.RemoveRange(member);
+                await _dbContext.SaveChangesAsync();
+            }
+            return new ResponseMessage
+            {
+
+                Message = "Member Deleted Successfully!!!",
+                Success = true
+            };
+
+        }
     }
 }

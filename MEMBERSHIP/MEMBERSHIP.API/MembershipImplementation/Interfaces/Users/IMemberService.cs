@@ -51,6 +51,8 @@ namespace MembershipImplementation.Interfaces.HRM
         Task<List<MemberRegionRevenueReportDto>> GetRegionRevenueReport ();
 
         Task <ResponseMessage> ImportMemberFormExcel(IFormFile ExcelFile);
+        Task <ResponseMessage> DeleteMember(Guid MemberId);
+
 
 
         //Task<List<EmployeeGetDto>> GetEmployees();

@@ -114,4 +114,44 @@ export class MembersComponent implements OnInit {
 
     })
   }
+
+  DeleteMember(memberId:string){
+    this.confirmationService.confirm({
+      message: 'Are You sure you want to delete this Member?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.controlService.deleteMember(memberId).subscribe({
+          next: (res) => {
+
+            if (res.success) {
+              this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: res.message });
+              this.getMemberss()
+            }
+            else {
+              this.messageService.add({ severity: 'error', summary: 'Rejected', detail: res.message });
+            }
+          }, error: (err) => {
+
+            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: err });
+
+
+          }
+        })
+
+      },
+      reject: (type: ConfirmEventType) => {
+        switch (type) {
+          case ConfirmEventType.REJECT:
+            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
+            break;
+          case ConfirmEventType.CANCEL:
+            this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
+            break;
+        }
+      },
+      key: 'positionDialog'
+    });
+
+  }
 }

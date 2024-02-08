@@ -83,4 +83,8 @@ export class MemberService {
     return this.http.post<ResponseMessage>(this.BaseURI+"/Member/ImportMemberFormExcel",formData)
   }
 
+  deleteMember(memberID:string){
+    return this.http.delete<ResponseMessage>(this.BaseURI+`/Member/DeleteMember?memberId=${memberID}`)
+  }
+
 }

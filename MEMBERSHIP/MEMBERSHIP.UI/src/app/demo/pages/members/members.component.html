@@ -48,7 +48,7 @@
 
 
    
-       
+       <div class="table-responsive">
         <table class="custom-table mt-4">
             <thead>
                 <tr>
@@ -94,6 +94,10 @@
                         <button class="btn btn-sm btn-outline-primary" (click)="goToDetail(item)">
                             Detail
                         </button>
+                        |
+                        <button class="btn btn-sm btn-outline-danger" (click)="DeleteMember(item.id)">
+                            Delete
+                        </button>
                         
 
                     </td>
@@ -107,6 +111,9 @@
             <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows"
                 [totalRecords]="Members&&Members.length" [rowsPerPageOptions]="[5, 10, 15]"></p-paginator>
         </div>
+
+       </div>
+       
 
 
 
