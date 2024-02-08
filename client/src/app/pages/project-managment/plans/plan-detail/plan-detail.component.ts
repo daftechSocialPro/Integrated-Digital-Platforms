@@ -81,7 +81,7 @@ export class PlanDetailComponent implements OnInit {
         console.log("projects", res)
 
         this.Plans = res
-        this .getProjectYears(res.startDate,res.endDate)
+        this.getProjectYears(this.Plans.startDate,this.Plans.endDate)
 
         this.ListTask(this.planId);
         console.log('this.planTasks: ', this.planTasks);
@@ -336,6 +336,9 @@ getGroupValue(order: number): boolean {
 
 onProjectYearChange(){
   console.log("Selected Year",this.selectedYear)
+  this.ListTask(this.planId);
+  
+
 }
 
 
