@@ -138,6 +138,9 @@ export class ActivityTargetComponent implements OnInit {
 
       let targetDivisionDtos: TargetDivisionDto[] = []
 
+
+      // 
+      
       for (let formValue of this.actTargets.value) {
         sumOfTarget += Number(formValue.Target)
         sumOfBudget += Number(formValue.Budget)
@@ -150,6 +153,27 @@ export class ActivityTargetComponent implements OnInit {
 
         targetDivisionDtos.push(targetDivisionDto)
       }
+
+      //////
+      
+      // Find the lowest order value, ensuring it's not NaN
+      const lowestOrder = targetDivisionDtos.reduce((lowest, dto) => {
+        const order = dto?.order || Number.MAX_VALUE;
+        return Math.min(lowest, order);
+      }, Number.MAX_VALUE);
+    
+      if (lowestOrder !== 0) {
+        // Add missing orders with 0 target and budget
+        for (let missingOrder = 0; missingOrder < lowestOrder; missingOrder++) {
+          targetDivisionDtos.push({
+            order: missingOrder,
+            target: 0,
+            targetBudget: 0
+          });
+        }
+      }
+      targetDivisionDtos.sort((a, b) => a.order - b.order);
+      //////
 
       let ActivityTargetDivisionDto: ActivityTargetDivisionDto = {
 

@@ -84,7 +84,7 @@ export class UpdateActivitiesComponent implements OnInit{
 
     console.log("ACTIVITIYXXXX",this.activity)
     this.user = this.userService.getCurrentUser()
-
+    this.getProjectFundSourse()
     
 
     this.ListofEmployees()
@@ -139,7 +139,7 @@ export class UpdateActivitiesComponent implements OnInit{
     // })
 
    
-    this.getProjectFundSourse()
+    
 
     
    this.activityForm = this.formBuilder.group({
@@ -165,7 +165,8 @@ export class UpdateActivitiesComponent implements OnInit{
     CountryId:[this.activity.countryId,Validators.required],
     RegionId:[this.activity.regionId,Validators.required],
     Zone:[this.activity.zone],
-    Woreda:[this.activity.woreda]
+    Woreda:[this.activity.woreda],
+    SelectedProjectFund:[this.activity.projectSourceId,Validators.required]
 
   })
  
@@ -182,7 +183,7 @@ export class UpdateActivitiesComponent implements OnInit{
     })
 
  
-
+  }
   checkActivityType(){
     if(this.activity.activityType === "BOTH"){
       return 0
@@ -296,46 +297,46 @@ export class UpdateActivitiesComponent implements OnInit{
   }
 
 
-  addSubActivity(){
+  // addSubActivity(){
 
-    // if(this.lat==0||this.lng==0){
-    //   this.messageService.add({severity:'error',summary:"Location Not Selected",detail:'Please choose a location from map!!'})
-    //   return
-    // }
-    if(this.activityForm.value.Goal<=this.activityForm.value.PreviousPerformance){
-      this.messageService.add({severity:'error',summary:"Baseline Target Error",detail:'Baseline can not be Greater or equal to Target !!'})
-      return
-    }
+  //   // if(this.lat==0||this.lng==0){
+  //   //   this.messageService.add({severity:'error',summary:"Location Not Selected",detail:'Please choose a location from map!!'})
+  //   //   return
+  //   // }
+  //   if(this.activityForm.value.Goal<=this.activityForm.value.PreviousPerformance){
+  //     this.messageService.add({severity:'error',summary:"Baseline Target Error",detail:'Baseline can not be Greater or equal to Target !!'})
+  //     return
+  //   }
 
-    if (this.activityForm.valid) {
-      let actvityP: SubActivityDetailDto = {
-        SubActivityDesctiption: this.activityForm.value.ActivityDescription,
-        StartDate: this.activityForm.value.StartDate,
-        EndDate: this.activityForm.value.EndDate,
-        PlannedBudget: this.activityForm.value.PlannedBudget,
-        ActivityNumber:this.activityForm.value.ActivityNumber,
-        ActivityType: this.activityForm.value.ActivityType,
-        OfficeWork: this.activityForm.value.ActivityType == 0 ? this.activityForm.value.OfficeWork : this.activityForm.value.ActivityType == 1 ? 100 : 0,
-        FieldWork: this.activityForm.value.ActivityType == 0 ? this.activityForm.value.FieldWork : this.activityForm.value.ActivityType == 2 ? 100 : 0,
-        UnitOfMeasurement: this.activityForm.value.UnitOfMeasurement,
-        PreviousPerformance: this.activityForm.value.PreviousPerformance,
-        Goal: this.activityForm.value.Goal,
-        TeamId: this.activityForm.value.TeamId,
-        CommiteeId: this.activityForm.value.CommiteeId,
-        Employees: this.activityForm.value.AssignedEmployee,
-        CreatedBy:this.user.userId,
-        longtude: this.lng,
-        latitude: this.lat,
-        StrategicPlanId:this.activityForm.value.StrategicPlan,
-        RegionId:this.activityForm.value.RegionId,
-        Zone:this.activityForm.value.Zone,
-        Woreda:this.activityForm.value.Woreda ,
-        StrategicPlanIndicatorId:this.activityForm.value.StrategicPlanIndicatorId,
-        IsTraining:this.activityForm.value.IsTraining,      
-        IsPercentage:this.activityForm.value.IsPercentage,
-        selectedProjectFund:this.activityForm.value.SelectedProjectFund
+  //   if (this.activityForm.valid) {
+  //     let actvityP: SubActivityDetailDto = {
+  //       SubActivityDesctiption: this.activityForm.value.ActivityDescription,
+  //       StartDate: this.activityForm.value.StartDate,
+  //       EndDate: this.activityForm.value.EndDate,
+  //       PlannedBudget: this.activityForm.value.PlannedBudget,
+  //       ActivityNumber:this.activityForm.value.ActivityNumber,
+  //       ActivityType: this.activityForm.value.ActivityType,
+  //       OfficeWork: this.activityForm.value.ActivityType == 0 ? this.activityForm.value.OfficeWork : this.activityForm.value.ActivityType == 1 ? 100 : 0,
+  //       FieldWork: this.activityForm.value.ActivityType == 0 ? this.activityForm.value.FieldWork : this.activityForm.value.ActivityType == 2 ? 100 : 0,
+  //       UnitOfMeasurement: this.activityForm.value.UnitOfMeasurement,
+  //       PreviousPerformance: this.activityForm.value.PreviousPerformance,
+  //       Goal: this.activityForm.value.Goal,
+  //       TeamId: this.activityForm.value.TeamId,
+  //       CommiteeId: this.activityForm.value.CommiteeId,
+  //       Employees: this.activityForm.value.AssignedEmployee,
+  //       CreatedBy:this.user.userId,
+  //       longtude: this.lng,
+  //       latitude: this.lat,
+  //       StrategicPlanId:this.activityForm.value.StrategicPlan,
+  //       RegionId:this.activityForm.value.RegionId,
+  //       Zone:this.activityForm.value.Zone,
+  //       Woreda:this.activityForm.value.Woreda ,
+  //       StrategicPlanIndicatorId:this.activityForm.value.StrategicPlanIndicatorId,
+  //       IsTraining:this.activityForm.value.IsTraining,      
+  //       IsPercentage:this.activityForm.value.IsPercentage,
+  //       selectedProjectFund:this.activityForm.value.SelectedProjectFund
 
-        
+      
   //     }
   //     if(this.requestFrom == "PLAN"){
   //       actvityP.PlanId = this.requestFromId;

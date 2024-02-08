@@ -39,7 +39,7 @@ export class AddProjectLocationComponent implements OnInit {
   ngOnInit(): void {
 
 
-    this.getFiscalYears()
+    //this.getFiscalYears()
 
     if (this.projectLocation) {
       this.projectLocationForm = this.formBuilder.group({
@@ -48,6 +48,19 @@ export class AddProjectLocationComponent implements OnInit {
 
       });
      
+      
+    }
+    else {
+      this.projectLocationForm = this.formBuilder.group({
+        name: ['', Validators.required],
+      
+        budget:['',Validators.required]
+
+      });
+      
+    }
+
+    if(this.lat && this.lng){
       this.initMap()
       const greenIcon = L.icon({
         iconUrl: 'assets/marker-icon-green.png',
@@ -63,16 +76,11 @@ export class AddProjectLocationComponent implements OnInit {
 
       this.marker = L.marker([this.lat, this.lng], { icon: greenIcon }).addTo(this.map);
     }
-    else {
-      this.projectLocationForm = this.formBuilder.group({
-        name: ['', Validators.required],
-      
-        budget:['',Validators.required]
-
-      });
+    else{
       this.lat = 9.1450
       this.lng = 40.4897
       this.initMap()
+
     }
 
 

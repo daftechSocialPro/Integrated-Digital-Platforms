@@ -267,7 +267,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                     CreatedById = targetDivisions.CreatedBy.ToString(),
                     CreatedDate = DateTime.Now,
                     ActivityId = targetDivisions.ActiviyId,
-                    Order = target.Order + 1,
+                    Order = target.Order ,
                     Target = target.Target,
                     TargetBudget = target.TargetBudget,
 
@@ -276,6 +276,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                 await _dBContext.ActivityTargetDivisions.AddAsync(targetDivision);
                 await _dBContext.SaveChangesAsync();
             }
+
 
 
 

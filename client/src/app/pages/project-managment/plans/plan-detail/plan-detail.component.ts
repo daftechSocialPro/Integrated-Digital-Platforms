@@ -36,7 +36,7 @@ export class PlanDetailComponent implements OnInit {
   planTasks: Map<string, any[]> = new Map<string, any[]>();
   taskActivities: Map<String, any[]> = new Map<String, any[]>();
   projectYears: SelectList[] = []
-  selectedYear: number = 1;
+  selectedYear: number = 0;
   filterBy:number=1
 
   constructor(
@@ -94,16 +94,16 @@ export class PlanDetailComponent implements OnInit {
   }
 
   getProjectYears(startDate: any, endDate: any) {
-
+    this.projectYears = [];
     const startYear = new Date(startDate).getFullYear();
     
     const endYear = new Date(endDate).getFullYear();
     
     
-    let index = 1
+    let index = 0
     for (let year = startYear; year <= endYear; year++) {
       this.projectYears.push({ name: year.toString(), id: index.toString() });
-      index++
+      index+=12
     }
 
     console.log("startYear" , this.projectYears)
@@ -232,7 +232,7 @@ export class PlanDetailComponent implements OnInit {
 
     updateActivity(task:TaskView, activity:any) {
       let modalRef = this.modalService.open(UpdateActivitiesComponent, { size: "xxl", backdrop: 'static' })
-  
+      modalRef.componentInstance.planId = this.planId
       var dateTime : GetStartEndDate={
         fromDate:this.Plans.startDate.toString(),
         endDate:this.Plans.endDate.toString()
@@ -325,9 +325,13 @@ viewDetail (item:ActivityView)
 
 getGroupValue(order: number): boolean {
   
-  const groupSize = 12; // Number of months in each group
+  const groupSize = 12; 
+  
+  
+  // Number of months in each group
 
-  return Math.floor((order - 1) / groupSize) + 1 === this.selectedYear;
+  //return Math.floor((order - 1) / groupSize) + 1 === this.selectedYear;
+  return (Math.floor(order / groupSize) * groupSize) == this.selectedYear
 }
 
 onProjectYearChange(){

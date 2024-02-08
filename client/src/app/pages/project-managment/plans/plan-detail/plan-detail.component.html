@@ -194,29 +194,29 @@
                                     <td style="border: 1px solid black;">{{act.target}}</td>
 
                                     <ng-container *ngFor=" let item of act?.monthPerformance; let i= index ">
-                                        <td *ngIf="i==0" style="border: 1px solid black;background-color: #e8ffde;">{{
+                                        <td *ngIf="i==(0+selectedYear)" style="border: 1px solid black;background-color: #e8ffde;">{{
                                             
-                                            (act?.monthPerformance[0]?.planned || 0) +
-                                            (act?.monthPerformance[1]?.planned || 0) +
-                                            (act?.monthPerformance[2]?.planned || 0) 
+                                            (act?.monthPerformance[0+selectedYear]?.planned || 0) +
+                                            (act?.monthPerformance[1+selectedYear]?.planned || 0) +
+                                            (act?.monthPerformance[2+selectedYear]?.planned || 0) 
                                  
                                             }}</td>
-                                        <td *ngIf="i==3" style="border: 1px solid black;background-color: #e8ffde;">{{
-                                            (act?.monthPerformance[3]?.planned || 0) +
-                                            (act?.monthPerformance[4]?.planned || 0) +
-                                            (act?.monthPerformance[5]?.planned || 0)
+                                        <td *ngIf="i==3+selectedYear" style="border: 1px solid black;background-color: #e8ffde;">{{
+                                            (act?.monthPerformance[3+selectedYear]?.planned || 0) +
+                                            (act?.monthPerformance[4+selectedYear]?.planned || 0) +
+                                            (act?.monthPerformance[5+selectedYear]?.planned || 0)
                                             }}</td>
-                                        <td *ngIf="i==6" style="border: 1px solid black;background-color: #e8ffde;">{{
-                                            (act?.monthPerformance[6]?.planned || 0) +
-                                            (act?.monthPerformance[7]?.planned || 0) +
-                                            (act?.monthPerformance[8]?.planned || 0)
+                                        <td *ngIf="i==6+selectedYear" style="border: 1px solid black;background-color: #e8ffde;">{{
+                                            (act?.monthPerformance[6+selectedYear]?.planned || 0) +
+                                            (act?.monthPerformance[7+selectedYear]?.planned || 0) +
+                                            (act?.monthPerformance[8+selectedYear]?.planned || 0)
                                             }}</td>
-                                        <td *ngIf="i==9" style="border: 1px solid black;background-color: #e8ffde;">
+                                        <td *ngIf="i==9+selectedYear" style="border: 1px solid black;background-color: #e8ffde;">
 
                                             {{
-                                            (act?.monthPerformance[9]?.planned ||0) +
-                                            (act?.monthPerformance[10]?.planned ||0) +
-                                            (act?.monthPerformance[11]?.planned)||0}}
+                                            (act?.monthPerformance[9+selectedYear]?.planned ||0) +
+                                            (act?.monthPerformance[10+selectedYear]?.planned ||0) +
+                                            (act?.monthPerformance[11+selectedYear]?.planned ||0)}}
                                         </td>
 
 
@@ -228,25 +228,25 @@
                                     <ng-container *ngFor=" let item of act?.monthPerformance; let i= index ">
 
 
-                                        <td *ngIf="i==0" style="border: 1px solid black;background-color: #e8ffde;">{{
-                                            (act?.monthPerformance[0]?.plannedBudget || 0) +
-                                            (act?.monthPerformance[1]?.plannedBudget || 0) +
-                                            (act?.monthPerformance[2]?.plannedBudget || 0)
+                                        <td *ngIf="i==0+selectedYear" style="border: 1px solid black;background-color: #e8ffde;">{{
+                                            (act?.monthPerformance[0+selectedYear]?.plannedBudget || 0) +
+                                            (act?.monthPerformance[1+selectedYear]?.plannedBudget || 0) +
+                                            (act?.monthPerformance[2+selectedYear]?.plannedBudget || 0)
                                             }}</td>
-                                        <td *ngIf="i==3" style="border: 1px solid black;background-color: #e8ffde;">{{
-                                            (act?.monthPerformance[3]?.plannedBudget || 0) +
-                                            (act?.monthPerformance[4]?.plannedBudget || 0) +
-                                            (act?.monthPerformance[5]?.plannedBudget || 0)
+                                        <td *ngIf="i==3+selectedYear" style="border: 1px solid black;background-color: #e8ffde;">{{
+                                            (act?.monthPerformance[3+selectedYear]?.plannedBudget || 0) +
+                                            (act?.monthPerformance[4+selectedYear]?.plannedBudget || 0) +
+                                            (act?.monthPerformance[5+selectedYear]?.plannedBudget || 0)
                                             }}</td>
                                         <td *ngIf="i==6" style="border: 1px solid black;background-color: #e8ffde;">{{
-                                            (act?.monthPerformance[6]?.plannedBudget || 0) +
-                                            (act?.monthPerformance[7]?.plannedBudget || 0) +
-                                            (act?.monthPerformance[8]?.plannedBudget || 0)
+                                            (act?.monthPerformance[6+selectedYear]?.plannedBudget || 0) +
+                                            (act?.monthPerformance[7+selectedYear]?.plannedBudget || 0) +
+                                            (act?.monthPerformance[8+selectedYear]?.plannedBudget || 0)
                                             }}</td>
                                         <td *ngIf="i==9" style="border: 1px solid black;background-color: #e8ffde;">{{
-                                            (act?.monthPerformance[9]?.plannedBudget || 0) +
-                                            (act?.monthPerformance[10]?.plannedBudget || 0) +
-                                            (act?.monthPerformance[11]?.plannedBudget || 0) }}
+                                            (act?.monthPerformance[9+selectedYear]?.plannedBudget || 0) +
+                                            (act?.monthPerformance[10+selectedYear]?.plannedBudget || 0) +
+                                            (act?.monthPerformance[11+selectedYear]?.plannedBudget || 0) }}
 
 
 
@@ -267,18 +267,18 @@
 
 
                                     <td style="background-color: antiquewhite;border: 1px solid black;">
-                                        {{ (act?.monthPerformance[0]?.plannedBudget || 0) +
-                                        (act?.monthPerformance[1]?.plannedBudget || 0) +
-                                        (act?.monthPerformance[2]?.plannedBudget || 0) +
-                                        (act?.monthPerformance[3]?.plannedBudget || 0) +
-                                        (act?.monthPerformance[4]?.plannedBudget || 0) +
-                                        (act?.monthPerformance[5]?.plannedBudget || 0) +
-                                        (act?.monthPerformance[6]?.plannedBudget || 0) +
-                                        (act?.monthPerformance[7]?.plannedBudget || 0) +
-                                        (act?.monthPerformance[8]?.plannedBudget || 0) +
-                                        (act?.monthPerformance[9]?.plannedBudget || 0) +
-                                        (act?.monthPerformance[10]?.plannedBudget || 0) +
-                                        (act?.monthPerformance[11]?.plannedBudget || 0)
+                                        {{ (act?.monthPerformance[0+selectedYear]?.plannedBudget || 0) +
+                                        (act?.monthPerformance[1+selectedYear]?.plannedBudget || 0) +
+                                        (act?.monthPerformance[2+selectedYear]?.plannedBudget || 0) +
+                                        (act?.monthPerformance[3+selectedYear]?.plannedBudget || 0) +
+                                        (act?.monthPerformance[4+selectedYear]?.plannedBudget || 0) +
+                                        (act?.monthPerformance[5+selectedYear]?.plannedBudget || 0) +
+                                        (act?.monthPerformance[6+selectedYear]?.plannedBudget || 0) +
+                                        (act?.monthPerformance[7+selectedYear]?.plannedBudget || 0) +
+                                        (act?.monthPerformance[8+selectedYear]?.plannedBudget || 0) +
+                                        (act?.monthPerformance[9+selectedYear]?.plannedBudget || 0) +
+                                        (act?.monthPerformance[10+selectedYear]?.plannedBudget || 0) +
+                                        (act?.monthPerformance[11+selectedYear]?.plannedBudget || 0)
                                         }}
 
                                     </td>

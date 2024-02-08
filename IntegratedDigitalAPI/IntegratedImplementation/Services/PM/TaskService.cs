@@ -162,7 +162,8 @@ namespace IntegratedDigitalAPI.Services.PM
                                             Woreda = e.Woreda,
                                             CountryId = e.Region.Country.Id,
                                             Latitude = e.Latitude,
-                                            Longtude = e.Longtude
+                                            Longtude = e.Longtude,
+                                            ProjectSourceId = e.ProjectSourceFundId
 
 
 
