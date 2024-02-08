@@ -6,6 +6,7 @@ using IntegratedImplementation.Helper;
 using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedInfrustructure.Data;
 using IntegratedInfrustructure.Model.HRM;
+using IntegratedInfrustructure.Model.PM;
 using IntegratedInfrustructure.Models.Inventory;
 using IntegratedInfrustructure.Models.PM;
 using Microsoft.AspNetCore.Hosting.Server;
@@ -277,7 +278,59 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                 await _dBContext.SaveChangesAsync();
             }
 
+            var existingOrders = await _dBContext.ActivityTargetDivisions
+                                        .Where(td => td.ActivityId == targetDivisions.ActiviyId)
+                                        .Select(td => td.Order)
+                                        .ToListAsync();
 
+           
+            var lowestOrder = existingOrders.Min() ;
+            var highestOrder = existingOrders.Max() ;
+
+            for (int order = 0; order < lowestOrder; order++)
+            {
+                if (!existingOrders.Contains(order))
+                {
+                    var newTargetDivision = new ActivityTargetDivision
+                    {
+                        Id = Guid.NewGuid(),
+                        CreatedById = targetDivisions.CreatedBy.ToString(),
+                        CreatedDate = DateTime.Now,
+                        ActivityId = targetDivisions.ActiviyId,
+                        Order = order,
+                        Target = 0,
+                        TargetBudget = 0
+                    };
+
+                    await _dBContext.ActivityTargetDivisions.AddAsync(newTargetDivision);
+                }
+            }
+
+            if (highestOrder % 12 != 0)
+            {
+                var nextMultipleOf12 = (highestOrder / 12 + 1) * 12;
+                for (int order = highestOrder + 1; order < nextMultipleOf12; order++)
+                {
+                    if (!existingOrders.Contains(order))
+                    {
+                        var newTargetDivision = new ActivityTargetDivision
+                        {
+                            Id = Guid.NewGuid(),
+                            CreatedById = targetDivisions.CreatedBy.ToString(),
+                            CreatedDate = DateTime.Now,
+                            ActivityId = targetDivisions.ActiviyId,
+                            Order = order,
+                            Target = 0,
+                            TargetBudget = 0
+                        };
+
+                        await _dBContext.ActivityTargetDivisions.AddAsync(newTargetDivision);
+                    }
+                }
+            }
+            
+
+            await _dBContext.SaveChangesAsync();
 
 
 
@@ -1130,39 +1183,133 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
             try
             {
 
-               
-                var activitiesParent = await _dBContext.ActivitiesParents.FindAsync(activityId);
-                var activities = await _dBContext.Activities.FindAsync(activityId);
 
-                if (activitiesParent != null || activities != null)
+                var activityParents = await _dBContext.ActivitiesParents.Where(x => x.Id == activityId).ToListAsync();
+
+                if (activityParents.Any())
                 {
-                    
-
-
-                    if(activities != null)
+                    foreach (var actP in activityParents)
                     {
-                        _dBContext.Activities.Remove(activities);
+                        var actvities = await _dBContext.Activities.Where(x => x.ActivityParentId == actP.Id).ToListAsync();
+
+                        foreach (var act in actvities)
+                        {
+                            var actProgress = await _dBContext.ActivityProgresses.Where(x => x.ActivityId == act.Id).ToListAsync();
+
+                            foreach (var actpro in actProgress)
+                            {
+                                var progAttachments = await _dBContext.ProgressAttachments.Where(x => x.ActivityProgressId == actpro.Id).ToListAsync();
+                                if (progAttachments.Any())
+                                {
+                                    _dBContext.ProgressAttachments.RemoveRange(progAttachments);
+                                    await _dBContext.SaveChangesAsync();
+                                }
+
+                            }
+
+                            if (actProgress.Any())
+                            {
+                                _dBContext.ActivityProgresses.RemoveRange(actProgress);
+                                await _dBContext.SaveChangesAsync();
+                            }
+
+                            var activityTargets = await _dBContext.ActivityTargetDivisions.Where(x => x.ActivityId == act.Id).ToListAsync();
+
+
+                            if (activityTargets.Any())
+                            {
+                                _dBContext.ActivityTargetDivisions.RemoveRange(activityTargets);
+                                await _dBContext.SaveChangesAsync();
+                            }
+
+
+                            var employees = await _dBContext.EmployeesAssignedForActivities.Where(x => x.ActivityId == act.Id).ToListAsync();
+
+
+                            if (activityTargets.Any())
+                            {
+                                _dBContext.EmployeesAssignedForActivities.RemoveRange(employees);
+                                await _dBContext.SaveChangesAsync();
+                            }
+
+
+
+
+                        }
                     }
 
-                    if (activitiesParent != null)
-                    {
-                        _dBContext.ActivitiesParents.Remove(activitiesParent);
-                    }
-
-                    var existingAssignments = await _dBContext.EmployeesAssignedForActivities
-                                                        .Where(e => e.ActivityId == activityId)
-                                                        .ToListAsync();
-
-
-
-
-                    foreach (var assignmentToRemove in existingAssignments)
-                    {
-                        _dBContext.EmployeesAssignedForActivities.Remove(assignmentToRemove);
-                    }
+                    _dBContext.ActivitiesParents.RemoveRange(activityParents);
                     await _dBContext.SaveChangesAsync();
 
-                    var Task = await _dBContext.Tasks.FirstOrDefaultAsync(x => x.Id.Equals(taskId));
+                }
+
+                var actvities2 = await _dBContext.Activities.Where(x => x.Id == activityId).ToListAsync();
+
+                if (actvities2.Any())
+                {
+                    foreach (var act in actvities2)
+                    {
+                        var actProgress = await _dBContext.ActivityProgresses.Where(x => x.ActivityId == act.Id).ToListAsync();
+
+                        foreach (var actpro in actProgress)
+                        {
+                            var progAttachments = await _dBContext.ProgressAttachments.Where(x => x.ActivityProgressId == actpro.Id).ToListAsync();
+                            if (progAttachments.Any())
+                            {
+                                _dBContext.ProgressAttachments.RemoveRange(progAttachments);
+                                await _dBContext.SaveChangesAsync();
+                            }
+
+                        }
+
+                        if (actProgress.Any())
+                        {
+                            _dBContext.ActivityProgresses.RemoveRange(actProgress);
+                            await _dBContext.SaveChangesAsync();
+                        }
+
+                        var activityTargets = await _dBContext.ActivityTargetDivisions.Where(x => x.ActivityId == act.Id).ToListAsync();
+
+
+                        if (activityTargets.Any())
+                        {
+                            _dBContext.ActivityTargetDivisions.RemoveRange(activityTargets);
+                            await _dBContext.SaveChangesAsync();
+                        }
+
+
+                        var employees = await _dBContext.EmployeesAssignedForActivities.Where(x => x.ActivityId == act.Id).ToListAsync();
+
+
+                        if (activityTargets.Any())
+                        {
+                            _dBContext.EmployeesAssignedForActivities.RemoveRange(employees);
+                            await _dBContext.SaveChangesAsync();
+                        }
+
+                        if (activityParents.Any())
+                        {
+                            _dBContext.ActivitiesParents.RemoveRange(activityParents);
+                            await _dBContext.SaveChangesAsync();
+                        }
+
+
+                    }
+
+                    _dBContext.Activities.RemoveRange(actvities2);
+                    await _dBContext.SaveChangesAsync();
+                }
+                else
+                {
+
+                    return new ResponseMessage
+                    {
+                        Success = false,
+                        Message = "Activity Not Found"
+                    };
+
+                }
+                var Task = await _dBContext.Tasks.FirstOrDefaultAsync(x => x.Id.Equals(taskId));
                     if (Task != null)
                     {
                         var plan = _dBContext.Projects.FirstOrDefaultAsync(x => x.Id.Equals(Task.ProjectId)).Result;
@@ -1192,18 +1339,9 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                         Message = "Activity Deleted Successfully",
                         Success = true
                     };
-                }
+            
 
-                else
-                {
-
-                    return new ResponseMessage
-                    {
-                        Success = false,
-                        Message = "Activity Not Found"
-                    };
-
-                }
+                
             }
             catch (Exception ex)
             {

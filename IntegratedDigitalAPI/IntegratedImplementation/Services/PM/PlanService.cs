@@ -316,7 +316,7 @@ namespace IntegratedDigitalAPI.Services.PM
 
                         if (taskMemos.Any())
                         {
-                            _dBContext.Project_Funds.RemoveRange(projectFunds);
+                            _dBContext.TaskMemos.RemoveRange(taskMemos);
                             await _dBContext.SaveChangesAsync();
                         }
                         if (taskMembers.Any())

@@ -201,17 +201,17 @@
                                             (act?.monthPerformance[2+selectedYear]?.planned || 0) 
                                  
                                             }}</td>
-                                        <td *ngIf="i==3+selectedYear" style="border: 1px solid black;background-color: #e8ffde;">{{
+                                        <td *ngIf="i==(3+selectedYear)" style="border: 1px solid black;background-color: #e8ffde;">{{
                                             (act?.monthPerformance[3+selectedYear]?.planned || 0) +
                                             (act?.monthPerformance[4+selectedYear]?.planned || 0) +
                                             (act?.monthPerformance[5+selectedYear]?.planned || 0)
                                             }}</td>
-                                        <td *ngIf="i==6+selectedYear" style="border: 1px solid black;background-color: #e8ffde;">{{
+                                        <td *ngIf="i==(6+selectedYear)" style="border: 1px solid black;background-color: #e8ffde;">{{
                                             (act?.monthPerformance[6+selectedYear]?.planned || 0) +
                                             (act?.monthPerformance[7+selectedYear]?.planned || 0) +
                                             (act?.monthPerformance[8+selectedYear]?.planned || 0)
                                             }}</td>
-                                        <td *ngIf="i==9+selectedYear" style="border: 1px solid black;background-color: #e8ffde;">
+                                        <td *ngIf="i==(9+selectedYear)" style="border: 1px solid black;background-color: #e8ffde;">
 
                                             {{
                                             (act?.monthPerformance[9+selectedYear]?.planned ||0) +
@@ -220,7 +220,7 @@
                                         </td>
 
 
-                                        <td *ngIf="filterBy==0 && getGroupValue(item.order)"
+                                        <td *ngIf="filterBy==0 && getGroupValue(i)"
                                             style="border: 1px solid black;background-color: #fdf584;"> {{item.planned}}
                                         </td>
                                     </ng-container>
@@ -228,22 +228,22 @@
                                     <ng-container *ngFor=" let item of act?.monthPerformance; let i= index ">
 
 
-                                        <td *ngIf="i==0+selectedYear" style="border: 1px solid black;background-color: #e8ffde;">{{
+                                        <td *ngIf="i==(0+selectedYear)" style="border: 1px solid black;background-color: #e8ffde;">{{
                                             (act?.monthPerformance[0+selectedYear]?.plannedBudget || 0) +
                                             (act?.monthPerformance[1+selectedYear]?.plannedBudget || 0) +
                                             (act?.monthPerformance[2+selectedYear]?.plannedBudget || 0)
                                             }}</td>
-                                        <td *ngIf="i==3+selectedYear" style="border: 1px solid black;background-color: #e8ffde;">{{
+                                        <td *ngIf="i==(3+selectedYear)" style="border: 1px solid black;background-color: #e8ffde;">{{
                                             (act?.monthPerformance[3+selectedYear]?.plannedBudget || 0) +
                                             (act?.monthPerformance[4+selectedYear]?.plannedBudget || 0) +
                                             (act?.monthPerformance[5+selectedYear]?.plannedBudget || 0)
                                             }}</td>
-                                        <td *ngIf="i==6" style="border: 1px solid black;background-color: #e8ffde;">{{
+                                        <td *ngIf="i==(6+selectedYear)" style="border: 1px solid black;background-color: #e8ffde;">{{
                                             (act?.monthPerformance[6+selectedYear]?.plannedBudget || 0) +
                                             (act?.monthPerformance[7+selectedYear]?.plannedBudget || 0) +
                                             (act?.monthPerformance[8+selectedYear]?.plannedBudget || 0)
                                             }}</td>
-                                        <td *ngIf="i==9" style="border: 1px solid black;background-color: #e8ffde;">{{
+                                        <td *ngIf="i==(9+selectedYear)" style="border: 1px solid black;background-color: #e8ffde;">{{
                                             (act?.monthPerformance[9+selectedYear]?.plannedBudget || 0) +
                                             (act?.monthPerformance[10+selectedYear]?.plannedBudget || 0) +
                                             (act?.monthPerformance[11+selectedYear]?.plannedBudget || 0) }}
@@ -253,7 +253,7 @@
                                         </td>
 
 
-                                        <td *ngIf="filterBy==0 && getGroupValue(item.order)"
+                                        <td *ngIf="filterBy==0 && getGroupValue(i)"
                                             style="border: 1px solid black;background-color: #fdcd84;">
                                             {{item.plannedBudget}}</td>
 
@@ -262,7 +262,7 @@
 
 
                                     <ng-container *ngIf="(act.monthPerformance!.length===0)">
-                                        <td *ngFor="item of items2"> </td>
+                                        <td *ngFor="let item of items2"> </td>
                                     </ng-container>
 
 
