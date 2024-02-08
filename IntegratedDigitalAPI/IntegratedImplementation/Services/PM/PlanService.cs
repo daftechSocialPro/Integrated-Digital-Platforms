@@ -225,8 +225,8 @@ namespace IntegratedDigitalAPI.Services.PM
                             PlannedBudget  = t.PlanedBudget,
                             NumberOfMembers = _dBContext.TaskMembers.Count(x=>x.TaskId == t.Id),
                          
-                            RemianingWeight = 100 - _dBContext.Activities.Sum(x => x.Weight),
-                            RemainingBudget = t.PlanedBudget - t.Activities.Sum(x=>x.PlanedBudget),
+                            RemianingWeight = 100 - _dBContext.Activities.Where(x => x.TaskId == t.Id).Sum(x => x.Weight),
+                            RemainingBudget = t.PlanedBudget - _dBContext.Activities.Where(x => x.ActivityParent.TaskId == t.Id).Sum(x => x.PlanedBudget),
                             NumberofActivities = _dBContext.Activities.Include(x => x.ActivityParent).Count(x => x.TaskId == t.Id || x.ActivityParent.TaskId == t.Id),
                             NumberOfFinalized = _dBContext.Activities.Include(x => x.ActivityParent).Count(x => x.Status == Status.FINALIZED && ( x.TaskId == t.Id || x.ActivityParent.TaskId == t.Id)),
                             NumberOfTerminated = _dBContext.Activities.Include(x => x.ActivityParent).Count(x => x.Status == Status.TERMINATED &&( x.TaskId == t.Id || x.ActivityParent.TaskId == t.Id))

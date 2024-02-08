@@ -52,6 +52,7 @@ namespace IntegratedDigitalAPI.DTOS.PM
         public Guid? CountryId { get; set; }
         public double? Longtude { get; set; }
         public double? Latitude { get; set; }
+        public Guid? ProjectSourceId { get; set; }
 
     }
 
