@@ -198,13 +198,24 @@ namespace IntegratedImplementation.Services.Configuration
         }
         public async Task<List<SelectListDto>> GetProjectFundSources()
         {
-            var strategicPlans = await _dbContext.ProjectFundSources.Include(x=>x.FiscalYear).Where(x=>x.FiscalYear.Rowstatus==RowStatus.ACTIVE).AsNoTracking().Select(x => new SelectListDto
+            var projectFunds = await _dbContext.ProjectFundSources.AsNoTracking().Select(x => new SelectListDto
             {
                 Id = x.Id,
                 Name = x.Name
             }).ToListAsync();
 
-            return strategicPlans;
+            return projectFunds;
+        }
+
+        public async Task<List<SelectListDto>> GetProjectFundSourcesForActivity(Guid projectId)
+        {
+            var projectFunds = await _dbContext.Project_Funds.Include(x=>x.ProjectSourceFund).Where(x=>x.ProjectId==projectId).AsNoTracking().Select(x => new SelectListDto
+            {
+                Id = x.ProjectSourceFund.Id,
+                Name = x.ProjectSourceFund.Name
+            }).ToListAsync();
+
+            return projectFunds;
         }
 
         public async Task<List<SelectListDto>> GetBenefitDropDowns()

@@ -13,6 +13,7 @@ export interface ITrainingGetDto {
     reportStatus:string
     traineeListStatus:string
     activityId:string
+    allocatedCEU:string
 
 }
 
@@ -28,6 +29,7 @@ export interface ITrainingPostDto{
     // NameofOrganizaton:string
     Title:string
     ActivityId:string
+    allocatedCEU:string
 
 
 

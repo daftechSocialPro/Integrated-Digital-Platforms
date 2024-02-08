@@ -51,15 +51,15 @@ export class ZoneComponent implements OnInit {
 
   }
 
-  removeZone(ZoneId:string) {
+  removeZone(Zone:string) {
 
-    console.log(ZoneId)
+    console.log(Zone)
     this.confirmationService.confirm({
       message: 'Are You sure you want to delete this Zone?',
       header: 'Delete Confirmation',
       icon: 'pi pi-info-circle',
       accept: () => {
-        this.controlService.deleteZone(ZoneId).subscribe({
+        this.controlService.deleteZone(Zone).subscribe({
           next: (res) => {
 
             if (res.success) {

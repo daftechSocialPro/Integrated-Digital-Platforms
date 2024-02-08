@@ -17,11 +17,12 @@ using MembershipImplementation.Interfaces.HRM;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Hangfire.Dashboard;
 using HangfireBasicAuthenticationFilter;
+using OfficeOpenXml;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+ExcelPackage.LicenseContext = LicenseContext.Commercial;
 builder.Services.AddCors(policyBuilder =>
     policyBuilder.AddDefaultPolicy(policy =>
         policy.WithOrigins("*").AllowAnyHeader().AllowAnyHeader())

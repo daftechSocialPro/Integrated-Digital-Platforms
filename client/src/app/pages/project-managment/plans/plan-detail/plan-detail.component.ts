@@ -77,10 +77,8 @@ export class PlanDetailComponent implements OnInit {
     this.planService.getSinglePlans(this.planId).subscribe({
       next: (res) => {
         console.log("projects", res)
-        this.Plans = res
-
+        this.Plans = res;
         this.ListTask(this.planId);
-
         console.log('this.planTasks: ', this.planTasks);
 
       },
@@ -192,6 +190,7 @@ export class PlanDetailComponent implements OnInit {
 
   addActivity(task:TaskView) {
     let modalRef = this.modalService.open(AddActivitiesComponent, { size: "xxl", backdrop: 'static' })
+    modalRef.componentInstance.planId = this.planId
 
     var dateTime : GetStartEndDate={
       fromDate:this.Plans.startDate.toString(),

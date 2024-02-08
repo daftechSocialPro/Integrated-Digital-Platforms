@@ -75,8 +75,8 @@ export class ConfigurationService {
   updateZone(fromData: IZonePostDto) {
     return this.http.put<ResponseMessage>(this.baseUrl + '/Zone', fromData);
   }
-  deleteZone(ZoneId: string) {
-    return this.http.delete<ResponseMessage>(this.baseUrl + `/Zone?ZoneId=${ZoneId}`);
+  deleteZone(Zone: string) {
+    return this.http.delete<ResponseMessage>(this.baseUrl + `/Zone?Zone=${Zone}`);
   }
   //
   getEducationaslFields() {

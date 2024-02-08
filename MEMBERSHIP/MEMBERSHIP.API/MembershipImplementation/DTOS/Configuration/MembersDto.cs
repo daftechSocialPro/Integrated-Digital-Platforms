@@ -17,7 +17,8 @@ namespace MembershipImplementation.DTOS.Configuration
 
         public string Email { get; set; }
 
-        public Guid? ZoneId { get; set; }
+        public Guid? RegionId { get; set; }
+        public string? Zone { get; set; }
 
         public string? Woreda { get; set; }
 
@@ -62,12 +63,12 @@ namespace MembershipImplementation.DTOS.Configuration
         public string Email { get; set; }
         public DateTime BirthDate { get; set; }
         public string Region { get; set; }
-        public string Zone { get; set; }
+        public string? Zone { get; set; }
         public string Woreda { get; set; }
         public string Inistitute { get; set; }
         public bool IsBirthDate { get; set; }
 
-
+        public DateTime LastPaid { get; set; }
         public string MembershipTypeId { get; set; }
         public string EducationalField { get; set; }
         public string EducationalLevel { get; set; }
@@ -145,5 +146,7 @@ namespace MembershipImplementation.DTOS.Configuration
         public string RegionName { get; set; }
 
         public double RegionRevenue { get; set; }
+
+        public int Members { get; set; }
     }
 }

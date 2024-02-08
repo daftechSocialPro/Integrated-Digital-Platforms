@@ -103,7 +103,12 @@ namespace IntegratedInfrustructure.Models.PM
 
         public ICollection<EmployeesAssignedForActivities> AssignedEmploye { get; set; }
         public ICollection<ActivityTargetDivision> ActivityTargetDivisions { get; set; }
-  
+
+
+
+        public Guid ProjectSourceFundId { get; set; }
+        public virtual ProjectFundSource ProjectSourceFund { get; set; }
+
     }
 
  

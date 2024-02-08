@@ -31,6 +31,18 @@ export class MembershipReportComponent implements OnInit {
   fromDate: string
   toDate: string
 
+  paymentStatusData: any[];
+  chartOptions: any;
+  loading:boolean=true
+
+  genderData: any[];
+  chartOptions2: any;
+  loading2:boolean=true
+
+  membershipTypeData: any[];
+  chartOptions3: any;
+  loading3: boolean = true;
+
   ngOnInit(): void {
      this.getMemberss();
      
@@ -49,12 +61,175 @@ export class MembershipReportComponent implements OnInit {
     this.controlService.getMembers().subscribe({
       next: (res) => {
         this.Members = res;
-
        this.filterdMembers = res 
+
+       this.getPaymentStatusChart()
+       this.getGenderChart()
+       this.getMembershipTypeChart()
       }
     });
   }
 
+  getPaymentStatusChart(){
+    const paymentStatusCounts = this.filterdMembers.reduce((acc, item) => {
+      acc[item.paymentStatus] = (acc[item.paymentStatus] || 0) + 1;
+      return acc;
+    }, {});
+
+    this.paymentStatusData = Object.keys(paymentStatusCounts).map(key => ({
+      value: paymentStatusCounts[key],
+      name: key
+    }));
+
+    // Define chart options
+    this.chartOptions = {
+      tooltip: {
+        trigger: 'item',
+        formatter: '{a} <br/>{b}: {c} ({d}%)'
+      },
+      legend: {
+        orient: 'vertical',
+        left: 'left',
+        data: this.paymentStatusData.map(item => item.name)
+      },
+      series: [
+        {
+          name: 'Payment Status',
+          type: 'pie',
+          radius: ['50%', '70%'],
+          avoidLabelOverlap: false,
+          label: {
+            show: false,
+            position: 'center'
+          },
+          emphasis: {
+            label: {
+              show: true,
+              fontSize: '20',
+              fontWeight: 'bold'
+            }
+          },
+          labelLine: {
+            show: false
+          },
+          data: this.paymentStatusData,
+          itemStyle: {
+            color: function(params) { // Use a function to define custom colors
+              var colors = ['#FFB970', '#198754', '#dc3545']; // Specify your custom colors here
+              return colors[params.dataIndex % colors.length];
+            }
+          }
+        }
+      ]
+    };
+
+    this.loading = false; // Hide loading indicator once the chart is rendered
+  
+    
+  }
+  getGenderChart(){
+    const genderCounts = this.filterdMembers.reduce((acc, item) => {
+      acc[item.gender] = (acc[item.gender] || 0) + 1;
+      return acc;
+    }, {});
+
+    this.genderData = Object.keys(genderCounts).map(key => ({
+      value: genderCounts[key],
+      name: key
+    }));
+
+    // Define chart options
+    this.chartOptions2 = {
+      tooltip: {
+        trigger: 'item',
+        formatter: '{a} <br/>{b}: {c} ({d}%)'
+      },
+      legend: {
+        orient: 'vertical',
+        left: 'left',
+        data: this.genderData.map(item => item.name)
+      },
+      series: [
+        {
+          name: 'Payment Status',
+          type: 'pie',
+          radius: ['50%', '70%'],
+          avoidLabelOverlap: false,
+          label: {
+            show: false,
+            position: 'center'
+          },
+          emphasis: {
+            label: {
+              show: true,
+              fontSize: '20',
+              fontWeight: 'bold'
+            }
+          },
+          labelLine: {
+            show: false
+          },
+          data: this.genderData,
+      
+        }
+      ]
+    };
+
+    this.loading2 = false; // Hide loading indicator once the chart is rendered
+  
+    
+  }
+  getMembershipTypeChart(){
+    const membershipTypeCounts = this.filterdMembers.reduce((acc, item) => {
+      acc[item.membershipType] = (acc[item.membershipType] || 0) + 1;
+      return acc;
+    }, {});
+
+    this.membershipTypeData = Object.keys(membershipTypeCounts).map(key => ({
+      value: membershipTypeCounts[key],
+      name: key
+    }));
+
+    // Define chart options
+    this.chartOptions3 = {
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow'
+        }
+      },
+      legend: {
+        data: ['Membership Types']
+      },
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+      },
+      xAxis: {
+        type: 'value'
+      },
+      yAxis: {
+        type: 'category',
+        data: this.membershipTypeData.map(item => item.name)
+      },
+      series: [
+        {
+          name: 'Membership Types',
+          type: 'bar',
+          data: this.membershipTypeData.map(item => item.value),
+          itemStyle: {
+            color: '#FF7070' // Specify the bar color
+          }
+        }
+      ]
+    };
+
+    this.loading3 = false; // Hide loading indicator once the chart is rendered
+  
+
+  }
   getChapter(value:string) {
     this.dropDownService.getRegionsDropdown(value).subscribe({
       next: (res) => {
@@ -122,7 +297,9 @@ export class MembershipReportComponent implements OnInit {
       
     }
 
-
+    this.getPaymentStatusChart()
+    this.getGenderChart()
+    this.getMembershipTypeChart()
   
   }
 

@@ -3,7 +3,8 @@ export interface IMembersPostDto {
   lastName: string;
   phoneNumber: string;
   email: string;
-  zoneId: string;
+  Zone: string;
+  RegionId:string
   woreda: string;
   inistitute: string;
   membershipTypeId: string;
@@ -23,7 +24,7 @@ export interface IMembersGetDto {
   membershipTypeId: string;
   educationalField: string;
   educationalLevel: string;
-
+  lastPaid:Date
   educationalLevelId: string;
   membershipType: string;
   memberId: string;

@@ -98,7 +98,7 @@
                                         <label for="FieldWOrk">Field WOrk</label>
                                     </div>
                                 </div>
-                                <div class="col-md-8">
+                                <div class="col-md-5">
                                     <div class="form-floating mb-3">
                                         <!-- <select class="form-select" id="UnitofMeasurment"
                                             formControlName="UnitOfMeasurement">
@@ -110,12 +110,23 @@
                                         <label for="UnitofMeasurment">Indicators </label>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-check" style="font-size: 30px;"> <input class="form-check-input" formControlName="IsPercentage"
+                                <div class="col-md-3">
+                                    <div class="form-check" style="font-size: 25px;"> <input class="form-check-input" formControlName="IsPercentage"
                                             type="checkbox" id="gridCheck"> <label class="form-check-label" style="font-size: 20px;font-weight: bold;"
                                             for="gridCheck">Is Percentage </label></div>
                                 </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating mb-3">
+                                    
+                                    <select class="form-control"  formControlName="SelectedProjectFund" >
 
+                                        <option *ngFor="let item of projectFundSources" [value]="item.id">
+                                            {{item.name}}</option>
+
+                                    </select>
+                                    <label for="ProjectSourceFunds">Activity Fund Source</label>
+                                    </div>
+                                </div>
 
                                 <div class="col-md-4">
                                     <div class="form-floating mb-3">

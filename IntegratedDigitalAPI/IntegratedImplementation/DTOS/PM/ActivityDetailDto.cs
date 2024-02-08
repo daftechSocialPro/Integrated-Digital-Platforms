@@ -13,7 +13,7 @@ namespace IntegratedDigitalAPI.DTOS.PM
         public string? Zone { get; set; }
         public string? Woreda { get; set; }
 
-       
+       public string? SelectedProjectFund { get; set; }
         public string? ActivityNumber { get; set; }
 
         public Guid CreatedBy { get; set; }
@@ -57,6 +57,8 @@ namespace IntegratedDigitalAPI.DTOS.PM
 
         public double Longtude { get; set; }
         public double Latitude { get; set; }
+
+        public Guid SelectedProjectFund { get; set; }
 
 
     }

@@ -78,7 +78,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                 activity.PlanedBudget = item.PlannedBudget;
                 activity.IsPercentage = item.IsPercentage;
                 activity.Indicator = item.UnitOfMeasurement;
-               
+                activity.ProjectSourceFundId = item.SelectedProjectFund;
                 activity.ShouldStat =  DateTime.Parse(item.StartDate);
                 activity.ShouldEnd = DateTime.Parse(item.EndDate);
                 activity.StrategicPlanId = item.StrategicPlanId;
@@ -171,7 +171,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
             activity.Goal = activityDetail.Goal;
             activity.OfficeWork = activityDetail.OfficeWork;
             activity.PlanedBudget = activityDetail.PlannedBudget;
-
+            activity.ProjectSourceFundId = activityDetail.SelectedProjectFund;
             activity.IsPercentage = activityDetail.IsPercentage;
             activity.Indicator = activityDetail.UnitOfMeasurement;
 

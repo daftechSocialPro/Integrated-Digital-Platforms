@@ -23,6 +23,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Reporting.NETCore;
 using Microsoft.VisualBasic;
+using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -74,7 +77,8 @@ namespace MembershipImplementation.Services.HRM
                     FullName = $"{memberPost.FirstName} {memberPost.LastName}",
                     PhoneNumber = memberPost.PhoneNumber,
                     Email = memberPost.Email,
-                    ZoneId = memberPost.ZoneId,
+                    RegionId = memberPost.RegionId,
+                    Zone=memberPost.Zone,
                     MembershipTypeId = memberPost.MembershipTypeId,
                     Woreda = memberPost.Woreda,
                     Inistitute = memberPost.Inistitute,
@@ -128,7 +132,8 @@ namespace MembershipImplementation.Services.HRM
                     FullName = $"{memberPost.FirstName} {memberPost.LastName}",
                     PhoneNumber = memberPost.PhoneNumber,
                     Email = memberPost.Email,
-                    ZoneId = memberPost.ZoneId,
+                    RegionId = memberPost.RegionId,
+                    Zone=memberPost.Zone,
                     MembershipTypeId = memberPost.MembershipTypeId,
                     Woreda = memberPost.Woreda,
                     Inistitute = memberPost.Inistitute,
@@ -184,7 +189,7 @@ namespace MembershipImplementation.Services.HRM
                      FullName = x.FullName,
                      PhoneNumber = x.PhoneNumber,
                      Email = x.Email,
-                     Zone = x.Zone.ZoneName,
+                     Zone = x.Zone,
                      Woreda = x.Woreda,
                      Inistitute = x.Inistitute
 
@@ -205,8 +210,8 @@ namespace MembershipImplementation.Services.HRM
                                      PhoneNumber = member.PhoneNumber,
                                      ImagePath = member.ImagePath,
                                      Email = member.Email,
-                                     Zone = member.Zone.ZoneName,
-                                     Region = member.Zone.Region.RegionName,
+                                     Zone = member.Zone,
+                                     Region = member.Region.RegionName,
                                      Woreda = member.Woreda,
                                      Inistitute = member.Inistitute,
                                      InstituteRole = member.InstituteRole,
@@ -247,8 +252,8 @@ namespace MembershipImplementation.Services.HRM
                                      PhoneNumber = member.PhoneNumber,
                                      ImagePath = member.ImagePath,
                                      Email = member.Email,
-                                     Zone = member.Zone.ZoneName,
-                                     Region = member.Zone.Region.RegionName,
+                                     Zone = member.Zone,
+                                     Region = member.Region.RegionName,
                                      Woreda = member.Woreda,
                                      Inistitute = member.Inistitute,
                                      InstituteRole = member.InstituteRole,
@@ -263,6 +268,7 @@ namespace MembershipImplementation.Services.HRM
                                      RejectedRemark = member.RejectedRemark,
                                      ExpiredDate = latestPayment!=null? latestPayment.ExpiredDate:DateTime.Now,
                                      PaymentStatus = latestPayment != null ? latestPayment.PaymentStatus.ToString():null,
+                                     LastPaid = latestPayment!=null? latestPayment.LastPaid:DateTime.Now,
                                      Amount = member.MembershipType.Money,
                                      IsBirthDate=member.IsBirthDate,
                                      MoodleId = member.MoodleId,
@@ -496,7 +502,7 @@ namespace MembershipImplementation.Services.HRM
         {
 
             var encryption = "2B7E151628AED2A6ABF7158809CF4F3C";
-            var members = await (from member in _dbContext.Members.Include(x => x.Zone.Region).Include(x => x.EducationalLevel).Where(x => x.IdCardStatus == IDCARDSTATUS.REQUESTED)
+            var members = await (from member in _dbContext.Members.Include(x => x.Region).Include(x => x.EducationalLevel).Where(x => x.IdCardStatus == IDCARDSTATUS.REQUESTED)
                                  join payment in _dbContext.MemberPayments on member.Id equals payment.MemberId into memberPayments
                                  from payment in memberPayments.DefaultIfEmpty()
                                  select new MembersGetDto
@@ -506,8 +512,8 @@ namespace MembershipImplementation.Services.HRM
                                      PhoneNumber = member.PhoneNumber,
                                      ImagePath = member.ImagePath,
                                      Email = member.Email,
-                                     Zone = member.Zone.ZoneName,
-                                     Region = member.Zone.Region.RegionName,
+                                     Zone = member.Zone,
+                                     Region = member.Region.RegionName,
                                      Woreda = member.Woreda,
                                      Inistitute = member.Inistitute,
                                      InstituteRole = member.InstituteRole,
@@ -688,7 +694,7 @@ namespace MembershipImplementation.Services.HRM
                 var formData = new MultipartFormDataContent();
                 formData.Add(new StringContent("json"), "moodlewsrestformat");
                 formData.Add(new StringContent("core_user_update_users"), "wsfunction");
-                formData.Add(new StringContent("39df265f0c3e1b44eb442be8afe49c50"), "wstoken");
+                formData.Add(new StringContent("34c8f4f0087149ff6e19312a545ae849"), "wstoken");
                 formData.Add(new StringContent(member.MoodleId), "users[0][id]");
                 formData.Add(new StringContent(status), "users[0][suspended]");
 
@@ -822,8 +828,8 @@ namespace MembershipImplementation.Services.HRM
         {
             var chapters = await _dbContext.Regions.Where(x=>x.CountryType== CountryType.ETHIOPIAN).ToListAsync();
 
-            var memberPayments = await _dbContext.MemberPayments.Include(x=>x.Member).ThenInclude(x=>x.MembershipType).Include(x => x.Member).ThenInclude(x=>x.Zone).Where(x=>x.Member.ZoneId!=null && x.PaymentStatus==PaymentStatus.PAID).ToListAsync();
-            var memberPaymentsForeigns = await _dbContext.MemberPayments.Include(x => x.Member).ThenInclude(x => x.MembershipType).Include(x => x.Member).ThenInclude(x => x.Zone).Where(x => x.Member.ZoneId == null && x.PaymentStatus == PaymentStatus.PAID).ToListAsync();
+            var memberPayments = await _dbContext.MemberPayments.Include(x=>x.Member).ThenInclude(x=>x.MembershipType).Include(x => x.Member).ThenInclude(x=>x.Region).Where(x=>x.Member.RegionId!=null && x.PaymentStatus==PaymentStatus.PAID).ToListAsync();
+            var memberPaymentsForeigns = await _dbContext.MemberPayments.Include(x => x.Member).ThenInclude(x => x.MembershipType).Where(x => x.Member.RegionId == null && x.PaymentStatus == PaymentStatus.PAID).ToListAsync();
 
             var membersReports = new List<MemberRegionRevenueReportDto>();
 
@@ -833,7 +839,9 @@ namespace MembershipImplementation.Services.HRM
                 var memberReport = new MemberRegionRevenueReportDto
                 {
                     RegionName = chapter.RegionName,
-                    RegionRevenue =  memberPayments.Where(x=>x.Member?.Zone?.RegionId==chapter.Id).Sum(x=>x.MembershipType.Money)
+                    RegionRevenue =  memberPayments.Where(x=>x.Member?.RegionId==chapter.Id).Sum(x=>x.MembershipType.Money),
+                    Members = _dbContext.Members.Count(x=>x.RegionId==chapter.Id),
+                    
                 };
 
                 membersReports.Add(memberReport);
@@ -842,193 +850,146 @@ namespace MembershipImplementation.Services.HRM
             var memberReport2 = new MemberRegionRevenueReportDto
             {
                 RegionName = CountryType.FOREIGN.ToString(),
-                RegionRevenue = memberPaymentsForeigns.Sum(x => x.MembershipType.Money)
+                RegionRevenue = memberPaymentsForeigns.Sum(x => x.MembershipType.Money),
+                Members = _dbContext.Members.Count(x=>x.RegionId==Guid.Empty),
             };
             membersReports.Add(memberReport2);
             return membersReports;
         }
 
+        public async Task<ResponseMessage> ImportMemberFormExcel(IFormFile ExcelFile)
+        {
+
+            try
+            {
+                int counter = 0;
+                using (var package = new ExcelPackage(ExcelFile.OpenReadStream()))
+                {
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
+
+                    int rowCount = worksheet.Dimension.Rows;
+                
+
+                    for (int row = 2; row <= rowCount; row++) // Assuming the data starts from the second row
+                    {
+                        Member member = new Member();
+                        var fullName = worksheet.Cells[row, 1].Value?.ToString() ?? string.Empty;
+                        var PhoneNumber = worksheet.Cells[row, 2].Value?.ToString() ?? string.Empty;
+                        var birthdateExcel = worksheet.Cells[row, 11].Value?.ToString() ;
+
+                        DateTime birthDate = DateTime.Parse(birthdateExcel);
+                        var result = await CheckIfPhoneNumberExistFromBot(PhoneNumber);
+
+                        if (!result.Exist)
+                        {
+
+                            var memberID = "";
+
+                            var paymentStatus = worksheet.Cells[row, 13].Value?.ToString().Trim() ?? string.Empty;
+                            var gender = worksheet.Cells[row, 8].Value?.ToString().Trim() ?? string.Empty;
+
+                            var memberType = worksheet.Cells[row, 3].Value?.ToString()?.Trim() ?? string.Empty;
+                            var selectedMembershipType = await _dbContext.MembershipTypes.Where(x => x.ShortCode == memberType).FirstOrDefaultAsync();
+
+                            if (selectedMembershipType == null)
+                            {
+
+                                return new ResponseMessage
+                                {
+                                    Data = $"Membership type {memberType} is not Found for Member {fullName}!! \n{counter} Members Added Successfully",
+                                    Message = "Excel Format Error",
+                                    Success = false
+                                };
+
+                            }
+                            memberID = await _generalConfig.GenerateCode(0, selectedMembershipType.ShortCode);
+
+                            var educationalLevel = worksheet.Cells[row, 6].Value?.ToString() ?? string.Empty;
+                            var selectedEducationalLevel = await _dbContext.EducationalLevels.Where(x => x.EducationalLevelName == educationalLevel).FirstOrDefaultAsync();
+
+
+                       
+
+                            var region = worksheet.Cells[row, 14].Value?.ToString() ?? string.Empty;
+                            var selectedRegion = await _dbContext.Regions.Where(x => x.RegionName == region).FirstOrDefaultAsync();
+
+
+                            member.CreatedDate = DateTime.Now;
+                            member.Id = Guid.NewGuid();
+                            member.FullName = fullName;
+                            member.PhoneNumber = PhoneNumber;
+                            member.MembershipTypeId = selectedMembershipType.Id;
+                            member.Zone = worksheet.Cells[row, 4].Value?.ToString() ?? string.Empty;
+                            member.Woreda = worksheet.Cells[row, 5].Value?.ToString() ?? string.Empty;
+                            member.RegionId = selectedRegion!=null ? selectedRegion.Id : null;    
+                            member.EducationalLevelId = selectedEducationalLevel != null?selectedEducationalLevel.Id:null;
+                            member.EducationalField = worksheet.Cells[row, 7].Value?.ToString() ?? string.Empty;
+                            member.Gender = gender == "M" ? Gender.MALE : Gender.FEMALE;
+                            member.Inistitute = worksheet.Cells[row, 9].Value?.ToString() ?? string.Empty;
+                            member.InstituteRole = worksheet.Cells[row, 10].Value?.ToString() ?? string.Empty;
+                            member.BirthDate = birthDate;
+
+                            member.MemberId = memberID;
+
+                            await _dbContext.Members.AddAsync(member);
+                            await _dbContext.SaveChangesAsync();
+
+                            AddUSerDto addUser = new AddUSerDto
+                            {
+
+                                MemberId = member.Id,
+                                UserName = member.MemberId,
+                                Password = "1234",
+
+
+
+                            };
+                            var result22 = await _authenticationService.AddUser(addUser);
+
+
+                            counter += 1;
 
 
 
 
-        //public async Task<ResponseMessage> AddEmployee(EmployeePostDto addEmployee)
-        //{
-        //    var id = Guid.NewGuid();
-        //    var path = "";
+                        } else
+                        {
+                            return new ResponseMessage
+                            {
+                                Data = $"PhoneNumber {PhoneNumber} registerd on Member {fullName} is already Exists !! \n{counter} Members Added Successfully ",
+                                Message = "Excel Format Error",
+                                Success = false
+                            };
+                        }
 
-        //    if (addEmployee.ImagePath != null)
-        //        path = _generalConfig.UploadFiles(addEmployee.ImagePath, id.ToString(), "Employee").Result.ToString();
+                            
 
+                         
+                        
 
-        //    var probationPeriod = await _dbContext.HrmSettings.FirstOrDefaultAsync(x => x.GeneralSetting == GeneralHrmSetting.PROBATIONPERIOD);
-        //    if (probationPeriod == null)
-        //        return new ResponseMessage { Success = false, Message = "Could Not Find Prohbation Period" };
+                    }
+                }
+                return new ResponseMessage
+                {
+                    Data = $"{counter} Members Added Successfully!",
+                    Message = "Add Successfully From Excel!!!",
+                    Success = true
+                };
 
+            }
+            catch (Exception ex)
+            {
+                return new ResponseMessage
+                {
 
-        //    var code = await _generalConfig.GenerateCode(GeneralCodeType.EMPLOYEEPREFIX);
-        //    addEmployee.EmploymentStatus = EmploymentStatus.ACTIVE.ToString();
-        //    EmployeeList employee = new EmployeeList
-        //    {
-        //        Id = Guid.NewGuid(),
-        //        CreatedDate = DateTime.Now,
-        //       CreatedById = addEmployee.CreatedById,
-        //        EmployeeCode = code,
-
-        //        Email = addEmployee.Email,
-
-        //        EmploymentStatus = Enum.Parse<EmploymentStatus>(addEmployee.EmploymentStatus),
-        //        EmploymentPosition = Enum.Parse<EmploymentPosition>(addEmployee.EmploymentPosition),
-
-        //        FirstName = addEmployee.FirstName,
-        //        Address = addEmployee.Address,
-        //        LastName = addEmployee.LastName,
-        //        BirthDate = addEmployee.BirthDate,
-        //        Gender = Enum.Parse<Gender>(addEmployee.Gender),
-
-        //        BankAccountNo = addEmployee.BankAccountNo,
-        //        EmploymentDate = addEmployee.EmploymentDate,
-        //        ImagePath = path,
-        //        PhoneNumber = addEmployee.PhoneNumber,
-
-        //        TinNumber = addEmployee.TinNumber,
-        //        Twitter = addEmployee.Twitter,
-        //        Facebook = addEmployee.Facebook,
-        //        Instagram = addEmployee.Instagram,
-        //        Telegram = addEmployee.Telegram,
-
-        //        Rowstatus = RowStatus.ACTIVE,
-
-        //    };
-        //    await _dbContext.Employees.AddAsync(employee);
-        //    await _dbContext.SaveChangesAsync();
+                    Message = ex.InnerException.Message,
+                    Success = false
+                };
+            }
 
 
+        }
 
-        //    return new ResponseMessage
-        //    {
-
-        //        Message = "Added Successfully",
-        //        Success = true
-        //    };
-        //}
-
-        //public async Task<ResponseMessage> UpdateEmployee(EmployeeGetDto addEmployee)
-        //{
-
-        //    var path = "";
-
-        //    if (addEmployee.Image != null)
-        //        path = _generalConfig.UploadFiles(addEmployee.Image, addEmployee.Id.ToString(), "Employee").Result.ToString();
-
-
-        //    var probationPeriod = await _dbContext.HrmSettings.FirstOrDefaultAsync(x => x.GeneralSetting == GeneralHrmSetting.PROBATIONPERIOD);
-        //    if (probationPeriod == null)
-        //        return new ResponseMessage { Success = false, Message = "Could Not Find Prohbation Period" };
-
-
-
-        //    addEmployee.EmploymentStatus = EmploymentStatus.ACTIVE.ToString();
-
-        //    var employee = _dbContext.Employees.Find(addEmployee.Id);
-
-        //    if (employee != null)
-        //    {
-
-        //        employee.Email = addEmployee.Email;
-        //        employee.EmploymentStatus = Enum.Parse<EmploymentStatus>(addEmployee.EmploymentStatus);
-        //        employee.EmploymentPosition = Enum.Parse<EmploymentPosition>(addEmployee.EmploymentPosition);
-
-        //        employee.FirstName = addEmployee.FirstName;
-        //        employee.Address = addEmployee.Address;
-        //        employee.LastName = addEmployee.LastName;
-        //        employee.BirthDate = addEmployee.BirthDate;
-        //        employee.Gender = Enum.Parse<Gender>(addEmployee.Gender);
-
-        //        employee.BankAccountNo = addEmployee.BankAccountNo;
-        //        employee.EmploymentDate = addEmployee.EmploymentDate;
-
-
-        //        if (addEmployee.Image!=null)
-        //        {
-        //            employee.ImagePath = path;
-        //        }
-        //        employee.PhoneNumber = addEmployee.PhoneNumber;
-
-        //        employee.TinNumber = addEmployee.TinNumber;
-        //        employee.Twitter = addEmployee.Twitter;
-        //        employee.Facebook = addEmployee.Facebook;
-        //        employee.Instagram = addEmployee.Instagram;
-        //        employee.Telegram = addEmployee.Telegram;
-
-        //        employee.Rowstatus = RowStatus.ACTIVE;
-
-        //        await _dbContext.SaveChangesAsync();
-
-        //        return new ResponseMessage
-        //        {
-
-        //            Message = "Updated Successfully",
-        //            Success = true
-        //        };
-
-        //    }
-        //    else
-        //    {
-        //        return new ResponseMessage
-        //        {
-
-        //            Message = "No employee Found",
-        //            Success = false
-        //        };
-        //    }
-
-
-
-
-        //}
-
-        //public async Task<List<EmployeeGetDto>> GetEmployees()
-        //{
-        //    var employeeList = await _dbContext.Employees.AsNoTracking()
-        //                            .ProjectTo<EmployeeGetDto>(_mapper.ConfigurationProvider)
-        //                            .ToListAsync();
-        //    return employeeList;
-        //}
-
-        //public async Task<EmployeeGetDto> GetEmployee(Guid employeeId)
-        //{
-        //    var employee = await _dbContext.Employees
-
-        //        .Where(x => x.Id == employeeId)
-        //        .AsNoTracking()
-        //        .ProjectTo<EmployeeGetDto>(_mapper.ConfigurationProvider).FirstAsync();
-
-        //    return employee;
-        //}
-
-
-
-        //  public async Task<List<SelectListDto>> GetEmployeeNoUser()
-        //  {
-        //      var users = _userManager.Users.Select(x => x.EmployeeId).ToList();
-
-        //      var employees = await _dbContext.Employees
-        //          .Where(e => !users.Contains(e.Id))
-        //          .ProjectTo<SelectListDto>(_mapper.ConfigurationProvider)
-        //          .ToListAsync();
-
-        //      return employees;
-        //  }
-
-
-        //public async  Task<List<SelectListDto>> GetEmployeeSelectList()
-        //  {
-
-        //      var employees = await _dbContext.Employees.ProjectTo<SelectListDto>(_mapper.ConfigurationProvider).ToListAsync();
-
-        //      return employees;
-        //  }
 
 
 

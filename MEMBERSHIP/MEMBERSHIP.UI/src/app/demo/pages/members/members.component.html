@@ -33,11 +33,22 @@
             </span>
         </div>
 
-        <div class="col-3">
-            <input type="text" placeholder="search ..." class="form-control" style="font-size: 18px;"
-                [(ngModel)]="searchTerm" (input)="applyFilter()" placeholder="Search">
+        <div class="row">
+            <div class="col-3">
+                <input type="text" placeholder="search ..." class="form-control" style="font-size: 18px;"
+                    [(ngModel)]="searchTerm" (input)="applyFilter()" placeholder="Search">
+            </div>
+            <div class="col-9 text-end">
+                <button class="btn btn-outline-success text-end" (click)="file.click()"><i
+                    class="bi bi-file-excel"></i> Import from Excel </button>
+                <input type="file" accept=".xlsx, .xls" #file hidden (change)="onFileSelected($event)" />
+            </div>
+    
         </div>
 
+
+   
+       
         <table class="custom-table mt-4">
             <thead>
                 <tr>

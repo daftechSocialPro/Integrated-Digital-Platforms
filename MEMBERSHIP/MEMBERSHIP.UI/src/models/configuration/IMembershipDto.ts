@@ -21,5 +21,6 @@ export interface IMembershipTypePostDto {
 
   export interface IRegionRevenueDto {
     regionRevenue:number,
-    regionName:string
+    regionName:string,
+    members:number
   }

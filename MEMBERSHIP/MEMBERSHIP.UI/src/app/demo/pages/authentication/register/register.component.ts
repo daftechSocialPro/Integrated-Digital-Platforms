@@ -52,7 +52,8 @@ export default class RegisterComponent implements OnInit {
       phoneNumber: ['', [Validators.required, Validators.pattern('[0-9]{10}')]],
       email: [''],
       membershipType: ['', Validators.required],
-      zoneId: [null,Validators.required],
+      RegionId:['',Validators.required],
+      Zone: [null,Validators.required],
       woreda: [null,Validators.required],
       inistitute: ['', Validators.required]
     });
@@ -80,14 +81,14 @@ export default class RegisterComponent implements OnInit {
     
     if (countryType === 'ETHIOPIAN') {
       this.registerForm.get('woreda').setValidators(Validators.required);
-      this.registerForm.get('zoneId').setValidators(Validators.required);
+      this.registerForm.get('Zone').setValidators(Validators.required);
     } else {
       this.registerForm.get('woreda').clearValidators();
-      this.registerForm.get('zoneId').clearValidators();
+      this.registerForm.get('Zone').clearValidators();
     }
 
     this.registerForm.get('woreda').updateValueAndValidity();
-    this.registerForm.get('zoneId').updateValueAndValidity();
+    this.registerForm.get('Zone').updateValueAndValidity();
 
 
 
@@ -116,7 +117,8 @@ export default class RegisterComponent implements OnInit {
       lastName: this.registerForm.value.lastName,
       phoneNumber: this.registerForm.value.phoneNumber.toString(),
       email: this.registerForm.value.email,
-      zoneId: this.registerForm.value.zoneId,
+      Zone: this.registerForm.value.Zone,
+      RegionId:this.registerForm.value.RegionId,
       woreda: this.registerForm.value.woreda,
       inistitute: this.registerForm.value.inistitute,
       membershipTypeId: this.registerForm.value.membershipType

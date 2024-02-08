@@ -80,7 +80,7 @@ namespace MembershipInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("MembershipInfrustructure.Model.Configuration.Announcment", b =>
@@ -115,7 +115,7 @@ namespace MembershipInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Announcments");
+                    b.ToTable("Announcments", (string)null);
                 });
 
             modelBuilder.Entity("MembershipInfrustructure.Model.Configuration.Country", b =>
@@ -148,7 +148,7 @@ namespace MembershipInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Countries");
+                    b.ToTable("Countries", (string)null);
                 });
 
             modelBuilder.Entity("MembershipInfrustructure.Model.Configuration.Course", b =>
@@ -194,7 +194,7 @@ namespace MembershipInfrustructure.Migrations
 
                     b.HasIndex("MembershipTypeId");
 
-                    b.ToTable("Courses");
+                    b.ToTable("Courses", (string)null);
                 });
 
             modelBuilder.Entity("MembershipInfrustructure.Model.Configuration.EducationalField", b =>
@@ -222,7 +222,7 @@ namespace MembershipInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EducationalFields");
+                    b.ToTable("EducationalFields", (string)null);
                 });
 
             modelBuilder.Entity("MembershipInfrustructure.Model.Configuration.EducationalLevel", b =>
@@ -250,7 +250,7 @@ namespace MembershipInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EducationalLevels");
+                    b.ToTable("EducationalLevels", (string)null);
                 });
 
             modelBuilder.Entity("MembershipInfrustructure.Model.Configuration.GeneralCodes", b =>
@@ -284,7 +284,7 @@ namespace MembershipInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GeneralCodes");
+                    b.ToTable("GeneralCodes", (string)null);
                 });
 
             modelBuilder.Entity("MembershipInfrustructure.Model.Configuration.MembershipType", b =>
@@ -326,7 +326,7 @@ namespace MembershipInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MembershipTypes");
+                    b.ToTable("MembershipTypes", (string)null);
                 });
 
             modelBuilder.Entity("MembershipInfrustructure.Model.Configuration.Region", b =>
@@ -354,7 +354,7 @@ namespace MembershipInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Regions");
+                    b.ToTable("Regions", (string)null);
                 });
 
             modelBuilder.Entity("MembershipInfrustructure.Model.Configuration.Zone", b =>
@@ -384,7 +384,7 @@ namespace MembershipInfrustructure.Migrations
 
                     b.HasIndex("RegionId");
 
-                    b.ToTable("Zones");
+                    b.ToTable("Zones", (string)null);
                 });
 
             modelBuilder.Entity("MembershipInfrustructure.Model.Users.Admin", b =>
@@ -417,7 +417,7 @@ namespace MembershipInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Admins");
+                    b.ToTable("Admins", (string)null);
                 });
 
             modelBuilder.Entity("MembershipInfrustructure.Model.Users.Member", b =>
@@ -489,6 +489,9 @@ namespace MembershipInfrustructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<Guid?>("RegionId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("RejectedRemark")
                         .HasColumnType("nvarchar(max)");
 
@@ -498,8 +501,8 @@ namespace MembershipInfrustructure.Migrations
                     b.Property<string>("Woreda")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("ZoneId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Zone")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -510,9 +513,9 @@ namespace MembershipInfrustructure.Migrations
                     b.HasIndex("PhoneNumber")
                         .IsUnique();
 
-                    b.HasIndex("ZoneId");
+                    b.HasIndex("RegionId");
 
-                    b.ToTable("Members");
+                    b.ToTable("Members", (string)null);
                 });
 
             modelBuilder.Entity("MembershipInfrustructure.Model.Users.MemberPayment", b =>
@@ -553,7 +556,7 @@ namespace MembershipInfrustructure.Migrations
 
                     b.HasIndex("MembershipTypeId");
 
-                    b.ToTable("MemberPayments");
+                    b.ToTable("MemberPayments", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -572,7 +575,7 @@ namespace MembershipInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -594,7 +597,7 @@ namespace MembershipInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RoleClaims");
+                    b.ToTable("RoleClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -616,7 +619,7 @@ namespace MembershipInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserClaims");
+                    b.ToTable("UserClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -635,7 +638,7 @@ namespace MembershipInfrustructure.Migrations
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
-                    b.ToTable("UserLogins");
+                    b.ToTable("UserLogins", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
@@ -648,7 +651,7 @@ namespace MembershipInfrustructure.Migrations
 
                     b.HasKey("UserId", "RoleId");
 
-                    b.ToTable("UserRoles");
+                    b.ToTable("UserRoles", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -667,7 +670,7 @@ namespace MembershipInfrustructure.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("UserTokens");
+                    b.ToTable("UserTokens", (string)null);
                 });
 
             modelBuilder.Entity("MembershipInfrustructure.Model.Configuration.Course", b =>
@@ -712,15 +715,15 @@ namespace MembershipInfrustructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MembershipInfrustructure.Model.Configuration.Zone", "Zone")
+                    b.HasOne("MembershipInfrustructure.Model.Configuration.Region", "Region")
                         .WithMany()
-                        .HasForeignKey("ZoneId");
+                        .HasForeignKey("RegionId");
 
                     b.Navigation("EducationalLevel");
 
                     b.Navigation("MembershipType");
 
-                    b.Navigation("Zone");
+                    b.Navigation("Region");
                 });
 
             modelBuilder.Entity("MembershipInfrustructure.Model.Users.MemberPayment", b =>

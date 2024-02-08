@@ -6,6 +6,7 @@
             <h1>Ethiopian Midwives Association</h1>
             <h2>Training Quality Evaluation tools</h2>
             <p class="mt-2">Title: <span>{{training&&training.title}} </span></p>
+            <p>Allocated CEU :<span>{{training&&training.allocatedCEU}}</span></p>
             <p>Duration: <span>{{training&&training.startDate|date:"dd MMM yyyy"}} -- {{training&&training.endDate|date:"dd MMM yyyy"}}</span></p>
             <p>Venue of the training: <span> {{training&&training.courseVenue}} </span></p>
             <p>Name of the trainers: <span *ngFor="let item of trainers; let last = last">{{item.fullName}}{{last ? '' :
@@ -13,7 +14,7 @@
 
         </div>
     </div>
-    <button type="button" (click)="downloadAsWord()">Download as Word</button>
+    <button *ngIf="traininggId" type="button" (click)="downloadAsWord()">Download as Word</button>
         <div id="reportContent" class="container card">
             <div class=" row justify-content-center">
               <div class="col-md-12">

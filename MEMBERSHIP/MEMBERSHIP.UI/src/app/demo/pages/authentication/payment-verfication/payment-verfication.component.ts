@@ -84,7 +84,7 @@ export default class PaymentVerficationComponent implements OnInit {
     debugger
     formData.append('moodlewsrestformat', 'json');
     formData.append('wsfunction', 'core_user_create_users');
-    formData.append('wstoken', '39df265f0c3e1b44eb442be8afe49c50');
+    formData.append('wstoken', '34c8f4f0087149ff6e19312a545ae849');
     formData.append('users[0][username]',userName);
     formData.append('users[0][password]', password);
     formData.append('users[0][firstname]', member.fullName.split(' ')[0]);

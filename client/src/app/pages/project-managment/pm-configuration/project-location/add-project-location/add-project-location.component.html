@@ -24,15 +24,7 @@
                                 <label for="Budget">Budget</label>
                             </div>
                         </div>
-                        <div class="col-md-6" *ngIf="calledFrom==0" >
-                            <div class="form-floating">
-                                <select class="form-select" id="fiscalYearId" formControlName="fiscalYearId">
-                                    <option *ngFor="let item of fiscalYears" [value]="item.id">{{item.name}}</option>
-                                </select>
-                         
-                                <label for="Budget" >Fiscal Year</label>
-                            </div>
-                        </div>
+             
 
 
                         <div class="col-md-12">

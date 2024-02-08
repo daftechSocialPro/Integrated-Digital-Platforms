@@ -18,6 +18,7 @@ export class MembersComponent implements OnInit {
   Members: IMembersGetDto[];
   paginatedMembers: IMembersGetDto[];
   searchTerm: string = '';
+  selectedFile: File | null = null;
   ngOnInit(): void {
     this.getMemberss();
   }
@@ -28,7 +29,7 @@ export class MembersComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private controlService: MemberService
-  ) {}
+  ) { }
 
   getMemberss() {
     this.controlService.getMembers().subscribe({
@@ -61,9 +62,9 @@ export class MembersComponent implements OnInit {
       return (
         item.fullName.toLowerCase().includes(searchTerm) ||
         item.phoneNumber.toLowerCase().includes(searchTerm) ||
-        (item.memberId&& item.memberId.toLocaleLowerCase().includes(searchTerm))||
+        (item.memberId && item.memberId.toLocaleLowerCase().includes(searchTerm)) ||
         item.membershipType.toLowerCase().includes(searchTerm) ||
-        (item.region&&item.region.toLowerCase().includes(searchTerm) )||
+        (item.region && item.region.toLowerCase().includes(searchTerm)) ||
         item.inistitute.toLowerCase().includes(searchTerm) ||
         (item.instituteRole && item.instituteRole.toLowerCase().includes(searchTerm)) ||
         (item.gender && item.gender.toLowerCase().includes(searchTerm)) ||
@@ -71,15 +72,46 @@ export class MembersComponent implements OnInit {
         item.expiredDate.toString().includes(searchTerm)
       );
     });
-    
+
   }
 
-  goToDetail(member:IMembersGetDto){
+  goToDetail(member: IMembersGetDto) {
 
-    let modalRef = this.modalService.open(MemberDetailComponent,{size:'xxl',backdrop:'static',windowClass: 'custom-modal-width'})
+    let modalRef = this.modalService.open(MemberDetailComponent, { size: 'xxl', backdrop: 'static', windowClass: 'custom-modal-width' })
     modalRef.componentInstance.member = member
-    modalRef.result.then(()=>{
+    modalRef.result.then(() => {
       this.getMemberss()
+    })
+  }
+
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0] as File;
+    if (!this.selectedFile) {
+      return;
+    }
+    this.importFromExcel()
+
+  }
+  importFromExcel() {
+
+    const formData = new FormData();
+    formData.append('ExcelFile', this.selectedFile);
+    this.controlService.importFromExcel(formData).subscribe({
+
+      next: (res) => {
+        if (res.success) {
+          this.messageService.add({ severity: 'success', summary: res.message, detail: res.data })
+          this.getMemberss()
+        }
+        else {
+          this.messageService.add({ severity: 'error', summary: res.message, detail: res.data })
+          this.getMemberss()
+        }
+      }
+      , error: (err) => {
+        this.messageService.add({ severity: 'error', summary: 'Something went wrong', detail: err })
+      }
+
     })
   }
 }

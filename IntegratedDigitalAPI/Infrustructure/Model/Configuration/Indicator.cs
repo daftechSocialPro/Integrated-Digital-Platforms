@@ -13,7 +13,7 @@ namespace IntegratedInfrustructure.Models.Common
         public Guid StrategicPlanId { get; set; }
         
         public virtual StrategicPlan StrategicPlan { get; set; }    
-        public TypeOfIndicator Type { get; set; }
+        public TypeStrategicPlanIndicator Type { get; set; }
     }
 
 }

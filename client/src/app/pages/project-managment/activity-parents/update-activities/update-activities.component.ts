@@ -26,6 +26,7 @@ export class UpdateActivitiesComponent implements OnInit{
   @Input() requestFromId!: string;
   @Input() dateAndTime!:GetStartEndDate
   @Input() activity!: any
+  @Input() planId!:string
 
   countries !: SelectList[];
   regions!: SelectList[];
@@ -49,7 +50,7 @@ export class UpdateActivitiesComponent implements OnInit{
 
   lat = 0 
   lng = 0
-
+  projectFundSources: SelectList[]
   constructor(
     private activeModal: NgbActiveModal,
     private formBuilder: FormBuilder,
@@ -89,7 +90,8 @@ export class UpdateActivitiesComponent implements OnInit{
       IsPercentage:[false,Validators.required],
       RegionId:['',Validators.required],
       Zone:[''],
-      Woreda:['']
+      Woreda:[''],
+      SelectedProjectFund:['',Validators.required]
 
     })
     
@@ -146,10 +148,18 @@ export class UpdateActivitiesComponent implements OnInit{
     //   },
     // })
 
-   // this.GetProjectLocations()
+   
+    this.getProjectFundSourse()
 
   }
+  getProjectFundSourse(){
 
+    this.dropDownService.GetProjectFundSourcesForActivity(this.planId).subscribe({
+      next:(res)=>{
+        this.projectFundSources = res 
+      }
+    })
+  }
   ListofEmployees() {
 
     this.taskService.getEmployeeNoTaskMembers(this.task.id!).subscribe({
@@ -275,7 +285,8 @@ export class UpdateActivitiesComponent implements OnInit{
         Woreda:this.activityForm.value.Woreda ,
         StrategicPlanIndicatorId:this.activityForm.value.StrategicPlanIndicatorId,
         IsTraining:this.activityForm.value.IsTraining,      
-        IsPercentage:this.activityForm.value.IsPercentage
+        IsPercentage:this.activityForm.value.IsPercentage,
+        selectedProjectFund:this.activityForm.value.SelectedProjectFund
         
       }
       if(this.requestFrom == "PLAN"){
@@ -341,6 +352,7 @@ export class UpdateActivitiesComponent implements OnInit{
         IsPercentage:this.activityForm.value.IsPercentage,
         longtude: this.lng,
         latitude: this.lat,
+        selectedProjectFund:this.activityForm.value.SelectedProjectFund
       }
 
       console.log("rrrrrrrrrrrrr",actvityP)

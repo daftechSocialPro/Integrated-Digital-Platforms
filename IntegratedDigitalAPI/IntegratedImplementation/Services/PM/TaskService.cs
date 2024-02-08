@@ -103,7 +103,7 @@ namespace IntegratedDigitalAPI.Services.PM
                 if (task.HasActivityParent)
                 {
                     activityViewDtos = (from a in _dBContext.ActivitiesParents.Where(x => x.TaskId == taskId)
-                                        join e in _dBContext.Activities.OrderBy(x=>x.CreatedDate)
+                                        join e in _dBContext.Activities.Include(x=>x.ProjectSourceFund).OrderBy(x=>x.CreatedDate)
                                         .Include(x=>x.Region).ThenInclude(x=>x.Country)
                                      on a.Id equals e.ActivityParentId
                                         // join ae in _dBContext.EmployeesAssignedForActivities.Include(x=>x.Employee) on e.Id equals ae.ActivityId
@@ -123,6 +123,7 @@ namespace IntegratedDigitalAPI.Services.PM
                                             UnitOfMeasurment = e.Indicator,
                                             OverAllPerformance = 0,
                                             StartDate = e.ShouldStat.ToString(),
+                                            ProjectSource = e.ProjectSourceFund.Name,
                                             EndDate = e.ShouldEnd.ToString(),
                                             Members = e.ProjectTeamId==null? _dBContext.EmployeesAssignedForActivities.Include(x => x.Employee).Where(x => x.ActivityId == e.Id).Select(y => new SelectListDto
                                             {

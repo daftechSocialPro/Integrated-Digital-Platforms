@@ -68,7 +68,9 @@ export class DropDownService {
     getProjectFundSourcess() {
         return this.http.get<SelectList[]>(this.baseUrl + "/DropDown/GetProjectFundSources")
     }
-
+    GetProjectFundSourcesForActivity(planId:string) {
+        return this.http.get<SelectList[]>(this.baseUrl + `/DropDown/GetProjectFundSourcesForActivity?projectId=${planId}`)
+    }
     getBenefitDropDowns() {
         return this.http.get<SelectList[]>(this.baseUrl + "/DropDown/GetBenefitDropDowns")
     }

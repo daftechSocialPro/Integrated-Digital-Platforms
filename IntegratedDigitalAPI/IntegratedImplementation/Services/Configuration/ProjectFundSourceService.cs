@@ -37,8 +37,7 @@ namespace IntegratedImplementation.Services.Configuration
             {
                 Id = id,
                 Name = projectFundSourcePost.Name,      
-                Budget =projectFundSourcePost.Budget,
-                FiscalYearId = projectFundSourcePost.FiscalYearId,
+                Budget =projectFundSourcePost.Budget,            
                 CreatedById = projectFundSourcePost.CreatedById,
                 CreatedDate = DateTime.Now,
               
@@ -59,15 +58,13 @@ namespace IntegratedImplementation.Services.Configuration
 
         public async Task<List<ProjectFundSourceGetDto>> GetProjectFundSource()
         {
-            var project = await _dbContext.ProjectFundSources.Include(x=>x.FiscalYear).AsNoTracking().
+            var project = await _dbContext.ProjectFundSources.AsNoTracking().
                 Select(x => new ProjectFundSourceGetDto
                 {
                     Id=x.Id,
-                    Name = x.Name,
-                    FiscalYear = x.FiscalYear.Year.ToString(),
-                    FiscalYearId =x.FiscalYearId,
+                    Name = x.Name,              
                     Budget=x.Budget,
-                    RemainingBudget =x.ProjectFunds.Sum(x=>x.Amount)
+                    RemainingBudget = x.Budget-x.ProjectFunds.Sum(x=>x.Amount)
 
                 }).ToListAsync();
 
@@ -87,8 +84,7 @@ namespace IntegratedImplementation.Services.Configuration
 
                 currentCompanyProfile.Name = projectFundSourcePut.Name;
                 currentCompanyProfile.Budget = projectFundSourcePut.Budget; 
-                currentCompanyProfile.FiscalYearId = projectFundSourcePut.FiscalYearId;
-
+           
 
 
                 await _dbContext.SaveChangesAsync();

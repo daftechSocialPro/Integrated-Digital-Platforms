@@ -29,6 +29,7 @@ export class AddActivitiesComponent implements OnInit {
   @Input() requestFrom!: string;
   @Input() requestFromId!: string;
   @Input() dateAndTime!:GetStartEndDate
+  @Input() planId!:string
 
   countries !: SelectList[];
   regions!: SelectList[];
@@ -52,6 +53,8 @@ export class AddActivitiesComponent implements OnInit {
 
   lat = 0 
   lng = 0
+
+  projectFundSources: SelectList[]
 
   constructor(
     private activeModal: NgbActiveModal,
@@ -88,7 +91,8 @@ export class AddActivitiesComponent implements OnInit {
       IsPercentage:[false,Validators.required],
       RegionId:['',Validators.required],
       Zone:[''],
-      Woreda:['']
+      Woreda:[''],
+      SelectedProjectFund:['',Validators.required]
 
 
     })
@@ -146,9 +150,17 @@ export class AddActivitiesComponent implements OnInit {
        
     //   },
     // })
+this.getProjectFundSourse()
 
-   // this.GetProjectLocations()
+  }
 
+  getProjectFundSourse(){
+
+    this.dropDownService.GetProjectFundSourcesForActivity(this.planId).subscribe({
+      next:(res)=>{
+        this.projectFundSources = res 
+      }
+    })
   }
 
   ListofEmployees() {
@@ -276,7 +288,8 @@ export class AddActivitiesComponent implements OnInit {
         Woreda:this.activityForm.value.Woreda ,
         StrategicPlanIndicatorId:this.activityForm.value.StrategicPlanIndicatorId,
         IsTraining:this.activityForm.value.IsTraining,      
-        IsPercentage:this.activityForm.value.IsPercentage
+        IsPercentage:this.activityForm.value.IsPercentage,
+        selectedProjectFund:this.activityForm.value.SelectedProjectFund
         
       }
       if(this.requestFrom == "PLAN"){
@@ -303,7 +316,7 @@ export class AddActivitiesComponent implements OnInit {
         
           console.error(err)
         }
-      })
+      }) 
     }
   }
 
@@ -342,6 +355,7 @@ export class AddActivitiesComponent implements OnInit {
         IsPercentage:this.activityForm.value.IsPercentage,
         longtude: this.lng,
         latitude: this.lat,
+        selectedProjectFund:this.activityForm.value.SelectedProjectFund
       }
 
       console.log("rrrrrrrrrrrrr",actvityP)

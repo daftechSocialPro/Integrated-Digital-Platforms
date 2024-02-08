@@ -26,6 +26,8 @@ export interface ActivityView {
     overAllProgress:number,
     isTraining :boolean
 
+    projectSource?:string
+
 
 }
 export interface MonthPerformanceView {

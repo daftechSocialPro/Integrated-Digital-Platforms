@@ -62,8 +62,12 @@
                 <span class="id-card__detail-value">{{member.phoneNumber}}</span>
               </div>
               <div class="id-card__detail">
+                <span class="id-card__detail-label">Issued Date</span>
+                <span class="id-card__detail-value">{{member.lastPaid|date:"dd MMM yyyy"}}</span>
+              </div>
+              <div class="id-card__detail">
                 <span class="id-card__detail-label">Expired Date</span>
-                <span class="id-card__detail-value">{{member.expiredDate|date:"dd MMM YYY"}}</span>
+                <span class="id-card__detail-value">{{member.expiredDate|date:"dd MMM yyyy"}}</span>
               </div>
              
             </div>

@@ -140,9 +140,10 @@
                                     <button class="btn btn-outline-primary btn-sm" (click)="addActivity(task)"> <i
                                             class="bi bi-plus me-1"></i> {{exportingToExcel?"":"Activity"}} </button>
                                 </td>
-                                <td [attr.colspan]="filterBy==0?38:14"  style="border: 1px solid black;  background-color: #e8ffde;width: 200px;">
+                                <td   style="border: 1px solid black;  background-color: #e8ffde;width: 200px;">
                                     {{task.taskName}}
                                 </td>
+                                <td [attr.colspan]="filterBy==0?37:13"></td>
                                 <td style="border: 1px solid black; background-color: #e8ffde ">
                                     
                                     <button class="btn btn-outline-warning btn-sm" (click)="updateTask(task)"> <i
@@ -274,7 +275,7 @@
                                         }}
 
                                     </td>
-                                    <td style="border: 1px solid black;"></td>
+                                    <td style="border: 1px solid black;">{{act?.projectSource}}</td>
                                     <td style="border: 1px solid black;">
                                         <button class="btn btn-outline-warning btn-sm" (click)="updateActivity(task,act)"> <i
                                         class="bi bi-pen me-1"></i> {{exportingToExcel?"":"Update"}} </button> |

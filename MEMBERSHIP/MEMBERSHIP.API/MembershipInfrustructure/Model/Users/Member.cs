@@ -19,8 +19,9 @@ namespace MembershipInfrustructure.Model.Users
         public string? ImagePath { get; set; }
         public string? Email { get; set; }
 
-        public Guid? ZoneId { get; set; }
-        public Zone Zone { get; set; }
+        public Guid? RegionId { get; set; }
+        public virtual Region Region { get; set; }
+        public string? Zone { get; set; }
 
         public string? Woreda { get; set; }
 

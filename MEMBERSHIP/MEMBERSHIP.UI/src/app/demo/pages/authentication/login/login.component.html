@@ -1,6 +1,6 @@
 <div class="auth-main">
   <div class="auth-wrapper v3 row">
-    <div class="auth-form col-8">
+    <div class="auth-form col-md-8 col-sm-12">
       <div class="card my-5">
         <div class="card-body">
           <a href="#" class="d-flex justify-content-center">
@@ -39,12 +39,15 @@
             <button type="submit" (click)="login()" class="btn btn-secondary">Sign In</button>
           </div>
           <hr />
+          <h5 >
+            Aready have an account?  <a class="text-secondary" style="cursor: pointer;" (click)="loginasMember()">Login as a Member!</a>
+          </h5>
         </form>
         </div>
       </div>
     </div>
 
-    <div class="col-4" >
+    <div class="col-md-4 col-sm-12" >
       <div class="member-info text-center">
         <img src="../../../../../assets/image_1212.png" alt="Member Image" style="max-height: 300px;" class="img-fluid bounce-image">
         <h4 class="text-center mt-4 animated-heading">Welcome to our Midwives Membership!</h4>
@@ -61,9 +64,7 @@
           benefits and support tailored specifically to midwifery professionals.
         </p>
      
-        <div class="d-grid mt-4">
-          <button type="button" (click)="loginasMember()" class="btn btn-secondary">Login</button>
-        </div>
+  
       </div>
     </div>
   </div>

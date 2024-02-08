@@ -36,6 +36,11 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { DatePipe } from '@angular/common';
 import { QRCodeModule } from 'angularx-qrcode';
 
+import * as echarts from 'echarts';
+import { NgxEchartsModule } from 'ngx-echarts';
+import AdminDashbordComponent from './demo/admin-dashbord/admin-dashbord.component';
+
+
 // import { ConsTariffComponent } from './cons-tariff/cons-tariff.component'
 @NgModule({
   declarations: [
@@ -58,6 +63,7 @@ import { QRCodeModule } from 'angularx-qrcode';
     AddUserComponent,
     UserRoleComponent,
     AutoCompleteComponent,
+    AdminDashbordComponent
         
   ],
   imports: [
@@ -70,7 +76,8 @@ import { QRCodeModule } from 'angularx-qrcode';
     DropdownModule,
     ConfirmDialogModule,
     NgApexchartsModule,
-    QRCodeModule
+    QRCodeModule,
+    NgxEchartsModule.forRoot({ echarts })
   ],
   providers: [
     {

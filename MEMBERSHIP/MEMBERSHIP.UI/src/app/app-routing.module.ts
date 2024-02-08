@@ -4,6 +4,7 @@ import { AdminComponent } from './theme/layout/admin/admin.component';
 import { GuestComponent } from './theme/layout/guest/guest.component';
 import { AuthGuard } from './auth/auth.guard';
 import { MembersDashboardComponent } from './demo/pages/members/members-dashboard/members-dashboard.component';
+import AdminDashbordComponent from './demo/admin-dashbord/admin-dashbord.component';
 
 const routes: Routes = [
   {
@@ -19,7 +20,7 @@ const routes: Routes = [
       {
         path: 'admin-dashboard',
 
-        loadComponent: () => import('./demo/admin-dashbord/admin-dashbord.component')
+        component:AdminDashbordComponent
       },
       {
         path: 'member-dashboard',
