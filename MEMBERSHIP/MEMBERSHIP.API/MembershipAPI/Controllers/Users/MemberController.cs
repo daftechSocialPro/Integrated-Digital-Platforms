@@ -195,8 +195,22 @@ namespace MembershipDigitalAPI.Controllers.HRM
             }
         }
 
+        [HttpDelete]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> DeleteMember(Guid memberId)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _memberService.DeleteMember(memberId));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
 
-        
+
+
 
 
         //[HttpGet]

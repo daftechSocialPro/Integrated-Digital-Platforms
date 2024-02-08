@@ -7,6 +7,7 @@ import { AddPlansComponent } from './add-plans/add-plans.component';
 import { PlanService } from '../../../services/plan.service';
 import { PlanView } from '../../../model/PM/PlansDto';
 import { PlanDetailComponent } from './plan-detail/plan-detail.component';
+import { ConfirmEventType, ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-plans',
@@ -21,6 +22,8 @@ export class PlansComponent implements OnInit {
     private modalService: NgbModal,
     private planService: PlanService,
     private router: Router,
+    private messageService :MessageService,
+    private confirmationService : ConfirmationService,
     private activeRoute: ActivatedRoute) { }
 
 
@@ -86,6 +89,48 @@ export class PlansComponent implements OnInit {
 
     this.router.navigate(['/pm/planDetail/',planId])
    
+  }
+
+  deletePlan(planId:string){
+
+    this.confirmationService.confirm({
+      message: 'Are You sure you want to delete this Project?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.planService.deletePlan(planId).subscribe({
+          next: (res) => {
+
+            if (res.success) {
+              this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: res.message });
+              this.listPlans()
+            }
+            else {
+              this.messageService.add({ severity: 'error', summary: 'Rejected', detail: res.message });
+            }
+          }, error: (err) => {
+
+            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: err });
+
+
+          }
+        })
+
+      },
+      reject: (type: ConfirmEventType) => {
+        switch (type) {
+          case ConfirmEventType.REJECT:
+            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
+            break;
+          case ConfirmEventType.CANCEL:
+            this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
+            break;
+        }
+      },
+      key: 'positionDialog'
+    });
+
+
   }
 
 

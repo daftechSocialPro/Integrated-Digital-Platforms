@@ -1,4 +1,5 @@
 ﻿using IntegratedDigitalAPI.DTOS.PM;
+using IntegratedDigitalAPI.Services.PM;
 using IntegratedDigitalAPI.Services.PM.Plan;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -89,6 +90,18 @@ namespace IntegratedDigitalAPI.Controllers.PM
             }
         }
 
+        [HttpDelete("deletePlan")]
+        public async Task<IActionResult> DeletePlan(Guid planId)
+        {
+            try
+            {
+                return Ok(await _planService.DeleteProject(planId));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
 
     }
 }

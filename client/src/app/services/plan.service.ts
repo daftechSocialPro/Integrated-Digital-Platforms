@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Plan, PlanView,PlanSingleview } from '../model/PM/PlansDto';
 import { UserService } from './user.service';
 import { ActivityView } from '../model/PM/ActivityViewDto';
+import { ResponseMessage } from '../model/ResponseMessage.Model';
 
 
 @Injectable({
@@ -42,6 +43,10 @@ export class PlanService {
 
         return this.http.get<ActivityView>(this.BaseURI+"/Activity/getSingleActivity?actId="+actId)
     }
+
+    deletePlan(planId:string){
+        return this.http.delete<ResponseMessage>(this.BaseURI+`/plan/deletePlan?planId=${planId}`)
+      }
 
 
 
