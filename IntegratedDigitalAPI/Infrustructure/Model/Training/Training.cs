@@ -27,6 +27,8 @@ namespace IntegratedInfrustructure.Model.Training
 
         public string Project { get; set; }
 
+        public string? AllocatedCEU { get; set; }
+
 
         public ReportStatus ReportStatus { get; set; }
 

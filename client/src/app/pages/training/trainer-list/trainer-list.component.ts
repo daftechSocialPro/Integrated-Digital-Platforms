@@ -16,8 +16,9 @@ import { environment } from 'src/environments/environment';
 })
 export class TrainerListComponent implements OnInit {
 
+  @ViewChild('myInput') myInput: ElementRef;
   baseUrl: string = environment.Client_URL 
-  @ViewChild('myInput', { static: false }) myInput: ElementRef;
+  
 
   trainerList:ITrainerGetDto[]=[]
   @Input()  trainingId!:string
@@ -43,8 +44,14 @@ export class TrainerListComponent implements OnInit {
     const inputElement = this.myInput.nativeElement;
     inputElement.value = url;
     inputElement.select();
-    document.execCommand('copy');
-    this.messageService.add({severity:'info',summary:'Copied to Clipboard',detail:'Training Report form Url Copied'})
+ 
+    navigator.clipboard.writeText(url)
+    .then(() => {
+      this.messageService.add({severity:'info',summary:'Copied to Clipboard',detail:'Training Report form Url Copied'});
+    })
+    .catch((error) => {
+      console.error('Failed to copy to clipboard:', error);
+    });
   }
   copyToClipboard2(): void {
   
@@ -52,8 +59,23 @@ export class TrainerListComponent implements OnInit {
     const inputElement = this.myInput.nativeElement;
     inputElement.value = url;
     inputElement.select();
-    document.execCommand('copy');
-    this.messageService.add({severity:'info',summary:'Copied to Clipboard', detail:'Trainee List Url Copied'})
+    
+  navigator.clipboard.writeText(url)
+  .then(() => {
+    this.messageService.add({severity:'info',summary:'Copied to Clipboard',detail:'Training Report form Url Copied'});
+  })
+  .catch((error) => {
+    console.error('Failed to copy to clipboard:', error);
+  });
+  
+  navigator.clipboard.writeText(url)
+    .then(() => {
+      this.messageService.add({severity:'info',summary:'Copied to Clipboard',detail:'Training List Url Copied'});
+    })
+    .catch((error) => {
+      console.error('Failed to copy to clipboard:', error);
+    });
+   
   }
 
   getTrainerList(){

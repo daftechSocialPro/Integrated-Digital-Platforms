@@ -10,8 +10,7 @@ namespace IntegratedImplementation.DTOS.Configuration
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public string? FiscalYear { get; set; }
-        public Guid FiscalYearId { get; set; }
+
         public double Budget {  get; set; } 
         public double RemainingBudget { get; set; }
 
@@ -22,7 +21,7 @@ namespace IntegratedImplementation.DTOS.Configuration
     {
 
         public string Name { get; set; }
-        public Guid FiscalYearId { get; set; }
+
         public double Budget { get; set; }
         public string CreatedById { get; set; }
     }

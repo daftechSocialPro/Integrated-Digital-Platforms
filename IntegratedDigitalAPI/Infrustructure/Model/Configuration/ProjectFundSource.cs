@@ -23,9 +23,6 @@ namespace IntegratedInfrustructure.Model.Configuration
 
         public double Budget { get; set; }
 
-        public Guid FiscalYearId { get; set; }
-
-        public virtual BudgetYear FiscalYear { get; set; }
 
         [InverseProperty(nameof(Project_Fund.ProjectSourceFund))]
         public ICollection<Project_Fund> ProjectFunds { get; set; }

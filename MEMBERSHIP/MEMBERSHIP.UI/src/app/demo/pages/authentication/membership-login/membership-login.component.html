@@ -1,6 +1,6 @@
 <div class="auth-main">
   <div class="auth-wrapper v3 row">
-    <div class="auth-form col-8">
+    <div class="auth-form col-md-8 col-sm-12">
       <div class="card my-5">
         <div class="card-body">
           <a href="#" class="d-flex justify-content-center">
@@ -25,39 +25,39 @@
 
             <div class="d-flex mt-1 justify-content-between">
 
-              <h5 class="text-secondary">
-                <a href="javascript:">Forgot Membership Id ?</a>
-              </h5>
+          
             </div>
             <div class="d-grid mt-4">
               <button type="submit" (click)="login()" class="btn btn-secondary">Sign In</button>
             </div>
+
             <hr />
+            <h5 >
+              Don't have an account?  <a class="text-secondary" style="cursor: pointer;" (click)="register()">Register now!</a>
+            </h5>
           </form>
         </div>
       </div>
     </div>
 
-    <div class="col-4">
+    <div class="col-md-4 col-sm-12">
       <div class="member-info text-center">
         <img src="../../../../../assets/image_1212.png" alt="Member Image" style="max-height: 280px;"
           class="img-fluid bounce-image">
         <h4 class="text-center mt-4 animated-heading"> Welcome to our Midwives Membership!</h4>
         <p class="text-center animated-paragraph">
-
-
-          Joining our Midwives Membership is an 
-          excellent opportunity for midwives to connect, 
-          collaborate, and access valuable resources within our 
-          community.By becoming a member, you will gain exclusive  
+          Joining our Midwives Membership is an
+          excellent opportunity for midwives to connect,
+          collaborate, and access valuable resources within our
+          community. By becoming a member, you will gain exclusive
           benefits and support tailored specifically to midwifery professionals.
         </p>
         <div class="d-grid mt-4">
-          <button type="button" (click)="loginasAdmin()" class="btn btn-secondary">Login as admin </button>
+          <button type="button" (click)="loginasAdmin()" class="btn btn-secondary">Login as admin</button>
         </div>
-        <div class="d-grid mt-4">
-          <button type="button" (click)="register()" class="btn btn-secondary">Register </button>
-        </div>
+     
+
+
       </div>
     </div>
   </div>

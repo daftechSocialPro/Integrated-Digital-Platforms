@@ -36,7 +36,7 @@
                             
                             <th scope="col">Name</th>
                             <th scope="col">Allocated Budget</th>
-                            <th scope="col">Fiscal Year </th>
+                            <th scope="col">Remaining Budget</th>
                                                
                             <th scope="col">Action</th>
                           
@@ -46,7 +46,7 @@
                         <tr>
                             <td>{{ location.name }}</td>
                             <td>{{ location.budget |number:'1.0-2' }}</td>
-                            <td>{{ location.fiscalYear }}</td>
+                            <td>{{ location.remainingBudget  |number:'1.0-2' }}</td>
                             <td>
                              
                                 <button type="button" (click)="updateProjectLocation(location)" class="btn btn-outline-warning"><i

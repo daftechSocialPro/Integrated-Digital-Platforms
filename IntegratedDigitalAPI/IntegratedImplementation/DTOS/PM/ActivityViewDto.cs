@@ -45,9 +45,14 @@ namespace IntegratedDigitalAPI.DTOS.PM
         public Guid? RegionId { get;  set; }
         public string? Zone { get;  set; }
         public string? Woreda { get; set; }
+
+
+        public string? ProjectSource { get; set; }
+
         public Guid? CountryId { get; set; }
         public double? Longtude { get; set; }
         public double? Latitude { get; set; }
+
     }
 
     public class MonthPerformanceViewDto

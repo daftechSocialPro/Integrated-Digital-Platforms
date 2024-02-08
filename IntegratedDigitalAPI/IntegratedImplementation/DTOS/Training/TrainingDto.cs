@@ -16,6 +16,8 @@ namespace IntegratedImplementation.DTOS.Training
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string Project { get; set; } = null!;
+
+        public string AllocatedCEU { get; set; }
         public string CreatedById { get; set; } = null!;
     }
 
@@ -33,7 +35,7 @@ namespace IntegratedImplementation.DTOS.Training
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string Project { get; set; } = null!;
-
+        public string AllocatedCEU { get; set; }
         public string ReportStatus { get; set; } = null!;
 
         public string TraineeListStatus { get; set; } = null!;

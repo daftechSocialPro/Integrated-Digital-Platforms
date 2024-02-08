@@ -37,7 +37,8 @@ export interface SubActivityDetailDto {
     Woreda?:string,
     StrategicPlanIndicatorId?:string,
     longtude: number,
-    latitude: number
+    latitude: number,
+    selectedProjectFund:string
 }
 
     

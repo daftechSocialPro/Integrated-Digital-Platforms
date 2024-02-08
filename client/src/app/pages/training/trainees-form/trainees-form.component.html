@@ -7,6 +7,7 @@
       <h3>Ethiopian Midwives Association</h3>
       
       <p class="mt-2"><b>Title: </b><span>{{training&&training.title}} </span></p>
+      <p><b>Allocated CEU: </b><span>{{training&&training.allocatedCEU}}</span></p>
       <p><b>Duration: </b><span>{{training&&training.startDate|date:"dd MMM yyyy"}} --- {{training&&training.endDate|date:"dd MMM yyyy"}}</span></p>
       <p><b>Venue of the training: </b><span> {{training&&training.courseVenue}} </span></p>
      
@@ -20,7 +21,9 @@
     </div>
   </div>
   <button  *ngIf="traininggId&&(training&&training.traineeListStatus=='SUBMITTED')" class="btn btn-outline-success text-end mb-3" (click)="exportAsExcel(training&&training.title)"><i
-    class="bi bi-file-excel"></i> Export Excel </button>
+    class="bi bi-file-excel"></i> Export Excel </button> |
+
+    <button  *ngIf="traininggId&&(training&&training.traineeListStatus=='SUBMITTED')" class="btn btn-outline-primary text-end mb-3" (click)="revertStatus()"> Revert Report Status </button>
   <div class="table-container ">
     <div class="table-wrapper ">
     <table class="table table-bordered"  #excelTable>
@@ -45,6 +48,7 @@
           <th style="border: 1px solid black;">Post Training Summary</th>
           <th style="border: 1px solid black;" *ngIf="traininggId&&(training&&training.traineeListStatus=='SUBMITTED')">Title</th>
           <th style="border: 1px solid black;" *ngIf="traininggId&&(training&&training.traineeListStatus=='SUBMITTED')">Project</th>
+          <th style="border: 1px solid black;" *ngIf="traininggId&&(training&&training.traineeListStatus=='SUBMITTED')">CEU</th>          
         </tr>
       </thead>
       <tbody>
@@ -70,6 +74,7 @@
           <td style="border: 1px solid black;">{{ row.postSummary }}</td>
           <td style="border: 1px solid black;" *ngIf="traininggId&&(training&&training.traineeListStatus=='SUBMITTED')">{{ training&&training.title }}</td>
           <td style="border: 1px solid black;" *ngIf="traininggId&&(training&&training.traineeListStatus=='SUBMITTED')">{{  training&&training.project }}</td>
+          <td style="border: 1px solid black;" *ngIf="traininggId&&(training&&training.traineeListStatus=='SUBMITTED')">{{  training&&training.allocatedCEU }}</td>
         </tr>
       </tbody>
     </table>

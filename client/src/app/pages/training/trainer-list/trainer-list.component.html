@@ -21,7 +21,7 @@
             </div>
         </div>
 
-
+        <input #myInput type="text" hidden>
         <p-table [value]="trainerList" [tableStyle]="{ 'min-width': '50rem' }"
             styleClass="p-datatable-sm p-datatable-gridlines">
             <ng-template pTemplate="header">
@@ -47,7 +47,7 @@
 
                     <td>
 
-                        <input #myInput type="text" style="position: absolute; left: -9999px;">
+                       
                        
                         <span *ngIf="Training&&Training.traineeListStatus!='NOTSENT'">Trainee List has been sent</span><br/>
                         <span *ngIf="Training&&Training.reportStatus!='NOTSENT'">Training Report has been sent</span>

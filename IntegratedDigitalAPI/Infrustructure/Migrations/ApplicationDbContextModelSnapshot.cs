@@ -441,9 +441,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("FiscalYearId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -454,8 +451,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CreatedById");
-
-                    b.HasIndex("FiscalYearId");
 
                     b.ToTable("ProjectFundSources");
                 });
@@ -2961,6 +2956,9 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<Guid>("ActivityId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("AllocatedCEU")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("CourseVenue")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -4107,6 +4105,9 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<bool>("PostToCase")
                         .HasColumnType("bit");
 
+                    b.Property<Guid>("ProjectSourceFundId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid?>("ProjectTeamId")
                         .HasColumnType("uniqueidentifier");
 
@@ -4157,6 +4158,8 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasIndex("EmployeeId");
 
                     b.HasIndex("PlanId");
+
+                    b.HasIndex("ProjectSourceFundId");
 
                     b.HasIndex("ProjectTeamId");
 
@@ -4884,15 +4887,7 @@ namespace IntegratedInfrustructure.Migrations
                         .WithMany()
                         .HasForeignKey("CreatedById");
 
-                    b.HasOne("IntegratedInfrustructure.Model.PM.BudgetYear", "FiscalYear")
-                        .WithMany()
-                        .HasForeignKey("FiscalYearId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.Navigation("CreatedBy");
-
-                    b.Navigation("FiscalYear");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Configuration.Region", b =>
@@ -6428,6 +6423,12 @@ namespace IntegratedInfrustructure.Migrations
                         .WithMany("Activities")
                         .HasForeignKey("PlanId");
 
+                    b.HasOne("IntegratedInfrustructure.Model.Configuration.ProjectFundSource", "ProjectSourceFund")
+                        .WithMany()
+                        .HasForeignKey("ProjectSourceFundId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("IntegratedInfrustructure.Models.PM.ProjectTeam", "Commitee")
                         .WithMany()
                         .HasForeignKey("ProjectTeamId");
@@ -6463,6 +6464,8 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("Employee");
 
                     b.Navigation("Plan");
+
+                    b.Navigation("ProjectSourceFund");
 
                     b.Navigation("Region");
 

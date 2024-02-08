@@ -164,6 +164,13 @@ namespace IntegratedInfrustructure.Data
             PERCENT,
             NUMBER,
         }
+
+        public enum TypeStrategicPlanIndicator
+        {
+            INPUT,
+            OUTPUT,
+            OUTCOME
+        }
         public enum MeasurementType
         {
             LENGTH,

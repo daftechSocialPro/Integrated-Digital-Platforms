@@ -1,6 +1,6 @@
 <div class="auth-main">
   <div class="auth-wrapper v3 row">
-    <div class="auth-form col-8">
+    <div class="auth-form col-md-8  col-sm-12">
       <div class="card my-2" style="max-width: 800px!important;">
         <div class="card-body">
           <a href="#" class="d-flex justify-content-center">
@@ -102,8 +102,8 @@
 
                 <div class="form-floating mb-3">
 
-                  <select class="form-control" id="region" #region (change)="getZones(region.value)">
-                    <option></option>
+                  <select class="form-control" id="region" formControlName="RegionId" >
+                  
                     <option *ngFor="let item of regions" [value]="item.id">{{item.name}}</option>
 
 
@@ -116,12 +116,7 @@
 
                 <div class="form-floating mb-3">
 
-                  <select class="form-control" formControlName="zoneId">
-                    <option></option>
-                    <option *ngFor="let item of zones" [value]="item.id">{{item.name}}</option>
-
-
-                  </select>
+                  <input type="text" class="form-control" id="Zone" formControlName="Zone" />
 
                   <label for="country">Zone</label>
                 </div>
@@ -157,12 +152,15 @@
                 class="btn btn-secondary">Register</button>
             </div>
             <hr />
+            <h5 >
+              Already have an account?  <a class="text-secondary" style="cursor: pointer;" (click)="loginasMember()">Login!</a>
+            </h5>
           </form>
         </div>
       </div>
     </div>
 
-    <div class="col-4">
+    <div class="col-md-4  col-sm-12">
       <div class="member-info text-center">
         <img src="../../../../../assets/image_1212.png" alt="Member Image" style="max-height: 260px;"
           class="img-fluid bounce-image">
@@ -176,9 +174,7 @@
           benefits and support tailored specifically to midwifery professionals.
         </p>
 
-        <div class="d-grid mt-4">
-          <button type="button" (click)="loginasMember()" class="btn btn-secondary">Login</button>
-        </div>
+      
       </div>
     </div>
   </div>

@@ -29,7 +29,7 @@ namespace IntegratedImplementation.Interfaces.Configuration
                 Id = Guid.NewGuid(),
                 Name = indicator.Name,
                 StrategicPlanId  = indicator.StratgicPlanId,
-                Type = Enum.Parse<TypeOfIndicator>(indicator.Type),
+                Type = Enum.Parse<TypeStrategicPlanIndicator>(indicator.Type),
                 CreatedDate = DateTime.Now,
                 CreatedById= indicator.CreatedById
             };
@@ -67,7 +67,7 @@ namespace IntegratedImplementation.Interfaces.Configuration
 
             unitMeasurment.Name = indicator.Name;
             unitMeasurment.StrategicPlanId= indicator.StratgicPlanId;
-            unitMeasurment.Type = Enum.Parse<TypeOfIndicator>(indicator.Type);
+            unitMeasurment.Type = Enum.Parse<TypeStrategicPlanIndicator>(indicator.Type);
          
             _dBContext.Entry(unitMeasurment).State = EntityState.Modified;
             await _dBContext.SaveChangesAsync();

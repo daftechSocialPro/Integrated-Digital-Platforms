@@ -79,4 +79,8 @@ export class MemberService {
     return this.http.get<IRegionRevenueDto[]>(this.BaseURI+`/Member/GetRegionReportRevenue`)  
   }
 
+  importFromExcel(formData:FormData){
+    return this.http.post<ResponseMessage>(this.BaseURI+"/Member/ImportMemberFormExcel",formData)
+  }
+
 }

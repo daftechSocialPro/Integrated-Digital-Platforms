@@ -108,9 +108,8 @@ namespace IntegratedImplementation.Datas
             CreateMap<HrmSetting, SelectListDto>()
             .ForMember(x => x.Name, e => e.MapFrom(mfg => mfg.GeneralSetting.ToString()));
 
-            CreateMap<ProjectFundSource, ProjectFundSourceGetDto>()
-                 .ForMember(x => x.FiscalYear, e => e.MapFrom(mfg => mfg.FiscalYear.Year.ToString())); ;
-
+            CreateMap<ProjectFundSource, ProjectFundSourceGetDto>();
+                
             CreateMap<TrainingReport, TrainingReportGetDto>();
 
 

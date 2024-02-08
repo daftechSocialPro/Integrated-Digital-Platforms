@@ -30,6 +30,7 @@ export class AddTrainingListComponent implements OnInit {
       StartDate: ['', Validators.required],
       EndDate: ['', Validators.required],
       Project: ['', Validators.required],
+      allocatedCeu:['',Validators.required]
 
     })
   }
@@ -55,7 +56,8 @@ export class AddTrainingListComponent implements OnInit {
         // TypeofOrganization: this.trainingForm.value.TypeofOrganization,
         CourseVenue: this.trainingForm.value.CourseVenue,
         StartDate: this.trainingForm.value.StartDate,
-        EndDate: this.trainingForm.value.EndDate
+        EndDate: this.trainingForm.value.EndDate,
+        allocatedCEU:this.trainingForm.value.allocatedCeu
       }
 
       this.trainingService.createTraining(training).subscribe({

@@ -181,7 +181,22 @@ namespace MembershipDigitalAPI.Controllers.HRM
             }
         }
 
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> ImportMemberFormExcel(IFormFile ExcelFile)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _memberService.ImportMemberFormExcel(ExcelFile));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
 
+
+        
 
 
         //[HttpGet]

@@ -4,6 +4,7 @@ using MembershipImplementation.DTOS.HRM;
 using MembershipImplementation.DTOS.Payment;
 using MembershipInfrustructure.Model.Users;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,6 +49,8 @@ namespace MembershipImplementation.Interfaces.HRM
         Task <ResponseMessage> UpdateMemberMoodle(MoodleDto moodlePost);
 
         Task<List<MemberRegionRevenueReportDto>> GetRegionRevenueReport ();
+
+        Task <ResponseMessage> ImportMemberFormExcel(IFormFile ExcelFile);
 
 
         //Task<List<EmployeeGetDto>> GetEmployees();

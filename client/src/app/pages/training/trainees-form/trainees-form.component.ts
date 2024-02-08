@@ -93,6 +93,29 @@ export class TraineesFormComponent implements OnInit {
     });
   }
 
+  revertStatus(){
+
+    this.trainingService.changeTraineeReportStatus(this.training.id,'SENT').subscribe({
+      next:(res)=>{
+        if (res.success) {
+
+          this.messageService.add({ severity: 'success', summary: `Successfully SUBMITTED`, detail: res.message })
+          window.location.reload()
+        }
+        else {
+          this.messageService.add({ severity: 'error', summary: 'Something went wrong!!! ', detail: res.message })
+
+        }
+
+      }, error: (err) => {
+        this.messageService.add({ severity: 'error', summary: 'Error ', detail: err })
+
+      }
+
+      
+    })
+  }
+
   addRow(): void {
 
     console.log(this.traineeForm.value)

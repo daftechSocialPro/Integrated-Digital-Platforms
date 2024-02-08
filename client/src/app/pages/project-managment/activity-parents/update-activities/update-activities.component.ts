@@ -26,6 +26,7 @@ export class UpdateActivitiesComponent implements OnInit{
   @Input() requestFromId!: string;
   @Input() dateAndTime!:GetStartEndDate
   @Input() activity!: any
+  @Input() planId!:string
 
   countries : SelectList[]=[];
   regions: SelectList[]=[];
@@ -50,8 +51,11 @@ export class UpdateActivitiesComponent implements OnInit{
   lat = 0 
   lng = 0
 
+  projectFundSources: SelectList[]
+
   commiteeId:string = null
   employeeId:string[]
+
 
 
   constructor(
@@ -71,9 +75,11 @@ export class UpdateActivitiesComponent implements OnInit{
   }
   ngOnInit(): void {
 
+
     this.getCountries()
     this.GetIndicatorsByStrategicPlanIds(this.activity.strategicPlan)
     this.getRegions(this.activity.countryId)
+
     
 
     console.log("ACTIVITIYXXXX",this.activity)
@@ -132,7 +138,8 @@ export class UpdateActivitiesComponent implements OnInit{
     //   },
     // })
 
-   // this.GetProjectLocations()
+   
+    this.getProjectFundSourse()
 
     
    this.activityForm = this.formBuilder.group({
@@ -165,6 +172,14 @@ export class UpdateActivitiesComponent implements OnInit{
   
 
   }
+  getProjectFundSourse(){
+
+
+    this.dropDownService.GetProjectFundSourcesForActivity(this.planId).subscribe({
+      next:(res)=>{
+        this.projectFundSources = res 
+      }
+    })
 
  
 
@@ -187,6 +202,7 @@ export class UpdateActivitiesComponent implements OnInit{
     this.employeeId = this.activity.members?.map(member => member.employeeId) || [];
     console.log("employeeIds", this.employeeId)
     return 1
+
   }
   ListofEmployees() {
 
@@ -279,43 +295,46 @@ export class UpdateActivitiesComponent implements OnInit{
     }
   }
 
-  // addSubActivity(){
 
-  //   // if(this.lat==0||this.lng==0){
-  //   //   this.messageService.add({severity:'error',summary:"Location Not Selected",detail:'Please choose a location from map!!'})
-  //   //   return
-  //   // }
-  //   if(this.activityForm.value.Goal<=this.activityForm.value.PreviousPerformance){
-  //     this.messageService.add({severity:'error',summary:"Baseline Target Error",detail:'Baseline can not be Greater or equal to Target !!'})
-  //     return
-  //   }
+  addSubActivity(){
 
-  //   if (this.activityForm.valid) {
-  //     let actvityP: SubActivityDetailDto = {
-  //       SubActivityDesctiption: this.activityForm.value.ActivityDescription,
-  //       StartDate: this.activityForm.value.StartDate,
-  //       EndDate: this.activityForm.value.EndDate,
-  //       PlannedBudget: this.activityForm.value.PlannedBudget,
-  //       ActivityNumber:this.activityForm.value.ActivityNumber,
-  //       ActivityType: this.activityForm.value.ActivityType,
-  //       OfficeWork: this.activityForm.value.ActivityType == 0 ? this.activityForm.value.OfficeWork : this.activityForm.value.ActivityType == 1 ? 100 : 0,
-  //       FieldWork: this.activityForm.value.ActivityType == 0 ? this.activityForm.value.FieldWork : this.activityForm.value.ActivityType == 2 ? 100 : 0,
-  //       UnitOfMeasurement: this.activityForm.value.UnitOfMeasurement,
-  //       PreviousPerformance: this.activityForm.value.PreviousPerformance,
-  //       Goal: this.activityForm.value.Goal,
-  //       TeamId: this.activityForm.value.TeamId,
-  //       CommiteeId: this.activityForm.value.CommiteeId,
-  //       Employees: this.activityForm.value.AssignedEmployee,
-  //       CreatedBy:this.user.userId,
-  //       longtude: this.lng,
-  //       latitude: this.lat,
-  //       StrategicPlanId:this.activityForm.value.StrategicPlan,
-  //       RegionId:this.activityForm.value.RegionId,
-  //       Zone:this.activityForm.value.Zone,
-  //       Woreda:this.activityForm.value.Woreda ,
-  //       StrategicPlanIndicatorId:this.activityForm.value.StrategicPlanIndicatorId,
-  //       IsTraining:this.activityForm.value.IsTraining,      
-  //       IsPercentage:this.activityForm.value.IsPercentage
+    // if(this.lat==0||this.lng==0){
+    //   this.messageService.add({severity:'error',summary:"Location Not Selected",detail:'Please choose a location from map!!'})
+    //   return
+    // }
+    if(this.activityForm.value.Goal<=this.activityForm.value.PreviousPerformance){
+      this.messageService.add({severity:'error',summary:"Baseline Target Error",detail:'Baseline can not be Greater or equal to Target !!'})
+      return
+    }
+
+    if (this.activityForm.valid) {
+      let actvityP: SubActivityDetailDto = {
+        SubActivityDesctiption: this.activityForm.value.ActivityDescription,
+        StartDate: this.activityForm.value.StartDate,
+        EndDate: this.activityForm.value.EndDate,
+        PlannedBudget: this.activityForm.value.PlannedBudget,
+        ActivityNumber:this.activityForm.value.ActivityNumber,
+        ActivityType: this.activityForm.value.ActivityType,
+        OfficeWork: this.activityForm.value.ActivityType == 0 ? this.activityForm.value.OfficeWork : this.activityForm.value.ActivityType == 1 ? 100 : 0,
+        FieldWork: this.activityForm.value.ActivityType == 0 ? this.activityForm.value.FieldWork : this.activityForm.value.ActivityType == 2 ? 100 : 0,
+        UnitOfMeasurement: this.activityForm.value.UnitOfMeasurement,
+        PreviousPerformance: this.activityForm.value.PreviousPerformance,
+        Goal: this.activityForm.value.Goal,
+        TeamId: this.activityForm.value.TeamId,
+        CommiteeId: this.activityForm.value.CommiteeId,
+        Employees: this.activityForm.value.AssignedEmployee,
+        CreatedBy:this.user.userId,
+        longtude: this.lng,
+        latitude: this.lat,
+        StrategicPlanId:this.activityForm.value.StrategicPlan,
+        RegionId:this.activityForm.value.RegionId,
+        Zone:this.activityForm.value.Zone,
+        Woreda:this.activityForm.value.Woreda ,
+        StrategicPlanIndicatorId:this.activityForm.value.StrategicPlanIndicatorId,
+        IsTraining:this.activityForm.value.IsTraining,      
+        IsPercentage:this.activityForm.value.IsPercentage,
+        selectedProjectFund:this.activityForm.value.SelectedProjectFund
+
         
   //     }
   //     if(this.requestFrom == "PLAN"){
@@ -382,6 +401,7 @@ export class UpdateActivitiesComponent implements OnInit{
         IsPercentage:this.activityForm.value.IsPercentage,
         longtude: this.lng,
         latitude: this.lat,
+        selectedProjectFund:this.activityForm.value.SelectedProjectFund
       }
 
       console.log("rrrrrrrrrrrrr",actvityP)

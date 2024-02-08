@@ -52,7 +52,7 @@ namespace IntegratedImplementation.Services.Training
                           Id = x.Id,
                           //ActivityNumber = x.Activity.ActivityNumber,
                           Title = x.Title,
-                
+                          AllocatedCEU = x.AllocatedCEU,                
                           CourseVenue = x.CourseVenue,
                           StartDate = x.StartDate,
                           EndDate = x.EndDate,
@@ -75,7 +75,7 @@ namespace IntegratedImplementation.Services.Training
                             ActivityNumber = x.Activity.ActivityNumber,
                             Title = x.Title,
                             ActivityId = x.ActivityId,
-           
+                            AllocatedCEU = x.AllocatedCEU,           
                             CourseVenue = x.CourseVenue,
                             StartDate = x.StartDate,
                             EndDate = x.EndDate,
@@ -98,7 +98,8 @@ namespace IntegratedImplementation.Services.Training
                      Id = x.Id,
                      ActivityNumber = x.Activity.ActivityNumber,
                      Title = x.Title,
-                     ActivityId = x.ActivityId,                   
+                     ActivityId = x.ActivityId,     
+                     AllocatedCEU = x.AllocatedCEU,
                    
                      CourseVenue = x.CourseVenue,
                      StartDate = x.StartDate,
@@ -123,7 +124,7 @@ namespace IntegratedImplementation.Services.Training
                     CreatedDate = DateTime.Now,
                     Title = trainingPostDto.Title,
                     ActivityId = trainingPostDto.ActivityId,
-               
+                    AllocatedCEU = trainingPostDto.AllocatedCEU,               
                     CourseVenue = trainingPostDto.CourseVenue,
                     StartDate = trainingPostDto.StartDate,
                     EndDate = trainingPostDto.EndDate,
@@ -343,8 +344,6 @@ namespace IntegratedImplementation.Services.Training
             }
 
         }
-
-
         public async Task<ResponseMessage> SendEmailTrainer(TrainerEmailDto trainerEmail,string type )
         {
             try
@@ -410,7 +409,6 @@ namespace IntegratedImplementation.Services.Training
 
 
         }
-
 
         //training report 
 

@@ -38,12 +38,12 @@ export class AddProjectLocationComponent implements OnInit {
 
   ngOnInit(): void {
 
-    debugger
+
     this.getFiscalYears()
+
     if (this.projectLocation) {
       this.projectLocationForm = this.formBuilder.group({
-        name: [this.projectLocation.name, Validators.required],
-        fiscalYearId:[this.projectLocation.fiscalYearId,Validators.required],
+        name: [this.projectLocation.name, Validators.required],    
         budget:[this.projectLocation.budget,Validators.required]
 
       });
@@ -66,7 +66,7 @@ export class AddProjectLocationComponent implements OnInit {
     else {
       this.projectLocationForm = this.formBuilder.group({
         name: ['', Validators.required],
-        fiscalYearId:['',Validators.required],
+      
         budget:['',Validators.required]
 
       });
@@ -82,14 +82,6 @@ export class AddProjectLocationComponent implements OnInit {
 
   }
 
-  getFiscalYears(){
-
-    this.dropDownService.getFiscalYears().subscribe({
-      next:(res)=>{
-        this.fiscalYears = res 
-      }
-    })
-  }
   submit() {
 
     if(this.projectLocation){
@@ -99,7 +91,7 @@ export class AddProjectLocationComponent implements OnInit {
   
           id:this.projectLocation.id,
           name: this.projectLocationForm.value.name,
-          fiscalYearId: this.projectLocationForm.value.fiscalYearId,
+        
           budget:this.projectLocationForm.value.budget
          
           // type : this.projectLocationForm.value.type
@@ -148,7 +140,7 @@ export class AddProjectLocationComponent implements OnInit {
       var projectLocationpost: ProjectLocationPostDto = {
 
         name: this.projectLocationForm.value.name,
-        fiscalYearId: this.projectLocationForm.value.fiscalYearId,
+   
         budget:this.projectLocationForm.value.budget
   
         // type : this.projectLocationForm.value.type

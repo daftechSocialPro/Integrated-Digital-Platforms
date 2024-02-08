@@ -82,12 +82,14 @@ namespace MembershipInfrustructure.Data
 
 
 
-
             modelBuilder.Entity<Member>()
     .Property(m => m.EducationalLevelId)
     .IsRequired(false);
 
-            modelBuilder.Entity<Member>().Property(m => m.ZoneId).IsRequired(false);
+            modelBuilder.Entity<Member>()
+     .Property(m => m.RegionId)
+     .IsRequired(false);
+
 
 
         }
