@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { ActivityTargetDivisionDto, ViewProgressDto, ActivityView, ApprovalProgressDto } from '../model/PM/ActivityViewDto';
 import { ComiteeAdd, CommitteeView, CommiteeAddEmployeeView } from '../model/PM/committeeDto';
-import { GetStartEndDate, SelectList } from '../model/common';
+import { GetStartEndDate, SelectList, TerminatedEmployeeReplacmentDto } from '../model/common';
 import { ActivityDetailDto, SubActivityDetailDto } from '../model/PM/ActivitiesDto';
 import { IActivityAttachment } from '../model/PM/ActivityAttachment';
 import { FilterationCriteria } from '../model/PM/ProgressReportDto';
@@ -73,6 +73,20 @@ export class PMService {
         return this.http.put<ResponseMessage>(this.BaseURI + "/Activity", acctivity)
     }
 
+    deleteActivity(activityId:string,taskId:string){
+        return this.http.delete<ResponseMessage>(this.BaseURI + "/Activity?activityid=" + activityId + "&taskId=" + taskId )
+      }
+    
+      getTerminatedEmployeesActivies(empId: string) {
+
+        return this.http.get<TerminatedEmployeeReplacmentDto[]>(this.BaseURI + "/Activity/getTerminatedEmployeesActivies?empId=" + empId)
+    }
+
+      replaceTerminatedEmployee(activity : any[],userId:string) {
+        return this.http.post<ResponseMessage>(this.BaseURI + "/Activity/replaceTerminatedEmployee?userId=" + userId, activity)
+    }
+
+    
     addActivityTargetDivision(activityDto: ActivityTargetDivisionDto) {
 
         return this.http.post(this.BaseURI + "/Activity/targetDivision", activityDto)

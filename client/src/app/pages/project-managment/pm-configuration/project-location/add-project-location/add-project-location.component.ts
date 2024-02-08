@@ -39,7 +39,8 @@ export class AddProjectLocationComponent implements OnInit {
   ngOnInit(): void {
 
 
- 
+    this.getFiscalYears()
+
     if (this.projectLocation) {
       this.projectLocationForm = this.formBuilder.group({
         name: [this.projectLocation.name, Validators.required],    

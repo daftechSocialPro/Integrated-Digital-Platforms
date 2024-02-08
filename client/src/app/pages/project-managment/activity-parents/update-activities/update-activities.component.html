@@ -39,8 +39,10 @@
                                     <div class="flex flex-column gap-2">
                                         <label htmlFor="startDate">Start Date</label>
 
-                                        <p-calendar formControlName="StartDate" [minDate]="minDate" [maxDate]="maxDate"
-                                            inputId="yearpicker"></p-calendar>
+                                        <!-- <p-calendar formControlName="StartDate" [minDate]="minDate" [maxDate]="maxDate"
+                                            inputId="yearpicker"></p-calendar> -->
+                                        <input type="date" class="form-control" id="yearpicker"  formControlName="StartDate" 
+                                        [min] = "minDate" [max] = "maxDate"> 
 
                                     </div>
 
@@ -49,8 +51,11 @@
                                     <div class="flex flex-column gap-2">
                                         <label htmlFor="startDate">End Date</label>
 
-                                        <p-calendar formControlName="EndDate" [minDate]="minDate" [maxDate]="maxDate"
-                                            inputId="yearpicker"></p-calendar>
+                                        <!-- <p-calendar formControlName="EndDate" [minDate]="minDate" [maxDate]="maxDate"
+                                            inputId="yearpicker"></p-calendar> -->
+
+                                        <input type="date" class="form-control" id="yearpicker"  formControlName="EndDate" 
+                                        [min] = "minDate" [max] = "maxDate"> 
 
                                     </div>
                                 </div>
@@ -78,7 +83,7 @@
                                             <option>--- Select Activity Type --- </option>
                                             <option value="0">Both</option>
                                             <option value="1"> Office Work</option>
-                                            <option value="2">Filed Work</option>
+                                            <option value="2">Field Work</option>
 
                                         </select>
                                         <label for="ActivityType">Activity Type </label>
@@ -93,9 +98,9 @@
                                 </div>
                                 <div class="col-md-6" *ngIf="activity.value=='0'">
                                     <div class="form-floating">
-                                        <input type="number" class="form-control" id="FieldWOrk" placeholder="FieldWOrk"
+                                        <input type="number" class="form-control" id="FieldWOrk" placeholder="FieldWork"
                                             formControlName="FieldWork">
-                                        <label for="FieldWOrk">Field WOrk</label>
+                                        <label for="FieldWOrk">Field Work</label>
                                     </div>
                                 </div>
                                 <div class="col-md-5">
@@ -166,7 +171,7 @@
 
                                 <div class="col-md-3">
                                     <div class="form-floating mb-3">
-                                        <select class="form-select" id="countryId" #country
+                                        <select class="form-select" id="countryId" #country formControlName="CountryId"
                                             (change)="getRegions(country.value)" aria-label="State">
                                             <option></option>
                                             <option *ngFor="let country of countries" [value]="country.id">{{
@@ -177,7 +182,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-floating mb-3">
-                                        <select class="form-select" (change)="getZones(region.value)" #region formControlName="RegionId"
+                                        <select class="form-select"  #region formControlName="RegionId"
                                             id="regionId" aria-label="State">
                                             <option></option>
                                             <option *ngFor="let region of regions" [value]="region.id">{{
@@ -281,7 +286,7 @@
 
                                             <select class="form-select" formControlName="AssignedEmployee"
                                                 id="employees" multiple>
-                                                <option *ngFor="let emp of Employees" value={{emp.employeeId}}>
+                                                <option *ngFor="let emp of Employees" value={{emp.id}}>
                                                     {{emp.name}}</option>
                                             </select>
 
