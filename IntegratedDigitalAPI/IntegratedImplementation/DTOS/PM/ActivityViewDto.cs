@@ -46,7 +46,13 @@ namespace IntegratedDigitalAPI.DTOS.PM
         public string? Zone { get;  set; }
         public string? Woreda { get; set; }
 
+
         public string? ProjectSource { get; set; }
+
+        public Guid? CountryId { get; set; }
+        public double? Longtude { get; set; }
+        public double? Latitude { get; set; }
+
     }
 
     public class MonthPerformanceViewDto
@@ -155,6 +161,20 @@ namespace IntegratedDigitalAPI.DTOS.PM
         public string ActivityDesctiption { get; set; }
     }
 
+    public class TerminatedEmployeeReplacmentDto
+    {
+        public SelectListDto Activity { get; set; }
+        public List<SelectListDto> ReplaceEmployees { get; set; }
+        public SelectListDto? TerminatedEmployee {  get; set; }
+
+    }
+    
+    public class TerminatedEmployeeReplacmentGetDto
+    {
+        public Guid EmpId { get; set; }
+        public Guid ActId { get; set; }
+        public Guid TerminateEmp { get; set; }
+    }
 
 
 }

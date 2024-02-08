@@ -1,13 +1,16 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
 import { DepartmentPostDto } from 'src/app/model/HRM/IDepartmentDto';
 import { TerminationRequesterDto } from 'src/app/model/HRM/IResignationDto';
+import { TerminatedEmployeeReplacmentDto } from 'src/app/model/common';
 import { UserView } from 'src/app/model/user';
 import { CommonService } from 'src/app/services/common.service';
 import { HrmService } from 'src/app/services/hrm.service';
+import { PMService } from 'src/app/services/pm.services';
 import { UserService } from 'src/app/services/user.service';
+import { AssignReplacementComponent } from './assign-replacement/assign-replacement.component';
 
 @Component({
   selector: 'app-terminate-employee',
@@ -19,6 +22,7 @@ export class TerminateEmployeeComponent implements OnInit {
  @Input() empId !: string
   terminateForm!: FormGroup;
   user !: UserView
+  TerminatedEmployeeActivites : TerminatedEmployeeReplacmentDto[] = []
   ngOnInit(): void {
     this.user  = this.userService.getCurrentUser()   
   }
@@ -29,7 +33,9 @@ export class TerminateEmployeeComponent implements OnInit {
     private hrmService : HrmService,
     private toastService : CommonService,
     private userService : UserService,
-    private messageService: MessageService) { 
+    private messageService: MessageService,
+    private pmService: PMService,
+    private modalService: NgbModal) { 
 
       this.terminateForm = this.formBuilder.group({
         remark: ['', Validators.required],
@@ -42,9 +48,25 @@ export class TerminateEmployeeComponent implements OnInit {
   closeModal() {
     this.activeModal.close();
   }
+  AssignReplacment() {
+
+    let modalRef = this.modalService.open(AssignReplacementComponent, { size: 'lg', backdrop: 'static' })
+    modalRef.componentInstance.TerminatedEmployeeActivites = this.TerminatedEmployeeActivites
+  }
   submit (){
+    
 
     if (this.terminateForm.valid){
+
+      this.pmService.getTerminatedEmployeesActivies(this.empId).subscribe({
+        next: (res) => {
+          this.TerminatedEmployeeActivites = res
+          if(this.TerminatedEmployeeActivites && this.TerminatedEmployeeActivites.length > 0){
+            this.AssignReplacment()
+          }
+        }
+      })
+      // return;
 
       var terminatePost : TerminationRequesterDto ={
         
@@ -52,6 +74,7 @@ export class TerminateEmployeeComponent implements OnInit {
         remark : this.terminateForm.value.remark,
         blacListed: Boolean(this.terminateForm.value.blacListed)
       }
+
 
       this.hrmService.terminateRequest(terminatePost).subscribe({
         next:(res)=>{

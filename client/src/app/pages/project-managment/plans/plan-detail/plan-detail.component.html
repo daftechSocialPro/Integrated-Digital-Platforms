@@ -16,8 +16,15 @@
 
 
             <div class="row">
-                <div class="col-9">
+                <div class="col-6">
 
+                </div>
+
+                <div class="col-3 text-start" *ngIf="!exportingToExcel">
+                    <label class="form-label">Project Years</label>
+                    <select class="form-control " [(ngModel)]="selectedYear" (change)="onProjectYearChange()">
+                        <option *ngFor="let year of projectYears" [value]="year.id">{{year.name}}</option>
+                    </select>
                 </div>
 
                 <div class="col-3 text-end" *ngIf="!exportingToExcel">
@@ -30,6 +37,7 @@
                 </div>
 
             </div>
+            
 
             <h6 class="mt-2">Project: <b>{{Plans.planName}} </b> </h6>
             <h6>Donor: <b>{{Plans.donor}}</b></h6>
@@ -37,6 +45,7 @@
             <h6>Period of Performance:
                 <b>{{Plans.startDate |date:"dd MMM yyyy"}} - {{Plans.endDate |date:"dd MMM yyyy"}} </b>
             </h6>
+            
             <div class="text-end col-lg-12">
                 <button class="btn btn-outline-primary text-end mb-3" (click)="addTask()"><i
                         class="bi bi-plus me-1"></i> Task </button> |
@@ -81,45 +90,45 @@
                         </tr>
                         <tr *ngIf="filterBy==0">
                             <th scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q1 T</th>
-                            <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Oct</th>
-                            <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Nov</th>
-                            <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Dec</th>
-
-                            <th scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q2 T</th>
                             <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Jan</th>
                             <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Feb</th>
                             <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Mar</th>
 
-                            <th scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q3 T</th>
+                            <th scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q2 T</th>
                             <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Apr</th>
                             <th scope="col" style="border: 1px solid black;background-color: #fdf584;">May</th>
                             <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Jun</th>
 
-                            <th scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q4 T</th>
+                            <th scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q3 T</th>
                             <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Jul</th>
                             <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Aug</th>
                             <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Sep</th>
 
+                            <th scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q4 T</th>
+                            <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Oct</th>
+                            <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Nov</th>
+                            <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Dec</th>
+
 
                             <th scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q1 B</th>
-                            <th scope="col" style="border: 1px solid black">Oct</th>
-                            <th scope="col" style="border: 1px solid black">Nov</th>
-                            <th scope="col" style="border: 1px solid black">Dec</th>
-
-                            <th scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q2 B</th>
                             <th scope="col" style="border: 1px solid black">Jan</th>
                             <th scope="col" style="border: 1px solid black">Feb</th>
                             <th scope="col" style="border: 1px solid black">Mar</th>
 
-                            <th scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q3 B</th>
+                            <th scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q2 B</th>
                             <th scope="col" style="border: 1px solid black">Apr</th>
                             <th scope="col" style="border: 1px solid black">May</th>
                             <th scope="col" style="border: 1px solid black">Jun</th>
 
-                            <th scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q4 B</th>
+                            <th scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q3 B</th>
                             <th scope="col" style="border: 1px solid black">Jul</th>
                             <th scope="col" style="border: 1px solid black">Aug</th>
                             <th scope="col" style="border: 1px solid black">Sep</th>
+
+                            <th scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q4 B</th>
+                            <th scope="col" style="border: 1px solid black">Oct</th>
+                            <th scope="col" style="border: 1px solid black">Nov</th>
+                            <th scope="col" style="border: 1px solid black">Dec</th>
 
                         </tr>
 
@@ -186,9 +195,11 @@
 
                                     <ng-container *ngFor=" let item of act?.monthPerformance; let i= index ">
                                         <td *ngIf="i==0" style="border: 1px solid black;background-color: #e8ffde;">{{
+                                            
                                             (act?.monthPerformance[0]?.planned || 0) +
                                             (act?.monthPerformance[1]?.planned || 0) +
-                                            (act?.monthPerformance[2]?.planned || 0)
+                                            (act?.monthPerformance[2]?.planned || 0) 
+                                 
                                             }}</td>
                                         <td *ngIf="i==3" style="border: 1px solid black;background-color: #e8ffde;">{{
                                             (act?.monthPerformance[3]?.planned || 0) +
@@ -202,16 +213,14 @@
                                             }}</td>
                                         <td *ngIf="i==9" style="border: 1px solid black;background-color: #e8ffde;">
 
-                                            {{(act?.monthPerformance[9]?.planned ||0) +
-                                            (act?.monthPerformance[10]?.planned ||0)
-
-
-                                            +
+                                            {{
+                                            (act?.monthPerformance[9]?.planned ||0) +
+                                            (act?.monthPerformance[10]?.planned ||0) +
                                             (act?.monthPerformance[11]?.planned)||0}}
                                         </td>
 
 
-                                        <td *ngIf="filterBy==0"
+                                        <td *ngIf="filterBy==0 && getGroupValue(item.order)"
                                             style="border: 1px solid black;background-color: #fdf584;"> {{item.planned}}
                                         </td>
                                     </ng-container>
@@ -237,11 +246,14 @@
                                         <td *ngIf="i==9" style="border: 1px solid black;background-color: #e8ffde;">{{
                                             (act?.monthPerformance[9]?.plannedBudget || 0) +
                                             (act?.monthPerformance[10]?.plannedBudget || 0) +
-                                            (act?.monthPerformance[11]?.plannedBudget ||
-                                            0) }}
+                                            (act?.monthPerformance[11]?.plannedBudget || 0) }}
+
+
+
                                         </td>
 
-                                        <td *ngIf="filterBy==0"
+
+                                        <td *ngIf="filterBy==0 && getGroupValue(item.order)"
                                             style="border: 1px solid black;background-color: #fdcd84;">
                                             {{item.plannedBudget}}</td>
 
@@ -274,7 +286,7 @@
                                     <td style="border: 1px solid black;">
                                         <button class="btn btn-outline-warning btn-sm" (click)="updateActivity(task,act)"> <i
                                         class="bi bi-pen me-1"></i> {{exportingToExcel?"":"Update"}} </button> |
-                                        <button class="btn btn-outline-danger btn-sm" (click)="addActivity(task)"> <i
+                                        <button class="btn btn-outline-danger btn-sm" (click)="DeleteActivity(act.id,task.id)"> <i
                                         class="bi bi-trash me-1"></i> {{exportingToExcel?"":"Delete"}} </button></td>
 
 

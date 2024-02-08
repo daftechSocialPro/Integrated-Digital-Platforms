@@ -951,197 +951,202 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                 //activityParent.TaskId = activityDetail.TaskId;
 
                 await _dBContext.SaveChangesAsync();
+            }
+            
+            
 
-                foreach (var item in activityDetail.ActivityDetails)
+            foreach (var item in activityDetail.ActivityDetails)
+            {
+
+
+                var activity = _dBContext.Activities.Where(x => x.Id == item.Id).FirstOrDefault();
+
+                if(activityParent == null)
+                {
+                    activityParent = await _dBContext.ActivitiesParents.Where(x => x.Id == activity.ActivityParentId).FirstOrDefaultAsync();
+                }
+                
+
+                if (activity != null)
                 {
 
-
-                    var activity = _dBContext.Activities.Where(x => x.Id == item.Id).FirstOrDefault();
-
-                    if (activity != null)
+                    //activity.CreatedBy = activityParent.CreatedBy;
+                    //activity.ActivityParentId = activityParent.Id;
+                    activity.ActivityDescription = item.SubActivityDesctiption;
+                    activity.ActivityType = item.ActivityType == 0 ? ActivityType.OFFICE_WORK : ActivityType.FIELD_WORK;
+                    activity.Begining = item.PreviousPerformance;
+                    if (item.CommiteeId != null)
                     {
+                        activity.ProjectTeamId = item.CommiteeId;
+                    }
+                    activity.FieldWork = item.FieldWork;
+                    activity.Goal = item.Goal;
+                    activity.OfficeWork = item.OfficeWork;
+                    activity.PlanedBudget = item.PlannedBudget;
+                    activity.IsPercentage = item.IsPercentage;
+                    activity.Indicator = item.UnitOfMeasurement;
 
-                        //activity.CreatedBy = activityParent.CreatedBy;
-                        //activity.ActivityParentId = activityParent.Id;
-                        activity.ActivityDescription = item.SubActivityDesctiption;
-                        activity.ActivityType = item.ActivityType == 0 ? ActivityType.OFFICE_WORK : ActivityType.FIELD_WORK;
-                        activity.Begining = item.PreviousPerformance;
-                        if (item.CommiteeId != null)
-                        {
-                            activity.ProjectTeamId = item.CommiteeId;
-                        }
-                        activity.FieldWork = item.FieldWork;
-                        activity.Goal = item.Goal;
-                        activity.OfficeWork = item.OfficeWork;
-                        activity.PlanedBudget = item.PlannedBudget;
-                        activity.IsPercentage = item.IsPercentage;
-                        activity.Indicator = item.UnitOfMeasurement;
-
-                        activity.ShouldStat = DateTime.Parse(item.StartDate);
-                        activity.ShouldEnd = DateTime.Parse(item.EndDate);
-                        activity.StrategicPlanId = item.StrategicPlanId;
-                        //activity.ZoneId = item.ZoneId;
-                        activity.RegionId = item.RegionId;
-                        activity.Zone = item.Zone;
-                        activity.Woreda = item.Woreda;
-                        activity.StrategicPlanIndicatorId = item.StrategicPlanIndicatorId;
-                        activity.ActivityNumber = item.ActivityNumber;
-                        activity.Longtude = item.Longtude;
-                        activity.Latitude = item.Latitude;
-                        activity.IsTraining = item.IsTraining;
+                    activity.ShouldStat = DateTime.Parse(item.StartDate);
+                    activity.ShouldEnd = DateTime.Parse(item.EndDate);
+                    activity.StrategicPlanId = item.StrategicPlanId;
+                    //activity.ZoneId = item.ZoneId;
+                    activity.RegionId = item.RegionId;
+                    activity.Zone = item.Zone;
+                    activity.Woreda = item.Woreda;
+                    activity.StrategicPlanIndicatorId = item.StrategicPlanIndicatorId;
+                    activity.ActivityNumber = item.ActivityNumber;
+                    activity.Longtude = item.Longtude;
+                    activity.Latitude = item.Latitude;
+                    activity.IsTraining = item.IsTraining;
 
                         
-                        await _dBContext.SaveChangesAsync();
+                    await _dBContext.SaveChangesAsync();
 
-                        if (item.Employees != null)
+                    if (item.Employees != null)
+                    {
+                        foreach (var employee in item.Employees)
                         {
-                            foreach (var employee in item.Employees)
+                            if (!string.IsNullOrEmpty(employee))
                             {
-                                if (!string.IsNullOrEmpty(employee))
-                                {
                                    
-                                    var existingAssignment = await _dBContext.EmployeesAssignedForActivities
-                                        .FirstOrDefaultAsync(e => e.ActivityId == activity.Id && e.EmployeeId == Guid.Parse(employee));
+                                var existingAssignment = await _dBContext.EmployeesAssignedForActivities
+                                    .FirstOrDefaultAsync(e => e.ActivityId == activity.Id && e.EmployeeId == Guid.Parse(employee));
 
-                                    if (existingAssignment == null)
-                                    {
+                                if (existingAssignment == null)
+                                {
                                        
-                                        EmployeesAssignedForActivities EAFA = new EmployeesAssignedForActivities
-                                        {
-                                            CreatedDate = DateTime.Now,
-                                            CreatedBy = activityParent.CreatedBy,
+                                    EmployeesAssignedForActivities EAFA = new EmployeesAssignedForActivities
+                                    {
+                                        CreatedDate = DateTime.Now,
+                                        CreatedBy = activity.CreatedBy,
 
-                                            Id = Guid.NewGuid(), 
+                                        Id = Guid.NewGuid(), 
 
-                                            ActivityId = activity.Id,
-                                            EmployeeId = Guid.Parse(employee),
-                                        };
+                                        ActivityId = activity.Id,
+                                        EmployeeId = Guid.Parse(employee),
+                                    };
 
-                                        _dBContext.EmployeesAssignedForActivities.Add(EAFA);
-                                    }
+                                    _dBContext.EmployeesAssignedForActivities.Add(EAFA);
+                                }
                                     
-                                    try
-                                    {
-                                        await _dBContext.SaveChangesAsync();
-                                    }
-                                    catch (Exception ex)
-                                    {
+                                try
+                                {
+                                    await _dBContext.SaveChangesAsync();
+                                }
+                                catch (Exception ex)
+                                {
                                         
-                                        Console.WriteLine("Error updating assignments: " + ex.Message);
-                                    }
+                                    Console.WriteLine("Error updating assignments: " + ex.Message);
                                 }
                             }
+                        }
 
-                            var existingAssignments = await _dBContext.EmployeesAssignedForActivities
-                                                        .Where(e => e.ActivityId == activity.Id)
-                                                        .ToListAsync();
+                        var existingAssignments = await _dBContext.EmployeesAssignedForActivities
+                                                    .Where(e => e.ActivityId == activity.Id)
+                                                    .ToListAsync();
 
 
-                            var assignmentsToRemove = existingAssignments.Where(ea => !item.Employees.Contains(ea.EmployeeId.ToString()));
+                        var assignmentsToRemove = existingAssignments.Where(ea => !item.Employees.Contains(ea.EmployeeId.ToString()));
 
                             
-                            foreach (var assignmentToRemove in assignmentsToRemove)
-                            {
-                                _dBContext.EmployeesAssignedForActivities.Remove(assignmentToRemove);
-                            }
-
-                            try
-                            {
-                                await _dBContext.SaveChangesAsync();
-                            }
-                            catch (Exception ex)
-                            {
-                                
-                                Console.WriteLine("Error updating assignments: " + ex.Message);
-                            }
+                        foreach (var assignmentToRemove in assignmentsToRemove)
+                        {
+                            _dBContext.EmployeesAssignedForActivities.Remove(assignmentToRemove);
                         }
 
-
-                    }
-                    else
-                    {
-                        return new ResponseMessage
+                        try
                         {
-                            Success = false,
-                            Message = "Activity Not Found"
-                        };
+                            await _dBContext.SaveChangesAsync();
+                        }
+                        catch (Exception ex)
+                        {
+                                
+                            Console.WriteLine("Error updating assignments: " + ex.Message);
+                        }
                     }
 
-
+                }
+                else
+                {
+                    return new ResponseMessage
+                    {
+                        Success = false,
+                        Message = "Activity Not Found"
+                    };
                 }
 
 
+            }
 
-                var Task = await _dBContext.Tasks.FirstOrDefaultAsync(x => x.Id.Equals(activityDetail.TaskId));
-                if (Task != null)
+
+
+            var Task = await _dBContext.Tasks.FirstOrDefaultAsync(x => x.Id.Equals(activityDetail.TaskId));
+            if (Task != null)
+            {
+                var plan = _dBContext.Projects.FirstOrDefaultAsync(x => x.Id.Equals(Task.ProjectId)).Result;
+                if (plan != null)
                 {
-                    var plan = _dBContext.Projects.FirstOrDefaultAsync(x => x.Id.Equals(Task.ProjectId)).Result;
-                    if (plan != null)
+                    var ActParent = _dBContext.ActivitiesParents.Find(activityParent.Id);
+                    var Activities = _dBContext.Activities.Where(x => x.ActivityParentId == activityParent.Id);
+                    if (ActParent != null && Activities != null)
                     {
-                        var ActParent = _dBContext.ActivitiesParents.Find(activityParent.Id);
-                        var Activities = _dBContext.Activities.Where(x => x.ActivityParentId == activityParent.Id);
-                        if (ActParent != null && Activities != null)
-                        {
-                            ActParent.ShouldStartPeriod = Activities.Min(x => x.ShouldStat);
-                            ActParent.ShouldEnd = Activities.Max(x => x.ShouldEnd);
-                            ActParent.Weight = Activities.Sum(x => x.Weight);
-                            _dBContext.SaveChanges();
-                        }
-                        var ActParents = _dBContext.ActivitiesParents.Where(x => x.TaskId == Task.Id).ToList();
-                        if (Task != null && ActParents != null)
-                        {
-                            Task.ShouldStartPeriod = ActParents.Min(x => x.ShouldStartPeriod);
-                            Task.ShouldEnd = ActParents.Max(x => x.ShouldEnd);
-                            Task.Weight = ActParents.Sum(x => x.Weight);
-                            _dBContext.SaveChanges();
-                        }
-                        var tasks = _dBContext.Tasks.Where(x => x.ProjectId == plan.Id).ToList();
-                        //plan.PeriodStartAt = tasks.Min(x => x.ShouldStartPeriod);
-                        //plan.PeriodEndAt = tasks.Max(x => x.ShouldEnd);
+                        ActParent.ShouldStartPeriod = Activities.Min(x => x.ShouldStat);
+                        ActParent.ShouldEnd = Activities.Max(x => x.ShouldEnd);
+                        ActParent.Weight = Activities.Sum(x => x.Weight);
                         _dBContext.SaveChanges();
                     }
+                    var ActParents = _dBContext.ActivitiesParents.Where(x => x.TaskId == Task.Id).ToList();
+                    if (Task != null && ActParents != null)
+                    {
+                        Task.ShouldStartPeriod = ActParents.Min(x => x.ShouldStartPeriod);
+                        Task.ShouldEnd = ActParents.Max(x => x.ShouldEnd);
+                        Task.Weight = ActParents.Sum(x => x.Weight);
+                        _dBContext.SaveChanges();
+                    }
+                    var tasks = _dBContext.Tasks.Where(x => x.ProjectId == plan.Id).ToList();
+                    //plan.PeriodStartAt = tasks.Min(x => x.ShouldStartPeriod);
+                    //plan.PeriodEndAt = tasks.Max(x => x.ShouldEnd);
+                    _dBContext.SaveChanges();
                 }
-
-                return new ResponseMessage
-                {
-                    Success = true,
-                    Message = "Activity Updated Successfully"
-                };
             }
-            else
+
+            return new ResponseMessage
             {
-                return new ResponseMessage
-                {
-                    Success = false,
-                    Message = "Activity Not Found"
-                };
-            }
-
-
-           
+                Success = true,
+                Message = "Activity Updated Successfully"
+            };
         }
+            
+           
+            
 
 
-        public async Task<ResponseMessage> DeleteActivity(Guid activityId)
+    
+
+
+        public async Task<ResponseMessage> DeleteActivity(Guid activityId, Guid taskId)
         {
             try
             {
 
                
                 var activitiesParent = await _dBContext.ActivitiesParents.FindAsync(activityId);
-                if (activitiesParent != null)
+                var activities = await _dBContext.Activities.FindAsync(activityId);
+
+                if (activitiesParent != null || activities != null)
                 {
-                    var activities = await _dBContext.Activities.FindAsync(activityId);
+                    
 
 
                     if(activities != null)
                     {
                         _dBContext.Activities.Remove(activities);
                     }
-                        
-                    
-                        
-                    _dBContext.ActivitiesParents.Remove(activitiesParent);
+
+                    if (activitiesParent != null)
+                    {
+                        _dBContext.ActivitiesParents.Remove(activitiesParent);
+                    }
 
                     var existingAssignments = await _dBContext.EmployeesAssignedForActivities
                                                         .Where(e => e.ActivityId == activityId)
@@ -1156,7 +1161,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                     }
                     await _dBContext.SaveChangesAsync();
 
-                    var Task = await _dBContext.Tasks.FirstOrDefaultAsync(x => x.Id.Equals(activitiesParent.TaskId));
+                    var Task = await _dBContext.Tasks.FirstOrDefaultAsync(x => x.Id.Equals(taskId));
                     if (Task != null)
                     {
                         var plan = _dBContext.Projects.FirstOrDefaultAsync(x => x.Id.Equals(Task.ProjectId)).Result;
@@ -1208,6 +1213,94 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
 
                 };
             }
+        }
+
+        public async Task<List<TerminatedEmployeeReplacmentDto>> GetTerminatedEmployeesActivies(Guid empId)
+        {
+            var empActivities = await _dBContext.EmployeesAssignedForActivities.Include(x => x.Activity).Where(x => x.EmployeeId == empId).Select(x => x.Activity).ToListAsync();
+            List<TerminatedEmployeeReplacmentDto> empActRep = new List<TerminatedEmployeeReplacmentDto>();
+            var terEmp = await _dBContext.Employees.Where(x => x.Id == empId).Select(x => new SelectListDto
+                                                                                        {
+                                                                                            Id = x.Id,
+                                                                                            Name = $"{x.FirstName} {x.LastName}"
+                                                                                        }).FirstOrDefaultAsync();
+            foreach (var act in empActivities)
+            {
+                var empsInAct = await _dBContext.EmployeesAssignedForActivities.Where(x => x.ActivityId == act.Id).Select(x => x.EmployeeId).ToListAsync();
+                var repEmps =  await (from e in _dBContext.Employees
+                                                              where !(empsInAct.Contains(e.Id))
+                                                              select new SelectListDto
+                                                              {
+                                                                  Id = e.Id,
+                                                                  Name = $"{e.FirstName} {e.LastName}"
+                                                              }).ToListAsync();
+                
+
+
+                TerminatedEmployeeReplacmentDto ter = new TerminatedEmployeeReplacmentDto
+                {
+                    Activity = new SelectListDto
+                    {
+                        Id = act.Id,
+                        Name = act.ActivityDescription,
+                        Reason = act.CreatedById
+                    },
+                    ReplaceEmployees = repEmps,
+                    TerminatedEmployee = terEmp
+
+                };
+                empActRep.Add(ter);
+              
+
+            }
+            return empActRep;
+        }
+
+        public async Task<ResponseMessage> ReplaceTerminatedEmployee(List<List<TerminatedEmployeeReplacmentGetDto>> ter,string userId)
+        {
+            try
+            {
+                foreach (var t in ter)
+                {
+                    foreach (var emp in t)
+                    {
+                        if (!string.IsNullOrEmpty(emp.EmpId.ToString()))
+                        {
+                            EmployeesAssignedForActivities EAFA = new EmployeesAssignedForActivities
+                            {
+                                CreatedDate = DateTime.Now,
+                                CreatedById = userId,
+
+                                Id = Guid.NewGuid(),
+
+                                ActivityId = emp.ActId,
+                                EmployeeId = emp.EmpId,
+                            };
+                            await _dBContext.EmployeesAssignedForActivities.AddAsync(EAFA);
+                            await _dBContext.SaveChangesAsync();
+                        }
+                    }
+                    var assignmentToRemove = await _dBContext.EmployeesAssignedForActivities.Where(x => x.EmployeeId == t[0].TerminateEmp && x.ActivityId == t[0].ActId).FirstOrDefaultAsync();
+                    _dBContext.EmployeesAssignedForActivities.Remove(assignmentToRemove);
+                    await _dBContext.SaveChangesAsync();
+
+                }
+                return new ResponseMessage
+                {
+                    Success = true,
+                    Message = "Employee Replaced Successfully"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseMessage
+                {
+                    Success = false,
+                    Message = ex.Message
+
+                };
+            }
+
         }
 
 

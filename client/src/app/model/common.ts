@@ -84,3 +84,10 @@ export class ItemDropDownDto {
     measurementType: number;
     isExpirable: number;
 }
+export interface TerminatedEmployeeReplacmentDto
+{
+    activity:SelectList,
+    replaceEmployees:SelectList[],
+    terminatedEmployee?:SelectList
+
+}

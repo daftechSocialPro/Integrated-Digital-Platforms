@@ -245,12 +245,13 @@ this.getProjectFundSourse()
 
     console.log(this.activityForm.value)
     if(this.requestFrom == "PLAN" || this.requestFrom == "TASK"){
-        this.addSubActivity()
+        //this.addSubActivity()
     }
     else{
           this.addActivityParent()
     }
   }
+
 
   addSubActivity(){
 
@@ -290,35 +291,37 @@ this.getProjectFundSourse()
         IsTraining:this.activityForm.value.IsTraining,      
         IsPercentage:this.activityForm.value.IsPercentage,
         selectedProjectFund:this.activityForm.value.SelectedProjectFund
-        
-      }
-      if(this.requestFrom == "PLAN"){
-        actvityP.PlanId = this.requestFromId;
-      }
-      else if(this.requestFrom == "TASK"){
-        actvityP.TaskId = this.requestFromId;
-      }
+
+  //     }
+  //     if(this.requestFrom == "PLAN"){
+  //       actvityP.PlanId = this.requestFromId;
+  //     }
+  //     else if(this.requestFrom == "TASK"){
+  //       actvityP.TaskId = this.requestFromId;
+  //     }
 
  
-      console.log("sdfsdfd",actvityP)
+  //     console.log("sdfsdfd",actvityP)
 
-      this.pmService.addSubActivity(actvityP).subscribe({
-        next: (res) => {
+  //     this.pmService.addSubActivity(actvityP).subscribe({
+  //       next: (res) => {
 
-          this.messageService.add({ severity: 'success', summary: 'Successfull', detail: 'Activity Successfully Created' });        
+  //         this.messageService.add({ severity: 'success', summary: 'Successfull', detail: 'Activity Successfully Created' });        
     
-          window.location.reload()
-          this.closeModal()
+  //         window.location.reload()
+  //         this.closeModal()
          
-        }, error: (err) => {
+  //       }, error: (err) => {
 
-          this.messageService.add({ severity: 'error', summary: 'Something went wrong.', detail: err.message });        
+  //         this.messageService.add({ severity: 'error', summary: 'Something went wrong.', detail: err.message });        
         
+
           console.error(err)
         }
       }) 
     }
   }
+
 
   addActivityParent(){
     
@@ -326,6 +329,8 @@ this.getProjectFundSourse()
     //   this.messageService.add({severity:'error',summary:"Location Not Selected",detail:'Please choose a location from map!!'})
     //   return
     // }
+    console.log("ADDED ACTIVITY XXXXXXXXXXXx",this.activityForm.value)
+    debugger
     if(this.activityForm.value.Goal<=this.activityForm.value.PreviousPerformance){
       this.messageService.add({severity:'error',summary:"Baseline Target Error",detail:'Baseline can not be Greater or equal to Target !!'})
       return
@@ -417,7 +422,7 @@ this.getProjectFundSourse()
   }
 
   addLocation(){
-
+    event.preventDefault()
     let modalRef = this.modalService.open(AddProjectLocationComponent,{size:'lg',backdrop:'static'})
     modalRef.componentInstance.calledFrom=1
 

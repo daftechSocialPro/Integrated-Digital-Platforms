@@ -171,15 +171,36 @@ namespace IntegratedDigitalAPI.Controllers.PM
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteActivity(Guid activityid)
+        public async Task<IActionResult> DeleteActivity(Guid activityid, Guid taskId)
         {
             try
             {
-                return Ok(await _activityService.DeleteActivity(activityid));
+
+                return Ok(await _activityService.DeleteActivity(activityid,taskId));
             }
             catch (Exception ex)
             {
                 return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        [HttpGet("getTerminatedEmployeesActivies")]
+        public async Task<List<TerminatedEmployeeReplacmentDto>> GetTerminatedEmployeesActivies(Guid empId)
+        {
+            return await _activityService.GetTerminatedEmployeesActivies(empId);
+        }
+
+        [HttpPost("replaceTerminatedEmployee")]
+        public async Task<IActionResult> ReplaceTerminatedEmployee(List<List<TerminatedEmployeeReplacmentGetDto>> ter, string userId)
+        {
+
+            if (ModelState.IsValid)
+            {
+                return Ok(await _activityService.ReplaceTerminatedEmployee(ter,userId));
+            }
+            else
+            {
+                return BadRequest();
             }
         }
 
