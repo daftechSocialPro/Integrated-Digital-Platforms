@@ -17,6 +17,8 @@ using IntegratedInfrustructure.Model.Training;
 using IntegratedImplementation.DTOS.Training;
 using IntegratedImplementation.DTOS.Inventory;
 using IntegratedInfrustructure.Models.Inventory;
+using IntegratedInfrustructure.Model.PM;
+using IntegratedImplementation.DTOS.PM;
 
 namespace IntegratedImplementation.Datas
 {
@@ -111,6 +113,8 @@ namespace IntegratedImplementation.Datas
             CreateMap<ProjectFundSource, ProjectFundSourceGetDto>();
                 
             CreateMap<TrainingReport, TrainingReportGetDto>();
+
+            CreateMap<ActivityLocation, ActivityLocationDto>();
 
 
             #region Inventory

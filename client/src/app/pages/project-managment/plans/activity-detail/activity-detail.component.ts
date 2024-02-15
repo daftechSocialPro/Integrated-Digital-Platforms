@@ -20,7 +20,7 @@ import { PlanService } from 'src/app/services/plan.service';
 })
 export class ActivityDetailComponent implements OnInit {
 
-planId !: string
+ planId !: string
   actId !: string
   actView!: ActivityView;
   isMember: boolean = false;
@@ -127,13 +127,14 @@ planId !: string
 
   }
 
-  Showonmap(lat:number,lng:number,projectLocation:string){
+  Showonmap(actview:ActivityView){
 
-   console.log(lat,lng)
+ 
   let modalRef =this.modalService.open(ShowonmapComponent,{size:'xl',backdrop:'static'})
-  modalRef.componentInstance.lat=lat
-  modalRef.componentInstance.lng = lng
-  modalRef.componentInstance.title = `Project Locatio: \n ${projectLocation}`
+  modalRef.componentInstance.locations=actview.activityLocations
+  modalRef.componentInstance.title = `${actview.name} (${actview.activityNumber})` 
+
+
   }
 
 
@@ -201,6 +202,8 @@ planId !: string
     this.planService.getSingleActivity(this.actId).subscribe({
       next:(res)=>{
         this.actView = res 
+
+        console.log(res)
         this.user = this.userService.getCurrentUser()
         if (this.actView.members.find(x => x.employeeId?.toLowerCase() == this.user.employeeId.toLowerCase()) ) {
           this.isMember = true;

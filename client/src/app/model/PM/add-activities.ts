@@ -36,10 +36,21 @@ export interface SubActivityDetailDto {
     Zone?:string,
     Woreda?:string,
     StrategicPlanIndicatorId?:string,
-    longtude: number,
-    latitude: number,
+    // longtude: number,
+    // latitude: number,
     selectedProjectFund:string
+
+    activityLocations : ActivityLocationDto[]
 }
 
+export interface ActivityLocationDto {
+
+    regionId: string;
+    zone: string;
+    woreda: string;
+    longtude: number;
+    latitude: number;
+  
+}
     
     

@@ -21,7 +21,9 @@ namespace IntegratedInfrustructure.Models.PM
         {
             ActProgress = new HashSet<ActivityProgress>();
             AssignedEmploye = new HashSet<EmployeesAssignedForActivities>();
-    
+            ActivityLocations = new HashSet<ActivityLocation>();
+
+
         }
 
         public string ActivityDescription { get; set; } = null!;
@@ -79,22 +81,14 @@ namespace IntegratedInfrustructure.Models.PM
         public virtual StrategicPlan StrategicPlan { get; set; }
 
 
-        public Guid RegionId { get; set; }
-        public virtual Region Region { get; set; }
-
-       
-        public string Zone { get; set; } = null;
-       
-
-        public string Woreda { get; set; } = null!;
+        
 
         public Guid StrategicPlanIndicatorId { get; set; }
         public virtual Indicator StrategicPlanIndicator { get; set; }
         //public Guid ProjectLocationId { get; set; }
         //public virtual ProjectLocation ProjectLocation { get; set; }
 
-        public double Latitude { get; set; }
-        public double Longtude { get; set; }
+     
 
         public  bool IsTraining {get;set;}
 
@@ -103,6 +97,7 @@ namespace IntegratedInfrustructure.Models.PM
 
         public ICollection<EmployeesAssignedForActivities> AssignedEmploye { get; set; }
         public ICollection<ActivityTargetDivision> ActivityTargetDivisions { get; set; }
+        public ICollection<ActivityLocation> ActivityLocations { get; set; }
 
 
 

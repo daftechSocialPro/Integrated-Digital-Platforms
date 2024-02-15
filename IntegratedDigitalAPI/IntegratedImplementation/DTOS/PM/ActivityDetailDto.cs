@@ -1,4 +1,6 @@
 ﻿
+using IntegratedImplementation.DTOS.PM;
+
 namespace IntegratedDigitalAPI.DTOS.PM
 {
     public class ActivityDetailDto
@@ -51,7 +53,7 @@ namespace IntegratedDigitalAPI.DTOS.PM
         public Guid RegionId { get; set; }
         
         public string? Zone { get; set; }
-        public string Woreda { get; set; }
+        public string? Woreda { get; set; }
         public Guid StrategicPlanIndicatorId { get; set; }
         public Guid StrategicPlanId { get; set; }
 
@@ -59,6 +61,9 @@ namespace IntegratedDigitalAPI.DTOS.PM
         public double Latitude { get; set; }
 
         public Guid SelectedProjectFund { get; set; }
+
+
+        public List<ActivityLocationDto> ActivityLocations { get; set; }
 
 
     }

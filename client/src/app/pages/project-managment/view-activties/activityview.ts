@@ -27,6 +27,7 @@ export interface ActivityView {
     overAllProgress: number
     isTraining :boolean
 
+    activityLocations?: any
 
 }
 export interface MonthPerformanceView {
@@ -36,7 +37,8 @@ export interface MonthPerformanceView {
     monthName: string,
     planned: number,
     actual: number,
-    percentage: number
+    percentage: number,
+    plannedBudget:number
 }
 
 

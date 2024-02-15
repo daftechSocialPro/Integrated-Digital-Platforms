@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IntegratedInfrustructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240208113101_initial")]
-    partial class initial
+    [Migration("20240211155403_activitylocations")]
+    partial class activitylocations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -2511,6 +2511,50 @@ namespace IntegratedInfrustructure.Migrations
                     b.ToTable("UsedItems");
                 });
 
+            modelBuilder.Entity("IntegratedInfrustructure.Model.PM.ActivityLocation", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ActivityId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("Latitude")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Longtude")
+                        .HasColumnType("float");
+
+                    b.Property<Guid>("RegionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Woreda")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Zone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ActivityId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("RegionId");
+
+                    b.ToTable("ActivityLocations");
+                });
+
             modelBuilder.Entity("IntegratedInfrustructure.Model.PM.BudgetYear", b =>
                 {
                     b.Property<Guid>("Id")
@@ -2975,9 +3019,8 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Project")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid?>("ProjectId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("ReportStatus")
                         .HasColumnType("int");
@@ -3000,6 +3043,8 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasIndex("ActivityId");
 
                     b.HasIndex("CreatedById");
+
+                    b.HasIndex("ProjectId");
 
                     b.ToTable("Trainings");
                 });
@@ -4090,12 +4135,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<bool>("IsTraining")
                         .HasColumnType("bit");
 
-                    b.Property<double>("Latitude")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Longtude")
-                        .HasColumnType("float");
-
                     b.Property<float>("OfficeWork")
                         .HasColumnType("real");
 
@@ -4112,9 +4151,6 @@ namespace IntegratedInfrustructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("ProjectTeamId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("RegionId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Rowstatus")
@@ -4141,14 +4177,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<float>("Weight")
                         .HasColumnType("real");
 
-                    b.Property<string>("Woreda")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Zone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int?>("targetDivision")
                         .HasColumnType("int");
 
@@ -4165,8 +4193,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasIndex("ProjectSourceFundId");
 
                     b.HasIndex("ProjectTeamId");
-
-                    b.HasIndex("RegionId");
 
                     b.HasIndex("StrategicPlanId");
 
@@ -5740,6 +5766,31 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("CreatedBy");
                 });
 
+            modelBuilder.Entity("IntegratedInfrustructure.Model.PM.ActivityLocation", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Models.PM.Activity", "Activity")
+                        .WithMany("ActivityLocations")
+                        .HasForeignKey("ActivityId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("IntegratedInfrustructure.Model.Configuration.Region", "Region")
+                        .WithMany()
+                        .HasForeignKey("RegionId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Activity");
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("Region");
+                });
+
             modelBuilder.Entity("IntegratedInfrustructure.Model.PM.BudgetYear", b =>
                 {
                     b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
@@ -5922,9 +5973,15 @@ namespace IntegratedInfrustructure.Migrations
                         .WithMany()
                         .HasForeignKey("CreatedById");
 
+                    b.HasOne("IntegratedInfrustructure.Model.PM.Project", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectId");
+
                     b.Navigation("Activity");
 
                     b.Navigation("CreatedBy");
+
+                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Training.TrainingReport", b =>
@@ -6436,12 +6493,6 @@ namespace IntegratedInfrustructure.Migrations
                         .WithMany()
                         .HasForeignKey("ProjectTeamId");
 
-                    b.HasOne("IntegratedInfrustructure.Model.Configuration.Region", "Region")
-                        .WithMany()
-                        .HasForeignKey("RegionId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("IntegratedInfrustructure.Model.PM.StrategicPlan", "StrategicPlan")
                         .WithMany()
                         .HasForeignKey("StrategicPlanId")
@@ -6469,8 +6520,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("Plan");
 
                     b.Navigation("ProjectSourceFund");
-
-                    b.Navigation("Region");
 
                     b.Navigation("StrategicPlan");
 
@@ -6845,6 +6894,8 @@ namespace IntegratedInfrustructure.Migrations
             modelBuilder.Entity("IntegratedInfrustructure.Models.PM.Activity", b =>
                 {
                     b.Navigation("ActProgress");
+
+                    b.Navigation("ActivityLocations");
 
                     b.Navigation("ActivityTargetDivisions");
 

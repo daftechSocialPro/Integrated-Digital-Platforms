@@ -1,9 +1,9 @@
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
 import { TaskView } from 'src/app/model/PM/TaskDto';
-import { SubActivityDetailDto, ActivityDetailDto } from 'src/app/model/PM/add-activities';
+import { SubActivityDetailDto, ActivityDetailDto, ActivityLocationDto } from 'src/app/model/PM/add-activities';
 import { GetStartEndDate, SelectList } from 'src/app/model/common';
 import { UserView } from 'src/app/model/user';
 import { CommonService } from 'src/app/services/common.service';
@@ -56,7 +56,7 @@ export class UpdateActivitiesComponent implements OnInit{
   commiteeId:string = null
   employeeId:string[]
 
-
+  activityLocations: ActivityLocationDto[]
 
   constructor(
     private activeModal: NgbActiveModal,
@@ -75,10 +75,14 @@ export class UpdateActivitiesComponent implements OnInit{
   }
   ngOnInit(): void {
 
+    console.log("sdfsdf",this.activity.activityLocations[0].region)
 
     this.getCountries()
     this.GetIndicatorsByStrategicPlanIds(this.activity.strategicPlan)
-    this.getRegions(this.activity.countryId)
+
+    if(this.activity.activityLocations[0].region){
+    this.getRegions(this.activity.activityLocations[0].region.countryId)
+    }
 
     
 
@@ -147,7 +151,7 @@ export class UpdateActivitiesComponent implements OnInit{
     EndDate: [this.activity.endDate.split(' ')[0], Validators.required],
     ActivityDescription: [this.activity.name, Validators.required],
     ActivityNumber:[this.activity.activityNumber,Validators.required],
-    PlannedBudget: [this.activity.plannedBudget, [Validators.required,Validators.max(this.task?.remainingBudget!)]],
+    PlannedBudget: [this.activity.plannedBudget, [Validators.required,Validators.max(this.task?.remainingBudget!+this.activity.plannedBudget)]],
     ActivityType: [this.checkActivityType()],
     OfficeWork: [this.activity.officeWork, Validators.required],
     FieldWork: [this.activity.fieldWork, Validators.required],
@@ -162,17 +166,65 @@ export class UpdateActivitiesComponent implements OnInit{
     StrategicPlanIndicatorId:[this.activity.strategicPlanIndicator],
     IsTraining:[this.activity.isTraining,Validators.required],
     IsPercentage:[this.activity.isPercentage,Validators.required],
-    CountryId:[this.activity.countryId,Validators.required],
-    RegionId:[this.activity.regionId,Validators.required],
-    Zone:[this.activity.zone],
-    Woreda:[this.activity.woreda],
-    SelectedProjectFund:[this.activity.projectSourceId,Validators.required]
+    CountryId:[this.activity.activityLocations?  this.activity.activityLocations[0].region.countryId:'',Validators.required],
+    // RegionId:[this.activity.regionId,Validators.required],
+    // Zone:[this.activity.zone],
+    // Woreda:[this.activity.woreda],
+    SelectedProjectFund:[this.activity.projectSourceId,Validators.required],
+
+    regionss: [this.activity.activityLocations?  this.activity.activityLocations.map((item)=>item.regionId):[]],
+    locations: this.formBuilder.array([])
 
   })
- 
+
+  
+ this.updateLocationForm()
   
 
   }
+
+
+  updateLocationForm(){
+   // Get the selected region IDs
+    var regionName =''
+    // Check if locations is a FormArray
+    if (this.locations instanceof FormArray) {
+        const currentLocationForms = this.locations;
+
+        // Add location forms for newly selected regions
+        this.activity.activityLocations.forEach((item: any) => {
+
+        var regionId = item.regionId
+
+        console.log('item',item)
+
+         
+            const locationFormExists = currentLocationForms.controls.some((locationForm) => {
+                const existingRegionId = (locationForm as FormGroup).get('regionId')?.value;
+                return existingRegionId === regionId;
+            });
+
+            regionName = item.region.regionName
+        
+            if (!locationFormExists) {
+                const locationGroup = this.formBuilder.group({
+                    regionName:regionName,
+                    regionId: regionId,
+                    zone: item.zone,
+                    woreda: item.woreda,
+                    latitude:item.latitude,
+                    longtude:item.longtude
+                });                
+
+                this.locations.push(locationGroup);
+            }
+        });
+    }
+  }
+
+
+
+
   getProjectFundSourse(){
 
 
@@ -209,6 +261,7 @@ export class UpdateActivitiesComponent implements OnInit{
 
     this.taskService.getEmployeeNoTaskMembers(this.task.id!).subscribe({
       next: (res) => {
+        console.log("emplouee",res)
         this.Employees = res
       }
       , error: (err) => {
@@ -376,6 +429,9 @@ export class UpdateActivitiesComponent implements OnInit{
       this.messageService.add({severity:'error',summary:"Baseline Target Error",detail:'Baseline can not be Greater or equal to Target !!'})
       return
     }
+
+    console.log("assigned employee",this.activityForm.value.AssignedEmployee)
+    debugger
     if (this.activityForm.valid) {
       let actvityP: SubActivityDetailDto = {
         Id: this.activity.id, 
@@ -400,8 +456,11 @@ export class UpdateActivitiesComponent implements OnInit{
         StrategicPlanIndicatorId:this.activityForm.value.StrategicPlanIndicatorId,
         IsTraining:this.activityForm.value.IsTraining,   
         IsPercentage:this.activityForm.value.IsPercentage,
-        longtude: this.lng,
-        latitude: this.lat,
+
+        
+        // longtude: this.lng,
+        // latitude: this.lat,
+        activityLocations : this.activityForm.value.locations,
         selectedProjectFund:this.activityForm.value.SelectedProjectFund
       }
 
@@ -471,21 +530,81 @@ export class UpdateActivitiesComponent implements OnInit{
     })
   }
 
-  addLocation(){
-    
+  addLocation(regionId,locationGroup){
     event.preventDefault()
     let modalRef = this.modalService.open(AddProjectLocationComponent,{size:'lg',backdrop:'static'})
-    modalRef.componentInstance.calledFrom=1
-    modalRef.componentInstance.lng = this.activity.projectLocationLng
-    modalRef.componentInstance.lat = this.activity.projectLocationLat
+    modalRef.componentInstance.calledFrom= 1
+    modalRef.componentInstance.regionId = regionId
 
     modalRef.result.then((res)=>{
 
-      this.lng = res.lng
-      this.lat = res.lat
+      locationGroup.patchValue({
+        longtude: res.lng,
+        latitude: res.lat
+      });
       console.log(res)
     })
 
     
   }
+
+
+
+  updateLocationForms() {
+    const selectedRegionIds = this.activityForm.get('regionss')?.value; // Get the selected region IDs
+    var regionName =''
+    // Check if locations is a FormArray
+    if (this.locations instanceof FormArray) {
+        const currentLocationForms = this.locations;
+
+        // Remove location forms that are no longer selected
+        for (let i = currentLocationForms.length - 1; i >= 0; i--) {
+            const locationForm = currentLocationForms.at(i) as FormGroup;
+            const regionId = locationForm.get('regionId')?.value;
+           
+
+            if (!selectedRegionIds.includes(regionId)) {
+                this.locations.removeAt(i);
+            }
+        }
+
+        // Add location forms for newly selected regions
+        selectedRegionIds.forEach((regionId: string) => {
+
+          console.log(regionId)
+            const locationFormExists = currentLocationForms.controls.some((locationForm) => {
+                const existingRegionId = (locationForm as FormGroup).get('regionId')?.value;
+                return existingRegionId === regionId;
+            });
+
+            regionName = this.regions.filter(x=>x.id.toLowerCase()==regionId.toLowerCase())[0].name
+        
+            if (!locationFormExists) {
+                const locationGroup = this.formBuilder.group({
+                    regionName:regionName,
+                    regionId: regionId,
+                    zone: '',
+                    woreda: '',
+                    latitude:'',
+                    longtude:''
+                });                
+
+                this.locations.push(locationGroup);
+            }
+        });
+    }
+
+    console.log(this.locations.value)
+}
+
+
+  // Getter for easier access to the locations FormArray
+  get locations() {
+    return this.activityForm.get('locations') as FormArray;
+  }
+
+  get regionss() {
+    return this.activityForm.get('regionss');
+  }
+
 }

@@ -45,7 +45,7 @@ namespace IntegratedImplementation.Services.Training
 
         public async Task<TrainingGetDto> GetSingleTraining(Guid TrainingId)
         {
-            var results = await _dbContext.Trainings.Where(x => x.Id == TrainingId)
+            var results = await _dbContext.Trainings.Include(x=>x.Project).Where(x => x.Id == TrainingId)
                       
                      .Select(x => new TrainingGetDto
                       {
@@ -56,7 +56,7 @@ namespace IntegratedImplementation.Services.Training
                           CourseVenue = x.CourseVenue,
                           StartDate = x.StartDate,
                           EndDate = x.EndDate,
-                          Project = x.Project,
+                          Project = x.Project.ProjectName,
                           ReportStatus = x.ReportStatus.ToString(),
                           TraineeListStatus = x.TraineeListStatus.ToString()
 
@@ -68,7 +68,7 @@ namespace IntegratedImplementation.Services.Training
         public async Task<List<TrainingGetDto>> GetTrainingList(Guid activityId)
         {
 
-            var results = await _dbContext.Trainings.Where(x => x.ActivityId == activityId)                       
+            var results = await _dbContext.Trainings.Include(x=>x.Project).Where(x => x.ActivityId == activityId)                       
                         .Include(x => x.Activity).Select(x => new TrainingGetDto
                         {
                             Id = x.Id,
@@ -79,7 +79,7 @@ namespace IntegratedImplementation.Services.Training
                             CourseVenue = x.CourseVenue,
                             StartDate = x.StartDate,
                             EndDate = x.EndDate,
-                            Project = x.Project,
+                            Project = x.Project.ProjectName,
                             ReportStatus = x.ReportStatus.ToString(),
                             TraineeListStatus = x.TraineeListStatus.ToString()
 
@@ -91,7 +91,7 @@ namespace IntegratedImplementation.Services.Training
 
         public async Task<List<TrainingGetDto>>GetTrainingList()
         {
-            var results = await _dbContext.Trainings
+            var results = await _dbContext.Trainings.Include(x=>x.Project)
                  
                  .Include(x => x.Activity).Select(x => new TrainingGetDto
                  {
@@ -104,7 +104,7 @@ namespace IntegratedImplementation.Services.Training
                      CourseVenue = x.CourseVenue,
                      StartDate = x.StartDate,
                      EndDate = x.EndDate,
-                     Project = x.Project,
+                     Project = x.Project.ProjectName,
                      ReportStatus = x.ReportStatus.ToString(),
                      TraineeListStatus = x.TraineeListStatus.ToString()
 
@@ -118,6 +118,43 @@ namespace IntegratedImplementation.Services.Training
 
             try
             {
+                Guid? projectId = Guid.NewGuid();
+                var act = await _dbContext.Activities
+                    .Include(x=>x.ActivityParent.Task)
+                    .Include(x=>x.Task)
+                    .Where(x=>x.Id==trainingPostDto.ActivityId).FirstOrDefaultAsync();
+
+                if ( act!= null)
+                {
+                    if (act.TaskId != null)
+                    {
+                       var task = await _dbContext.Tasks.FindAsync(act.TaskId);
+                        if (task!=null && task.ProjectId!=null)
+
+                        {
+                            projectId = task.ProjectId;
+                        }
+                       
+                    }
+
+                  if (act.ActivityParentId != null)
+                    {
+                        var activityParent = await _dbContext.ActivitiesParents.FindAsync(act.ActivityParentId);
+
+                        if (activityParent!=null) {
+                            var task = await _dbContext.Tasks.FindAsync(act.ActivityParent.TaskId);
+                            if (task != null && task.ProjectId != null)
+
+                            {
+                                projectId = task.ProjectId;
+                            }
+                        }
+
+                    }
+
+                    
+                }
+
                 var TrainingPost = new IntegratedInfrustructure.Model.Training.Training
                 {
                     Id = Guid.NewGuid(),
@@ -128,7 +165,7 @@ namespace IntegratedImplementation.Services.Training
                     CourseVenue = trainingPostDto.CourseVenue,
                     StartDate = trainingPostDto.StartDate,
                     EndDate = trainingPostDto.EndDate,
-                    Project = trainingPostDto.Project,
+                    ProjectId = projectId,
                     CreatedById = trainingPostDto.CreatedById,
                 };
 

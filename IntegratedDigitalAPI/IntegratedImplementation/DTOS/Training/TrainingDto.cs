@@ -15,7 +15,7 @@ namespace IntegratedImplementation.DTOS.Training
         public string CourseVenue { get; set; } = null!;
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public string Project { get; set; } = null!;
+     
 
         public string AllocatedCEU { get; set; }
         public string CreatedById { get; set; } = null!;

@@ -64,7 +64,7 @@
                                         <input type="number" class="form-control" id="PlannedBudget"
                                             placeholder="EndDate" formControlName="PlannedBudget">
                                         <label for="PlannedBudget">Planned Budget</label>
-                                        <small style="color: red;">Remaining Budget : {{task?.remainingBudget}}</small>
+                                        <small style="color: red;">Remaining Budget : {{task?.remainingBudget+activity.plannedBudget}}</small>
                                     </div>
                                 </div>
                                 <!-- <div class="col-md-6">
@@ -77,7 +77,7 @@
                                 </div> -->
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3">
-                                        <select class="form-select" id="ActivityType" #activity
+                                        <select class="form-select" id="ActivityType" #activityy
                                             formControlName="ActivityType">
 
                                             <option>--- Select Activity Type --- </option>
@@ -89,14 +89,14 @@
                                         <label for="ActivityType">Activity Type </label>
                                     </div>
                                 </div>
-                                <div class="col-md-6" *ngIf="activity.value=='0'">
+                                <div class="col-md-6" *ngIf="activityy.value=='0'">
                                     <div class="form-floating">
                                         <input type="number" class="form-control" id="OfficeWork"
                                             placeholder="OfficeWork" formControlName="OfficeWork">
                                         <label for="OfficeWork">Office Work</label>
                                     </div>
                                 </div>
-                                <div class="col-md-6" *ngIf="activity.value=='0'">
+                                <div class="col-md-6" *ngIf="activityy.value=='0'">
                                     <div class="form-floating">
                                         <input type="number" class="form-control" id="FieldWOrk" placeholder="FieldWork"
                                             formControlName="FieldWork">
@@ -182,43 +182,42 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-floating mb-3">
-                                        <select class="form-select"  #region formControlName="RegionId"
-                                            id="regionId" aria-label="State">
-                                            <option></option>
-                                            <option *ngFor="let region of regions" [value]="region.id">{{
-                                                region.name }}</option>
+                                        <select multiple class="form-select" style="height: 200px;" (change)="updateLocationForms()" formControlName="regionss">
+                                            <option *ngFor="let region of regions" [ngValue]="region.id">{{ region.name }}</option>
                                         </select>
-                                        <label for="countryId">Region</label>
+                                        <label for="regionId">Region</label>
                                     </div>
                                 </div>
-                                <!-- <div class="col-md-3">
-                                    <div class="form-floating mb-3">
-                                        <select class="form-select" id="zoneId" formControlName="ZoneId"
-                                            aria-label="State">
-                                            <option></option>
-                                            <option *ngFor="let zone of zones" [value]="zone.id">{{
-                                                zone.name }}</option>
-                                        </select>
-                                        <label for="zoneId"> Zone</label>
-                                    </div>
-                                </div> -->
-                                <div class="col-md-2">
-                                    <div class="form-floating"> <input type="text" class="form-control" id="zone"
-                                            placeholder="zone"  formControlName="Zone">
-                                        <label for="zone"> Zone</label>
-                                    </div>
-                                </div>
+                                
+                                <div formArrayName="locations"  class="col-md-6">
+                                    <div *ngFor="let locationGroup of locations.controls; let i = index">
+                                      <div [formGroupName]="i" class="row">
 
-                                <div class="col-md-2">
-                                    <div class="form-floating"> <input type="text" class="form-control" id="woreda"
-                                            placeholder="woreda"  formControlName="Woreda">
-                                        <label for="woreda"> Woreda</label>
+                                        <div class="col-md-12">
+                                            <span><b>{{ locationGroup.get('regionName').value }}</b></span>
+                                          </div>
+                                        <div class="col-md-5">
+                                          <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" [id]="'zone' + i" placeholder="Zone" formControlName="zone">
+                                            <label [for]="'zone' + i">Zone</label>
+                                          </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                          <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" [id]="'woreda' + i" placeholder="Woreda" formControlName="woreda">
+                                            <label [for]="'woreda' + i">Woreda</label>
+                                          </div>
+                                        </div>
+
+
+                                        <div class="col-md-2">
+                                            <button class="btn btn-outline-primary" (click)="addLocation(locationGroup.get('regionId').value,locationGroup )">
+                                                <i class="pi pi-map-marker"></i>
+                                            </button>
+                                        </div>
+
+                                      </div>
                                     </div>
-                                </div>
-                                <div class="col-md-1">
-                                    <button class="btn btn-outline-primary" (click)="addLocation()">
-                                        <i class="pi pi-map-marker"></i>
-                                    </button>
                                 </div>
                                 <!-- <div class="col-md-3">
                                     <div class="form-floating mb-3">
@@ -286,7 +285,7 @@
 
                                             <select class="form-select" formControlName="AssignedEmployee"
                                                 id="employees" multiple>
-                                                <option *ngFor="let emp of Employees" value={{emp.id}}>
+                                                <option *ngFor="let emp of Employees" [value]="emp.id.toUpperCase()">
                                                     {{emp.name}}</option>
                                             </select>
 

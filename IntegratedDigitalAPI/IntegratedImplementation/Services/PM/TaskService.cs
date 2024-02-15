@@ -104,8 +104,10 @@ namespace IntegratedDigitalAPI.Services.PM
                 if (task.HasActivityParent)
                 {
                     activityViewDtos = (from a in _dBContext.ActivitiesParents.Where(x => x.TaskId == taskId)
-                                        join e in _dBContext.Activities.Include(x=>x.ProjectSourceFund).OrderBy(x=>x.CreatedDate)
-                                        .Include(x=>x.Region).ThenInclude(x=>x.Country)
+                                        join e in _dBContext.Activities.
+                                        Include(x=>x.ActivityLocations).ThenInclude(x=>x.Region).                                        
+                                        Include(x=>x.ProjectSourceFund).OrderBy(x=>x.CreatedDate)
+                                      
                                      on a.Id equals e.ActivityParentId
                                         // join ae in _dBContext.EmployeesAssignedForActivities.Include(x=>x.Employee) on e.Id equals ae.ActivityId
                                         select new ActivityViewDto
@@ -114,10 +116,8 @@ namespace IntegratedDigitalAPI.Services.PM
                                             Name = e.ActivityDescription,
                                             PlannedBudget = e.PlanedBudget,
                                             ActivityType = e.ActivityType.ToString(),
-                                            ProjectLocation = $"{e.Woreda}-{e.Zone}-{e.Region.RegionName}-{e.Region.Country.CountryName}",
-                                            IsTraining = e.IsTraining,
-                                            ProjectLocationLng = e.Longtude,
-                                            ProjectLocationLat = e.Latitude,
+                                           IsTraining = e.IsTraining,
+                                         
                                             ActivityNumber = e.ActivityNumber,
                                             Begining = e.Begining,
                                             Target = e.Goal,
@@ -128,7 +128,7 @@ namespace IntegratedDigitalAPI.Services.PM
                                             EndDate = e.ShouldEnd.ToString(),
                                             Members = e.ProjectTeamId==null? _dBContext.EmployeesAssignedForActivities.Include(x => x.Employee).Where(x => x.ActivityId == e.Id).Select(y => new SelectListDto
                                             {
-                                                Id = y.Id,
+                                                Id = y.Employee.Id,
                                                 Name = $"{y.Employee.FirstName} {y.Employee.LastName}",
                                                 Photo = y.Employee.ImagePath,
                                                 EmployeeId = y.EmployeeId.ToString(),
@@ -136,7 +136,7 @@ namespace IntegratedDigitalAPI.Services.PM
                                             }).ToList():_dBContext.ProjectTeamEmployees.Where(x=>x.ProjectTeamId == e.ProjectTeamId).Include(x=>x.Employee)
                                             .Select(y => new SelectListDto
                                             {
-                                                Id = y.Id,
+                                                Id = y.Employee.Id,
                                                 Name = $"{y.Employee.FirstName} {y.Employee.LastName}",
                                                 Photo = y.Employee.ImagePath,
                                                 EmployeeId = y.EmployeeId.ToString(),
@@ -158,23 +158,19 @@ namespace IntegratedDigitalAPI.Services.PM
                                             StrategicPlan = e.StrategicPlanId,
                                             StrategicPlanIndicator = e.StrategicPlanIndicatorId,
                                             IsPercentage = e.IsPercentage,
-                                            RegionId = e.RegionId,
-                                            Zone = e.Zone,
-                                            Woreda = e.Woreda,
-                                            CountryId = e.Region.Country.Id,
-                                            Latitude = e.Latitude,
-                                            Longtude = e.Longtude,
-                                            ProjectSourceId = e.ProjectSourceFundId
+                                          
+                                          
+                                            ProjectSourceId = e.ProjectSourceFundId,
 
-
+                                            ActivityLocations = e.ActivityLocations.ToList()
 
                                         }
                                   ).ToList();
                 }
                 else
                 {
-                    activityViewDtos = (from e in _dBContext.Activities.OrderBy(x=>x.CreatedDate)
-                                         .Include(x => x.Region).ThenInclude(x => x.Country)
+                    activityViewDtos = (from e in _dBContext.Activities.OrderBy(x=>x.CreatedDate).
+                                          Include(x => x.ActivityLocations).ThenInclude(x => x.Region)
                                         where e.TaskId == task.Id
                                         // join ae in _dBContext.EmployeesAssignedForActivities.Include(x=>x.Employee) on e.Id equals ae.ActivityId
                                         select new ActivityViewDto
@@ -183,10 +179,7 @@ namespace IntegratedDigitalAPI.Services.PM
                                             Name = e.ActivityDescription,
                                             PlannedBudget = e.PlanedBudget,
                                             ActivityType = e.ActivityType.ToString(),
-                                            ProjectLocation = $"{e.Woreda}-{e.Zone}-{e.Region.RegionName}-{e.Region.Country.CountryName}",
-                                            IsTraining = e.IsTraining,
-                                            ProjectLocationLng = e.Longtude,
-                                            ProjectLocationLat = e.Latitude,
+                                            IsTraining = e.IsTraining,                                            
                                             ActivityNumber =e.ActivityNumber,
                                             Begining = e.Begining,
                                             Target = e.Goal,
@@ -196,7 +189,7 @@ namespace IntegratedDigitalAPI.Services.PM
                                             EndDate = e.ShouldEnd.ToString(),
                                             Members = e.ProjectTeamId == null ? _dBContext.EmployeesAssignedForActivities.Include(x => x.Employee).Where(x => x.ActivityId == e.Id).Select(y => new SelectListDto
                                             {
-                                                Id = y.Id,
+                                                Id = y.Employee.Id,
                                                 Name = $"{y.Employee.FirstName} {y.Employee.LastName}",
                                                 Photo = y.Employee.ImagePath,
                                                 EmployeeId = y.EmployeeId.ToString(),
@@ -204,7 +197,7 @@ namespace IntegratedDigitalAPI.Services.PM
                                             }).ToList() : _dBContext.ProjectTeamEmployees.Where(x => x.ProjectTeamId == e.ProjectTeamId).Include(x => x.Employee)
                                             .Select(y => new SelectListDto
                                             {
-                                                Id = y.Id,
+                                                Id = y.Employee.Id,
                                                 Name = $"{y.Employee.FirstName} {y.Employee.LastName}",
                                                 Photo = y.Employee.ImagePath,
                                                 EmployeeId = y.EmployeeId.ToString(),
@@ -226,9 +219,8 @@ namespace IntegratedDigitalAPI.Services.PM
                                             StrategicPlan = e.StrategicPlanId,
                                             StrategicPlanIndicator = e.StrategicPlanIndicatorId,
                                             IsPercentage = e.IsPercentage,
-                                            RegionId = e.RegionId,
-                                            Zone = e.Zone,
-                                            Woreda = e.Woreda
+                                            ActivityLocations = e.ActivityLocations.ToList()
+
 
                                         }
                                           ).ToList();
@@ -283,8 +275,8 @@ namespace IntegratedDigitalAPI.Services.PM
 
                     var activityProgress = _dBContext.ActivityProgresses;
 
-                    var activityViewDtos = (from e in _dBContext.Activities.OrderBy(x=>x.CreatedDate)
-                                           .Include(x=>x.Region).ThenInclude(x=>x.Country)
+                    var activityViewDtos = (from e in _dBContext.Activities.OrderBy(x=>x.CreatedDate).
+                                            Include(x => x.ActivityLocations).ThenInclude(x => x.Region)
                                             where e.PlanId == plan.Id
                                             // join ae in _dBContext.EmployeesAssignedForActivities.Include(x=>x.Employee) on e.Id equals ae.ActivityId
                                             select new ActivityViewDto
@@ -293,9 +285,7 @@ namespace IntegratedDigitalAPI.Services.PM
                                                 Name = e.ActivityDescription,
                                                 PlannedBudget = e.PlanedBudget,
                                                 ActivityType = e.ActivityType.ToString(),
-                                                ProjectLocation = $"{e.Woreda}-{e.Zone}-{e.Region.RegionName}-{e.Region.Country.CountryName}",
-                                                ProjectLocationLng = e.Longtude,
-                                                ProjectLocationLat = e.Latitude,
+                                               
                                                 ActivityNumber= e.ActivityNumber,
                                                 IsTraining = e.IsTraining,
                                                 Begining = e.Begining,
@@ -306,7 +296,7 @@ namespace IntegratedDigitalAPI.Services.PM
                                                 EndDate = e.ShouldEnd.ToString(),
                                                 Members = _dBContext.EmployeesAssignedForActivities.Include(x => x.Employee).Where(x => x.ActivityId == e.Id).Select(y => new SelectListDto
                                                 {
-                                                    Id = y.Id,
+                                                    Id = y.Employee.Id,
                                                     Name = $"{y.Employee.FirstName} {y.Employee.LastName}",
                                                     Photo = y.Employee.ImagePath,
                                                     EmployeeId = y.EmployeeId.ToString(),
@@ -327,9 +317,8 @@ namespace IntegratedDigitalAPI.Services.PM
                                                 StrategicPlan = e.StrategicPlanId,
                                                 StrategicPlanIndicator = e.StrategicPlanIndicatorId,
                                                 IsPercentage = e.IsPercentage,
-                                                RegionId = e.RegionId,
-                                                Zone = e.Zone,
-                                                Woreda = e.Woreda
+                                                ActivityLocations = e.ActivityLocations.ToList()
+
 
                                             }
                                             ).ToList();

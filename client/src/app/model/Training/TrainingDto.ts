@@ -21,7 +21,7 @@ export interface ITrainingPostDto{
 
 
     CreatedById?:string
-    Project:string
+  
     EndDate:Date
     StartDate:Date
     CourseVenue:string

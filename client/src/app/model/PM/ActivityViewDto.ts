@@ -28,6 +28,8 @@ export interface ActivityView {
 
     projectSource?:string
 
+    activityLocations?:any
+
 
 }
 export interface MonthPerformanceView {

@@ -132,6 +132,8 @@ namespace IntegratedInfrustructure.Data
         public DbSet<TaskMemo> TaskMemos { get; set; }
         public DbSet<TaskMemoReply> TaskMemoReply { get; set; }
         public DbSet<Tasks> Tasks { get; set; }
+
+        public DbSet<ActivityLocation> ActivityLocations { get; set; }  
         #endregion
 
         #region 

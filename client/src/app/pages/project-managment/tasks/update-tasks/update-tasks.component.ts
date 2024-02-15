@@ -33,7 +33,7 @@ export class UpdateTasksComponent implements OnInit {
     this.taskForm = this.formBuilder.group({
       TaskDescription:[this.task.taskName,Validators.required],
       HasActvity: [this.task.hasActivity, Validators.required],
-      PlannedBudget:[this.task.plannedBudget,[Validators.required,Validators.max(this.plan.remainingBudget)]]
+      PlannedBudget:[this.task.plannedBudget,[Validators.required,Validators.max(this.plan.remainingBudget+this.task.plannedBudget)]]
 
     })
   

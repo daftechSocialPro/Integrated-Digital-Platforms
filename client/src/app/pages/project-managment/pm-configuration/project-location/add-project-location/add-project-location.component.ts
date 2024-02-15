@@ -16,6 +16,7 @@ import { SelectList } from 'src/app/model/common';
   styleUrls: ['./add-project-location.component.css']
 })
 export class AddProjectLocationComponent implements OnInit {
+  @Input() regionId : string;
   @Input() lat !: number
   @Input() lng !: number
   private map!: L.Map;
@@ -232,6 +233,7 @@ export class AddProjectLocationComponent implements OnInit {
 
     
     this.activeModal.close({
+      regionId:this.regionId,
       lat:this.lat,
       lng:this.lng
     })

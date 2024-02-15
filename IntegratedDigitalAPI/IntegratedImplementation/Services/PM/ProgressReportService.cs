@@ -1274,9 +1274,9 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
             List<ActivityViewDto> assignedActivities =
                 await (from e in _dBContext.Activities
                       
-                        .Include(x => x.Region).ThenInclude(x => x.Country)
+                        
                        .Include(x => x.Commitee).ThenInclude(x => x.Employees)
-                       .Where(x => x.RegionId == LocationId &&x.ShouldStat >= budgetYearStart &&x.ShouldEnd <= budgetYearEnd)
+                       .Where(x => x.ActivityLocations.Select(x=>x.ActivityId).Contains(LocationId)&&x.ShouldStat >= budgetYearStart &&x.ShouldEnd <= budgetYearEnd)
 
                        select new ActivityViewDto
                        {
@@ -1284,10 +1284,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                            Name = e.ActivityDescription,
                            PlannedBudget = e.PlanedBudget,
                            ActivityType = e.ActivityType.ToString(),
-                           ProjectLocation = $"{e.Woreda}-{e.Zone}-{e.Region.RegionName}-{e.Region.Country.CountryName}",
-
-                           ProjectLocationLng = e.Longtude,
-                           ProjectLocationLat = e.Latitude,
+                          
                            ActivityNumber = e.ActivityNumber,
 
                            Begining = e.Begining,
@@ -3571,7 +3568,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
         public async Task<List<StaffWeeklyPlanDto>> GetStaffWeeklyPlans(FilterDateCriteriaDto filterDateCriteria)
         {
             var report = await _dBContext.Activities.AsNoTracking()
-                                 .Include(x => x.Region.Country)
+                                 
                                  .Include(x => x.Employee)
                                  .Where(x => x.ShouldEnd >= filterDateCriteria.FromDate
                                  && x.ShouldEnd <= filterDateCriteria.ToDate)
@@ -3580,7 +3577,7 @@ namespace IntegratedDigitalAPI.Services.PM.ProgressReport
                                      ActivityNo = x.ActivityNumber,
                                      Activity = x.ActivityDescription,
                                      ExecutionDate = x.ShouldEnd,
-                                     PlaceOfWork = $"{x.Woreda}-{x.Zone}-{x.Region.RegionName}-{x.Region.Country.CountryName}",
+                                     PlaceOfWork = $"",
                                      Responsible = String.Join(",", x.AssignedEmploye.Select(x => $"{x.Employee.FirstName} {x.Employee.MiddleName} {x.Employee.LastName}").ToList())
 
                                  }).ToListAsync();

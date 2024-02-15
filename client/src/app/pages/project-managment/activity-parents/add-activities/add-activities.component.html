@@ -14,8 +14,6 @@
                     <form class="" [formGroup]="activityForm" (ngSubmit)="submit()">
                         <div class="modal-body">
                             <div class="row g-3">
-
-
                                 <div class="col-12">
                                     <div class="form-floating">
                                         <textarea class="form-control" formControlName="ActivityDescription"
@@ -62,14 +60,7 @@
                                         <small style="color: red;">Remaining Budget : {{task?.remainingBudget}}</small>
                                     </div>
                                 </div>
-                                <!-- <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input type="number" class="form-control" id="Weight" placeholder="Weight"
-                                            formControlName="Weight">
-                                        <label for="Weight">Weight</label>
-                                        <small style="color: red;">Remaining Weight : {{task?.remianingWeight}}</small>
-                                    </div>
-                                </div> -->
+
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3">
                                         <select class="form-select" id="ActivityType" #activity
@@ -100,44 +91,43 @@
                                 </div>
                                 <div class="col-md-5">
                                     <div class="form-floating mb-3">
-                                        <!-- <select class="form-select" id="UnitofMeasurment"
-                                            formControlName="UnitOfMeasurement">
-                                            <option *ngFor="let um of unitMeasurments" value={{um.id}}>{{um.name}}
-                                            </option>
-                                        </select> -->
-                                        <input type="text" class="form-control" id="UnitOfMeasurement" placeholder="UnitOfMeasurement"
-                                        formControlName="UnitOfMeasurement">
+
+                                        <input type="text" class="form-control" id="UnitOfMeasurement"
+                                            placeholder="UnitOfMeasurement" formControlName="UnitOfMeasurement">
                                         <label for="UnitofMeasurment">Indicators </label>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
-                                    <div class="form-check" style="font-size: 25px;"> <input class="form-check-input" formControlName="IsPercentage"
-                                            type="checkbox" id="gridCheck"> <label class="form-check-label" style="font-size: 20px;font-weight: bold;"
+                                    <div class="form-check" style="font-size: 25px;"> <input class="form-check-input"
+                                            formControlName="IsPercentage" type="checkbox" id="gridCheck"> <label
+                                            class="form-check-label" style="font-size: 20px;font-weight: bold;"
                                             for="gridCheck">Is Percentage </label></div>
                                 </div>
 
                                 <div class="col-md-4">
                                     <div class="form-floating mb-3">
-                                    
-                                    <select class="form-control"  formControlName="SelectedProjectFund" >
 
-                                        <option *ngFor="let item of projectFundSources" [value]="item.id">
-                                            {{item.name}}</option>
+                                        <select class="form-control" formControlName="SelectedProjectFund">
 
-                                    </select>
-                                    <label for="ProjectSourceFunds">Activity Fund Source</label>
+                                            <option *ngFor="let item of projectFundSources" [value]="item.id">
+                                                {{item.name}}</option>
+
+                                        </select>
+                                        <label for="ProjectSourceFunds">Activity Fund Source</label>
                                     </div>
                                 </div>
 
-                            
+
 
 
                                 <div class="col-md-4">
                                     <div class="form-floating mb-3">
                                         <select class="form-select" id="strategicPlans" formControlName="StrategicPlan"
-                                         #strategicPlan (change)="GetIndicatorsByStrategicPlanIds(strategicPlan.value)">
+                                            #strategicPlan
+                                            (change)="GetIndicatorsByStrategicPlanIds(strategicPlan.value)">
                                             <option></option>
-                                            <option *ngFor="let strategicPlan of strategicPlans" [value]="strategicPlan.id">{{strategicPlan.name}}
+                                            <option *ngFor="let strategicPlan of strategicPlans"
+                                                [value]="strategicPlan.id">{{strategicPlan.name}}
                                             </option>
 
                                         </select>
@@ -147,9 +137,11 @@
 
                                 <div class="col-md-4">
                                     <div class="form-floating mb-3">
-                                        <select class="form-select" id="strategicPlanIndicator" formControlName="StrategicPlanIndicatorId">
-                                            
-                                            <option *ngFor="let um of strategicPlanIndicators" value={{um.id}}>{{um.name}}
+                                        <select class="form-select" id="strategicPlanIndicator"
+                                            formControlName="StrategicPlanIndicatorId">
+
+                                            <option *ngFor="let um of strategicPlanIndicators" value={{um.id}}>
+                                                {{um.name}}
                                             </option>
 
                                         </select>
@@ -159,86 +151,72 @@
 
 
                                 <div class="col-md-4">
-                                    <div class="form-check" style="font-size: 30px;"> <input class="form-check-input" formControlName="IsTraining"
-                                            type="checkbox" id="gridCheck"> <label class="form-check-label" style="font-size: 20px;font-weight: bold;"
+                                    <div class="form-check" style="font-size: 30px;"> <input class="form-check-input"
+                                            formControlName="IsTraining" type="checkbox" id="gridCheck"> <label
+                                            class="form-check-label" style="font-size: 20px;font-weight: bold;"
                                             for="gridCheck">Is Training </label></div>
                                 </div>
 
 
 
 
+                                <div class="row">
 
-                                <div class="col-md-3">
-                                    <div class="form-floating mb-3">
-                                        <select class="form-select" id="countryId" #country
-                                            (change)="getRegions(country.value)" aria-label="State">
-                                            <option></option>
-                                            <option *ngFor="let country of countries" [value]="country.id">{{
-                                                country.name }}</option>
-                                        </select>
-                                        <label for="countryId">Country</label>
+
+                                    <div class="col-md-3">
+                                        <div class="form-floating mb-3">
+                                            <select class="form-select" id="countryId" #country
+                                                (change)="getRegions(country.value)" aria-label="State">
+                                                <option></option>
+                                                <option *ngFor="let country of countries" [value]="country.id">{{
+                                                    country.name }}</option>
+                                            </select>
+                                            <label for="countryId">Country</label>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-floating mb-3">
-                                        <select class="form-select" (change)="getZones(region.value)" #region formControlName="RegionId"
-                                            id="regionId" aria-label="State">
-                                            <option></option>
-                                            <option *ngFor="let region of regions" [value]="region.id">{{
-                                                region.name }}</option>
-                                        </select>
-                                        <label for="countryId">Region</label>
+
+                                    <div class="col-md-3">
+                                        <div class="form-floating mb-3">
+                                            <select multiple class="form-select" style="height: 200px;" (change)="updateLocationForms()" formControlName="regionss">
+                                                <option *ngFor="let region of regions" [ngValue]="region.id">{{ region.name }}</option>
+                                            </select>
+                                            <label for="regionId">Region</label>
+                                        </div>
                                     </div>
-                                </div>
-                                <!-- <div class="col-md-3">
-                                    <div class="form-floating mb-3">
-                                        <select class="form-select" id="zoneId" formControlName="ZoneId"
-                                            aria-label="State">
-                                            <option></option>
-                                            <option *ngFor="let zone of zones" [value]="zone.id">{{
-                                                zone.name }}</option>
-                                        </select>
-                                        <label for="zoneId"> Zone</label>
+                                    
+                                    <div formArrayName="locations"  class="col-md-6">
+                                        <div *ngFor="let locationGroup of locations.controls; let i = index">
+                                          <div [formGroupName]="i" class="row">
+
+                                            <div class="col-md-12">
+                                                <span><b>{{ locationGroup.get('regionName').value }}</b></span>
+                                              </div>
+                                            <div class="col-md-5">
+                                              <div class="form-floating mb-3">
+                                                <input type="text" class="form-control" [id]="'zone' + i" placeholder="Zone" formControlName="zone">
+                                                <label [for]="'zone' + i">Zone</label>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-5">
+                                              <div class="form-floating mb-3">
+                                                <input type="text" class="form-control" [id]="'woreda' + i" placeholder="Woreda" formControlName="woreda">
+                                                <label [for]="'woreda' + i">Woreda</label>
+                                              </div>
+                                            </div>
+
+
+                                            <div class="col-md-2">
+                                                <button class="btn btn-outline-primary" (click)="addLocation(locationGroup.get('regionId').value,locationGroup )">
+                                                    <i class="pi pi-map-marker"></i>
+                                                </button>
+                                            </div>
+
+                                          </div>
+                                        </div>
                                     </div>
-                                </div> -->
-                                <div class="col-md-2">
-                                    <div class="form-floating"> <input type="text" class="form-control" id="zone"
-                                            placeholder="zone"  formControlName="Zone">
-                                        <label for="zone"> Zone</label>
-                                    </div>
+                                    
+
                                 </div>
-
-                                <div class="col-md-2">
-                                    <div class="form-floating"> <input type="text" class="form-control" id="woreda"
-                                            placeholder="woreda"  formControlName="Woreda">
-                                        <label for="woreda"> Woreda</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-1">
-                                    <button class="btn btn-outline-primary" (click)="addLocation()">
-                                        <i class="pi pi-map-marker"></i>
-                                    </button>
-                                </div>
-                                <!-- <div class="col-md-3">
-                                    <div class="form-floating mb-3">
-                                        <select class="form-select" id="ProjectLocationId"
-                                            formControlName="ProjectLocationId">
-
-                                            <option *ngFor="let um of projectLocations" value={{um.id}}>{{um.name}}
-                                            </option>
-
-                                        </select>
-                                        <label for="ProjectLocationId">Project Location </label>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                <button class="btn btn-outline-primary" (click)="addLocation()">
-                                    <i class="pi pi-map-marker"></i>
-                                </button>
-                                </div> -->
-
-
-
 
 
                                 <div class="col-md-6">
@@ -309,11 +287,14 @@
                         <div class="modal-body" *ngIf="task">
                             <div class="card-title text-center">{{task.taskName!}}</div>
                             <div class="text-center">
-                                <span class="card-title" *ngIf="dateAndTime"> {{dateAndTime.fromDate|date:"dd MM YYYY"}} -
+                                <span class="card-title" *ngIf="dateAndTime"> {{dateAndTime.fromDate|date:"dd MM YYYY"}}
+                                    -
                                     {{dateAndTime.endDate |date:"dd MM YYYY"}} </span> <br />
 
-                                <span class="card-title"> Task Budget : {{task.plannedBudget!|number:'1.0-2'}} ETB</span> <br />
-                                <span class="card-title"> Remaining Task Budget : {{task.remainingBudget |number:'1.0-2'}} ETB</span>
+                                <span class="card-title"> Task Budget : {{task.plannedBudget!|number:'1.0-2'}}
+                                    ETB</span> <br />
+                                <span class="card-title"> Remaining Task Budget : {{task.remainingBudget
+                                    |number:'1.0-2'}} ETB</span>
                                 <br />
                                 <!-- <span class="card-title">Remaining Task Weight :{{task.remianingWeight}} %</span> -->
                             </div>

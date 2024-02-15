@@ -29,7 +29,7 @@ export class AddTrainingListComponent implements OnInit {
       CourseVenue: ['', Validators.required],
       StartDate: ['', Validators.required],
       EndDate: ['', Validators.required],
-      Project: ['', Validators.required],
+     
       allocatedCeu:['',Validators.required]
 
     })
@@ -49,7 +49,7 @@ export class AddTrainingListComponent implements OnInit {
 
       let training: ITrainingPostDto = {
 
-        Project: this.trainingForm.value.Project,
+        
         ActivityId: this.activityId,
         Title: this.trainingForm.value.Title,
         // NameofOrganizaton: this.trainingForm.value.NameofOrganizaton,

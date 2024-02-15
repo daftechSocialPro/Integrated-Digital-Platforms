@@ -27,6 +27,9 @@ export class PlanDetailComponent implements OnInit {
   @ViewChild('excelTable', { static: false }) excelTable!: ElementRef;
   items: number[] = Array(13).fill(0);
   items2: number[] = Array(8).fill(0);
+
+  taskItems :number[] =Array(37).fill(0)
+  taskItems2 :number[] =Array(13).fill(0)
   planId!: string;
   
   exportingToExcel = false;
