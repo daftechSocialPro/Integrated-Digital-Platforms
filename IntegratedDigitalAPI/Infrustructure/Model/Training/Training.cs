@@ -1,4 +1,5 @@
 ﻿using IntegratedInfrustructure.Model.Authentication;
+using IntegratedInfrustructure.Model.PM;
 using IntegratedInfrustructure.Models.PM;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,9 @@ namespace IntegratedInfrustructure.Model.Training
 
         public DateTime EndDate { get; set; }   
 
-        public string Project { get; set; }
+        public Guid? ProjectId { get; set; }
+
+        public virtual Project Project { get; set; }
 
         public string? AllocatedCEU { get; set; }
 

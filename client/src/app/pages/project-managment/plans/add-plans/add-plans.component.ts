@@ -162,11 +162,24 @@ export class AddPlansComponent implements OnInit {
 
   selectEmployeePM(event: SelectList) {
    
+    console.log("add",event)
+    // this.employee = event;
+    this.ProjectManagerId = event
+
+  }
+
+  
+
+  selectEmployeePM2(event: SelectList) {
+   
+    console.log("update",event)
 
     // this.employee = event;
     this.ProjectManagerId = event
 
   }
+
+
   selectEmployeeF(event: string) {
 
     // this.employee = event;
@@ -256,7 +269,7 @@ console.log("p",this.ProjectManagerId)
         plandBudget: this.planForm.value.PlandBudget,
         remark: this.planForm.value.Remark,
         structureId: this.planForm.value.StructureId,
-        projectManagerId: this.planView.projectManagerId,
+        projectManagerId: this.ProjectManagerId.id,
         goal: this.planForm.value.Goal,
         objective: this.planForm.value.Objective,
         startDate: this.planForm.value.StartDate,

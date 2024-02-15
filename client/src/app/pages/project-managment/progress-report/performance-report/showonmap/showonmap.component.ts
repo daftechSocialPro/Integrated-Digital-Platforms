@@ -10,6 +10,8 @@ import * as L from 'leaflet';
 })
 export class ShowonmapComponent {
 
+
+  @Input() locations?:any
   @Input() lat !:number
   @Input() lng !:number
   @Input() title :string=""
@@ -18,7 +20,11 @@ export class ShowonmapComponent {
   constructor(private activeModal:NgbActiveModal) {}
 
   ngAfterViewInit() {
-    this.initMap();
+
+    if(this.locations){
+this.initMap2()
+    }else{
+    this.initMap();}
   }
 
   private initMap(): void {
@@ -47,6 +53,40 @@ export class ShowonmapComponent {
     
     const marker = L.marker([this.lat,this.lng], { icon: greenIcon }).addTo(this.map);
     marker.bindPopup(this.title);
+  }
+
+  private initMap2(): void {
+    this.map = L.map('map', {
+      center: [9,38],
+      zoom: 6
+    });
+
+    const tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+                   '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+                   'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+      maxZoom: 18
+    });
+
+    tileLayer.addTo(this.map);
+    const greenIcon = L.icon({
+      iconUrl: 'assets/marker-icon-green.png',
+      //shadowUrl: 'assets/marker-shadow.png',
+    
+      iconSize: [41, 35],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41]
+    });
+
+    console.log("locations")
+    
+    this.locations.map((item)=>{
+      const marker = L.marker([item.latitude, item.longtude], { icon: greenIcon }).addTo(this.map);
+      const title = `${item.region.regionName} - ${item.zone} - ${item.woreda}`
+      marker.bindPopup(title);
+    })
+  
   }
   closeModal(){
 

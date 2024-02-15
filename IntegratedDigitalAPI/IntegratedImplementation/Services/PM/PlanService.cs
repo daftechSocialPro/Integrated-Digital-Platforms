@@ -97,9 +97,12 @@ namespace IntegratedDigitalAPI.Services.PM
                     singlePlan.Objective = plan.Objective;
                     singlePlan.PlannedBudget = plan.PlandBudget;
                     singlePlan.DepartmentId = plan.StructureId;
-                    singlePlan.ProjectManagerId = plan.ProjectManagerId;
 
+                    if (plan.ProjectManagerId!=Guid.Empty)
+                    {
+                        singlePlan.ProjectManagerId = plan.ProjectManagerId;
 
+                    }
                     await _dBContext.SaveChangesAsync();
 
                 }

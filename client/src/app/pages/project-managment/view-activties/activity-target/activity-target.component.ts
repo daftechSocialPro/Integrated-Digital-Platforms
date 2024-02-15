@@ -63,62 +63,54 @@ export class ActivityTargetComponent implements OnInit {
       this.remainingBudget = this.activity.plannedBudget
       this.remainingTarget  = this.activity.target- this.activity.begining
     }
-
+this.onTargetChange()
     console.log('activity', this.activity)
   }
 
   addTargetForm() {
+    let monthDifference = this.getMonthDifference(this.activity.startDate, this.activity.endDate);
+    console.log('monthDifference', monthDifference);
+  
+    this.actTargets.clear();
+  
+    let startMonthIndex = new Date(this.activity.startDate).getMonth();
+  
+    for (let i = 0; i < monthDifference; i++) {
+      let monthIndex = (startMonthIndex + i) % 12;
+      let monthName = this.months[monthIndex];
+  
+      let targetFormGroup = new FormGroup({
+        monthName: new FormControl({ value: monthName, disabled: true }),
+        monthValue: new FormControl(monthIndex, Validators.required),
+        Target: new FormControl(0, Validators.required),
+        Budget: new FormControl(0, Validators.required)
+      });
+  
+      const monthPerformance = this.activity.monthPerformance.find(
+        performance => performance.order === monthIndex
+      );
 
+      console.log("monthPerformance",monthPerformance)
 
-    let monthDiffernce = this.getMonthDifference(this.activity.startDate, this.activity.endDate)
-    console.log('monthdiffernce', monthDiffernce)
-    this.actTargets.removeAt(0)
-
-
-
-    
-
-    var monthIndex = new Date(this.activity.startDate).getMonth();
-    let total = monthDiffernce + monthIndex
-
-    var i = 0
-    while (i < monthDiffernce) {
-
-      
-
-      if (monthIndex >= 12) {
-        var k = monthIndex - 12
-      
-        const target = new FormGroup({
-          monthName: new FormControl({ value: this.months[k], disabled: true }),
-          monthValue: new FormControl(monthIndex, Validators.required),
-          Target: new FormControl(0, Validators.required),
-          Budget: new FormControl(0, Validators.required)
+  
+      if (monthPerformance) {
+        targetFormGroup.patchValue({
+          Target: monthPerformance.planned,
+          Budget: monthPerformance.plannedBudget
+          
         });
-        this.actTargets.push(target);
+        
       }
-      else {
-        const target = new FormGroup({
-          monthName: new FormControl({ value: this.months[monthIndex], disabled: true }),
-          monthValue: new FormControl(monthIndex, Validators.required),
-          Target: new FormControl(0, Validators.required),
-          Budget: new FormControl(0, Validators.required)
-        });
-        this.actTargets.push(target);
-      }
-
-
-     
-      monthIndex += 1
-      i += 1;
-      // if (monthIndex == total)
-      //   break;
-
-
+  
+      this.actTargets.push(targetFormGroup);
     }
+
+   
+ 
   }
 
   onTargetChange(){
+    debugger
     var sumOfTarget = 0
     var sumOfBudget = 0
     for (let formValue of this.actTargets.value) {
@@ -129,6 +121,9 @@ export class ActivityTargetComponent implements OnInit {
   this.remainingTarget = (this.activity.target - this.activity.begining)-sumOfTarget
   this.remainingBudget = this.activity.plannedBudget-sumOfBudget
 }
+
+
+
 
   submitTarget() {
 
@@ -208,6 +203,84 @@ export class ActivityTargetComponent implements OnInit {
 
     }
   }
+  updateTarget() {
+
+    if (this.actTargets.valid) {
+      var sumOfTarget = 0
+      var sumOfBudget = 0
+
+      let targetDivisionDtos: TargetDivisionDto[] = []
+
+
+      // 
+      
+      for (let formValue of this.actTargets.value) {
+        sumOfTarget += Number(formValue.Target)
+        sumOfBudget += Number(formValue.Budget)
+
+        let targetDivisionDto: TargetDivisionDto = {
+          order: Number(formValue.monthValue),
+          target: Number(formValue.Target),
+          targetBudget: Number(formValue.Budget)
+        }
+
+        targetDivisionDtos.push(targetDivisionDto)
+      }
+
+     
+      let ActivityTargetDivisionDto: ActivityTargetDivisionDto = {
+
+        activiyId: this.activity.id,
+        createdBy: this.user.userId,
+        targetDivisionDtos: targetDivisionDtos
+      }
+
+
+
+
+
+      if (sumOfTarget != (this.activity.target - this.activity.begining)) {
+
+
+        this.messageService.add({ severity: 'error', summary: 'Verfication Failed.', detail: 'Sum of Activity target not equal to target of Activity' });
+
+
+        return
+
+      }
+
+      if (sumOfBudget != this.activity.plannedBudget) {
+        this.messageService.add({ severity: 'error', summary: 'Verfication Failed.', detail: 'Sum of Activity Budget not equal to Planned Budget' });
+
+
+        return
+
+      }
+
+      console.log("target act", ActivityTargetDivisionDto)
+
+
+      this.pmService.updateActivityTargetDivision(ActivityTargetDivisionDto).subscribe({
+        next: (res) => {
+
+          this.messageService.add({ severity: 'success', summary: 'Successfully created.', detail: 'Activity Target Assigned successFully' });
+
+
+          this.closeModal()
+          window.location.reload()
+
+        }, error: (err) => {
+          this.messageService.add({ severity: 'error', summary: 'Something went wrong.', detail: err.message });
+
+
+        }
+      })
+    }
+    else {
+
+
+    }
+  }
   closeModal() {
     this.activeModal.close()
   }
@@ -223,7 +296,7 @@ export class ActivityTargetComponent implements OnInit {
 
     console.log('Month Difference:', monthDifference);
 
-    return monthDifference;
+    return monthDifference+1;
   }
 
 

@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IndividualConfig } from 'ngx-toastr';
 
-import {  ActivityDetailDto, SubActivityDetailDto } from '../../../../model/PM/add-activities';
+import {  ActivityDetailDto, ActivityLocationDto, SubActivityDetailDto } from '../../../../model/PM/add-activities';
 import { TaskView } from 'src/app/model/PM/TaskDto';
 import { GetStartEndDate, SelectList } from 'src/app/model/common';
 import { UserView } from 'src/app/model/user';
@@ -49,10 +49,11 @@ export class AddActivitiesComponent implements OnInit {
   Employees: SelectList[] = [];
   minDate!: Date;
 
-    maxDate!: Date ;
+  maxDate!: Date ;
 
-  lat = 0 
-  lng = 0
+ 
+
+
 
   projectFundSources: SelectList[]
 
@@ -86,13 +87,13 @@ export class AddActivitiesComponent implements OnInit {
       CommiteeId: [null],
       AssignedEmployee: [],
       StrategicPlan:[],
-      StrategicPlanIndicatorId:[],
+      StrategicPlanIndicatorId:[,Validators.required],
       IsTraining:[false,Validators.required],
       IsPercentage:[false,Validators.required],
-      RegionId:['',Validators.required],
-      Zone:[''],
-      Woreda:[''],
-      SelectedProjectFund:['',Validators.required]
+  
+      SelectedProjectFund:['',Validators.required],
+      regionss: [[]],
+      locations: this.formBuilder.array([])
 
 
     })
@@ -150,7 +151,7 @@ export class AddActivitiesComponent implements OnInit {
        
     //   },
     // })
-this.getProjectFundSourse()
+  this.getProjectFundSourse()
 
   }
 
@@ -253,75 +254,6 @@ this.getProjectFundSourse()
   }
 
 
-  // addSubActivity(){
-
-  //   // if(this.lat==0||this.lng==0){
-  //   //   this.messageService.add({severity:'error',summary:"Location Not Selected",detail:'Please choose a location from map!!'})
-  //   //   return
-  //   // }
-  //   if(this.activityForm.value.Goal<=this.activityForm.value.PreviousPerformance){
-  //     this.messageService.add({severity:'error',summary:"Baseline Target Error",detail:'Baseline can not be Greater or equal to Target !!'})
-  //     return
-  //   }
-
-  //   if (this.activityForm.valid) {
-  //     let actvityP: SubActivityDetailDto = {
-  //       SubActivityDesctiption: this.activityForm.value.ActivityDescription,
-  //       StartDate: this.activityForm.value.StartDate,
-  //       EndDate: this.activityForm.value.EndDate,
-  //       PlannedBudget: this.activityForm.value.PlannedBudget,
-  //       ActivityNumber:this.activityForm.value.ActivityNumber,
-  //       ActivityType: this.activityForm.value.ActivityType,
-  //       OfficeWork: this.activityForm.value.ActivityType == 0 ? this.activityForm.value.OfficeWork : this.activityForm.value.ActivityType == 1 ? 100 : 0,
-  //       FieldWork: this.activityForm.value.ActivityType == 0 ? this.activityForm.value.FieldWork : this.activityForm.value.ActivityType == 2 ? 100 : 0,
-  //       UnitOfMeasurement: this.activityForm.value.UnitOfMeasurement,
-  //       PreviousPerformance: this.activityForm.value.PreviousPerformance,
-  //       Goal: this.activityForm.value.Goal,
-  //       TeamId: this.activityForm.value.TeamId,
-  //       CommiteeId: this.activityForm.value.CommiteeId,
-  //       Employees: this.activityForm.value.AssignedEmployee,
-  //       CreatedBy:this.user.userId,
-  //       longtude: this.lng,
-  //       latitude: this.lat,
-  //       StrategicPlanId:this.activityForm.value.StrategicPlan,
-  //       RegionId:this.activityForm.value.RegionId,
-  //       Zone:this.activityForm.value.Zone,
-  //       Woreda:this.activityForm.value.Woreda ,
-  //       StrategicPlanIndicatorId:this.activityForm.value.StrategicPlanIndicatorId,
-  //       IsTraining:this.activityForm.value.IsTraining,      
-  //       IsPercentage:this.activityForm.value.IsPercentage,
-  //       selectedProjectFund:this.activityForm.value.SelectedProjectFund
-
-  // //     }
-  // //     if(this.requestFrom == "PLAN"){
-  // //       actvityP.PlanId = this.requestFromId;
-  // //     }
-  // //     else if(this.requestFrom == "TASK"){
-  // //       actvityP.TaskId = this.requestFromId;
-  // //     }
-
- 
-  // //     console.log("sdfsdfd",actvityP)
-
-  // //     this.pmService.addSubActivity(actvityP).subscribe({
-  // //       next: (res) => {
-
-  // //         this.messageService.add({ severity: 'success', summary: 'Successfull', detail: 'Activity Successfully Created' });        
-    
-  // //         window.location.reload()
-  // //         this.closeModal()
-         
-  // //       }, error: (err) => {
-
-  // //         this.messageService.add({ severity: 'error', summary: 'Something went wrong.', detail: err.message });        
-        
-
-  //         console.error(err)
-  //       }
-  //     }) 
-  //   }
-  // }
-
 
   addActivityParent(){
     
@@ -358,8 +290,9 @@ this.getProjectFundSourse()
         StrategicPlanIndicatorId:this.activityForm.value.StrategicPlanIndicatorId,
         IsTraining:this.activityForm.value.IsTraining,   
         IsPercentage:this.activityForm.value.IsPercentage,
-        longtude: this.lng,
-        latitude: this.lat,
+        activityLocations : this.activityForm.value.locations,
+        // longtude: this.lng,
+        // latitude: this.lat,
         selectedProjectFund:this.activityForm.value.SelectedProjectFund
       }
 
@@ -421,20 +354,85 @@ this.getProjectFundSourse()
     })
   }
 
-  addLocation(){
+  addLocation(regionId,locationGroup){
     event.preventDefault()
     let modalRef = this.modalService.open(AddProjectLocationComponent,{size:'lg',backdrop:'static'})
-    modalRef.componentInstance.calledFrom=1
+    modalRef.componentInstance.calledFrom= 1
+    modalRef.componentInstance.regionId = regionId
 
     modalRef.result.then((res)=>{
 
-      this.lng = res.lng
-      this.lat = res.lat
+
+  
+      locationGroup.patchValue({
+        longtude: res.lng,
+        latitude: res.lat
+      });
       console.log(res)
     })
 
     
   }
+
+
+  updateLocationForms() {
+    const selectedRegionIds = this.activityForm.get('regionss')?.value; // Get the selected region IDs
+    var regionName =''
+    // Check if locations is a FormArray
+    if (this.locations instanceof FormArray) {
+        const currentLocationForms = this.locations;
+
+        // Remove location forms that are no longer selected
+        for (let i = currentLocationForms.length - 1; i >= 0; i--) {
+            const locationForm = currentLocationForms.at(i) as FormGroup;
+            const regionId = locationForm.get('regionId')?.value;
+           
+
+            if (!selectedRegionIds.includes(regionId)) {
+                this.locations.removeAt(i);
+            }
+        }
+
+        // Add location forms for newly selected regions
+        selectedRegionIds.forEach((regionId: string) => {
+
+          console.log(regionId)
+            const locationFormExists = currentLocationForms.controls.some((locationForm) => {
+                const existingRegionId = (locationForm as FormGroup).get('regionId')?.value;
+                return existingRegionId === regionId;
+            });
+
+            regionName = this.regions.filter(x=>x.id.toLowerCase()==regionId.toLowerCase())[0].name
+        
+            if (!locationFormExists) {
+                const locationGroup = this.formBuilder.group({
+                    regionName:regionName,
+                    regionId: regionId,
+                    zone: '',
+                    woreda: '',
+                    latitude:'',
+                    longtude:''
+                });                
+
+                this.locations.push(locationGroup);
+            }
+        });
+    }
+
+    console.log(this.locations.value)
+}
+
+
+  // Getter for easier access to the locations FormArray
+  get locations() {
+    return this.activityForm.get('locations') as FormArray;
+  }
+
+  get regionss() {
+    return this.activityForm.get('regionss');
+  }
+
+
 
 
 }

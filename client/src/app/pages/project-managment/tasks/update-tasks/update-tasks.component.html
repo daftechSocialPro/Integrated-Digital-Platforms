@@ -28,7 +28,7 @@
                                             formControlName="PlannedBudget">
                                         <label for="PlannedBudget">Planned Budget</label>
 
-                                        <small style="color: red;">Remaining Budget : {{plan.remainingBudget|number:'1.0-2'}} ETB </small>
+                                        <small style="color: red;">Remaining Budget : {{plan.remainingBudget+task.plannedBudget|number:'1.0-2'}} ETB </small>
                                     </div>
                                 </div>
 

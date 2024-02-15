@@ -106,9 +106,18 @@
                                 <td>{{actView.begining}}</td>
                                 <td>{{actView.target}}</td>
                                 <td>{{actView.unitOfMeasurment}}</td>
-                                <td>{{actView.projectLocation}} </td>
-                                <td> <button class="btn btn-outline-primary" (click)="Showonmap(
-            actView.projectLocationLat,actView.projectLocationLng,actView.projectLocation)">View
+                                <td>
+                                    
+                                    <div *ngFor="let item of actView.activityLocations">
+
+                                        <span>{{item.region.regionName}}- {{item.zone}} - {{item.woreda}} </span> <br/>
+
+                                    </div>
+                                    
+                                    
+                                    
+                                    {{actView.projectLocation}} </td>
+                                <td> <button class="btn btn-outline-primary" (click)="Showonmap(actView)">View
                                     </button></td>
 
                             </tr>

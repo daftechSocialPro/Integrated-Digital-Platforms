@@ -12,6 +12,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
 
         public Task<int> AddTargetActivities(ActivityTargetDivisionDto targetDivisions);
 
+        public Task<int> UpdateTargetActivities(ActivityTargetDivisionDto targetDivisions);
         public Task<ResponseMessage> AddProgress(AddProgressActivityDto activityProgress);
         public Task<ResponseMessage> UpdateProgress(AddProgressActivityDto activityProgress);
 

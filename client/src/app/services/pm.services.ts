@@ -92,6 +92,11 @@ export class PMService {
         return this.http.post(this.BaseURI + "/Activity/targetDivision", activityDto)
 
     }
+    updateActivityTargetDivision(activityDto: ActivityTargetDivisionDto) {
+
+        return this.http.put(this.BaseURI + "/Activity/updateTargetDivision", activityDto)
+
+    }
 
     addActivityPorgress(progress: FormData) {
 

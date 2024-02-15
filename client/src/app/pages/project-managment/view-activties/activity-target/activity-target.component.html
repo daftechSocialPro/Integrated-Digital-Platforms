@@ -60,7 +60,9 @@
             </div>
             <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
                     (click)="closeModal()">Close</button>
-                <button type="button" type="submit" (click)="submitTarget()" class="btn btn-outline-primary">Assign
+                <button type="button" type="submit" (click)="activity?.monthPerformance.length!=0?updateTarget():submitTarget()" [class]="activity?.monthPerformance.length!=0?'btn btn-outline-warning':'btn btn-outline-primary'">
+                    
+                   {{activity?.monthPerformance.length!=0?'Update':'Assign'}}
                     Target </button>
             </div>
         </div>

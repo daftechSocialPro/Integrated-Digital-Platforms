@@ -67,6 +67,20 @@ namespace IntegratedDigitalAPI.Controllers.PM
             }
         }
 
+        [HttpPut("updateTargetDivision")]
+        public IActionResult UpdateTargetDivisionActivity(ActivityTargetDivisionDto activityTarget)
+        {
+            try
+            {
+                var response = _activityService.UpdateTargetActivities(activityTarget);
+                return Ok(new { response });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error : {ex}");
+            }
+        }
+
 
 
         [HttpPost("addProgress")]

@@ -61,9 +61,9 @@
 
                                 <div class="col-md-4">
                                     <div class="form-floating">
-                                        <app-autocomplete2 [isDisabled]="true" *ngIf="employeeList.length>0&&planView"
+                                        <app-autocomplete2  *ngIf="employeeList.length>0&&planView"
                                             [data]="employeeList" [selectedId]="planView.projectManagerId.toLowerCase()"
-                                            placeHolder="Project Manager" (selectedItem)="selectEmployeePM($event)">
+                                            placeHolder="Project Manager" (selectedItem)="selectEmployeePM2($event)">
                                         </app-autocomplete2>
 
                                         <app-autocomplete2 *ngIf="employeeList.length>0&&!planView" [data]="employeeList"

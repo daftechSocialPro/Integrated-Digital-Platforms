@@ -1,6 +1,8 @@
 ﻿
 
 using IntegratedImplementation.DTOS.Configuration;
+using IntegratedImplementation.DTOS.PM;
+using IntegratedInfrustructure.Model.PM;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
 
@@ -14,10 +16,7 @@ namespace IntegratedDigitalAPI.DTOS.PM
         public string ActivityType { get; set; } = null!;
         public float Weight { get; set; }
 
-        public string ProjectLocation { get; set; }
-        public double ProjectLocationLat { get; set; }
-        public double ProjectLocationLng { get; set; }
-
+       
         public string ActivityNumber { get; set; }
 
         public float Begining { get; set; }
@@ -42,17 +41,16 @@ namespace IntegratedDigitalAPI.DTOS.PM
         public Guid? StrategicPlan { get;  set; }
         public Guid? StrategicPlanIndicator { get;  set; }
         public bool? IsPercentage { get;  set; }
-        public Guid? RegionId { get;  set; }
-        public string? Zone { get;  set; }
-        public string? Woreda { get; set; }
+       
 
 
         public string? ProjectSource { get; set; }
 
         public Guid? CountryId { get; set; }
-        public double? Longtude { get; set; }
-        public double? Latitude { get; set; }
+
         public Guid? ProjectSourceId { get; set; }
+
+        public List<ActivityLocation> ActivityLocations { get; set; } 
 
     }
 
