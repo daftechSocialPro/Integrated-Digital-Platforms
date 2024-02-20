@@ -36,12 +36,13 @@ export class MemberDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.userService.getCurrentUser();
+    console.log(this.member)
     this.getEducationalLevels();
     this.updateProfileForm = this.formBuilder.group({
       fullName: [this.member.fullName,Validators.required],
       phoneNumber :[this.member.phoneNumber,Validators.required],
       educationalField: [this.member.educationalField, Validators.required],
-      educationalLevelId: [this.member.educationalLevelId.toLocaleLowerCase(), Validators.required],
+      educationalLevelId: [this.member.educationalLevelId&& this.member.educationalLevelId.toLowerCase(), Validators.required],
       gender: [this.member.gender, Validators.required],
       institute: [this.member.inistitute, Validators.required],
       email : [this.member.email],

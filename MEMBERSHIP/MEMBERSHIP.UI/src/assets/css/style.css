@@ -33318,7 +33318,7 @@ select[data-multiselectsplitter-secondselect-selector].dataTable-input {
 }
 
 .widget-profile-card-3 {
-    background-image: url(../images/widget/slider5.html);
+    /*background-image: url(../images/widget/slider5.html);*/
     background-size: cover;
     padding: 50px 0;
     text-align: center
@@ -33390,7 +33390,7 @@ select[data-multiselectsplitter-secondselect-selector].dataTable-input {
     color: #fff;
     text-align: center;
     padding-top: 45px;
-    background-image: url(../images/widget/blur-bg.html);
+    /*background-image: url(../images/widget/blur-bg.html);*/
     background-size: cover
 }
 

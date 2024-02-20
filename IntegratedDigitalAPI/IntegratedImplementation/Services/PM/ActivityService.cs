@@ -40,141 +40,150 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
         public async Task<int> AddActivityDetails(ActivityDetailDto activityDetail)
         {
 
-
-            var actparent = _dBContext.ActivitiesParents.Where(x => x.TaskId == activityDetail.TaskId).FirstOrDefault();
-
-
-            ActivityParent activityParent = new ActivityParent();
-
-            if (actparent != null)
-            {
-                activityParent = actparent;
-            }
-            else {
-                activityParent.Id = Guid.NewGuid();
-                
-                activityParent.CreatedDate = DateTime.Now;
-                activityParent.CreatedById = activityDetail.CreatedBy.ToString();
-                activityParent.ActivityParentDescription = activityDetail.ActivityDescription;
-                activityParent.HasActivity = activityDetail.HasActivity;
-                activityParent.TaskId = activityDetail.TaskId;
-                await _dBContext.AddAsync(activityParent);
-            }
-
-            foreach (var item in activityDetail.ActivityDetails)
+            try
             {
 
+                var actparent = _dBContext.ActivitiesParents.Where(x => x.TaskId == activityDetail.TaskId).FirstOrDefault();
 
-                IntegratedInfrustructure.Models.PM.Activity activity = new IntegratedInfrustructure.Models.PM.Activity();
-                activity.Id = Guid.NewGuid();
-                activity.CreatedDate = DateTime.Now;
-                activity.CreatedBy = activityParent.CreatedBy;
-                activity.ActivityParentId = activityParent.Id;
-                activity.ActivityDescription = item.SubActivityDesctiption;
-                activity.ActivityType = item.ActivityType == 0 ? ActivityType.OFFICE_WORK : ActivityType.FIELD_WORK;
-                activity.Begining = item.PreviousPerformance;
-                if (item.CommiteeId != null)
+
+                ActivityParent activityParent = new ActivityParent();
+
+                if (actparent != null)
                 {
-                    activity.ProjectTeamId = item.CommiteeId;
+                    activityParent = actparent;
                 }
-                activity.FieldWork = item.FieldWork;
-                activity.Goal = item.Goal;
-                activity.OfficeWork = item.OfficeWork;
-                activity.PlanedBudget = item.PlannedBudget;
-                activity.IsPercentage = item.IsPercentage;
-                activity.Indicator = item.UnitOfMeasurement;
-                activity.ProjectSourceFundId = item.SelectedProjectFund;
-                activity.ShouldStat =  DateTime.Parse(item.StartDate);
-                activity.ShouldEnd = DateTime.Parse(item.EndDate);
-                activity.StrategicPlanId = item.StrategicPlanId;
-                //activity.ZoneId = item.ZoneId;
-               
-                activity.StrategicPlanIndicatorId = item.StrategicPlanIndicatorId;
-                activity.ActivityNumber = item.ActivityNumber;
-              
-                activity.IsTraining = item.IsTraining;
-
-                await _dBContext.Activities.AddAsync(activity);
-                await _dBContext.SaveChangesAsync();
-                if (item.Employees != null)
+                else
                 {
-                    foreach (var employee in item.Employees)
-                    {
-                        if (!string.IsNullOrEmpty(employee))
-                        {
-                            EmployeesAssignedForActivities EAFA = new EmployeesAssignedForActivities
-                            {
-                                CreatedDate = DateTime.Now,
-                                CreatedBy = activityParent.CreatedBy,
-                              
-                                Id = Guid.NewGuid(),
+                    activityParent.Id = Guid.NewGuid();
 
-                                ActivityId = activity.Id,
-                                EmployeeId = Guid.Parse(employee),
-                            };
-                            await _dBContext.EmployeesAssignedForActivities.AddAsync(EAFA);
-                            await _dBContext.SaveChangesAsync();
+                    activityParent.CreatedDate = DateTime.Now;
+                    activityParent.CreatedById = activityDetail.CreatedBy.ToString();
+                    activityParent.ActivityParentDescription = activityDetail.ActivityDescription;
+                    activityParent.HasActivity = activityDetail.HasActivity;
+                    activityParent.TaskId = activityDetail.TaskId;
+                    await _dBContext.AddAsync(activityParent);
+                }
+
+                foreach (var item in activityDetail.ActivityDetails)
+                {
+
+
+                    IntegratedInfrustructure.Models.PM.Activity activity = new IntegratedInfrustructure.Models.PM.Activity();
+                    activity.Id = Guid.NewGuid();
+                    activity.CreatedDate = DateTime.Now;
+                    activity.CreatedBy = activityParent.CreatedBy;
+                    activity.ActivityParentId = activityParent.Id;
+                    activity.ActivityDescription = item.SubActivityDesctiption;
+                    activity.ActivityType = item.ActivityType == 0 ? ActivityType.OFFICE_WORK : ActivityType.FIELD_WORK;
+                    activity.Begining = item.PreviousPerformance;
+                    if (item.CommiteeId != null)
+                    {
+                        activity.ProjectTeamId = item.CommiteeId;
+                    }
+                    activity.FieldWork = item.FieldWork;
+                    activity.Goal = item.Goal;
+                    activity.OfficeWork = item.OfficeWork;
+                    activity.PlanedBudget = item.PlannedBudget;
+                    activity.IsPercentage = item.IsPercentage;
+                    activity.Indicator = item.UnitOfMeasurement;
+                    activity.ProjectSourceFundId = item.SelectedProjectFund;
+                    activity.ShouldStat = DateTime.Parse(item.StartDate);
+                    activity.ShouldEnd = DateTime.Parse(item.EndDate);
+                    activity.StrategicPlanId = item.StrategicPlanId;
+                    //activity.ZoneId = item.ZoneId;
+
+                    activity.StrategicPlanIndicatorId = item.StrategicPlanIndicatorId;
+                    activity.ActivityNumber = item.ActivityNumber;
+
+                    activity.IsTraining = item.IsTraining;
+
+                    await _dBContext.Activities.AddAsync(activity);
+                    await _dBContext.SaveChangesAsync();
+                    if (item.Employees != null)
+                    {
+                        foreach (var employee in item.Employees)
+                        {
+                            if (!string.IsNullOrEmpty(employee))
+                            {
+                                EmployeesAssignedForActivities EAFA = new EmployeesAssignedForActivities
+                                {
+                                    CreatedDate = DateTime.Now,
+                                    CreatedBy = activityParent.CreatedBy,
+
+                                    Id = Guid.NewGuid(),
+
+                                    ActivityId = activity.Id,
+                                    EmployeeId = Guid.Parse(employee),
+                                };
+                                await _dBContext.EmployeesAssignedForActivities.AddAsync(EAFA);
+                                await _dBContext.SaveChangesAsync();
+                            }
                         }
                     }
+
+
+                    foreach (var activityLocation in item.ActivityLocations)
+                    {
+
+                        ActivityLocation actLocation = new ActivityLocation
+                        {
+                            CreatedDate = DateTime.Now,
+                            CreatedById = activityParent.CreatedById,
+
+                            Id = Guid.NewGuid(),
+                            ActivityId = activity.Id,
+                            RegionId = activityLocation.RegionId,
+                            Zone = activityLocation.Zone,
+                            Woreda = activityLocation.Woreda,
+                            Latitude = activityLocation.Latitude,
+                            Longtude = activityLocation.Longtude
+
+                        };
+                        await _dBContext.ActivityLocations.AddAsync(actLocation);
+                        await _dBContext.SaveChangesAsync();
+
+                    }
+
                 }
 
 
-                foreach (var activityLocation in item.ActivityLocations)
+
+                var Task = await _dBContext.Tasks.FirstOrDefaultAsync(x => x.Id.Equals(activityDetail.TaskId));
+                if (Task != null)
                 {
-               
-                            ActivityLocation actLocation = new ActivityLocation
-                            {
-                                CreatedDate = DateTime.Now,
-                                CreatedById = activityParent.CreatedById,
-                              
-                                Id = Guid.NewGuid(),
-                                ActivityId = activity.Id,
-                                RegionId = activityLocation.RegionId,
-                                Zone =activityLocation.Zone,
-                                Woreda =activityLocation.Woreda,
-                                Latitude =activityLocation.Latitude,
-                                Longtude = activityLocation.Longtude
-
-                            };
-                            await _dBContext.ActivityLocations.AddAsync(actLocation);
-                            await _dBContext.SaveChangesAsync();
-                        
+                    var plan = _dBContext.Projects.FirstOrDefaultAsync(x => x.Id.Equals(Task.ProjectId)).Result;
+                    if (plan != null)
+                    {
+                        var ActParent = _dBContext.ActivitiesParents.Find(activityParent.Id);
+                        var Activities = _dBContext.Activities.Where(x => x.ActivityParentId == activityParent.Id);
+                        if (ActParent != null && Activities != null)
+                        {
+                            ActParent.ShouldStartPeriod = Activities.Min(x => x.ShouldStat);
+                            ActParent.ShouldEnd = Activities.Max(x => x.ShouldEnd);
+                            ActParent.Weight = Activities.Sum(x => x.Weight);
+                            _dBContext.SaveChanges();
+                        }
+                        var ActParents = _dBContext.ActivitiesParents.Where(x => x.TaskId == Task.Id).ToList();
+                        if (Task != null && ActParents != null)
+                        {
+                            Task.ShouldStartPeriod = ActParents.Min(x => x.ShouldStartPeriod);
+                            Task.ShouldEnd = ActParents.Max(x => x.ShouldEnd);
+                            Task.Weight = ActParents.Sum(x => x.Weight);
+                            _dBContext.SaveChanges();
+                        }
+                        var tasks = _dBContext.Tasks.Where(x => x.ProjectId == plan.Id).ToList();
+                        //plan.PeriodStartAt = tasks.Min(x => x.ShouldStartPeriod);
+                        //plan.PeriodEndAt = tasks.Max(x => x.ShouldEnd);
+                        _dBContext.SaveChanges();
+                    }
                 }
-
+                return 1;
             }
-
-
-
-            var Task = await _dBContext.Tasks.FirstOrDefaultAsync(x => x.Id.Equals(activityDetail.TaskId));
-            if (Task != null)
+            catch (Exception ex)
             {
-                var plan = _dBContext.Projects.FirstOrDefaultAsync(x => x.Id.Equals(Task.ProjectId)).Result;
-                if (plan != null)
-                {
-                    var ActParent = _dBContext.ActivitiesParents.Find(activityParent.Id);
-                    var Activities = _dBContext.Activities.Where(x => x.ActivityParentId == activityParent.Id);
-                    if (ActParent != null && Activities != null)
-                    {
-                        ActParent.ShouldStartPeriod = Activities.Min(x => x.ShouldStat);
-                        ActParent.ShouldEnd = Activities.Max(x => x.ShouldEnd);
-                        ActParent.Weight = Activities.Sum(x => x.Weight);
-                        _dBContext.SaveChanges();
-                    }
-                    var ActParents = _dBContext.ActivitiesParents.Where(x => x.TaskId == Task.Id).ToList();
-                    if (Task != null && ActParents != null)
-                    {
-                        Task.ShouldStartPeriod = ActParents.Min(x => x.ShouldStartPeriod);
-                        Task.ShouldEnd = ActParents.Max(x => x.ShouldEnd);
-                        Task.Weight = ActParents.Sum(x => x.Weight);
-                        _dBContext.SaveChanges();
-                    }
-                    var tasks = _dBContext.Tasks.Where(x => x.ProjectId == plan.Id).ToList();
-                    //plan.PeriodStartAt = tasks.Min(x => x.ShouldStartPeriod);
-                    //plan.PeriodEndAt = tasks.Max(x => x.ShouldEnd);
-                    _dBContext.SaveChanges();
-                }
+
+                return 0;
             }
-            return 1;
         }
 
 
@@ -1443,7 +1452,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                         var employees = await _dBContext.EmployeesAssignedForActivities.Where(x => x.ActivityId == act.Id).ToListAsync();
 
 
-                        if (activityTargets.Any())
+                        if (employees.Any())
                         {
                             _dBContext.EmployeesAssignedForActivities.RemoveRange(employees);
                             await _dBContext.SaveChangesAsync();
@@ -1452,6 +1461,14 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                         if (activityParents.Any())
                         {
                             _dBContext.ActivitiesParents.RemoveRange(activityParents);
+                            await _dBContext.SaveChangesAsync();
+                        }
+
+                        var actLocations = await _dBContext.ActivityLocations.Where(x => x.ActivityId == act.Id).ToListAsync();
+
+                        if (actLocations.Any())
+                        {
+                            _dBContext.ActivityLocations.RemoveRange(actLocations);
                             await _dBContext.SaveChangesAsync();
                         }
 
