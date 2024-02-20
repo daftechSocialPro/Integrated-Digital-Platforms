@@ -375,6 +375,14 @@ namespace IntegratedDigitalAPI.Services.PM
                                         _dBContext.EmployeesAssignedForActivities.RemoveRange(employees);
                                         await _dBContext.SaveChangesAsync();
                                     }
+                                    var actLocations = await _dBContext.ActivityLocations.Where(x => x.ActivityId == act.Id).ToListAsync();
+
+                                    if (actLocations.Any())
+                                    {
+                                        _dBContext.ActivityLocations.RemoveRange(actLocations);
+                                        await _dBContext.SaveChangesAsync();
+                                    }
+
 
 
 
@@ -386,7 +394,7 @@ namespace IntegratedDigitalAPI.Services.PM
                             await _dBContext.SaveChangesAsync();
 
                         }
-                        var actvities2 = await _dBContext.Activities.Where(x => x.ActivityParentId == task.Id).ToListAsync();
+                        var actvities2 = await _dBContext.Activities.Where(x => x.TaskId == task.Id).ToListAsync();
 
                         if (actvities2.Any())
                         {
@@ -424,7 +432,7 @@ namespace IntegratedDigitalAPI.Services.PM
                                 var employees = await _dBContext.EmployeesAssignedForActivities.Where(x => x.ActivityId == act.Id).ToListAsync();
 
 
-                                if (activityTargets.Any())
+                                if (employees.Any())
                                 {
                                     _dBContext.EmployeesAssignedForActivities.RemoveRange(employees);
                                     await _dBContext.SaveChangesAsync();
@@ -436,17 +444,32 @@ namespace IntegratedDigitalAPI.Services.PM
                                     await _dBContext.SaveChangesAsync();
                                 }
 
+                                var actLocations = await _dBContext.ActivityLocations.Where(x => x.ActivityId == act.Id).ToListAsync();
+
+                                if (actLocations.Any())
+                                {
+                                    _dBContext.ActivityLocations.RemoveRange(actLocations);
+                                    await _dBContext.SaveChangesAsync();
+                                }
+
 
                             }
 
                             _dBContext.Activities.RemoveRange(actvities2);
                             await _dBContext.SaveChangesAsync();
                         }
-                        _dBContext.Tasks.RemoveRange(tasks);
-                        await _dBContext.SaveChangesAsync();
+                        
                     }
+                    _dBContext.Tasks.RemoveRange(tasks);
+                    await _dBContext.SaveChangesAsync();
 
 
+                    _dBContext.Projects.Remove(plan);
+                    await _dBContext.SaveChangesAsync();
+                }
+
+                else
+                {
                     _dBContext.Projects.Remove(plan);
                     await _dBContext.SaveChangesAsync();
                 }

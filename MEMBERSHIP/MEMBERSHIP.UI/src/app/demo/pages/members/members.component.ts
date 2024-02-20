@@ -15,8 +15,8 @@ import { MemberDetailComponent } from './member-detail/member-detail.component';
 export class MembersComponent implements OnInit {
   first: number = 0;
   rows: number = 5;
-  Members: IMembersGetDto[];
-  paginatedMembers: IMembersGetDto[];
+  Members: IMembersGetDto[]=[];
+  paginatedMembers: IMembersGetDto[]=[];
   searchTerm: string = '';
   selectedFile: File | null = null;
   ngOnInit(): void {

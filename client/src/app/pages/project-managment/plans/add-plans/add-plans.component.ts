@@ -192,7 +192,7 @@ export class AddPlansComponent implements OnInit {
 
 
 
-    if (!this.ProjectManagerId) {
+    if (!this.ProjectManagerId.id) {
 
 
       this.messageService.add({ severity: 'error', summary: 'Netowrk Error', detail: "Project manager Not selected" });
