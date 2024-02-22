@@ -37,9 +37,9 @@ namespace IntegratedInfrustructure.Model.Training
 
         public Gender Gender { get; set; }
 
-        public string ? PreSummary { get; set; }
+        public double ? PreSummary { get; set; }
 
-        public string ? PostSummary { get; set; }
+        public double ? PostSummary { get; set; }
 
     }
 }

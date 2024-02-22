@@ -26,4 +26,10 @@ export class ProjectmanagementService {
     return this.http.put<ResponseMessage>(this.baseUrl+"/StrategicPlan",stragiclanGet)
   }
 
+  getStrategicPlanForReport(strategicPlanId:string){
+
+        
+    return this.http.get<any>(this.baseUrl+`/StrategicPlan/GetStrategicPlanForReport?strategicPlanId=${strategicPlanId}`)
+}
+
 }

@@ -8,6 +8,8 @@ import { PlanService } from '../../../services/plan.service';
 import { PlanView } from '../../../model/PM/PlansDto';
 import { PlanDetailComponent } from './plan-detail/plan-detail.component';
 import { ConfirmEventType, ConfirmationService, MessageService } from 'primeng/api';
+import { UserView } from 'src/app/model/user';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-plans',
@@ -18,16 +20,19 @@ export class PlansComponent implements OnInit {
   
   programId!: string;
   Plans: PlanView[] = []
+  userview:UserView
   constructor(
     private modalService: NgbModal,
     private planService: PlanService,
     private router: Router,
     private messageService :MessageService,
+    private userService:UserService,
     private confirmationService : ConfirmationService,
     private activeRoute: ActivatedRoute) { }
 
 
   ngOnInit(): void {
+    this.userview = this.userService.getCurrentUser()
 
     this.programId = this.activeRoute.snapshot.paramMap.get('programId')!
 
@@ -36,6 +41,7 @@ export class PlansComponent implements OnInit {
 
   listPlans() {
 
+    if(this.userview.role.includes('PM-ADMIN')){
     this.planService.getPlans().subscribe({
       next: (res) => {
         console.log("projects", res)
@@ -45,6 +51,17 @@ export class PlansComponent implements OnInit {
         console.error(err)
       }
     })
+    }else {
+      this.planService.getPlans(this.userview.employeeId).subscribe({
+        next: (res) => {
+          console.log("projects", res)
+          this.Plans = res
+        },
+        error: (err) => {
+          console.error(err)
+        }
+      })
+    }
 
   }
 

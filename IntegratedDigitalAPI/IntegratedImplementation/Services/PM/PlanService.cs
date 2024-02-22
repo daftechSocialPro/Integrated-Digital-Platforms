@@ -169,7 +169,7 @@ namespace IntegratedDigitalAPI.Services.PM
 
         {
 
-            var plans = programId != null ? _dBContext.Projects.Include(x => x.Department).Include(x => x.ProjectManager).Include(x => x.ProjectFunds) :
+            var plans = programId != null ? _dBContext.Projects.Where(x=>x.ProjectManagerId==programId).Include(x => x.Department).Include(x => x.ProjectManager).Include(x => x.ProjectFunds) :
                 _dBContext.Projects.Include(x => x.Department).Include(x => x.ProjectManager).Include(x => x.ProjectFunds);
 
 

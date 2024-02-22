@@ -167,6 +167,16 @@ export class PMService {
         return this.http.get<IPlannedReport>(this.BaseURI + "/ProgressReport/StrategicPlanReport?BudgetYea=" + BudgetYear + "&ReportBy=" + ReportBy + "&strategicPlanId=" + selectStructureId)
 
     }
+
+
+  
+
+
+    GetStrategicPlan(BudgetYear: string, ReportBy: string, selectStructureId: string) {
+
+        return this.http.get<IPlannedReport>(this.BaseURI + "/ProgressReport/StrategicPlanReport?BudgetYea=" + BudgetYear + "&ReportBy=" + ReportBy + "&strategicPlanId=" + selectStructureId)
+
+    }
     getActivityLocationReport(BudgetYear: string, locationId: string) {
 
         return this.http.get<ActivityView[]>(this.BaseURI + "/ProgressReport/ActivityLocation?BudgetYea=" + BudgetYear + "&locationId=" + locationId)

@@ -1,4 +1,5 @@
 ﻿using Implementation.Helper;
+using IntegratedDigitalAPI.DTOS.PM;
 using IntegratedImplementation.DTOS.HRM;
 using IntegratedImplementation.DTOS.PM;
 using System;
@@ -14,6 +15,8 @@ namespace IntegratedImplementation.Interfaces.PM
         Task<List<StrategicPlanGetDto>> GetStrategicPlanList();
         Task<ResponseMessage> AddStrategicPlan(StrategicPlanPostDto strategicPlansPost);
         Task<ResponseMessage> UpdateStrategicPlan(StrategicPlanGetDto strategicPlansPost);
+
+        Task<List<ActivityGroup>> GetStrategicPlanReport(Guid strategicPlanId);
 
     }
 }
