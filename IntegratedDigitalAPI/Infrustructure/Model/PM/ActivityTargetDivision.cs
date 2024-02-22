@@ -9,6 +9,7 @@ namespace IntegratedInfrustructure.Models.PM
         public float Target { get; set; }
         public float TargetBudget { get; set; }
         public int Order { get; set; }       
+        public int Year { get; set; }
     }
 
     

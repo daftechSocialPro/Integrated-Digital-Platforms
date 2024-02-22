@@ -46,10 +46,10 @@ export interface SubActivityDetailDto {
 export interface ActivityLocationDto {
 
     regionId: string;
-    zone: string;
-    woreda: string;
-    longtude: number;
-    latitude: number;
+    zone?: string;
+    woreda?: string;
+    longtude?: number;
+    latitude?: number;
   
 }
     

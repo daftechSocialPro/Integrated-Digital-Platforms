@@ -33,6 +33,7 @@ export interface ActivityView {
 export interface MonthPerformanceView {
 
     id: string;
+    year?:number
     order: number,
     monthName: string,
     planned: number,
@@ -50,6 +51,7 @@ export interface ActivityTargetDivisionDto {
 }
 export interface TargetDivisionDto {
 
+    year: number,
     order: number,
     target: number,
     targetBudget: number

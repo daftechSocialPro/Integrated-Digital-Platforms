@@ -9,11 +9,65 @@
             </ol>
         </nav>
     </div>
-    <div class="col-lg-12">
-        <div *ngFor="let actView of Activties">                                    
+    <!-- mmmm -->
+
+    
+        <p-table #dt [value]="Activties" dataKey="id" [tableStyle]="{'min-width': '60rem'}" [rows]="10" [paginator]="true" [showCurrentPageReport]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+	    [globalFilterFields]="['name','activityNumber','plannedBudget','activityType']">>
+            <ng-template pTemplate="caption">
+                <div class="flex align-items-center justify-content-between">
+                    <h5 class="m-0">Assigned Activities</h5>
+                    <span class="p-input-icon-left p-ml-auto">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" #inputField (input)="dt.filterGlobal(inputField.value, 'contains')" placeholder="Search..." />
+                    </span>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 5rem"></th>
+                    <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
+                    <!-- <th>Image</th> -->
+                    <th pSortableColumn="activityNumber">Activity Number <p-sortIcon field="activityNumber"></p-sortIcon></th>
+                    <th pSortableColumn="plannedBudget">Planned Budget <p-sortIcon field="plannedBudget"></p-sortIcon></th>
+                    <!-- <th pSortableColumn="rating">Reviews <p-sortIcon field="rating"></p-sortIcon></th> -->
+                    <th pSortableColumn="activityType">Activity Type <p-sortIcon field="activityType"></p-sortIcon></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-actView let-expanded="expanded">
+                <tr>
+                    <td>
+                        <button type="button" pButton pRipple [pRowToggler]="actView" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                    </td>
+                    <td>{{actView.name}}</td>
+                    <!-- <td><img [src]="'assets/showcase/images/demo/product/' + product.image" [alt]="product.name" width="100" class="shadow-4" /></td> -->
+                    <td>{{actView.activityNumber}}</td>
+                    <td>{{actView.plannedBudget}} ETB</td>
+                    <!-- <td></td> -->
+                    <td>{{actView.activityType}}</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="rowexpansion" let-actView>
+                <tr>
+                    <td colspan="7">
+                        <div class="p-3">
+                            <app-view-activties  [actView]="actView"></app-view-activties>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+
+  
+    
+    <!-- mmmmmmmm -->
+    <!-- <div class="col-lg-12">
+        <div *ngFor="let actView of Activties">
+
             <app-view-activties  [actView]="actView"></app-view-activties>
         </div>        
-    </div>
+    </div> -->
     <section class="section profile">
     </section>
 </main>

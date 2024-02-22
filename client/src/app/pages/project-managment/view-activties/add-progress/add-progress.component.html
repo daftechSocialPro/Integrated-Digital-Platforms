@@ -17,9 +17,9 @@
                     <div class="form-floating mb-3">
                         <select class="form-select" formControlName="QuarterId">
 
-                            <option *ngFor="let perform of activity.monthPerformance ;let i= index;" value={{i+1}}
+                            <option *ngFor="let perform of getPerformancesByCurrentYear() ;let i= index;" value={{i+1}}
                                 value={{perform.id}}>
-                                {{months[perform.order-1]}} ( overall {{perform.planned}} ) </option>
+                                {{months[perform.order]}} ( overall {{perform.planned}} ) </option>
                         </select>
                         <label for="QuarterId">Month</label>
                     </div>

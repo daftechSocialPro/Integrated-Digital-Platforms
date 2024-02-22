@@ -38,10 +38,10 @@ export class PlanDetailComponent implements OnInit {
   plan!: PlanSingleview
   planTasks: Map<string, any[]> = new Map<string, any[]>();
   taskActivities: Map<String, any[]> = new Map<String, any[]>();
-  projectYears: SelectList[] = []
-  selectedYear: number = 0;
+  projectYears: any[] = []
+  selectedYear!: number;
   filterBy:number=1
-
+  dataLoaded: boolean = true;
   constructor(
    
     private activatedROute: ActivatedRoute,
@@ -68,10 +68,10 @@ export class PlanDetailComponent implements OnInit {
   onFilterByChange(){
     if (this.filterBy==0){
       this.items= Array(37).fill(0);
-      this.items2= Array(33).fill(0);
+      this.items2= Array(32).fill(0);
     }else  {
       this.items= Array(13).fill(0);
-      this.items2= Array(9).fill(0);
+      this.items2= Array(8).fill(0);
     }
   }
 
@@ -99,19 +99,15 @@ export class PlanDetailComponent implements OnInit {
   getProjectYears(startDate: any, endDate: any) {
     this.projectYears = [];
     const startYear = new Date(startDate).getFullYear();
-    
     const endYear = new Date(endDate).getFullYear();
+    this.selectedYear = startYear;
     
     
-    let index = 0
     for (let year = startYear; year <= endYear; year++) {
-      this.projectYears.push({ name: year.toString(), id: index.toString() });
-      index+=12
+      this.projectYears.push({ name: year.toString(), id: year });
     }
 
     console.log("startYear" , this.projectYears)
-
-    
   }
 
   getSingleTaskActivities(taskId: String) {
@@ -130,24 +126,46 @@ export class PlanDetailComponent implements OnInit {
 
   }
 
-  ListTask(planId: string) {
+  // ListTask(planId: string) {
 
-    this.planService.getSinglePlans(planId).subscribe({
-      next: (res) => {
-        this.plan = res
-        const result = res.tasks
-        result.forEach((task) => {
-          if (task.id !== undefined) {
-            this.getSingleTaskActivities(task.id)
-          }
+  //   this.planService.getSinglePlans(planId).subscribe({
+  //     next: (res) => {
+  //       this.plan = res
+  //       const result = res.tasks
+  //       result.forEach((task) => {
+  //         if (task.id !== undefined) {
+  //           this.getSingleTaskActivities(task.id)
+  //         }
 
-        });
+  //       });
 
-        this.planTasks.set(planId, result);
-        console.log('this.taskActivities: ', this.taskActivities);
+  //       this.planTasks.set(planId, result);
+  //       console.log('this.taskActivities: ', this.taskActivities);
 
-      }
-    })
+  //     }
+  //   })
+  // }
+
+  ListTask(planId: string): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this.planService.getSinglePlans(planId).subscribe({
+        next: (res) => {
+          this.plan = res;
+          const result = res.tasks;
+          const promises = result.map(task => this.getSingleTaskActivities(task.id));
+          Promise.all(promises).then(() => {
+            this.planTasks.set(planId, result);
+            console.log('this.taskActivities: ', this.taskActivities);
+            resolve(); // Resolve the promise once data is loaded
+          }).catch(error => {
+            reject(error); // Reject the promise if there's an error
+          });
+        },
+        error: (err) => {
+          reject(err); // Reject the promise if there's an error
+        }
+      });
+    });
   }
 
   addTask() {
@@ -326,25 +344,49 @@ viewDetail (item:ActivityView)
 }
 
 
-getGroupValue(order: number): boolean {
+// getGroupValue(order: number): boolean {
   
-  const groupSize = 12; 
-  
-  
-  // Number of months in each group
+//   const groupSize = 12; 
 
-  //return Math.floor((order - 1) / groupSize) + 1 === this.selectedYear;
-  return (Math.floor(order / groupSize) * groupSize) == this.selectedYear
-}
+//   // Number of months in each group
 
+//   //return Math.floor((order - 1) / groupSize) + 1 === this.selectedYear;
+//   return (Math.floor(order / groupSize) * groupSize) == this.selectedYear
+// }
+
+// onProjectYearChange(){
+//   console.log("Selected Year",this.selectedYear)
+//   this.ListTask(this.planId);
+// }
 onProjectYearChange(){
-  console.log("Selected Year",this.selectedYear)
-  this.ListTask(this.planId);
-  
-
+  this.dataLoaded = false
+  console.log("Selected Year", this.selectedYear);
+  this.ListTask(this.planId).then(() => {
+    this.dataLoaded = true; 
+  });
 }
 
-
+// getPerformancesByCurrentYear(monthPerformance : any): any[] {
+  
+//   const currentYear = this.selectedYear; 
+//   // console.log("currentYear",currentYear)
+//   const filteredArray = monthPerformance.filter(item => {
+//     const itemYear = item.year
+//     return itemYear === currentYear;
+//   });
+//   console.log("filteredArray",filteredArray)
+//   return filteredArray;
+// }
+getPerformancesByCurrentYear(monthPerformance: any): any[] {
+  if (!this.dataLoaded) return []; // Return empty array if data is not loaded yet
+  const currentYear = this.selectedYear; 
+  const filteredArray = monthPerformance.filter(item => {
+    const itemYear = item.year;
+    return itemYear == currentYear;
+  });
+  
+  return filteredArray;
+}
 
 }
 

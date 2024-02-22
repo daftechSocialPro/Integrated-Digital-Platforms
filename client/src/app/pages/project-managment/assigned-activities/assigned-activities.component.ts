@@ -41,6 +41,16 @@ export class AssignedActivitiesComponent implements OnInit {
     })
   }
 
+  findIndexById(id: string): number {
+    let index = -1;
+    for (let i = 0; i < this.Activties.length; i++) {
+        if (this.Activties[i].id === id) {
+            index = i;
+            break;
+        }
+    }
 
+    return index;
+}
 
 }
