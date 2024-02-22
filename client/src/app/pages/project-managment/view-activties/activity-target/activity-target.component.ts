@@ -26,6 +26,7 @@ export class ActivityTargetComponent implements OnInit {
 
   actTargets = new FormArray([
     new FormGroup({
+      year: new FormControl(''),
       monthName: new FormControl({ value: 'January', disabled: true }),
       monthValue: new FormControl(0, Validators.required),
       Target: new FormControl(0, Validators.required),
@@ -68,49 +69,91 @@ this.onTargetChange()
   }
 
   addTargetForm() {
-    let monthDifference = this.getMonthDifference(this.activity.startDate, this.activity.endDate);
-    console.log('monthDifference', monthDifference);
+    const monthDifferences = this.getMonthDifference(this.activity.startDate, this.activity.endDate);
+    const years = Object.keys(monthDifferences);
   
     this.actTargets.clear();
   
-    let startMonthIndex = new Date(this.activity.startDate).getMonth();
-  
-    for (let i = 0; i < monthDifference; i++) {
-      let monthIndex = (startMonthIndex + i) % 12;
-      let monthName = this.months[monthIndex];
-  
-      let targetFormGroup = new FormGroup({
-        monthName: new FormControl({ value: monthName, disabled: true }),
-        monthValue: new FormControl(monthIndex, Validators.required),
-        Target: new FormControl(0, Validators.required),
-        Budget: new FormControl(0, Validators.required)
-      });
-  
-      const monthPerformance = this.activity.monthPerformance.find(
-        performance => performance.order === monthIndex
-      );
+    for (let i = 0; i < years.length; i++) {
+      const year = years[i];
 
-      console.log("monthPerformance",monthPerformance)
 
+      const months = monthDifferences[year];
+      const isFirstYear = i === 0;
+      const startMonthIndex = isFirstYear ? new Date(this.activity.startDate).getMonth() : 0;
   
-      if (monthPerformance) {
-        targetFormGroup.patchValue({
-          Target: monthPerformance.planned,
-          Budget: monthPerformance.plannedBudget
-          
+      for (let j = 0; j < months; j++) {
+        const monthIndex = (startMonthIndex + j) % 12;
+        const monthName = this.months[monthIndex];
+  
+        const targetFormGroup = new FormGroup({
+          year: new FormControl(year),
+          monthName: new FormControl({ value: monthName, disabled: true }),
+          monthValue: new FormControl(monthIndex, Validators.required),
+          Target: new FormControl(0, Validators.required),
+          Budget: new FormControl(0, Validators.required)
         });
         
-      }
+        const monthPerformance = this.activity.monthPerformance.find(performance => performance.order === monthIndex && performance.year === parseInt(year));
   
-      this.actTargets.push(targetFormGroup);
+        if (monthPerformance) {
+          targetFormGroup.patchValue({
+            
+            Target: monthPerformance.planned,
+            Budget: monthPerformance.plannedBudget
+          });
+        }
+       
+  
+        this.actTargets.push(targetFormGroup);
+      }
     }
+  }
+
+  // addTargetForm() {
+  //   let monthDifference = this.getMonthDifference(this.activity.startDate, this.activity.endDate);
+  //   console.log('monthDifference', monthDifference);
+  
+  //   this.actTargets.clear();
+  
+  //   let startMonthIndex = new Date(this.activity.startDate).getMonth();
+  
+  //   for (let i = 0; i < monthDifference; i++) {
+  //     let monthIndex = (startMonthIndex + i) % 12;
+  //     let monthName = this.months[monthIndex];
+  
+  //     let targetFormGroup = new FormGroup({
+  //       monthName: new FormControl({ value: monthName, disabled: true }),
+  //       monthValue: new FormControl(monthIndex, Validators.required),
+  //       Target: new FormControl(0, Validators.required),
+  //       Budget: new FormControl(0, Validators.required)
+  //     });
+  
+  //     const monthPerformance = this.activity.monthPerformance.find(
+  //       performance => performance.order === monthIndex
+  //     );
+
+  //     console.log("monthPerformance",monthPerformance)
+
+  
+  //     if (monthPerformance) {
+  //       targetFormGroup.patchValue({
+  //         Target: monthPerformance.planned,
+  //         Budget: monthPerformance.plannedBudget
+          
+  //       });
+        
+  //     }
+  
+  //     this.actTargets.push(targetFormGroup);
+  //   }
 
    
  
-  }
+  // }
 
   onTargetChange(){
-    debugger
+    
     var sumOfTarget = 0
     var sumOfBudget = 0
     for (let formValue of this.actTargets.value) {
@@ -137,10 +180,12 @@ this.onTargetChange()
       // 
       
       for (let formValue of this.actTargets.value) {
+        
         sumOfTarget += Number(formValue.Target)
         sumOfBudget += Number(formValue.Budget)
 
         let targetDivisionDto: TargetDivisionDto = {
+          year: Number(formValue.year),
           order: Number(formValue.monthValue),
           target: Number(formValue.Target),
           targetBudget: Number(formValue.Budget)
@@ -215,10 +260,12 @@ this.onTargetChange()
       // 
       
       for (let formValue of this.actTargets.value) {
+        console.log("formValue",formValue)
         sumOfTarget += Number(formValue.Target)
         sumOfBudget += Number(formValue.Budget)
-
+        
         let targetDivisionDto: TargetDivisionDto = {
+          year: Number(formValue.year),
           order: Number(formValue.monthValue),
           target: Number(formValue.Target),
           targetBudget: Number(formValue.Budget)
@@ -226,7 +273,7 @@ this.onTargetChange()
 
         targetDivisionDtos.push(targetDivisionDto)
       }
-
+      debugger
      
       let ActivityTargetDivisionDto: ActivityTargetDivisionDto = {
 
@@ -285,19 +332,46 @@ this.onTargetChange()
     this.activeModal.close()
   }
 
-  getMonthDifference(startDate: string, endDate: string): number {
+  // getMonthDifference(startDate: string, endDate: string): number {
 
+  //   const startYear = new Date(startDate).getFullYear();
+  //   const startMonth = new Date(startDate).getMonth();
+  //   const endYear = new Date(endDate).getFullYear();
+  //   const endMonth = new Date(endDate).getMonth();
+
+  //   const monthDifference = (endYear - startYear) * 12 + (endMonth - startMonth);
+
+  //   console.log('Month Difference:', monthDifference);
+
+  //   return monthDifference+1;
+  // }
+
+
+  getMonthDifference(startDate: string, endDate: string): { [year: number]: number } {
     const startYear = new Date(startDate).getFullYear();
     const startMonth = new Date(startDate).getMonth();
     const endYear = new Date(endDate).getFullYear();
     const endMonth = new Date(endDate).getMonth();
-
-    const monthDifference = (endYear - startYear) * 12 + (endMonth - startMonth);
-
+    
+    const monthDifference: { [year: number]: number } = {};
+  
+    for (let year = startYear; year <= endYear; year++) {
+      let monthStart = 0;
+      let monthEnd = 11;
+  
+      if (year === startYear) {
+        monthStart = startMonth;
+      }
+  
+      if (year === endYear) {
+        monthEnd = endMonth;
+      }
+  
+      const months = (monthEnd - monthStart) + 1;
+      monthDifference[year] = months;
+    }
+  
     console.log('Month Difference:', monthDifference);
-
-    return monthDifference+1;
+    return monthDifference;
   }
-
-
 }

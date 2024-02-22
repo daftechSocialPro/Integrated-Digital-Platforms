@@ -75,12 +75,12 @@ export class UpdateActivitiesComponent implements OnInit{
   }
   ngOnInit(): void {
 
-    console.log("sdfsdf",this.activity.activityLocations[0].region)
+    
 
     this.getCountries()
     this.GetIndicatorsByStrategicPlanIds(this.activity.strategicPlan)
 
-    if(this.activity.activityLocations[0].region){
+    if(this.activity.activityLocations.length>0 && this.activity.activityLocations[0].region){
     this.getRegions(this.activity.activityLocations[0].region.countryId)
     }
 
@@ -166,7 +166,7 @@ export class UpdateActivitiesComponent implements OnInit{
     StrategicPlanIndicatorId:[this.activity.strategicPlanIndicator],
     IsTraining:[this.activity.isTraining,Validators.required],
     IsPercentage:[this.activity.isPercentage,Validators.required],
-    CountryId:[this.activity.activityLocations?  this.activity.activityLocations[0].region.countryId:'',Validators.required],
+    CountryId:[this.activity.activityLocations.length>0?  this.activity.activityLocations[0].region.countryId:'',Validators.required],
     // RegionId:[this.activity.regionId,Validators.required],
     // Zone:[this.activity.zone],
     // Woreda:[this.activity.woreda],
@@ -431,7 +431,7 @@ export class UpdateActivitiesComponent implements OnInit{
     }
 
     console.log("assigned employee",this.activityForm.value.AssignedEmployee)
-    debugger
+    //debugger
     if (this.activityForm.valid) {
       let actvityP: SubActivityDetailDto = {
         Id: this.activity.id, 
@@ -585,8 +585,8 @@ export class UpdateActivitiesComponent implements OnInit{
                     regionId: regionId,
                     zone: '',
                     woreda: '',
-                    latitude:'',
-                    longtude:''
+                    latitude:0,
+                    longtude:0
                 });                
 
                 this.locations.push(locationGroup);

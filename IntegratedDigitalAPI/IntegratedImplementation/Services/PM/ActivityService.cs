@@ -325,6 +325,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                     Order = target.Order ,
                     Target = target.Target,
                     TargetBudget = target.TargetBudget,
+                    Year = target.Year,
 
                 };
 
@@ -332,40 +333,21 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                 await _dBContext.SaveChangesAsync();
             }
 
-            var existingOrders = await _dBContext.ActivityTargetDivisions
-                                        .Where(td => td.ActivityId == targetDivisions.ActiviyId)
-                                        .Select(td => td.Order)
-                                        .ToListAsync();
+            var existingOrdersByYear = await _dBContext.ActivityTargetDivisions
+                                     .Where(td => td.ActivityId == targetDivisions.ActiviyId)
+                                     .GroupBy(td => td.Year) 
+                                     .ToListAsync();
 
-           
-            var lowestOrder = existingOrders.Min() ;
-            var highestOrder = existingOrders.Max() ;
 
-            for (int order = 0; order < lowestOrder; order++)
+            foreach (var existingOrders in existingOrdersByYear)
             {
-                if (!existingOrders.Contains(order))
-                {
-                    var newTargetDivision = new ActivityTargetDivision
-                    {
-                        Id = Guid.NewGuid(),
-                        CreatedById = targetDivisions.CreatedBy.ToString(),
-                        CreatedDate = DateTime.Now,
-                        ActivityId = targetDivisions.ActiviyId,
-                        Order = order,
-                        Target = 0,
-                        TargetBudget = 0
-                    };
+                var year = existingOrders.Key;
+                var lowestOrder = existingOrders.Min(td => td.Order);
+                var highestOrder = existingOrders.Max(td => td.Order);
 
-                    await _dBContext.ActivityTargetDivisions.AddAsync(newTargetDivision);
-                }
-            }
-
-            if (highestOrder % 12 != 0)
-            {
-                var nextMultipleOf12 = (highestOrder / 12 + 1) * 12;
-                for (int order = highestOrder + 1; order < nextMultipleOf12; order++)
+                for (int order = 0; order < lowestOrder; order++)
                 {
-                    if (!existingOrders.Contains(order))
+                    if (!existingOrders.Any(td => td.Order == order))
                     {
                         var newTargetDivision = new ActivityTargetDivision
                         {
@@ -375,14 +357,39 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                             ActivityId = targetDivisions.ActiviyId,
                             Order = order,
                             Target = 0,
-                            TargetBudget = 0
+                            TargetBudget = 0,
+                            Year = year,
                         };
 
                         await _dBContext.ActivityTargetDivisions.AddAsync(newTargetDivision);
                     }
                 }
+
+                if (highestOrder != 11)
+                {
+                    //var nextMultipleOf12 = (highestOrder / 11 + 1) * 11;
+                    for (int order = highestOrder + 1; order < 12; order++)
+                    {
+                        if (!existingOrders.Any(td => td.Order == order))
+                        {
+                            var newTargetDivision = new ActivityTargetDivision
+                            {
+                                Id = Guid.NewGuid(),
+                                CreatedById = targetDivisions.CreatedBy.ToString(),
+                                CreatedDate = DateTime.Now,
+                                ActivityId = targetDivisions.ActiviyId,
+                                Order = order,
+                                Target = 0,
+                                TargetBudget = 0,
+                                Year = year,
+                            };
+
+                            await _dBContext.ActivityTargetDivisions.AddAsync(newTargetDivision);
+                        }
+                    }
+                }
             }
-            
+
 
             await _dBContext.SaveChangesAsync();
 
@@ -413,6 +420,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                     Order = target.Order,
                     Target = target.Target,
                     TargetBudget = target.TargetBudget,
+                    Year = target.Year,
 
                 };
 
@@ -420,40 +428,21 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                 await _dBContext.SaveChangesAsync();
             }
 
-            var existingOrders = await _dBContext.ActivityTargetDivisions
-                                        .Where(td => td.ActivityId == targetDivisions.ActiviyId)
-                                        .Select(td => td.Order)
-                                        .ToListAsync();
+            var existingOrdersByYear = await _dBContext.ActivityTargetDivisions
+                                     .Where(td => td.ActivityId == targetDivisions.ActiviyId)
+                                     .GroupBy(td => td.Year)
+                                     .ToListAsync();
 
 
-            var lowestOrder = existingOrders.Min();
-            var highestOrder = existingOrders.Max();
-
-            for (int order = 0; order < lowestOrder; order++)
+            foreach (var existingOrders in existingOrdersByYear)
             {
-                if (!existingOrders.Contains(order))
-                {
-                    var newTargetDivision = new ActivityTargetDivision
-                    {
-                        Id = Guid.NewGuid(),
-                        CreatedById = targetDivisions.CreatedBy.ToString(),
-                        CreatedDate = DateTime.Now,
-                        ActivityId = targetDivisions.ActiviyId,
-                        Order = order,
-                        Target = 0,
-                        TargetBudget = 0
-                    };
+                var year = existingOrders.Key;
+                var lowestOrder = existingOrders.Min(td => td.Order);
+                var highestOrder = existingOrders.Max(td => td.Order);
 
-                    await _dBContext.ActivityTargetDivisions.AddAsync(newTargetDivision);
-                }
-            }
-
-            if (highestOrder % 12 != 0)
-            {
-                var nextMultipleOf12 = (highestOrder / 12 + 1) * 12;
-                for (int order = highestOrder + 1; order < nextMultipleOf12; order++)
+                for (int order = 0; order < lowestOrder; order++)
                 {
-                    if (!existingOrders.Contains(order))
+                    if (!existingOrders.Any(td => td.Order == order))
                     {
                         var newTargetDivision = new ActivityTargetDivision
                         {
@@ -463,10 +452,35 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                             ActivityId = targetDivisions.ActiviyId,
                             Order = order,
                             Target = 0,
-                            TargetBudget = 0
+                            TargetBudget = 0,
+                            Year = year,
                         };
 
                         await _dBContext.ActivityTargetDivisions.AddAsync(newTargetDivision);
+                    }
+                }
+
+                if (highestOrder != 11)
+                {
+                    //var nextMultipleOf12 = (highestOrder / 11 + 1) * 11;
+                    for (int order = highestOrder + 1; order < 12; order++)
+                    {
+                        if (!existingOrders.Any(td => td.Order == order))
+                        {
+                            var newTargetDivision = new ActivityTargetDivision
+                            {
+                                Id = Guid.NewGuid(),
+                                CreatedById = targetDivisions.CreatedBy.ToString(),
+                                CreatedDate = DateTime.Now,
+                                ActivityId = targetDivisions.ActiviyId,
+                                Order = order,
+                                Target = 0,
+                                TargetBudget = 0,
+                                Year = year,
+                            };
+
+                            await _dBContext.ActivityTargetDivisions.AddAsync(newTargetDivision);
+                        }
                     }
                 }
             }
@@ -826,7 +840,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
             List<ActivityViewDto> assignedActivities =
                 await (from e in _dBContext.Activities
                        
-                        .Include(x => x.ActivityLocations)
+                        .Include(x => x.ActivityLocations).ThenInclude(x => x.Region).ThenInclude(x => x.Country)
                        .Include(x=>x.Commitee).ThenInclude(x=>x.Employees)
                        .Where(x=>x.ActualEnd==null)
                        where employeeAssigned.Contains(e.Id)||(e.ProjectTeamId!=null?e.Commitee.Employees.Select(x=>x.EmployeeId).Contains(employeeId):false)
@@ -858,19 +872,20 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                            MonthPerformance = _dBContext.ActivityTargetDivisions.Where(x => x.ActivityId == e.Id).OrderBy(x => x.Order).Select(y => new MonthPerformanceViewDto
                            {
                                Id = y.Id,
+                               Year = y.Year,
                                Order = y.Order,
                                Planned = y.Target,
                                Actual = activityProgress.Where(x => x.QuarterId == y.Id).Sum(mp => mp.ActualWorked),
                                Percentage = y.Target != 0 ? (activityProgress.Where(x => x.QuarterId == y.Id && x.IsApprovedByDirector == ApprovalStatus.APPROVED && x.IsApprovedByFinance == ApprovalStatus.APPROVED && x.IsApprovedByManager == ApprovalStatus.APPROVED).Sum(x => x.ActualWorked) / y.Target) * 100 : 0
 
 
-                           }).ToList()
-
+                           }).ToList(),
+                           ActivityLocations = e.ActivityLocations.ToList()
 
 
 
                        }
-                                    ).ToListAsync();
+                        ).ToListAsync();
 
 
             
@@ -946,6 +961,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                                                 MonthPerformance = _dBContext.ActivityTargetDivisions.Where(x => x.ActivityId == e.ActivityId).OrderBy(x => x.Order).Select(y => new MonthPerformanceViewDto
                                                 {
                                                     Id = y.Id,
+                                                    Year = y.Year,
                                                     Order = y.Order,
                                                     Planned = y.Target,
                                                     Actual = activityProgress.Where(x=>x.QuarterId==y.Id).Sum(mp=>mp.ActualWorked),
@@ -1106,6 +1122,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                            MonthPerformance = _dBContext.ActivityTargetDivisions.Where(x => x.ActivityId == e.Id).OrderBy(x => x.Order).Select(y => new MonthPerformanceViewDto
                            {
                                Id = y.Id,
+                               Year =y.Year,
                                Order = y.Order,
                                Planned = y.Target,
                                Actual = activityProgress.Where(x => x.QuarterId == y.Id).Sum(mp => mp.ActualWorked),

@@ -63,7 +63,7 @@ namespace IntegratedDigitalAPI.DTOS.PM
         public Guid SelectedProjectFund { get; set; }
 
 
-        public List<ActivityLocationDto> ActivityLocations { get; set; }
+        public List<ActivityLocationDto>? ActivityLocations { get; set; }
 
 
     }

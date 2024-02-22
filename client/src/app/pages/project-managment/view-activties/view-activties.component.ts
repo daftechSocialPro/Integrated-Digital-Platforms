@@ -49,7 +49,7 @@ export class ViewActivtiesComponent implements OnInit {
     private userService: UserService) { }
 
   ngOnInit(): void {
-    console.log("task", this.actView)
+    console.log("actVIEWWWWWWW", this.actView)
     this.user = this.userService.getCurrentUser()
     if (this.actView.members.find(x => x.employeeId?.toLowerCase() == this.user.employeeId.toLowerCase()) ) {
       this.isMember = true;
@@ -131,23 +131,69 @@ export class ViewActivtiesComponent implements OnInit {
   }
 
 
+  // getMonthDifference(startDate: string, endDate: string) {
+  //   const startYear = new Date(startDate).getFullYear();
+  //   const startMonth = new Date(startDate).getMonth();
+  //   const endYear = new Date(endDate).getFullYear();
+  //   const endMonth = new Date(endDate).getMonth();
+  
+  //   const monthDifference = (endYear - startYear) * 12 + (endMonth - startMonth);
+  
+  //   console.log('Month Difference:', monthDifference);
+
+  //   this.generateMonthsArray(monthDifference)
+  
+  // }
+
   getMonthDifference(startDate: string, endDate: string) {
+    
     const startYear = new Date(startDate).getFullYear();
     const startMonth = new Date(startDate).getMonth();
     const endYear = new Date(endDate).getFullYear();
     const endMonth = new Date(endDate).getMonth();
+    
+    const monthDifference: { [year: number]: number } = {};
   
-    const monthDifference = (endYear - startYear) * 12 + (endMonth - startMonth);
+    for (let year = startYear; year <= endYear; year++) {
+      let monthStart = 0;
+      let monthEnd = 11;
+  
+      if (year === startYear) {
+        monthStart = startMonth;
+      }
+  
+      if (year === endYear) {
+        monthEnd = endMonth;
+      }
+  
+      const months = (monthEnd - monthStart) + 1;
+      monthDifference[year] = months;
+    }
   
     console.log('Month Difference:', monthDifference);
+    const currentYear = new Date().getFullYear();
+    this.generateMonthsArray(monthDifference[currentYear])
+    
+  }
 
-    this.generateMonthsArray(monthDifference)
-  
+  getStartMonth(){
+    const currentYear = new Date().getFullYear();
+    const startYear = (new Date(this.actView.startDate)).getFullYear()
+    if(currentYear == startYear){
+      return (new Date (this.actView.startDate)).getMonth()
+    }
+    else{
+      return 0
+
+    }
+    
   }
 
   generateMonthsArray(monthDifference: number) {
-  
-   let startMonth = (new Date (this.actView.startDate)).getMonth()
+   
+   let startMonth:number = this.getStartMonth();
+   
+   
    let total =  monthDifference+startMonth
     while (startMonth< total) {
       const monthObject :SelectList = {
@@ -182,6 +228,19 @@ export class ViewActivtiesComponent implements OnInit {
     modalRef.componentInstance.activityId  = activityId
 
 
+  }
+
+
+  
+
+  getPerformancesByCurrentYear(): any[] {
+    const currentYear = new Date().getFullYear();
+    const startIndex = this.getStartMonth(); 
+    const filteredArray = this.actView.monthPerformance.filter(item => {
+      const itemYear = item.year
+      return itemYear === currentYear;
+    });
+    return filteredArray.slice(startIndex);
   }
   
 }
