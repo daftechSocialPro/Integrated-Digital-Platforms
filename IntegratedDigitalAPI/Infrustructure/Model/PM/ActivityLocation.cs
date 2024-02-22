@@ -18,8 +18,8 @@ namespace IntegratedInfrustructure.Model.PM
         public virtual Region Region { get; set; }
         public string? Zone { get; set; } 
         public string? Woreda { get; set; } 
-        public double Latitude { get; set; }
-        public double Longtude { get; set; }
+        public double? Latitude { get; set; }
+        public double? Longtude { get; set; }
 
 
     }

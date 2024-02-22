@@ -73,6 +73,7 @@ namespace IntegratedDigitalAPI.DTOS.PM
         public float Percentage { get; set; }
 
         public float PlannedBudget { get; set; }
+        public int Year { get; set; }
     }
 
 
@@ -88,7 +89,7 @@ namespace IntegratedDigitalAPI.DTOS.PM
 
     public class TargetDivisionDto
     {
-
+        public int Year { get; set; }
         public int Order { get; set; }
         public float Target { get; set; }
         public float TargetBudget { get; set; }

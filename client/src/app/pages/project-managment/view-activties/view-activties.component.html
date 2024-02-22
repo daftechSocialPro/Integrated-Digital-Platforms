@@ -59,12 +59,15 @@
                 <div>
                     <span> Planned Budget : </span> {{actView.plannedBudget}} ETB <br />
                     <span> Activity Type : </span> {{actView.activityType}} <br />
-                    <span> Project Location :</span> {{actView.projectLocation}} <br />
+                    <div *ngFor="let ploc of actView.activityLocations">
+                        <span> Project Location :</span> {{ploc.woreda}}-{{ploc.zone}}-{{ploc.region.regionName}}-{{ploc.region.country.countryName}} <br />
 
-                    <button class="btn btn-outline-primary" (click)="Showonmap(
-                    actView.projectLocationLat,actView.projectLocationLng,actView.projectLocation)">View On Map
-                    </button>
+                        <button class="btn btn-outline-primary" (click)="Showonmap(
+                            ploc.latitude,ploc.longtude,actView.projectLocation)">View On Map
+                        </button>
 
+                    </div>
+                    
                     <br />
                 </div>
                 <div>
@@ -109,7 +112,7 @@
                     <tbody>
 
                         <tr>
-                            <ng-container *ngFor="let perform of actView.monthPerformance ;let i= index;">
+                            <ng-container *ngFor="let perform of getPerformancesByCurrentYear() ;let i= index;">
                                 <ng-container *ngIf="i==0">
                                     <td>{{perform.planned}} </td>
                                     <td>{{perform.actual}} </td>

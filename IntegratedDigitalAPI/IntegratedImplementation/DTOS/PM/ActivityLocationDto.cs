@@ -16,8 +16,8 @@ namespace IntegratedImplementation.DTOS.PM
 
         public string ? Woreda { get; set; }
 
-        public double Latitude { get; set; }
-        public double Longtude { get; set; }
+        public double? Latitude { get; set; }
+        public double? Longtude { get; set; }
 
 
 

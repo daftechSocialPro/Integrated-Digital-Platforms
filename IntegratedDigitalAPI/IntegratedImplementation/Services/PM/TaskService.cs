@@ -145,6 +145,7 @@ namespace IntegratedDigitalAPI.Services.PM
                                             MonthPerformance = _dBContext.ActivityTargetDivisions.Where(x => x.ActivityId == e.Id).OrderBy(x => x.Order).Select(y => new MonthPerformanceViewDto
                                             {
                                                 Id = y.Id,
+                                                Year = y.Year,
                                                 Order = y.Order,
                                                 Planned = y.Target,
                                                 Actual = activityProgress.Where(x => x.QuarterId == y.Id).Sum(x => x.ActualWorked),
@@ -206,6 +207,7 @@ namespace IntegratedDigitalAPI.Services.PM
                                             MonthPerformance = _dBContext.ActivityTargetDivisions.Where(x => x.ActivityId == e.Id).OrderBy(x => x.Order).Select(y => new MonthPerformanceViewDto
                                             {
                                                 Id = y.Id,
+                                                Year = y.Year,
                                                 Order = y.Order,
                                                 Planned = y.Target,
                                                 PlannedBudget = y.TargetBudget,
@@ -305,6 +307,7 @@ namespace IntegratedDigitalAPI.Services.PM
                                                 MonthPerformance = _dBContext.ActivityTargetDivisions.Where(x => x.ActivityId == e.Id).OrderBy(x => x.Order).Select(y => new MonthPerformanceViewDto
                                                 {
                                                     Id = y.Id,
+                                                    Year = y.Year,
                                                     Order = y.Order,
                                                     Planned = y.Target,
                                                     Actual = activityProgress.Where(x => x.QuarterId == y.Id).Sum(x => x.ActualWorked),

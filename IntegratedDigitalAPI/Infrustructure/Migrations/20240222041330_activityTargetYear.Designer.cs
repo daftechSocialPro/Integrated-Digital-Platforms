@@ -4,6 +4,7 @@ using IntegratedInfrustructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IntegratedInfrustructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240222041330_activityTargetYear")]
+    partial class activityTargetYear
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2879,11 +2882,11 @@ namespace IntegratedInfrustructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double?>("PostSummary")
-                        .HasColumnType("float");
+                    b.Property<string>("PostSummary")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<double?>("PreSummary")
-                        .HasColumnType("float");
+                    b.Property<string>("PreSummary")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Profession")
                         .IsRequired()

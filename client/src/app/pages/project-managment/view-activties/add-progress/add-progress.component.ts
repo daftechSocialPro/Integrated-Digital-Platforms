@@ -221,6 +221,27 @@ export class AddProgressComponent implements OnInit {
     this.activeModal.close()
   }
 
+  getStartMonth(){
+    const currentYear = new Date().getFullYear();
+    const startYear = (new Date(this.activity.startDate)).getFullYear()
+    if(currentYear == startYear){
+      return (new Date (this.activity.startDate)).getMonth()
+    }
+    else{
+      return 0
+
+    }
+    
+  }
+  getPerformancesByCurrentYear(): any[] {
+    const currentYear = new Date().getFullYear();
+    const startIndex = this.getStartMonth(); 
+    const filteredArray = this.activity.monthPerformance.filter(item => {
+      const itemYear = item.year
+      return itemYear === currentYear;
+    });
+    return filteredArray.slice(startIndex);
+  }
 
 
 }
