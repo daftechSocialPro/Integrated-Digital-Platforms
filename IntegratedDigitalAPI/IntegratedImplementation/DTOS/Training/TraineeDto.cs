@@ -56,8 +56,8 @@ namespace IntegratedImplementation.DTOS.Training
       
         public string Zone { get; set; }
         public string Woreda { get; set; }
-        public double? PreSummary { get; set; }
-        public double? PostSummary { get; set; }
+        public double PreSummary { get; set; }
+        public double PostSummary { get; set; }
 
 
 

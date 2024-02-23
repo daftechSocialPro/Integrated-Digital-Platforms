@@ -258,33 +258,40 @@ namespace IntegratedImplementation.Services.Training
 
         public async Task<List<TraineeGetDto>> GetTraineeList(Guid TainingId)
         {
+            try
+            {
 
-            var results = await _dbContext.Trainees
-                .Include(x=>x.EducationalLevel)
-                .Where(x => x.TrainingId == TainingId).OrderBy(x => x.FullName)
-                       .Select(x => new TraineeGetDto
-                       {
-                           Id=x.Id,
-                           FullName = x.FullName,
-                           Email = x.Email,
-                           PhoneNumber = x.PhoneNumber,
-                           Age = x.Age,
-                           Gender = x.Gender.ToString(),
-                           EducationalField = x.EducationalField,
-                           EducationalLevel = x.EducationalLevel.EducationalLevelName,
-                           EducationalLevelId = x.EducationalLevelId,
-                           RegionId=x.RegionId,
-                           Region = x.Region.RegionName,
-                           Zone = x.Zone,
-                           Woreda = x.Woreda,
-                           Profession =x.Profession,
-                           TypeofOrganization = x.TypeofOrganization,
-                           NameofOrganizaton = x.NameofOrganizaton,
-                           PreSummary =x.PreSummary,
-                           PostSummary  =x.PostSummary,
-                       }).ToListAsync();
+                var results = await _dbContext.Trainees
+                    .Include(x => x.EducationalLevel)
+                    .Where(x => x.TrainingId == TainingId).OrderBy(x => x.FullName)
+                           .Select(x => new TraineeGetDto
+                           {
+                               Id = x.Id,
+                               FullName = x.FullName,
+                               Email = x.Email,
+                               PhoneNumber = x.PhoneNumber,
+                               Age = x.Age,
+                               Gender = x.Gender.ToString(),
+                               EducationalField = x.EducationalField,
+                               EducationalLevel = x.EducationalLevel.EducationalLevelName,
+                               EducationalLevelId = x.EducationalLevelId,
+                               RegionId = x.RegionId,
+                               Region = x.Region.RegionName,
+                               Zone = x.Zone,
+                               Woreda = x.Woreda,
+                               Profession = x.Profession,
+                               TypeofOrganization = x.TypeofOrganization,
+                               NameofOrganizaton = x.NameofOrganizaton,
+                               PreSummary = (double) x.PreSummary,
+                               PostSummary = (double) x.PostSummary,
+                           }).ToListAsync();
 
-            return results;
+                return results;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception();
+            }
 
         }
         public async Task<ResponseMessage> AddTrainee(TraineePostDto trainerPostDto)

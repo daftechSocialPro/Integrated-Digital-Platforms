@@ -78,80 +78,91 @@ namespace IntegratedImplementation.Services.PM
             return new ResponseMessage { Success = false, Message = "Unable To Find Department" };
         }
 
-        public async Task<List<ActivityGroup>> GetStrategicPlanReport (Guid strategicPlanId)
+        public async Task<List<ActivityGroup>> GetStrategicPlanReport(Guid strategicPlanId)
         {
-            var activityProgress = _dbContext.ActivityProgresses;
-            var activityViewDtos = (from e in _dbContext.Activities.Where(x => x.StrategicPlanId == strategicPlanId)
-                    .Include(x => x.ActivityParent.Task.Project)
-                    .Include(x => x.Task.Project)
-                    .Include(x => x.ActivityLocations).ThenInclude(x => x.Region)
-                    .Include(x => x.ProjectSourceFund)
-                    .OrderBy(x => x.CreatedDate)
-                                    select new ActivityViewDto
-                                    {
-                                        Id = e.Id,
-                                        Name = e.ActivityDescription,
-                                        PlannedBudget = e.PlanedBudget,
-                                        ActivityType = e.ActivityType.ToString(),
-                                        IsTraining = e.IsTraining,
-                                        TaskName = e.TaskId != null ? e.Task.TaskDescription : e.ActivityParent.Task.TaskDescription,
-                                        ProjectName =e.TaskId !=null ? e.Task.Project.ProjectName:e.ActivityParent.Task.Project.ProjectName,
+            var activityViewDtos = await _dbContext.Activities
+                .Where(x => x.StrategicPlanId == strategicPlanId)
+                .Include(x => x.ActivityParent.Task.Project)
+                .Include(x => x.Task.Project)
+                .Include(x => x.ActivityLocations).ThenInclude(x => x.Region)
+                .Include(x => x.ProjectSourceFund)
+                .OrderBy(x => x.CreatedDate)
+                .Select(e => new ActivityViewDto
+                {
+                    Id = e.Id,
+                    Name = e.ActivityDescription,
+                    PlannedBudget = e.PlanedBudget,
+                    ActivityType = e.ActivityType.ToString(),
+                    IsTraining = e.IsTraining,
+                    TaskName = e.TaskId != null ? e.Task.TaskDescription : e.ActivityParent.Task.TaskDescription,
+                    ProjectName = e.TaskId != null ? e.Task.Project.ProjectName : e.ActivityParent.Task.Project.ProjectName,
+                    ActivityNumber = e.ActivityNumber,
+                    Begining = e.Begining,
+                    Target = e.Goal,
+                    UnitOfMeasurment = e.Indicator,
+                    OverAllPerformance = 0,
+                    StartDate = e.ShouldStat.ToString(),
+                    ProjectSource = e.ProjectSourceFund.Name,
+                    EndDate = e.ShouldEnd.ToString(),
+                    Members = e.ProjectTeamId == null
+                        ? _dbContext.EmployeesAssignedForActivities
+                            .Include(x => x.Employee)
+                            .Where(x => x.ActivityId == e.Id)
+                            .Select(y => new SelectListDto
+                            {
+                                Id = y.Employee.Id,
+                                Name = $"{y.Employee.FirstName} {y.Employee.LastName}",
+                                Photo = y.Employee.ImagePath,
+                                EmployeeId = y.EmployeeId.ToString(),
+                            }).ToList()
+                        : _dbContext.ProjectTeamEmployees
+                            .Where(x => x.ProjectTeamId == e.ProjectTeamId)
+                            .Include(x => x.Employee)
+                            .Select(y => new SelectListDto
+                            {
+                                Id = y.Employee.Id,
+                                Name = $"{y.Employee.FirstName} {y.Employee.LastName}",
+                                Photo = y.Employee.ImagePath,
+                                EmployeeId = y.EmployeeId.ToString(),
+                            }).ToList(),
+                    MonthPerformance = _dbContext.ActivityTargetDivisions
+                        .Where(x => x.ActivityId == e.Id)
+                        .OrderBy(x => x.Order)
+                        .Select(y => new MonthPerformanceViewDto
+                        {
+                            Id = y.Id,
+                            Order = y.Order,
+                            Planned = y.Target,
+                            Actual = _dbContext.ActivityProgresses
+                                .Where(x => x.QuarterId == y.Id)
+                                .Sum(x => x.ActualWorked),
+                            PlannedBudget = y.TargetBudget,
+                            Percentage = y.Target != 0 ?
+                                (float)(_dbContext.ActivityProgresses
+                                    .Where(x => x.QuarterId == y.Id && x.IsApprovedByDirector == EnumList.ApprovalStatus.APPROVED && x.IsApprovedByFinance == EnumList.ApprovalStatus.APPROVED && x.IsApprovedByManager == EnumList.ApprovalStatus.APPROVED)
+                                    .Sum(x => x.ActualWorked) / y.Target) * 100 : 0
+                        }).ToList(),
+                    OverAllProgress = _dbContext.ActivityProgresses
+                        .Where(x => x.ActivityId == e.Id && x.IsApprovedByDirector == EnumList.ApprovalStatus.APPROVED && x.IsApprovedByFinance == EnumList.ApprovalStatus.APPROVED && x.IsApprovedByManager == EnumList.ApprovalStatus.APPROVED)
+                        .Sum(x => x.ActualWorked) * 100 / e.Goal,
+                    OfficeWork = e.OfficeWork,
+                    FieldWork = e.FieldWork,
+                    StrategicPlan = e.StrategicPlanId,
+                    StrategicPlanIndicator = e.StrategicPlanIndicatorId,
+                    IsPercentage = e.IsPercentage,
+                    ProjectSourceId = e.ProjectSourceFundId,
+                    ActivityLocations = e.ActivityLocations.ToList()
+                }).ToListAsync();
 
-                                        ActivityNumber = e.ActivityNumber,
-                                        Begining = e.Begining,
-                                        Target = e.Goal,
-                                        UnitOfMeasurment = e.Indicator,
-                                        OverAllPerformance = 0,
-                                        StartDate = e.ShouldStat.ToString(),
-                                        ProjectSource = e.ProjectSourceFund.Name,
-                                        EndDate = e.ShouldEnd.ToString(),
-                                        Members = e.ProjectTeamId == null ? _dbContext.EmployeesAssignedForActivities.Include(x => x.Employee).Where(x => x.ActivityId == e.Id).Select(y => new SelectListDto
-                                        {
-                                            Id = y.Employee.Id,
-                                            Name = $"{y.Employee.FirstName} {y.Employee.LastName}",
-                                            Photo = y.Employee.ImagePath,
-                                            EmployeeId = y.EmployeeId.ToString(),
-
-                                        }).ToList() : _dbContext.ProjectTeamEmployees.Where(x => x.ProjectTeamId == e.ProjectTeamId).Include(x => x.Employee)
-                                        .Select(y => new SelectListDto
-                                        {
-                                            Id = y.Employee.Id,
-                                            Name = $"{y.Employee.FirstName} {y.Employee.LastName}",
-                                            Photo = y.Employee.ImagePath,
-                                            EmployeeId = y.EmployeeId.ToString(),
-
-                                        }).ToList(),
-                                        MonthPerformance = _dbContext.ActivityTargetDivisions.Where(x => x.ActivityId == e.Id).OrderBy(x => x.Order).Select(y => new MonthPerformanceViewDto
-                                        {
-                                            Id = y.Id,
-                                            Order = y.Order,
-                                            Planned = y.Target,
-                                            Actual = activityProgress.Where(x => x.QuarterId == y.Id).Sum(x => x.ActualWorked),
-                                            PlannedBudget = y.TargetBudget,
-                                            Percentage = y.Target != 0 ? (activityProgress.Where(x => x.QuarterId == y.Id && x.IsApprovedByDirector == EnumList.ApprovalStatus.APPROVED && x.IsApprovedByFinance == EnumList.ApprovalStatus.APPROVED && x.IsApprovedByManager == EnumList.ApprovalStatus.APPROVED).Sum(x => x.ActualWorked) / y.Target) * 100 : 0
-
-                                        }).ToList(),
-                                        OverAllProgress = activityProgress.Where(x => x.ActivityId == e.Id && x.IsApprovedByDirector == EnumList.ApprovalStatus.APPROVED && x.IsApprovedByFinance == EnumList.ApprovalStatus.APPROVED && x.IsApprovedByManager == EnumList.ApprovalStatus.APPROVED).Sum(x => x.ActualWorked) * 100 / e.Goal,
-                                        OfficeWork = e.OfficeWork,
-                                        FieldWork = e.FieldWork,
-                                        StrategicPlan = e.StrategicPlanId,
-                                        StrategicPlanIndicator = e.StrategicPlanIndicatorId,
-                                        IsPercentage = e.IsPercentage,
-
-
-                                        ProjectSourceId = e.ProjectSourceFundId,
-
-                                        ActivityLocations = e.ActivityLocations.ToList()
-
-                                    }
-                                ).GroupBy(dto => dto.TaskName) // Group by task name
+            var activityGroups = activityViewDtos.GroupBy(dto => dto.TaskName)
                 .Select(group => new ActivityGroup
                 {
                     TaskName = group.Key,
                     ActivityViewDtos = group.ToList()
                 }).ToList();
 
-            return activityViewDtos;
+            return activityGroups;
         }
+
     }
 }
