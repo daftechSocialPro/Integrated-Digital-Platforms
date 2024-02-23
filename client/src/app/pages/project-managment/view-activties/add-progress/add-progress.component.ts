@@ -27,6 +27,7 @@ export class AddProgressComponent implements OnInit {
   Documents:File[]=[];
   FinanceDoc:any; 
   draftedProgress!:ViewProgressDto
+  filteredPerformanceArray!:any[]
   
 
 
@@ -67,6 +68,7 @@ export class AddProgressComponent implements OnInit {
    
 
   ngOnInit():  void {    
+    this.getPerformancesByCurrentYear()
     this.getLocation()
     this.user = this.userService.getCurrentUser();
     this.getDraftedProgress()
@@ -233,14 +235,16 @@ export class AddProgressComponent implements OnInit {
     }
     
   }
-  getPerformancesByCurrentYear(): any[] {
+  getPerformancesByCurrentYear() {
     const currentYear = new Date().getFullYear();
     const startIndex = this.getStartMonth(); 
     const filteredArray = this.activity.monthPerformance.filter(item => {
       const itemYear = item.year
       return itemYear === currentYear;
     });
-    return filteredArray.slice(startIndex);
+    console.log("filteredArray.slice(startIndex)", this.activity.monthPerformance)
+    this.filteredPerformanceArray = filteredArray.slice(startIndex)
+   // return filteredArray.slice(startIndex);
   }
 
 

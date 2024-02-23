@@ -43,6 +43,18 @@
                             <label for="ReportBy">View Report By</label>
                         </div>
 
+                        <div class="form-floating col-3 me-2" *ngIf="filterBy == 0">
+                            <select class="form-control " [(ngModel)]="Quarter" (change)="onQuarterChange()">
+                                <option value=0>All Quarters</option>
+                                <option value=1>First Quarter</option>
+                                <option value=2>Second Quarter</option>
+                                <option value=3>Third Quarter</option>
+                                <option value=4>Fourth Quarter</option>
+                            </select>
+
+                            <label for="ReportBy">Quarter Report</label>
+                        </div>
+
 
 
 
@@ -71,167 +83,175 @@
 
                         <th scope="col" [attr.rowspan]="filterBy==0?3:2" style="border: 1px solid black;">Annual
                             Target</th>
-                        <th scope="col" [attr.colspan]="filterBy==0?32:8" style="border: 1px solid black;">Target
+                        <th scope="col" [attr.colspan]="filterBy==0?(Quarter==0?32:8):8" style="border: 1px solid black;">Target
                         </th>
-                        <th scope="col" [attr.colspan]="filterBy==0?33:9" style="border: 1px solid black;">Budget
+                        <th scope="col" [attr.colspan]="filterBy==0?(Quarter==0?33:9):9" style="border: 1px solid black;">Budget
                         </th>
                         <th scope="col" [attr.rowspan]="filterBy==0?3:2" style="border: 1px solid black;">Source of
                             Budget</th>
                         <th scope="col" [attr.rowspan]="filterBy==0?3:2" style="border: 1px solid black;">Project</th>
+                        <th scope="col" [attr.rowspan]="filterBy==0?3:2" style="border: 1px solid black;">Progress Status</th>
 
                     </tr>
 
                     <tr>
-                        <th scope="col" [attr.colspan]="filterBy==0?8:0" style="border: 1px solid black;">Q1
+                        <th scope="col" *ngIf="(Quarter== 1 || Quarter == 0)" [attr.colspan]="filterBy==0?8:0" style="border: 1px solid black;">Q1
                             {{filterBy==1?'(p)':''}}</th>
-                        <th scope="col" *ngIf="filterBy==1" [attr.colspan]="0"
+                        <th scope="col" *ngIf="filterBy==1 && (Quarter== 1 || Quarter == 0)" [attr.colspan]="0"
                             style="border: 1px solid black;background-color: #fdf584;">Q1 (A)</th>
-                        <th scope="col" [attr.colspan]="filterBy==0?8:0" style="border: 1px solid black;">Q2
+
+                        <th scope="col" *ngIf="(Quarter== 2 || Quarter ==0)" [attr.colspan]="filterBy==0?8:0" style="border: 1px solid black;">Q2
                             {{filterBy==1?'(p)':''}}</th>
-                        <th scope="col" *ngIf="filterBy==1" [attr.colspan]="0"
+                        <th scope="col" *ngIf="filterBy==1 && (Quarter== 2 || Quarter ==0)" [attr.colspan]="0"
                             style="border: 1px solid black;background-color: #fdf584;">Q2 (A)</th>
-                        <th scope="col" [attr.colspan]="filterBy==0?8:0" style="border: 1px solid black;">Q3
+
+                        <th scope="col" *ngIf="(Quarter== 3 || Quarter ==0)" [attr.colspan]="filterBy==0?8:0" style="border: 1px solid black;">Q3
                             {{filterBy==1?'(p)':''}}</th>
-                        <th scope="col" *ngIf="filterBy==1" [attr.colspan]="0"
+                        <th scope="col" *ngIf="filterBy==1 && (Quarter== 3 || Quarter ==0)" [attr.colspan]="0"
                             style="border: 1px solid black;background-color: #fdf584;">Q3 (A)</th>
-                        <th scope="col" [attr.colspan]="filterBy==0?8:0" style="border: 1px solid black;">Q4
+
+                        <th scope="col" *ngIf="(Quarter== 4 || Quarter ==0)" [attr.colspan]="filterBy==0?8:0" style="border: 1px solid black;">Q4
                             {{filterBy==1?'(p)':''}}</th>
-                        <th scope="col" *ngIf="filterBy==1" [attr.colspan]="0"
+                        <th scope="col" *ngIf="filterBy==1 && (Quarter== 4 || Quarter ==0)" [attr.colspan]="0"
                             style="border: 1px solid black;background-color: #fdf584;">Q4 (A)</th>
-                        <th scope="col" [attr.colspan]="filterBy==0?8:0" style="border: 1px solid black;">Q1
+
+                        <th scope="col" *ngIf="(Quarter== 1 || Quarter ==0)" [attr.colspan]="filterBy==0?8:0" style="border: 1px solid black;">Q1
                             {{filterBy==1?'(p)':''}}</th>
-                        <th scope="col" *ngIf="filterBy==1" [attr.colspan]="0"
+                        <th scope="col" *ngIf="filterBy==1 && (Quarter== 1 || Quarter == 0)" [attr.colspan]="0"
                             style="border: 1px solid black;background-color: #fdf584;">Q1 (A)</th>
-                        <th scope="col" [attr.colspan]="filterBy==0?8:0" style="border: 1px solid black;">Q2
+
+                        <th scope="col" *ngIf="(Quarter== 2 || Quarter ==0)" [attr.colspan]="filterBy==0?8:0" style="border: 1px solid black;">Q2
                             {{filterBy==1?'(p)':''}}</th>
-                        <th scope="col" *ngIf="filterBy==1" [attr.colspan]="0"
+                        <th scope="col" *ngIf="filterBy==1 && (Quarter== 2 || Quarter ==0)" [attr.colspan]="0"
                             style="border: 1px solid black;background-color: #fdf584;">Q2 (A)</th>
-                        <th scope="col" [attr.colspan]="filterBy==0?8:0" style="border: 1px solid black;">Q3
+
+                        <th scope="col" *ngIf="(Quarter== 3 || Quarter ==0)" [attr.colspan]="filterBy==0?8:0" style="border: 1px solid black;">Q3
                             {{filterBy==1?'(p)':''}}</th>
-                        <th scope="col" *ngIf="filterBy==1" [attr.colspan]="0"
+                        <th scope="col" *ngIf="filterBy==1 && (Quarter== 3 || Quarter ==0)" [attr.colspan]="0"
                             style="border: 1px solid black;background-color: #fdf584;">Q3 (A)</th>
-                        <th scope="col" [attr.colspan]="filterBy==0?8:0" style="border: 1px solid black;">Q4
+
+                        <th scope="col" *ngIf="(Quarter== 4 || Quarter ==0)" [attr.colspan]="filterBy==0?8:0" style="border: 1px solid black;">Q4
                             {{filterBy==1?'(p)':''}}</th>
-                        <th scope="col" *ngIf="filterBy==1" [attr.colspan]="0"
+                        <th scope="col" *ngIf="filterBy==1 && (Quarter== 4 || Quarter ==0)" [attr.colspan]="0"
                             style="border: 1px solid black;background-color: #fdf584;">Q4 (A)</th>
                         <th scope="col" [attr.rowspan]="filterBy==0?2:1" style="border: 1px solid black;">Total
                             Budget</th>
                     </tr>
                     <tr *ngIf="filterBy==0">
-                        <th scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q1 T(P)</th>
-                        <th scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q1 T(A)</th>
+                        <th *ngIf="(Quarter== 1 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q1 T(P)</th>
+                        <th *ngIf="(Quarter== 1 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q1 T(A)</th>
 
-                        <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Jan(p)</th>
-                        <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Jan(A)</th>
+                        <th *ngIf="(Quarter== 1 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdf584;">Jan(p)</th>
+                        <th *ngIf="(Quarter== 1 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdf584;">Jan(A)</th>
 
-                        <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Feb(p)</th>
-                        <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Feb(A)</th>
+                        <th *ngIf="(Quarter== 1 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdf584;">Feb(p)</th>
+                        <th *ngIf="(Quarter== 1 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdf584;">Feb(A)</th>
 
-                        <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Mar(p)</th>
-                        <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Mar(A)</th>
+                        <th *ngIf="(Quarter== 1 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdf584;">Mar(p)</th>
+                        <th *ngIf="(Quarter== 1 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdf584;">Mar(A)</th>
 
-                        <th scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q2 T(p)</th>
-                        <th scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q2 T(A)</th>
+                        <th *ngIf="(Quarter== 2 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q2 T(p)</th>
+                        <th *ngIf="(Quarter== 2 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q2 T(A)</th>
 
-                        <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Apr (P)</th>
-                        <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Apr (A)</th>
+                        <th *ngIf="(Quarter== 2 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdf584;">Apr (P)</th>
+                        <th *ngIf="(Quarter== 2 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdf584;">Apr (A)</th>
 
-                        <th scope="col" style="border: 1px solid black;background-color: #fdf584;">May(p)</th>
-                        <th scope="col" style="border: 1px solid black;background-color: #fdf584;">May(A)</th>
+                        <th *ngIf="(Quarter== 2 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdf584;">May(p)</th>
+                        <th *ngIf="(Quarter== 2 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdf584;">May(A)</th>
 
-                        <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Jun(P)</th>
-                        <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Jun(A)</th>
+                        <th *ngIf="(Quarter== 2 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdf584;">Jun(P)</th>
+                        <th *ngIf="(Quarter== 2 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdf584;">Jun(A)</th>
 
-                        <th scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q3 T(P)</th>
-                        <th scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q3 T(A)</th>
+                        <th *ngIf="(Quarter== 3 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q3 T(P)</th>
+                        <th *ngIf="(Quarter== 3 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q3 T(A)</th>
 
-                        <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Jul(P)</th>
-                        <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Jul(A)</th>
+                        <th *ngIf="(Quarter== 3 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdf584;">Jul(P)</th>
+                        <th *ngIf="(Quarter== 3 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdf584;">Jul(A)</th>
 
-                        <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Aug(P)</th>
-                        <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Aug(A)</th>
+                        <th *ngIf="(Quarter== 3 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdf584;">Aug(P)</th>
+                        <th *ngIf="(Quarter== 3 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdf584;">Aug(A)</th>
 
-                        <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Sep (P)</th>
-                        <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Sep (A)</th>
+                        <th *ngIf="(Quarter== 3 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdf584;">Sep (P)</th>
+                        <th *ngIf="(Quarter== 3 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdf584;">Sep (A)</th>
 
-                        <th scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q4 T(P)</th>
-                        <th scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q4 T(A)</th>
+                        <th *ngIf="(Quarter== 4 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q4 T(P)</th>
+                        <th *ngIf="(Quarter== 4 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q4 T(A)</th>
 
-                        <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Oct (P)</th>
-                        <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Oct (A)</th>
-
-
-                        <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Nov (P)</th>
-                        <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Nov (A)</th>
-
-                        <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Dec (P)</th>
-                        <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Dec (A)</th>
+                        <th *ngIf="(Quarter== 4 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdf584;">Oct (P)</th>
+                        <th *ngIf="(Quarter== 4 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdf584;">Oct (A)</th>
 
 
-                        <th scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q1 B (p)</th>
-                        <th scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q1 B (A)</th>
-                        <th scope="col" style="border: 1px solid black">Jan (P)</th>
-                        <th scope="col" style="border: 1px solid black">Jan (A)</th>
+                        <th *ngIf="(Quarter== 4 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdf584;">Nov (P)</th>
+                        <th *ngIf="(Quarter== 4 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdf584;">Nov (A)</th>
 
-                        <th scope="col" style="border: 1px solid black">Feb (P)</th>
-                        <th scope="col" style="border: 1px solid black">Feb (A)</th>
+                        <th *ngIf="(Quarter== 4 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdf584;">Dec (P)</th>
+                        <th *ngIf="(Quarter== 4 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdf584;">Dec (A)</th>
 
-                        <th scope="col" style="border: 1px solid black">Mar (P)</th>
-                        <th scope="col" style="border: 1px solid black">Mar (A)</th>
 
-                        <th scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q2 B(P)</th>
-                        <th scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q2 B(A)</th>
+                        <th *ngIf="(Quarter== 1 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q1 B (p)</th>
+                        <th *ngIf="(Quarter== 1 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q1 B (A)</th>
+                        <th *ngIf="(Quarter== 1 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdcd84;">Jan (P)</th>
+                        <th *ngIf="(Quarter== 1 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdcd84;">Jan (A)</th>
 
-                        <th scope="col" style="border: 1px solid black">Apr (P)</th>
-                        <th scope="col" style="border: 1px solid black">Apr (A)</th>
+                        <th *ngIf="(Quarter== 1 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdcd84;">Feb (P)</th>
+                        <th *ngIf="(Quarter== 1 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdcd84;">Feb (A)</th>
 
-                        <th scope="col" style="border: 1px solid black">May (P) </th>
-                        <th scope="col" style="border: 1px solid black">May (A) </th>
+                        <th *ngIf="(Quarter== 1 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdcd84;">Mar (P)</th>
+                        <th *ngIf="(Quarter== 1 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdcd84;">Mar (A)</th>
 
-                        <th scope="col" style="border: 1px solid black">Jun (P)</th>
-                        <th scope="col" style="border: 1px solid black">Jun (A)</th>
+                        <th *ngIf="(Quarter== 2 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q2 B(P)</th>
+                        <th *ngIf="(Quarter== 2 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q2 B(A)</th>
 
-                        <th scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q3 B(P)</th>
-                        <th scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q3 B(A)</th>
+                        <th *ngIf="(Quarter== 2 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdcd84;">Apr (P)</th>
+                        <th *ngIf="(Quarter== 2 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdcd84;">Apr (A)</th>
 
-                        <th scope="col" style="border: 1px solid black">Jul (P)</th>
-                        <th scope="col" style="border: 1px solid black">Jul (A)</th>
+                        <th *ngIf="(Quarter== 2 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdcd84;">May (P) </th>
+                        <th *ngIf="(Quarter== 2 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdcd84;">May (A) </th>
 
-                        <th scope="col" style="border: 1px solid black">Aug (P)</th>
-                        <th scope="col" style="border: 1px solid black">Aug (A)</th>
+                        <th *ngIf="(Quarter== 2 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdcd84;">Jun (P)</th>
+                        <th *ngIf="(Quarter== 2 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdcd84;">Jun (A)</th>
 
-                        <th scope="col" style="border: 1px solid black">Sep (P)</th>
-                        <th scope="col" style="border: 1px solid black">Sep (A)</th>
+                        <th *ngIf="(Quarter== 3 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q3 B(P)</th>
+                        <th *ngIf="(Quarter== 3 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q3 B(A)</th>
 
-                        <th scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q4 B(P)</th>
-                        <th scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q4 B(A)</th>
+                        <th *ngIf="(Quarter== 3 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdcd84;">Jul (P)</th>
+                        <th *ngIf="(Quarter== 3 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdcd84;">Jul (A)</th>
 
-                        <th scope="col" style="border: 1px solid black">Oct (P)</th>
-                        <th scope="col" style="border: 1px solid black">Oct (A)</th>
+                        <th *ngIf="(Quarter== 3 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdcd84;">Aug (P)</th>
+                        <th *ngIf="(Quarter== 3 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdcd84;">Aug (A)</th>
 
-                        <th scope="col" style="border: 1px solid black">Nov (P)</th>
-                        <th scope="col" style="border: 1px solid black">Nov (A)</th>
+                        <th *ngIf="(Quarter== 3 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdcd84;">Sep (P)</th>
+                        <th *ngIf="(Quarter== 3 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdcd84;">Sep (A)</th>
 
-                        <th scope="col" style="border: 1px solid black">Dec (P)</th>
-                        <th scope="col" style="border: 1px solid black">Dec (A)</th>
+                        <th *ngIf="(Quarter== 4 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q4 B(P)</th>
+                        <th *ngIf="(Quarter== 4 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q4 B(A)</th>
+
+                        <th *ngIf="(Quarter== 4 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdcd84;">Oct (P)</th>
+                        <th *ngIf="(Quarter== 4 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdcd84;">Oct (A)</th>
+
+                        <th *ngIf="(Quarter== 4 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdcd84;">Nov (P)</th>
+                        <th *ngIf="(Quarter== 4 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdcd84;">Nov (A)</th>
+
+                        <th *ngIf="(Quarter== 4 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdcd84;">Dec (P)</th>
+                        <th *ngIf="(Quarter== 4 || Quarter ==0)" scope="col" style="border: 1px solid black;background-color: #fdcd84;">Dec (A)</th>
 
                     </tr>
 
                 </thead>
 
-                <tbody class="labels">
+                <!-- <tbody class="labels">
                     <tr>
 
                         <td [attr.colspan]="filterBy==0?71:23"
                             style="border: 1px solid black; background-color: #D5FFFF"> </td>
                     </tr>
-                </tbody>
+                </tbody> -->
 
                 <ng-template ngFor let-strategicPlan [ngForOf]="filterdStrategicPlans" let-index1="index">
                     <tbody class="labels">
                         <tr>
 
-                            <td [attr.colspan]="filterBy==0?71:23"
+                            <td [attr.colspan]="filterBy==0?72:24"
                                 style="border: 1px solid black;  background-color: #e8ffde;width: 200px;font-size: larger;">
                                 {{strategicPlan.name}}
                             </td>
@@ -247,12 +267,12 @@
                     <ng-template ngFor let-task [ngForOf]="strategicActivites.get(strategicPlan.id)" let-index2="index">
                         <tbody>
                             <tr>
-                                <td [attr.colspan]="3"
-                                    style="border: 1px solid black;  background-color: #e8ffde;width: 200px;">
+                                <td [attr.colspan]="filterBy==0?72:24"
+                                    style="border: 1px solid black;  background-color: #D5FFFF;width: 200px;">
                                     Objective {{index2 + 1}} {{task.taskName}}
                                 </td>
-                                <td *ngFor="let item of filterBy==0?taskItems:taskItems2"
-                                    style="border: 1px solid black;  background-color: #e8ffde;width: 200px;"></td>
+                                <!-- <td *ngFor="let item of filterBy==0?taskItems:taskItems2"
+                                    style="border: 1px solid black;  background-color: #e8ffde;width: 200px;"></td> -->
                             </tr>
                         </tbody>
 
@@ -280,7 +300,7 @@
                                     <td style="border: 1px solid black;">{{act.target}}</td>
 
                                     <ng-container *ngFor=" let item of act?.monthPerformance; let i= index ">
-                                        <td *ngIf="i==(0+selectedYear)"
+                                        <td *ngIf="i==(0+selectedYear) && (Quarter== 1 || Quarter ==0)"
                                             style="border: 1px solid black;background-color: #e8ffde;">{{
 
                                             (act?.monthPerformance[0+selectedYear]?.planned || 0) +
@@ -288,7 +308,7 @@
                                             (act?.monthPerformance[2+selectedYear]?.planned || 0)
 
                                             }}</td>
-                                        <td *ngIf="i==(0+selectedYear)"
+                                        <td *ngIf="i==(0+selectedYear) && (Quarter== 1 || Quarter ==0)"
                                             style="border: 1px solid black;background-color: #fdf584;">{{
 
                                             (act?.monthPerformance[0+selectedYear]?.actual || 0) +
@@ -298,14 +318,14 @@
                                             }}</td>
 
 
-                                        <td *ngIf="i==(3+selectedYear)"
+                                        <td *ngIf="i==(3+selectedYear) && (Quarter== 2 || Quarter == 0)"
                                             style="border: 1px solid black;background-color: #e8ffde;">{{
                                             (act?.monthPerformance[3+selectedYear]?.planned || 0) +
                                             (act?.monthPerformance[4+selectedYear]?.planned || 0) +
                                             (act?.monthPerformance[5+selectedYear]?.planned || 0)
                                             }}</td>
 
-                                        <td *ngIf="i==(3+selectedYear)"
+                                        <td *ngIf="i==(3+selectedYear) && (Quarter== 2 || Quarter == 0)"
                                             style="border: 1px solid black;background-color: #fdf584;">{{
                                             (act?.monthPerformance[3+selectedYear]?.actual || 0) +
                                             (act?.monthPerformance[4+selectedYear]?.actual || 0) +
@@ -316,14 +336,14 @@
 
 
 
-                                        <td *ngIf="i==(6+selectedYear)"
+                                        <td *ngIf="i==(6+selectedYear) && (Quarter== 3 || Quarter == 0)"
                                             style="border: 1px solid black;background-color: #e8ffde;">{{
                                             (act?.monthPerformance[6+selectedYear]?.planned || 0) +
                                             (act?.monthPerformance[7+selectedYear]?.planned || 0) +
                                             (act?.monthPerformance[8+selectedYear]?.planned || 0)
                                             }}</td>
 
-                                        <td *ngIf="i==(6+selectedYear)"
+                                        <td *ngIf="i==(6+selectedYear) && (Quarter== 3 || Quarter == 0)"
                                             style="border: 1px solid black;background-color: #fdf584;">{{
                                             (act?.monthPerformance[6+selectedYear]?.actual || 0) +
                                             (act?.monthPerformance[7+selectedYear]?.actual || 0) +
@@ -334,7 +354,7 @@
 
 
 
-                                        <td *ngIf="i==(9+selectedYear)"
+                                        <td *ngIf="i==(9+selectedYear) && (Quarter== 4 || Quarter == 0)"
                                             style="border: 1px solid black;background-color: #e8ffde;">
 
                                             {{
@@ -344,7 +364,7 @@
                                         </td>
 
 
-                                        <td *ngIf="i==(9+selectedYear)"
+                                        <td *ngIf="i==(9+selectedYear) && (Quarter== 4 || Quarter == 0)"
                                             style="border: 1px solid black;background-color: #fdf584;">
 
                                             {{
@@ -356,10 +376,10 @@
 
 
 
-                                        <td *ngIf="filterBy==0 && getGroupValue(i)"
+                                        <td *ngIf="filterBy==0 && getQuarterValue(i)"
                                             style="border: 1px solid black;background-color: #fdf584;"> {{item.planned}}
                                         </td>
-                                        <td *ngIf="filterBy==0 && getGroupValue(i)"
+                                        <td *ngIf="filterBy==0 && getQuarterValue(i)"
                                             style="border: 1px solid black;background-color: #fdf584;"> {{item.actual}}
                                         </td>
                                     </ng-container>
@@ -367,14 +387,14 @@
                                     <ng-container *ngFor=" let item of act?.monthPerformance; let i= index ">
 
 
-                                        <td *ngIf="i==(0+selectedYear)"
+                                        <td *ngIf="i==(0+selectedYear) && (Quarter== 1 || Quarter == 0)"
                                             style="border: 1px solid black;background-color: #e8ffde;">{{
                                             (act?.monthPerformance[0+selectedYear]?.plannedBudget || 0) +
                                             (act?.monthPerformance[1+selectedYear]?.plannedBudget || 0) +
                                             (act?.monthPerformance[2+selectedYear]?.plannedBudget || 0)
                                             }}</td>
 
-                                        <td *ngIf="i==(0+selectedYear)"
+                                        <td *ngIf="i==(0+selectedYear) && (Quarter== 1 || Quarter == 0)"
                                             style="border: 1px solid black;background-color: #fdf584;">{{
                                             (act?.monthPerformance[0+selectedYear]?.usedBudget || 0) +
                                             (act?.monthPerformance[1+selectedYear]?.usedBudget || 0) +
@@ -383,27 +403,27 @@
 
 
 
-                                        <td *ngIf="i==(3+selectedYear)"
+                                        <td *ngIf="i==(3+selectedYear) && (Quarter== 2 || Quarter == 0)"
                                             style="border: 1px solid black;background-color: #e8ffde;">{{
                                             (act?.monthPerformance[3+selectedYear]?.plannedBudget || 0) +
                                             (act?.monthPerformance[4+selectedYear]?.plannedBudget || 0) +
                                             (act?.monthPerformance[5+selectedYear]?.plannedBudget || 0)
                                             }}</td>
 
-                                        <td *ngIf="i==(3+selectedYear)"
+                                        <td *ngIf="i==(3+selectedYear) && (Quarter== 2 || Quarter == 0)"
                                             style="border: 1px solid black;background-color: #fdf584;">{{
                                             (act?.monthPerformance[3+selectedYear]?.usedBudget || 0) +
                                             (act?.monthPerformance[4+selectedYear]?.usedBudget || 0) +
                                             (act?.monthPerformance[5+selectedYear]?.usedBudget || 0)
                                             }}</td>
-                                        <td *ngIf="i==(6+selectedYear)"
+                                        <td *ngIf="i==(6+selectedYear) && (Quarter== 3 || Quarter == 0)"
                                             style="border: 1px solid black;background-color: #e8ffde;">{{
                                             (act?.monthPerformance[6+selectedYear]?.plannedBudget || 0) +
                                             (act?.monthPerformance[7+selectedYear]?.plannedBudget || 0) +
                                             (act?.monthPerformance[8+selectedYear]?.plannedBudget || 0)
                                             }}</td>
 
-                                        <td *ngIf="i==(6+selectedYear)"
+                                        <td *ngIf="i==(6+selectedYear) && (Quarter== 3 || Quarter == 0)"
                                             style="border: 1px solid black;background-color: #fdf584;">{{
                                             (act?.monthPerformance[6+selectedYear]?.usedBudget || 0) +
                                             (act?.monthPerformance[7+selectedYear]?.usedBudget || 0) +
@@ -413,7 +433,7 @@
 
 
 
-                                        <td *ngIf="i==(9+selectedYear)"
+                                        <td *ngIf="i==(9+selectedYear) && (Quarter== 4 || Quarter == 0)"
                                             style="border: 1px solid black;background-color: #e8ffde;">{{
                                             (act?.monthPerformance[9+selectedYear]?.plannedBudget || 0) +
                                             (act?.monthPerformance[10+selectedYear]?.plannedBudget || 0) +
@@ -424,7 +444,7 @@
                                         </td>
 
 
-                                        <td *ngIf="i==(9+selectedYear)"
+                                        <td *ngIf="i==(9+selectedYear) && (Quarter== 4 || Quarter == 0)"
                                             style="border: 1px solid black;background-color: #fdf584;">{{
                                             (act?.monthPerformance[9+selectedYear]?.usedBudget || 0) +
                                             (act?.monthPerformance[10+selectedYear]?.usedBudget || 0) +
@@ -435,11 +455,11 @@
                                         </td>
 
 
-                                        <td *ngIf="filterBy==0 && getGroupValue(i)"
+                                        <td *ngIf="filterBy==0 && getQuarterValue(i)"
                                             style="border: 1px solid black;background-color: #fdcd84;">
                                             {{item.plannedBudget}}
                                         </td>
-                                        <td *ngIf="filterBy==0 && getGroupValue(i)"
+                                        <td *ngIf="filterBy==0 && getQuarterValue(i)"
                                             style="border: 1px solid black;background-color: #fdcd84;">
                                             {{item.usedBudget}}
                                         </td>
@@ -471,6 +491,7 @@
                                     </td>
                                     <td style="border: 1px solid black;">{{act?.projectSource}}</td>
                                     <td style="border: 1px solid black;">{{act?.projectName}}</td>
+                                    <td style="border: 1px solid black;">{{act?.progressStatus}}</td>
 
                                 </tr>
                             </tbody>

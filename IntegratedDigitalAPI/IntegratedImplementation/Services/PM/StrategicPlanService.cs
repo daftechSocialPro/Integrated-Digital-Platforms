@@ -151,7 +151,20 @@ namespace IntegratedImplementation.Services.PM
                     StrategicPlanIndicator = e.StrategicPlanIndicatorId,
                     IsPercentage = e.IsPercentage,
                     ProjectSourceId = e.ProjectSourceFundId,
-                    ActivityLocations = e.ActivityLocations.ToList()
+                    ActivityLocations = e.ActivityLocations.ToList(),
+                    ProgressStatus = _dbContext.ActivityProgresses
+                                    .Where(x => x.ActivityId == e.Id)
+                                    .Select(x => x.progressStatus)
+                                    .AsQueryable()
+                                    .Any(status => status == ProgressStatus.FINALIZE) ? "FINISHED" : _dbContext.ActivityProgresses
+                                    .Where(x => x.ActivityId == e.Id)
+                                    .Select(x => x.progressStatus)
+                                    .Count() == 0 ? "NOT STARTED":
+                                    _dbContext.ActivityProgresses
+                                    .Where(x => x.ActivityId == e.Id)
+                                    .Select(x => x.progressStatus)
+                                    .All(status => status == ProgressStatus.SIMPLEPROGRESS) ? "IN PROGRESS" :
+                                    "NOT STARTED"
                 }).ToListAsync();
 
             var activityGroups = activityViewDtos.GroupBy(dto => dto.TaskName)
