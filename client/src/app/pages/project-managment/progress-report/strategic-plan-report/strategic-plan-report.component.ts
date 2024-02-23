@@ -27,7 +27,7 @@ export class StrategicPlanReportComponent implements OnInit {
   plannedreport  !: IPlannedReport
   cnt: number = 0
 
-    
+  Quarter:number = 0    
 filterBy:number=1
 selectedYear: number = 0;
 selectedStrategicPlan !: string
@@ -79,6 +79,7 @@ taskItems2 :number[] =Array(20).fill(0)
 
   
   onFilterByChange(){
+    this.Quarter = 0
     if (this.filterBy==0){
       this.items= Array(37).fill(0);
       this.items2= Array(64).fill(0);
@@ -87,7 +88,15 @@ taskItems2 :number[] =Array(20).fill(0)
       this.items2= Array(16).fill(0);
     }
   }
-
+  onQuarterChange(){
+    if (this.Quarter==0){
+      this.items= Array(37).fill(0);
+      this.items2= Array(64).fill(0);
+    }else  {
+      this.items= Array(13).fill(0);
+      this.items2= Array(16).fill(0);
+    }
+  }
   getStrategicPlanForReport(strategicPlanId : string) {
 
     this.projectService.getStrategicPlanForReport(strategicPlanId).subscribe({
@@ -138,14 +147,25 @@ taskItems2 :number[] =Array(20).fill(0)
 }
 
 
-getGroupValue(order: number): boolean {
-  
-  const groupSize = 12; 
-  
-  
-  // Number of months in each group
+getQuarterValue(i:number){
 
-  //return Math.floor((order - 1) / groupSize) + 1 === this.selectedYear;
-  return (Math.floor(order / groupSize) * groupSize) == this.selectedYear
+  if(this.Quarter==0){
+    return true
+  }
+  else{
+    let result:number
+    if (i >= 0 && i <= 2) {
+      result = 1;
+    } else if (i >= 3 && i <= 5) {
+      result = 2;
+    } else if (i >= 6 && i <= 8) {
+      result = 3;
+    } else if (i >= 9 && i <= 11) {
+      result = 4;
+    } 
+    
+    return result == this.Quarter;
+  }
 }
+
 }

@@ -567,7 +567,9 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                 }
 
            
-                var ac = _dBContext.Activities.Find(activityProgress2.ActivityId);
+                var ac = _dBContext.Activities.Include(x => x.ActivityParent).ThenInclude(x => x.Task).ThenInclude(x => x.Project).ThenInclude(x => x.ProjectManager)
+                                        .Include(x => x.Plan).ThenInclude(x => x.ProjectManager)
+                                        .Include(x => x.Task).ThenInclude(x => x.Project).ThenInclude(x => x.ProjectManager).FirstOrDefault(x => x.Id == activityProgress2.ActivityId);
                 ac.Status = activityProgress2.progressStatus == ProgressStatus.SIMPLEPROGRESS ? Status.ONPROGRESS : Status.FINALIZED;
                 if (ac.ActualStart == null)
                 {
@@ -594,11 +596,11 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                     if (ac.PlanId != null)
                         employee = ac.Plan.ProjectManager;
 
-                    var email = new EmailMetadata
-                    (employee.Email, "Activity Progress Approval",
-                        $"Dear {employee.FirstName} {employee.MiddleName} {employee.LastName},\n\nEmployee {employeee.FirstName} {employeee.MiddleName} {employeee.LastName} has been report a progress on {ac.ActivityDescription}." +
-                        $" Please review the Progress and provide your approval.\n\nThank you.\n\nSincerely,\nEMIA");
-                    await _emailService.Send(email);
+                    //var email = new EmailMetadata
+                    //(employee.Email, "Activity Progress Approval",
+                    //    $"Dear {employee.FirstName} {employee.MiddleName} {employee.LastName},\n\nEmployee {employeee.FirstName} {employeee.MiddleName} {employeee.LastName} has been report a progress on {ac.ActivityDescription}." +
+                    //    $" Please review the Progress and provide your approval.\n\nThank you.\n\nSincerely,\nEMIA");
+                    //await _emailService.Send(email);
 
                 }
 
@@ -626,12 +628,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
 
             try
             {
-                
-
-
-
-
-
+         
                 var actProgress = _dBContext.ActivityProgresses
                     .Include(x=>x.EmployeeValue)
                     .Include(x=>x.Activity)
