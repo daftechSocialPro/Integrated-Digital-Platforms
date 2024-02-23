@@ -100,8 +100,9 @@
         <input pInputText type="text" class="mt-2"  placeholder="Educational Field" formControlName="educationalField" />&nbsp;
         <input pInputText type="text" class="mt-2"  placeholder="Name of Organization" formControlName="nameofOrganizaton" />&nbsp;
         <input pInputText type="text" class="mt-2"  placeholder="Type of Organization" formControlName="typeofOrganization" />&nbsp;
-        <textarea pInputText type="text" class="mt-2"  placeholder="Pre Summary" formControlName="preSummary" ></textarea>&nbsp;
-        <textarea pInputText type="text" class="mt-2"  placeholder="Post Summary" formControlName="postSummary" ></textarea>&nbsp;
+        <input pInputText type="number" class="mt-2"  placeholder="Pre Summary" formControlName="preSummary" />&nbsp;
+        <input pInputText type="number" class="mt-2"  placeholder="Post Summary" formControlName="postSummary" />&nbsp;
+        
         <button type="button"  [disabled]="!traineeForm.valid" class="btn btn-outline-primary" (click)="addRow()">+</button>
       </form>
     </div>

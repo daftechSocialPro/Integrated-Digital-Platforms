@@ -2879,11 +2879,11 @@ namespace IntegratedInfrustructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PostSummary")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<double>("PostSummary")
+                        .HasColumnType("float");
 
-                    b.Property<string>("PreSummary")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<double>("PreSummary")
+                        .HasColumnType("float");
 
                     b.Property<string>("Profession")
                         .IsRequired()

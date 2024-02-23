@@ -38,8 +38,8 @@ export interface ITraineePostDto{
     regionId: string 
     zone : string 
     woreda : string
-    postSummary?:string
-    preSummary?:string
+    postSummary?:number
+    preSummary?:number
 
 }
 

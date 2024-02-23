@@ -42,6 +42,7 @@ namespace IntegratedDigitalAPI.DTOS.PM
         public Guid? StrategicPlanIndicator { get;  set; }
         public bool? IsPercentage { get;  set; }
        
+        public string ? TaskName { get; set; }
 
 
         public string? ProjectSource { get; set; }
@@ -50,8 +51,16 @@ namespace IntegratedDigitalAPI.DTOS.PM
 
         public Guid? ProjectSourceId { get; set; }
 
+        public string ? ProjectName { get; set; }
+
         public List<ActivityLocation> ActivityLocations { get; set; } 
 
+    }
+
+    public class ActivityGroup
+    {
+        public string TaskName { get; set; }
+        public List<ActivityViewDto> ActivityViewDtos { get; set; }
     }
 
     public class MonthPerformanceViewDto

@@ -56,5 +56,19 @@ namespace IntegratedDigitalAPI.Controllers.PM
                 return BadRequest();
             }
         }
+
+        [HttpGet("GetStrategicPlanForReport")]
+        public async Task<IActionResult> GetStrategicPlanForReport(Guid strategicPlanId)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _strategicPlanService.GetStrategicPlanReport(strategicPlanId));
+
+            }else
+            {
+                return BadRequest();
+            }
+
+        }
     }
 }
