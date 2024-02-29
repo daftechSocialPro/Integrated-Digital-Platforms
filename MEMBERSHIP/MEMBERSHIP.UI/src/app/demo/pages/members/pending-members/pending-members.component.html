@@ -6,7 +6,8 @@
                     <div class="row">
                         <div class="d-flex justify-content-center">
                             <div class="auth-header">
-                                <h2>{{memberTelegram&&memberTelegram.member.fullName.toUpperCase()}} <b>( {{memberTelegram&&memberTelegram.member.memberId}} )</b>
+                                <h2>{{memberTelegram&&memberTelegram.member.fullName.toUpperCase()}} <b>(
+                                        {{memberTelegram&&memberTelegram.member.memberId}} )</b>
                                 </h2>
 
 
@@ -27,17 +28,19 @@
                         </div>
                     </div>
 
-                    <div  *ngIf="memberTelegram.status=='PAID'" class="p-4 text-center">
+                    <div *ngIf="memberTelegram.status=='PAID'" class="p-4 text-center">
 
-                        <h3 class="mb-3" ><b>
-                            you have previously completed the registration process using the provided phone number and
-                            have successfully made the necessary payment and
-                            <span class="text-success"> <b>{{memberTelegram&&memberTelegram.message}}</b> </span>.
-                            We kindly request you to log in using your assigned membership ID to access the desired
-                            services.</b>
+                        <h3 class="mb-3"><b>
+                                you have previously completed the registration process using the provided phone number
+                                and
+                                have successfully made the necessary payment and
+                                <span class="text-success"> <b>{{memberTelegram&&memberTelegram.message}}</b> </span>.
+                                We kindly request you to log in using your assigned membership ID to access the desired
+                                services.</b>
 
                         </h3>
-                        <button class="btn btn-outline-primary" (click)="closeModal()" routerLink="/auth/membership-login">Login</button>
+                        <button class="btn btn-outline-primary" (click)="closeModal()"
+                            routerLink="/auth/membership-login">Login</button>
                     </div>
 
 
@@ -48,8 +51,8 @@
                         <div class="row mt-2">
                             <div class="col-md-4">
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" disabled [value]="memberTelegram&&memberTelegram.member.fullName"
-                                        id="fullName" />
+                                    <input type="text" class="form-control" disabled
+                                        [value]="memberTelegram&&memberTelegram.member.fullName" id="fullName" />
                                     <label for="fullName">Full Name </label>
                                 </div>
                             </div>
@@ -107,28 +110,27 @@
 
                         <div class="d-grid mt-4">
                             <button [disabled]="!selectedMembership&&!selectedAmount" (click)="renewMembership()"
-                                class="btn btn-secondary">{{memberTelegram.status=="EXPIRED"?'Renew':'Continue to Payment'}}</button>
+                                class="btn btn-secondary">{{memberTelegram.status=="EXPIRED"?'Renew':
+                                'Continue to Payment'}}</button>
                         </div>
 
                         <hr />
                     </form>
-<div *ngIf="(memberTelegram.status=='PENDING' && memberTelegram.member.text_Rn!=null)">
+                    <div *ngIf="(memberTelegram.status=='PENDING' && memberTelegram.member.text_Rn!=null)">
 
-    <div class="d-grid mt-4">
-        <button (click)="renewMembership2()"
-            class="btn btn-secondary">Continue to Payment</button>
-    </div>
+                        <div class="d-grid mt-4">
+                            <button (click)="renewMembership2()" class="btn btn-secondary">Continue to Payment</button>
+                        </div>
 
-</div>
+                    </div>
 
-<div *ngIf="(memberTelegram.status=='PENDING' && memberTelegram.member.text_Rn==null)">
+                    <div *ngIf="(memberTelegram.status=='PENDING' && memberTelegram.member.text_Rn==null)">
 
-    <div class="d-grid mt-4">
-        <button (click)="renewMembership3()"
-            class="btn btn-secondary">Continue to Payment</button>
-    </div>
+                        <div class="d-grid mt-4">
+                            <button (click)="renewMembership3()" class="btn btn-secondary">Continue to Payment</button>
+                        </div>
 
-</div>
+                    </div>
                 </div>
             </div>
         </div>

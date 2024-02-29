@@ -39,7 +39,7 @@ export class NavLeftComponent implements OnInit {
       next: (res) => {
         this.member = res
 
-        console.log(this.member)
+        console.log("member",this.member)
         this.login()
       }
     }))
@@ -48,6 +48,7 @@ export class NavLeftComponent implements OnInit {
 
   openModal() {
     let modalRef = this.modalService.open(CompleteProfileComponent, { size: 'lg', backdrop: 'static', keyboard: false, windowClass: 'custom-modal-width' })
+    modalRef.componentInstance.memberVar = this.member
   }
 
 
@@ -70,7 +71,7 @@ export class NavLeftComponent implements OnInit {
 
           console.log(this.user)
 
-          if (this.user.isProfileCompleted.toLowerCase() == "false") {
+          if (this.user.isProfileCompleted.toLowerCase() == "false"||this.member.paymentStatus=="PENDING") {
             this.openModal()
           }
           if (this.user.isExpired.toLowerCase() == "true") {

@@ -1,5 +1,6 @@
 ﻿
 using IntegratedImplementation.DTOS.PM;
+using NLog.LayoutRenderers;
 
 namespace IntegratedDigitalAPI.DTOS.PM
 {
@@ -67,4 +68,33 @@ namespace IntegratedDigitalAPI.DTOS.PM
 
 
     }
+
+
+    public class UpdateActivityProgressDto
+    {
+
+        public Guid ActivityId { get; set; }
+
+        public Guid EmployeeId { get; set; }
+
+        public int Order { get; set; }
+
+        public float ActualWorked { get; set; }
+
+        public float UsedBudget { get; set; }
+
+        public string CreatedBy { get; set; }
+
+        public PROGRESS_TYPE ProgressType { get; set; }
+    }
+
+    public enum PROGRESS_TYPE
+    {
+        BUDGET,
+        ACTUAL_WORKED
+    }
+
+
+
+      
 }

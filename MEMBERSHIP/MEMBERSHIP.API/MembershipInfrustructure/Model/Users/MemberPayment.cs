@@ -1,6 +1,7 @@
 ﻿using MembershipInfrustructure.Model.Configuration;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace MembershipInfrustructure.Model.Users
         public Member Member { get; set; }
 
         public string Text_Rn { get; set; }
-        public string Url { get;set; }
+        public string Url { get; set; }
         public double Payment { get; set; }
 
         public Guid MembershipTypeId { get; set; }
@@ -25,6 +26,9 @@ namespace MembershipInfrustructure.Model.Users
         public DateTime LastPaid { get; set; }
 
         public PaymentStatus PaymentStatus { get; set; }
+
+  
+        public DateTime? ModifiedDate { get; set; } = DateTime.Now;
 
 
     }

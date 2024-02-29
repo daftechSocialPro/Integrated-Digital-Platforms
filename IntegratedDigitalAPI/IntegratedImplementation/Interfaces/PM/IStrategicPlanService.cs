@@ -18,5 +18,9 @@ namespace IntegratedImplementation.Interfaces.PM
 
         Task<List<ActivityGroup>> GetStrategicPlanReport(Guid strategicPlanId);
 
+
+        Task<List<ActivityViewDto>> GetActivitiesFromProject(Guid projectId);
+        
+
     }
 }

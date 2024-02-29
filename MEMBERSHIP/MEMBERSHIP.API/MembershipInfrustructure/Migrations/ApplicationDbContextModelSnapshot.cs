@@ -80,7 +80,7 @@ namespace MembershipInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("MembershipInfrustructure.Model.Configuration.Announcment", b =>
@@ -115,7 +115,7 @@ namespace MembershipInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Announcments", (string)null);
+                    b.ToTable("Announcments");
                 });
 
             modelBuilder.Entity("MembershipInfrustructure.Model.Configuration.Country", b =>
@@ -148,7 +148,7 @@ namespace MembershipInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Countries", (string)null);
+                    b.ToTable("Countries");
                 });
 
             modelBuilder.Entity("MembershipInfrustructure.Model.Configuration.Course", b =>
@@ -194,7 +194,7 @@ namespace MembershipInfrustructure.Migrations
 
                     b.HasIndex("MembershipTypeId");
 
-                    b.ToTable("Courses", (string)null);
+                    b.ToTable("Courses");
                 });
 
             modelBuilder.Entity("MembershipInfrustructure.Model.Configuration.EducationalField", b =>
@@ -222,7 +222,7 @@ namespace MembershipInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EducationalFields", (string)null);
+                    b.ToTable("EducationalFields");
                 });
 
             modelBuilder.Entity("MembershipInfrustructure.Model.Configuration.EducationalLevel", b =>
@@ -250,7 +250,7 @@ namespace MembershipInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EducationalLevels", (string)null);
+                    b.ToTable("EducationalLevels");
                 });
 
             modelBuilder.Entity("MembershipInfrustructure.Model.Configuration.GeneralCodes", b =>
@@ -284,7 +284,7 @@ namespace MembershipInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GeneralCodes", (string)null);
+                    b.ToTable("GeneralCodes");
                 });
 
             modelBuilder.Entity("MembershipInfrustructure.Model.Configuration.MembershipType", b =>
@@ -326,7 +326,7 @@ namespace MembershipInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MembershipTypes", (string)null);
+                    b.ToTable("MembershipTypes");
                 });
 
             modelBuilder.Entity("MembershipInfrustructure.Model.Configuration.Region", b =>
@@ -354,7 +354,7 @@ namespace MembershipInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Regions", (string)null);
+                    b.ToTable("Regions");
                 });
 
             modelBuilder.Entity("MembershipInfrustructure.Model.Configuration.Zone", b =>
@@ -384,7 +384,7 @@ namespace MembershipInfrustructure.Migrations
 
                     b.HasIndex("RegionId");
 
-                    b.ToTable("Zones", (string)null);
+                    b.ToTable("Zones");
                 });
 
             modelBuilder.Entity("MembershipInfrustructure.Model.Users.Admin", b =>
@@ -417,7 +417,7 @@ namespace MembershipInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Admins", (string)null);
+                    b.ToTable("Admins");
                 });
 
             modelBuilder.Entity("MembershipInfrustructure.Model.Users.Member", b =>
@@ -515,7 +515,7 @@ namespace MembershipInfrustructure.Migrations
 
                     b.HasIndex("RegionId");
 
-                    b.ToTable("Members", (string)null);
+                    b.ToTable("Members");
                 });
 
             modelBuilder.Entity("MembershipInfrustructure.Model.Users.MemberPayment", b =>
@@ -535,6 +535,9 @@ namespace MembershipInfrustructure.Migrations
 
                     b.Property<Guid>("MembershipTypeId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<double>("Payment")
                         .HasColumnType("float");
@@ -556,7 +559,7 @@ namespace MembershipInfrustructure.Migrations
 
                     b.HasIndex("MembershipTypeId");
 
-                    b.ToTable("MemberPayments", (string)null);
+                    b.ToTable("MemberPayments");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -575,7 +578,7 @@ namespace MembershipInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles", (string)null);
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -597,7 +600,7 @@ namespace MembershipInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RoleClaims", (string)null);
+                    b.ToTable("RoleClaims");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -619,7 +622,7 @@ namespace MembershipInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserClaims", (string)null);
+                    b.ToTable("UserClaims");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -638,7 +641,7 @@ namespace MembershipInfrustructure.Migrations
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
-                    b.ToTable("UserLogins", (string)null);
+                    b.ToTable("UserLogins");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
@@ -651,7 +654,7 @@ namespace MembershipInfrustructure.Migrations
 
                     b.HasKey("UserId", "RoleId");
 
-                    b.ToTable("UserRoles", (string)null);
+                    b.ToTable("UserRoles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -670,7 +673,7 @@ namespace MembershipInfrustructure.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("UserTokens", (string)null);
+                    b.ToTable("UserTokens");
                 });
 
             modelBuilder.Entity("MembershipInfrustructure.Model.Configuration.Course", b =>

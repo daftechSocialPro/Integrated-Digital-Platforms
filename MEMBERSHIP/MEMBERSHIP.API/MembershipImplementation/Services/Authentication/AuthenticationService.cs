@@ -150,7 +150,7 @@ namespace Implementation.Services.Authentication
                     return new ResponseMessage()
                     {
                         Success = false,
-                        Message = "could not find Employee"
+                        Message = "could not find Member"
                     };
                 }
 

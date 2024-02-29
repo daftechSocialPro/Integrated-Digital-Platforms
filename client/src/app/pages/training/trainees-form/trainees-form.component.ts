@@ -32,6 +32,9 @@ export class TraineesFormComponent implements OnInit {
   training !: ITrainingGetDto
 
   regions:SelectList[]=[]
+
+
+  filterdTraines:ITraineeGetDto[] = [];  
   
 
   genders=[    
@@ -191,6 +194,7 @@ export class TraineesFormComponent implements OnInit {
     this.trainingService.getTraineeList(this.trainingId).subscribe({
       next:(res)=>{
         this.traineeData = res 
+        this.filterdTraines= res 
       }
     })}
     else{
@@ -200,6 +204,19 @@ export class TraineesFormComponent implements OnInit {
         }
       })
     }
+  }
+
+  filterTrainees(value:string){
+
+    var searchTerm = value.toLowerCase();
+    this.filterdTraines = this.traineeData.filter((item)=>{
+
+      return (
+        item.fullName.toLowerCase().includes(searchTerm) ||
+        item.phoneNumber.toLowerCase().includes(searchTerm)
+
+      )
+    })
   }
 
   getAge(birthDate:Date){

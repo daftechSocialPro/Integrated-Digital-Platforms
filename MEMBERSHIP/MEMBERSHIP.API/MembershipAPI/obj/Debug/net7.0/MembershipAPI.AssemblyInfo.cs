@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MembershipAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+683df570991b72c0eae5a28ee0a8aeade65eb5bf")]
 [assembly: System.Reflection.AssemblyProductAttribute("MembershipAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MembershipAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

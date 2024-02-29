@@ -21,9 +21,20 @@
     </div>
   </div>
   <button  *ngIf="traininggId&&(training&&training.traineeListStatus=='SUBMITTED')" class="btn btn-outline-success text-end mb-3" (click)="exportAsExcel(training&&training.title)"><i
-    class="bi bi-file-excel"></i> Export Excel </button> |
+    class="bi bi-file-excel"></i> Export Excel </button> &nbsp;
 
     <button  *ngIf="traininggId&&(training&&training.traineeListStatus=='SUBMITTED')" class="btn btn-outline-primary text-end mb-3" (click)="revertStatus()"> Revert Report Status </button>
+
+    <div class="card p-2">
+    <div class="col-3  my-3" >
+      <div class="form-floating">
+        <input type="text" class="form-control" id="PlannedBudget" #searchterm  placeholder="filter" (change)="filterTrainees(searchterm.value)"
+            placeholder="EndDate" >
+        <label for="PlannedBudget">Filter </label>
+       
+    </div>
+      
+    </div>
   <div class="table-container ">
     <div class="table-wrapper ">
     <table class="table table-bordered"  #excelTable>
@@ -52,7 +63,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let row of traineeData; let i = index">
+        <tr *ngFor="let row of filterdTraines; let i = index">
           <td style="border: 1px solid black;" *ngIf="!traininggId && (training && training.traineeListStatus != 'SUBMITTED')"><button class="btn btn-sm btn-outline-warning" (click)="editRow(row)">
             <i class="bi bi-pencil"></i>
           </button></td>
@@ -107,4 +118,5 @@
       </form>
     </div>
   </div>
+</div>
   

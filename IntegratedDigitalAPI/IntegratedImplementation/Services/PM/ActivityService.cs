@@ -211,25 +211,25 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
 
             activity.StrategicPlanId = activityDetail.StrategicPlanId;
             //activity.ZoneId = activityDetail.ZoneId;
-          
+
             activity.ActivityNumber = activityDetail.ActivityNumber;
 
-            
-            
+
+
             activity.IsTraining = activityDetail.IsTraining;
 
             if (activityDetail.PlanId != null)
             {
                 activity.PlanId = activityDetail.PlanId;
             }
-            else if(activityDetail.TaskId != null)
+            else if (activityDetail.TaskId != null)
             {
                 activity.TaskId = activityDetail.TaskId;
             }
             activity.ShouldStat = DateTime.Parse(activityDetail.StartDate);
             activity.ShouldEnd = DateTime.Parse(activityDetail.EndDate);
 
-           
+
             await _dBContext.Activities.AddAsync(activity);
             await _dBContext.SaveChangesAsync();
             if (activityDetail.Employees != null)
@@ -242,7 +242,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                         {
                             CreatedDate = DateTime.Now,
                             CreatedById = activityDetail.CreatedBy.ToString(),
-                          
+
                             Id = Guid.NewGuid(),
 
                             ActivityId = activity.Id,
@@ -278,7 +278,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
 
 
 
-            if (activityDetail.PlanId != Guid.Empty&& activityDetail.PlanId!=null)
+            if (activityDetail.PlanId != Guid.Empty && activityDetail.PlanId != null)
             {
                 var plan = await _dBContext.Projects.FirstOrDefaultAsync(x => x.Id.Equals(activityDetail.PlanId));
                 //if(plan != null)
@@ -297,7 +297,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                     Task.ShouldStartPeriod = activity.ShouldStat;
                     Task.ShouldEnd = activity.ShouldEnd;
                     Task.Weight = activity.Weight;
-                    if(plan != null)
+                    if (plan != null)
                     {
                         var tasks = await _dBContext.Tasks.Where(x => x.ProjectId == plan.Id).ToListAsync();
                         //plan.PeriodStartAt = tasks.Min(x => x.ShouldStartPeriod);
@@ -322,7 +322,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                     CreatedById = targetDivisions.CreatedBy.ToString(),
                     CreatedDate = DateTime.Now,
                     ActivityId = targetDivisions.ActiviyId,
-                    Order = target.Order ,
+                    Order = target.Order,
                     Target = target.Target,
                     TargetBudget = target.TargetBudget,
                     Year = target.Year,
@@ -335,7 +335,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
 
             var existingOrdersByYear = await _dBContext.ActivityTargetDivisions
                                      .Where(td => td.ActivityId == targetDivisions.ActiviyId)
-                                     .GroupBy(td => td.Year) 
+                                     .GroupBy(td => td.Year)
                                      .ToListAsync();
 
 
@@ -501,7 +501,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
             try
             {
 
-                var Goal = _dBContext.Activities.Find(activityProgress.ActivityId).Goal- _dBContext.Activities.Find(activityProgress.ActivityId).Begining;
+                var Goal = _dBContext.Activities.Find(activityProgress.ActivityId).Goal - _dBContext.Activities.Find(activityProgress.ActivityId).Begining;
                 var progressGoal = _dBContext.ActivityProgresses.Where(x => x.ActivityId == activityProgress.ActivityId && !x.IsDraft).Sum(x => x.ActualWorked);
 
                 if (Goal < (progressGoal + activityProgress.ActualWorked))
@@ -566,7 +566,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                     }
                 }
 
-           
+
                 var ac = _dBContext.Activities.Include(x => x.ActivityParent).ThenInclude(x => x.Task).ThenInclude(x => x.Project).ThenInclude(x => x.ProjectManager)
                                         .Include(x => x.Plan).ThenInclude(x => x.ProjectManager)
                                         .Include(x => x.Task).ThenInclude(x => x.Project).ThenInclude(x => x.ProjectManager).FirstOrDefault(x => x.Id == activityProgress2.ActivityId);
@@ -628,16 +628,16 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
 
             try
             {
-         
+
                 var actProgress = _dBContext.ActivityProgresses
-                    .Include(x=>x.EmployeeValue)
-                    .Include(x=>x.Activity)
-                    .Where(x=>x.Id==activityProgress.Id).FirstOrDefault();
-                if (actProgress!=null)
+                    .Include(x => x.EmployeeValue)
+                    .Include(x => x.Activity)
+                    .Where(x => x.Id == activityProgress.Id).FirstOrDefault();
+                if (actProgress != null)
                 {
 
 
-                    var Goal = actProgress.Activity.Goal- actProgress.Activity.Begining;
+                    var Goal = actProgress.Activity.Goal - actProgress.Activity.Begining;
                     var progressGoal = _dBContext.ActivityProgresses.Where(x => x.ActivityId == actProgress.ActivityId && !x.IsDraft).Sum(x => x.ActualWorked);
 
                     if (Goal < (progressGoal + activityProgress.ActualWorked))
@@ -699,11 +699,11 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                     }
 
                     var ac = _dBContext.Activities
-                        
-                        .Include(x=>x.ActivityParent.Task.Project.ProjectManager)
-                        .Include(x=>x.Task.Project.ProjectManager)
-                        .Include(x=>x.Plan.ProjectManager)                        
-                        .Where(x=>x.Id==activityProgress.ActivityId).FirstOrDefault();
+
+                        .Include(x => x.ActivityParent.Task.Project.ProjectManager)
+                        .Include(x => x.Task.Project.ProjectManager)
+                        .Include(x => x.Plan.ProjectManager)
+                        .Where(x => x.Id == activityProgress.ActivityId).FirstOrDefault();
 
                     ac.Status = actProgress.progressStatus == ProgressStatus.SIMPLEPROGRESS ? Status.ONPROGRESS : Status.FINALIZED;
                     if (ac.ActualStart == null)
@@ -727,8 +727,8 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
 
                     if (!bool.Parse(activityProgress.IsDraft))
                     {
-                        var  employee = new EmployeeList();
-                        if(ac.ActivityParentId!=null)
+                        var employee = new EmployeeList();
+                        if (ac.ActivityParentId != null)
                             employee = ac.ActivityParent.Task.Project.ProjectManager;
                         if (ac.TaskId != null)
                             employee = ac.Task.Project.ProjectManager;
@@ -760,7 +760,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                     };
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
                 return new ResponseMessage
@@ -781,7 +781,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                                       {
                                           Id = p.Id,
                                           ActalWorked = p.ActualWorked,
-                                          UsedBudget = p.ActualBudget,                                        
+                                          UsedBudget = p.ActualBudget,
                                           IsApprovedByManager = p.IsApprovedByManager.ToString(),
                                           IsApprovedByFinance = p.IsApprovedByFinance.ToString(),
                                           IsApprovedByDirector = p.IsApprovedByDirector.ToString(),
@@ -803,14 +803,14 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
 
         public async Task<ProgressViewDto> ViewDraftProgress(Guid actId)
         {
-            var progressView = await (from p in _dBContext.ActivityProgresses.Where(x => x.ActivityId == actId&&x.IsDraft)
+            var progressView = await (from p in _dBContext.ActivityProgresses.Where(x => x.ActivityId == actId && x.IsDraft)
                                       select new ProgressViewDto
                                       {
                                           Id = p.Id,
                                           ActalWorked = p.ActualWorked,
                                           UsedBudget = p.ActualBudget,
-                                          QuarterId=p.QuarterId,
-                                          Remark =p.Remark,
+                                          QuarterId = p.QuarterId,
+                                          Remark = p.Remark,
 
                                           IsApprovedByManager = p.IsApprovedByManager.ToString(),
                                           IsApprovedByFinance = p.IsApprovedByFinance.ToString(),
@@ -836,22 +836,22 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
             var activityProgress = _dBContext.ActivityProgresses;
             List<ActivityViewDto> assignedActivities =
                 await (from e in _dBContext.Activities
-                       
+
                         .Include(x => x.ActivityLocations).ThenInclude(x => x.Region).ThenInclude(x => x.Country)
-                       .Include(x=>x.Commitee).ThenInclude(x=>x.Employees)
-                       .Where(x=>x.ActualEnd==null)
-                       where employeeAssigned.Contains(e.Id)||(e.ProjectTeamId!=null?e.Commitee.Employees.Select(x=>x.EmployeeId).Contains(employeeId):false)
+                       .Include(x => x.Commitee).ThenInclude(x => x.Employees)
+                       .Where(x => x.ActualEnd == null)
+                       where employeeAssigned.Contains(e.Id) || (e.ProjectTeamId != null ? e.Commitee.Employees.Select(x => x.EmployeeId).Contains(employeeId) : false)
                        select new ActivityViewDto
                        {
                            Id = e.Id,
                            Name = e.ActivityDescription,
                            PlannedBudget = e.PlanedBudget,
                            ActivityType = e.ActivityType.ToString(),
-                                               
+
                            IsTraining = e.IsTraining,
-                          
+
                            ActivityNumber = e.ActivityNumber,
-                           
+
                            Begining = e.Begining,
                            Target = e.Goal,
                            UnitOfMeasurment = e.Indicator,
@@ -872,6 +872,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                                Year = y.Year,
                                Order = y.Order,
                                Planned = y.Target,
+                               UsedBudget = activityProgress.Where(x => x.QuarterId == y.Id).Sum(mp => mp.ActualBudget),
                                Actual = activityProgress.Where(x => x.QuarterId == y.Id).Sum(mp => mp.ActualWorked),
                                Percentage = y.Target != 0 ? (activityProgress.Where(x => x.QuarterId == y.Id && x.IsApprovedByDirector == ApprovalStatus.APPROVED && x.IsApprovedByFinance == ApprovalStatus.APPROVED && x.IsApprovedByManager == ApprovalStatus.APPROVED).Sum(x => x.ActualWorked) / y.Target) * 100 : 0
 
@@ -885,7 +886,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                         ).ToListAsync();
 
 
-            
+
 
             return assignedActivities;
         }
@@ -898,7 +899,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
             {
 
 
-                var not = (from p in _dBContext.Projects.Where(x => ( x.ProjectManagerId == employeeId))
+                var not = (from p in _dBContext.Projects.Where(x => (x.ProjectManagerId == employeeId))
                            join a in _dBContext.Activities on p.Id equals a.PlanId
                            join ap in _dBContext.ActivityProgresses on a.Id equals ap.ActivityId
                            select new
@@ -927,20 +928,20 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                 List<ActivityViewDto> actDtos = new List<ActivityViewDto>();
 
 
-                var activityProgress = _dBContext.ActivityProgresses.Where(x=>!x.IsDraft);
+                var activityProgress = _dBContext.ActivityProgresses.Where(x => !x.IsDraft);
                 foreach (var activitprogress in not)
                 {
 
-                    var activityViewDtos = (from e in _dBContext.ActivityProgresses.Include(x => x.Activity.ActivityParent.Task.Project.Department).Include(x=>x.Activity).Where(a => a.Id == activitprogress.Id && (a.IsApprovedByManager == ApprovalStatus.PENDING || a.IsApprovedByDirector == ApprovalStatus.PENDING || a.IsApprovedByFinance == ApprovalStatus.PENDING))
+                    var activityViewDtos = (from e in _dBContext.ActivityProgresses.Include(x => x.Activity.ActivityParent.Task.Project.Department).Include(x => x.Activity).Where(a => a.Id == activitprogress.Id && (a.IsApprovedByManager == ApprovalStatus.PENDING || a.IsApprovedByDirector == ApprovalStatus.PENDING || a.IsApprovedByFinance == ApprovalStatus.PENDING))
                                                 // join ae in _dBContext.EmployeesAssignedForActivities.Include(x=>x.Employee) on e.Id equals ae.ActivityId
                                             select new ActivityViewDto
                                             {
                                                 Id = e.ActivityId,
                                                 Name = e.Activity.ActivityDescription,
                                                 PlannedBudget = e.Activity.PlanedBudget,
-                                                ActivityType = e.Activity.ActivityType.ToString(),                                               
+                                                ActivityType = e.Activity.ActivityType.ToString(),
                                                 IsTraining = e.Activity.IsTraining,
-                               
+
                                                 Begining = e.Activity.Begining,
                                                 Target = e.Activity.Goal,
                                                 UnitOfMeasurment = e.Activity.Indicator,
@@ -950,7 +951,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                                                 Members = _dBContext.EmployeesAssignedForActivities.Include(x => x.Employee).Where(x => x.ActivityId == e.ActivityId).Select(y => new SelectListDto
                                                 {
                                                     Id = y.Id,
-                                                    Name = $"{y.Employee.FirstName} {y.Employee.LastName}" ,
+                                                    Name = $"{y.Employee.FirstName} {y.Employee.LastName}",
                                                     Photo = y.Employee.ImagePath,
                                                     EmployeeId = y.EmployeeId.ToString(),
 
@@ -961,7 +962,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                                                     Year = y.Year,
                                                     Order = y.Order,
                                                     Planned = y.Target,
-                                                    Actual = activityProgress.Where(x=>x.QuarterId==y.Id).Sum(mp=>mp.ActualWorked),
+                                                    Actual = activityProgress.Where(x => x.QuarterId == y.Id).Sum(mp => mp.ActualWorked),
                                                     Percentage = y.Target != 0 ? (activityProgress.Where(x => x.QuarterId == y.Id && x.IsApprovedByDirector == ApprovalStatus.APPROVED && x.IsApprovedByFinance == ApprovalStatus.APPROVED && x.IsApprovedByManager == ApprovalStatus.APPROVED).Sum(x => x.ActualWorked) / y.Target) * 100 : 0
 
 
@@ -983,7 +984,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
 
                 return actDtos.DistinctBy(x => x.Id).ToList();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 List<ActivityViewDto> actDtos = new List<ActivityViewDto>();
 
@@ -1080,18 +1081,18 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
         public async Task<ActivityViewDto> GetSingleActivity(Guid actId)
         {
 
-            var employeeAssigned = _dBContext.EmployeesAssignedForActivities.Where(x => x.ActivityId== actId).Select(x => x.ActivityId).ToList();
+            var employeeAssigned = _dBContext.EmployeesAssignedForActivities.Where(x => x.ActivityId == actId).Select(x => x.ActivityId).ToList();
 
 
 
             var activityProgress = _dBContext.ActivityProgresses;
             ActivityViewDto assignedActivities =
-                await (from e in _dBContext.Activities.Where(x=>x.Id==actId)
-                       .Include(x=>x.ActivityLocations).ThenInclude(x=>x.Region)
-                        
+                await (from e in _dBContext.Activities.Where(x => x.Id == actId)
+                       .Include(x => x.ActivityLocations).ThenInclude(x => x.Region)
+
                        .Include(x => x.Commitee).ThenInclude(x => x.Employees)
                        .Where(x => x.ActualEnd == null)
-    
+
                        select new ActivityViewDto
                        {
                            Id = e.Id,
@@ -1099,7 +1100,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                            PlannedBudget = e.PlanedBudget,
                            ActivityType = e.ActivityType.ToString(),
                            IsTraining = e.IsTraining,
-                         
+
                            ActivityNumber = e.ActivityNumber,
 
                            Begining = e.Begining,
@@ -1119,7 +1120,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                            MonthPerformance = _dBContext.ActivityTargetDivisions.Where(x => x.ActivityId == e.Id).OrderBy(x => x.Order).Select(y => new MonthPerformanceViewDto
                            {
                                Id = y.Id,
-                               Year =y.Year,
+                               Year = y.Year,
                                Order = y.Order,
                                Planned = y.Target,
                                Actual = activityProgress.Where(x => x.QuarterId == y.Id).Sum(mp => mp.ActualWorked),
@@ -1158,8 +1159,8 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
 
                 await _dBContext.SaveChangesAsync();
             }
-            
-            
+
+
 
             foreach (var item in activityDetail.ActivityDetails)
             {
@@ -1167,11 +1168,11 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
 
                 var activity = _dBContext.Activities.Where(x => x.Id == item.Id).FirstOrDefault();
 
-                if(activityParent == null)
+                if (activityParent == null)
                 {
                     activityParent = await _dBContext.ActivitiesParents.Where(x => x.Id == activity.ActivityParentId).FirstOrDefaultAsync();
                 }
-                
+
 
                 if (activity != null)
                 {
@@ -1196,22 +1197,22 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                     activity.ShouldEnd = DateTime.Parse(item.EndDate);
                     activity.StrategicPlanId = item.StrategicPlanId;
                     //activity.ZoneId = item.ZoneId;
-                
+
                     activity.StrategicPlanIndicatorId = item.StrategicPlanIndicatorId;
                     activity.ActivityNumber = item.ActivityNumber;
-                  
+
                     activity.IsTraining = item.IsTraining;
                     activity.ProjectSourceFundId = item.SelectedProjectFund;
-                        
+
                     await _dBContext.SaveChangesAsync();
 
                     if (item.Employees != null)
                     {
 
 
-                        var assignmentsToRemove = await _dBContext.EmployeesAssignedForActivities.Where(ea => ea.ActivityId==activity.Id).ToListAsync();
+                        var assignmentsToRemove = await _dBContext.EmployeesAssignedForActivities.Where(ea => ea.ActivityId == activity.Id).ToListAsync();
 
-                            
+
                         foreach (var assignmentToRemove in assignmentsToRemove)
                         {
                             _dBContext.EmployeesAssignedForActivities.Remove(assignmentToRemove);
@@ -1223,36 +1224,36 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                         }
                         catch (Exception ex)
                         {
-                                
+
                             Console.WriteLine("Error updating assignments: " + ex.Message);
                         }
                         foreach (var employee in item.Employees)
                         {
                             if (!string.IsNullOrEmpty(employee))
                             {
-                                
-                                       
-                                    EmployeesAssignedForActivities EAFA = new EmployeesAssignedForActivities
-                                    {
-                                        CreatedDate = DateTime.Now,
-                                        CreatedBy = activity.CreatedBy,
 
-                                        Id = Guid.NewGuid(), 
 
-                                        ActivityId = activity.Id,
-                                        EmployeeId = Guid.Parse(employee),
-                                    };
+                                EmployeesAssignedForActivities EAFA = new EmployeesAssignedForActivities
+                                {
+                                    CreatedDate = DateTime.Now,
+                                    CreatedBy = activity.CreatedBy,
 
-                                    _dBContext.EmployeesAssignedForActivities.Add(EAFA);
-                                
-                                    
+                                    Id = Guid.NewGuid(),
+
+                                    ActivityId = activity.Id,
+                                    EmployeeId = Guid.Parse(employee),
+                                };
+
+                                _dBContext.EmployeesAssignedForActivities.Add(EAFA);
+
+
                                 try
                                 {
                                     await _dBContext.SaveChangesAsync();
                                 }
                                 catch (Exception ex)
                                 {
-                                        
+
                                     Console.WriteLine("Error updating assignments: " + ex.Message);
                                 }
                             }
@@ -1263,17 +1264,17 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                                                     .ToListAsync();
 
 
-                        
+
                     }
 
 
-                    if (item.ActivityLocations!=null)
+                    if (item.ActivityLocations != null)
                     {
 
                         var actLocations = await _dBContext.ActivityLocations.Where(ea => ea.ActivityId == activity.Id).ToListAsync();
 
 
-                            _dBContext.ActivityLocations.RemoveRange(actLocations);
+                        _dBContext.ActivityLocations.RemoveRange(actLocations);
 
 
                         foreach (var activityLocation in item.ActivityLocations)
@@ -1355,12 +1356,12 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                 Message = "Activity Updated Successfully"
             };
         }
-            
-           
-            
 
 
-    
+
+
+
+
 
 
         public async Task<ResponseMessage> DeleteActivity(Guid activityId, Guid taskId)
@@ -1503,38 +1504,38 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
 
                 }
                 var Task = await _dBContext.Tasks.FirstOrDefaultAsync(x => x.Id.Equals(taskId));
-                    if (Task != null)
+                if (Task != null)
+                {
+                    var plan = _dBContext.Projects.FirstOrDefaultAsync(x => x.Id.Equals(Task.ProjectId)).Result;
+                    if (plan != null)
                     {
-                        var plan = _dBContext.Projects.FirstOrDefaultAsync(x => x.Id.Equals(Task.ProjectId)).Result;
-                        if (plan != null)
+
+                        var ActParents = _dBContext.ActivitiesParents.Where(x => x.TaskId == Task.Id).ToList();
+                        if (Task != null && ActParents != null)
                         {
-                           
-                            var ActParents = _dBContext.ActivitiesParents.Where(x => x.TaskId == Task.Id).ToList();
-                            if (Task != null && ActParents != null)
-                            {
-                                Task.ShouldStartPeriod = ActParents.Min(x => x.ShouldStartPeriod);
-                                Task.ShouldEnd = ActParents.Max(x => x.ShouldEnd);
-                                Task.Weight = ActParents.Sum(x => x.Weight);
-                                _dBContext.SaveChanges();
-                            }
-                            var tasks = _dBContext.Tasks.Where(x => x.ProjectId == plan.Id).ToList();
-                            //plan.PeriodStartAt = tasks.Min(x => x.ShouldStartPeriod);
-                            //plan.PeriodEndAt = tasks.Max(x => x.ShouldEnd);
+                            Task.ShouldStartPeriod = ActParents.Min(x => x.ShouldStartPeriod);
+                            Task.ShouldEnd = ActParents.Max(x => x.ShouldEnd);
+                            Task.Weight = ActParents.Sum(x => x.Weight);
                             _dBContext.SaveChanges();
                         }
+                        var tasks = _dBContext.Tasks.Where(x => x.ProjectId == plan.Id).ToList();
+                        //plan.PeriodStartAt = tasks.Min(x => x.ShouldStartPeriod);
+                        //plan.PeriodEndAt = tasks.Max(x => x.ShouldEnd);
+                        _dBContext.SaveChanges();
                     }
+                }
 
 
-                    
 
-                    return new ResponseMessage
-                    {
-                        Message = "Activity Deleted Successfully",
-                        Success = true
-                    };
-            
 
-                
+                return new ResponseMessage
+                {
+                    Message = "Activity Deleted Successfully",
+                    Success = true
+                };
+
+
+
             }
             catch (Exception ex)
             {
@@ -1552,21 +1553,21 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
             var empActivities = await _dBContext.EmployeesAssignedForActivities.Include(x => x.Activity).Where(x => x.EmployeeId == empId).Select(x => x.Activity).ToListAsync();
             List<TerminatedEmployeeReplacmentDto> empActRep = new List<TerminatedEmployeeReplacmentDto>();
             var terEmp = await _dBContext.Employees.Where(x => x.Id == empId).Select(x => new SelectListDto
-                                                                                        {
-                                                                                            Id = x.Id,
-                                                                                            Name = $"{x.FirstName} {x.LastName}"
-                                                                                        }).FirstOrDefaultAsync();
+            {
+                Id = x.Id,
+                Name = $"{x.FirstName} {x.LastName}"
+            }).FirstOrDefaultAsync();
             foreach (var act in empActivities)
             {
                 var empsInAct = await _dBContext.EmployeesAssignedForActivities.Where(x => x.ActivityId == act.Id).Select(x => x.EmployeeId).ToListAsync();
-                var repEmps =  await (from e in _dBContext.Employees
-                                                              where !(empsInAct.Contains(e.Id))
-                                                              select new SelectListDto
-                                                              {
-                                                                  Id = e.Id,
-                                                                  Name = $"{e.FirstName} {e.LastName}"
-                                                              }).ToListAsync();
-                
+                var repEmps = await (from e in _dBContext.Employees
+                                     where !(empsInAct.Contains(e.Id))
+                                     select new SelectListDto
+                                     {
+                                         Id = e.Id,
+                                         Name = $"{e.FirstName} {e.LastName}"
+                                     }).ToListAsync();
+
 
 
                 TerminatedEmployeeReplacmentDto ter = new TerminatedEmployeeReplacmentDto
@@ -1582,13 +1583,13 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
 
                 };
                 empActRep.Add(ter);
-              
+
 
             }
             return empActRep;
         }
 
-        public async Task<ResponseMessage> ReplaceTerminatedEmployee(List<List<TerminatedEmployeeReplacmentGetDto>> ter,string userId)
+        public async Task<ResponseMessage> ReplaceTerminatedEmployee(List<List<TerminatedEmployeeReplacmentGetDto>> ter, string userId)
         {
             try
             {
@@ -1635,8 +1636,90 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
 
         }
 
+        public async Task<ResponseMessage> UpdateActivityProgress(UpdateActivityProgressDto updateActivityProgressDto)
+        {
+            try
+            {
+
+             
+                    var targetDivicitions = await _dBContext.ActivityTargetDivisions.
+                        Where(x => x.ActivityId == updateActivityProgressDto.ActivityId && x.Order == updateActivityProgressDto.Order).ToListAsync();
+
+                    if (targetDivicitions.Any())
+                    {
+                        var targetDivicition = targetDivicitions.FirstOrDefault();
+                        var actProgress = await _dBContext.ActivityProgresses.Where(x => x.QuarterId == targetDivicition.Id).ToListAsync();
+                        if (actProgress.Any())
+                        {
+                            var actProgres = actProgress.FirstOrDefault();
+
+                        if (updateActivityProgressDto.ProgressType == PROGRESS_TYPE.ACTUAL_WORKED)
+                        {
+
+                            actProgres.ActualWorked = updateActivityProgressDto.ActualWorked;
+                        }else
+                        {
+                            actProgres.ActualBudget = updateActivityProgressDto.UsedBudget;
+                        }
+                            actProgres.CreatedDate = DateTime.Now;
+                           await _dBContext.SaveChangesAsync();
+
+                            return new ResponseMessage
+                            {
+                                Success = true,
+                                Message = "Achivement Updated Successfully!!!"
+                            };
+
+                        }
+                        else
+                        {
+                            var actpro = new ActivityProgress
+                            {
+                                Id = Guid.NewGuid(),
+                                CreatedById = updateActivityProgressDto.CreatedBy,
+                                ActivityId = updateActivityProgressDto.ActivityId,
+                                ActualWorked = updateActivityProgressDto.ProgressType == PROGRESS_TYPE.ACTUAL_WORKED? updateActivityProgressDto.ActualWorked:0,
+                                ActualBudget = updateActivityProgressDto.ProgressType == PROGRESS_TYPE.BUDGET ? updateActivityProgressDto.UsedBudget : 0,
+                                QuarterId = targetDivicition.Id,
+                                EmployeeValueId = updateActivityProgressDto.EmployeeId,
+                                Lat="",
+                                Lng="",
+                                Remark=""
+
+                            };
+
+                            await _dBContext.ActivityProgresses.AddAsync(actpro);
+                            await _dBContext.SaveChangesAsync();
+
+                            return new ResponseMessage
+                            {
+                                Success = true,
+                                Message = "Achivement Added Successfully!!!"
+                            };
+                        }
+                    }
+                    else
+                    {
+                        return new ResponseMessage
+                        {
+                            Success = false,
+                            Message = "Actvity target Not Assigned !!!"
+                        };
+
+                    }
+                
 
 
+            }
+            catch (Exception ex)
+            {
+                return new ResponseMessage
+                {
+                    Success = false,
+                    Message = ex.Message
+                };
+            }
+        }
     }
 }
 

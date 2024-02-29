@@ -34,7 +34,6 @@ builder.Services.AddControllers().AddJsonOptions(
     {
         options.JsonSerializerOptions.PropertyNamingPolicy = null;
     });
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.Configure<ApplicationSetting>(builder.Configuration.GetSection("ApplicationSetting"));
 
@@ -116,6 +115,7 @@ builder.Services.AddAuthentication(x =>
         ClockSkew = TimeSpan.Zero
     };
 });
+
 
 
 builder.Services.AddHttpContextAccessor();

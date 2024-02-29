@@ -49,8 +49,8 @@ export default class RegisterComponent implements OnInit {
     this.registerForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      phoneNumber: ['', [Validators.required, Validators.pattern('[0-9]{10}')]],
-      email: [''],
+      phoneNumber: ['', [Validators.required, Validators.pattern('[0-9]{10}'),Validators.min(10)]],
+      email: ['',Validators.required],
       membershipType: ['', Validators.required],
       RegionId:['',Validators.required],
       Zone: [null,Validators.required],

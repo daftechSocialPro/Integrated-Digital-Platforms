@@ -18,6 +18,7 @@ namespace MembershipImplementation.Interfaces.HRM
         Task<ResponseMessage> RegisterMember(MembersPostDto memberPost);
         Task<MembersGetDto> CheckPhoneNumberExist(string PhoneNumber);
 
+        Task<ResponseMessage> UpdateTextReference(string oldTextRn, string newTextRn);
 
         Task<List<MembersGetDto>> GetMembers();
         Task<MembersGetDto> GetSingleMember(Guid MemberId);

@@ -87,4 +87,9 @@ export class MemberService {
     return this.http.delete<ResponseMessage>(this.BaseURI+`/Member/DeleteMember?memberId=${memberID}`)
   }
 
+  updateTextReference (oldTextRn:string,newTextRn:string,){
+
+    return this.http.put<ResponseMessage>(this.BaseURI+`/Member/UpdateTextRef?oldTextRn=${oldTextRn}&newTextRn=${newTextRn}`,{})
+  }
+
 }

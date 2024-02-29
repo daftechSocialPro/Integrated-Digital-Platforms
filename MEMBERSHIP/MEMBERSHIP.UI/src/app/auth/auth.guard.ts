@@ -23,7 +23,10 @@ export class AuthGuard implements CanActivate {
       if (roles) {
         if (this.service.roleMatch(roles)) return true;
         else {
+
+          //on-construction
           this.router.navigate(['/auth/membership-login']);
+          //this.router.navigate(['/on-construction']);
           return false;
         }
       }
@@ -31,6 +34,7 @@ export class AuthGuard implements CanActivate {
     }
     else {
       this.router.navigate(['/auth/membership-login']);
+      //this.router.navigate(['/on-construction']);
       return false;
     }
 

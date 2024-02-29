@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "iUGNLFX8y60JC6SVpLZYvh4tGrkIUo8bBNdntlKJtco=",
+  "Hash": "RyMiGb/ZXuW0f+HDWsvPeSf/bS5cydpplhGiiq7r4lo=",
   "Source": "MembershipAPI",
   "BasePath": "_content/MembershipAPI",
   "Mode": "Default",
@@ -2468,6 +2468,25 @@
       "OriginalItemSpec": "wwwroot\\Member\\Kay Clements.jpg"
     },
     {
+      "Identity": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\MEMBERSHIP\\MEMBERSHIP.API\\MembershipAPI\\wwwroot\\Member\\Kirubel Gizaw.jpg",
+      "SourceId": "MembershipAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\MEMBERSHIP\\MEMBERSHIP.API\\MembershipAPI\\wwwroot\\",
+      "BasePath": "_content/MembershipAPI",
+      "RelativePath": "Member/Kirubel Gizaw.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Member\\Kirubel Gizaw.jpg"
+    },
+    {
       "Identity": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\MEMBERSHIP\\MEMBERSHIP.API\\MembershipAPI\\wwwroot\\Member\\kirubel gizaw.png",
       "SourceId": "MembershipAPI",
       "SourceType": "Discovered",
@@ -2675,6 +2694,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Member\\Ursa Daniel.png"
+    },
+    {
+      "Identity": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\MEMBERSHIP\\MEMBERSHIP.API\\MembershipAPI\\wwwroot\\Member\\yoni test test.jpg",
+      "SourceId": "MembershipAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\MEMBERSHIP\\MEMBERSHIP.API\\MembershipAPI\\wwwroot\\",
+      "BasePath": "_content/MembershipAPI",
+      "RelativePath": "Member/yoni test test.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Member\\yoni test test.jpg"
     },
     {
       "Identity": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\MEMBERSHIP\\MEMBERSHIP.API\\MembershipAPI\\wwwroot\\swagger-ui\\SwaggerDark.css",

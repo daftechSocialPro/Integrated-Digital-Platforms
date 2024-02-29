@@ -1,6 +1,6 @@
 <div class="auth-main">
     <div class="auth-wrapper v3 row">
-        <div class="auth-form col-8" style="background-color: white;">
+        <div class="auth-form col-8" style="background-color: white;" >
             <div class="card " style="max-width: 800px!important">
                 <div class="card-body">
                     <div class="row">
@@ -9,14 +9,14 @@
                                 <h2>{{member&&member.fullName}} ({{member&&member.memberId}})</h2>
 
 
-                                <h2 class="text-secondary "><b> Please Complete Your Profile before proceeding </b></h2>
+                                <h2 *ngIf="memberVar.paymentStatus=='PAID'" class="text-secondary "><b> Please Complete Your Profile before proceeding </b></h2>
 
                                 <hr />
                             </div>
                         </div>
                     </div>
 
-                    <form [formGroup]="completeProfileForm">
+                    <form [formGroup]="completeProfileForm" *ngIf="memberVar.paymentStatus=='PAID'">
                         <div class="row">
                             <div class="row">
                                 <div class="col-4">
@@ -109,11 +109,11 @@
             </div>
         </div>
 
-        <div class="col-4">
+        <div class="col-4" >
             <div class="member-info text-center">
                 <img src="../../../../../assets/logo2.png" alt="Member Image" style="max-height: 300px;"
                     class="img-fluid bounce-image">
-                <h2 class="text-secondary mt-2"><b>Ethipian Midwives Association </b></h2>
+                <h2 class="text-secondary mt-2"><b>Ethiopian Midwives Association </b></h2>
                 <p class="text-center animated-paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                     Nullam auctor, nisl at aliquet ullamcorper, urna mauris consequat nisi, eget consequat nunc dolor
                     sit amet turpis.</p>
@@ -130,8 +130,24 @@
                 <div class="d-grid mt-4 ">
 
 
-                    <button type="button" (click)="verifyPayment()" class="btn btn-outline-success">Verify
-                        Payment</button>
+                    <div *ngIf="(memberVar.paymentStatus=='PENDING' && memberVar.text_Rn!=null)">
+
+                        <div class="d-grid mt-4">
+                            <button (click)="renewMembership2()"
+                                class="btn btn-secondary">Continue to Payment</button>
+                        </div>
+                        
+                    
+                    </div>
+
+                    <div *ngIf="((memberVar.paymentStatus=='PENDING' && memberVar.text_Rn==null)||memberVar.paymentStatus==null)">
+
+                        <div class="d-grid mt-4">
+                            <button (click)="renewMembership3()" class="btn btn-secondary">Continue to Payment</button>
+                        </div>
+
+                    </div>
+                 
 
                 </div>
                 <div class="d-grid mt-4 ">

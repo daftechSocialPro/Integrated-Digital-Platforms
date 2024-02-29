@@ -523,6 +523,93 @@ namespace IntegratedInfrustructure.Migrations
                     b.ToTable("Zones");
                 });
 
+            modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Configuration.AccountType", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Category")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Normal_Balance")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Remark")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SubCategory")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Temporary")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.ToTable("AccountTypes");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Configuration.FinanceLookup", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDefault")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("LookupType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LookupValue")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Remark")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.ToTable("FinanceLookups");
+                });
+
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.AttendanceLogFile", b =>
                 {
                     b.Property<Guid>("Id")
@@ -4951,6 +5038,24 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("CreatedBy");
 
                     b.Navigation("Region");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Configuration.AccountType", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.Navigation("CreatedBy");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Configuration.FinanceLookup", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.Navigation("CreatedBy");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.AttendanceLogFile", b =>
