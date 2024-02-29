@@ -4,8 +4,8 @@
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
-                <li class="breadcrumb-item">Inventory</li>
-                <li class="breadcrumb-item active">hase</li>
+                <li class="breadcrumb-item" ><a (click)="goBack()">Inventory</a></li>
+                <li class="breadcrumb-item active">add good Reciving note</li>
             </ol>
         </nav>
     </div>
@@ -16,6 +16,13 @@
     
             <form #detailForm="ngForm">
                 <div class="row mb-2">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="col-md-12" htmlFor="projectId">Project</label>
+                            <p-dropdown [options]="projectDropDown" optionLabel="name" optionValue="id"  name="projectId" 
+                                [(ngModel)]="addProduct.projectId" placeholder="Select Project"  [filter]="true" filterBy="name" [showClear]="true"></p-dropdown>
+                        </div>
+                    </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="col-md-12" htmlFor="itemId">Item</label>
@@ -48,7 +55,7 @@
                     <div *ngIf="addProduct.isPurchaseRequest" class="col-md-3">
                         <div class="form-group">
                             <label class="col-md-12" htmlFor="purchaseRequestId">Purchase Request</label>
-                                <p-dropdown [options]="purchaseRequestDropDown" optionLabel="name" name="purchaseRequestId"
+                                <p-dropdown [options]="purchaseRequestDropDown" optionLabel="name" optionValue="id" name="purchaseRequestId"
                                     [(ngModel)]="addProduct.purchaseRequestId" placeholder="Select Purchase Request"
                                     [filter]="true" filterBy="name" [showClear]="true"></p-dropdown>
                         </div>
@@ -94,7 +101,7 @@
                                 inputId="icon"></p-calendar>
                         </div>
                     </div>
-                    <div class="col-md-3 mt-2">
+                    <div *ngIf="isExpirable" class="col-md-3 mt-2">
                         <div class="form-group">
                             <label htmlFor="lastname2">Expire Date</label>
                             <p-calendar [showIcon]="true" [(ngModel)]="addProduct.expireDateTime" name="expireDateTime"
@@ -123,13 +130,15 @@
                     <div class="col-md-6 mt-2">
                         <div class="form-group">
                             <label class="col-md-12" htmlFor="description">Description</label>
-                            <textarea pInputText id="description" type="text" row="10" cols="10" name="description"
-                                [(ngModel)]="addProduct.description"></textarea>
+                            <textarea class="form-control" rows="5" #description  ></textarea>
+                            <!-- <textarea pInputText id="description" type="text" height="120" row="15" cols="10" name="description"
+                                [(ngModel)]="addProduct.description"></textarea> -->
                         </div>
                     </div>
                 </div>
             
                 <div class="modal-footer">
+                    <button pButton type="button" label="Go Back"   icon="pi pi-angle-double-left" class="p-button-sm p-button-default" (click)="goBack()"></button> &nbsp;
                     <button pButton type="button" label="Save"  [disabled]="!detailForm.valid"  icon="pi pi-check" class="p-button-sm p-button-success" (click)="SaveChanges()"></button>
                 </div>
             </form>

@@ -19,6 +19,7 @@ using IntegratedInfrustructure.Models.Common;
 using IntegratedInfrustructure.Model.Training;
 using IntegratedInfrustructure.Models.Inventory;
 using IntegratedInfrustructure.Model.Inventory;
+using IntegratedInfrustructure.Model.FInance.Configuration;
 
 namespace IntegratedInfrustructure.Data
 {
@@ -168,6 +169,19 @@ namespace IntegratedInfrustructure.Data
         public DbSet<MaintainableItems> MaintainableItems { get; set; }
         public DbSet<UsedItems> UsedItems { get; set; }
         #endregion
+
+
+
+        #region Finacne
+
+        public DbSet<AccountType> AccountTypes { get; set; }
+
+        public DbSet<FinanceLookup> FinanceLookups { get; set; }
+
+        #endregion
+
+
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }

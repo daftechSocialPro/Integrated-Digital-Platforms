@@ -2,6 +2,8 @@
 
 
 
+using static IntegratedInfrustructure.Data.EnumList;
+
 namespace IntegratedImplementation.DTOS.Inventory
 {
 
@@ -9,9 +11,7 @@ namespace IntegratedImplementation.DTOS.Inventory
     {
         public string CreatedById { get; set; } = null!;
         public string RequesterEmployeeId { get; set; } = null!;
-        public bool BranchRequested { get; set; }
-        public string? BranchId { get; set; } = null!;
-        public DateTime Date { get; set; }
+        public string? ProjectId { get; set; } = null!;
         public List<AddStoreRequestListDto> RequestLists { get; set; } = null!;
     }
 
@@ -40,6 +40,9 @@ namespace IntegratedImplementation.DTOS.Inventory
         public string RequesterEmployee { get; set; } = null!;
         public double Quantity { get; set; }
         public string MeasurementUnitName { get; set; } = null!;
+        public ApprovalStatus ApprovalStatus { get; set; }
+        public bool IsFinalApproved { get; set; }
+
 
     }
 

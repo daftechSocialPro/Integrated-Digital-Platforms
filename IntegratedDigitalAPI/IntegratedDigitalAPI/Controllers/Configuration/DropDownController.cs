@@ -132,6 +132,14 @@ namespace IntegratedDigitalAPI.Controllers.Configuration
         public async Task<IActionResult> GetProjectFundSources()
         {
             return Ok(await _DropDownService.GetProjectFundSources());
+        } 
+        
+        
+        [HttpGet]
+        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetProjectDropDowns()
+        {
+            return Ok(await _DropDownService.GetProjectDropDowns());
         }
 
         [HttpGet]
@@ -171,6 +179,13 @@ namespace IntegratedDigitalAPI.Controllers.Configuration
         public async Task<IActionResult> GetItemDropDown()
         {
             return Ok(await _DropDownService.GetItemDropDown());
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(ItemDropDownDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetItemByRequest(string StoreRequestId)
+        {
+            return Ok(await _DropDownService.GetItemByRequest(StoreRequestId));
         }
 
         [HttpGet]

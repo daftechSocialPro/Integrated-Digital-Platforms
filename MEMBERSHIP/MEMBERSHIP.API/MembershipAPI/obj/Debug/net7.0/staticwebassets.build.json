@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "RR0VoxL3ikGmNiTyXeUJcKxtk/oE5ZHW20AJ6JDwh38=",
+  "Hash": "OY5dySviCXJ5IZCQ0NIVrVyKVIyrm3SQxBhKVVymdtQ=",
   "Source": "MembershipAPI",
   "BasePath": "_content/MembershipAPI",
   "Mode": "Default",
@@ -2466,6 +2466,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Member\\Kay Clements.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\MEMBERSHIP\\MEMBERSHIP.API\\MembershipAPI\\wwwroot\\Member\\Kirubel Gizaw.jpg",
+      "SourceId": "MembershipAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\MEMBERSHIP\\MEMBERSHIP.API\\MembershipAPI\\wwwroot\\",
+      "BasePath": "_content/MembershipAPI",
+      "RelativePath": "Member/Kirubel Gizaw.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Member\\Kirubel Gizaw.jpg"
     },
     {
       "Identity": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\MEMBERSHIP\\MEMBERSHIP.API\\MembershipAPI\\wwwroot\\Member\\kirubel gizaw.png",

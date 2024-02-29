@@ -268,6 +268,7 @@ import { UpdateTraineeComponent } from './pages/training/trainees-form/update-tr
 import { UpdateTasksComponent } from './pages/project-managment/tasks/update-tasks/update-tasks.component';
 import { UpdateActivitiesComponent } from './pages/project-managment/activity-parents/update-activities/update-activities.component';
 import { AssignReplacementComponent } from './pages/human-resource/employee-managment/employee-termination/terminate-employee/assign-replacement/assign-replacement.component';
+import { PlanVsAchivmentProjectComponent } from './pages/project-managment/progress-report/plan-vs-achivment-project/plan-vs-achivment-project.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -586,7 +587,8 @@ import { AssignReplacementComponent } from './pages/human-resource/employee-mana
     UpdateTraineeComponent,
     UpdateTasksComponent,
     UpdateActivitiesComponent,
-    AssignReplacementComponent
+    AssignReplacementComponent,
+    PlanVsAchivmentProjectComponent
     //  AddMeasurementComponent,
     //  UpdateMeasurmentComponent
   ],

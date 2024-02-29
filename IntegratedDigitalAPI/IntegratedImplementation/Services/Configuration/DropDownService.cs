@@ -207,6 +207,17 @@ namespace IntegratedImplementation.Services.Configuration
             return projectFunds;
         }
 
+        public async Task<List<SelectListDto>> GetProjectDropDowns()
+        {
+            var projectFunds = await _dbContext.Projects.AsNoTracking().Select(x => new SelectListDto
+            {
+                Id = x.Id,
+                Name = $"{x.ProjectNumber}/{x.ProjectName}"
+            }).ToListAsync();
+
+            return projectFunds;
+        }
+
         public async Task<List<SelectListDto>> GetProjectFundSourcesForActivity(Guid projectId)
         {
             var projectFunds = await _dbContext.Project_Funds.Include(x=>x.ProjectSourceFund).Where(x=>x.ProjectId==projectId).AsNoTracking().Select(x => new SelectListDto
@@ -315,6 +326,20 @@ namespace IntegratedImplementation.Services.Configuration
                            isExpirable = x.IsExpirable,
                            MeasurementType = (int)x.MeasurementType,
                            Name = x.Name
+                       }).ToListAsync();
+            return items;
+        }
+
+        public async Task<List<ItemDropDownDto>> GetItemByRequest(string StoreRequestId)
+        {
+            var items = await _dbContext.StoreRequestLists.Include(x => x.Item).Include(x => x.StoreRequest).AsNoTracking()
+                       .Where(x => x.StoreRequestId == Guid.Parse(StoreRequestId)).
+                       Select(x => new ItemDropDownDto
+                       {
+                           Id = x.ItemId,
+                           isExpirable = x.Item.IsExpirable,
+                           MeasurementType = (int)x.Item.MeasurementType,
+                           Name = x.Item.Name
                        }).ToListAsync();
             return items;
         }

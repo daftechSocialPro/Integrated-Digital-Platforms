@@ -13,12 +13,12 @@ import { InventoryService } from 'src/app/services/inventory.service';
 })
 export class AddGoodsReceivingNoteComponent implements OnInit{
   
-  index: number = 0;
   isExpirable: boolean = false;
   measurementType: number = 0;
   itemsDropDown : ItemDropDownDto[] = [];
   selectedItem: any;
   vendorDropDown: SelectList[] = [];
+  projectDropDown: SelectList[] = [];
   purchaseRequestDropDown: SelectList[] = [];
   measurementUnitDropDown: SelectList[] = [];
   addProduct: AddProductDto = new AddProductDto() ;
@@ -36,12 +36,22 @@ export class AddGoodsReceivingNoteComponent implements OnInit{
     this.getItems();
     this.getVendordropDown();
     this.getCurrentProd();
+    this.getProjectDropDowns();
+
   }
 
 getVendordropDown(){
   this.dropDownService.getVendorDropDown().subscribe({
     next: (res) => {
         this.vendorDropDown = res;
+    }
+  })
+}
+
+getProjectDropDowns(){
+  this.dropDownService.getProjectDropDowns().subscribe({
+    next: (res) => {
+        this.projectDropDown = res;
     }
   })
 }
@@ -60,13 +70,7 @@ goBack(){
 
 
 
-  openNext(){
-    this.index ++;
-  }
 
-  openPreviuous(){
-    this.index --;
-  }
 
   changeItem(event:any){
     this.selectedItem =  this.itemsDropDown.find(x => x.id == event);
@@ -130,7 +134,6 @@ goBack(){
         next: (res) => {
           if (res.success) {
             this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Product Created', life: 3000 });
-            this.index = 0;
             this.addProduct = new AddProductDto();
           }
           else {

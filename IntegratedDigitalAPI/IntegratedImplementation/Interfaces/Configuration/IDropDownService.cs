@@ -28,6 +28,7 @@ namespace IntegratedImplementation.Interfaces.Configuration
         Task<List<SelectListDto>> GetStrategicPlans();
         Task<List<SelectListDto>> GetIndicatorsByStrategicPlanId(Guid strategicPlanId);
         Task<List<SelectListDto>> GetProjectFundSources();
+        Task<List<SelectListDto>> GetProjectDropDowns();
         Task<List<SelectListDto>> GetProjectFundSourcesForActivity(Guid projectId);
 
         Task<List<SelectListDto>> GetBenefitDropDowns();
@@ -36,6 +37,7 @@ namespace IntegratedImplementation.Interfaces.Configuration
         Task<List<SelectListDto>> GetShiftDropDown();
 
         Task<List<ItemDropDownDto>> GetItemDropDown();
+        Task<List<ItemDropDownDto>> GetItemByRequest(string StoreRequestId);
         Task<List<SelectListDto>> GetMeasurementListByType(MeasurementType measurmentType);
         Task<List<SelectListDto>> GetPurchaseRequestByItem(string itemId);
         Task<List<SelectListDto>> GetStoreRequestDropDown();

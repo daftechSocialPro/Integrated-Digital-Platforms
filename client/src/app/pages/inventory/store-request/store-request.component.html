@@ -16,6 +16,15 @@
             <form #itemsForm="ngForm">
                 <div class="row">
                     <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="col-md-12" htmlFor="projectId">Project</label>
+                            <p-dropdown [options]="projectDropDown" optionLabel="name" optionValue="id"  name="projectId" 
+                                [(ngModel)]="addStoreRequest.projectId" placeholder="Select Project"  [filter]="true" filterBy="name" [showClear]="true"></p-dropdown>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
                         <label htmlFor="lastname2">Item</label> <br />
                         <p-dropdown [options]="itemsDropDown" optionLabel="name" name="itemId" 
                             (onChange)="changeItem($event)"  [(ngModel)]="items"

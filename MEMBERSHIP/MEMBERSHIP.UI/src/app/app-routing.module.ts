@@ -5,6 +5,7 @@ import { GuestComponent } from './theme/layout/guest/guest.component';
 import { AuthGuard } from './auth/auth.guard';
 import { MembersDashboardComponent } from './demo/pages/members/members-dashboard/members-dashboard.component';
 import AdminDashbordComponent from './demo/admin-dashbord/admin-dashbord.component';
+import { OnConstructionComponent } from './demo/on-construction/on-construction.component';
 
 const routes: Routes = [
   {
@@ -68,6 +69,10 @@ const routes: Routes = [
         loadChildren: () => import('./demo/pages/reports/reports.module').then((m) => m.ReportsModule)
       }
     ]
+  },{
+    path:'on-construction',
+    component:OnConstructionComponent
+
   },
   {
     path: '',

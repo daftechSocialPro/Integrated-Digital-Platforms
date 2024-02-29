@@ -44,6 +44,11 @@ namespace IntegratedImplementation.Services.Inventory
                 Rowstatus = RowStatus.ACTIVE,
                 StoreRequestNumber = requestNo,
             };
+
+            if(!string.IsNullOrEmpty(addStoreRequest.ProjectId)) 
+            {
+                store.ProjectId = Guid.Parse(addStoreRequest.ProjectId);
+            }
           
             await _dbContext.StoreRequests.AddAsync(store);
             await _dbContext.SaveChangesAsync();
@@ -84,7 +89,7 @@ namespace IntegratedImplementation.Services.Inventory
             List<StoreRequestItems> StoreRequestLists = new List<StoreRequestItems>();
 
             var itemRequests = await (from x in _dbContext.StoreRequestLists.Include(x => x.StoreRequest.RequesterEmployee)
-                                      where x.ApprovalStatus == ApprovalStatus.PENDING 
+                                      where (x.ApprovalStatus == ApprovalStatus.PENDING || !x.IsFinalApproved)
                                       group x by new { x.ItemId, x.Item.Name, x.MeasurementUnit.MeasurementType } into It
                                       select new
                                       {
@@ -112,7 +117,7 @@ namespace IntegratedImplementation.Services.Inventory
 
 
                 var StoreApprovedProducts = await _dbContext.StoreRequestLists.Include(x => x.MeasurementUnit)
-                                                 .Where(x => x.ApprovalStatus == ApprovalStatus.APPROVED &&
+                                                 .Where(x => x.ApprovalStatus == ApprovalStatus.APPROVED && x.IsFinalApproved &&
                                                  x.ItemId == items.ItemId && !x.IsIssued )
                                                 .Select(x => new
                                                 {
@@ -128,13 +133,15 @@ namespace IntegratedImplementation.Services.Inventory
 
                 var requestLists = await _dbContext.StoreRequestLists.Include(x => x.MeasurementUnit).
                                           Include(x => x.StoreRequest.RequesterEmployee).AsNoTracking()
-                                         .Where(x => x.ApprovalStatus == ApprovalStatus.PENDING && x.ItemId == items.ItemId)
+                                         .Where(x => ( x.ApprovalStatus == ApprovalStatus.PENDING || (x.ApprovalStatus == ApprovalStatus.APPROVED && !x.IsFinalApproved)) && x.ItemId == items.ItemId)
                                          .Select(x => new StoreRequestLists
                                          {
                                              Id = x.Id.ToString(),
                                              MeasurementUnitName = x.MeasurementUnit.Name,
                                              Quantity = x.Quantity,
                                              ToSIUnit = x.MeasurementUnit.ToSIUnit,
+                                             IsFinalApproved = x.IsFinalApproved,
+                                             ApprovalStatus = x.ApprovalStatus,
                                              RequesterEmployee = $"{x.StoreRequest.RequesterEmployee.FirstName} {x.StoreRequest.RequesterEmployee.MiddleName} {x.StoreRequest.RequesterEmployee.LastName}"
                                          }).ToListAsync();
 
@@ -168,11 +175,24 @@ namespace IntegratedImplementation.Services.Inventory
 
         public async Task<ResponseMessage> ApproveStoreRequest(ApproveStoreRequest approveRequest)
         {
-            var request = await _dbContext.StoreRequestLists.Include(x => x.MeasurementUnit)
+            var request = await _dbContext.StoreRequestLists.Include(x => x.MeasurementUnit).Include(x => x.StoreRequest)
                         .FirstOrDefaultAsync(x => x.Id.Equals(Guid.Parse(approveRequest.Id)));
             
             if (request != null)
             {
+
+                if(request.StoreRequest.ProjectId != null)
+                {
+                    var currentproject =  await _dbContext.Projects.AnyAsync(x => x.Id == request.StoreRequest.ProjectId && x.ProjectManagerId == Guid.Parse(approveRequest.ApproverEmployeeId));
+
+                    if (!currentproject)
+                    {
+                        return new ResponseMessage { Success = false, Message = "You are not authorized to approve the Item" };
+                    }
+                }
+
+                var item = _dbContext.Items.Include(x => x.Category).FirstOrDefault(x => x.Id == request.ItemId);
+
                 double measuerement = 0.0;
                 double StoreapprovedQuantity = 0.0;
                 var currentProducts = await (from x in _dbContext.Products.Include(x => x.MeasurementUnit)
@@ -205,13 +225,49 @@ namespace IntegratedImplementation.Services.Inventory
                 if(StoreapprovedQuantity + measuerement < approveRequest.ApprovedQuantity)
                     return new ResponseMessage { Success = false, Message = "No stok in Item" };
 
+
+                if(item!= null && item.Category.CategoryType == CategoryType.ASSET)
+                {
+                    request.IsFinalApproved = false;
+                }
+                else
+                {
+                    request.IsFinalApproved = true;
+                    request.FinalApproverId = Guid.Parse(approveRequest.ApproverEmployeeId);
+                }
                 request.ApprovalStatus = ApprovalStatus.APPROVED;
                 request.Quantity = approveRequest.ApprovedQuantity;
                 request.ApproverEmployeeId = Guid.Parse(approveRequest.ApproverEmployeeId);
                 await _dbContext.SaveChangesAsync();
-                return new ResponseMessage { Success = true, Data = request };
+                return new ResponseMessage { Success = true, Message = "Success!!" }; 
+            }
+            return new ResponseMessage { Success = false, Message = "Could Not Find Item" };
+        } 
+        
+        
+        public async Task<ResponseMessage> FinalApproveStoreRequest(string requestId, string approverEmployeeId)
+        {
+            var request = await _dbContext.StoreRequestLists.FirstOrDefaultAsync(x => x.Id.Equals(Guid.Parse(requestId)));
+            
+            if (request != null)
+            {
+
+                if(request.ApprovalStatus == ApprovalStatus.APPROVED)
+                {
+                    request.IsFinalApproved = true;
+                    request.FinalApproverId = Guid.Parse(approverEmployeeId);
+                    await _dbContext.SaveChangesAsync();
+                    return new ResponseMessage { Success = true, Data = request };
+                }
+                else
+                {
+                    return new ResponseMessage { Success = false, Message = "Item has not been approved initialy!!" };
+                }
+               
             }
             return new ResponseMessage { Success = false, Message = "Could Not Find Item" };
         }
+
+
     }
 }

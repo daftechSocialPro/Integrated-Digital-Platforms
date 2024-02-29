@@ -1,8 +1,7 @@
 export class AddStoreRequestDto {
     createdById: string;
     requesterEmployeeId: string;
-    branchRequested: boolean;
-    date: number;
+    projectId: string;
     requestLists: AddStoreRequestListDto[];
 }
 
@@ -20,6 +19,8 @@ export class StoreRequestItems {
     remainingQuantity: number;
     storeApprovedQuantity: number;
     measurementUnitName: string;
+    approvalStatus: number;
+    isFinalApproved: boolean;
     storeRequests: StoreRequestLists[];
 }
 

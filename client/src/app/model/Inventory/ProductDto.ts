@@ -1,6 +1,7 @@
 export class AddProductDto {
     id: string;
     createdById: string;
+    projectId: string;
     itemId: string;
     itemDetailName: string;
     isPurchaseRequest: boolean;

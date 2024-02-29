@@ -11,6 +11,7 @@ namespace IntegratedImplementation.DTOS.Inventory
     {
         public string CreatedById { get; set; } = null!;
         public string ItemId { get; set; } = null!;
+        public string? ProjectId { get; set; } = null!;
         public string ItemDetailName { get; set; } = null!;
         public bool IsPurchaseRequest { get; set; }
         public string? PurchaseRequestId { get; set; }

@@ -93,13 +93,14 @@ export default class AdminDashbordComponent {
       },
       series: [
         {
-          name: 'Payment Status',
+          name: 'Gender',
           type: 'pie',
           radius: ['50%', '70%'],
           avoidLabelOverlap: false,
           label: {
-            show: false,
-            position: 'center'
+            show: true,
+            position: 'center',
+            formatter: '{b}: {c}' // Add the value placeholder {c}
           },
           emphasis: {
             label: {
@@ -112,18 +113,17 @@ export default class AdminDashbordComponent {
             show: false
           },
           data: this.genderData,
-      
         }
-      ],toolbox: {
+      ],
+      toolbox: {
         feature: {
           saveAsImage: {},
           restore: {},
-          dataView: {},        
-          print: {} // Add the print feature
+          dataView: {},
+          print: {}
         }
       }
     };
-
     this.loading2 = false; // Hide loading indicator once the chart is rendered
   
     
@@ -267,8 +267,9 @@ export default class AdminDashbordComponent {
           radius: ['50%', '70%'],
           avoidLabelOverlap: false,
           label: {
-            show: false,
-            position: 'center'
+            show: true,
+            position: 'center',
+            formatter: '{b}: {c}' // Add the value placeholder {c}
           },
           emphasis: {
             label: {
@@ -282,8 +283,8 @@ export default class AdminDashbordComponent {
           },
           data: this.paymentStatusData,
           itemStyle: {
-            color: function(params) { // Use a function to define custom colors
-              var colors = ['#FFB970', '#198754', '#dc3545']; // Specify your custom colors here
+            color: function(params) {
+              var colors = ['#FFB970', '#198754', '#dc3545'];
               return colors[params.dataIndex % colors.length];
             }
           }
@@ -293,7 +294,7 @@ export default class AdminDashbordComponent {
         feature: {
           saveAsImage: {},
           restore: {},
-          dataView: {},        
+          dataView: {},
           print: {} // Add the print feature
         }
       }

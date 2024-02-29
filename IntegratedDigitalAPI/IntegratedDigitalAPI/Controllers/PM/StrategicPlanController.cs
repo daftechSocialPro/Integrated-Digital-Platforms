@@ -70,5 +70,20 @@ namespace IntegratedDigitalAPI.Controllers.PM
             }
 
         }
+
+        [HttpGet("GetActivitiesFromProject")]
+        public async Task<IActionResult> GetActivitiesFromProject(Guid projectId)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _strategicPlanService.GetActivitiesFromProject(projectId));
+
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
     }
 }

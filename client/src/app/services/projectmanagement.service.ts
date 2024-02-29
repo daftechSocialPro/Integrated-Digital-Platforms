@@ -32,4 +32,12 @@ export class ProjectmanagementService {
     return this.http.get<any>(this.baseUrl+`/StrategicPlan/GetStrategicPlanForReport?strategicPlanId=${strategicPlanId}`)
 }
 
+
+getActivitiesFromProject
+(projectId:string){
+
+        
+  return this.http.get<any>(this.baseUrl+`/StrategicPlan/GetActivitiesFromProject?projectId=${projectId}`)
+}
+
 }

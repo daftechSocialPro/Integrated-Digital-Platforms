@@ -301,5 +301,23 @@ namespace IntegratedInfrustructure.Data
             MAINTAINABLE,
             RETURNED
         }
+
+        public enum LOOKOUPTYPE
+        {
+            ARTICLE,
+            BANK,
+            BUSSINESS_TYPE,
+            COASTING,
+            CUSTOMER_STATUS,
+            DISTRIBUTION,
+            COSTING,
+
+        }
+
+        public enum NORMALBALANCE
+        {
+            CREDIT,
+            DEBT
+        }
     }
 }

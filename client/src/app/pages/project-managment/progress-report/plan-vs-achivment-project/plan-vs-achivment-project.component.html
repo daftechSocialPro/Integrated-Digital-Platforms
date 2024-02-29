@@ -1,0 +1,117 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Plan vs Achivment </h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+                <li class="breadcrumb-item active">Plan vs Achivement </li>
+            </ol>
+        </nav>
+    </div>
+    <section class="section dashboard">
+
+
+        <div class="row">
+
+            <div class="col-12">
+                <div class="card p-2">
+
+
+
+                    <div class="d-flex justify-content-start ">
+
+                        <div class="form-floating col-3 me-2">
+                            <select class="form-control" [(ngModel)]="selectedProject" (change)="onPorjectCHange()"
+                                id="StrategicPlanId" placeholder="StrategicPlanId">
+                                <option></option>
+                                <option *ngFor="let item of projects" value={{item.id}}>{{item.planName}}</option>
+                            </select>
+                            <label for="StrategicPlanId">Projects</label>
+                        </div>
+
+
+
+                        <div class="form-floating col-3 me-2">
+                            <select class="form-control " [(ngModel)]="Quarter" (change)="onQuarterChange()">
+                                <option></option>
+                                <option value=4>October - December {{currentYear}}</option>
+                                <option value=3>July - Augest {{currentYear}}</option>
+                                <option value=2>April - June {{currentYear}}</option>
+                                <option value=1>January - March {{currentYear}}</option>
+                            </select>
+
+                            <label for="ReportBy">Quarter Report</label>
+                        </div>
+
+
+
+
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+        <div class="text-end col-lg-12 mt-2">
+
+            <button class="btn btn-outline-success text-end mb-3" (click)="exportAsExcel('Plan vs Achivment')"><i
+                    class="bi bi-file-excel"></i> Export Excel </button>
+        </div>
+        <div #excelTable class="table-responsive card">
+            <table class="table table-bordered mt-2 " id="myTable">
+                <thead >
+                    <tr>
+                        <th scope="col"  style="border: 1px solid black;background-color: #00667d;color: white;">ID
+                        </th>
+                        <th scope="col"  style="border: 1px solid black;background-color: #00667d;color: white;">
+                            Task/Activity</th>
+
+                        <th scope="col"   style="border: 1px solid black;background-color: #00667d;color: white;">Indicator
+                        </th>
+
+                        <th scope="col"   style="border: 1px solid black;background-color: #00667d;color: white;">
+                            Target</th>
+                        <th scope="col"   style="border: 1px solid black;background-color: #00667d;color: white;">Achivments
+                        </th>
+                        <th scope="col"   style="border: 1px solid black;background-color: #00667d;color: white;"> Annual Budget
+                        </th>
+                        <th scope="col" style="border: 1px solid black;background-color: #00667d;color: white;">Utilized Budget
+                            To Date</th>
+
+                        <th scope="col"   style="border: 1px solid black;background-color: #00667d;color: white;">Status</th>
+
+                    </tr>
+                   
+
+
+
+
+                </thead>
+
+                <tbody class="labels">
+                    <tr *ngFor="let item of filterdActivities">
+                        <td  style="border: 1px solid black; "> {{item.activityNumber}}</td>
+                        <td style="border: 1px solid black; ">{{item.name}}</td>
+                        <td style="border: 1px solid black; ">{{item.unitOfMeasurment}}</td>
+                        <td style="border: 1px solid black; ">{{getMonthPeroformance(item.monthPerformance)}}</td>
+                        <td style="border: 1px solid black; ">{{getMonthPeroformance2(item.monthPerformance)}}</td>
+                        <td style="border: 1px solid black; ">{{getMonthPeroformance3(item.monthPerformance)}}</td>
+                        <th style="border: 1px solid black; ">{{getMonthPeroformance4(item.monthPerformance)}}</th>
+                        <th style="border: 1px solid black; ">
+                            
+                            <span [ngStyle]="item.progressStatus === 'NOT STARTED' ? {'background-color': '#ffd174','color':'white','padding':'5px'} : {'background-color': '#a7f482','color':'white','padding':'5px'}">
+                                {{ item.progressStatus }}
+                            </span>
+                     
+                        </th>
+
+                        
+                    </tr>
+                </tbody>
+
+                
+            </table>
+        </div>
+    </section>
+</main>
