@@ -46,4 +46,12 @@ export class ProjectmanagementService {
     return this.http.put<ResponseMessage> (this.baseUrl +'/PM/Activity/UpdateActivityProgress',UpdateActivityProgress)
   }
 
+
+getActivitiesFromProject
+(projectId:string){
+
+        
+  return this.http.get<any>(this.baseUrl+`/StrategicPlan/GetActivitiesFromProject?projectId=${projectId}`)
+}
+
 }

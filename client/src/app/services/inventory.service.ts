@@ -122,9 +122,7 @@ export class InventoryService {
     return this.http.get<AddProductDto>(this.BaseURI + `/Product/GetProductDetail?productId=${productId}`);
   }
 
-  getStoreRequestDropDown(){
-    return this.http.get<SelectList[]>(this.BaseURI + `/StoreRequest/GetStoreRequestDropDown`);
-  }
+
 
   addStoreRequest(addStore: AddStoreRequestDto){
     addStore.createdById = this.userService.getCurrentUser().userId;
@@ -138,6 +136,11 @@ export class InventoryService {
   approveStoreRequest(approveStore: ApproveStoreRequest){
     approveStore.approverEmployeeId = this.userService.getCurrentUser().employeeId;
     return this.http.put<ResponseMessage>(this.BaseURI + '/StoreRequest/ApproveStoreRequest', approveStore);
+  }
+
+  finalApproveStoreRequest(storerequestId: string) {
+    let approverEmployeeId = this.userService.getCurrentUser().employeeId;
+    return this.http.put<ResponseMessage>(this.BaseURI + `/StoreRequest/FinalApproveStoreRequest?requestId=${storerequestId}&approverEmployeeId=${approverEmployeeId}`, { requestId:storerequestId, approverEmployeeId: approverEmployeeId });
   }
 
   rejectStoreRequest(rejectRequest: RejectStoreRequest){

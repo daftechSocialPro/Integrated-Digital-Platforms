@@ -1,6 +1,10 @@
 {
   "Version": 1,
+<<<<<<< HEAD
   "Hash": "5CBw9IDHlbqoD6FyJcZ74imrkaeJvDuubVvEtUHeXlQ=",
+=======
+  "Hash": "OY5dySviCXJ5IZCQ0NIVrVyKVIyrm3SQxBhKVVymdtQ=",
+>>>>>>> dbe146f1b6a323e526b5f5312bfa9e3532762e27
   "Source": "MembershipAPI",
   "BasePath": "_content/MembershipAPI",
   "Mode": "Default",

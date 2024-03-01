@@ -59,6 +59,21 @@ namespace IntegratedDigitalAPI.Controllers.Inventory
 
         [HttpPut]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> FinalApproveStoreRequest(string requestId, string approverEmployeeId)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _storeRequest.FinalApproveStoreRequest(requestId, approverEmployeeId));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+
+        [HttpPut]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> RejectStoreRequest(RejectStoreRequest store)
         {
             if (ModelState.IsValid)

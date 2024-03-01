@@ -51,7 +51,7 @@ namespace IntegratedImplementation.Services.Inventory
         {
            
             var itemRequests = await (from x in _dbContext.StoreRequestLists
-                                      where x.ApprovalStatus == ApprovalStatus.APPROVED && !x.IsIssued
+                                      where x.ApprovalStatus == ApprovalStatus.APPROVED && x.IsFinalApproved && !x.IsIssued
                                       select new StoreReceivalListDto
                                       {
                                           Id = x.Id.ToString(),

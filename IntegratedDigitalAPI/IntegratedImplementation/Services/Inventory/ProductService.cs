@@ -62,6 +62,10 @@ namespace IntegratedImplementation.Services.Inventory
             {
                 product.PurchaseRequestId = Guid.Parse(addProduct.PurchaseRequestId);
             }
+            if (!String.IsNullOrEmpty(addProduct.ProjectId))
+            {
+                product.ProjectId = Guid.Parse(addProduct.ProjectId);
+            }
             await _dbContext.Products.AddAsync(product);
             await _dbContext.SaveChangesAsync();
 
