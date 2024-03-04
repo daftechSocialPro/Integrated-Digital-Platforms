@@ -90,6 +90,7 @@ export class AddActivitiesComponent implements OnInit {
       StrategicPlanIndicatorId:[,Validators.required],
       IsTraining:[false,Validators.required],
       IsPercentage:[false,Validators.required],
+      IsCancelled:[false,Validators.required],
   
       SelectedProjectFund:['',Validators.required],
       regionss: [[]],
@@ -293,7 +294,8 @@ export class AddActivitiesComponent implements OnInit {
         activityLocations : this.activityForm.value.locations,
         // longtude: this.lng,
         // latitude: this.lat,
-        selectedProjectFund:this.activityForm.value.SelectedProjectFund
+        selectedProjectFund:this.activityForm.value.SelectedProjectFund,
+        IsCancelled:this.activityForm.value.IsCancelled
       }
 
       console.log("rrrrrrrrrrrrr",actvityP)

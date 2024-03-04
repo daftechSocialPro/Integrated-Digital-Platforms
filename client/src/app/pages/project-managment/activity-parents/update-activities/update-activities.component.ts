@@ -75,16 +75,12 @@ export class UpdateActivitiesComponent implements OnInit{
   }
   ngOnInit(): void {
 
-    
-
     this.getCountries()
     this.GetIndicatorsByStrategicPlanIds(this.activity.strategicPlan)
 
     if(this.activity.activityLocations.length>0 && this.activity.activityLocations[0].region){
     this.getRegions(this.activity.activityLocations[0].region.countryId)
     }
-
-    
 
     console.log("ACTIVITIYXXXX",this.activity)
     this.user = this.userService.getCurrentUser()
@@ -173,7 +169,8 @@ export class UpdateActivitiesComponent implements OnInit{
     SelectedProjectFund:[this.activity.projectSourceId,Validators.required],
 
     regionss: [this.activity.activityLocations?  this.activity.activityLocations.map((item)=>item.regionId):[]],
-    locations: this.formBuilder.array([])
+    locations: this.formBuilder.array([]),
+    IsCancelled:[this.activity.isCancelled,Validators.required],
 
   })
 
@@ -461,7 +458,8 @@ export class UpdateActivitiesComponent implements OnInit{
         // longtude: this.lng,
         // latitude: this.lat,
         activityLocations : this.activityForm.value.locations,
-        selectedProjectFund:this.activityForm.value.SelectedProjectFund
+        selectedProjectFund:this.activityForm.value.SelectedProjectFund,
+        IsCancelled:this.activityForm.value.IsCancelled
       }
 
       console.log("rrrrrrrrrrrrr",actvityP)

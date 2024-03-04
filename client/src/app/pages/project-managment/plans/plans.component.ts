@@ -20,6 +20,7 @@ export class PlansComponent implements OnInit {
   
   programId!: string;
   Plans: PlanView[] = []
+  FilterdPlans: PlanView[] = []
   userview:UserView
   constructor(
     private modalService: NgbModal,
@@ -46,6 +47,7 @@ export class PlansComponent implements OnInit {
       next: (res) => {
         console.log("projects", res)
         this.Plans = res
+        this.FilterdPlans = res
       },
       error: (err) => {
         console.error(err)
@@ -56,6 +58,7 @@ export class PlansComponent implements OnInit {
         next: (res) => {
           console.log("projects", res)
           this.Plans = res
+          this.FilterdPlans = res
         },
         error: (err) => {
           console.error(err)
@@ -107,6 +110,11 @@ export class PlansComponent implements OnInit {
     this.router.navigate(['/pm/planDetail/',planId])
    
   }
+  viewDashboard(planId : string){
+
+    this.router.navigate(['/pm/planDashboard/',planId])
+   
+  }
 
   deletePlan(planId:string){
 
@@ -150,5 +158,17 @@ export class PlansComponent implements OnInit {
 
   }
 
+
+  Filter(value:string){
+
+    const searchTerm = value.toLowerCase()
+
+    this.FilterdPlans = this.Plans.filter((item)=> {
+          return (
+                  item.planName.toLowerCase().includes(searchTerm) ||
+                  item.projectNumber.toLowerCase().includes(searchTerm)
+                )
+    })
+  }
 
 }

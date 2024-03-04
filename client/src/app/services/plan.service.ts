@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { Plan, PlanView,PlanSingleview } from '../model/PM/PlansDto';
+import { Plan, PlanView,PlanSingleview, PlanPieChartPostDto, PlanBarChartPostDto } from '../model/PM/PlansDto';
 import { UserService } from './user.service';
 import { ActivityView } from '../model/PM/ActivityViewDto';
 import { ResponseMessage } from '../model/ResponseMessage.Model';
@@ -46,7 +46,15 @@ export class PlanService {
 
     deletePlan(planId:string){
         return this.http.delete<ResponseMessage>(this.BaseURI+`/plan/deletePlan?planId=${planId}`)
-      }
+    }
+
+    getPlanPieCharts(planId:string, quarter:number){
+        return this.http.get<PlanPieChartPostDto>(this.BaseURI + "/plan/getPlanPieCharts?planId="+planId+"&quarter="+quarter)
+    }
+
+    getPlanBarCharts(planId:string){
+        return this.http.get<PlanBarChartPostDto>(this.BaseURI + "/plan/getPlanBarCharts?planId="+planId)
+    }
 
 
 

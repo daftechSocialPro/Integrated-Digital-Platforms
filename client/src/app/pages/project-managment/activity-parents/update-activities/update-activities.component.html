@@ -294,10 +294,21 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
+                        <div class="modal-footer">
+                            <div class="toggle">
+                                <h6 class="title">Cancel Activity:  </h6>
+                                <p-inputSwitch  formControlName="IsCancelled"></p-inputSwitch>
+
+                            </div>
+                             <div class="">
+                                <button type="button" class="btn btn-outline-secondary try"
                                 (click)="closeModal()">Close</button>
-                            <button type="button" type="submit" [disabled]="!activityForm.valid"
+                                <button type="button" type="submit" [disabled]="!activityForm.valid"
                                 class="btn btn-outline-primary">Update</button>
+                             </div>
+                             
+                             
+                            
                         </div>
                     </form>
                 </div>

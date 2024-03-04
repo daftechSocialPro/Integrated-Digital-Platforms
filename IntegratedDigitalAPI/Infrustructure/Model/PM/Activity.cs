@@ -104,6 +104,9 @@ namespace IntegratedInfrustructure.Models.PM
         public Guid ProjectSourceFundId { get; set; }
         public virtual ProjectFundSource ProjectSourceFund { get; set; }
 
+        [DefaultValue(false)]
+        public bool isCancelled { get; set;}
+
     }
 
  
