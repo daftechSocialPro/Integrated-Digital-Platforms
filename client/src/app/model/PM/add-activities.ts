@@ -39,6 +39,7 @@ export interface SubActivityDetailDto {
     // longtude: number,
     // latitude: number,
     selectedProjectFund:string
+    IsCancelled:boolean
 
     activityLocations : ActivityLocationDto[]
 }

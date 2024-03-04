@@ -54,7 +54,8 @@ namespace IntegratedDigitalAPI.DTOS.PM
         public string ? ProjectName { get; set; }
 
         public List<ActivityLocation> ActivityLocations { get; set; }
-        public string? ProgressStatus { get; set; }         
+        public string? ProgressStatus { get; set; }
+        public bool? IsCancelled { get; set; }     
 
     }
 

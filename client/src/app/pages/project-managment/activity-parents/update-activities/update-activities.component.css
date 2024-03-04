@@ -1,3 +1,37 @@
 .calendars-popup {
 	z-index: 99999 !important;
 }
+
+  .left-end-content {
+	display: flex;
+	align-items: center;
+  }
+
+  :host ::ng-deep 
+    .p-inputswitch.p-inputswitch-checked 
+    .p-inputswitch-slider, 
+:host ::ng-deep 
+    .p-inputswitch.p-inputswitch-checked:hover 
+    .p-inputswitch-slider {
+    background: red !important;
+	box-shadow: 0 0 0 0.2rem #ed9595 !important;
+}
+.toggle{
+ 
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 10px;
+}
+.modal-footer{
+  display: flex;
+  justify-content: space-between;
+  
+}
+.try{
+  margin-right: 10px;
+}
+.title{
+  margin-right: 5px;
+  margin-top: 4px;
+}
