@@ -33,8 +33,7 @@ export class ProjectmanagementService {
   }
 
 
-  getActivitiesFromProject
-    (projectId: string) {
+  getActivitiesFromProject(projectId: string) {
 
 
     return this.http.get<any>(this.baseUrl + `/StrategicPlan/GetActivitiesFromProject?projectId=${projectId}`)
@@ -47,11 +46,11 @@ export class ProjectmanagementService {
   }
 
 
-getActivitiesFromProject
-(projectId:string){
+// getActivitiesFromProject
+// (projectId:string){
 
         
-  return this.http.get<any>(this.baseUrl+`/StrategicPlan/GetActivitiesFromProject?projectId=${projectId}`)
-}
+//   return this.http.get<any>(this.baseUrl+`/StrategicPlan/GetActivitiesFromProject?projectId=${projectId}`)
+// }
 
 }
