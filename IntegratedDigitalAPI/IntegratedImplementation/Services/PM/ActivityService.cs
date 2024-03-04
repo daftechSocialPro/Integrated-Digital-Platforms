@@ -1147,19 +1147,19 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
         {
 
 
-            var activityParent = _dBContext.ActivitiesParents.Where(x => x.Id == activityDetail.Id).FirstOrDefault();
+            //var activityParent = _dBContext.ActivitiesParents.Where(x => x.Id == activityDetail.Id).FirstOrDefault();
 
-            if (activityParent != null)
-            {
-                //activityParent.CreatedById = activityDetail.CreatedBy.ToString();
-                activityParent.ActivityParentDescription = activityDetail.ActivityDescription;
-                activityParent.HasActivity = activityDetail.HasActivity;
-                //activityParent.TaskId = activityDetail.TaskId;
+            //if (activityParent != null)
+            //{
+            //    //activityParent.CreatedById = activityDetail.CreatedBy.ToString();
+            //    activityParent.ActivityParentDescription = activityDetail.ActivityDescription;
+            //    activityParent.HasActivity = activityDetail.HasActivity;
+            //    //activityParent.TaskId = activityDetail.TaskId;
 
-                await _dBContext.SaveChangesAsync();
-            }
-            
-            
+            //    await _dBContext.SaveChangesAsync();
+            //}
+            ActivityParent activityParent = new ActivityParent();
+
 
             foreach (var item in activityDetail.ActivityDetails)
             {
@@ -1167,11 +1167,11 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
 
                 var activity = _dBContext.Activities.Where(x => x.Id == item.Id).FirstOrDefault();
 
-                if(activityParent == null)
-                {
+                //if (activityParent == null)
+                //{
                     activityParent = await _dBContext.ActivitiesParents.Where(x => x.Id == activity.ActivityParentId).FirstOrDefaultAsync();
-                }
-                
+                //}
+
 
                 if (activity != null)
                 {
@@ -1202,6 +1202,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                   
                     activity.IsTraining = item.IsTraining;
                     activity.ProjectSourceFundId = item.SelectedProjectFund;
+                    activity.isCancelled = item.isCancelled;
                         
                     await _dBContext.SaveChangesAsync();
 

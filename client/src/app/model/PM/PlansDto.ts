@@ -72,6 +72,34 @@ export interface PlanSingleview {
 
 
 
+export interface PlanPieChartPostDto{
+
+    planName: string
+    quarter: string
+    chartDataSets: ChartDataSet[]
+
+}
+
+export interface PlanBarChartPostDto{
+    planName: string
+    progressChartDataSets: ChartDataSet[]
+    budgetChartDataSets: ChartDataSet[]
+}
+
+export interface ChartDataSet{
+    label: string
+    data: number
+
+}
+
+
+
+
+
+
+
+
+
   
 
 

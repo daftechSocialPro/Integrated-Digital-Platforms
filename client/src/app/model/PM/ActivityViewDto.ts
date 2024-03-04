@@ -29,6 +29,7 @@ export interface ActivityView {
     projectSource?:string
 
     activityLocations?:any
+    isCancelled: boolean
 
 
 }

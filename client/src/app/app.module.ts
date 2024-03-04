@@ -268,6 +268,9 @@ import { UpdateTraineeComponent } from './pages/training/trainees-form/update-tr
 import { UpdateTasksComponent } from './pages/project-managment/tasks/update-tasks/update-tasks.component';
 import { UpdateActivitiesComponent } from './pages/project-managment/activity-parents/update-activities/update-activities.component';
 import { AssignReplacementComponent } from './pages/human-resource/employee-managment/employee-termination/terminate-employee/assign-replacement/assign-replacement.component';
+import { ToolbarModule } from 'primeng/toolbar';
+import { PlanDashboardComponent } from './pages/project-managment/plans/plan-dashboard/plan-dashboard.component';
+import { NgxEchartsModule } from 'ngx-echarts';
 @NgModule({
   declarations: [
     AppComponent,
@@ -586,7 +589,8 @@ import { AssignReplacementComponent } from './pages/human-resource/employee-mana
     UpdateTraineeComponent,
     UpdateTasksComponent,
     UpdateActivitiesComponent,
-    AssignReplacementComponent
+    AssignReplacementComponent,
+    PlanDashboardComponent
     //  AddMeasurementComponent,
     //  UpdateMeasurmentComponent
   ],
@@ -620,9 +624,13 @@ import { AssignReplacementComponent } from './pages/human-resource/employee-mana
     FileUploadModule,
     NgImageSliderModule,
     TimelineModule ,
+    ToolbarModule,
     ToastrModule.forRoot({
       preventDuplicates: true,
-    })
+    }),
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts'),
+    }),
   ],
   providers: [
     {

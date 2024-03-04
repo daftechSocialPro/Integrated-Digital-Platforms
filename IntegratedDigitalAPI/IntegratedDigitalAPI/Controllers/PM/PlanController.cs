@@ -103,5 +103,32 @@ namespace IntegratedDigitalAPI.Controllers.PM
             }
         }
 
+        [HttpGet("getPlanPieCharts")]
+
+        public async Task<IActionResult> GetPlanPieCharts(Guid planId, int quarter )
+        {
+            try
+            {
+                return Ok(await _planService.GetPlanPieCharts(planId, quarter));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+        [HttpGet("getPlanBarCharts")]
+
+        public async Task<IActionResult> GetPlanBarCharts(Guid planId)
+        {
+            try
+            {
+                return Ok(await _planService.GetPlanBarCharts(planId));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
     }
 }

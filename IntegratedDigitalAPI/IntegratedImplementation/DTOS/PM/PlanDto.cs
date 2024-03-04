@@ -90,6 +90,38 @@ namespace IntegratedDigitalAPI.DTOS.PM
 
     }
 
+    public record PlanPieChartGetDto
+    {
+        public Guid PlanId { get; set; }
+        public int? Year { get; set; }
+        public string? Quarter {  get; set; }
+
+    }
+
+    public record PlanPieChartPostDto
+    {
+        public string PlanName {  get; set; }
+        
+        public int? Quarter { get; set; }
+
+        public List<ChartDataSet> ChartDataSets { get; set; }
+
+
+    }
+
+    public record PlanBarChartPostDto
+    {
+        public string PlanName { get; set; }
+
+        public List<ChartDataSet> BudgetChartDataSets { get; set; }
+        public List<ChartDataSet> ProgressChartDataSets { get; set; }
+    }
+
+    public record ChartDataSet
+    {
+        public string Label { get; set; }
+        public float Data { get; set; }
+    }
     public class TaskVIewDto
     {
         public Guid Id { get; set; }

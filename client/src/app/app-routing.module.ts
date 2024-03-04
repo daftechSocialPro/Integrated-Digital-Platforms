@@ -52,6 +52,7 @@ import { PlanDetailComponent } from './pages/project-managment/plans/plan-detail
 import { ActivityDetailComponent } from './pages/project-managment/plans/activity-detail/activity-detail.component';
 import { TrainingDetailComponent } from './pages/training/training-detail/training-detail.component';
 import { WeeklyActivitiesComponent } from './pages/project-managment/weekly-activities/weekly-activities.component';
+import { PlanDashboardComponent } from './pages/project-managment/plans/plan-dashboard/plan-dashboard.component';
 
 
 
@@ -69,6 +70,7 @@ const routes: Routes = [
   { path: 'pm/actForApproval', canActivate: [AuthGuard], component: ActivityforapprovalComponent },
 
   { path: 'pm/planDetail/:planId', canActivate: [AuthGuard], component: PlanDetailComponent },
+  { path: 'pm/planDashboard/:planId', canActivate: [AuthGuard], component: PlanDashboardComponent },
   { path: 'pm/activityDetail/:actId/:planId', canActivate: [AuthGuard], component: ActivityDetailComponent },
   //report
 
