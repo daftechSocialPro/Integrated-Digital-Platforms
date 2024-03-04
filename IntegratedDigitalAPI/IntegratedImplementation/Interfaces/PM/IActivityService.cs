@@ -22,6 +22,9 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
         public Task<List<ActivityViewDto>> GetAssignedActivity(Guid employeeId);
 
 
+
+        public Task<ResponseMessage> UpdateActivityProgress(UpdateActivityProgressDto updateActivityProgressDto);
+
        
 
 

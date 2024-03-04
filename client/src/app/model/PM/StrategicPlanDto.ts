@@ -12,3 +12,16 @@ export interface StrategicPlanPostDto {
     createdById?:string
 
 }
+
+
+export interface UpdateActivityProgressDto
+{
+    activityId:string
+    employeeId:string
+    order:number
+    actualWorked?:number
+    usedBudget?:number
+    createdBy:string
+    progressType: number
+  
+}

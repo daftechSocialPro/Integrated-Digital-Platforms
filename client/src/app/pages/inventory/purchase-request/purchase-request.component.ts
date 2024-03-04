@@ -17,6 +17,7 @@ export class PurchaseRequestComponent implements OnInit {
   employeeField: any;
   items: any;
   addPurchaseRequest: AddPurchaseRequestDto = new AddPurchaseRequestDto();
+  projectDropDown: SelectList[] = [];
   
 
   purchaserequesList: AddPurchaseRequestListDto[] = [];
@@ -39,6 +40,7 @@ export class PurchaseRequestComponent implements OnInit {
   ngOnInit(): void {
     this.getEmployeeDropDown();
     this.getItems();
+    this.getProjectDropDowns();
   }
 
   getItems(){
@@ -46,7 +48,16 @@ export class PurchaseRequestComponent implements OnInit {
       next: (res) => {
           this.itemsDropDown = res;
       }
-    })
+    });
+  }
+
+  changeRequest(event: any){
+    this.itemsDropDown = [];
+    this.dropDownService.getItemByRequest(event.value).subscribe({
+      next: (res) => {
+          this.itemsDropDown = res;
+      }
+    });
   }
 
   changeItem(event:any){
@@ -62,7 +73,7 @@ export class PurchaseRequestComponent implements OnInit {
 
   isStoreChecked(event: any) {
     if (event.checked) {
-      this.inventoryService.getStoreRequestDropDown().subscribe({
+      this.dropDownService.getStoreRequestDropDown().subscribe({
         next: (res) => {
           this.storeRequestDropdown = res;
         }
@@ -76,6 +87,14 @@ export class PurchaseRequestComponent implements OnInit {
         if (res) {
           this.employeeList = res;
         }
+      }
+    })
+  }
+
+  getProjectDropDowns(){
+    this.dropDownService.getProjectDropDowns().subscribe({
+      next: (res) => {
+          this.projectDropDown = res;
       }
     })
   }

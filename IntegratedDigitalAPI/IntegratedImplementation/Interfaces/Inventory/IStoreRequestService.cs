@@ -13,6 +13,8 @@ namespace IntegratedImplementation.Interfaces.Inventory
         Task<ResponseMessage> AddStoreRequest(AddStoreRequestDto addStoreRequest);
         Task<List<StoreRequestItems>> GetPendingStoreRequests();
         Task<ResponseMessage> ApproveStoreRequest(ApproveStoreRequest approveRequest);
+
+        Task<ResponseMessage> FinalApproveStoreRequest(string requestId, string approverEmployeeId);
         Task<ResponseMessage> RejectStoreRequest(RejectStoreRequest rejectRequest);
     }
 }

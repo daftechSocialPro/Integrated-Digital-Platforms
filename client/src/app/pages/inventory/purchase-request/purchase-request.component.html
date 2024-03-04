@@ -15,6 +15,11 @@
             <p-toast></p-toast>
             <div class="card p-2">
                 <div class="row">
+                    <div  class="col-md-4">
+                        <label htmlFor="lastname2">Project</label><br />
+                        <p-dropdown [options]="projectDropDown" optionLabel="name" optionValue="id"  name="projectId" 
+                        [(ngModel)]="addPurchaseRequest.projectId" placeholder="Select Project"  [filter]="true" filterBy="name" [showClear]="true"></p-dropdown>
+                    </div>
                     <div class="col-md-2 ">
                         <label htmlFor="lastname2">Is Store Requested</label> <br />
                         <p-inputSwitch [(ngModel)]="addPurchaseRequest.isStoreRequested" name="isStoreRequested"
@@ -23,7 +28,7 @@
                     <div *ngIf="addPurchaseRequest.isStoreRequested" class="col-md-2">
                         <label htmlFor="lastname2">Store Request</label>
                         <p-dropdown [options]="storeRequestDropdown" optionLabel="name" name="storeRequestId"
-                            optionValue="id" [(ngModel)]="addPurchaseRequest.storeRequestId"
+                            optionValue="id" [(ngModel)]="addPurchaseRequest.storeRequestId" (onChange)="changeRequest($event)"
                             placeholder="Select Store Request" [filter]="true" filterBy="name"
                             [showClear]="true"></p-dropdown>
                     </div>

@@ -3,6 +3,7 @@ export class AddPurchaseRequestDto {
     requesterEmployeeId: string;
     isStoreRequested: number;
     storeRequestId: string;
+    projectId: string;
     requestLists: AddPurchaseRequestListDto[] = [];
 }
 

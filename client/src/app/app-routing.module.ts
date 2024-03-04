@@ -52,7 +52,11 @@ import { PlanDetailComponent } from './pages/project-managment/plans/plan-detail
 import { ActivityDetailComponent } from './pages/project-managment/plans/activity-detail/activity-detail.component';
 import { TrainingDetailComponent } from './pages/training/training-detail/training-detail.component';
 import { WeeklyActivitiesComponent } from './pages/project-managment/weekly-activities/weekly-activities.component';
+
+import { PlanVsAchivmentProjectComponent } from './pages/project-managment/progress-report/plan-vs-achivment-project/plan-vs-achivment-project.component';
+
 import { PlanDashboardComponent } from './pages/project-managment/plans/plan-dashboard/plan-dashboard.component';
+
 
 
 
@@ -86,8 +90,9 @@ const routes: Routes = [
   { path: 'weeklyProgressPlanReport', canActivate: [AuthGuard], component: WeeklyPlanPerformanceComponent },
 
   { path: 'estimatedcoast', canActivate: [AuthGuard], component: EstimatedCoastComponent },
+  { path: 'projectAchivment', canActivate: [AuthGuard], component: PlanVsAchivmentProjectComponent },
 
-
+  
 
   { path: 'pm/projectTeam', canActivate: [AuthGuard], component: ComittesComponent },
   { path: 'pm/training-dashboard', canActivate: [AuthGuard], component: TrainingDashboardComponent },

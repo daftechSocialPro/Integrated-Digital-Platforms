@@ -8,6 +8,7 @@ using IntegratedDigitalAPI.Services.PM.Commite;
 using IntegratedDigitalAPI.Services.PM.Plan;
 using IntegratedDigitalAPI.Services.PM.ProgressReport;
 using IntegratedImplementation.Interfaces.Configuration;
+using IntegratedImplementation.Interfaces.Finance.Configuration;
 using IntegratedImplementation.Interfaces.HRM;
 using IntegratedImplementation.Interfaces.Inventory;
 using IntegratedImplementation.Interfaces.Notification;
@@ -15,6 +16,7 @@ using IntegratedImplementation.Interfaces.PM;
 using IntegratedImplementation.Interfaces.Training;
 using IntegratedImplementation.Interfaces.Vacancy;
 using IntegratedImplementation.Services.Configuration;
+using IntegratedImplementation.Services.Finance.Configuration;
 using IntegratedImplementation.Services.HRM;
 using IntegratedImplementation.Services.Inventory;
 using IntegratedImplementation.Services.Notification;
@@ -104,6 +106,11 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<IStoreRequestService, StoreRequestService>();
             services.AddScoped<IStoreReceivalService, StoreReceivalService>();
             services.AddScoped<IInventoryReportService, InventoryReportService>();
+            #endregion
+
+            #region finance
+            services.AddScoped<IAccountTypeService, AccountTypeService>();            
+            services.AddScoped<IFinanceLookupService, FinanceLookupService>();            
             #endregion
 
 

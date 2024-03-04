@@ -34,7 +34,6 @@ builder.Services.AddControllers().AddJsonOptions(
     {
         options.JsonSerializerOptions.PropertyNamingPolicy = null;
     });
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.Configure<ApplicationSetting>(builder.Configuration.GetSection("ApplicationSetting"));
 
@@ -115,6 +114,14 @@ builder.Services.AddAuthentication(x =>
         ValidateAudience = false,
         ClockSkew = TimeSpan.Zero
     };
+});
+
+builder.Services.UseKestrel(options =>
+{
+    options.Listen(IPAddress.Any, 443, listenOptions =>
+    {
+        listenOptions.UseHttps("cert.pem", "key.pem");
+    });
 });
 
 

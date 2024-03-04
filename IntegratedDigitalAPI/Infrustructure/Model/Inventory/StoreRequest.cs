@@ -1,5 +1,6 @@
 ﻿using IntegratedInfrustructure.Model.Authentication;
 using IntegratedInfrustructure.Model.HRM;
+using IntegratedInfrustructure.Model.PM;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -21,8 +22,8 @@ namespace IntegratedInfrustructure.Models.Inventory
 
         [InverseProperty(nameof(StoreRequestList.StoreRequest))]
         public ICollection<StoreRequestList> StoreRequestLists { get; set; }
-
-
+        public Guid? ProjectId { get; set; }
+        public virtual Project Project { get; set; } = null!;
 
     }
 }

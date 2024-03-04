@@ -227,7 +227,7 @@ renewMembership(){
     first_name: this.member.fullName,
     last_name: '',
     phone_number: this.member.phoneNumber,
-    return_url: this.returnUrl,
+    return_url: this.returnUrl,    
     title: `Payment for Membership`,
     description: this.member.memberId
   };

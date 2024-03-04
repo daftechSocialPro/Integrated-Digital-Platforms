@@ -56,8 +56,12 @@
                         <td>{{reqItem.measurementUnitName}}</td>
                         <td>{{reqItem.quantity | number : '1.2-2'}}</td>
                         <td>
-                            <p-button icon="pi pi-check" class="p-button-success"
+                            <p-button icon="pi pi-check" class="p-button-success" *ngIf="reqItem.approvalStatus == 0"
                                 (onClick)="approveItems(reqItem,request.remainingQuantity,request.storeApprovedQuantity)"></p-button>
+                            
+                            &nbsp;
+                            <p-button icon="pi pi-check" class="p-button-success" *ngIf="reqItem.approvalStatus == 1"
+                                (onClick)="finalApproval(reqItem.id)"></p-button>
                         </td>
                         <td>
                             <p-button icon="pi pi-times" class="p-button-danger"

@@ -19,6 +19,8 @@ using IntegratedImplementation.DTOS.Inventory;
 using IntegratedInfrustructure.Models.Inventory;
 using IntegratedInfrustructure.Model.PM;
 using IntegratedImplementation.DTOS.PM;
+using IntegratedInfrustructure.Model.FInance.Configuration;
+using IntegratedImplementation.DTOS.Finance.Configuration;
 
 namespace IntegratedImplementation.Datas
 {
@@ -156,8 +158,16 @@ namespace IntegratedImplementation.Datas
                 .ForMember(a => a.SinglePrice, e => e.MapFrom(mfg => (double)mfg.SinglePrice))
                 .ForMember(a => a.RequesterEmployee, e => e.MapFrom(mfg => $"{mfg.PurchaseRequest.RequesterEmployee.FirstName} {mfg.PurchaseRequest.RequesterEmployee.MiddleName} {mfg.PurchaseRequest.RequesterEmployee.LastName} "))
                 .ForMember(a => a.MeasurementUnitName, e => e.MapFrom(mfg => mfg.MeasurementUnit.Name));
-          
+
             #endregion
+
+
+            #region Finance
+
+            CreateMap<FinanceLookup, FinanceLookupGetDto>();
+            CreateMap<AccountType, AccountTypeGetDto>();
+
+          #endregion
 
         }
     }

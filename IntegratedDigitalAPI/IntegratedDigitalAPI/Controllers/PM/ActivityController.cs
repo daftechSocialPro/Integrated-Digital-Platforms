@@ -112,6 +112,23 @@ namespace IntegratedDigitalAPI.Controllers.PM
             }
         }
 
+        [HttpPut("UpdateActivityProgress")]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> UpdateActivityProgressNew(UpdateActivityProgressDto Progress)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _activityService.UpdateActivityProgress(Progress));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+
+        
+
 
 
 

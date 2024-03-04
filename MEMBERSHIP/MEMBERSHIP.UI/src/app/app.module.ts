@@ -39,6 +39,7 @@ import { QRCodeModule } from 'angularx-qrcode';
 import * as echarts from 'echarts';
 import { NgxEchartsModule } from 'ngx-echarts';
 import AdminDashbordComponent from './demo/admin-dashbord/admin-dashbord.component';
+import { OnConstructionComponent } from './demo/on-construction/on-construction.component';
 
 
 // import { ConsTariffComponent } from './cons-tariff/cons-tariff.component'
@@ -63,7 +64,8 @@ import AdminDashbordComponent from './demo/admin-dashbord/admin-dashbord.compone
     AddUserComponent,
     UserRoleComponent,
     AutoCompleteComponent,
-    AdminDashbordComponent
+    AdminDashbordComponent,
+    OnConstructionComponent
         
   ],
   imports: [

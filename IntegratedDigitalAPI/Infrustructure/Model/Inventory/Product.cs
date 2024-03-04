@@ -1,5 +1,6 @@
 ﻿using IntegratedInfrustructure.Model.Authentication;
 using IntegratedInfrustructure.Model.Inventory;
+using IntegratedInfrustructure.Model.PM;
 using IntegratedInfrustructure.Models.Common;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace IntegratedInfrustructure.Models.Inventory
         public string DetailCode { get; set; } = null!;
         public bool IsPurchaseRequest { get; set; }
         public Guid? PurchaseRequestId { get; set; }
-        public virtual PurchaseRequest PurchaseRequest { get; set; } = null!;
+        public virtual PurchaseRequestList PurchaseRequest { get; set; } = null!;
         public double SinglePrice { get; set; }
         public double Quantiy { get; set; }
         public Guid MeasurementUnitId { get; set; }
@@ -33,5 +34,7 @@ namespace IntegratedInfrustructure.Models.Inventory
         public double RemainingQuantity { get; set; }
         public int Cartoon { get; set; }
         public int Packet { get; set; }
+        public Guid? ProjectId { get; set; }
+        public virtual Project Project { get; set; } = null!;
     }
 }

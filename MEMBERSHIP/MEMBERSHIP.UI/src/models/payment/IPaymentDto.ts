@@ -7,6 +7,7 @@ export interface IPaymentData {
     phone_number: string;
     return_url: string;
     title: string;
+    
     description: string;
   }
 

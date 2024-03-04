@@ -12,6 +12,7 @@ namespace IntegratedImplementation.DTOS.Inventory
         public string RequesterEmployeeId { get; set; } = null!;
         public bool IsStoreRequested { get; set; }
         public string? StoreRequestId { get; set; } 
+        public string? ProjectId { get; set; }
         public List<AddPurchaseRequestListDto> RequestLists { get; set; } = null!;
     }
 

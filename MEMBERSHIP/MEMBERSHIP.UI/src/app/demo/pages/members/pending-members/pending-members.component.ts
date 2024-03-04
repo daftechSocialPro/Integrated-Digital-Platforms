@@ -192,10 +192,10 @@ export class PendingMembersComponent implements OnInit {
           next: (re) => {
             console.log(res);
             if (re.response) {
-              if (re.response.status === 'success') {
+              if (re.response.data.status === 'success') {
                 this.MakePaymentConfirmation(res.text_Rn);
               }
-              this.paymentStatus = re.response.status;
+              this.paymentStatus = re.response.data.status;
             } else {
               this.paymentStatus = re.message;
             }
@@ -209,7 +209,9 @@ export class PendingMembersComponent implements OnInit {
   }
   MakePaymentConfirmation(text_rn: string) {
     this.paymentService.MakePaymentConfirmation(text_rn).subscribe({
-      next: (res) => { }
+      next: (res) => {
+        window.location.reload()
+       }
     });
   }
 
@@ -232,6 +234,7 @@ export class PendingMembersComponent implements OnInit {
       phone_number: this.memberTelegram.member.phoneNumber,
       return_url: this.returnUrl,
       title: `Payment for Membership`,
+      
       description: this.memberTelegram.member.memberId
     };
     this.goTOPayment(payment, this.member);
@@ -240,27 +243,91 @@ export class PendingMembersComponent implements OnInit {
 
   renewMembership2() {
 
-    var payment: IPaymentData = {
-      amount: this.memberTelegram.member.amount,
-      currency: 'ETB',
-      email: this.memberTelegram.member.email,
-      first_name: this.memberTelegram.member.fullName,
-      last_name: '',
-      phone_number: this.memberTelegram.member.phoneNumber,
-      return_url: this.returnUrl,
-      title: `Payment for Membership`,
-      description: this.memberTelegram.member.memberId
-    };
-
-
-    this.paymentService.payment(payment).subscribe({
+    this.paymentService.verifyPayment(this.memberTelegram.member.text_Rn).subscribe({
       next: (res) => {
-        window.location.href = this.memberTelegram.member.url;
-        this.verifyPayment()
-      }
-    })
+        console.log(res);
+        if (res.response) {
+          if (res.response.data.status == 'success') {
+            this.MakePaymentConfirmation(this.memberTelegram.member.text_Rn);
+          }
+          else{
+
+            var payment: IPaymentData = {
+              amount: this.memberTelegram.member.amount,
+              currency: 'ETB',
+              email: this.memberTelegram.member.email,
+              first_name: this.memberTelegram.member.fullName,
+              last_name: '',
+              phone_number: this.memberTelegram.member.phoneNumber,
+              return_url: this.returnUrl,
+              title: `Payment for Membership`,          
+              description: this.memberTelegram.member.memberId
+            };       
+
+            
+        
+            console.log("payment",payment)
+            debugger
+            this.paymentService.payment(payment).subscribe({
+              next: (result) => {
 
 
+                this.memberService.updateTextReference(this.memberTelegram.member.text_Rn,result.response.tx_ref).subscribe({
+                  next:(res)=>{
+                    if (res.success){
+                      window.location.href = result.response.data.checkout_url;
+                      this.verifyPayment();
+
+                    }
+                  }
+                })
+
+      
+              }
+            })
+        
+        
+          }
+        } else{
+
+          var payment: IPaymentData = {
+            amount: this.memberTelegram.member.amount,
+            currency: 'ETB',
+            email: this.memberTelegram.member.email,
+            first_name: this.memberTelegram.member.fullName,
+            last_name: '',
+            phone_number: this.memberTelegram.member.phoneNumber,
+            return_url: this.returnUrl,
+            title: `Payment for Membership`,
+       
+            description: this.memberTelegram.member.memberId
+          };
+      
+      
+          console.log("payment",payment)
+          debugger
+
+
+          this.paymentService.payment(payment).subscribe({
+            next: (result) => {
+            this.memberService.updateTextReference(this.memberTelegram.member.text_Rn,result.response.tx_ref).subscribe({
+                  next:(res)=>{
+                    if (res.success){
+                      window.location.href = result.response.data.checkout_url;
+                      this.verifyPayment();
+
+                    }
+                  }
+                })
+
+            }
+          })
+      
+      
+        }
+       }})
+
+ 
 
 
 
@@ -278,6 +345,7 @@ export class PendingMembersComponent implements OnInit {
       phone_number: this.memberTelegram.member.phoneNumber,
       return_url: this.returnUrl,
       title: `Payment for Membership`,
+    
       description: this.memberTelegram.member.memberId
     };
 

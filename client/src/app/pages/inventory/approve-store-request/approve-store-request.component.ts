@@ -57,6 +57,22 @@ export class ApproveStoreRequestComponent implements OnInit {
        this.editStoreRequest = { ...item }
      }
    }
+
+   finalApproval(storeRequestId: string){
+    this.inventoryService.finalApproveStoreRequest(storeRequestId).subscribe({
+      next: (res) => {
+         if(res.success){
+          this.getStoreRequestList();
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Item Approved Successfully', life: 3000 });
+         }
+         else{
+          this.messageService.add({severity:'error',summary:'Error',detail: res.message})
+         }
+      },error: (err) => {
+        this.messageService.add({severity:'error',summary:'Error',detail: "Error Approving Quantity"})
+      }
+    });
+   }
  
    rejectItem(stroreRequestId: string){
      this.rejectDialog = true;

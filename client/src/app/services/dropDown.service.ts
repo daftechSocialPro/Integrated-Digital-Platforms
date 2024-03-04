@@ -65,6 +65,11 @@ export class DropDownService {
     getIndicatorByStrategicPlanId(strategicPlanId:string){
         return this.http.get<SelectList[]>(this.baseUrl + "/DropDown/GetIndicatorByStrategicPlanId?strategicPlanId=" + strategicPlanId)
     }
+
+    getProjectDropDowns(){
+        return this.http.get<SelectList[]>(this.baseUrl + "/DropDown/GetProjectDropDowns")
+    }
+
     getProjectFundSourcess() {
         return this.http.get<SelectList[]>(this.baseUrl + "/DropDown/GetProjectFundSources")
     }
@@ -95,6 +100,11 @@ export class DropDownService {
         return this.http.get<ItemDropDownDto[]>(this.baseUrl + '/DropDown/GetItemDropDown');
     }
 
+    
+    getItemByRequest(requestId: string) {
+        return this.http.get<ItemDropDownDto[]>(this.baseUrl + `/DropDown/GetItemByRequest?StoreRequestId=${requestId}`);
+    }
+
     getPurchaseRequestDropDown(itemId: string) {
         return this.http.get<SelectList[]>(this.baseUrl + `/DropDown/GetPurchaseRequestByItem?ItemId=${itemId}`);
     }
@@ -103,5 +113,9 @@ export class DropDownService {
 
         return this.http.get<SelectList[]>(this.baseUrl+'/DropDown/GetFiscalYears')
     }
+
+    getStoreRequestDropDown(){
+        return this.http.get<SelectList[]>(this.baseUrl + `/DropDown/GetStoreRequestDropDown`);
+      }
 
 }

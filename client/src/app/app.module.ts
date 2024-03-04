@@ -268,9 +268,13 @@ import { UpdateTraineeComponent } from './pages/training/trainees-form/update-tr
 import { UpdateTasksComponent } from './pages/project-managment/tasks/update-tasks/update-tasks.component';
 import { UpdateActivitiesComponent } from './pages/project-managment/activity-parents/update-activities/update-activities.component';
 import { AssignReplacementComponent } from './pages/human-resource/employee-managment/employee-termination/terminate-employee/assign-replacement/assign-replacement.component';
+
+import { PlanVsAchivmentProjectComponent } from './pages/project-managment/progress-report/plan-vs-achivment-project/plan-vs-achivment-project.component';
+
 import { ToolbarModule } from 'primeng/toolbar';
 import { PlanDashboardComponent } from './pages/project-managment/plans/plan-dashboard/plan-dashboard.component';
 import { NgxEchartsModule } from 'ngx-echarts';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -590,7 +594,11 @@ import { NgxEchartsModule } from 'ngx-echarts';
     UpdateTasksComponent,
     UpdateActivitiesComponent,
     AssignReplacementComponent,
+
+    PlanVsAchivmentProjectComponent
+
     PlanDashboardComponent
+
     //  AddMeasurementComponent,
     //  UpdateMeasurmentComponent
   ],

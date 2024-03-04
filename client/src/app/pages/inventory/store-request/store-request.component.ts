@@ -28,7 +28,7 @@ export class StoreRequestComponent implements OnInit {
   branchListDropDown: SelectList[] = [];
   itemsDropDown: ItemDropDownDto[] = [];
   measurementUnitDropDown: SelectList[] = [];
-
+  projectDropDown: SelectList[] = [];
 
   constructor(private dropDownService: DropDownService, private inventoryService: InventoryService,
     private messageService: MessageService, private userService: UserService) {
@@ -39,6 +39,7 @@ export class StoreRequestComponent implements OnInit {
     this.currentUser = this.userService.getCurrentUser()
 
     this.getItems();
+    this.getProjectDropDowns();
   }
 
   getItems() {
@@ -106,6 +107,13 @@ export class StoreRequestComponent implements OnInit {
     }
   }
 
+  getProjectDropDowns(){
+    this.dropDownService.getProjectDropDowns().subscribe({
+      next: (res) => {
+          this.projectDropDown = res;
+      }
+    })
+  }
 
   removeData(itemId: string) {
     this.storeRequestList = this.storeRequestList.filter(x => x.itemId != itemId);

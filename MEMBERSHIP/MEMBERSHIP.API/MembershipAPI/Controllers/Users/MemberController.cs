@@ -210,6 +210,22 @@ namespace MembershipDigitalAPI.Controllers.HRM
         }
 
 
+        [HttpPut]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> UpdateTextRef(string oldTextRn,string newTextRn)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _memberService.UpdateTextReference(oldTextRn,newTextRn));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+
+
 
 
 

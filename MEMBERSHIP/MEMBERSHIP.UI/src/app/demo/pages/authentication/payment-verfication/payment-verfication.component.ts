@@ -48,7 +48,7 @@ export default class PaymentVerficationComponent implements OnInit {
       next: (res) => {
         console.log(res);
         if (res.response) {
-          if (res.response.status == 'success') {
+          if (res.response.data.status == 'success') {
             this.MakePaymentConfirmation();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: res.response.status });
@@ -105,13 +105,14 @@ export default class PaymentVerficationComponent implements OnInit {
             moodleName: res[0].username,
             moodleId: res[0].id.toString(),
             memberId: member.id,
-          moodlePassword : password
+            moodlePassword : password
           }
           this.updateMember(moodleDto)
 
         }
         else {
           this.messageService.add({ severity: 'error', summary: res.debuginfo, detail: res.message });
+          window.location.href = this.baseUrl;
         }
 
 
@@ -126,10 +127,14 @@ export default class PaymentVerficationComponent implements OnInit {
         window.location.href = this.baseUrl;
         }else{
           this.messageService.add({ severity: 'error', summary: 'Something went wrong !!!', detail: res.message });
+          console.log(res)
+          window.location.href = this.baseUrl;
         }
 
       },error:(err)=>{
         this.messageService.add({ severity: 'error', summary:'Something went wrong', detail: err.message });
+        console.log(err)
+        window.location.href = this.baseUrl;
     
       }
     })
@@ -144,9 +149,11 @@ export default class PaymentVerficationComponent implements OnInit {
           window.location.href = this.baseUrl;
         } else {
           this.messageService.add({ severity: 'error', summary: 'Something went Wrong!!!', detail: res.message });
+          window.location.href = this.baseUrl;
         }
       }, error: (err) => {
         this.messageService.add({ severity: 'error', summary: 'Something went wrong!!', detail: err });
+        window.location.href = this.baseUrl;
       }
     })
   }

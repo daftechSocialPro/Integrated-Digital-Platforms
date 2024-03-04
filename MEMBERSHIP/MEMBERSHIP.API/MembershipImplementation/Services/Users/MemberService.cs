@@ -267,13 +267,14 @@ namespace MembershipImplementation.Services.HRM
                                      EducationalLevelId = member.EducationalLevelId.ToString(),
                                      IdCardStatus = member.IdCardStatus.ToString(),
                                      RejectedRemark = member.RejectedRemark,
-                                     ExpiredDate = latestPayment!=null? latestPayment.ExpiredDate:DateTime.Now,
-                                     PaymentStatus = latestPayment != null ? latestPayment.PaymentStatus.ToString():null,
-                                     LastPaid = latestPayment!=null? latestPayment.LastPaid:DateTime.Now,
+                                     ExpiredDate = latestPayment != null ? latestPayment.ExpiredDate : DateTime.Now,
+                                     PaymentStatus = latestPayment != null ? latestPayment.PaymentStatus.ToString() : null,
+                                     LastPaid = latestPayment != null ? latestPayment.LastPaid : DateTime.Now,
+                                     Text_Rn = latestPayment != null ? latestPayment.Text_Rn:"",
                                      Amount = member.MembershipType.Money,
-                                     IsBirthDate=member.IsBirthDate,
+                                     IsBirthDate = member.IsBirthDate,
                                      MoodleId = member.MoodleId,
-                                     MoodlePassword = member.MoodlePassword!=null? _generalConfig.Decrypt( member.MoodlePassword!, encryption):"",
+                                     MoodlePassword = member.MoodlePassword != null ? _generalConfig.Decrypt(member.MoodlePassword!, encryption) : "",
                                      MoodleName = member.MoodleUserName,
                                      MoodleStatus = member.MoodleStatus.ToString(),
                                      createdByDate = member.CreatedDate
@@ -386,11 +387,13 @@ namespace MembershipImplementation.Services.HRM
                 var result = await _authenticationService.AddUser(addUser);
 
 
-                var message = $"Your Membership Id is {member.MemberId} you can login using the provided membership Id ";
+                var message = $"Congratulation, being EMwA Member!!!\n" +
+                    $"We have received your payment and would like to thank you for \n being a member of Ethiopian Midwives Association. \n" +
+                    $"Your Membership ID is {member.MemberId} you can login through https://emwamms.org using the provided membership Id.";
                 var email = new EmailMetadata
                                     (member.Email, "ID Card Status",
-                                        $"Dear {member.FullName},\n\n{message}." +
-                                        $"\nThank you.\n\nSincerely,\nEMIA");
+                                        $"{message}" +
+                                        $"\nThank you.\n\nSincerely,\nFekadu Mazengia\nExecutive Director");
                 await _emailService.Send(email);
 
 
@@ -1026,6 +1029,47 @@ namespace MembershipImplementation.Services.HRM
                 Success = true
             };
 
+        }
+
+        public async Task<ResponseMessage> UpdateTextReference(string oldTextRn, string newTextRn)
+        {
+
+            try
+            {
+                var memberPayment = await _dbContext.MemberPayments.Where(x => x.Text_Rn == oldTextRn).ToListAsync();
+                if (memberPayment.Any())
+                {
+                    var payment = memberPayment.FirstOrDefault();
+                    payment.Text_Rn = newTextRn;
+
+                    await _dbContext.SaveChangesAsync();
+
+                    return new ResponseMessage
+                    {
+                        Success = true,
+                    };
+
+
+                }
+
+                return new ResponseMessage
+                {
+                    Success = false,
+                    Message = "payment not found"
+                };
+
+            }
+            catch(Exception ex) 
+            {
+                return new ResponseMessage
+                {
+                    Success = false,
+                    Message =ex.Message
+                };
+            }
+
+
+            throw new NotImplementedException();
         }
     }
 }
