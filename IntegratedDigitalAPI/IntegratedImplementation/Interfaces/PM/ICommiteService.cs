@@ -17,5 +17,6 @@ namespace IntegratedDigitalAPI.Services.PM.Commite
         public Task<int> RemoveEmployeestoCommitte(CommiteEmployeesdto commiteEmployeesdto);
         public Task<List<SelectListDto>> GetSelectListCommittee();
         public Task<List<SelectListDto>> GetCommiteeEmployees(Guid comitteId);
+        //object AddCommite(AddCommiteDto addCommiteDto);
     }
 }
