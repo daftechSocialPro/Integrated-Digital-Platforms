@@ -23,7 +23,6 @@ import { PurchaseRequestComponent } from './purchase-request/purchase-request.co
 import { MeasurementUnitComponent } from './inventory-setting/measurement-unit/measurement-unit.component';
 import { AddMeasurementunitComponent } from './inventory-setting/measurement-unit/add-measurementunit/add-measurementunit.component';
 import { ApprovePurchaseRequestComponent } from './approve-purchase-request/approve-purchase-request.component';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { GoodsReceivingNoteComponent } from './goods-receiving-note/goods-receiving-note.component';
 import { AddGoodsReceivingNoteComponent } from './goods-receiving-note/add-goods-receiving-note/add-goods-receiving-note.component';

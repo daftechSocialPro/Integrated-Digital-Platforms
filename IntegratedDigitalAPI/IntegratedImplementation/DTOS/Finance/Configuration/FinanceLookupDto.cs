@@ -9,14 +9,14 @@ namespace IntegratedImplementation.DTOS.Finance.Configuration
 {
     public record FinanceLookupPostDto
     {
-        public string Category { get; set; }
-        public string Description { get; set; }
-        public string LookupType { get; set; }
-        public string LookupValue { get; set; }
+        public string Category { get; set; } = null!;
+        public string Description { get; set; } = null!;
+        public string LookupType { get; set; } = null!;
+        public string LookupValue { get; set; } = null!;
         public bool IsDefault { get; set; }
-        public string Remark { get; set; }
+        public string Remark { get; set; } = null!;
 
-        public string CreatedById { get; set; }
+        public string CreatedById { get; set; }= null!;
     }
 
     public record FinanceLookupGetDto : FinanceLookupPostDto
