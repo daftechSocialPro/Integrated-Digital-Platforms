@@ -9,11 +9,29 @@
          </ol>
       </nav>
    </div>
-   <div class="text-end col-lg-12">
-      <button class="btn btn-outline-primary text-end mb-3" (click)="addPlan()"><i class="bi bi-plus me-1"></i> Project
-      </button>
-   </div>
+   
+   <div class="mb-5">
 
+      <p-toolbar >
+         <div class="p-toolbar-group-start">
+             <!-- <button pButton icon="pi pi-plus" class="mr-2"></button>
+             <button pButton icon="pi pi-print" class="mr-2"></button>
+             <button pButton icon="pi pi-upload"></button> -->
+         </div>
+         <div class="p-toolbar-group-center">
+             <span class="p-input-icon-left">
+                 <i class="pi pi-search"></i>
+                 <input pInputText placeholder="Search" #filterBy (change)="Filter(filterBy.value)"/>
+             </span>
+         </div>
+         <div class="p-toolbar-group-end">
+            <button class="btn btn-outline-primary text-end " (click)="addPlan()"><i class="bi bi-plus me-1"></i>Add Project
+            </button>
+         </div>
+     </p-toolbar>
+   </div>
+   
+   
  <!-- <div class="card">
    <table>
       <thead>
@@ -54,7 +72,7 @@
    <section class="section profile">
       <div class="row">
 
-         <div class="col-lg-6" *ngFor="let plan of Plans" style="cursor: pointer;" >
+         <div class="col-lg-6" *ngFor="let plan of FilterdPlans" style="cursor: pointer;" >
 
             <div class="card">
                <div class="card-header">
@@ -124,10 +142,10 @@
 
                      </div>
                      <div class="col-lg-6 text-end">
-
-                        <button class="btn btn-sm btn-outline-primary" (click)="viewDetail(plan.id)"> View Detail</button> |
-                        <button type="button" (click)="updatePlan(plan)"  class="btn btn-sm btn-outline-warning"><i class="bi bi-pencil"></i> Update</button>|
-                         <button type="button" (click)="deletePlan(plan.id)"  class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i> Delete</button>
+                        <button class="btn btn-sm btn-outline-info mt-1" (click)="viewDashboard(plan.id)"><i class="bi bi-bar-chart-line"></i> Dashboard</button> |
+                        <button class="btn btn-sm btn-outline-primary mt-1" (click)="viewDetail(plan.id)"> View Detail</button> |
+                        <button type="button" (click)="updatePlan(plan)"  class="btn btn-sm btn-outline-warning mt-1"><i class="bi bi-pencil"></i> Update</button> |
+                        <button type="button" (click)="deletePlan(plan.id)"  class="btn btn-sm btn-outline-danger mt-1"><i class="bi bi-trash"></i> Delete</button>
                      </div>
 
                   </div>

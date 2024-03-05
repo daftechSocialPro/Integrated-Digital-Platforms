@@ -1,0 +1,52 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+       <h1>Plan</h1>
+       <nav>
+          <ol class="breadcrumb">
+             <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+             <li class="breadcrumb-item active">Dashboard</li>
+          </ol>
+       </nav>
+    </div>
+    <section class="section dashboard">
+       
+    
+        <div class="row gap-4">
+            
+            <div class="card col-md-5 ">
+                <div class="col-4 text-start mb-5" >
+                    <label class="form-label">Select Quarter</label>
+                    <select class="form-control " [(ngModel)]="Quarter" (change)="onQuarterChange($event.target)">
+                        <option value=0>All Quarters</option>
+                        <option value=1>First Quarter</option>
+                        <option value=2>Second Quarter</option>
+                        <option value=3>Third Quarter</option>
+                        <option value=4>Fourth Quarter</option>
+                    </select>
+                </div>
+
+                <div echarts [options]="pieChartOption"></div>
+            </div>
+            
+
+            <div class="card col-md-6">
+                <h6>{{barChartData.planName}} - Budget Utilization Rate</h6>
+                <div echarts [options]="bar2ChartOption"></div>
+            </div>
+
+
+            <div class="card col-md-12">
+                
+                
+                <h6>{{barChartData.planName}} - Accomplitioment Rate</h6>
+                <div echarts [options]="barChartOption"></div>
+                
+                    
+                
+            </div>
+
+        </div>
+          
+       
+    </section>
+ </main>

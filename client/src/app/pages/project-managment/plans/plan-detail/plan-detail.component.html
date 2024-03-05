@@ -169,14 +169,14 @@
                         <ng-container *ngIf="dataLoaded">
                             <ng-template ngFor let-act [ngForOf]="taskActivities.get(task.id)" let-index2="index">
                                 <tbody>
-                                    <tr>
+                                    <tr style='{{act.isCancelled ? "background-color: #dc354573;":""}}' >
                                         <td style="border: 1px solid black;">
                                             {{index1 + 1}}.{{index2 + 1}}
                                             <button class="btn btn-outline-primary btn-sm"
                                                 *ngIf="(act.monthPerformance!.length===0)" (click)="AssignTarget(act)"> <i
                                                     class="bi bi-plus me-1"></i> Target </button>
                                         </td>
-                                        <td style="border: 1px solid black;cursor:pointer " (click)="viewDetail(act)">
+                                        <td style="border: 1px solid black;cursor:pointer "   (click)="viewDetail(act)">
     
     
     

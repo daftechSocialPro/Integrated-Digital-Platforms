@@ -4355,6 +4355,9 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<float>("Weight")
                         .HasColumnType("real");
 
+                    b.Property<bool>("isCancelled")
+                        .HasColumnType("bit");
+
                     b.Property<int?>("targetDivision")
                         .HasColumnType("int");
 

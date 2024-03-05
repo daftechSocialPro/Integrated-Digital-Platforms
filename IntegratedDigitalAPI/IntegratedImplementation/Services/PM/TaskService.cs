@@ -163,7 +163,8 @@ namespace IntegratedDigitalAPI.Services.PM
                                           
                                             ProjectSourceId = e.ProjectSourceFundId,
 
-                                            ActivityLocations = e.ActivityLocations.ToList()
+                                            ActivityLocations = e.ActivityLocations.ToList(),
+                                            IsCancelled = e.isCancelled
 
                                         }
                                   ).ToList();
