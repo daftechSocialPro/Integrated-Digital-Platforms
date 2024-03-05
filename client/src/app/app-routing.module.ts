@@ -130,7 +130,8 @@ const routes: Routes = [
 {path:'forgetPassword',component:ForgetPasswordComponent},
 
 { path: 'printout', loadChildren: () => import('./pages/print-out/print-out.module').then(m => m.PrintOutModule) },
-{ path: 'inventory', loadChildren: () => import('./pages/inventory/inventory.module').then(m => m.InventoryModule) }
+{ path: 'inventory', loadChildren: () => import('./pages/inventory/inventory.module').then(m => m.InventoryModule) },
+{ path: 'finance', loadChildren: () => import('./pages/finance/finance.module').then(m => m.FinanceModule) }
 ];
 
 @NgModule({
