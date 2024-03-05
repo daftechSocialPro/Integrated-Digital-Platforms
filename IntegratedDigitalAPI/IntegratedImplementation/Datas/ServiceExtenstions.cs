@@ -110,7 +110,9 @@ namespace IntegratedImplementation.Datas
 
             #region finance
             services.AddScoped<IAccountTypeService, AccountTypeService>();            
-            services.AddScoped<IFinanceLookupService, FinanceLookupService>();            
+            services.AddScoped<IFinanceLookupService, FinanceLookupService>();       
+            services.AddScoped<IChartOfAccountService, ChartOfAccountService>();       
+            services.AddScoped<IAccountingPeriodService, AccountingPeriodService>();       
             #endregion
 
 

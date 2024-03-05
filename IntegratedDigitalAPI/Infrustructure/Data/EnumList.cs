@@ -351,5 +351,19 @@ namespace IntegratedInfrustructure.Data
             MEDIUM_TERM_LIABILITY,
             OTHER_ASSET
         }
+
+        public enum ACCOUNTINGPERIODTYPE
+        {
+            TWELVE,
+            TWENTYFOUR,
+            THIRTYSIX,
+            FORTYEIGHT
+        }
+
+        public enum CALANDERTYPE
+        {
+            ETHIOPIAN,
+            GREGORIAN
+        }
     }
 }
