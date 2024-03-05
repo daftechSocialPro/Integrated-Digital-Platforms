@@ -33,15 +33,12 @@ namespace IntegratedImplementation.Services.Finance.Configuration
         public async Task<ResponseMessage> AddAccountType(AccountTypePostDto accountTypePost)
         {
 
-
-
             AccountType accountType = new AccountType
             {
                 Id = Guid.NewGuid(),
                 Type = accountTypePost.Type,
                 Category = Enum.Parse<ACCOUNTTYPECATEGORY>(accountTypePost.Category),
                 SubCategory = Enum.Parse<ACCOUNTTYPESUBCATEGORY>(accountTypePost.SubCategory),
-                Temporary = accountTypePost.Temporary,
                 Normal_Balance = Enum.Parse<NORMALBALANCE>(accountTypePost.Normal_Balance),
                 Remark = accountTypePost.Remark,
                 CreatedById = accountTypePost.CreatedById,
@@ -77,9 +74,7 @@ namespace IntegratedImplementation.Services.Finance.Configuration
                 currentAccountType.Type = accountType.Type;
                 currentAccountType.Category = Enum.Parse<ACCOUNTTYPECATEGORY>(accountType.Category);
                 currentAccountType.SubCategory = Enum.Parse<ACCOUNTTYPESUBCATEGORY>(accountType.SubCategory);
-                currentAccountType.Temporary = accountType.Temporary;
                 currentAccountType.Normal_Balance = Enum.Parse<NORMALBALANCE>(accountType.Normal_Balance);
-                currentAccountType.Temporary = accountType.Temporary;
                 currentAccountType.Remark = accountType.Remark;
                 await _dbContext.SaveChangesAsync();
 

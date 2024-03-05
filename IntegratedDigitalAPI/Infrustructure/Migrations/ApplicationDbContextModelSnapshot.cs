@@ -551,10 +551,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<int>("SubCategory")
                         .HasColumnType("int");
 
-                    b.Property<string>("Temporary")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -566,15 +562,90 @@ namespace IntegratedInfrustructure.Migrations
                     b.ToTable("AccountTypes");
                 });
 
+            modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Configuration.AccountingPeriod", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("AccountingPeriodType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CalanderType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.ToTable("AccountingPeriods");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Configuration.ChartOfAccount", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AccountNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("AccountTypeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("OnlyControlAccount")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountTypeId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.ToTable("ChartOfAccounts");
+                });
+
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Configuration.FinanceLookup", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Category")
+                        .HasColumnType("int");
 
                     b.Property<string>("CreatedById")
                         .HasColumnType("nvarchar(450)");
@@ -608,6 +679,80 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasIndex("CreatedById");
 
                     b.ToTable("FinanceLookups");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Configuration.PeriodDetails", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AccountingPeriodId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("PeriodEnd")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PeriodNo")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("PeriodStart")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountingPeriodId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.ToTable("PeriodDetails");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Configuration.SubsidiaryAccount", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AccountNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ChartOfAccountId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Sequence")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChartOfAccountId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.ToTable("SubsidiaryAccounts");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.AttendanceLogFile", b =>
@@ -5075,11 +5220,71 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("CreatedBy");
                 });
 
+            modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Configuration.AccountingPeriod", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.Navigation("CreatedBy");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Configuration.ChartOfAccount", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.FInance.Configuration.AccountType", "AccountType")
+                        .WithMany()
+                        .HasForeignKey("AccountTypeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.Navigation("AccountType");
+
+                    b.Navigation("CreatedBy");
+                });
+
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Configuration.FinanceLookup", b =>
                 {
                     b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedById");
+
+                    b.Navigation("CreatedBy");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Configuration.PeriodDetails", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.FInance.Configuration.AccountingPeriod", "AccountingPeriod")
+                        .WithMany("PeriodDetail")
+                        .HasForeignKey("AccountingPeriodId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.Navigation("AccountingPeriod");
+
+                    b.Navigation("CreatedBy");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Configuration.SubsidiaryAccount", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.FInance.Configuration.ChartOfAccount", "ChartOfAccount")
+                        .WithMany("SubsidaryAccounts")
+                        .HasForeignKey("ChartOfAccountId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.Navigation("ChartOfAccount");
 
                     b.Navigation("CreatedBy");
                 });
@@ -6978,6 +7183,16 @@ namespace IntegratedInfrustructure.Migrations
             modelBuilder.Entity("IntegratedInfrustructure.Model.Configuration.ProjectFundSource", b =>
                 {
                     b.Navigation("ProjectFunds");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Configuration.AccountingPeriod", b =>
+                {
+                    b.Navigation("PeriodDetail");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Configuration.ChartOfAccount", b =>
+                {
+                    b.Navigation("SubsidaryAccounts");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeList", b =>

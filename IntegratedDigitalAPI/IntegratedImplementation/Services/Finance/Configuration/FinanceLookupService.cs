@@ -30,16 +30,14 @@ namespace IntegratedImplementation.Services.Finance.Configuration
 
         public async Task<ResponseMessage> AddFinanceLookup(FinanceLookupPostDto FinanceLookupPost)
         {
-
-
-
             FinanceLookup FinanceLookup = new FinanceLookup
             {
                 Id = Guid.NewGuid(),
-                Category = FinanceLookupPost.Category,
+                Category = Enum.Parse <LOOKUPCATEGORY>(FinanceLookupPost.Category),
                 LookupType = Enum.Parse<LOOKOUPTYPE>(FinanceLookupPost.LookupType),
                 LookupValue = FinanceLookupPost.LookupValue,
                 IsDefault = FinanceLookupPost.IsDefault,
+                Description = FinanceLookupPost.Description,
                 Remark = FinanceLookupPost.Remark,
                 CreatedById = FinanceLookupPost.CreatedById,
                 Rowstatus = RowStatus.ACTIVE

@@ -12,11 +12,9 @@ namespace IntegratedImplementation.DTOS.Finance.Configuration
     {
         public string Type { get; set; } = null!;
         public string Normal_Balance { get; set; } = null!;
-        public string Temporary { get; set; } = null!;
         public string Category { get; set; } = null!;
         public string SubCategory { get; set; } = null!;
         public string Remark { get; set; } = null!;
-
         public string CreatedById { get; set; } = null!;    
 
 

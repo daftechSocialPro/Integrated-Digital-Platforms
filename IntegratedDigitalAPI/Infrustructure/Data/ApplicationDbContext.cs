@@ -175,8 +175,11 @@ namespace IntegratedInfrustructure.Data
         #region Finacne
 
         public DbSet<AccountType> AccountTypes { get; set; }
-
         public DbSet<FinanceLookup> FinanceLookups { get; set; }
+        public DbSet<ChartOfAccount> ChartOfAccounts { get; set; }
+        public DbSet<SubsidiaryAccount> SubsidiaryAccounts { get; set; }
+        public DbSet<AccountingPeriod> AccountingPeriods { get; set; }
+        public DbSet<PeriodDetails> PeriodDetails { get; set; }
 
         #endregion
 

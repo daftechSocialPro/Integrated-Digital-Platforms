@@ -302,10 +302,16 @@ namespace IntegratedInfrustructure.Data
             RETURNED
         }
 
+        public enum LOOKUPCATEGORY
+        {
+            ACCOUNTING,
+            GLOBALSYSTEMLIBRARY,
+            VOUCHER
+        }
+
         public enum LOOKOUPTYPE
         {
             ARTICLE,
-            BANK,
             BUSSINESS_TYPE,
             COASTING,
             CUSTOMER_STATUS,
@@ -318,6 +324,46 @@ namespace IntegratedInfrustructure.Data
         {
             CREDIT,
             DEBT
+        }
+
+        public enum ACCOUNTTYPECATEGORY
+        {
+            OTHER,
+            ASSET,
+            CAPITAL,
+            EQUITY,
+            LIABILITY
+        }
+
+        public enum ACCOUNTTYPESUBCATEGORY
+        {
+            ASSET,
+            CAPITAL,
+            COST_OF_SALES,
+            CURRENT_ASSET,
+            CURRENT_LIABILITY,
+            EQUITY,
+            EXPENSES,
+            FIXED_ASSET,
+            INCOME,
+            LIABILITY,
+            LONG_TERM_LIABILITY,
+            MEDIUM_TERM_LIABILITY,
+            OTHER_ASSET
+        }
+
+        public enum ACCOUNTINGPERIODTYPE
+        {
+            TWELVE,
+            TWENTYFOUR,
+            THIRTYSIX,
+            FORTYEIGHT
+        }
+
+        public enum CALANDERTYPE
+        {
+            ETHIOPIAN,
+            GREGORIAN
         }
     }
 }
