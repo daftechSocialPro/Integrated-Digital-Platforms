@@ -595,7 +595,7 @@ import { NgxEchartsModule } from 'ngx-echarts';
     UpdateActivitiesComponent,
     AssignReplacementComponent,
 
-    PlanVsAchivmentProjectComponent
+    PlanVsAchivmentProjectComponent,
 
     PlanDashboardComponent
 
