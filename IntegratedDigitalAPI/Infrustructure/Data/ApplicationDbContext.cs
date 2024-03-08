@@ -20,6 +20,7 @@ using IntegratedInfrustructure.Model.Training;
 using IntegratedInfrustructure.Models.Inventory;
 using IntegratedInfrustructure.Model.Inventory;
 using IntegratedInfrustructure.Model.FInance.Configuration;
+using IntegratedInfrustructure.Model.FInance.Actions;
 
 namespace IntegratedInfrustructure.Data
 {
@@ -180,6 +181,14 @@ namespace IntegratedInfrustructure.Data
         public DbSet<SubsidiaryAccount> SubsidiaryAccounts { get; set; }
         public DbSet<AccountingPeriod> AccountingPeriods { get; set; }
         public DbSet<PeriodDetails> PeriodDetails { get; set; }
+        public DbSet<Payment> Payments { get; set; }
+        public DbSet<PaymentDetail> PaymentDetails { get; set; }
+        public DbSet<GeneralPayrollSetting> GeneralPayrollSettings { get; set; }
+        public DbSet<IncomeTaxSetting> IncomeTaxSettings { get; set; }
+        public DbSet<PayrollData> PayrollDatas { get; set; }
+        public DbSet<EmployeePayroll> EmployeePayrolls { get; set; }
+
+        public DbSet<BenefitPayroll> BenefitPayrolls { get; set; }
 
         #endregion
 

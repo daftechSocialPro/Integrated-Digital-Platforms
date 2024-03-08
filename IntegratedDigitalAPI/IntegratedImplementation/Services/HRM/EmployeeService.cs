@@ -90,7 +90,7 @@ namespace IntegratedImplementation.Services.HRM
                     Gender = Enum.Parse<Gender>(addEmployee.Gender),
                     IsPension = addEmployee.IsPension,
                     MaritalStatus = Enum.Parse<MaritalStatus>(addEmployee.MaritalStatus),
-                    PaymentType = Enum.Parse<PaymentType>(addEmployee.PaymentType),
+                    PaymentType = Enum.Parse<EmployeePaymentType>(addEmployee.PaymentType),
                     EmploymentDate = addEmployee.EmploymentDate,
                     ImagePath = path,
                     PhoneNumber = addEmployee.PhoneNumber,
@@ -252,7 +252,7 @@ namespace IntegratedImplementation.Services.HRM
 
                     if (addEmployee.PaymentType != null)
                     {
-                        employee.PaymentType = Enum.Parse<PaymentType>(addEmployee.PaymentType);
+                        employee.PaymentType = Enum.Parse<EmployeePaymentType>(addEmployee.PaymentType);
                     }
 
                     if (path != "")
@@ -528,7 +528,7 @@ namespace IntegratedImplementation.Services.HRM
                     Gender = Enum.Parse<Gender>(addEmployee.Gender),
 
                     MaritalStatus = Enum.Parse<MaritalStatus>(addEmployee.MaritalStatus),
-                    PaymentType = Enum.Parse<PaymentType>(addEmployee.PaymentType),
+                    PaymentType = Enum.Parse<EmployeePaymentType>(addEmployee.PaymentType),
                     BankAccountNo = addEmployee.BankAccountNo,
                     EmploymentDate = addEmployee.EmploymentDate,
                     ImagePath = path,
@@ -601,7 +601,7 @@ namespace IntegratedImplementation.Services.HRM
 
                     if (addEmployee.PaymentType != null)
                     {
-                        employee.PaymentType = Enum.Parse<PaymentType>(addEmployee.PaymentType);
+                        employee.PaymentType = Enum.Parse<EmployeePaymentType>(addEmployee.PaymentType);
                     }
 
                     if (path != "")

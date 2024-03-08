@@ -35,7 +35,7 @@ namespace IntegratedInfrustructure.Model.HRM
         public MaritalStatus MaritalStatus { get; set; }
         public string? ImagePath { get; set; } = null!;
         public EmploymentType EmploymentType { get; set; }
-        public PaymentType PaymentType { get; set; }
+        public EmployeePaymentType PaymentType { get; set; }
         public DateTime EmploymentDate { get; set; }
         public DateTime? ContractEndDate { get; set; }
         public DateTime? TerminatedDate { get; set; }
@@ -46,6 +46,7 @@ namespace IntegratedInfrustructure.Model.HRM
         public bool ExistingEmployee { get; set; }
         public bool IdGenerated { get; set; }
         public bool IsApproved { get; set; }
+        public bool IsProvident { get; set; }
 
         [InverseProperty(nameof(EmploymentDetail.Employee))]
         public ICollection<EmploymentDetail> EmployeeDetail { get; set; }
