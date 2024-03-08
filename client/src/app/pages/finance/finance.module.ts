@@ -21,6 +21,8 @@ import { TabViewModule } from 'primeng/tabview';
 import { ToastModule } from 'primeng/toast';
 import { FinanceLookupComponent } from './finance-configuration/finance-lookup/finance-lookup.component';
 import { AddFinanceLookupComponent } from './finance-configuration/finance-lookup/add-finance-lookup/add-finance-lookup.component';
+import { AccountingPeriodComponent } from './finance-configuration/accounting-period/accounting-period.component';
+import { AddAccountingPeriodComponent } from './finance-configuration/accounting-period/add-accounting-period/add-accounting-period.component';
 
 
 @NgModule({
@@ -29,7 +31,9 @@ import { AddFinanceLookupComponent } from './finance-configuration/finance-looku
     AddAccountTypeComponent,
     AccountTypeComponent,
     FinanceLookupComponent,
-    AddFinanceLookupComponent
+    AddFinanceLookupComponent,
+    AccountingPeriodComponent,
+    AddAccountingPeriodComponent
   ],
   imports: [
     CommonModule,

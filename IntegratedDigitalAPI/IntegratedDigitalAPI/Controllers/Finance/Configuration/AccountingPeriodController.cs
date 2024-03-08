@@ -20,7 +20,7 @@ namespace IntegratedDigitalAPI.Controllers.Finance.Configuration
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(AccountTypeGetDto), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(AccountingPeriodDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAccountingPeriod()
         {
             return Ok(await _accountingPeriod.GetAccountingPeriod());

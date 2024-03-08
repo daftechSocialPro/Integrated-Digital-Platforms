@@ -94,7 +94,7 @@ namespace IntegratedImplementation.Services.Finance.Configuration
                 DateTime endDate = details.PeriodStart;
                 int lastDayDetail = DateTime.DaysInMonth(endDate.Year, endDate.Month);
 
-                period.EndDate = new DateTime(endDate.Year, endDate.Month, lastDayDetail);
+                details.PeriodEnd = new DateTime(endDate.Year, endDate.Month, lastDayDetail);
 
                 await _dbContext.PeriodDetails.AddAsync(details);
                 await _dbContext.SaveChangesAsync();
@@ -114,7 +114,7 @@ namespace IntegratedImplementation.Services.Finance.Configuration
                 Description = x.Description,
                 EndDate = x.EndDate,
                 StartDate = x.StartDate,
-                PeriodDetails = x.PeriodDetail.Select(x => new PeriodDetailDto
+                PeriodDetails = x.PeriodDetail.OrderBy(x => x.PeriodNo).Select(x => new PeriodDetailDto
                 {
                     PeriodNo = x.PeriodNo,
                     PeriodStart = x.PeriodStart,

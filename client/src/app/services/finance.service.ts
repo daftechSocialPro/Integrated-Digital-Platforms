@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { AccountTypePostDto } from '../model/Finance/IAccountTypeDto';
 import { ResponseMessage } from '../model/ResponseMessage.Model';
 import { FinanceLookupPostDto } from '../model/Finance/IFinanceLookupTypeDto';
+import { AccountingPeriodGetDto, AccountingPeriodPostDto } from '../model/Finance/IAccountingPeriodDto';
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +38,13 @@ export class FinanceService {
 
   getFinanceLookups() {
     return this.http.get<FinanceLookupPostDto[]>(this.BaseURI + "/FinanceLookup/GetFinanceLookups")
+  }
+
+  getAccountingPeriod(){
+    return this.http.get<AccountingPeriodGetDto[]>(this.BaseURI + "/AccountingPeriod/GetAccountingPeriod")
+  }
+  addAccountingPeriod(addAccountingPeriod: AccountingPeriodPostDto){
+    return this.http.post<ResponseMessage>(this.BaseURI + "/AccountingPeriod/AddAccountingPeriod", addAccountingPeriod )
   }
   
 }

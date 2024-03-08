@@ -21,6 +21,9 @@
                     <li class="nav-item" role="presentation"> <button class="nav-link" id="lookup-tab" data-bs-toggle="tab"
                             data-bs-target="#lookup" type="button" role="tab" aria-controls="lookup"
                             aria-selected="false">Look Up</button></li>
+                    <li class="nav-item" role="presentation"> <button class="nav-link" id="period-tab" data-bs-toggle="tab"
+                        data-bs-target="#period" type="button" role="tab" aria-controls="period"
+                        aria-selected="false">Period</button></li>
                     
                 </ul>
                 <div class="tab-content pt-2" id="myTabContent">
@@ -29,6 +32,9 @@
                     </div>
                     <div class="tab-pane fade  p-2" id="lookup" role="tabpanel" aria-labelledby="lookup-tab">
                         <app-finance-lookup/>
+                    </div>
+                    <div class="tab-pane fade  p-2" id="period" role="tabpanel" aria-labelledby="period-tab">
+                        <app-accounting-period/>
                     </div>
                 </div>
             </div>
