@@ -13,7 +13,7 @@ namespace IntegratedInfrustructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20240305132737_AccountingPeriod")]
-    partial class AccountingPeriod
+    partial class AccountingPeriodMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

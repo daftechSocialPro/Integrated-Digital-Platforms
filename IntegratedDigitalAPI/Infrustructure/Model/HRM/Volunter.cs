@@ -25,7 +25,7 @@ namespace IntegratedInfrustructure.Model.HRM
         public DateTime BirthDate { get; set; }
         public MaritalStatus MaritalStatus { get; set; }
         public string? ImagePath { get; set; } = null!;
-        public PaymentType PaymentType { get; set; }
+        public EmployeePaymentType PaymentType { get; set; }
         public DateTime EmploymentDate { get; set; }
         public DateTime? ContractEndDate { get; set; }
         public DateTime? TerminatedDate { get; set; }

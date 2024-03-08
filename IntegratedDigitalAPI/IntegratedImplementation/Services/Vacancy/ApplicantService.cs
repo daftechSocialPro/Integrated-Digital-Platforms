@@ -467,7 +467,7 @@ namespace IntegratedImplementation.Services.Vacancy
                         BirthDate = currentApplication.Applicant.BirthDate,
                         Gender = currentApplication.Applicant.Gender,
                         MaritalStatus = MaritalStatus.SINGLE,
-                        PaymentType = PaymentType.PERMONTH,
+                        PaymentType = EmployeePaymentType.PERMONTH,
                         EmploymentDate = Convert.ToDateTime(applicantProcess.HireDate),
                         ImagePath = currentApplication.Applicant.Photo,
                         PhoneNumber = currentApplication.Applicant.PhoneNumber,
