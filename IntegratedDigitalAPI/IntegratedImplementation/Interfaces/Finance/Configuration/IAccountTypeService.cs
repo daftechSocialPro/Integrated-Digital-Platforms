@@ -1,4 +1,5 @@
 ﻿using Implementation.Helper;
+using IntegratedImplementation.DTOS.Configuration;
 using IntegratedImplementation.DTOS.Finance.Configuration;
 using IntegratedImplementation.DTOS.PM;
 using System;
@@ -15,5 +16,6 @@ namespace IntegratedImplementation.Interfaces.Finance.Configuration
         Task<ResponseMessage> AddAccountType( AccountTypePostDto accountTypePost);
         Task<List<AccountTypeGetDto>> GetAccountTypes();
         Task<ResponseMessage> UpdateAccountType(AccountTypeGetDto BudgetYearPost);
+        Task<List<SelectListDto>> GetAccountTypeSelectList();
     }
 }

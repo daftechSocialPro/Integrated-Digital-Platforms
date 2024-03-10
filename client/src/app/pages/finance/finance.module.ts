@@ -23,6 +23,14 @@ import { FinanceLookupComponent } from './finance-configuration/finance-lookup/f
 import { AddFinanceLookupComponent } from './finance-configuration/finance-lookup/add-finance-lookup/add-finance-lookup.component';
 import { AccountingPeriodComponent } from './finance-configuration/accounting-period/accounting-period.component';
 import { AddAccountingPeriodComponent } from './finance-configuration/accounting-period/add-accounting-period/add-accounting-period.component';
+import { ChartOfAccountsComponent } from './chart-of-accounts/chart-of-accounts.component';
+import { AddChartOfAccountsComponent } from './chart-of-accounts/add-chart-of-accounts/add-chart-of-accounts.component';
+import { AddSubsidiaryAccountComponent } from './chart-of-accounts/add-subsidiary-account/add-subsidiary-account.component';
+import { CheckboxModule } from 'primeng/checkbox';
+import { PayrollSettingComponent } from './finance-configuration/payroll-setting/payroll-setting.component';
+import { GeneralSettingsComponent } from './finance-configuration/payroll-setting/general-settings/general-settings.component';
+import { IncomeTaxComponent } from './finance-configuration/payroll-setting/income-tax/income-tax.component';
+import { BenefitPayrollComponent } from './finance-configuration/payroll-setting/benefit-payroll/benefit-payroll.component';
 
 
 @NgModule({
@@ -33,7 +41,14 @@ import { AddAccountingPeriodComponent } from './finance-configuration/accounting
     FinanceLookupComponent,
     AddFinanceLookupComponent,
     AccountingPeriodComponent,
-    AddAccountingPeriodComponent
+    AddAccountingPeriodComponent,
+    ChartOfAccountsComponent,
+    AddChartOfAccountsComponent,
+    AddSubsidiaryAccountComponent,
+    PayrollSettingComponent,
+    GeneralSettingsComponent,
+    IncomeTaxComponent,
+    BenefitPayrollComponent
   ],
   imports: [
     CommonModule,
@@ -54,7 +69,8 @@ import { AddAccountingPeriodComponent } from './finance-configuration/accounting
     DialogModule,
     CalendarModule,
     ConfirmPopupModule,
-    TabViewModule
+    TabViewModule,
+    CheckboxModule
   ]
 })
 export class FinanceModule { }
