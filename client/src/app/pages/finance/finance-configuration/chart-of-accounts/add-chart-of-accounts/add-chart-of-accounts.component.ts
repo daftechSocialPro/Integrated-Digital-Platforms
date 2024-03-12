@@ -52,7 +52,7 @@ export class AddChartOfAccountsComponent implements OnInit {
     this.financeService.getAccountTypesSelectList().subscribe({
       next : (res) =>{
         this.accountTypeSelectList = res
-        const accountType = this.accountTypeSelectList.find(x => x.name == this.chartOfAccounts.accountType)
+        const accountType = this.accountTypeSelectList.find(x => x.name == this.chartOfAccounts.accountType).id
         this.chartOfAccountsForm.controls['accountTypeId'].setValue(accountType)
       }
     })
@@ -62,11 +62,11 @@ export class AddChartOfAccountsComponent implements OnInit {
   submit() {
 
     if (this.chartOfAccountsForm.valid) {
-
+      
       if (this.chartOfAccounts) {
         var chartOfAccountPost: ChartOfAccountsPostDto = {
           id: this.chartOfAccounts.id,
-          accountTypeId: this.chartOfAccountsForm.value.accountTypeId.id,
+          accountTypeId: this.chartOfAccountsForm.value.accountTypeId,
           accountNo: this.chartOfAccountsForm.value.accountNo,
           description: this.chartOfAccountsForm.value.description,
           onlyControlAccount: this.chartOfAccountsForm.value.onlyControlAccount,

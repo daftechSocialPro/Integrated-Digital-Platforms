@@ -20,7 +20,8 @@ namespace IntegratedImplementation.DTOS.Finance.Configuration
         public string CreatedById { get; set; } = null!;
         public List<string> BenefitId { get; set; } = null!;
         public bool Taxable { get; set; }
-        public PayrollReportType PayrollReportType { get; set; }
+        //public PayrollReportType PayrollReportType { get; set; }
+        public string PayrollReportType { get; set; }
     }
 
 

@@ -8,6 +8,7 @@ import { FinanceLookupPostDto } from '../model/Finance/IFinanceLookupTypeDto';
 import { AccountingPeriodGetDto, AccountingPeriodPostDto } from '../model/Finance/IAccountingPeriodDto';
 import { ChartOfAccountsGetDto, ChartOfAccountsPostDto, SubsidiaryAccountsPostDto } from '../model/Finance/IChartOfAccountsDto';
 import { SelectList } from '../model/common';
+import { BenefitPayrollGetDto, BenefitPayrollPostDto, GeneralSettingGetDto, GeneralSettingPostDto, IncomeTaxDto } from '../model/Finance/IPayrollSettingDto';
 
 @Injectable({
   providedIn: 'root'
@@ -79,4 +80,32 @@ export class FinanceService {
     return this.http.put<ResponseMessage>(this.BaseURI + "/ChartOfAccount/ChangeSubsidiaryAccountStatus?subsidiaryId="+subsidiaryId,{})
   }
 
+  //Payroll Settings
+    //general Settings
+    getGeneralPayrollSettings(){
+      return this.http.get<GeneralSettingGetDto[]>(this.BaseURI + "/PayrollSetting/GetGeneralPayrollSettings")
+    }
+
+    addGeneralPayrollSetting(generalSetting: GeneralSettingPostDto){
+      return this.http.post<ResponseMessage>(this.BaseURI + "/PayrollSetting/SaveGeneralPayrollSetting",generalSetting)
+    }
+
+    //Income Tax
+    getIncomeTax(){
+      return this.http.get<IncomeTaxDto[]>(this.BaseURI + "/PayrollSetting/GetIncomeTax")
+    }
+    addIncomeTax(incomeTax: IncomeTaxDto){
+      return this.http.post<ResponseMessage>( this.BaseURI + "/PayrollSetting/AddIncomeTax",incomeTax)
+    }
+    updateIncomeTax(incomeTax: IncomeTaxDto){
+      return this.http.put<ResponseMessage>( this.BaseURI + "/PayrollSetting/UpdateIncomeTax",incomeTax)
+    }
+
+    //Benefit Payroll
+    getBenefitPayrolls(){
+      return this.http.get<BenefitPayrollGetDto[]>( this.BaseURI + "/PayrollSetting/GetBenefitPayrolls")
+    }
+    addBenefitPayroll(benefitPayroll: BenefitPayrollPostDto){
+      return this.http.post<ResponseMessage>( this.BaseURI + "/PayrollSetting/AddBenefitPayroll",benefitPayroll)
+    }
 }

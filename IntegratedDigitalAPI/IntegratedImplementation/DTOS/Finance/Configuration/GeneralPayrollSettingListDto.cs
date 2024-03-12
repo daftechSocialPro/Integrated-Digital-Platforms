@@ -18,7 +18,8 @@ namespace IntegratedImplementation.DTOS.Finance.Configuration
     public class GeneralPayrollSettingDto
     {
         public string CreatedById { get; set; } = null!;
-        public GeneralPSett GeneralPSetting { get; set; }
+        //public GeneralPSett GeneralPSetting { get; set; }
+        public string GeneralPSetting { get; set; }
         public double Value { get; set; }
     }
 }

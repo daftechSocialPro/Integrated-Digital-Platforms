@@ -30,7 +30,6 @@ export class ChartOfAccountsComponent implements OnInit {
     this.financeService.getChatOfAccounts().subscribe({
       next: (res) => {
         this.chartOfAccounts = res
-        console.log("this.chartOfAccounts",this.chartOfAccounts)
       }
     })
   }
