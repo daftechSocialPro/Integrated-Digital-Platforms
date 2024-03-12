@@ -485,6 +485,10 @@ export class HrmService {
         return this.http.post<ResponseMessage>(this.baseUrl + "/LoanManagement/ApproveInitialRequest", initialRequest)
     }
 
+    approveSecondRequest(initialRequest: ApproveInitialRequestDto) {
+        return this.http.post<ResponseMessage>(this.baseUrl + "/LoanManagement/ApproveSecondRequest", initialRequest)
+    }
+
     getEmployeeLoans() {
         return this.http.get<EmployeeLoanDto[]>(this.baseUrl + `/LoanManagement/GetEmployeeLoans`)
     }

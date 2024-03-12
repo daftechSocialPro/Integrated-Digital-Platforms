@@ -29,7 +29,7 @@ namespace IntegratedDigitalAPI.Controllers.Finance.Action
 
 
         [HttpPost]
-        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+
         public async Task<IActionResult> AddAccountingPeriod(AddPaymentDto addPayment)
         {
             if (ModelState.IsValid)

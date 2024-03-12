@@ -61,7 +61,7 @@ export class RequestLoanComponent  implements OnInit {
         employeeId: this.employeeId,
         loanSettingId: this.loanRequestForm.value.loanSettingId,
         deductionRequest: this.loanRequestForm.value.deductionRequest,
-        totalMoneyRequest: this.loanRequestForm.value.deductionRequest,
+        totalMoneyRequest: this.loanRequestForm.value.totalMoneyRequest,
       }
 
       this.hrmService.requestLoan(requestLoan).subscribe({

@@ -13,5 +13,6 @@ namespace IntegratedInfrustructure.Model.HRM
         public Guid EmployeeLoanId { get; set; }
         public EmployeeLoan EmployeeLoan { get; set; } = null!;
         public double PaidMoney { get; set; }
+        public DateTime PaidDate { get; set; }
     }
 }
