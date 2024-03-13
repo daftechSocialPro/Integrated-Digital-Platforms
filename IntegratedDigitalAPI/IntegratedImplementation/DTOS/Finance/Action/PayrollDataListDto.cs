@@ -13,6 +13,7 @@ namespace IntegratedImplementation.DTOS.Finance.Action
         public string PayrollMonth { get; set; } = null!;
         public int CalculatedCount { get; set; }
         public string PreparedBy { get; set; } = null!;
+        public string CheckedBy { get; set; } = null!;
         public string ApprovedBy { get; set; } = null!;
         public double TotalAmount { get; set; }
         public bool IsActive { get; set; }
@@ -32,10 +33,7 @@ namespace IntegratedImplementation.DTOS.Finance.Action
         public bool Recalculate { get; set; }
     }
 
-    public class PayrollReportParam
-    {
-        public DateTime PayrollMonth { get; set; }
-        public string BranchId { get; set; } = null!;
-        public bool WithServiceCharge { get; set; }
-    }
+  
+
+   
 }

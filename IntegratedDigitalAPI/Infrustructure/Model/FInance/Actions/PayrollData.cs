@@ -13,6 +13,8 @@ namespace IntegratedInfrustructure.Model.FInance.Actions
         public DateTime PayStart { get; set; }
         public DateTime PayEnd { get; set; }
         public int CalculatedCount { get; set; }
+        public Guid? CheckedById { get; set; }
+        public virtual EmployeeList CheckedBy { get; set; } = null!;
         public Guid? ApprovedById { get; set; }
         public virtual EmployeeList ApprovedBy { get; set; } = null!;
         public double TotalAmount { get; set; }

@@ -48,7 +48,7 @@ namespace IntegratedImplementation.Services.HRM
                                   RequestedDate = x.CreatedDate,
                                   CurrentStatus = x.LoanStatus.ToString()
                               }).ToListAsync();
-           
+
         }
 
 
@@ -58,14 +58,34 @@ namespace IntegratedImplementation.Services.HRM
             if (loanSetting == null)
                 return new ResponseMessage { Success = false, Message = "Could not find Loan Setting" };
 
+            if (requestLoan.DeductionRequest < loanSetting.MinDeductedPercent || requestLoan.DeductionRequest > loanSetting.MaxDeductedPercent)
+            {
+                return new ResponseMessage { Success = false, Message = "Please correct the  Deduction Percent" };
+            }
+
+            if (requestLoan.TotalMoneyRequest > loanSetting.MaxLoanAmmount)
+            {
+                return new ResponseMessage { Success = false, Message = "Please correct the  Ammount of loan" };
+            }
+
             var currentloan = await _dbContext.EmployeeLoans.Include(x => x.EmployeeSettlements).Where(x => x.LoanRequest.RequesterId == requestLoan.EmployeeId &&
                                                                           x.LoanStatus == LoanStatus.GIVEN).ToListAsync();
 
-            if(loanSetting.MaxLoanAmmount <= currentloan.Sum(x => x.ApprovedAmmount - x.EmployeeSettlements.Sum(y => y.PaidMoney)))
+            if (loanSetting.MaxLoanAmmount <= currentloan.Sum(x => x.ApprovedAmmount - x.EmployeeSettlements.Sum(y => y.PaidMoney)))
             {
                 return new ResponseMessage { Success = false, Message = " You have maxed out the approved loan" };
             }
 
+            var currentEmpSalary = await _dbContext.EmploymentDetails.FirstOrDefaultAsync(x => x.EmployeeId == requestLoan.EmployeeId && x.Rowstatus == RowStatus.ACTIVE);
+            if (currentEmpSalary == null)
+            {
+                return new ResponseMessage { Success = false, Message = "Salary has not been set yet!!" };
+            }
+
+            if (((currentEmpSalary.Salary / requestLoan.DeductionRequest) * 100) * 12 * loanSetting.PaymentYear <= requestLoan.TotalMoneyRequest)
+            {
+                return new ResponseMessage { Success = false, Message = $"You can not pay the ammount based on the payment {loanSetting.PaymentYear} year" };
+            }
 
             LoanRequest rquest = new LoanRequest
             {
@@ -98,7 +118,7 @@ namespace IntegratedImplementation.Services.HRM
                                   LoanType = x.LoanSetting.TypeOfLoan.ToString(),
                                   RequestedAmount = x.TotalMoneyRequest,
                                   RequestedDate = x.CreatedDate,
-                                  
+
                               }).ToListAsync();
         }
 
@@ -106,12 +126,17 @@ namespace IntegratedImplementation.Services.HRM
         {
             var currentRequest = await _dbContext.LoanRequests.Include(x => x.LoanSetting).FirstOrDefaultAsync(x => x.Id == approveinitial.RequestId);
 
-            if(currentRequest == null)
+            if (currentRequest == null)
             {
                 return new ResponseMessage { Success = false, Message = "Could not find Request" };
-
             }
 
+            var currentEmpSalary = await _dbContext.EmploymentDetails.FirstOrDefaultAsync(x => x.EmployeeId == currentRequest.RequesterId && x.Rowstatus == RowStatus.ACTIVE);
+            if (currentEmpSalary == null)
+            {
+                return new ResponseMessage { Success = false, Message = "Set the salary of the employee" };
+            }
+            var paymentAmmount = (currentEmpSalary.Salary / currentRequest.DeductionRequest) * 100;
             //int currentyear 
 
             EmployeeLoan loan = new EmployeeLoan()
@@ -124,11 +149,29 @@ namespace IntegratedImplementation.Services.HRM
                 ApprovedById = approveinitial.ApproverId,
                 LoanStatus = LoanStatus.PENDING,
                 PaymentStartDate = DateTime.Now,
-               // PaymentEndDate = DateTime.Now.AddYears(currentRequest.LoanSetting.PaymentYear),
+                PayAmmount = paymentAmmount,
+                // PaymentEndDate = DateTime.Now.AddYears(currentRequest.LoanSetting.PaymentYear),
                 Rowstatus = RowStatus.ACTIVE
             };
 
             await _dbContext.EmployeeLoans.AddAsync(loan);
+            await _dbContext.SaveChangesAsync();
+
+            return new ResponseMessage { Success = true, Message = "Approved Successfully" };
+        }
+
+
+        public async Task<ResponseMessage> ApproveSecondRequest(ApproveInitialRequestDto approveinitial)
+        {
+            var currentRequest = await _dbContext.EmployeeLoans.FirstOrDefaultAsync(x => x.Id == approveinitial.RequestId);
+
+            if (currentRequest == null)
+            {
+                return new ResponseMessage { Success = false, Message = "Could not find Request" };
+            }
+
+            currentRequest.LoanStatus = LoanStatus.APPROVED;
+            currentRequest.SecondApproverId = approveinitial.ApproverId;
             await _dbContext.SaveChangesAsync();
 
             return new ResponseMessage { Success = true, Message = "Approved Successfully" };

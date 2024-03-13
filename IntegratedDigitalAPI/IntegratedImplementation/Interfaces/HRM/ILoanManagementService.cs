@@ -18,6 +18,7 @@ namespace IntegratedImplementation.Interfaces.HRM
         public Task<List<RequestedLoanListDto>> LoanRequestList();
 
         public Task<ResponseMessage> ApproveInitialRequest(ApproveInitialRequestDto approveinitial);
+        public Task<ResponseMessage> ApproveSecondRequest(ApproveInitialRequestDto approveinitial);
 
         public Task<List<EmployeeLoanDto>> GetEmployeeLoans();
 

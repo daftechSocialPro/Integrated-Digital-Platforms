@@ -49,7 +49,7 @@ namespace IntegratedImplementation.DTOS.HRM
         public string ApproverName { get; set; } = null!;
         public string? SecondApproverName { get; set; } 
         public DateTime PaymentStart { get; set; }
-        public DateTime PaymentEnd { get; set; }
+        public DateTime? PaymentEnd { get; set; }
         public string CurrentStatus { get; set; } = null!;
     }
 }

@@ -70,6 +70,20 @@ namespace IntegratedDigitalAPI.Controllers.HRM
         }
 
 
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> ApproveSecondRequest([FromBody] ApproveInitialRequestDto approveinitial)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _loanManagementService.ApproveSecondRequest(approveinitial));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
         [HttpGet]
         [ProducesResponseType(typeof(EmployeeLoanDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetEmployeeLoans()
