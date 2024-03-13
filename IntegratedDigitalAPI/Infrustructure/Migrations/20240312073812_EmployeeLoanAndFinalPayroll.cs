@@ -6,17 +6,39 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace IntegratedInfrustructure.Migrations
 {
     /// <inheritdoc />
-    public partial class employeeEdit : Migration
+    public partial class EmployeeLoanAndFinalPayroll : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AddColumn<DateTime>(
+                name: "PaidDate",
+                table: "EmployeeSettlements",
+                type: "datetime2",
+                nullable: false,
+                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
+
             migrationBuilder.AddColumn<bool>(
                 name: "IsProvident",
                 table: "Employees",
                 type: "bit",
                 nullable: false,
                 defaultValue: false);
+
+            migrationBuilder.AlterColumn<DateTime>(
+                name: "PaymentEndDate",
+                table: "EmployeeLoans",
+                type: "datetime2",
+                nullable: true,
+                oldClrType: typeof(DateTime),
+                oldType: "datetime2");
+
+            migrationBuilder.AddColumn<double>(
+                name: "PayAmmount",
+                table: "EmployeeLoans",
+                type: "float",
+                nullable: false,
+                defaultValue: 0.0);
 
             migrationBuilder.CreateTable(
                 name: "BenefitPayrolls",
@@ -56,14 +78,16 @@ namespace IntegratedInfrustructure.Migrations
                     BasicSallary = table.Column<double>(type: "float", nullable: false),
                     TransportFuelAllowance = table.Column<double>(type: "float", nullable: false),
                     CommunicationAllowance = table.Column<double>(type: "float", nullable: false),
+                    PositionAllowance = table.Column<double>(type: "float", nullable: false),
                     OverTime = table.Column<double>(type: "float", nullable: false),
-                    GrossSallary = table.Column<double>(type: "float", nullable: false),
-                    Tax = table.Column<double>(type: "float", nullable: false),
-                    EmployerPension = table.Column<double>(type: "float", nullable: false),
+                    TotalEarning = table.Column<double>(type: "float", nullable: false),
+                    TaxableIncome = table.Column<double>(type: "float", nullable: false),
+                    IncomeTax = table.Column<double>(type: "float", nullable: false),
+                    CompanyPension = table.Column<double>(type: "float", nullable: false),
                     EmployeePension = table.Column<double>(type: "float", nullable: false),
                     ProvidentFund = table.Column<double>(type: "float", nullable: false),
                     Loan = table.Column<double>(type: "float", nullable: false),
-                    Penality = table.Column<double>(type: "float", nullable: false),
+                    Penalty = table.Column<double>(type: "float", nullable: false),
                     NetPay = table.Column<double>(type: "float", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedById = table.Column<string>(type: "nvarchar(450)", nullable: true),
@@ -186,6 +210,7 @@ namespace IntegratedInfrustructure.Migrations
                     PayStart = table.Column<DateTime>(type: "datetime2", nullable: false),
                     PayEnd = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CalculatedCount = table.Column<int>(type: "int", nullable: false),
+                    CheckedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ApprovedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     TotalAmount = table.Column<double>(type: "float", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -198,6 +223,11 @@ namespace IntegratedInfrustructure.Migrations
                     table.ForeignKey(
                         name: "FK_PayrollDatas_Employees_ApprovedById",
                         column: x => x.ApprovedById,
+                        principalTable: "Employees",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_PayrollDatas_Employees_CheckedById",
+                        column: x => x.CheckedById,
                         principalTable: "Employees",
                         principalColumn: "Id");
                     table.ForeignKey(
@@ -330,6 +360,11 @@ namespace IntegratedInfrustructure.Migrations
                 column: "ApprovedById");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PayrollDatas_CheckedById",
+                table: "PayrollDatas",
+                column: "CheckedById");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PayrollDatas_CreatedById",
                 table: "PayrollDatas",
                 column: "CreatedById");
@@ -360,8 +395,26 @@ namespace IntegratedInfrustructure.Migrations
                 name: "Payments");
 
             migrationBuilder.DropColumn(
+                name: "PaidDate",
+                table: "EmployeeSettlements");
+
+            migrationBuilder.DropColumn(
                 name: "IsProvident",
                 table: "Employees");
+
+            migrationBuilder.DropColumn(
+                name: "PayAmmount",
+                table: "EmployeeLoans");
+
+            migrationBuilder.AlterColumn<DateTime>(
+                name: "PaymentEndDate",
+                table: "EmployeeLoans",
+                type: "datetime2",
+                nullable: false,
+                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                oldClrType: typeof(DateTime),
+                oldType: "datetime2",
+                oldNullable: true);
         }
     }
 }

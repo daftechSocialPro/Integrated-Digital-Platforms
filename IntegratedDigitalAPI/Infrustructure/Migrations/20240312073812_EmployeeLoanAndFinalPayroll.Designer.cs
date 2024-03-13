@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IntegratedInfrustructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240310071530_employeeEdit")]
-    partial class employeeEdit
+    [Migration("20240312073812_EmployeeLoanAndFinalPayroll")]
+    partial class EmployeeLoanAndFinalPayroll
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -538,6 +538,9 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<double>("CommunicationAllowance")
                         .HasColumnType("float");
 
+                    b.Property<double>("CompanyPension")
+                        .HasColumnType("float");
+
                     b.Property<string>("CreatedById")
                         .HasColumnType("nvarchar(450)");
 
@@ -550,10 +553,7 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<double>("EmployeePension")
                         .HasColumnType("float");
 
-                    b.Property<double>("EmployerPension")
-                        .HasColumnType("float");
-
-                    b.Property<double>("GrossSallary")
+                    b.Property<double>("IncomeTax")
                         .HasColumnType("float");
 
                     b.Property<double>("Loan")
@@ -571,7 +571,10 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<DateTime>("PayStart")
                         .HasColumnType("datetime2");
 
-                    b.Property<double>("Penality")
+                    b.Property<double>("Penalty")
+                        .HasColumnType("float");
+
+                    b.Property<double>("PositionAllowance")
                         .HasColumnType("float");
 
                     b.Property<double>("ProvidentFund")
@@ -580,7 +583,10 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<int>("Rowstatus")
                         .HasColumnType("int");
 
-                    b.Property<double>("Tax")
+                    b.Property<double>("TaxableIncome")
+                        .HasColumnType("float");
+
+                    b.Property<double>("TotalEarning")
                         .HasColumnType("float");
 
                     b.Property<double>("TransportFuelAllowance")
@@ -721,6 +727,9 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<int>("CalculatedCount")
                         .HasColumnType("int");
 
+                    b.Property<Guid?>("CheckedById")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("CreatedById")
                         .HasColumnType("nvarchar(450)");
 
@@ -742,6 +751,8 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ApprovedById");
+
+                    b.HasIndex("CheckedById");
 
                     b.HasIndex("CreatedById");
 
@@ -1824,7 +1835,10 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<int>("LoanStatus")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("PaymentEndDate")
+                    b.Property<double>("PayAmmount")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime?>("PaymentEndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("PaymentStartDate")
@@ -2040,6 +2054,9 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.Property<Guid>("EmployeeLoanId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("PaidDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<double>("PaidMoney")
                         .HasColumnType("float");
@@ -5628,11 +5645,17 @@ namespace IntegratedInfrustructure.Migrations
                         .WithMany()
                         .HasForeignKey("ApprovedById");
 
+                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "CheckedBy")
+                        .WithMany()
+                        .HasForeignKey("CheckedById");
+
                     b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedById");
 
                     b.Navigation("ApprovedBy");
+
+                    b.Navigation("CheckedBy");
 
                     b.Navigation("CreatedBy");
                 });
