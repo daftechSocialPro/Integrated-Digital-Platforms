@@ -41,7 +41,7 @@ namespace IntegratedImplementation.Services.Finance.Configuration
         public async Task<ResponseMessage> SaveGeneralPayrollSetting(GeneralPayrollSettingDto addPayrollSetting)
         {
 
-            var currentSetting = await _dbContext.GeneralPayrollSettings.FirstOrDefaultAsync(x => x.GeneralPSetting == addPayrollSetting.GeneralPSetting);
+            var currentSetting = await _dbContext.GeneralPayrollSettings.FirstOrDefaultAsync(x => x.GeneralPSetting == Enum.Parse<GeneralPSett>(addPayrollSetting.GeneralPSetting));
 
             if (currentSetting == null)
             {
@@ -50,7 +50,7 @@ namespace IntegratedImplementation.Services.Finance.Configuration
                     Id = Guid.NewGuid(),
                     CreatedById = addPayrollSetting.CreatedById,
                     CreatedDate = DateTime.Now,
-                    GeneralPSetting = addPayrollSetting.GeneralPSetting,
+                    GeneralPSetting = Enum.Parse<GeneralPSett>(addPayrollSetting.GeneralPSetting),
                     Rowstatus = RowStatus.ACTIVE,
                     Value = addPayrollSetting.Value,
                 };
@@ -92,7 +92,8 @@ namespace IntegratedImplementation.Services.Finance.Configuration
                                           Deductable = y.Deductable,
                                           StartingAmount = y.StartingAmount,
                                           EndingAmount = y.EndingAmount,
-                                          Percent = y.Percent
+                                          Percent = y.Percent,
+                                          IsActive = y.Rowstatus == RowStatus.ACTIVE ? true : false
                                       }).ToListAsync();
             return incomeTaxList;
         }
@@ -135,17 +136,17 @@ namespace IntegratedImplementation.Services.Finance.Configuration
 
         public async Task<ResponseMessage> UpdateIncomeTax(IncomeTaxDto updateIncomeTax)
         {
-            var incomeTaxExists = await _dbContext.IncomeTaxSettings.
-                                     AnyAsync(x => x.StartingAmount >=
-                                     updateIncomeTax.StartingAmount &&
-                                     x.EndingAmount <= updateIncomeTax.EndingAmount
-                                     && x.Rowstatus == RowStatus.ACTIVE);
-            if (incomeTaxExists)
-                return new ResponseMessage
-                {
-                    Message = "Income Tax Already Exists",
-                    Success = false
-                };
+            //var incomeTaxExists = await _dbContext.IncomeTaxSettings.
+            //                         AnyAsync(x => x.StartingAmount >=
+            //                         updateIncomeTax.StartingAmount &&
+            //                         x.EndingAmount <= updateIncomeTax.EndingAmount
+            //                         && x.Rowstatus == RowStatus.ACTIVE);
+            //if (incomeTaxExists)
+            //    return new ResponseMessage
+            //    {
+            //        Message = "Income Tax Already Exists",
+            //        Success = false
+            //    };
 
 
             var currentTax = await _dbContext.IncomeTaxSettings.FirstOrDefaultAsync(x => x.Id == Guid.Parse(updateIncomeTax.Id));
@@ -153,22 +154,22 @@ namespace IntegratedImplementation.Services.Finance.Configuration
             if (currentTax == null)
                 return new ResponseMessage
                 {
-                    Message = "Added Successfully!!",
+                    Message = "Income Tax Not Found",
                     Success = false
                 };
 
             currentTax.EndDate = updateIncomeTax.EndDate;
-            currentTax.CreatedById = updateIncomeTax.CreatedById;
+            //currentTax.CreatedById = updateIncomeTax.CreatedById;
             currentTax.Deductable = updateIncomeTax.Deductable;
             currentTax.EndingAmount = updateIncomeTax.EndingAmount;
             currentTax.Percent = updateIncomeTax.Percent;
             currentTax.StartingAmount = updateIncomeTax.StartingAmount;
-            currentTax.Rowstatus = updateIncomeTax.Rowstatus;
+            currentTax.Rowstatus = updateIncomeTax.IsActive == true ? RowStatus.ACTIVE : RowStatus.INACTIVE;
             await _dbContext.SaveChangesAsync();
             return new ResponseMessage
             {
                 Data = currentTax,
-                Message = "Added Successfully!!",
+                Message = "Updated Successfully!!",
                 Success = true
             };
         }
@@ -189,8 +190,8 @@ namespace IntegratedImplementation.Services.Finance.Configuration
                 {
                     PayrollReportType = item.ToString(),
                     Taxable = empLst.First().Taxable,
-                    BenefitLists = String.Concat(empLst.Select(x => x.BenefitList.Name), ",")
-                });
+                    BenefitLists = string.Join(",", empLst.Select(x => x.BenefitList.Name))
+            });
             }
 
             return listOfBenefits;
@@ -198,14 +199,14 @@ namespace IntegratedImplementation.Services.Finance.Configuration
 
         public async Task<ResponseMessage> AddBenefitPayroll(AddBenefitPayroll addBenefitPayroll)
         {
-            var benefitExists = await _dbContext.BenefitPayrolls.AnyAsync(x => addBenefitPayroll.BenefitId.Contains(x.BenefitListId.ToString()) && x.PayrollReportType != addBenefitPayroll.PayrollReportType );
+            var benefitExists = await _dbContext.BenefitPayrolls.AnyAsync(x => addBenefitPayroll.BenefitId.Contains(x.BenefitListId.ToString()) && x.PayrollReportType != Enum.Parse<PayrollReportType>(addBenefitPayroll.PayrollReportType) );
 
             if(benefitExists)
             {
                 return new ResponseMessage { Success = false, Message = "Benefit already exists please Check again!!" };
             }
 
-            List<BenefitPayroll> removeNotIncluded = await _dbContext.BenefitPayrolls.Where(x => x.PayrollReportType == addBenefitPayroll.PayrollReportType && !addBenefitPayroll.BenefitId.Contains(x.BenefitListId.ToString())).ToListAsync();
+            List<BenefitPayroll> removeNotIncluded = await _dbContext.BenefitPayrolls.Where(x => x.PayrollReportType == Enum.Parse<PayrollReportType>(addBenefitPayroll.PayrollReportType) && !addBenefitPayroll.BenefitId.Contains(x.BenefitListId.ToString())).ToListAsync();
 
             if (removeNotIncluded.Any())
             {
@@ -226,7 +227,7 @@ namespace IntegratedImplementation.Services.Finance.Configuration
                         CreatedById = addBenefitPayroll.CreatedById,
                         CreatedDate = DateTime.Now,
                         Taxable = addBenefitPayroll.Taxable,
-                        PayrollReportType = addBenefitPayroll.PayrollReportType,
+                        PayrollReportType = Enum.Parse<PayrollReportType>(addBenefitPayroll.PayrollReportType),
                         Rowstatus = RowStatus.ACTIVE,
                     };
 

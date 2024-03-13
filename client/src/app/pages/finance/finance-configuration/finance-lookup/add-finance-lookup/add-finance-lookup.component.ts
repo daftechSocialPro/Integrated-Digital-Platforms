@@ -21,18 +21,18 @@ export class AddFinanceLookupComponent implements OnInit {
 
 
   lookUpCategory = [
-    { value: "ACCOUNTING", name: "ACCOUNTING" },
-    { value: "GLOBAL SYSTEM LIBRARY", name: "GLOBALSYSTEMLIBRARY" },
-    { value: "VOUCHER", name: "VOUCHER" },
+    { value: "ACCOUNTING", name: "Accounting" },
+    { value: "GLOBALSYSTEMLIBRARY", name: "Global System Library" },
+    { value: "VOUCHER", name: "Voucher" },
   ]
 
   lookUpType = [
-    { value: "ARTICLE", name: "ARTICLE" },
-    { value: "BUSSINESS TYPE", name: "BUSSINESS_TYPE" },
-    { value: "COASTING", name: "COASTING" },
-    { value: "CUSTOMER STATUS", name: "CUSTOMER_STATUS" },
-    { value: "DISTRIBUTION", name: "DISTRIBUTION" },
-    { value: "COSTING", name: "COSTING" },
+    { value: "ARTICLE", name: "Article" },
+    { value: "BUSSINESS_TYPE", name: "Bussiness Type" },
+    { value: "COASTING", name: "Coasting" },
+    { value: "CUSTOMER_STATUS", name: "Customer Status" },
+    { value: "DISTRIBUTION", name: "Distribution" },
+    { value: "COSTING", name: "Costing" },
   ]
 
 
@@ -56,7 +56,7 @@ export class AddFinanceLookupComponent implements OnInit {
         lookupType: ['', Validators.required],
         lookupValue: [''],
         description: [''],
-        isDefault: [''],
+        isDefault: [false],
         remark: [''],
       });
     }

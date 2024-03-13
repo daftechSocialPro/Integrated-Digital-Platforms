@@ -5,6 +5,10 @@ import { environment } from 'src/environments/environment';
 import { AccountTypePostDto } from '../model/Finance/IAccountTypeDto';
 import { ResponseMessage } from '../model/ResponseMessage.Model';
 import { FinanceLookupPostDto } from '../model/Finance/IFinanceLookupTypeDto';
+import { AccountingPeriodGetDto, AccountingPeriodPostDto } from '../model/Finance/IAccountingPeriodDto';
+import { ChartOfAccountsGetDto, ChartOfAccountsPostDto, SubsidiaryAccountsPostDto } from '../model/Finance/IChartOfAccountsDto';
+import { SelectList } from '../model/common';
+import { BenefitPayrollGetDto, BenefitPayrollPostDto, GeneralSettingGetDto, GeneralSettingPostDto, IncomeTaxDto } from '../model/Finance/IPayrollSettingDto';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +29,9 @@ export class FinanceService {
   getAccountTypes() {
     return this.http.get<AccountTypePostDto[]>(this.BaseURI + "/AccountType/GetAccountTypes")
   }
+  getAccountTypesSelectList(){
+    return this.http.get<SelectList[]>(this.BaseURI + "/AccountType/GetAccountTypeSelectList")
+  }
 
   
   addFinanceLookup(addLookup: FinanceLookupPostDto) {
@@ -38,5 +45,67 @@ export class FinanceService {
   getFinanceLookups() {
     return this.http.get<FinanceLookupPostDto[]>(this.BaseURI + "/FinanceLookup/GetFinanceLookups")
   }
+
+  //Accounting Period
+  getAccountingPeriod(){
+    return this.http.get<AccountingPeriodGetDto[]>(this.BaseURI + "/AccountingPeriod/GetAccountingPeriod")
+  }
+  addAccountingPeriod(addAccountingPeriod: AccountingPeriodPostDto){
+    return this.http.post<ResponseMessage>(this.BaseURI + "/AccountingPeriod/AddAccountingPeriod", addAccountingPeriod )
+  }
   
+  //Chart of Account
+  getChatOfAccounts(){
+    return this.http.get<ChartOfAccountsGetDto[]>(this.BaseURI + "/ChartOfAccount/GetChartOfAccounts")
+  }
+  addChartOfAccounts(addChartOfAccounts: ChartOfAccountsPostDto){
+    return this.http.post<ResponseMessage>(this.BaseURI + "/ChartOfAccount/AddChartOfAccount",addChartOfAccounts)
+  }
+  updateChartOfAccounts(updateChartOfAccounts: ChartOfAccountsPostDto){
+    return this.http.put<ResponseMessage>(this.BaseURI + "/ChartOfAccount/UpdateChartOfAccount",updateChartOfAccounts)
+  }
+  changeChartOfAccountStatus(accountId:string){
+    return this.http.put<ResponseMessage>(this.BaseURI + "/ChartOfAccount/ChangeChartOfAccountStatus?accountId="+accountId,{})
+  }
+
+  addSubsidiaryAccount(addSubsidiaryAccount: SubsidiaryAccountsPostDto)
+  {
+    return this.http.post<ResponseMessage>(this.BaseURI + "/ChartOfAccount/AddSubsidiaryAccount",addSubsidiaryAccount)
+  }
+  updateSubsidiaryAccount(updateSubsidiaryAccount: SubsidiaryAccountsPostDto){
+    return this.http.put<ResponseMessage>(this.BaseURI + "/ChartOfAccount/UpdateSubsidiaryAccount",updateSubsidiaryAccount)
+  }
+
+  changeSubsidiaryAccountStatus(subsidiaryId:string){
+    return this.http.put<ResponseMessage>(this.BaseURI + "/ChartOfAccount/ChangeSubsidiaryAccountStatus?subsidiaryId="+subsidiaryId,{})
+  }
+
+  //Payroll Settings
+    //general Settings
+    getGeneralPayrollSettings(){
+      return this.http.get<GeneralSettingGetDto[]>(this.BaseURI + "/PayrollSetting/GetGeneralPayrollSettings")
+    }
+
+    addGeneralPayrollSetting(generalSetting: GeneralSettingPostDto){
+      return this.http.post<ResponseMessage>(this.BaseURI + "/PayrollSetting/SaveGeneralPayrollSetting",generalSetting)
+    }
+
+    //Income Tax
+    getIncomeTax(){
+      return this.http.get<IncomeTaxDto[]>(this.BaseURI + "/PayrollSetting/GetIncomeTax")
+    }
+    addIncomeTax(incomeTax: IncomeTaxDto){
+      return this.http.post<ResponseMessage>( this.BaseURI + "/PayrollSetting/AddIncomeTax",incomeTax)
+    }
+    updateIncomeTax(incomeTax: IncomeTaxDto){
+      return this.http.put<ResponseMessage>( this.BaseURI + "/PayrollSetting/UpdateIncomeTax",incomeTax)
+    }
+
+    //Benefit Payroll
+    getBenefitPayrolls(){
+      return this.http.get<BenefitPayrollGetDto[]>( this.BaseURI + "/PayrollSetting/GetBenefitPayrolls")
+    }
+    addBenefitPayroll(benefitPayroll: BenefitPayrollPostDto){
+      return this.http.post<ResponseMessage>( this.BaseURI + "/PayrollSetting/AddBenefitPayroll",benefitPayroll)
+    }
 }

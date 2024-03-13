@@ -16,6 +16,7 @@ namespace IntegratedImplementation.DTOS.Finance.Configuration
         public float Percent { get; set; }
         public float Deductable { get; set; }
         public DateTime EndDate { get; set; }
-        public RowStatus Rowstatus { get; set; }
+        //public RowStatus Rowstatus { get; set; }
+        public bool IsActive { get; set; }
     }
 }

@@ -1,0 +1,72 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">{{incomeTax?"Update":"Add"}} Income Tax</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Income Tax</h5>
+            <div class="row">
+                <div class="col-lg-12">
+                    <form class="" [formGroup]="incomeTaxForm" (ngSubmit)="submit()">
+                        <div class="modal-body">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="number" class="form-control" id="startingAmount"
+                                            placeholder="startingAmount" formControlName="startingAmount">
+                                        <label for="startingAmount">Starting Amount</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="number" class="form-control" id="endingAmount"
+                                            placeholder="endingAmount" formControlName="endingAmount">
+                                        <label for="endingAmount">Ending Amount</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="number" class="form-control" id="percent"
+                                            placeholder="percent" formControlName="percent">
+                                        <label for="percent">Percent</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="number" class="form-control" id="deductable"
+                                            placeholder="deductable" formControlName="deductable">
+                                        <label for="deductable">Deductable</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="date" class="form-control" id="endDate"
+                                            formControlName="endDate">
+                                        <label for="endDate">End Date</label>
+                                    </div>
+                                </div>
+                                <div *ngIf="incomeTax != undefined" class="col-md-6">
+                                    <div class="form-floating">
+                                        <label >Active Status</label>
+                                        <p-inputSwitch formControlName="isActive"></p-inputSwitch>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
+                                (click)="closeModal()">Close</button>
+                            <button type="button" type="submit" [disabled]="!incomeTaxForm.valid"
+                                [class]="incomeTax?'btn btn-outline-warning':'btn btn-outline-primary'">
+                                {{incomeTax?"Update":"Create"}}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
