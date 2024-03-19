@@ -118,4 +118,16 @@ export class DropDownService {
         return this.http.get<SelectList[]>(this.baseUrl + `/DropDown/GetStoreRequestDropDown`);
       }
 
+    getAccountTypeDropDown(){
+        return this.http.get<SelectList[]>(this.baseUrl + '/DropDown/GetAccountTypeDropDown')
+    }
+
+    getChartOfAccountsDropDown(){
+        return this.http.get<SelectList[]>(this.baseUrl + '/DropDown/GetChartOfAccountsDropDown')
+    }
+
+    getAccountingPeriodDropDown(){
+        return this.http.get<SelectList[]>(this.baseUrl + '/DropDown/GetAccountingPeriodDropDown')
+    }
+
 }

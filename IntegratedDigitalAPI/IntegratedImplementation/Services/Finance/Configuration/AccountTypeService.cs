@@ -64,16 +64,6 @@ namespace IntegratedImplementation.Services.Finance.Configuration
             return accountTypes;
         }
 
-        public async Task<List<SelectListDto>> GetAccountTypeSelectList()
-        {
-
-            var accountTypesSelectList = await _dbContext.AccountTypes.AsNoTracking().Select(x => new SelectListDto
-            {
-                Name = x.Type,
-                Id = x.Id,
-            }).ToListAsync();
-            return accountTypesSelectList;
-        }
 
         public async Task<ResponseMessage> UpdateAccountType(AccountTypeGetDto accountType)
         {
