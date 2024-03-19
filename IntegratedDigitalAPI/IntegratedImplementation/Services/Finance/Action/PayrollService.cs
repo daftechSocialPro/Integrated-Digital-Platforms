@@ -29,13 +29,13 @@ namespace IntegratedImplementation.Services.Finance.Action
 
         public async Task<List<PayrollDataListDto>> GetPayrollDataList()
         {
-            var payrollDatas = await _dbContext.PayrollDatas.AsNoTracking().Include(x => x.ApprovedBy).Include(x => x.CheckedBy)
+            var payrollDatas = await _dbContext.PayrollDatas.AsNoTracking().Include(x => x.ApprovedBy).Include(x => x.CheckedBy).OrderByDescending(x => x.PayStart)
                                        .Select(x => new PayrollDataListDto
                                        {
                                            Id = x.Id.ToString(),
                                            PayrollMonth = x.PayStart.ToString("MMMM"),
-                                           ApprovedBy = x.ApprovedBy == null ? "" : $"{x.ApprovedBy.FirstName} {x.ApprovedBy.FirstName} {x.ApprovedBy.FirstName}",
-                                           CheckedBy = x.CheckedBy == null ? "" : $"{x.CheckedBy.FirstName} {x.CheckedBy.FirstName} {x.CheckedBy.FirstName}",
+                                           ApprovedBy = x.ApprovedBy == null ? "" : $"{x.ApprovedBy.FirstName} {x.ApprovedBy.MiddleName} {x.ApprovedBy.LastName}",
+                                           CheckedBy = x.CheckedBy == null ? "" : $"{x.CheckedBy.FirstName} {x.CheckedBy.MiddleName} {x.CheckedBy.LastName}",
                                            CalculatedCount = x.CalculatedCount,
                                            TotalAmount = x.TotalAmount,
                                            IsActive = x.Rowstatus == RowStatus.ACTIVE ? true : false,
@@ -71,7 +71,7 @@ namespace IntegratedImplementation.Services.Finance.Action
             currData.CheckedById = currEmp.Id;
             await _dbContext.SaveChangesAsync();
 
-            return new ResponseMessage { Success = true, Message = "Approved Successfully" };
+            return new ResponseMessage { Success = true, Message = "Checked Successfully" };
         }  
         
         
@@ -97,6 +97,7 @@ namespace IntegratedImplementation.Services.Finance.Action
 
         public async Task<ResponseMessage> CalculatePayroll(PayrollParams payrollParams)
         {
+            payrollParams.PayrollMonth = payrollParams.PayrollMonth.AddDays(1);
             var EmpPension = await _dbContext.GeneralPayrollSettings.FirstOrDefaultAsync(x => x.GeneralPSetting == GeneralPSett.PENSIONEMPLOYEE);
             var ComPension = await _dbContext.GeneralPayrollSettings.FirstOrDefaultAsync(x => x.GeneralPSetting == GeneralPSett.PENSIONCOMPANY);
             var PF = await _dbContext.GeneralPayrollSettings.FirstOrDefaultAsync(x => x.GeneralPSetting == GeneralPSett.PROVIDENTFUND);
@@ -363,7 +364,7 @@ namespace IntegratedImplementation.Services.Finance.Action
                 await _dbContext.SaveChangesAsync();
             }
 
-            var previous = await _dbContext.PayrollDatas.Where(x => x.Rowstatus == RowStatus.ACTIVE).ToListAsync();
+            var previous = await _dbContext.PayrollDatas.Where(x => x.Rowstatus == RowStatus.ACTIVE &&  !(x.PayStart == startdate && x.PayEnd == enddate)).ToListAsync();
             previous.ForEach(x =>
             {
                 x.Rowstatus = RowStatus.INACTIVE;
@@ -389,9 +390,11 @@ namespace IntegratedImplementation.Services.Finance.Action
             else
             {
                 payrollData.CalculatedCount = payrollData.CalculatedCount + 1;
-                payrollData.ApprovedById = Guid.Empty;
-                payrollData.CheckedById = Guid.Empty;
+                payrollData.ApprovedById =null;
+                payrollData.CheckedById =null;
                 payrollData.TotalAmount = TotalNetPay;
+               // payrollData.Rowstatus = RowStatus.ACTIVE;
+
 
             }
             await _dbContext.SaveChangesAsync();

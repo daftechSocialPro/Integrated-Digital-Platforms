@@ -29,13 +29,6 @@ namespace IntegratedDigitalAPI.Controllers.Finance.Configuration
             return Ok(await _accountTypeService.GetAccountTypes());
         }
 
-        [HttpGet]
-        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetAccountTypeSelectList()
-        {
-            return Ok(await _accountTypeService.GetAccountTypeSelectList());
-        }
-        
 
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]

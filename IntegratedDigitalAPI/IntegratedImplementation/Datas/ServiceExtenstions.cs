@@ -117,6 +117,7 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<IAccountingPeriodService, AccountingPeriodService>();
             services.AddScoped<IPayrollSettingService, PayrollSettingService>();
             services.AddScoped<IPaymentsService, PaymentService>();       
+            services.AddScoped<IPayrollService, PayrollService>();
                  
             #endregion
 

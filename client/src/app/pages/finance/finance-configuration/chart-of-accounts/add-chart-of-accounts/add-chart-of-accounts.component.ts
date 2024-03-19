@@ -6,6 +6,7 @@ import { AccountTypePostDto } from 'src/app/model/Finance/IAccountTypeDto';
 import { ChartOfAccountsGetDto, ChartOfAccountsPostDto } from 'src/app/model/Finance/IChartOfAccountsDto';
 import { SelectList } from 'src/app/model/common';
 import { UserView } from 'src/app/model/user';
+import { DropDownService } from 'src/app/services/dropDown.service';
 import { FinanceService } from 'src/app/services/finance.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -24,7 +25,8 @@ export class AddChartOfAccountsComponent implements OnInit {
     private formBuilder:FormBuilder,
     private activeModal: NgbActiveModal,
     private userService: UserService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private dropDownService: DropDownService
   ){}
 
   ngOnInit(): void {
@@ -49,7 +51,7 @@ export class AddChartOfAccountsComponent implements OnInit {
     }
   }
   getAccountTypeSelectList(){
-    this.financeService.getAccountTypesSelectList().subscribe({
+    this.dropDownService.getAccountTypeDropDown().subscribe({
       next : (res) =>{
         this.accountTypeSelectList = res
         const accountType = this.accountTypeSelectList.find(x => x.name == this.chartOfAccounts.accountType).id

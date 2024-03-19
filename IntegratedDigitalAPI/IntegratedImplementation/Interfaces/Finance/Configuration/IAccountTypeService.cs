@@ -16,6 +16,6 @@ namespace IntegratedImplementation.Interfaces.Finance.Configuration
         Task<ResponseMessage> AddAccountType( AccountTypePostDto accountTypePost);
         Task<List<AccountTypeGetDto>> GetAccountTypes();
         Task<ResponseMessage> UpdateAccountType(AccountTypeGetDto BudgetYearPost);
-        Task<List<SelectListDto>> GetAccountTypeSelectList();
+     
     }
 }

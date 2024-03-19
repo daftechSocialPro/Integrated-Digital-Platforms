@@ -34,6 +34,11 @@ import { AddGeneralPayrollSettingComponent } from './finance-configuration/payro
 import { AddIncomeTaxComponent } from './finance-configuration/payroll-setting/income-tax/add-income-tax/add-income-tax.component';
 import { AddBenefitPayrollComponent } from './finance-configuration/payroll-setting/benefit-payroll/add-benefit-payroll/add-benefit-payroll.component';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { PaymentsComponent } from './payments/payments.component';
+import { AddPaymentsComponent } from './payments/add-payments/add-payments.component';
+import { PayrollComponent } from './payroll/payroll.component';
+import { FileUploadModule } from 'primeng/fileupload';
+
 
 @NgModule({
   declarations: [
@@ -53,7 +58,10 @@ import { MultiSelectModule } from 'primeng/multiselect';
     BenefitPayrollComponent,
     AddGeneralPayrollSettingComponent,
     AddIncomeTaxComponent,
-    AddBenefitPayrollComponent
+    AddBenefitPayrollComponent,
+    PaymentsComponent,
+    AddPaymentsComponent,
+    PayrollComponent
   ],
   imports: [
     CommonModule,
@@ -76,7 +84,9 @@ import { MultiSelectModule } from 'primeng/multiselect';
     ConfirmPopupModule,
     TabViewModule,
     CheckboxModule,
-    MultiSelectModule
+    MultiSelectModule,
+    FileUploadModule
+
   ]
 })
 export class FinanceModule { }

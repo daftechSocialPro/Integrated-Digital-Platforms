@@ -1,0 +1,194 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Add Payment</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            
+            <div class="row">
+                <div class="col-lg-12">
+                    <form class="" [formGroup]="paymentForm" (ngSubmit)="submit()">
+                        
+                        <div class="card mt-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Add Payment</h5>
+                                <div class="row g-3">     
+                                    <div class="col-md-4 mb-3">
+                                        <div class="form-floating">
+                                            <select class="form-control" formControlName="accountingPeriodId">
+                                                <option *ngFor="let item of accountingPeriodDropDown" [value]="item.id">{{item.name}}</option>
+                                            </select>
+                                            <label for="accountingPeriodId">Accounting Period</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-floating">
+                                                <select class="form-control" formControlName="paymentType">
+                                                    <option *ngFor="let item of paymentTypeList" [value]="item.value">{{item.name}}</option>
+                                                </select>
+                                                <label for="paymentType">Payment Type</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" id="paymentNumber"
+                                                    placeholder="paymentNumber" formControlName="paymentNumber">
+                                                <label for="paymentNumber">Payment Number</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-floating">
+                                                <input type="date" class="form-control" id="paymentDate"
+                                                    formControlName="paymentDate">
+                                                <label for="paymentDate">Payment Date</label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6 ">
+                                        <div class="form-floating">
+                                            <select class="form-control" formControlName="supplierId">
+                                                <option *ngFor="let item of supplierDropDown" [value]="item.id">{{item.name}}</option>
+                                            </select>
+                                            <label for="supplierId">Supplier</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 ">
+                                        <div class="form-floating">
+                                            <select class="form-control" formControlName="bankId">
+                                                <option *ngFor="let item of bankDropDown" [value]="item.id">{{item.name}}</option>
+                                            </select>
+                                            <label for="bankId">Bank</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        
+                                        <p-fileUpload  (onSelect)="onUpload($event)" (onRemove)="onRemove()" [multiple]="false" accept="image/*" [maxFileSize]="1000000" 
+                                        [showUploadButton]="false" [showCancelButton]="false">
+                                            <ng-template pTemplate="content">
+                                                <ul *ngIf="uploadedFiles.length">
+                                                    <!-- <li *ngFor="let file of uploadedFiles">{{ file.name }} - {{ file.size }} bytes</li> -->
+                                                </ul>
+                                            </ng-template>
+                                        </p-fileUpload>
+                        
+                                    </div>
+                                    <div class="col-md-6">
+                                        
+                                        <textarea class="form-control" placeholder="Remark"  formControlName="remark" id="remark" rows="5">
+                                        </textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+
+                            <div class="card-body">
+                                <h5 class="card-title">Add Payment Details</h5>
+                                <form #itemsForm="ngForm">
+                                    <div class="row p-2 mb-2">
+                                    <div class="col-md-2">
+                                        <label class="col-md-12" htmlFor="lastname2">Item</label> 
+                                        <select  class="form-control" [(ngModel)]="addPaymentDetailList.itemId" id="itemId" required
+                                            name="itemId">
+                                            <option></option>
+                                            <option *ngFor="let it of itemsDropDown" [value]="it.id">{{it.name}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="col-md-12" htmlFor="lastname2">Chart Of Account</label>
+                                        <select  class="form-control"   [(ngModel)]="addPaymentDetailList.chartOfAccountId" id="chartOfAccountId" required
+                                            name="chartOfAccountId">
+                                            <option></option>
+                                            <option *ngFor="let it of chartOfAccountDropDown" [value]="it.id">{{it.name}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label htmlFor="lastname2">Description</label>
+                                        <input type="text" class="form-control" id="description"
+                                            required [(ngModel)]="addPaymentDetailList.description" [ngModelOptions]="{standalone: true}" >
+                                                                    
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label htmlFor="lastname2">Quantity</label>
+                                        <input class="form-control" type="number" min="0" name="quantity" required [(ngModel)]="addPaymentDetailList.quantity">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label htmlFor="lastname2">Price</label>
+                                        <input class="form-control" type="number" min="0" name="price" required
+                                            [(ngModel)]="addPaymentDetailList.price">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label htmlFor="lastname2">Total price</label>
+                                        <input class="form-control" type="number" min="0" name="totalPrice" disabled [value]="addPaymentDetailList.quantity * addPaymentDetailList.price"
+                                            [(ngModel)]="addPaymentDetailList.totalPrice">
+                                    </div>
+                                    
+                                    <div class="col-md-1">
+                                    <label></label><br/>
+                                        <button pButton type="button" icon="pi pi-plus" [disabled]="!itemsForm.valid" class="ui-button-info btn-sm"
+                                            (click)="newRow()"></button>
+                                    </div>
+                                    </div>
+                                </form>
+                            
+                                <div class="p-fluid p-formgrid grid">
+                                    <p-table #dt [value]="paymentDetailList" responsiveLayout="scroll">
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th>Item</th>
+                                                <th>Chart Of Accounts</th>
+                                                <th>Description</th>
+                                                <th>Quantity</th>
+                                                <th>Price</th>
+                                                <th>Total Price</th>
+                                                <th style="width:8em"></th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-purchaseRequest>
+                                            <tr>
+                                                <td>
+                                                    {{purchaseRequest.itemName}}
+                                                </td>
+                                                <td>
+                                                    {{purchaseRequest.chartOfAccountName}}
+                                                </td>
+                                                <td>
+                                                    {{purchaseRequest.description}}
+                                                </td>
+                                                <td>
+                                                    {{purchaseRequest.quantity}}
+                                                </td>
+                                                <td>
+                                                    {{purchaseRequest.price | currency }}
+                                                </td>
+                                                <td>
+                                                    {{purchaseRequest.price * purchaseRequest.quantity | currency }}
+                                                </td>
+                                                <td style="text-align:center">
+                                                    <button pButton type="button" icon="pi pi-times" class="ui-button-danger"
+                                                        (click)="removeData(purchaseRequest.itemId)"></button>
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
+                                (click)="closeModal()">Close</button>
+                            <button type="button" type="submit" [disabled]="!paymentForm.valid"
+                                class="btn btn-outline-primary">
+                                Create
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

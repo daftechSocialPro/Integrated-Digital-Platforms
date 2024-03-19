@@ -41,7 +41,7 @@ export class PlansComponent implements OnInit {
   }
 
   listPlans() {
-
+    
     if(this.userview.role.includes('PM-ADMIN')){
     this.planService.getPlans().subscribe({
       next: (res) => {
