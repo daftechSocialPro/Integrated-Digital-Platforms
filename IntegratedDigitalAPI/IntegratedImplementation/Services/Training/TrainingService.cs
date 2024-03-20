@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using FluentEmail.Core;
 using Implementation.Helper;
 using IntegratedImplementation.DTOS.Authentication;
 using IntegratedImplementation.DTOS.Configuration;
@@ -33,7 +34,7 @@ namespace IntegratedImplementation.Services.Training
 
         private readonly IConfiguration _configuration;
 
-        public TrainingService(ApplicationDbContext dbContext, IMapper mapper,IEmailService emailService, IGeneralConfigService generalConfig, IConfiguration configuration)
+        public TrainingService(ApplicationDbContext dbContext, IMapper mapper, IEmailService emailService, IGeneralConfigService generalConfig, IConfiguration configuration)
         {
             _dbContext = dbContext;
             _mapper = mapper;
@@ -45,22 +46,22 @@ namespace IntegratedImplementation.Services.Training
 
         public async Task<TrainingGetDto> GetSingleTraining(Guid TrainingId)
         {
-            var results = await _dbContext.Trainings.Include(x=>x.Project).Where(x => x.Id == TrainingId)
-                      
-                     .Select(x => new TrainingGetDto
-                      {
-                          Id = x.Id,
-                          //ActivityNumber = x.Activity.ActivityNumber,
-                          Title = x.Title,
-                          AllocatedCEU = x.AllocatedCEU,                
-                          CourseVenue = x.CourseVenue,
-                          StartDate = x.StartDate,
-                          EndDate = x.EndDate,
-                          Project = x.Project.ProjectName,
-                          ReportStatus = x.ReportStatus.ToString(),
-                          TraineeListStatus = x.TraineeListStatus.ToString()
+            var results = await _dbContext.Trainings.Include(x => x.Project).Where(x => x.Id == TrainingId)
 
-                      }).FirstOrDefaultAsync();
+                     .Select(x => new TrainingGetDto
+                     {
+                         Id = x.Id,
+                         //ActivityNumber = x.Activity.ActivityNumber,
+                         Title = x.Title,
+                         AllocatedCEU = x.AllocatedCEU,
+                         CourseVenue = x.CourseVenue,
+                         StartDate = x.StartDate,
+                         EndDate = x.EndDate,
+                         Project = x.Project.ProjectName,
+                         ReportStatus = x.ReportStatus.ToString(),
+                         TraineeListStatus = x.TraineeListStatus.ToString()
+
+                     }).FirstOrDefaultAsync();
 
             return results;
 
@@ -68,14 +69,14 @@ namespace IntegratedImplementation.Services.Training
         public async Task<List<TrainingGetDto>> GetTrainingList(Guid activityId)
         {
 
-            var results = await _dbContext.Trainings.Include(x=>x.Project).Where(x => x.ActivityId == activityId)                       
+            var results = await _dbContext.Trainings.Include(x => x.Project).Where(x => x.ActivityId == activityId)
                         .Include(x => x.Activity).Select(x => new TrainingGetDto
                         {
                             Id = x.Id,
                             ActivityNumber = x.Activity.ActivityNumber,
                             Title = x.Title,
                             ActivityId = x.ActivityId,
-                            AllocatedCEU = x.AllocatedCEU,           
+                            AllocatedCEU = x.AllocatedCEU,
                             CourseVenue = x.CourseVenue,
                             StartDate = x.StartDate,
                             EndDate = x.EndDate,
@@ -89,18 +90,18 @@ namespace IntegratedImplementation.Services.Training
 
         }
 
-        public async Task<List<TrainingGetDto>>GetTrainingList()
+        public async Task<List<TrainingGetDto>> GetTrainingList()
         {
-            var results = await _dbContext.Trainings.Include(x=>x.Project)
-                 
+            var results = await _dbContext.Trainings.Include(x => x.Project)
+
                  .Include(x => x.Activity).Select(x => new TrainingGetDto
                  {
                      Id = x.Id,
                      ActivityNumber = x.Activity.ActivityNumber,
                      Title = x.Title,
-                     ActivityId = x.ActivityId,     
+                     ActivityId = x.ActivityId,
                      AllocatedCEU = x.AllocatedCEU,
-                   
+
                      CourseVenue = x.CourseVenue,
                      StartDate = x.StartDate,
                      EndDate = x.EndDate,
@@ -120,28 +121,29 @@ namespace IntegratedImplementation.Services.Training
             {
                 Guid? projectId = Guid.NewGuid();
                 var act = await _dbContext.Activities
-                    .Include(x=>x.ActivityParent.Task)
-                    .Include(x=>x.Task)
-                    .Where(x=>x.Id==trainingPostDto.ActivityId).FirstOrDefaultAsync();
+                    .Include(x => x.ActivityParent.Task)
+                    .Include(x => x.Task)
+                    .Where(x => x.Id == trainingPostDto.ActivityId).FirstOrDefaultAsync();
 
-                if ( act!= null)
+                if (act != null)
                 {
                     if (act.TaskId != null)
                     {
-                       var task = await _dbContext.Tasks.FindAsync(act.TaskId);
-                        if (task!=null && task.ProjectId!=null)
+                        var task = await _dbContext.Tasks.FindAsync(act.TaskId);
+                        if (task != null && task.ProjectId != null)
 
                         {
                             projectId = task.ProjectId;
                         }
-                       
+
                     }
 
-                  if (act.ActivityParentId != null)
+                    if (act.ActivityParentId != null)
                     {
                         var activityParent = await _dbContext.ActivitiesParents.FindAsync(act.ActivityParentId);
 
-                        if (activityParent!=null) {
+                        if (activityParent != null)
+                        {
                             var task = await _dbContext.Tasks.FindAsync(act.ActivityParent.TaskId);
                             if (task != null && task.ProjectId != null)
 
@@ -152,7 +154,7 @@ namespace IntegratedImplementation.Services.Training
 
                     }
 
-                    
+
                 }
 
                 var TrainingPost = new IntegratedInfrustructure.Model.Training.Training
@@ -161,7 +163,7 @@ namespace IntegratedImplementation.Services.Training
                     CreatedDate = DateTime.Now,
                     Title = trainingPostDto.Title,
                     ActivityId = trainingPostDto.ActivityId,
-                    AllocatedCEU = trainingPostDto.AllocatedCEU,               
+                    AllocatedCEU = trainingPostDto.AllocatedCEU,
                     CourseVenue = trainingPostDto.CourseVenue,
                     StartDate = trainingPostDto.StartDate,
                     EndDate = trainingPostDto.EndDate,
@@ -173,8 +175,8 @@ namespace IntegratedImplementation.Services.Training
                 await _dbContext.SaveChangesAsync();
 
 
-           
-                
+
+
 
 
                 return new ResponseMessage
@@ -201,17 +203,18 @@ namespace IntegratedImplementation.Services.Training
 
         //trainer
 
-      public async Task<List<TrainerGetDto>> GetTrainerList(Guid TainingId)
+        public async Task<List<TrainerGetDto>> GetTrainerList(Guid TainingId)
         {
 
             var results = await _dbContext.Trainers.Where(x => x.TrainingId == TainingId)
                        .Select(x => new TrainerGetDto
-                        {
-                         FullName = x.FullName,
-                         Email = x.Email,
-                         PhoneNumber = x.PhoneNumber,
+                       {
+                           Id = x.Id,
+                           FullName = x.FullName,
+                           Email = x.Email,
+                           PhoneNumber = x.PhoneNumber,
 
-                        }).ToListAsync();
+                       }).ToListAsync();
 
             return results;
 
@@ -254,6 +257,100 @@ namespace IntegratedImplementation.Services.Training
 
         }
 
+        public async Task<ResponseMessage> UpdateTrainer(TrainerPostDto trainerPostDto)
+        {
+            try
+            {
+
+                var trainer = await _dbContext.Trainers.FindAsync(trainerPostDto.Id);
+
+                if (trainer != null)
+                {
+                    trainer.FullName = trainerPostDto.FullName;
+                    trainer.PhoneNumber = trainerPostDto.PhoneNumber;
+                    trainer.Email = trainerPostDto.Email;
+
+                    await _dbContext.SaveChangesAsync();
+
+
+                    return new ResponseMessage
+                    {
+                        Success = true,
+                        Message = "Trainer Successfully Updated !!!"
+
+                    };
+                }
+
+
+
+
+                return new ResponseMessage
+                {
+                    Success = false,
+                    Message = "Trainer Not Found !!!"
+
+                };
+
+            }
+            catch (Exception ex)
+            {
+                return new ResponseMessage
+                {
+                    Success = false,
+                    Message = ex.Message
+                };
+
+            }
+
+        }
+
+
+        public async Task<ResponseMessage> DeleteTrainer(Guid trainerId)
+        {
+            try
+            {
+                var trainer = await _dbContext.Trainers.FindAsync(trainerId);
+                if (trainer != null)
+                {
+
+                    _dbContext.Remove(trainer);
+
+                    await _dbContext.SaveChangesAsync();
+
+
+                    return new ResponseMessage
+                    {
+                        Success = true,
+                        Message = "Trainer Successfully Deleted !!!"
+
+                    };
+                }
+
+
+
+
+                return new ResponseMessage
+                {
+                    Success = false,
+                    Message = "Trainer Not Found !!!"
+
+                };
+
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseMessage
+                {
+                    Success = false,
+                    Message = ex.Message
+                };
+            }
+
+
+        }
+
+
         //trainee 
 
         public async Task<List<TraineeGetDto>> GetTraineeList(Guid TainingId)
@@ -282,8 +379,8 @@ namespace IntegratedImplementation.Services.Training
                                Profession = x.Profession,
                                TypeofOrganization = x.TypeofOrganization,
                                NameofOrganizaton = x.NameofOrganizaton,
-                               PreSummary = (double) x.PreSummary,
-                               PostSummary = (double) x.PostSummary,
+                               PreSummary = (double)x.PreSummary,
+                               PostSummary = (double)x.PostSummary,
                            }).ToListAsync();
 
                 return results;
@@ -298,28 +395,28 @@ namespace IntegratedImplementation.Services.Training
         {
             try
             {
-                
+
                 var TraineePost = new Trainee
                 {
                     Id = Guid.NewGuid(),
                     TrainingId = trainerPostDto.TraningId,
-                  
+
                     FullName = trainerPostDto.FullName,
                     EducationalField = trainerPostDto.EducationalField,
                     EducationalLevelId = trainerPostDto.EducationalLevelId,
                     PhoneNumber = trainerPostDto.PhoneNumber,
                     Email = trainerPostDto.Email,
                     Age = trainerPostDto.Age,
-                    Gender = Enum.Parse<Gender>( trainerPostDto.Gender),
+                    Gender = Enum.Parse<Gender>(trainerPostDto.Gender),
                     RegionId = trainerPostDto.RegionId,
                     Zone = trainerPostDto.Zone,
-                    Woreda  = trainerPostDto.Woreda,
+                    Woreda = trainerPostDto.Woreda,
                     NameofOrganizaton = trainerPostDto.NameofOrganizaton,
                     TypeofOrganization = trainerPostDto.TypeofOrganization,
                     Profession = trainerPostDto.Profession,
-                    PostSummary = trainerPostDto.PostSummary,
+                    PostSummary = trainerPostDto.PostSummary != null ? (double)trainerPostDto.PostSummary : 0.0,
                     PreSummary = trainerPostDto.PreSummary
-                    
+
                 };
 
                 await _dbContext.Trainees.AddAsync(TraineePost);
@@ -343,6 +440,27 @@ namespace IntegratedImplementation.Services.Training
 
             }
 
+        }
+
+        public async Task<ResponseMessage> DeleteTrainee(Guid traineeId)
+        {
+            try
+            {
+                var trainee = await _dbContext.Trainees.FindAsync(traineeId);
+                if (trainee != null)
+                {
+                    _dbContext.Remove(trainee);
+                    _dbContext.SaveChanges();
+                    return new ResponseMessage { Success = true, Message = "Successfully Deleted!!!" };
+                }
+                return new ResponseMessage { Success = false, Message = "trainee not found" };
+
+
+            }
+            catch (Exception ex)
+            {
+                return new ResponseMessage { Success = false, Message = ex.Message };
+            }
         }
         public async Task<ResponseMessage> UpdateTrainee(TraineePostDto trainerPostDto)
         {
@@ -388,21 +506,21 @@ namespace IntegratedImplementation.Services.Training
             }
 
         }
-        public async Task<ResponseMessage> SendEmailTrainer(TrainerEmailDto trainerEmail,string type )
+        public async Task<ResponseMessage> SendEmailTrainer(TrainerEmailDto trainerEmail, string type)
         {
             try
             {
                 var appSettings = _configuration.GetSection("ApplicationSetting");
 
                 var clientUrl = appSettings["Client_URL"];
-                
+
 
                 var url = type == "report" ? $"{clientUrl}/trainee-form/training-report-form/" : $"{clientUrl}/trainee-form/";
 
                 var email = new EmailMetadata
                   (trainerEmail.Email, "Trainees List",
                       $"Dear {trainerEmail.FullName},\n\n by clicking the link below you can add the trainees {url}{trainerEmail.TrainingId}.\n\nSincerely,\nEMIA");
-               var result =  await _emailService.Send(email);
+                var result = await _emailService.Send(email);
 
                 if (result.Success)
                 {
@@ -431,7 +549,8 @@ namespace IntegratedImplementation.Services.Training
                         Success = true,
                         Message = $"Email send to {trainerEmail.FullName} Sucessfully !!!"
                     };
-                }else
+                }
+                else
                 {
                     return new ResponseMessage
                     {
@@ -440,7 +559,8 @@ namespace IntegratedImplementation.Services.Training
                     };
                 }
 
-            }catch  (Exception ex)
+            }
+            catch (Exception ex)
             {
                 return new ResponseMessage
                 {
@@ -456,12 +576,12 @@ namespace IntegratedImplementation.Services.Training
 
         //training report 
 
-       public async Task<TrainingReportGetDto> GetTrainingReport(Guid TainingId)
+        public async Task<TrainingReportGetDto> GetTrainingReport(Guid TainingId)
         {
 
-            var result = await _dbContext.TrainingReports.Include(x=>x.ReportAttachments).Where(x=>x.TrainingId==TainingId)
-                               
-                               .Select(tr=>  new TrainingReportGetDto
+            var result = await _dbContext.TrainingReports.Include(x => x.ReportAttachments).Where(x => x.TrainingId == TainingId)
+
+                               .Select(tr => new TrainingReportGetDto
                                {
                                    Id = tr.Id,
                                    Objective = tr.Objective,
@@ -470,9 +590,9 @@ namespace IntegratedImplementation.Services.Training
                                    Challenges = tr.Challenges,
                                    LessonsLearned = tr.LessonsLearned,
                                    Summary = tr.Summary,
-                                   TopicsCoverd = tr .TopicsCoverd,
+                                   TopicsCoverd = tr.TopicsCoverd,
                                    PrePostSummary = tr.PrePostSummary,
-                                   Attachments = tr.ReportAttachments.Where(x=>x.FileType==FileType.ATTACHMENT).Select(x=>x.FilePath).ToList(),
+                                   Attachments = tr.ReportAttachments.Where(x => x.FileType == FileType.ATTACHMENT).Select(x => x.FilePath).ToList(),
 
                                    Images = tr.ReportAttachments.Where(x => x.FileType == FileType.IMAGES).Select(x => x.FilePath).ToList(),
 
@@ -490,7 +610,7 @@ namespace IntegratedImplementation.Services.Training
         {
             try
             {
-                var trainingReport =await  _dbContext.TrainingReports.Where(x => x.TrainingId == trainingPostDto.TrainingId).FirstOrDefaultAsync();
+                var trainingReport = await _dbContext.TrainingReports.Where(x => x.TrainingId == trainingPostDto.TrainingId).FirstOrDefaultAsync();
 
                 if (trainingReport == null)
                 {
@@ -507,15 +627,15 @@ namespace IntegratedImplementation.Services.Training
                         Summary = trainingPostDto.Summary,
                         PrePostSummary = trainingPostDto.PrePostSummary,
                         CreatedDate = DateTime.Now,
-                       
+
                     };
 
                     await _dbContext.TrainingReports.AddAsync(TrainingPost);
-                    await _dbContext.SaveChangesAsync();                   
+                    await _dbContext.SaveChangesAsync();
 
 
 
-                   
+
 
                     var training = _dbContext.Trainings.Find(trainingPostDto.TrainingId);
 
@@ -735,7 +855,7 @@ namespace IntegratedImplementation.Services.Training
                 await _dbContext.SaveChangesAsync();
                 return new ResponseMessage
                 {
-                    Success = true ,
+                    Success = true,
                     Message = " Successfully Submitted !!!"
                 };
 
@@ -747,6 +867,100 @@ namespace IntegratedImplementation.Services.Training
                 {
                     Success = false,
                     Message = "training not found"
+                };
+            }
+        }
+
+        public async Task<ResponseMessage> UpdateTraining(TrainingPostDto trainingPostDto)
+        {
+            try
+            {
+                var training = await _dbContext.Trainings.FindAsync(trainingPostDto.Id);
+
+                if (training != null)
+                {
+
+                    training.Title = trainingPostDto.Title;
+                    training.AllocatedCEU = trainingPostDto.AllocatedCEU;
+                    training.CourseVenue = trainingPostDto.CourseVenue;
+                    training.StartDate = trainingPostDto.StartDate;
+                    training.EndDate = trainingPostDto.EndDate;
+
+                    await _dbContext.SaveChangesAsync();
+
+                    return new ResponseMessage
+                    {
+                        Success = true,
+                        Message = "Training Successfully Deleted !!!"
+
+                    };
+
+                }
+                else
+                {
+                    return new ResponseMessage
+                    {
+                        Success = false,
+                        Message = "Training Not Found!!!"
+
+                    };
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
+                return new ResponseMessage
+                {
+                    Success = false,
+                    Message = ex.Message
+                };
+
+            }
+        }
+
+        public async Task<ResponseMessage> DeleteTraining(Guid trainingId)
+        {
+            try
+            {
+                var training = await _dbContext.Trainings.FindAsync(trainingId);
+                if (training != null)
+                {
+                    var trainerList = await _dbContext.Trainers.Where(x=>x.TrainingId == trainingId).ToListAsync();
+                    var traineeList = await _dbContext.Trainees.Where(x=>x.TrainingId == trainingId).ToListAsync();
+
+                    _dbContext.RemoveRange(traineeList);
+                    _dbContext.RemoveRange(trainerList); 
+                    _dbContext.RemoveRange(training);
+
+                    await _dbContext.SaveChangesAsync();
+
+                    return new ResponseMessage
+                    {
+                        Success = true,
+                        Message = "Training Successfully Deleted!!!"
+
+                    };
+
+                }
+                else
+                {
+                    return new ResponseMessage
+                    {
+                        Success = false,
+                        Message = "Training Not Found!!!"
+
+                    };
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return new ResponseMessage
+                {
+                    Success = false,
+                    Message = ex.Message
                 };
             }
         }

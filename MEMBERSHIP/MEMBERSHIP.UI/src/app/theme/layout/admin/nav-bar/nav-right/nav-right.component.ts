@@ -22,6 +22,8 @@ export class NavRightComponent implements OnInit {
   ngOnInit(): void {
 
     this.currentUser = this.userService.getCurrentUser()
+
+    console.log(this.currentUser)
    if(this.currentUser.role.toUpperCase()=="MEMBER"){
     this.getMemberEvent()
    }
@@ -62,8 +64,7 @@ export class NavRightComponent implements OnInit {
 
 
 
-  detail(eventId : string ){
-   
+  detail(eventId : string ){   
 
     this.router.navigate(['configuration/event-detail', eventId]);
   }

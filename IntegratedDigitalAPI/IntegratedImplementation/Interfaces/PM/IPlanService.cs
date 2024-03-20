@@ -22,8 +22,10 @@ namespace IntegratedDigitalAPI.Services.PM.Plan
         public Task<GetStartEndDate> GetDateTime(Guid planId);
 
         public Task<ResponseMessage> DeleteProject(Guid planId);
-        public Task<PlanPieChartPostDto> GetPlanPieCharts(Guid planId, int quarter);
-        public Task<PlanBarChartPostDto> GetPlanBarCharts(Guid planId);
+        public Task<PlanPieChartPostDto> GetPlanPieCharts(Guid? planId,Guid? strategicPlanId , int quarter);
+        public Task<PlanBarChartPostDto> GetPlanBarCharts(Guid? planId, Guid? strategicPlanId);
+
+
         //public Task<int> UpdatePrograms(Programs Programs);
         //public Task<List<ProgramDto>> GetPrograms();
         //public Task<List<SelectListDto>> GetProgramsSelectList();

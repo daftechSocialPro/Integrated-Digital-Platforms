@@ -116,13 +116,6 @@ builder.Services.AddAuthentication(x =>
     };
 });
 
-builder.Services.UseKestrel(options =>
-{
-    options.Listen(IPAddress.Any, 443, listenOptions =>
-    {
-        listenOptions.UseHttps("cert.pem", "key.pem");
-    });
-});
 
 
 builder.Services.AddHttpContextAccessor();

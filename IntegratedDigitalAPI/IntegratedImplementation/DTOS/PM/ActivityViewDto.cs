@@ -5,6 +5,7 @@ using IntegratedImplementation.DTOS.PM;
 using IntegratedInfrustructure.Model.PM;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace IntegratedDigitalAPI.DTOS.PM
 {
@@ -55,7 +56,11 @@ namespace IntegratedDigitalAPI.DTOS.PM
 
         public List<ActivityLocation> ActivityLocations { get; set; }
         public string? ProgressStatus { get; set; }
-        public bool? IsCancelled { get; set; }     
+        public bool? IsCancelled { get; set; }   
+        
+        public bool ? IsStarted { get; set; }
+
+        public bool ? IsCompleted { get; set; }
 
     }
 
@@ -79,6 +84,13 @@ namespace IntegratedDigitalAPI.DTOS.PM
         public int Year { get; set; }
     }
 
+
+    public record ActivityPlanGetDto
+    {
+        public Guid EmployeeId { get; set; }
+
+        public List<string> Roles { get; set; }
+    }
 
     public class ActivityTargetDivisionDto
     {

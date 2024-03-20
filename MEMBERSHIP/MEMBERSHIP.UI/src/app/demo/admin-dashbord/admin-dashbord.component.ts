@@ -12,6 +12,8 @@ import * as echarts from 'echarts';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { DropDownService } from 'src/app/services/dropDown.service';
 import { SelectList } from 'src/models/ResponseMessage.Model';
+import { UserService } from 'src/app/services/user.service';
+import { UserView } from 'src/models/auth/userDto';
 
 @Component({
   selector: 'app-default', 
@@ -49,10 +51,12 @@ export default class AdminDashbordComponent {
   selectPaymentStatus:string='all'
 
   chapters:SelectList[]
+
+  userView : UserView
   
 
   // Constructor
-  constructor(private memberService: MemberService,private dropDownService:DropDownService) {
+  constructor(private memberService: MemberService,private dropDownService:DropDownService,private userService : UserService) {
 
   }
   
@@ -65,7 +69,12 @@ export default class AdminDashbordComponent {
 
     this.getMembers();
     this.getChapter('ETHIOPIAN')
+
+    this.userView = this.userService.getCurrentUser()
+
+
  
+    // console.log("User",this.userService.getCurrentUser())
 
 
   }
@@ -193,11 +202,17 @@ export default class AdminDashbordComponent {
       next: (res) => {
         this.members = res;
         this.filterdMembers=res
+
+        if (this.userView.regionId!=""){
+          this.selectedChapter = this.userView.regionId
+          this.applyFilter()
+        }
         this.getGenderChart();
         this.getMembershipTypeChart();
         this.getPaymentStatusChart();        
         this.getPendingMembers();
         this.generate(this.currentYear.toString())
+
        
       }
     });

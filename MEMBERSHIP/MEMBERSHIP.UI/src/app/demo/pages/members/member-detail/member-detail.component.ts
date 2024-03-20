@@ -23,6 +23,9 @@ export class MemberDetailComponent implements OnInit {
   educationalLelvels: SelectList[];
   educationalFields: SelectList[];
   updateProfileForm: FormGroup;
+
+
+  memberships: SelectList[];
   constructor(
     private userService: UserService,
     private commonService: CommonService,
@@ -38,6 +41,9 @@ export class MemberDetailComponent implements OnInit {
     this.user = this.userService.getCurrentUser();
     console.log(this.member)
     this.getEducationalLevels();
+    this.getMemberships(this.member&&this.member.membershipCategory)
+
+    if (this.member){}
     this.updateProfileForm = this.formBuilder.group({
       fullName: [this.member.fullName,Validators.required],
       phoneNumber :[this.member.phoneNumber,Validators.required],
@@ -48,7 +54,26 @@ export class MemberDetailComponent implements OnInit {
       email : [this.member.email],
       woreda: [this.member.woreda],
       birthDate: [this.member.birthDate.split('T')[0], Validators.required],
-      instituteRole: [this.member.instituteRole, Validators.required]
+      instituteRole: [this.member.instituteRole, Validators.required],
+      expiredDate: [this.member.expiredDate ? this.member.expiredDate.toString().split('T')[0]:null],
+      lastPaid : [this.member.lastPaid!=null?  this.member.lastPaid.toString().split('T')[0]:null],
+      paymentStatus :[this.member.paymentStatus],
+      membershipType:[this.member.membershipTypeId]
+
+
+    });
+
+  
+  }
+
+
+  getMemberships(category: string) {
+    this.dropdownService.getMembershipDropDown(category).subscribe({
+      next: (res) => {
+        this.memberships = res;
+
+        this.updateProfileForm.controls['membershipType'].setValue(this.member.membershipTypeId.toLowerCase())
+      }
     });
   }
 
@@ -98,7 +123,12 @@ export class MemberDetailComponent implements OnInit {
         gender: this.updateProfileForm.value.gender,
         woreda: this.updateProfileForm.value.woreda,
         instituteRole: this.updateProfileForm.value.instituteRole,
-        institute: this.updateProfileForm.value.institute
+        institute: this.updateProfileForm.value.institute,
+
+        lastPaid:this.updateProfileForm.value.lastPaid,
+        expiredDate : this.updateProfileForm.value.expiredDate,
+        paymentStatus : this.updateProfileForm.value.paymentStatus,
+        membershipTypeId :this.updateProfileForm.value.membershipType
       };
 
       const formData = new FormData();
@@ -114,6 +144,13 @@ export class MemberDetailComponent implements OnInit {
       formData.set('woreda',updateProfile.woreda)
       formData.set('instituteRole',updateProfile.instituteRole)
       formData.set('institute',updateProfile.institute)
+
+      formData.set('lastPaid',updateProfile.lastPaid.toString())
+      formData.set('expiredDate',updateProfile.expiredDate.toString())
+      formData.set('paymentStatus',updateProfile.paymentStatus)
+      formData.set('membershipTypeId',updateProfile.membershipTypeId)
+      
+      
       formData.append("image", this.fileGH);
     
     this.memberService.updateProfileFromAdmin(formData).subscribe({

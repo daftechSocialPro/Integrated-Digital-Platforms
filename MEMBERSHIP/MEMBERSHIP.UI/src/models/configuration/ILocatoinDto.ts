@@ -18,6 +18,8 @@ export interface ICountryGetDto {
     regionName: string;
     countryType: string;
     createdById?: string;
+    userName?:string;
+    password?:string;
   }
   
   export interface IRegionGetDto {
@@ -25,6 +27,8 @@ export interface ICountryGetDto {
     regionName: string;
     countryName?: string;
     countryType: string;
+    userName ?:string;
+    password ?:string
   }
   
   export interface IZonePostDto {

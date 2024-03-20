@@ -96,7 +96,7 @@ namespace MembershipDigitalAPI.Controllers.HRM
 
         [HttpPut]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> UpdateMember(MemberUpdateDto memberDto)
+        public async Task<IActionResult> UpdateMember([FromForm]MemberUpdateDto memberDto)
         {
             if (ModelState.IsValid)
             {

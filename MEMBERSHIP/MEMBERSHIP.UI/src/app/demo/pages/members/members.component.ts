@@ -6,6 +6,9 @@ import { ConfigurationService } from 'src/app/services/configuration.service';
 import { MemberService } from 'src/app/services/member.service';
 import { IMembersGetDto } from 'src/models/auth/membersDto';
 import { MemberDetailComponent } from './member-detail/member-detail.component';
+import { RegisterMembersAdminComponent } from './register-members-admin/register-members-admin.component';
+import { UserService } from 'src/app/services/user.service';
+import { UserView } from 'src/models/auth/userDto';
 
 @Component({
   selector: 'app-members',
@@ -19,8 +22,10 @@ export class MembersComponent implements OnInit {
   paginatedMembers: IMembersGetDto[]=[];
   searchTerm: string = '';
   selectedFile: File | null = null;
+  user: UserView
   ngOnInit(): void {
     this.getMemberss();
+    this.user = this.userService.getCurrentUser()
   }
 
   constructor(
@@ -28,6 +33,7 @@ export class MembersComponent implements OnInit {
     private commonService: CommonService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
+    private userService : UserService,
     private controlService: MemberService
   ) { }
 
@@ -153,5 +159,13 @@ export class MembersComponent implements OnInit {
       key: 'positionDialog'
     });
 
+  }
+
+
+  RegisterMember (){
+    let modalRef = this.modalService.open(RegisterMembersAdminComponent,{size:'lg',backdrop:'static'})
+    modalRef.result.then(()=>{
+      this.getMemberss()
+    })
   }
 }

@@ -4,8 +4,10 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { CommonService } from 'src/app/services/common.service';
 import { DropDownService } from 'src/app/services/dropDown.service';
 import { MemberService } from 'src/app/services/member.service';
+import { UserService } from 'src/app/services/user.service';
 import { SelectList } from 'src/models/ResponseMessage.Model';
 import { IMembersGetDto } from 'src/models/auth/membersDto';
+import { UserView } from 'src/models/auth/userDto';
 
 @Component({
   selector: 'app-membership-report',
@@ -42,15 +44,25 @@ export class MembershipReportComponent implements OnInit {
   membershipTypeData: any[];
   chartOptions3: any;
   loading3: boolean = true;
+  userView : UserView
 
   ngOnInit(): void {
      this.getMemberss();
+
+     this.userView = this.userService.getCurrentUser()
+
+     if(this.userView.regionId!=''){
+
+      this.getRegions('ETHIOPIAN')
+      
+     }
      
    // this.getMemberReport()
   }
 
   constructor(
     private modalService: NgbModal,
+    private userService : UserService,
     private commonService: CommonService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,  private controlService: MemberService,
@@ -62,6 +74,11 @@ export class MembershipReportComponent implements OnInit {
       next: (res) => {
         this.Members = res;
        this.filterdMembers = res 
+
+       if(this.userView.regionId!=''){
+       
+        this.applyFilter()
+      }
 
        this.getPaymentStatusChart()
        this.getGenderChart()
@@ -234,6 +251,11 @@ export class MembershipReportComponent implements OnInit {
     this.dropDownService.getRegionsDropdown(value).subscribe({
       next: (res) => {
         this.chapters = res
+
+        if(this.userView.regionId!=''){
+          this.selectedChapter = this.userView.regionId
+
+        }
       }
     })
   }
@@ -333,6 +355,9 @@ export class MembershipReportComponent implements OnInit {
   // }
 
   getRegions(countryType: string) { 
+
+
+
 this.getChapter(countryType)
   }
 

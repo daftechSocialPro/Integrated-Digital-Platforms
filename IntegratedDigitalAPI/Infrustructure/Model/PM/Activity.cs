@@ -78,10 +78,7 @@ namespace IntegratedInfrustructure.Models.PM
         public virtual ActivityParent ActivityParent { get; set; } = null!;
 
         public Guid StrategicPlanId { get; set; }
-        public virtual StrategicPlan StrategicPlan { get; set; }
-
-
-        
+        public virtual StrategicPlan StrategicPlan { get; set; }        
 
         public Guid StrategicPlanIndicatorId { get; set; }
         public virtual Indicator StrategicPlanIndicator { get; set; }
@@ -106,6 +103,12 @@ namespace IntegratedInfrustructure.Models.PM
 
         [DefaultValue(false)]
         public bool isCancelled { get; set;}
+
+        [DefaultValue(false)]
+        public bool isCompleted { get; set;}
+
+        public bool isStarted { get; set;}
+
 
     }
 

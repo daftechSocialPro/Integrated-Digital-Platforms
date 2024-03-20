@@ -4,6 +4,9 @@ import { CommonService } from 'src/app/services/common.service';
 import * as html2pdf from 'html2pdf.js';
 import { IMembersGetDto } from 'src/models/auth/membersDto';
 import { HttpClient } from '@angular/common/http';
+
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+
 @Component({
   selector: 'app-generate-id-card',
   templateUrl: './generate-id-card.component.html',
@@ -12,16 +15,27 @@ import { HttpClient } from '@angular/common/http';
 export class GenerateIdCardComponent implements OnInit {
   @Input() member:IMembersGetDto;
   imagePath: string="'../../../../../assets/images/profile.jpg'";
+  isMobile : boolean
 
   constructor(   
     private commonService: CommonService,
-    private http:HttpClient
+    private http:HttpClient,
+    private breakpointObserver: BreakpointObserver
   ) {}
 
   ngOnInit(): void {
     this.getImage2()
+    this.breakpointObserver.observe([
+      Breakpoints.Handset,
+      Breakpoints.Small,
+      Breakpoints.XSmall
+    ]).subscribe(result => {
+      this.isMobile = result.matches;
+    });
 
   }
+
+ 
 
   getImage(url: string) {
     return this.commonService.createImgPath(url);
@@ -41,7 +55,13 @@ export class GenerateIdCardComponent implements OnInit {
     } 
   }
 
-  async generatePdf() {   
+  async generatePdf() {  
+ 
+    if (this.isMobile){
+      this.isMobile=false 
+
+    }
+    
   
     const cardElement = document.getElementById('card'); 
 
@@ -55,7 +75,28 @@ export class GenerateIdCardComponent implements OnInit {
           dpi: 300,
           pagebreak: { mode: 'landscape' }, // Set the DPI (dots per inch)
         })
-        .save(membername);
+        .save(membername)
+        .then(() => {
+       
+  
+          this.breakpointObserver.observe([
+            Breakpoints.Handset,
+            Breakpoints.Small,
+            Breakpoints.XSmall
+          ]).subscribe(result => {
+            this.isMobile = result.matches;
+            if (this.isMobile) {
+              cardElement.style.display = 'none';
+            }
+          });
+          // Handle setting this.isMobile if needed
+          // For example, if you need to toggle this.isMobile after PDF generation
+          // this.isMobile = false; 
+        })
+        .catch((error) => {
+          console.error('Error generating PDF:', error);
+        });
+   
     } else {
       // Handle the case where the card element is not found
       console.error('Card element not found.');

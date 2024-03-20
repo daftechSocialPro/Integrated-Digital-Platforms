@@ -28,6 +28,24 @@
                             <label for="floatingInput">Chapter Name</label>
                         </div>
                     </div>
+
+
+                    <div class="col-md-6" *ngIf="Region">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" formControlName="userName" id="floatingInput" />
+                            <label for="floatingInput">User name</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6" *ngIf="Region">
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" formControlName="password" id="floatingInput" />
+                            <label for="floatingInput">Password</label>
+                        </div>
+                    </div>
+
+
+
                  
 
                 </div>

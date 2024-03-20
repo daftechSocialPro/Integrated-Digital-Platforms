@@ -146,8 +146,68 @@
                                     <label for="birthDate">Birth Date</label>
                                 </div>
                             </div>
+
+                            <div class="col-md-4">
+                                <div class="form-floating mb-3">
+                                    <select class="form-control" formControlName="paymentStatus">
+                                        <option>PENDING</option>
+                                        <option>PAID</option>
+                                        <option>EXPIRED</option>
+                                    </select>
+                                    <label for="paymetnStatus">Payment Status</label>
+                                </div>
+                            </div>
                         </div>
 
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-floating mb-3">
+                                    <input type="date" class="form-control" formControlName="lastPaid"
+                                        id="lastPaid" />
+                                    <label for="lastPaid" >Last Paid</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-floating mb-3">
+                                    <input type="date" class="form-control" formControlName="expiredDate"
+                                        id="expiredDate" />
+                                    <label for="expiredDate">Expired Date</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-floating mb-3">
+                
+                                  <select class="form-control" #category (change)="getMemberships(category.value)">
+                                    <option></option>
+                                    <option value="MIDWIVES">MIDWIVES</option>
+                                    <option value="NONMIDWIVES">NONMIDWIVES</option>
+                
+                                  </select>
+                                  <label for="email">Membership Category</label>
+                                </div>
+                              </div>
+                
+                
+                
+                              <div class="col-md-4">
+                
+                                <div class="form-floating mb-3">
+                
+                                  <select class="form-control" formControlName="membershipType">
+                                    <option></option>
+                                    <option *ngFor="let item of memberships" [value]="item.id.toLowerCase()">{{item.name}}</option>
+                
+                                  </select>
+                
+                                  <label for="membershipType">Membership Types</label>
+                                </div>
+                
+                
+                              </div>
+
+                        </div>
                         <div class="col-12 text-end mt-4">
                             <button type="submit" [disabled]="!updateProfileForm.valid"
                                 class="btn btn-outline-warning">Update</button>

@@ -80,18 +80,18 @@ export class TraineesFormComponent implements OnInit {
       gender: ['', Validators.required],
       profession: ['', Validators.required],
       phoneNumber: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      age: ['', Validators.required],
+      email: ['', [ Validators.email]],
+      age: [0],
       region: ['', Validators.required],
       zone: ['', Validators.required],
       woreda: ['', Validators.required],  
       
       educationalLevel: ['', Validators.required],
-      educationalField: ['', Validators.required],
+      educationalField: ['field'],
       nameofOrganizaton: ['', Validators.required],
       typeofOrganization: ['', Validators.required],
       preSummary: ['', Validators.required],
-      postSummary: [''],
+      postSummary: [0],
    
     });
   }
@@ -195,12 +195,15 @@ export class TraineesFormComponent implements OnInit {
       next:(res)=>{
         this.traineeData = res 
         this.filterdTraines= res 
+
+      
       }
     })}
     else{
       this.trainingService.getTraineeList(this.traininggId).subscribe({
         next:(res)=>{
           this.traineeData = res 
+          this.filterdTraines= res 
         }
       })
     }
@@ -280,6 +283,24 @@ export class TraineesFormComponent implements OnInit {
 
       this.getTrainee()
     })
+  }
+
+  deleteRow(row:any){
+
+    this.trainingService.deleteTrainee(row.id).subscribe({
+      next:(res)=>{
+        if(res.success){
+
+          this.messageService.add({severity:'success',detail:'Success',summary:res.message})
+          this.getTrainee()
+
+        }else {
+          this.messageService.add({severity:'error',detail:'Something went wrong !!!',summary:res.message})
+        }
+      }
+    })
+    
+
   }
 
   exportAsExcel(name:string) {

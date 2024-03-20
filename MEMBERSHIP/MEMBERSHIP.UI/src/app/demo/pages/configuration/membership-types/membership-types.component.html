@@ -20,7 +20,7 @@
 
 
 <div class="card p-4">
-    <div class="col-lg-12 text-end p-2">
+    <div class="col-lg-12 text-end p-2" *ngIf="userView.role.includes('SuperAdmin')">
         <button type="button" class="btn btn-outline-success" (click)="addMembershipType()">
             <i class="pi pi-plus me-1" style="font-size: 12px;"></i> Membership Type
         </button>
@@ -43,7 +43,7 @@
                             <p class="card-text"><strong>Category:</strong> {{item.membershipCategory}}</p>
                             <p class="card-text"><strong>Description:</strong> {{item.description}}</p>
 
-                            <div class="card-buttons">
+                            <div class="card-buttons" *ngIf="userView.role.includes('SuperAdmin')">
                                 <button type="button" (click)="updateMembershipType(item)"
                                     class="btn btn-outline-warning btn-sm">
                                     <i class="ti ti-pencil"></i> Edit

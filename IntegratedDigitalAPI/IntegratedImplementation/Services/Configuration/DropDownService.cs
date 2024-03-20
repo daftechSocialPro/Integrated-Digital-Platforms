@@ -178,7 +178,7 @@ namespace IntegratedImplementation.Services.Configuration
         }
         public async Task<List<SelectListDto>> GetStrategicPlans()
         {
-            var strategicPlans = await _dbContext.StrategicPlans.Select(x => new SelectListDto
+            var strategicPlans = await _dbContext.StrategicPlans.OrderBy(x=>x.Name).Select(x => new SelectListDto
             {
                 Id = x.Id,
                 Name = x.Name
