@@ -55,7 +55,7 @@ namespace IntegratedInfrustructure.Data
             RESIGNED
         }
 
-        public enum PaymentType
+        public enum EmployeePaymentType
         {
             PERDAY,
             PERWEEK,
@@ -124,7 +124,8 @@ namespace IntegratedInfrustructure.Data
             NUMBEROFDAYOFFS,
             RESIGNATIONREQUESTDAYS,
             ANNUALLEAVEREQESTMONTH,
-            LEAVEREQUESTDAYSBEFORE
+            LEAVEREQUESTDAYSBEFORE,
+
         }
 
         public enum PerformanceStatus
@@ -351,5 +352,47 @@ namespace IntegratedInfrustructure.Data
             MEDIUM_TERM_LIABILITY,
             OTHER_ASSET
         }
+
+        public enum ACCOUNTINGPERIODTYPE
+        {
+            TWELVE,
+            TWENTYFOUR,
+            THIRTYSIX,
+            FORTYEIGHT
+        }
+
+        public enum CALANDERTYPE
+        {
+            ETHIOPIAN,
+            GREGORIAN
+        }
+
+
+        public enum PaymentType
+        {
+            TRANSFER,
+            CHECK,
+            CASH
+        }
+
+        public enum GeneralPSett
+        {
+            PENSIONEMPLOYEE,
+            PENSIONCOMPANY,
+            PROVIDENTFUND,
+            NORMALOT,
+            NIGHTOT,
+            DAYOFFOT,
+            HOLIDAYOT,
+
+        }
+
+        public enum PayrollReportType
+        {
+            TRANSPORT_FUEL,
+            COMMUNICATION,
+            POSITION
+        }
+
     }
 }

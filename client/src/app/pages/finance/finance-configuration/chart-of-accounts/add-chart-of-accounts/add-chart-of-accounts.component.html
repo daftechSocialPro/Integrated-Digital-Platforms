@@ -1,0 +1,59 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">{{chartOfAccounts?"Update":"Add"}} Chart Of Accounts</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Chart Of Accounts</h5>
+            <div class="row">
+                <div class="col-lg-12">
+                    <form class="" [formGroup]="chartOfAccountsForm" (ngSubmit)="submit()">
+                        <div class="modal-body">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <select class="form-control" formControlName="accountTypeId">
+                                            <option *ngFor="let item of accountTypeSelectList" [value]="item.id">{{item.name}}</option>
+                                        </select>
+                                        <label for="normal_Balance">Account Type</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="accountNo"
+                                            placeholder="Add Account Number" formControlName="accountNo">
+                                        <label for="accountNo">Account Number</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <p-checkbox formControlName="onlyControlAccount" [binary]="true" inputId="onlyControlAccount"></p-checkbox>
+                                        <label for="onlyControlAccount">Only Control Account</label>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-12">
+                                    <div class="form-floating">
+                                        <textarea class="form-control"  formControlName="description" id="description" rows="5">
+                                        </textarea>
+                                        <label for="type">Description</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
+                                (click)="closeModal()">Close</button>
+                            <button type="button" type="submit" [disabled]="!chartOfAccountsForm.valid"
+                                [class]="chartOfAccounts?'btn btn-outline-warning':'btn btn-outline-primary'">
+                                {{chartOfAccounts?"Update":"Create"}}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -214,7 +214,16 @@
                   <ul id="finance-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li *ngIf="roleMatch(['HRM-CONFIGURATION'])"> <a routerLink="/finance/financeconfig"
                                     routerLinkActive="active">
-                                    <i class="bi bi-circle"></i><span>Configuration</span> </a></li>
+                                    <i class="bi bi-circle"></i><span>Configuration</span> </a>
+                        </li>
+                        <li *ngIf="roleMatch(['HRM-CONFIGURATION'])"> <a routerLink="/finance/payments"
+                              routerLinkActive="active">
+                              <i class="bi bi-circle"></i><span>Payments</span> </a>
+                        </li>
+                        <li *ngIf="roleMatch(['HRM-CONFIGURATION'])"> <a routerLink="/finance/payroll"
+                              routerLinkActive="active">
+                              <i class="bi bi-circle"></i><span>Payroll</span> </a>
+                        </li>
                        
                         
                   </ul>

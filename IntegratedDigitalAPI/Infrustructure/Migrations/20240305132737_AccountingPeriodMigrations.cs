@@ -6,85 +6,76 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace IntegratedInfrustructure.Migrations
 {
     /// <inheritdoc />
-    public partial class chartofAccount : Migration
+    public partial class AccountingPeriodMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "ChartOfAccounts",
+                name: "AccountingPeriods",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AccountTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AccountNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AccountingPeriodType = table.Column<int>(type: "int", nullable: false),
+                    CalanderType = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OnlyControlAccount = table.Column<bool>(type: "bit", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedById = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Rowstatus = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ChartOfAccounts", x => x.Id);
+                    table.PrimaryKey("PK_AccountingPeriods", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ChartOfAccounts_AccountTypes_AccountTypeId",
-                        column: x => x.AccountTypeId,
-                        principalTable: "AccountTypes",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_ChartOfAccounts_Users_CreatedById",
+                        name: "FK_AccountingPeriods_Users_CreatedById",
                         column: x => x.CreatedById,
                         principalTable: "Users",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "SubsidiaryAccounts",
+                name: "PeriodDetails",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ChartOfAccountId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AccountNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Sequence = table.Column<int>(type: "int", nullable: false),
+                    AccountingPeriodId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PeriodNo = table.Column<int>(type: "int", nullable: false),
+                    PeriodStart = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PeriodEnd = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedById = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Rowstatus = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SubsidiaryAccounts", x => x.Id);
+                    table.PrimaryKey("PK_PeriodDetails", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SubsidiaryAccounts_ChartOfAccounts_ChartOfAccountId",
-                        column: x => x.ChartOfAccountId,
-                        principalTable: "ChartOfAccounts",
+                        name: "FK_PeriodDetails_AccountingPeriods_AccountingPeriodId",
+                        column: x => x.AccountingPeriodId,
+                        principalTable: "AccountingPeriods",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_SubsidiaryAccounts_Users_CreatedById",
+                        name: "FK_PeriodDetails_Users_CreatedById",
                         column: x => x.CreatedById,
                         principalTable: "Users",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ChartOfAccounts_AccountTypeId",
-                table: "ChartOfAccounts",
-                column: "AccountTypeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ChartOfAccounts_CreatedById",
-                table: "ChartOfAccounts",
+                name: "IX_AccountingPeriods_CreatedById",
+                table: "AccountingPeriods",
                 column: "CreatedById");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SubsidiaryAccounts_ChartOfAccountId",
-                table: "SubsidiaryAccounts",
-                column: "ChartOfAccountId");
+                name: "IX_PeriodDetails_AccountingPeriodId",
+                table: "PeriodDetails",
+                column: "AccountingPeriodId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SubsidiaryAccounts_CreatedById",
-                table: "SubsidiaryAccounts",
+                name: "IX_PeriodDetails_CreatedById",
+                table: "PeriodDetails",
                 column: "CreatedById");
         }
 
@@ -92,10 +83,10 @@ namespace IntegratedInfrustructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "SubsidiaryAccounts");
+                name: "PeriodDetails");
 
             migrationBuilder.DropTable(
-                name: "ChartOfAccounts");
+                name: "AccountingPeriods");
         }
     }
 }

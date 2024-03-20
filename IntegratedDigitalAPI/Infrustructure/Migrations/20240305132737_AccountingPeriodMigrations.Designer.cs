@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IntegratedInfrustructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240305065034_chartofAccount")]
-    partial class chartofAccount
+    [Migration("20240305132737_AccountingPeriod")]
+    partial class AccountingPeriodMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -565,6 +565,44 @@ namespace IntegratedInfrustructure.Migrations
                     b.ToTable("AccountTypes");
                 });
 
+            modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Configuration.AccountingPeriod", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("AccountingPeriodType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CalanderType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.ToTable("AccountingPeriods");
+                });
+
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Configuration.ChartOfAccount", b =>
                 {
                     b.Property<Guid>("Id")
@@ -644,6 +682,42 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasIndex("CreatedById");
 
                     b.ToTable("FinanceLookups");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Configuration.PeriodDetails", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AccountingPeriodId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("PeriodEnd")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PeriodNo")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("PeriodStart")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountingPeriodId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.ToTable("PeriodDetails");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Configuration.SubsidiaryAccount", b =>
@@ -4358,6 +4432,9 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<float>("Weight")
                         .HasColumnType("real");
 
+                    b.Property<bool>("isCancelled")
+                        .HasColumnType("bit");
+
                     b.Property<int?>("targetDivision")
                         .HasColumnType("int");
 
@@ -5146,6 +5223,15 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("CreatedBy");
                 });
 
+            modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Configuration.AccountingPeriod", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.Navigation("CreatedBy");
+                });
+
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Configuration.ChartOfAccount", b =>
                 {
                     b.HasOne("IntegratedInfrustructure.Model.FInance.Configuration.AccountType", "AccountType")
@@ -5168,6 +5254,23 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedById");
+
+                    b.Navigation("CreatedBy");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Configuration.PeriodDetails", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.FInance.Configuration.AccountingPeriod", "AccountingPeriod")
+                        .WithMany("PeriodDetail")
+                        .HasForeignKey("AccountingPeriodId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.Navigation("AccountingPeriod");
 
                     b.Navigation("CreatedBy");
                 });
@@ -7083,6 +7186,11 @@ namespace IntegratedInfrustructure.Migrations
             modelBuilder.Entity("IntegratedInfrustructure.Model.Configuration.ProjectFundSource", b =>
                 {
                     b.Navigation("ProjectFunds");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Configuration.AccountingPeriod", b =>
+                {
+                    b.Navigation("PeriodDetail");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Configuration.ChartOfAccount", b =>

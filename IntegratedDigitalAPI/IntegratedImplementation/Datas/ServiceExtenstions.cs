@@ -8,6 +8,7 @@ using IntegratedDigitalAPI.Services.PM.Commite;
 using IntegratedDigitalAPI.Services.PM.Plan;
 using IntegratedDigitalAPI.Services.PM.ProgressReport;
 using IntegratedImplementation.Interfaces.Configuration;
+using IntegratedImplementation.Interfaces.Finance.Action;
 using IntegratedImplementation.Interfaces.Finance.Configuration;
 using IntegratedImplementation.Interfaces.HRM;
 using IntegratedImplementation.Interfaces.Inventory;
@@ -16,6 +17,7 @@ using IntegratedImplementation.Interfaces.PM;
 using IntegratedImplementation.Interfaces.Training;
 using IntegratedImplementation.Interfaces.Vacancy;
 using IntegratedImplementation.Services.Configuration;
+using IntegratedImplementation.Services.Finance.Action;
 using IntegratedImplementation.Services.Finance.Configuration;
 using IntegratedImplementation.Services.HRM;
 using IntegratedImplementation.Services.Inventory;
@@ -110,7 +112,13 @@ namespace IntegratedImplementation.Datas
 
             #region finance
             services.AddScoped<IAccountTypeService, AccountTypeService>();            
-            services.AddScoped<IFinanceLookupService, FinanceLookupService>();            
+            services.AddScoped<IFinanceLookupService, FinanceLookupService>();       
+            services.AddScoped<IChartOfAccountService, ChartOfAccountService>();       
+            services.AddScoped<IAccountingPeriodService, AccountingPeriodService>();
+            services.AddScoped<IPayrollSettingService, PayrollSettingService>();
+            services.AddScoped<IPaymentsService, PaymentService>();       
+            services.AddScoped<IPayrollService, PayrollService>();
+                 
             #endregion
 
 

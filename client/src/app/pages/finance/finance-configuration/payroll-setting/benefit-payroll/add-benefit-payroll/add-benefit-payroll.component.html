@@ -1,0 +1,58 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Add Benefit Payroll</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Benefit Payroll</h5>
+            <div class="row">
+                <div class="col-lg-12">
+                    <form class="" [formGroup]="benefitPayrollForm" (ngSubmit)="submit()">
+                        <div class="modal-body">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <select class="form-control" formControlName="payrollReportType">
+                                            <option *ngFor="let item of payrollReportType" [value]="item.value">{{item.name}}</option>
+                                        </select>
+                                        <label for="payrollReportType">Payroll Report Type</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input class="form-check-input" type="checkbox" name="taxable" 
+                                        formControlName="taxable" value="false" id="taxable">
+                                        <label for="lookupValue">Taxable</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">   
+                                    <p-multiSelect #SelectedItem formControlName ="benefitId" (onChange)="SelectItems($event)" [options]="benefitList" placeholder="Select Benefits(s)" optionLabel="label" class="multiselect-custom" display="chip">
+                                        <ng-template let-benefit pTemplate="item">
+                                            <div class="flex align-items-center">
+                                                <span class="ml-2">{{benefit.label}}</span>
+                                            </div>
+                                            
+                                        </ng-template>
+                                    </p-multiSelect>
+                                    
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
+                                (click)="closeModal()">Close</button>
+                            <button type="button" type="submit" [disabled]="!benefitPayrollForm.valid"
+                                class="btn btn-outline-primary">
+                                Create
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

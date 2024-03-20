@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Implementation.Helper;
+using IntegratedImplementation.DTOS.Configuration;
 using IntegratedImplementation.DTOS.Finance.Configuration;
 using IntegratedImplementation.DTOS.PM;
 using IntegratedImplementation.Interfaces.Finance.Configuration;
@@ -62,6 +63,7 @@ namespace IntegratedImplementation.Services.Finance.Configuration
             var accountTypes = await _dbContext.AccountTypes.AsNoTracking().ProjectTo<AccountTypeGetDto>(_mapper.ConfigurationProvider).ToListAsync();
             return accountTypes;
         }
+
 
         public async Task<ResponseMessage> UpdateAccountType(AccountTypeGetDto accountType)
         {

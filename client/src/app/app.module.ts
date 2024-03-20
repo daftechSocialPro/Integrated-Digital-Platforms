@@ -599,7 +599,12 @@ import { ResizableModule } from './components/resizable/resizable.modulte';
     AssignReplacementComponent,
 
     PlanVsAchivmentProjectComponent,
+<<<<<<< HEAD
     PlanDashboardComponent,
+=======
+
+    PlanDashboardComponent
+>>>>>>> de500afbf9303361c8b2aa7691bd64a6bc40fdaf
 
     //  AddMeasurementComponent,
     //  UpdateMeasurmentComponent
