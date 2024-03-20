@@ -52,7 +52,7 @@ import { DepartmentComponent } from './pages/human-resource/hrm-configuration/de
 import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
-import { ListboxModule } from 'primeng/listbox';
+import {ListboxModule} from 'primeng/listbox';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { AddDepartmentComponent } from './pages/human-resource/hrm-configuration/department/add-department/add-department.component';
 import { UpdateDepartmentComponent } from './pages/human-resource/hrm-configuration/department/update-department/update-department.component';
@@ -61,18 +61,14 @@ import { AddPositionComponent } from './pages/human-resource/hrm-configuration/p
 import { UpdatePositionComponent } from './pages/human-resource/hrm-configuration/position/update-position/update-position.component';
 import { EmployeeManagmentComponent } from './pages/human-resource/employee-managment/employee-managment.component';
 import { AddEmployeeComponent } from './pages/human-resource/employee-managment/add-employee/add-employee.component';
-import { EmployeeDetailComponent } from './pages/human-resource/employee-managment/employee-detail/employee-detail.component';
+import { EmployeeDetailComponent } from './pages/human-resource/employee-managment/employee-detail/employee-detail.component'
 import { StepsModule } from 'primeng/steps';
 import { EmploymentHistoryComponent } from './pages/human-resource/employee-managment/employee-detail/employment-history/employment-history.component';
 import { AddEmploymentHistoryComponent } from './pages/human-resource/employee-managment/employee-detail/employment-history/add-employment-history/add-employment-history.component';
 import { UpdateEmploymentHistoryComponent } from './pages/human-resource/employee-managment/employee-detail/employment-history/update-employment-history/update-employment-history.component';
 
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import {
-  ConfirmationService,
-  MessageService,
-  ConfirmEventType,
-} from 'primeng/api';
+import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { EmployeeFamilyComponent } from './pages/human-resource/employee-managment/employee-detail/employee-family/employee-family.component';
 import { AddEmployeeFamilyComponent } from './pages/human-resource/employee-managment/employee-detail/employee-family/add-employee-family/add-employee-family.component';
@@ -107,7 +103,7 @@ import { GeneralCodesComponent } from './pages/configuration/common/general-code
 import { LeaveTypeComponent } from './pages/human-resource/hrm-configuration/leave-type/leave-type.component';
 import { UpdateEmployeeComponent } from './pages/human-resource/employee-managment/update-employee/update-employee.component';
 import { AddLeaveTypeComponent } from './pages/human-resource/hrm-configuration/leave-type/add-leave-type/add-leave-type.component';
-import { UpdateLeaveTypeComponent } from './pages/human-resource/hrm-configuration/leave-type/update-leave-type/update-leave-type.component';
+import { UpdateLeaveTypeComponent } from './pages/human-resource/hrm-configuration/leave-type/update-leave-type/update-leave-type.component'
 import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
 import { AddVaccancyDocumentComponent } from './pages/human-resource/vacancy-management/add-vaccancy-document/add-vaccancy-document.component';
@@ -121,6 +117,7 @@ import { AutocompleteComponent } from './components/autocomplete/autocomplete.co
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { TimelineModule } from 'primeng/timeline';
+
 
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { UpdateRolesComponent } from './pages/configuration/user-management/update-roles/update-roles.component';
@@ -277,7 +274,6 @@ import { PlanVsAchivmentProjectComponent } from './pages/project-managment/progr
 import { ToolbarModule } from 'primeng/toolbar';
 import { PlanDashboardComponent } from './pages/project-managment/plans/plan-dashboard/plan-dashboard.component';
 import { NgxEchartsModule } from 'ngx-echarts';
-import { ResizableModule } from './components/resizable/resizable.modulte';
 
 @NgModule({
   declarations: [
@@ -397,6 +393,7 @@ import { ResizableModule } from './components/resizable/resizable.modulte';
     AddApplicantWorkComponent,
     ApplicantDocumentsComponent,
     AddApplicantDocumentsComponent,
+
 
     PerformanceSettingComponent,
     AddPerformanceSettingComponent,
@@ -560,7 +557,7 @@ import { ResizableModule } from './components/resizable/resizable.modulte';
     AddTrainerComponent,
     TrainerListComponent,
     TraineesFormComponent,
-    TrainingReportFormComponenT,
+    TrainingReportFormComponenT ,
     BenefitListsComponent,
     AddBenefitListComponent,
     EmployeeBenefitsComponent,
@@ -599,12 +596,8 @@ import { ResizableModule } from './components/resizable/resizable.modulte';
     AssignReplacementComponent,
 
     PlanVsAchivmentProjectComponent,
-<<<<<<< HEAD
-    PlanDashboardComponent,
-=======
 
     PlanDashboardComponent
->>>>>>> de500afbf9303361c8b2aa7691bd64a6bc40fdaf
 
     //  AddMeasurementComponent,
     //  UpdateMeasurmentComponent
@@ -638,7 +631,7 @@ import { ResizableModule } from './components/resizable/resizable.modulte';
     InputMaskModule,
     FileUploadModule,
     NgImageSliderModule,
-    TimelineModule,
+    TimelineModule ,
     ToolbarModule,
     ToastrModule.forRoot({
       preventDuplicates: true,
@@ -646,7 +639,6 @@ import { ResizableModule } from './components/resizable/resizable.modulte';
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts'),
     }),
-    ResizableModule
   ],
   providers: [
     {
@@ -657,8 +649,9 @@ import { ResizableModule } from './components/resizable/resizable.modulte';
     ConfirmationService,
     MessageService,
     DialogService,
-    DatePipe,
+    DatePipe
+
   ],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
