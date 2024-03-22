@@ -36,7 +36,7 @@ namespace IntegratedImplementation.Services.Finance.Action
             {
                     return new ResponseMessage { Success = false, Message = "Please Add Accounting Period" };            
             }
-            else if(!(currentPeriod.StartDate >= addPayment.PaymentDate && currentPeriod.EndDate <= addPayment.PaymentDate))
+            else if(!(currentPeriod.StartDate <= addPayment.PaymentDate && currentPeriod.EndDate >= addPayment.PaymentDate))
             {
                 return new ResponseMessage { Success = false, Message = "The accounting Period is not consistent with the payment date " };
             }

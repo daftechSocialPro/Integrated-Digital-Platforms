@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using FluentEmail.Core;
+using Implementation.DTOS.Authentication;
 using Implementation.Helper;
 using IntegratedImplementation.DTOS.Authentication;
 using IntegratedImplementation.DTOS.Configuration;
@@ -10,8 +11,10 @@ using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedImplementation.Interfaces.Training;
 using IntegratedInfrustructure.Data;
 using IntegratedInfrustructure.Model.Training;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -961,6 +964,139 @@ namespace IntegratedImplementation.Services.Training
                 {
                     Success = false,
                     Message = ex.Message
+                };
+            }
+        }
+
+        public async Task<ResponseMessage> ImportTraineeFormExcel(IFormFile ExcelFile)
+        {
+            try
+            {
+                int counter = 0;
+                using (var package = new ExcelPackage(ExcelFile.OpenReadStream()))
+                {
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
+
+                    int rowCount = worksheet.Dimension.Rows;
+
+
+                    for (int row = 2; row <= rowCount; row++) // Assuming the data starts from the second row
+                    {
+                        Trainee trainee = new Trainee();
+                        var fullName = worksheet.Cells[row, 1].Value?.ToString() ?? string.Empty;
+                        var PhoneNumber = worksheet.Cells[row, 6].Value?.ToString() ?? string.Empty;
+                        var trainingId = worksheet.Cells[row,15].Value?.ToString() ?? string.Empty;
+                     
+                        var result = _dbContext.Trainees.Where(x=>x.TrainingId==Guid.Parse(trainingId) && x.PhoneNumber==PhoneNumber && x.FullName.ToLower() == fullName.ToLower()).Any();
+
+                        if (!result)
+                        {
+
+                            var gender = worksheet.Cells[row, 2].Value?.ToString().Trim() ?? string.Empty;
+                            var age = worksheet.Cells[row, 3].Value?.ToString().Trim() ?? string.Empty;
+                            var Profession = worksheet.Cells[row, 4].Value?.ToString().Trim() ?? string.Empty;
+                            var levelOfEducation = worksheet.Cells[row, 5].Value?.ToString()?.Trim() ?? string.Empty;
+                            var selectedlevelOfEducation = await _dbContext.EducationalLevels.Where(x => x.EducationalLevelName == levelOfEducation).FirstOrDefaultAsync();
+
+                            if (selectedlevelOfEducation == null)
+                            {
+
+                                return new ResponseMessage
+                                {
+                                    Data = $"Level Of Education {levelOfEducation} is not Found for Trainee {fullName}!! \n{counter} Members Added Successfully",
+                                    Message = "Excel Format Error",
+                                    Success = false
+                                };
+
+                            }
+
+
+                            var email = worksheet.Cells[row, 7].Value?.ToString().Trim() ?? string.Empty;
+
+                            var region = worksheet.Cells[row, 8].Value?.ToString()?.Trim() ?? string.Empty;
+                            var selectedRegion = await _dbContext.Regions.Where(x => x.RegionName == region).FirstOrDefaultAsync();
+
+                            if (selectedRegion == null)
+                            {
+
+                                return new ResponseMessage
+                                {
+                                    Data = $"Selected Region {region} is not Found for Trainee {fullName}!! \n{counter} Members Added Successfully",
+                                    Message = "Excel Format Error",
+                                    Success = false
+                                };
+
+                            }
+                            var zone = worksheet.Cells[row, 9].Value?.ToString().Trim() ?? string.Empty;
+                            var woreda = worksheet.Cells[row, 10].Value?.ToString().Trim() ?? string.Empty;
+                            var organization = worksheet.Cells[row, 11].Value?.ToString().Trim() ?? string.Empty;
+                            var organizationType = worksheet.Cells[row, 12].Value?.ToString().Trim() ?? string.Empty;
+                            var preTrainingSummary = worksheet.Cells[row, 13].Value?.ToString().Trim() ?? string.Empty;
+                            var postTrainingSummary = worksheet.Cells[row, 14].Value?.ToString().Trim() ?? string.Empty;
+
+                           
+                            trainee.Id = Guid.NewGuid();
+                            trainee.FullName = fullName;
+                            trainee.PhoneNumber = PhoneNumber;
+                            trainee.Profession = Profession;
+                            trainee.TrainingId = Guid.Parse(trainingId);
+                            trainee.Gender = gender!= string.Empty?  Enum.Parse<Gender>(gender):Gender.FEMALE;
+                            trainee.Age = Int32.Parse(age);
+                            trainee.EducationalLevelId = selectedlevelOfEducation.Id;
+                            trainee.Email = email;
+                            trainee.RegionId = selectedRegion.Id;
+                            trainee.Zone = zone;
+                            trainee.Woreda = woreda;
+                            trainee.NameofOrganizaton = organization;
+                            trainee.EducationalField = "";
+                            trainee.TypeofOrganization = organizationType;
+                            trainee.PreSummary = preTrainingSummary!=string.Empty? Int32.Parse(preTrainingSummary):0;
+                            trainee.PostSummary = postTrainingSummary!=string.Empty? Int32.Parse(postTrainingSummary):0;
+
+
+                            await _dbContext.Trainees.AddAsync(trainee);
+                            await _dbContext.SaveChangesAsync();
+
+
+
+                            counter += 1;
+
+
+
+
+                        }
+                        else
+                        {
+                            return new ResponseMessage
+                            {
+                                Data = $"PhoneNumber {PhoneNumber} registerd on Member {fullName} is already Exists !! \n{counter} Trainee Added Successfully ",
+                                Message = "Excel Format Error",
+                                Success = false
+                            };
+                        }
+
+
+
+
+
+
+                    }
+                }
+                return new ResponseMessage
+                {
+                    Data = $"{counter} Trainees Added Successfully!",
+                    Message = "Add Successfully From Excel!!!",
+                    Success = true
+                };
+
+            }
+            catch (Exception ex)
+            {
+                return new ResponseMessage
+                {
+
+                    Message = ex.InnerException.Message,
+                    Success = false
                 };
             }
         }

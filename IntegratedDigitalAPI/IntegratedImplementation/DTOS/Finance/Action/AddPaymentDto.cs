@@ -3,6 +3,7 @@ using IntegratedInfrustructure.Model.FInance.Actions;
 using IntegratedInfrustructure.Model.HRM;
 using IntegratedInfrustructure.Models.Inventory;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,12 +24,17 @@ namespace IntegratedImplementation.DTOS.Finance.Action
         public IFormFile? DocumentPath { get; set; }
         public string? Remark { get; set; }
         public string CreatedById { get; set; } = null!;
+
+  
         public List<AddPaymentDetailDto> AddPaymentDetails { get; set; } = null!;
     }
 
     public class AddPaymentDetailDto
     {
         public Guid? ItemId { get; set; }
+
+        public string ? ItemName { get; set; }
+        public string ? ChartOfAccountName { get; set; }
         public Guid ChartOfAccountId { get; set; }
         public string Description { get; set; } = null!;
         public double Quantity { get; set; }

@@ -110,7 +110,7 @@ export class FinanceService {
   getPendingPayments(){
     return this.http.get<PaymentGetDto[]>( this.BaseURI +"/Payment/GetPendingPayments")
   }
-  addPayments(paymentData: PaymentPostDto){
+  addPayments(paymentData: FormData, ){
     return this.http.post<ResponseMessage>(this.BaseURI + "/Payment/AddPayments",paymentData)
   }
   approvePayment(approvePaymentData: ApprovePaymentDto){

@@ -17,11 +17,13 @@ using System.Text.Json;
 using System.Configuration;
 using System.Net.Mail;
 using System.Net;
+using OfficeOpenXml;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+ExcelPackage.LicenseContext = LicenseContext.Commercial;
 builder.Services.AddCors(policyBuilder =>
     policyBuilder.AddDefaultPolicy(policy =>
         policy.WithOrigins("*").AllowAnyHeader().AllowAnyHeader())

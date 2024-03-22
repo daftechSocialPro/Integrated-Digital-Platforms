@@ -20,6 +20,12 @@
     
     </div>
   </div>
+
+
+  <button  *ngIf="training.traineeListStatus!='SUBMITTED'" class="btn btn-outline-success text-end mb-3" (click)="file.click()"><i
+    class="bi bi-file-excel"></i> Import from Excel </button> &nbsp;
+    <input type="file" accept=".xlsx, .xls" #file hidden (change)="onFileSelected($event)" />
+
   <button  *ngIf="traininggId&&(training&&training.traineeListStatus=='SUBMITTED')" class="btn btn-outline-success text-end mb-3" (click)="exportAsExcel(training&&training.title)"><i
     class="bi bi-file-excel"></i> Export Excel </button> &nbsp;
 

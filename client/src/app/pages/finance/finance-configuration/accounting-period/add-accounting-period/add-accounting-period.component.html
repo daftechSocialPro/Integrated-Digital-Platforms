@@ -21,7 +21,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <select class="form-control" formControlName="calanderType">
+                                        <select class="form-control" #calanderTypee formControlName="calanderType">
                                             <option *ngFor="let item of calanderType" [value]="item.value">{{item.name}}</option>
                                         </select>
                                         <label for="calanderType">Calander Type</label>
@@ -37,8 +37,16 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="date" class="form-control" id="startDate"
+                                        <input type="date"    [style.display]="calanderTypee.value !== 'GREGORIAN' ? 'none' : ''"  class="form-control" id="startDate"
                                             formControlName="startDate">
+                                        
+
+                                        <input 
+                                        [style.display]="calanderTypee.value !== 'ETHIOPIAN' ? 'none' : ''"
+                                        
+                                        type="text" class="form-control stdate" id="StartDate" 
+                                        placeholder="StartDate" >
+
                                         <label for="startDate">Start Date</label>
                                     </div>
                                 </div>

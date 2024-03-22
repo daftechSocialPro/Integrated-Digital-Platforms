@@ -32,6 +32,10 @@ export class TrainingService {
 
     }
 
+    importFromExcel(formData:FormData){
+        return this.http.post<ResponseMessage>(this.BaseURI+"ImportTraineeFormExcel",formData)
+      }
+
     getTrainings(activityId: String) {
 
         return this.http.get<ITrainingGetDto[]>(this.BaseURI + "GetTrainingList?activityId=" + activityId)

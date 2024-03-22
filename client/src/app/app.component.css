@@ -1,3 +1,8 @@
 .ngb-modal-xxl .modal-dialog {
-    width: 1200px;
+    width: 1400px;
+  }
+
+
+  .custom-modal-width .modal-dialog {
+    max-width: 1400px; /* Adjust the width value as needed */
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
@@ -8,6 +8,8 @@ import { FinanceService } from 'src/app/services/finance.service';
 import { UserService } from 'src/app/services/user.service';
 import { UserView } from 'src/app/model/user';
 import { AddPaymentDetailDto, PaymentPostDto } from 'src/app/model/Finance/IPaymentDto';
+import { Router } from '@angular/router';
+import { DOCUMENT } from '@angular/common';
 
 
 
@@ -35,15 +37,18 @@ export class AddPaymentsComponent implements OnInit{
   uploadedFiles: any[] = [];
 
   constructor(
-    private activeModal: NgbActiveModal,
+    @Inject(DOCUMENT) private document: Document,
     private formBuilder: FormBuilder,
     private financeService: FinanceService,
+    private routerService : Router,
     private userService: UserService,
     private messageService: MessageService,
     private dropDownService: DropDownService
   ){}
 
   ngOnInit(): void {
+
+    this.document.body.classList.toggle('toggle-sidebar');
     this.user = this.userService.getCurrentUser()
     this.getBankDropDown()
     this.getChartOfAccountDropDown()
@@ -146,24 +151,55 @@ export class AddPaymentsComponent implements OnInit{
         // documentPath: this.uploadedFiles.length > 0 ? this.uploadedFiles[0] : null,
         remark: this.paymentForm.value.remark,
         createdById: this.user.userId
+        
        } 
-       this.paymentDetailList.map(x => x.totalPrice = (x.quantity * x.price)) 
-       addPaymentData.addPaymentDetails = this.paymentDetailList
-       var formData = new FormData();
+
+
+       const formData = new FormData();
+
+// Append each property of the addPaymentData object to the FormData
+Object.keys(addPaymentData).forEach(key => {
+    formData.append(key, addPaymentData[key]);
+});
+this.paymentDetailList.map(x => x.totalPrice = (x.quantity * x.price)) 
+// addPaymentData.addPaymentDetails = this.paymentDetailList
+// Append documentPath if available
+if (this.uploadedFiles.length > 0) {
+  formData.append('documentPath', this.uploadedFiles[0]);
+}
+
+// Append addPaymentDetails if available
+if (this.paymentDetailList.length > 0) {
+  for (let i = 0; i < this.paymentDetailList.length; i++) {
+    const paymentDetail = this.paymentDetailList[i];
+    for (const key in paymentDetail) {
+      if (paymentDetail.hasOwnProperty(key)) {
+        formData.append(`AddPaymentDetails[${i}].${key}`, paymentDetail[key]);
+      }
+    }
+  }
+}
+
+       console.log(this.uploadedFiles)
+  
        
-        for (let key in addPaymentData) {
-          if (addPaymentData.hasOwnProperty(key)) {
-            formData.append(key, (addPaymentData as any)[key]);
-          }
-        }
-        for (var i = 0; i < this.paymentDetailList.length; i++) {
-          formData.append("addPaymentDetails", JSON.stringify(this.paymentDetailList[i]));
-        }
+        // for (let key in addPaymentData) {
+        //   if (addPaymentData.hasOwnProperty(key)) {
+        //     formData.append(key, (addPaymentData as any)[key]);
+        //   }
+        // }
+        // for (var i = 0; i < this.paymentDetailList.length; i++) {
+        //   formData.append("addPaymentDetails", JSON.stringify(this.paymentDetailList[i]));
+        // }
 
        
-       formData.append('documentPath', this.uploadedFiles.length > 0 ? this.uploadedFiles[0] : null);
+    
+
+
+       console.log(formData)
+       
   
-       this.financeService.addPayments(addPaymentData).subscribe({
+       this.financeService.addPayments(formData).subscribe({
         next: (res) => {
           if (res.success) {
             this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Request Created', life: 3000 });
@@ -196,7 +232,12 @@ export class AddPaymentsComponent implements OnInit{
 
     this.messageService.add({severity: 'error', summary: 'File Removed', detail: ''});
   }
-  closeModal() {
-    this.activeModal.close();
+  // closeModal() {
+  //   this.activeModal.close();
+  // }
+
+  goToPayments(){
+
+    this.routerService.navigateByUrl('/finance/payments')
   }
 }

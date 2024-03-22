@@ -6,6 +6,7 @@ import { AccountingPeriodPostDto } from 'src/app/model/Finance/IAccountingPeriod
 import { UserView } from 'src/app/model/user';
 import { FinanceService } from 'src/app/services/finance.service';
 import { UserService } from 'src/app/services/user.service';
+declare const $: any
 
 @Component({
   selector: 'app-add-accounting-period',
@@ -30,6 +31,8 @@ export class AddAccountingPeriodComponent implements OnInit {
     {name:"Gregorian (G.C.)", value:"GREGORIAN"},
   ]
 
+  ethiopianDate:string
+
 
   constructor(
     private activeModal: NgbActiveModal,
@@ -41,12 +44,23 @@ export class AddAccountingPeriodComponent implements OnInit {
 
 
   ngOnInit(): void {
+
       this.user = this.userService.getCurrentUser()
       this.accountingPeriodForm = this.formBuilder.group({
         accountingPeriodType:['',Validators.required],
         calanderType:['',Validators.required],
         description:['',Validators.required],
-        startDate:[null,Validators.required]
+        startDate:[null]
+      })
+
+      $('#StartDate').calendarsPicker({
+                calendar: $.calendars.instance('ethiopian', 'am'),
+  
+        onSelect: (date: any) => {
+        
+          this.ethiopianDate = date[0]._month+"/"+date[0]._day+"/"+date[0]._year
+         
+        },
       })
   }
 
@@ -60,11 +74,14 @@ export class AddAccountingPeriodComponent implements OnInit {
           accountingPeriodType: this.accountingPeriodForm.value.accountingPeriodType,
           calanderType: this.accountingPeriodForm.value.calanderType,
           description: this.accountingPeriodForm.value.description,
-          startDate: this.accountingPeriodForm.value.startDate,
+          startDate:  this.accountingPeriodForm.value.startDate,
+          ethiopianDate : this.ethiopianDate,
           createdById: this.user.userId,
           
         }
 
+
+        console.log("accountingPeriodPost",accountingPeriodPost)
         this.financeService.addAccountingPeriod(accountingPeriodPost).subscribe({
           next: (res) => {
             if (res.success) {

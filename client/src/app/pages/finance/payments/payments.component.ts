@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ApprovePaymentDto, PaymentGetDto } from 'src/app/model/Finance/IPaymentDto';
 import { FinanceService } from 'src/app/services/finance.service';
@@ -6,6 +6,8 @@ import { AddPaymentsComponent } from './add-payments/add-payments.component';
 import { UserView } from 'src/app/model/user';
 import { UserService } from 'src/app/services/user.service';
 import { ConfirmEventType, ConfirmationService, MessageService } from 'primeng/api';
+import { Router } from '@angular/router';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-payments',
@@ -14,18 +16,24 @@ import { ConfirmEventType, ConfirmationService, MessageService } from 'primeng/a
 })
 export class PaymentsComponent implements OnInit{
 
+
+
   pendingPaymentsList: PaymentGetDto[]
   user!: UserView
 
   constructor(
+  
     private financeService : FinanceService, 
     private modalService:NgbModal,
+    private routerService  : Router,
     private userService: UserService,
     private messageService: MessageService,
     private confirmationService : ConfirmationService,
   ){}
 
   ngOnInit(): void {
+
+   
     this.user = this.userService.getCurrentUser()
     this.getPendingPayments()
   }
@@ -39,10 +47,16 @@ export class PaymentsComponent implements OnInit{
   }
 
   addPayment(){
-    let modalRef = this.modalService.open(AddPaymentsComponent,{backdrop:'static',windowClass: 'modal-fullscreen'})
-    modalRef.result.then(()=>{
-      this.getPendingPayments()
-    })
+
+this.routerService.navigateByUrl('/finance/payments/addpayment')
+
+
+
+
+    // let modalRef = this.modalService.open(AddPaymentsComponent,{ size:'xxl',   backdrop:'static'})
+    // modalRef.result.then(()=>{
+    //   this.getPendingPayments()
+    // })
   }
   
   approvePayment(paymentId: string,paymentNumber: string, paymentType: string, paymentDate: Date, paymentBank: string, paymentSupplier: string, paymentRemark:string){

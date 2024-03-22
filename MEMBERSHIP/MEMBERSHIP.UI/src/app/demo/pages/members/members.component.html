@@ -34,19 +34,22 @@
         </div>
 
         <div class="row">
-            <div class="col-3">
+            <div class="col-xl-3 ">
                 <input type="text" placeholder="search ..." class="form-control" style="font-size: 18px;"
                     [(ngModel)]="searchTerm" (input)="applyFilter()" placeholder="Search">
             </div>
-            <div class="col-9 text-end" *ngIf="user.role.includes('SuperAdmin')">
-                <button class="btn btn-outline-success text-end" (click)="file.click()"><i
+           
+    
+        </div>
+        <div class="row mt-2">
+            <div class="col-12 text-end" *ngIf="user.role.includes('SuperAdmin')">
+                <button class="btn btn-sm btn-outline-success text-end" (click)="file.click()"><i
                     class="bi bi-file-excel"></i> Import from Excel </button>
 
-                    |       <button class="btn btn-outline-primary text-end" (click)="RegisterMember()"  ><i
+                    &nbsp;   <button class="btn btn-sm btn-outline-primary text-end" (click)="RegisterMember()"  ><i
                         class="bi bi-plust"></i> Register </button>
                 <input type="file" accept=".xlsx, .xls" #file hidden (change)="onFileSelected($event)" />
             </div>
-    
         </div>
 
 
@@ -100,7 +103,7 @@
                         <button class="btn btn-sm btn-outline-primary" (click)="goToDetail(item)">
                             Detail
                         </button>
-                        |
+                       &nbsp;
                         <button class="btn btn-sm btn-outline-danger" (click)="DeleteMember(item.id)">
                             Delete
                         </button>

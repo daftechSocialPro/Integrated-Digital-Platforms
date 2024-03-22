@@ -1,6 +1,7 @@
 ﻿using Implementation.Helper;
 using IntegratedImplementation.DTOS.Training;
 using IntegratedImplementation.DTOS.Vacancy;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,6 +44,10 @@ namespace IntegratedImplementation.Interfaces.Training
         Task<ResponseMessage> AddTrainingReport(TrainingReportPostDto trainingPostDto);
 
         Task<ResponseMessage> ChangeTraineesStatus(string Status, Guid trainingId);
+
+        Task<ResponseMessage> ImportTraineeFormExcel(IFormFile ExcelFile);
+
+        
 
 
 

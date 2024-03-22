@@ -30,7 +30,7 @@ export class TraineesFormComponent implements OnInit {
   educationalFields:SelectList[]=[]
   educationalLevels:SelectList[]=[]
   training !: ITrainingGetDto
-
+  selectedFile: File | null = null;
   regions:SelectList[]=[]
 
 
@@ -317,6 +317,38 @@ export class TraineesFormComponent implements OnInit {
     link.download = `${name}.xls`;
     link.href = uri + base64(format(template, ctx));
     link.click();
+}
+
+
+onFileSelected(event: any) {
+  this.selectedFile = event.target.files[0] as File;
+  if (!this.selectedFile) {
+    return;
+  }
+  this.importFromExcel()
+
+}
+importFromExcel() {
+
+  const formData = new FormData();
+  formData.append('ExcelFile', this.selectedFile);
+  this.trainingService.importFromExcel(formData).subscribe({
+
+    next: (res) => {
+      if (res.success) {
+        this.messageService.add({ severity: 'success', summary: res.message, detail: res.data })
+        this.getTrainee()
+      }
+      else {
+        this.messageService.add({ severity: 'error', summary: res.message, detail: res.data })
+        this.getTrainee()
+      }
+    }
+    , error: (err) => {
+      this.messageService.add({ severity: 'error', summary: 'Something went wrong', detail: err })
+    }
+
+  })
 }
 
   

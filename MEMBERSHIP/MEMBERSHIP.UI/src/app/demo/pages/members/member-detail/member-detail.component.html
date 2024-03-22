@@ -1,4 +1,4 @@
-<div class="modal-content">
+<div class=" card ">
     <div class="modal-header">
         <h5 class="modal-title">Member: <span class="text-success"
                 style="font-size: 18px;font-weight: bolder;">{{member&&member.fullName.toUpperCase()}}</span> detail
@@ -15,14 +15,14 @@
 
                 <div class="row">
 
-                    <div class="col-3">
+                    <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
 
 
 
-                        <img [src]="getImage2()" alt="Profile" style="width: 100%;">
+                        <img [src]="getImage2()" alt="Profile" style="width:100%;">
                         <input #file (change)="onUpload($event)" type="file" style="display: none;" accept="image/*" />
                         <div class="pt-2">
-                            <a (click)="file.click()" style="width: 100%;" class="btn btn-outline-primary btn-sm"
+                            <a (click)="file.click()" style="width: 100%;"  class="btn btn-outline-primary btn-sm"
                                 title="Upload new profile image">
                                 <i class="bi bi-upload"></i> Upload Image
                             </a>
@@ -30,13 +30,13 @@
 
 
                     </div>
-                    <div class="col-9">
+                    <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
 
 
                         <hr />
 
                         <div class="row mt-2">
-                            <div class="col-md-4">
+                            <div class="col-md-4 ">
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" formControlName="fullName" id="fullName" />
                                     <label for="fullName">Full Name </label>
@@ -163,9 +163,8 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-floating mb-3">
-                                    <input type="date" class="form-control" formControlName="lastPaid"
-                                        id="lastPaid" />
-                                    <label for="lastPaid" >Last Paid</label>
+                                    <input type="date" class="form-control" formControlName="lastPaid" id="lastPaid" />
+                                    <label for="lastPaid">Last Paid</label>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -178,34 +177,35 @@
 
                             <div class="col-md-4">
                                 <div class="form-floating mb-3">
-                
-                                  <select class="form-control" #category (change)="getMemberships(category.value)">
-                                    <option></option>
-                                    <option value="MIDWIVES">MIDWIVES</option>
-                                    <option value="NONMIDWIVES">NONMIDWIVES</option>
-                
-                                  </select>
-                                  <label for="email">Membership Category</label>
+
+                                    <select class="form-control" #category (change)="getMemberships(category.value)">
+                                        <option></option>
+                                        <option value="MIDWIVES">MIDWIVES</option>
+                                        <option value="NONMIDWIVES">NONMIDWIVES</option>
+
+                                    </select>
+                                    <label for="email">Membership Category</label>
                                 </div>
-                              </div>
-                
-                
-                
-                              <div class="col-md-4">
-                
+                            </div>
+
+
+
+                            <div class="col-md-4">
+
                                 <div class="form-floating mb-3">
-                
-                                  <select class="form-control" formControlName="membershipType">
-                                    <option></option>
-                                    <option *ngFor="let item of memberships" [value]="item.id.toLowerCase()">{{item.name}}</option>
-                
-                                  </select>
-                
-                                  <label for="membershipType">Membership Types</label>
+
+                                    <select class="form-control" formControlName="membershipType">
+                                        <option></option>
+                                        <option *ngFor="let item of memberships" [value]="item.id.toLowerCase()">
+                                            {{item.name}}</option>
+
+                                    </select>
+
+                                    <label for="membershipType">Membership Types</label>
                                 </div>
-                
-                
-                              </div>
+
+
+                            </div>
 
                         </div>
                         <div class="col-12 text-end mt-4">

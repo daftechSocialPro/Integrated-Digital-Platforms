@@ -3,7 +3,8 @@ export interface AccountingPeriodPostDto{
     accountingPeriodType: string
     calanderType: string
     description: string
-    startDate: Date
+    startDate?: Date
+    ethiopianDate ?: string
 }
 
 export interface AccountingPeriodGetDto extends AccountingPeriodPostDto{
