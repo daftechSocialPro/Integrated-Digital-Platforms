@@ -22,4 +22,8 @@
     <ProjectReference Include="..\Infrustructure\IntegratedInfrustructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\Finance\NewFolder\" />
+  </ItemGroup>
+
 </Project>
