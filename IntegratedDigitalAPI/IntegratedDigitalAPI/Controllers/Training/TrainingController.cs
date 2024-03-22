@@ -60,6 +60,41 @@ namespace IntegratedDigitalAPI.Controllers.Training
 
             }
         }
+
+
+        [HttpPut]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> UpdateTrainingList(TrainingPostDto trainingPost)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _trainingService.UpdateTraining(trainingPost));
+            }
+            else
+            {
+                return BadRequest();
+
+
+            }
+        }
+
+        [HttpDelete]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> DeleteTraining(Guid trainingId)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _trainingService.DeleteTraining(trainingId));
+            }
+            else
+            {
+                return BadRequest();
+
+
+            }
+        }
+
+
         //trainer
 
         [HttpGet]
@@ -77,6 +112,37 @@ namespace IntegratedDigitalAPI.Controllers.Training
             if (ModelState.IsValid)
             {
                 return Ok(await _trainingService.AddTrainer(trainerPost));
+            }
+            else
+            {
+                return BadRequest();
+
+
+            }
+        }
+
+        [HttpPut]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> UpdateTrainerList(TrainerPostDto trainerPost)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _trainingService.UpdateTrainer(trainerPost));
+            }
+            else
+            {
+                return BadRequest();
+
+
+            }
+        }
+        [HttpDelete]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> DeleteTrainer(Guid trainerId)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _trainingService.DeleteTrainer(trainerId));
             }
             else
             {
@@ -126,6 +192,24 @@ namespace IntegratedDigitalAPI.Controllers.Training
 
             }
         }
+
+
+        [HttpDelete]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> DeleteTrainee(Guid traineeId)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _trainingService.DeleteTrainee(traineeId));
+            }
+            else
+            {
+                return BadRequest();
+
+
+            }
+        }
+
 
 
         [HttpPost]
@@ -182,7 +266,22 @@ namespace IntegratedDigitalAPI.Controllers.Training
             }
         }
 
-       
+
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> ImportTraineeFormExcel(IFormFile ExcelFile)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _trainingService.ImportTraineeFormExcel(ExcelFile));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+
 
     }
 }

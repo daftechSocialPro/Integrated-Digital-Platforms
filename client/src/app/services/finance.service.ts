@@ -9,6 +9,8 @@ import { AccountingPeriodGetDto, AccountingPeriodPostDto } from '../model/Financ
 import { ChartOfAccountsGetDto, ChartOfAccountsPostDto, SubsidiaryAccountsPostDto } from '../model/Finance/IChartOfAccountsDto';
 import { SelectList } from '../model/common';
 import { BenefitPayrollGetDto, BenefitPayrollPostDto, GeneralSettingGetDto, GeneralSettingPostDto, IncomeTaxDto } from '../model/Finance/IPayrollSettingDto';
+import { ApprovePaymentDto, PaymentGetDto, PaymentPostDto } from '../model/Finance/IPaymentDto';
+import { CalculatePayrollDto, CheckOrApprovePayrollDto, PayrollGetDto } from '../model/Finance/IPayrollDto';
 
 @Injectable({
   providedIn: 'root'
@@ -29,11 +31,7 @@ export class FinanceService {
   getAccountTypes() {
     return this.http.get<AccountTypePostDto[]>(this.BaseURI + "/AccountType/GetAccountTypes")
   }
-  getAccountTypesSelectList(){
-    return this.http.get<SelectList[]>(this.BaseURI + "/AccountType/GetAccountTypeSelectList")
-  }
-
-  
+    
   addFinanceLookup(addLookup: FinanceLookupPostDto) {
     return this.http.post<ResponseMessage>(this.BaseURI + "/FinanceLookup/AddFinanceLookup", addLookup)
   }
@@ -108,4 +106,27 @@ export class FinanceService {
     addBenefitPayroll(benefitPayroll: BenefitPayrollPostDto){
       return this.http.post<ResponseMessage>( this.BaseURI + "/PayrollSetting/AddBenefitPayroll",benefitPayroll)
     }
+  //Payment
+  getPendingPayments(){
+    return this.http.get<PaymentGetDto[]>( this.BaseURI +"/Payment/GetPendingPayments")
+  }
+  addPayments(paymentData: FormData, ){
+    return this.http.post<ResponseMessage>(this.BaseURI + "/Payment/AddPayments",paymentData)
+  }
+  approvePayment(approvePaymentData: ApprovePaymentDto){
+    return this.http.put<ResponseMessage>(this.BaseURI + "/Payment/ApprovePayment",approvePaymentData)
+  }
+  //Payroll
+  getPayrollDataList(){
+    return this.http.get<PayrollGetDto[]>(this.BaseURI + "/Payroll/GetPayrollDataList")
+  }
+  calculatePayroll(calculatePayrollData: CalculatePayrollDto){
+    return this.http.post<ResponseMessage>(this.BaseURI + "/Payroll/CalculatePayroll",calculatePayrollData)
+  }
+  checkPayroll(checkPayrollData: CheckOrApprovePayrollDto){
+    return this.http.put<ResponseMessage>(this.BaseURI + "/Payroll/CheckPayroll",checkPayrollData)
+  }
+  approvePayroll(approvePayrollData: CheckOrApprovePayrollDto){
+    return this.http.put<ResponseMessage>(this.BaseURI + "/Payroll/ApprovePayroll",approvePayrollData)
+  }
 }

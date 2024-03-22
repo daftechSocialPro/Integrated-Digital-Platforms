@@ -4,6 +4,7 @@ using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedImplementation.Interfaces.Finance.Action;
 using IntegratedInfrustructure.Data;
 using IntegratedInfrustructure.Model.FInance.Actions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -33,9 +34,9 @@ namespace IntegratedImplementation.Services.Finance.Action
 
             if(currentPeriod == null) 
             {
-                    return new ResponseMessage { Success = false, Message = "please Add Accounting Period" };            
+                    return new ResponseMessage { Success = false, Message = "Please Add Accounting Period" };            
             }
-            else if(!(currentPeriod.StartDate >= addPayment.PaymentDate && currentPeriod.EndDate <= addPayment.PaymentDate))
+            else if(!(currentPeriod.StartDate <= addPayment.PaymentDate && currentPeriod.EndDate >= addPayment.PaymentDate))
             {
                 return new ResponseMessage { Success = false, Message = "The accounting Period is not consistent with the payment date " };
             }

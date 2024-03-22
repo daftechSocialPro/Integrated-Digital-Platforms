@@ -48,6 +48,16 @@ namespace MembershipImplementation.DTOS.Configuration
         public string? Woreda { get; set; }
 
         public string InstituteRole { get; set; }
+
+
+
+        public DateTime LastPaid { get; set; }
+
+        public DateTime ExpiredDate { get; set; }
+
+        public string? PaymentStatus { get; set; }
+
+        public Guid ? MembershipTypeId { get; set; }
     }
 
 
@@ -72,6 +82,7 @@ namespace MembershipImplementation.DTOS.Configuration
         public string MembershipTypeId { get; set; }
         public string EducationalField { get; set; }
         public string EducationalLevel { get; set; }
+        public string MembershipCategory { get; set; }
 
 
         public string EducationalLevelId { get; set; }
@@ -136,7 +147,7 @@ namespace MembershipImplementation.DTOS.Configuration
 
         public DateTime BirthDate { get; set; }
 
-        public IFormFile Image { get; set; }
+        public IFormFile? Image { get; set; }
     }
 
 

@@ -231,6 +231,9 @@ namespace MembershipImplementation.Services.HRM
                                      PaymentStatus = latestPayment != null ? latestPayment.PaymentStatus.ToString() : PaymentStatus.PENDING.ToString(),
                                      RejectedRemark = member.RejectedRemark,
 
+                                     LastPaid = latestPayment != null ? latestPayment.LastPaid : DateTime.Now,
+                                     MembershipCategory= member.MembershipType.MembershipCategory.ToString(),
+
                                      MoodleId = member.MoodleId,
                                      MoodlePassword = member.MoodlePassword!=null? _generalConfig.Decrypt(member.MoodlePassword!, encryption):"",
                                      MoodleName = member.MoodleUserName,
@@ -274,6 +277,9 @@ namespace MembershipImplementation.Services.HRM
                                      Amount = member.MembershipType.Money,
                                      IsBirthDate = member.IsBirthDate,
                                      MoodleId = member.MoodleId,
+
+                                     MembershipCategory = member.MembershipType.MembershipCategory.ToString(),
+
                                      MoodlePassword = member.MoodlePassword != null ? _generalConfig.Decrypt(member.MoodlePassword!, encryption) : "",
                                      MoodleName = member.MoodleUserName,
                                      MoodleStatus = member.MoodleStatus.ToString(),
@@ -425,6 +431,13 @@ namespace MembershipImplementation.Services.HRM
                 currentMember.InstituteRole = memberUpdate.InstituteRole;
                 currentMember.Email = memberUpdate.Email;
 
+                if (memberUpdate.Image != null)
+                {
+                    var imagePath = await _generalConfig.UploadFiles(memberUpdate.Image, currentMember.FullName, "Member");
+                    currentMember.ImagePath = imagePath;
+                }
+
+
                 await _dbContext.SaveChangesAsync();
                 return new ResponseMessage { Data = currentMember, Success = true, Message = "Updated Successfully" };
             }
@@ -435,31 +448,172 @@ namespace MembershipImplementation.Services.HRM
         public async Task<ResponseMessage> UpdateProfileFromAdmin(MemberUpdateDto memberUpdate)
         {
 
-            var currentMember = await _dbContext.Members.FirstOrDefaultAsync(x => x.Id == memberUpdate.Id);
-
-            if (currentMember != null)
+            try
             {
-                currentMember.FullName = memberUpdate.FullName;
-                currentMember.PhoneNumber = memberUpdate.PhoneNumber;
-                currentMember.Email = memberUpdate.Email;
-                currentMember.EducationalField = memberUpdate.EducationalField;
-                currentMember.EducationalLevelId = memberUpdate.EducationalLevelId;
-                currentMember.Gender = Enum.Parse<Gender>(memberUpdate.Gender);
-                currentMember.BirthDate = memberUpdate.BirthDate;
-                currentMember.Woreda = memberUpdate.Woreda;
-                currentMember.Inistitute = memberUpdate.Institute;
-                currentMember.InstituteRole = memberUpdate.InstituteRole;
+                var currentMember = await _dbContext.Members.Include(x=>x.MembershipType).FirstOrDefaultAsync(x => x.Id == memberUpdate.Id);
 
-                if (memberUpdate.Image != null)
+                var isChanged = false;
+
+                if (currentMember != null)
                 {
-                    var imagePath = await _generalConfig.UploadFiles(memberUpdate.Image, currentMember.FullName, "Member");
-                    currentMember.ImagePath = imagePath;
-                }
+                    currentMember.FullName = memberUpdate.FullName;
+                    currentMember.PhoneNumber = memberUpdate.PhoneNumber;
+                    currentMember.Email = memberUpdate.Email;
+                    currentMember.EducationalField = memberUpdate.EducationalField;
+                    currentMember.EducationalLevelId = memberUpdate.EducationalLevelId;
+                    currentMember.Gender = Enum.Parse<Gender>(memberUpdate.Gender);
+                    currentMember.BirthDate = memberUpdate.BirthDate;
+                    currentMember.Woreda = memberUpdate.Woreda;
+                    currentMember.Inistitute = memberUpdate.Institute;
+                    currentMember.InstituteRole = memberUpdate.InstituteRole;
+                    if (memberUpdate.MembershipTypeId != null) {
+                        if (currentMember.MembershipTypeId != memberUpdate.MembershipTypeId)
+                        {
+                            isChanged = true; 
+                        }
+                        currentMember.MembershipTypeId = memberUpdate.MembershipTypeId.Value;
+                    }
 
-                await _dbContext.SaveChangesAsync();
-                return new ResponseMessage { Data = currentMember, Success = true, Message = "Updated Successfully" };
+                    if (memberUpdate.Image != null)
+                    {
+                        var imagePath = await _generalConfig.UploadFiles(memberUpdate.Image, currentMember.FullName, "Member");
+                        currentMember.ImagePath = imagePath;
+                    }
+
+
+                    var currentPayments = await _dbContext.MemberPayments.Where(x => x.MemberId == currentMember.Id).OrderBy(x => x.LastPaid).ToListAsync();
+
+                    if (currentPayments.Any())
+                    {
+                        var currentPayment = currentPayments.First();
+
+
+                        currentPayment.PaymentStatus = Enum.Parse<PaymentStatus>(memberUpdate.PaymentStatus);
+                        currentPayment.LastPaid = memberUpdate.LastPaid;
+                        currentPayment.ExpiredDate = memberUpdate.ExpiredDate;
+
+
+                       if( currentPayment.PaymentStatus == PaymentStatus.PAID && (currentMember.MemberId==null|| currentMember.MembershipTypeId != null))
+                        {
+                            var mt = await _dbContext.MembershipTypes.FindAsync(currentMember.MembershipTypeId);
+                            var memberID = await _generalConfig.GenerateCode(0, mt.ShortCode);
+
+                            while (_dbContext.Members.Any(x => x.MemberId == memberID))
+                            {
+                                memberID = await _generalConfig.GenerateCode(0, mt.ShortCode);
+
+                            }
+                            if ((currentMember.MembershipTypeId != null && isChanged))
+                            {
+                                var memberUser = await _dbContext.Users.Where(x => x.MemberId == currentMember.Id).ToListAsync();
+                                _dbContext.Users.RemoveRange(memberUser);
+                               await  _dbContext.SaveChangesAsync();
+                            }
+                            if (isChanged||currentMember.MemberId==null)
+                            {
+                                currentMember.MemberId = memberID;
+                            }
+
+                          
+                            AddUSerDto addUser = new AddUSerDto
+                            {
+
+                                MemberId = currentMember.Id,
+                                UserName = currentMember.MemberId,
+                                Password = "1234",
+
+
+
+                            };
+                            var result = await _authenticationService.AddUser(addUser);
+
+
+                            var message = $"Congratulation, being EMwA Member!!!\n" +
+                                $"We have received your payment and would like to thank you for \n being a member of Ethiopian Midwives Association. \n" +
+                                $"Your Membership ID is {currentMember.MemberId} you can login through https://emwamms.org using the provided membership Id.";
+                            var email = new EmailMetadata
+                                                (currentMember.Email, "ID Card Status",
+                                                    $"{message}" +
+                                                    $"\nThank you.\n\nSincerely,\nFekadu Mazengia\nExecutive Director");
+                            await _emailService.Send(email);
+
+                        }
+                    }
+                    else
+                    {
+                        var currentpay = new MemberPayment
+                        {
+                            Id = Guid.NewGuid(),
+                            PaymentStatus = Enum.Parse<PaymentStatus>(memberUpdate.PaymentStatus),
+                            LastPaid = memberUpdate.LastPaid,
+                            ExpiredDate = memberUpdate.ExpiredDate,
+                            MemberId = currentMember.Id,
+                            MembershipTypeId = currentMember.MembershipTypeId,
+                            Text_Rn = "tx-emwa_admin_register",
+                            Url=""
+
+
+                        };
+                        if (currentpay.PaymentStatus == PaymentStatus.PAID && (currentMember.MemberId == null || currentMember.MembershipTypeId != null))
+                        {
+                            var mt = await _dbContext.MembershipTypes.FindAsync(currentMember.MembershipTypeId);
+                            var memberID = await _generalConfig.GenerateCode(0, mt.ShortCode);
+
+                            while (_dbContext.Members.Any(x => x.MemberId == memberID))
+                            {
+                                memberID = await _generalConfig.GenerateCode(0, mt.ShortCode);
+
+                            }
+                            if (isChanged || currentMember.MemberId == null)
+                            {
+                                currentMember.MemberId = memberID;
+                            }
+
+                            if ((currentMember.MembershipTypeId != null && isChanged)||currentMember.MemberId==null)
+                            {
+                                var memberUser = await _dbContext.Users.Where(x => x.MemberId == currentMember.Id).ToListAsync();
+                                 _dbContext.Users.RemoveRange(memberUser);
+                                await _dbContext.SaveChangesAsync();
+                            }
+
+
+
+                            AddUSerDto addUser = new AddUSerDto
+                            {
+
+                                MemberId = currentMember.Id,
+                                UserName = currentMember.MemberId,
+                                Password = "1234",
+
+
+
+                            };
+                            var result = await _authenticationService.AddUser(addUser);
+
+
+                            var message = $"Congratulation, being EMwA Member!!!\n" +
+                                $"We have received your payment and would like to thank you for \n being a member of Ethiopian Midwives Association. \n" +
+                                $"Your Membership ID is {currentMember.MemberId} you can login through https://emwamms.org using the provided membership Id.";
+                            var email = new EmailMetadata
+                                                (currentMember.Email, "ID Card Status",
+                                                    $"{message}" +
+                                                    $"\nThank you.\n\nSincerely,\nFekadu Mazengia\nExecutive Director");
+                            await _emailService.Send(email);
+
+                        }
+                        await _dbContext.MemberPayments.AddAsync(currentpay);
+                    }
+
+
+                    await _dbContext.SaveChangesAsync();
+                    return new ResponseMessage { Data = currentMember, Success = true, Message = "Updated Successfully" };
+                }
+                return new ResponseMessage { Success = false, Message = "Unable To Find Member" };
             }
-            return new ResponseMessage { Success = false, Message = "Unable To Find Member" };
+            catch (Exception ex)
+            {
+                return new ResponseMessage { Success = false, Message = ex.Message };
+            }
         }
 
         public async Task<ResponseMessage> ChangeIdCardStatus(Guid memberId, string status, string? remark)
@@ -537,7 +691,7 @@ namespace MembershipImplementation.Services.HRM
                                      RejectedRemark = member.RejectedRemark,
 
                                      MoodleId = member.MoodleId,
-                                     MoodlePassword = _generalConfig.Decrypt(member.MoodlePassword, encryption),
+                                     MoodlePassword = member.MoodlePassword!=null? _generalConfig.Decrypt(member.MoodlePassword, encryption):"",
                                      MoodleName = member.MoodleUserName
 
                                  }).ToListAsync();
@@ -833,7 +987,7 @@ namespace MembershipImplementation.Services.HRM
             var chapters = await _dbContext.Regions.Where(x=>x.CountryType== CountryType.ETHIOPIAN).ToListAsync();
 
             var memberPayments = await _dbContext.MemberPayments.Include(x=>x.Member).ThenInclude(x=>x.MembershipType).Include(x => x.Member).ThenInclude(x=>x.Region).Where(x=>x.Member.RegionId!=null && x.PaymentStatus==PaymentStatus.PAID).ToListAsync();
-            var memberPaymentsForeigns = await _dbContext.MemberPayments.Include(x => x.Member).ThenInclude(x => x.MembershipType).Where(x => x.Member.RegionId == null && x.PaymentStatus == PaymentStatus.PAID).ToListAsync();
+            var memberPaymentsForeigns = await _dbContext.MemberPayments.Include(x => x.Member).Include(x => x.MembershipType).Where(x => x.Member.RegionId == null && x.PaymentStatus == PaymentStatus.PAID).ToListAsync();
 
             var membersReports = new List<MemberRegionRevenueReportDto>();
 
@@ -854,7 +1008,7 @@ namespace MembershipImplementation.Services.HRM
             var memberReport2 = new MemberRegionRevenueReportDto
             {
                 RegionName = CountryType.FOREIGN.ToString(),
-                RegionRevenue = memberPaymentsForeigns.Sum(x => x.MembershipType.Money),
+                RegionRevenue = memberPaymentsForeigns.Sum(x => x.MembershipTypeId!=null? x.MembershipType.Money:0),
                 Members = _dbContext.Members.Count(x=>x.RegionId==Guid.Empty),
             };
             membersReports.Add(memberReport2);

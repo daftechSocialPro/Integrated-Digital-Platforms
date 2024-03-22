@@ -18,9 +18,10 @@ import { MembersDashboardComponent } from './members-dashboard/members-dashboard
 import { MemberDetailComponent } from './member-detail/member-detail.component';
 import { PendingMembersComponent } from './pending-members/pending-members.component';
 import { CelebrationComponent } from './celebration/celebration.component';
+import { RegisterMembersAdminComponent } from './register-members-admin/register-members-admin.component';
 
 @NgModule({
-  declarations: [MembersComponent, MemberProfileComponent, MemberCourseComponent, MemberAnnouncmentsComponent, GenerateIdCardComponent, RequestedIdcardsComponent, ChangeIdStatusComponent, RenewMemberComponent,MembersDashboardComponent, MemberDetailComponent, PendingMembersComponent,CelebrationComponent],
+  declarations: [MembersComponent, MemberProfileComponent, MemberCourseComponent, MemberAnnouncmentsComponent, GenerateIdCardComponent, RequestedIdcardsComponent, ChangeIdStatusComponent, RenewMemberComponent,MembersDashboardComponent, MemberDetailComponent, PendingMembersComponent,CelebrationComponent, RegisterMembersAdminComponent],
   imports: [CommonModule, MembersRoutingModule, InputMaskModule, ReactiveFormsModule, PaginatorModule, QRCodeModule]
 })
 export class MembersModule {}

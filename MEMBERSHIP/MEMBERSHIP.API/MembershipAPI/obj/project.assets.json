@@ -455,10 +455,10 @@
           "Microsoft.AspNetCore.App"
         ]
       },
-      "Microsoft.AspNetCore.Authorization/7.0.9": {
+      "Microsoft.AspNetCore.Authorization/7.0.16": {
         "type": "package",
         "dependencies": {
-          "Microsoft.AspNetCore.Metadata": "7.0.9",
+          "Microsoft.AspNetCore.Metadata": "7.0.16",
           "Microsoft.Extensions.Logging.Abstractions": "7.0.1",
           "Microsoft.Extensions.Options": "7.0.1"
         },
@@ -473,11 +473,11 @@
           }
         }
       },
-      "Microsoft.AspNetCore.Components/7.0.9": {
+      "Microsoft.AspNetCore.Components/7.0.16": {
         "type": "package",
         "dependencies": {
-          "Microsoft.AspNetCore.Authorization": "7.0.9",
-          "Microsoft.AspNetCore.Components.Analyzers": "7.0.9"
+          "Microsoft.AspNetCore.Authorization": "7.0.16",
+          "Microsoft.AspNetCore.Components.Analyzers": "7.0.16"
         },
         "compile": {
           "lib/net7.0/Microsoft.AspNetCore.Components.dll": {
@@ -490,7 +490,7 @@
           }
         }
       },
-      "Microsoft.AspNetCore.Components.Analyzers/7.0.9": {
+      "Microsoft.AspNetCore.Components.Analyzers/7.0.16": {
         "type": "package",
         "build": {
           "buildTransitive/netstandard2.0/Microsoft.AspNetCore.Components.Analyzers.targets": {}
@@ -749,7 +749,7 @@
           }
         }
       },
-      "Microsoft.AspNetCore.Metadata/7.0.9": {
+      "Microsoft.AspNetCore.Metadata/7.0.16": {
         "type": "package",
         "compile": {
           "lib/net7.0/Microsoft.AspNetCore.Metadata.dll": {
@@ -3253,10 +3253,10 @@
         "microsoft.aspnetcore.authentication.jwtbearer.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.Authorization/7.0.9": {
-      "sha512": "fP5h07iQILCMA1kl7Y3KgzM9YWNgcmJKdzBEE59i9LhcTUsvMdvY2LhfmmJ7ZftS0mhkPRiXF/LdsKb06ClwYg==",
+    "Microsoft.AspNetCore.Authorization/7.0.16": {
+      "sha512": "O1L9W6r3lrl8FLhMQJwBv2bxhlrdCCeOruiO/6Aib3N8A7zc0xhISOXIJQZmM4I5XCBoNCQ6rRnKdYyVmgAiNg==",
       "type": "package",
-      "path": "microsoft.aspnetcore.authorization/7.0.9",
+      "path": "microsoft.aspnetcore.authorization/7.0.16",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3268,14 +3268,14 @@
         "lib/net7.0/Microsoft.AspNetCore.Authorization.xml",
         "lib/netstandard2.0/Microsoft.AspNetCore.Authorization.dll",
         "lib/netstandard2.0/Microsoft.AspNetCore.Authorization.xml",
-        "microsoft.aspnetcore.authorization.7.0.9.nupkg.sha512",
+        "microsoft.aspnetcore.authorization.7.0.16.nupkg.sha512",
         "microsoft.aspnetcore.authorization.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.Components/7.0.9": {
-      "sha512": "pxaPhkp7dRZxuobkAdJkxwI+xZaI1FVIo8t9lsikv1oG3aeYbwPdfzaSFV5TbKsGxQnRnUUfpGb4NebDd4/G8w==",
+    "Microsoft.AspNetCore.Components/7.0.16": {
+      "sha512": "jRMh9j5kvG60J/2CudXO6rdYix+HSwUkrsY1Lns/pwwf3n1K/JJIRdhb96tfLsTSIA/Yq9HE5B29+ptoqYwOhA==",
       "type": "package",
-      "path": "microsoft.aspnetcore.components/7.0.9",
+      "path": "microsoft.aspnetcore.components/7.0.16",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3283,14 +3283,14 @@
         "THIRD-PARTY-NOTICES.txt",
         "lib/net7.0/Microsoft.AspNetCore.Components.dll",
         "lib/net7.0/Microsoft.AspNetCore.Components.xml",
-        "microsoft.aspnetcore.components.7.0.9.nupkg.sha512",
+        "microsoft.aspnetcore.components.7.0.16.nupkg.sha512",
         "microsoft.aspnetcore.components.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.Components.Analyzers/7.0.9": {
-      "sha512": "Bk5COjKt1fMkOXjv82VCM83pGj47YkyHv3PZXDEMym0WVKhvNyiqAUd4nPdvqyxfldIhC0H6zyCPLAC0oLsZkA==",
+    "Microsoft.AspNetCore.Components.Analyzers/7.0.16": {
+      "sha512": "/YtMkLgBBp3ta54sBDTkqLb17TcGc9ZcUN1k3xeGmM0BzrW8CHpC8hZkhQg8qClzSZA780ojweDMpNPJlmcEAA==",
       "type": "package",
-      "path": "microsoft.aspnetcore.components.analyzers/7.0.9",
+      "path": "microsoft.aspnetcore.components.analyzers/7.0.16",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3299,7 +3299,7 @@
         "analyzers/dotnet/cs/Microsoft.AspNetCore.Components.Analyzers.dll",
         "build/netstandard2.0/Microsoft.AspNetCore.Components.Analyzers.targets",
         "buildTransitive/netstandard2.0/Microsoft.AspNetCore.Components.Analyzers.targets",
-        "microsoft.aspnetcore.components.analyzers.7.0.9.nupkg.sha512",
+        "microsoft.aspnetcore.components.analyzers.7.0.16.nupkg.sha512",
         "microsoft.aspnetcore.components.analyzers.nuspec"
       ]
     },
@@ -3610,10 +3610,10 @@
         "microsoft.aspnetcore.jsonpatch.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.Metadata/7.0.9": {
-      "sha512": "ni8k/TCKMFmBdW+FOEmPNad4pA697tt59iEcpUG+HhagyXYnipfkbW9bu4/EOyyvSAOz4YMSA6in7gL/KZZlAA==",
+    "Microsoft.AspNetCore.Metadata/7.0.16": {
+      "sha512": "vTqWt54ZHNS+nY/yhKcnIwWaqVMW4BLBjGn1mdXkhjvCbArtYhtILpv/FaYM4Z4i37Vxw4nf3gLSMJLEg9fLzQ==",
       "type": "package",
-      "path": "microsoft.aspnetcore.metadata/7.0.9",
+      "path": "microsoft.aspnetcore.metadata/7.0.16",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3625,7 +3625,7 @@
         "lib/net7.0/Microsoft.AspNetCore.Metadata.xml",
         "lib/netstandard2.0/Microsoft.AspNetCore.Metadata.dll",
         "lib/netstandard2.0/Microsoft.AspNetCore.Metadata.xml",
-        "microsoft.aspnetcore.metadata.7.0.9.nupkg.sha512",
+        "microsoft.aspnetcore.metadata.7.0.16.nupkg.sha512",
         "microsoft.aspnetcore.metadata.nuspec"
       ]
     },
@@ -7424,7 +7424,7 @@
       "MembershipImplementation >= 1.0.0",
       "MembershipInfrustructure >= 1.0.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 7.0.9",
-      "Microsoft.AspNetCore.Components >= 7.0.9",
+      "Microsoft.AspNetCore.Components >= 7.0.16",
       "Microsoft.AspNetCore.Identity.UI >= 7.0.9",
       "Microsoft.AspNetCore.OpenApi >= 7.0.9",
       "Microsoft.EntityFrameworkCore >= 7.0.9",
@@ -7513,7 +7513,7 @@
           },
           "Microsoft.AspNetCore.Components": {
             "target": "Package",
-            "version": "[7.0.9, )"
+            "version": "[7.0.16, )"
           },
           "Microsoft.AspNetCore.Identity.UI": {
             "target": "Package",
@@ -7577,21 +7577,11 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.404\\RuntimeIdentifierGraph.json"
       }
     }
   },
   "logs": [
-    {
-      "code": "NU1902",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'Microsoft.AspNetCore.Components' 7.0.9 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-3fx3-85r4-8j3w",
-      "libraryId": "Microsoft.AspNetCore.Components",
-      "targetGraphs": [
-        "net7.0"
-      ]
-    },
     {
       "code": "NU1701",
       "level": "Warning",

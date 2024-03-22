@@ -1,3 +1,8 @@
 .ms-0 {
   margin: 0 16px 0 0 !important;
 }
+.full-width-modal .modal-dialog {
+  max-width: 100%;
+  width: 100%;
+  margin: 0;
+}

@@ -1,4 +1,5 @@
 ﻿using AutoMapper.QueryableExtensions;
+using DocumentFormat.OpenXml.Wordprocessing;
 using IntegratedImplementation.DTOS.Configuration;
 using IntegratedImplementation.DTOS.Inventory;
 using IntegratedImplementation.Interfaces.Configuration;
@@ -178,7 +179,7 @@ namespace IntegratedImplementation.Services.Configuration
         }
         public async Task<List<SelectListDto>> GetStrategicPlans()
         {
-            var strategicPlans = await _dbContext.StrategicPlans.Select(x => new SelectListDto
+            var strategicPlans = await _dbContext.StrategicPlans.OrderBy(x=>x.Name).Select(x => new SelectListDto
             {
                 Id = x.Id,
                 Name = x.Name
@@ -343,5 +344,39 @@ namespace IntegratedImplementation.Services.Configuration
                        }).ToListAsync();
             return items;
         }
+
+        public async Task<List<SelectListDto>> GetAccountTypeDropDown()
+        {
+
+            var accountTypesSelectList = await _dbContext.AccountTypes.AsNoTracking().Select(x => new SelectListDto
+            {
+                Name = x.Type,
+                Id = x.Id,
+            }).ToListAsync();
+            return accountTypesSelectList;
+        }
+
+        public async Task<List<SelectListDto>> GetAccountingPeriodDropDown()
+        {
+
+            var accountingPeriodSelectList = await _dbContext.AccountingPeriods.AsNoTracking().Select(x => new SelectListDto
+            {
+                Name = $"{x.Description} ({x.AccountingPeriodType.ToString()})",
+                Id = x.Id,
+            }).ToListAsync();
+            return accountingPeriodSelectList;
+        }
+
+        public async Task<List<SelectListDto>> GetChartOfAccountsDropDown()
+        {
+            var chartOfAccountsList = await _dbContext.ChartOfAccounts.Where(x => x.Rowstatus == RowStatus.ACTIVE).AsNoTracking().Select(x => new SelectListDto
+            {
+                Name =$"{x.Description} ({x.AccountNo})" ,
+                Id = x.Id
+
+            }).ToListAsync();
+            return chartOfAccountsList;
+        }
+
     }
 }

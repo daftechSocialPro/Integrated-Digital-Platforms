@@ -2,6 +2,8 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MemberService } from 'src/app/services/member.service';
 import { IRegionRevenueDto } from 'src/models/configuration/IMembershipDto';
 import {  EChartsOption } from 'echarts';
+import { UserService } from 'src/app/services/user.service';
+import { UserView } from 'src/models/auth/userDto';
 
 @Component({
   selector: 'app-total-revenue',
@@ -17,17 +19,15 @@ export class TotalRevenueComponent implements OnInit {
 
   chartOption:EChartsOption 
 
+  userView : UserView
+
   ngOnInit(): void {
     this.getRevenueReport()
 
-
-  
-
-
-
+    this.userView = this.userService.getCurrentUser()
 
   }
-  constructor(private memberService: MemberService) { }
+  constructor(private memberService: MemberService,private userService : UserService) { }
 
 
   getRevenueReport() {
@@ -35,6 +35,10 @@ export class TotalRevenueComponent implements OnInit {
     this.memberService.GetRegionReportRevenue().subscribe({
       next: (res) => {
         this.reportRevenues = res
+
+        if (this.userView.regionId!=''){
+          this.reportRevenues = this.reportRevenues.filter((item)=> {return (item.regionName == this.userView.regionId)})
+        }
         this.reportRevenues.map((item) => {
           console.log(item.regionRevenue)
           this.regionRevenueSum += item.regionRevenue

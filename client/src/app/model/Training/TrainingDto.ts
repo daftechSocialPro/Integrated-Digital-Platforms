@@ -30,6 +30,7 @@ export interface ITrainingPostDto{
     Title:string
     ActivityId:string
     allocatedCEU:string
+    id?:string
 
 
 

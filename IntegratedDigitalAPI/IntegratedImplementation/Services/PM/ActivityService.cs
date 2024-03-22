@@ -402,68 +402,56 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
         public async Task<int> UpdateTargetActivities(ActivityTargetDivisionDto targetDivisions)
         {
 
-
-            var activityTargets = await _dBContext.ActivityTargetDivisions.Where(x => x.ActivityId == targetDivisions.ActiviyId).ToListAsync();
-
-            _dBContext.RemoveRange(activityTargets);
-            await _dBContext.SaveChangesAsync();
-
-            foreach (var target in targetDivisions.TargetDivisionDtos)
+            try
             {
+                var activityTargets = await _dBContext.ActivityTargetDivisions.Where(x => x.ActivityId == targetDivisions.ActiviyId).ToListAsync();
 
-                var targetDivision = new ActivityTargetDivision
+                
+
+                foreach(var act in activityTargets)
                 {
-                    Id = Guid.NewGuid(),
-                    CreatedById = targetDivisions.CreatedBy.ToString(),
-                    CreatedDate = DateTime.Now,
-                    ActivityId = targetDivisions.ActiviyId,
-                    Order = target.Order,
-                    Target = target.Target,
-                    TargetBudget = target.TargetBudget,
-                    Year = target.Year,
+                    var actpros = await _dBContext.ActivityProgresses.Where(x => x.QuarterId == act.Id).ToListAsync();
 
-                };
-
-                await _dBContext.ActivityTargetDivisions.AddAsync(targetDivision);
+                    _dBContext.RemoveRange(actpros);
+                    await _dBContext.SaveChangesAsync();
+                }
+                _dBContext.RemoveRange(activityTargets);
                 await _dBContext.SaveChangesAsync();
-            }
-
-            var existingOrdersByYear = await _dBContext.ActivityTargetDivisions
-                                     .Where(td => td.ActivityId == targetDivisions.ActiviyId)
-                                     .GroupBy(td => td.Year)
-                                     .ToListAsync();
 
 
-            foreach (var existingOrders in existingOrdersByYear)
-            {
-                var year = existingOrders.Key;
-                var lowestOrder = existingOrders.Min(td => td.Order);
-                var highestOrder = existingOrders.Max(td => td.Order);
-
-                for (int order = 0; order < lowestOrder; order++)
+                foreach (var target in targetDivisions.TargetDivisionDtos)
                 {
-                    if (!existingOrders.Any(td => td.Order == order))
-                    {
-                        var newTargetDivision = new ActivityTargetDivision
-                        {
-                            Id = Guid.NewGuid(),
-                            CreatedById = targetDivisions.CreatedBy.ToString(),
-                            CreatedDate = DateTime.Now,
-                            ActivityId = targetDivisions.ActiviyId,
-                            Order = order,
-                            Target = 0,
-                            TargetBudget = 0,
-                            Year = year,
-                        };
 
-                        await _dBContext.ActivityTargetDivisions.AddAsync(newTargetDivision);
-                    }
+                    var targetDivision = new ActivityTargetDivision
+                    {
+                        Id = Guid.NewGuid(),
+                        CreatedById = targetDivisions.CreatedBy.ToString(),
+                        CreatedDate = DateTime.Now,
+                        ActivityId = targetDivisions.ActiviyId,
+                        Order = target.Order,
+                        Target = target.Target,
+                        TargetBudget = target.TargetBudget,
+                        Year = target.Year,
+
+                    };
+
+                    await _dBContext.ActivityTargetDivisions.AddAsync(targetDivision);
+                    await _dBContext.SaveChangesAsync();
                 }
 
-                if (highestOrder != 11)
+                var existingOrdersByYear = await _dBContext.ActivityTargetDivisions
+                                         .Where(td => td.ActivityId == targetDivisions.ActiviyId)
+                                         .GroupBy(td => td.Year)
+                                         .ToListAsync();
+
+
+                foreach (var existingOrders in existingOrdersByYear)
                 {
-                    //var nextMultipleOf12 = (highestOrder / 11 + 1) * 11;
-                    for (int order = highestOrder + 1; order < 12; order++)
+                    var year = existingOrders.Key;
+                    var lowestOrder = existingOrders.Min(td => td.Order);
+                    var highestOrder = existingOrders.Max(td => td.Order);
+
+                    for (int order = 0; order < lowestOrder; order++)
                     {
                         if (!existingOrders.Any(td => td.Order == order))
                         {
@@ -482,16 +470,44 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                             await _dBContext.ActivityTargetDivisions.AddAsync(newTargetDivision);
                         }
                     }
+
+                    if (highestOrder != 11)
+                    {
+                        //var nextMultipleOf12 = (highestOrder / 11 + 1) * 11;
+                        for (int order = highestOrder + 1; order < 12; order++)
+                        {
+                            if (!existingOrders.Any(td => td.Order == order))
+                            {
+                                var newTargetDivision = new ActivityTargetDivision
+                                {
+                                    Id = Guid.NewGuid(),
+                                    CreatedById = targetDivisions.CreatedBy.ToString(),
+                                    CreatedDate = DateTime.Now,
+                                    ActivityId = targetDivisions.ActiviyId,
+                                    Order = order,
+                                    Target = 0,
+                                    TargetBudget = 0,
+                                    Year = year,
+                                };
+
+                                await _dBContext.ActivityTargetDivisions.AddAsync(newTargetDivision);
+                            }
+                        }
+                    }
                 }
+
+
+                await _dBContext.SaveChangesAsync();
+
+
+
+
+                return 1;
             }
-
-
-            await _dBContext.SaveChangesAsync();
-
-
-
-
-            return 1;
+            catch(Exception ex)
+            {
+                return 1;
+            }
 
         }
 
@@ -837,6 +853,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
             List<ActivityViewDto> assignedActivities =
                 await (from e in _dBContext.Activities
 
+                       .Include(x=>x.ActivityParent.Task.Project)
                         .Include(x => x.ActivityLocations).ThenInclude(x => x.Region).ThenInclude(x => x.Country)
                        .Include(x => x.Commitee).ThenInclude(x => x.Employees)
                        .Where(x => x.ActualEnd == null)
@@ -851,6 +868,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                            IsTraining = e.IsTraining,
 
                            ActivityNumber = e.ActivityNumber,
+                           ProjectName = e.PlanId!=null?e.Plan.ProjectName:(e.TaskId!=null ? e.Task.Project.ProjectName: e.ActivityParent.Task.Project.ProjectName),
 
                            Begining = e.Begining,
                            Target = e.Goal,
@@ -872,18 +890,109 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                                Year = y.Year,
                                Order = y.Order,
                                Planned = y.Target,
+                               PlannedBudget = y.TargetBudget,
                                UsedBudget = activityProgress.Where(x => x.QuarterId == y.Id).Sum(mp => mp.ActualBudget),
                                Actual = activityProgress.Where(x => x.QuarterId == y.Id).Sum(mp => mp.ActualWorked),
                                Percentage = y.Target != 0 ? (activityProgress.Where(x => x.QuarterId == y.Id && x.IsApprovedByDirector == ApprovalStatus.APPROVED && x.IsApprovedByFinance == ApprovalStatus.APPROVED && x.IsApprovedByManager == ApprovalStatus.APPROVED).Sum(x => x.ActualWorked) / y.Target) * 100 : 0
 
 
                            }).ToList(),
-                           ActivityLocations = e.ActivityLocations.ToList()
+                           ActivityLocations = e.ActivityLocations.ToList(),
+                           IsCancelled = e.isCancelled,
+                           IsCompleted = e.isCompleted,
+                           IsStarted = e.isStarted
 
 
 
                        }
-                        ).ToListAsync();
+                        ).OrderBy(x=>x.ActivityNumber).ToListAsync();
+
+
+
+
+            return assignedActivities;
+        }
+
+        public async Task<List<ActivityViewDto>> GetActivityForPlan(Guid employeeId,List<string> roles )
+        {
+
+            var projects = _dBContext.Projects.ToList();
+            if (!roles.Contains("PM-ADMIN"))
+            {
+                projects = projects.Where(x => x.ProjectManagerId == employeeId).ToList();
+
+            }
+            List<IntegratedInfrustructure.Models.PM.Activity> activities = new List<IntegratedInfrustructure.Models.PM.Activity>();
+
+            foreach (var project in projects)
+            {
+
+                var tasks = await _dBContext.Tasks.Where(x => x.ProjectId == project.Id).ToListAsync();
+                activities.AddRange(await _dBContext.Activities.Include(x=>x.Plan).Where(x => x.PlanId == project.Id).ToListAsync());
+                foreach (var task in tasks)
+                {
+
+                    var activityParents = await _dBContext.ActivitiesParents.Include(x=>x.Task.Project).Where(x => x.TaskId == task.Id).ToListAsync();
+                    activities.AddRange(await _dBContext.Activities.Include(x => x.Task.Project).Where(x => x.TaskId == task.Id).ToListAsync());
+
+
+                    foreach (var actpare in activityParents)
+                    {
+                        activities.AddRange(await _dBContext.Activities.Include(x => x.ActivityParent.Task.Project).Where(x => x.ActivityParentId == actpare.Id).ToListAsync());
+                    }
+
+                }
+            }
+                  
+
+
+            var activityProgress = _dBContext.ActivityProgresses;
+            List<ActivityViewDto> assignedActivities =
+                 (from e in activities
+                      
+                       select new ActivityViewDto
+                       {
+                           Id = e.Id,
+                           Name = e.ActivityDescription,
+                           PlannedBudget = e.PlanedBudget,
+                           ActivityType = e.ActivityType.ToString(),
+                           IsTraining = e.IsTraining,
+                           ActivityNumber = e.ActivityNumber,
+                           ProjectName = e.PlanId != null ? e.Plan.ProjectName : (e.TaskId != null ? e.Task.Project.ProjectName : e.ActivityParent.Task.Project.ProjectName),
+
+                           Begining = e.Begining,
+                           Target = e.Goal,
+                           UnitOfMeasurment = e.Indicator,
+                           OverAllPerformance = 0,
+                           StartDate = e.ShouldStat.ToString(),
+                           EndDate = e.ShouldEnd.ToString(),
+                           Members = _dBContext.EmployeesAssignedForActivities.Include(x => x.Employee).Where(x => x.ActivityId == e.Id).Select(y => new SelectListDto
+                           {
+                               Id = y.Id,
+                               Name = $"{y.Employee.FirstName} {y.Employee.LastName}",
+                               Photo = y.Employee.ImagePath,
+                               EmployeeId = y.EmployeeId.ToString(),
+
+                           }).ToList(),
+                           MonthPerformance = _dBContext.ActivityTargetDivisions.Where(x => x.ActivityId == e.Id).OrderBy(x => x.Order).Select(y => new MonthPerformanceViewDto
+                           {
+                               Id = y.Id,
+                               Year = y.Year,
+                               Order = y.Order,
+                               Planned = y.Target,
+                               PlannedBudget = y.TargetBudget,
+                               UsedBudget = activityProgress.Where(x => x.QuarterId == y.Id).Sum(mp => mp.ActualBudget),
+                               Actual = activityProgress.Where(x => x.QuarterId == y.Id).Sum(mp => mp.ActualWorked),
+                               Percentage = y.Target != 0 ? (activityProgress.Where(x => x.QuarterId == y.Id && x.IsApprovedByDirector == ApprovalStatus.APPROVED && x.IsApprovedByFinance == ApprovalStatus.APPROVED && x.IsApprovedByManager == ApprovalStatus.APPROVED).Sum(x => x.ActualWorked) / y.Target) * 100 : 0
+
+
+                           }).ToList(),
+                           ActivityLocations = e.ActivityLocations.ToList(),
+                           IsCancelled = e.isCancelled,
+                           IsCompleted = e.isCompleted,
+                           IsStarted = e.isStarted
+                       }
+                        ).OrderBy(x => x.ActivityNumber).ToList();
 
 
 
@@ -1730,6 +1839,83 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                     Message = ex.Message
                 };
             }
+        }
+
+        public async Task<ResponseMessage> ChangeActivityStatus(Guid activityId, string ? isCompleted, string? isCancel, string? isStarted)
+        {
+
+            try
+            {
+                var activity = await _dBContext.Activities.FindAsync(activityId);
+
+                if (activity != null)
+
+                {
+
+                    if (isCompleted != "undefined")
+                    {
+                        activity.isCompleted = isCompleted.ToLower()=="true";
+
+                        if (activity.isCompleted)
+                        {
+                            activity.isStarted = false;
+                            activity.isCancelled = false;
+
+                        }
+                    }
+                    if (isCancel != "undefined")
+                    {
+                        activity.isCancelled = isCancel.ToLower() == "true";
+
+                        if (activity.isCancelled)
+                        {
+                            activity.isStarted = false;
+                            activity.isCompleted = false;
+
+                        }
+                    }
+
+                    if (isStarted != "undefined")
+                    {
+                        activity.isStarted =isStarted.ToLower() == "true";
+
+                        if (activity.isStarted)
+                        {
+                            activity.isCompleted = false;
+                            activity.isCancelled = false;
+
+                        }
+                    }
+
+                    await _dBContext.SaveChangesAsync();
+
+                    return new ResponseMessage
+                    {
+                        Success = true,
+                        Message = "Activity Status Updated Successfully !!!"
+                    };
+
+
+                }
+                else
+                {
+                    return new ResponseMessage
+                    {
+                        Success = false,
+                        Message = "Activity not Found !!!"
+                    };
+                }
+
+            }
+            catch(Exception ex)
+            {
+                return new ResponseMessage
+                {
+                    Success=false,
+                    Message = ex.Message
+                };
+            }
+         
         }
     }
 }

@@ -39,17 +39,17 @@
                 <div class="col-md-2">
                     <label class="col-md-12" htmlFor="lastname2">Item</label> 
                     <select  class="form-control" (change)="changeItem($event.target)" [(ngModel)]="items" id="itemId" required
-                    name="itemId">
-                   <option></option>
-                   <option *ngFor="let it of itemsDropDown" [value]="it.id">{{it.name}}</option>
-               </select>
+                        name="itemId">
+                        <option></option>
+                        <option *ngFor="let it of itemsDropDown" [value]="it.id">{{it.name}}</option>
+                    </select>
                 </div>
                 <div class="col-md-2">
                     <label class="col-md-12" htmlFor="lastname2">Measurement Unit</label>
                     <select  class="form-control" (onChange)="changeItem($event)"   [(ngModel)]="addPurchaseRequestList.measurementUnitId" id="measurementUnitId" required
-                    name="measurementUnitId">
-                   <option></option>
-                   <option *ngFor="let it of measurementUnitDropDown" [value]="it.id">{{it.name}}</option>
+                        name="measurementUnitId">
+                        <option></option>
+                        <option *ngFor="let it of measurementUnitDropDown" [value]="it.id">{{it.name}}</option>
                     </select>
                 </div>
                 <div class="col-md-2">

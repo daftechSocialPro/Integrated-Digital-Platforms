@@ -81,6 +81,25 @@ namespace IntegratedDigitalAPI.Controllers.PM
             }
         }
 
+        [HttpPut("ChangeActivityStatus")]
+        public async Task<IActionResult> ChangeActivityStatus(Guid activityId, string? isCompleted, string? isCancel, string? isStarted)
+        {
+            try
+            {
+                var response = await _activityService.ChangeActivityStatus(activityId,isCompleted,isCancel,isStarted);
+                return Ok(response );
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error : {ex}");
+            }
+        }
+
+
+
+
+        
+
 
 
         [HttpPost("addProgress")]
@@ -149,6 +168,14 @@ namespace IntegratedDigitalAPI.Controllers.PM
         {
             return await _activityService.GetAssignedActivity(employeeId);
         }
+
+        [HttpPost("GetActivityForPlan")]
+        public async Task<List<ActivityViewDto>> GetActivityForPlan(ActivityPlanGetDto planGetDto)
+        {
+            return await _activityService.GetActivityForPlan(planGetDto.EmployeeId,planGetDto.Roles);
+        }
+
+        
 
         [HttpGet("forApproval")]
         public async Task<List<ActivityViewDto>> forApproval(Guid employeeId)

@@ -29,6 +29,9 @@ namespace MembershipImplementation.DTOS.Configuration
     {
         public Guid? Id { get; set; }
         public string RegionName { get; set; } = null!;
+
+        public string? UserName { get; set; }
+        public string? Password { get; set; } 
         public string  CountryType { get; set; }
         public string? CreatedById { get; set; }
 
@@ -39,6 +42,10 @@ namespace MembershipImplementation.DTOS.Configuration
         public Guid Id { get; set; }
         public string RegionName { get; set; } = null!;
         public string? CountryName { get; set; }
+
+        public string ? UserName { get; set; }
+
+        public string Password { get; set; }
        
 
     }

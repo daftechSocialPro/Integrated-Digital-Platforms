@@ -46,6 +46,8 @@ export interface IMembersGetDto {
 
   createdByDate:Date
 
+  membershipCategory ?:string
+
 
 }
 export interface ICompletePorfileDto {
@@ -69,6 +71,12 @@ export interface IMemberUpdateDto {
   birthDate: Date;
   woreda: string;
   instituteRole: string;
+
+  lastPaid ?: Date ;
+  expiredDate ?: Date;
+  paymentStatus ?: string
+
+  membershipTypeId?:string
 }
 
 export interface IMemberTelegramDto{

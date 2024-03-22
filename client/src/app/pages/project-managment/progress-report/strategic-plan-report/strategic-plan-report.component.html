@@ -34,8 +34,8 @@
                         </div>
 
                         <div class="form-floating col-3 me-2">
-                            <select class="form-control " [(ngModel)]="filterBy" (change)="onFilterByChange()">
 
+                            <select class="form-control " [(ngModel)]="filterBy" (change)="onFilterByChange()">
                                 <option value=0>Monthly</option>
                                 <option value=1>Quarterly</option>
                             </select>
@@ -44,6 +44,7 @@
                         </div>
 
                         <div class="form-floating col-3 me-2" *ngIf="filterBy == 0">
+
                             <select class="form-control " [(ngModel)]="Quarter" (change)="onQuarterChange()">
                                 <option value=0>All Quarters</option>
                                 <option value=1>First Quarter</option>
@@ -54,9 +55,6 @@
 
                             <label for="ReportBy">Quarter Report</label>
                         </div>
-
-
-
 
                     </div>
 

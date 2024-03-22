@@ -11,6 +11,10 @@
                               class="bi bi-chevron-down ms-auto"></i>
                   </a>
                   <ul id="components-project" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+
+                        <li *ngIf="roleMatch(['PM-CONFIGURATION','PLANNER','PROGRESS-REPORT','PM-VIEW-REPORT','PM-ADMIN'])"> <a routerLink="/pm/planDashboard"
+                              routerLinkActive="active">
+                              <i class="bi bi-circle"></i><span>Dashboard</span> </a></li>
                         <li *ngIf="roleMatch(['PM-CONFIGURATION','PM-ADMIN'])"> <a routerLink="/pm/configuration"
                                     routerLinkActive="active">
                                     <i class="bi bi-circle"></i><span>Configuration</span> </a></li>
@@ -24,7 +28,7 @@
                         </li>
 
                         <li *ngIf="roleMatch(['PROGRESS-REPORT','PM-ADMIN'])"> <a routerLink="/pm/assignedactivities"
-                                    routerLinkActive="active"> <i class="bi bi-circle"></i><span>Assigned Activities
+                                    routerLinkActive="active"> <i class="bi bi-circle"></i><span>Planned Vs Achivements
 
                                           <p-badge *ngIf="Activties&&Activties.length>0" severity="success"
                                                 [value]="Activties&&Activties.length.toString()"></p-badge>
@@ -210,7 +214,16 @@
                   <ul id="finance-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li *ngIf="roleMatch(['HRM-CONFIGURATION'])"> <a routerLink="/finance/financeconfig"
                                     routerLinkActive="active">
-                                    <i class="bi bi-circle"></i><span>Configuration</span> </a></li>
+                                    <i class="bi bi-circle"></i><span>Configuration</span> </a>
+                        </li>
+                        <li *ngIf="roleMatch(['HRM-CONFIGURATION'])"> <a routerLink="/finance/payments"
+                              routerLinkActive="active">
+                              <i class="bi bi-circle"></i><span>Payments</span> </a>
+                        </li>
+                        <li *ngIf="roleMatch(['HRM-CONFIGURATION'])"> <a routerLink="/finance/payroll"
+                              routerLinkActive="active">
+                              <i class="bi bi-circle"></i><span>Payroll</span> </a>
+                        </li>
                        
                         
                   </ul>

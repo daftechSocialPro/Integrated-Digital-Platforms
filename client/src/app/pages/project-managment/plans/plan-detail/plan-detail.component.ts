@@ -42,6 +42,8 @@ export class PlanDetailComponent implements OnInit {
   selectedYear!: number;
   filterBy:number=1
   dataLoaded: boolean = true;
+
+  assignedBudget:number = 0 
   constructor(
    
     private activatedROute: ActivatedRoute,
@@ -107,14 +109,18 @@ export class PlanDetailComponent implements OnInit {
       this.projectYears.push({ name: year.toString(), id: year });
     }
 
-    console.log("startYear" , this.projectYears)
+
   }
 
   getSingleTaskActivities(taskId: String) {
+  
     this.taskService.getSingleTask(taskId).subscribe({
       next: (res) => {
         if (res.activityViewDtos !== undefined) {
           const result = res.activityViewDtos;
+
+          console.log("activitites",res.activityViewDtos)
+          this.assignedBudget += res.activityViewDtos.reduce((accumulator, item) => accumulator + item.plannedBudget, 0);
           this.taskActivities.set(taskId, result);
         }
 
@@ -152,6 +158,7 @@ export class PlanDetailComponent implements OnInit {
         next: (res) => {
           this.plan = res;
           const result = res.tasks;
+          this.assignedBudget=0;
           const promises = result.map(task => this.getSingleTaskActivities(task.id));
           Promise.all(promises).then(() => {
             this.planTasks.set(planId, result);
@@ -242,7 +249,7 @@ export class PlanDetailComponent implements OnInit {
 
     }
 
-    console.log(task)
+
     modalRef.componentInstance.task = task
     modalRef.componentInstance.requestFrom = "ACTIVITY";
     modalRef.componentInstance.requestFromId = task.id;
@@ -260,7 +267,7 @@ export class PlanDetailComponent implements OnInit {
   
       }
   
-      console.log(task)
+
       modalRef.componentInstance.task = task
       modalRef.componentInstance.requestFrom = "ACTIVITY";
       modalRef.componentInstance.requestFromId = task.id;
@@ -360,7 +367,7 @@ viewDetail (item:ActivityView)
 // }
 onProjectYearChange(){
   this.dataLoaded = false
-  console.log("Selected Year", this.selectedYear);
+
   this.ListTask(this.planId).then(() => {
     this.dataLoaded = true; 
   });
@@ -378,6 +385,7 @@ onProjectYearChange(){
 //   return filteredArray;
 // }
 getPerformancesByCurrentYear(monthPerformance: any): any[] {
+
   if (!this.dataLoaded) return []; // Return empty array if data is not loaded yet
   const currentYear = this.selectedYear; 
   const filteredArray = monthPerformance.filter(item => {

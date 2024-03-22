@@ -6,6 +6,8 @@ import { IAnnouncmentGetDto } from 'src/models/configuration/IAnnouncmentDto';
 import { CourseComponent } from '../course/course.component';
 import { AddAnnouncmentComponent } from './add-announcment/add-announcment.component';
 import { CommonService } from 'src/app/services/common.service';
+import { UserView } from 'src/models/auth/userDto';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-announcment',
@@ -18,12 +20,16 @@ export class AnnouncmentComponent implements OnInit {
   Announcment: IAnnouncmentGetDto[];
   paginatedAnnouncment: IAnnouncmentGetDto[];
 
+  userView : UserView
+
   ngOnInit(): void {
     this.getAnnouncments();
+    this.userView = this.userService.getCurrentUser()
   }
 
   constructor(
     private modalService: NgbModal,
+    private userService: UserService,
     private commonService: CommonService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,

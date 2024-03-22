@@ -1,4 +1,5 @@
 ﻿using MembershipInfrustructure.Model.Authentication;
+using MembershipInfrustructure.Model.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,9 @@ namespace MembershipInfrustructure.Model.Users
         public string Email { get;set; }
 
         public string ImagePath { get; set; }   
+
+        public Guid? RegionId { get; set; }
+
+        public virtual Region Region { get; set; }
     }
 }

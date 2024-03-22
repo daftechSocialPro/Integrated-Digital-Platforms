@@ -4772,6 +4772,12 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<bool>("isCancelled")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("isCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("isStarted")
+                        .HasColumnType("bit");
+
                     b.Property<int?>("targetDivision")
                         .HasColumnType("int");
 

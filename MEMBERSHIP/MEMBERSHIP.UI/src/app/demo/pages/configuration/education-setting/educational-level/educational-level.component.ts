@@ -4,6 +4,8 @@ import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/a
 import { ConfigurationService } from 'src/app/services/configuration.service';
 import { IEducationalLevelGetDto } from 'src/models/configuration/IEducationDto';
 import { AddEducationalLevelComponent } from './add-educational-level/add-educational-level.component';
+import { UserView } from 'src/models/auth/userDto';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-educational-level',
@@ -17,12 +19,16 @@ export class EducationalLevelComponent implements OnInit {
   EducationalLevel:IEducationalLevelGetDto[];
   paginatedEducationalLevel : IEducationalLevelGetDto[];
 
+  userView: UserView
+
   ngOnInit(): void {
-    this.getEducationalLevels()    
+    this.getEducationalLevels()  
+    this.userView = this.userService.getCurrentUser()  
   }
 
   constructor(
     private modalService : NgbModal,
+    private userService : UserService,
     private confirmationService: ConfirmationService,
     private messageService : MessageService,
     private controlService:ConfigurationService){}

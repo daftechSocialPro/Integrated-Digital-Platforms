@@ -43,8 +43,8 @@ namespace IntegratedImplementation.DTOS.Training
         public string FullName { get; set; }
         public string PhoneNumber { get; set; }
         public int Age { get; set; }
-        public string Email { get; set; }
-        public string EducationalField { get; set; }
+        public string? Email { get; set; }
+        public string? EducationalField { get; set; }
         public Guid EducationalLevelId { get; set; }
         public string Gender { get; set; }
 

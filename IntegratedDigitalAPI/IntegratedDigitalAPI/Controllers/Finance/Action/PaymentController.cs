@@ -29,8 +29,9 @@ namespace IntegratedDigitalAPI.Controllers.Finance.Action
 
 
         [HttpPost]
-
-        public async Task<IActionResult> AddAccountingPeriod(AddPaymentDto addPayment)
+        [Consumes("multipart/form-data")]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> AddPayments([FromForm] AddPaymentDto addPayment ) 
         {
             if (ModelState.IsValid)
             {

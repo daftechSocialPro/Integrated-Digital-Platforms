@@ -38,7 +38,6 @@ C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\
 C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\MEMBERSHIP\MEMBERSHIP.API\MembershipImplementation\obj\Debug\net7.0\MembershipImplementation.AssemblyInfoInputs.cache
 C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\MEMBERSHIP\MEMBERSHIP.API\MembershipImplementation\obj\Debug\net7.0\MembershipImplementation.AssemblyInfo.cs
 C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\MEMBERSHIP\MEMBERSHIP.API\MembershipImplementation\obj\Debug\net7.0\MembershipImplementation.csproj.CoreCompileInputs.cache
-C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\MEMBERSHIP\MEMBERSHIP.API\MembershipImplementation\obj\Debug\net7.0\MembershipImplementation.sourcelink.json
 C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\MEMBERSHIP\MEMBERSHIP.API\MembershipImplementation\obj\Debug\net7.0\MembershipImplementation.csproj.CopyComplete
 C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\MEMBERSHIP\MEMBERSHIP.API\MembershipImplementation\obj\Debug\net7.0\MembershipImplementation.dll
 C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\MEMBERSHIP\MEMBERSHIP.API\MembershipImplementation\obj\Debug\net7.0\refint\MembershipImplementation.dll

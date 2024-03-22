@@ -32,6 +32,8 @@ namespace IntegratedImplementation.DTOS.Finance.Configuration
         public string AccountingPeriodType { get; set; } = null!;
         public string CalanderType { get; set; } = null!;
         public string Description { get; set; } = null!;
-        public DateTime StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
+
+        public string ? ethiopianDate { get; set; }
     }
 }

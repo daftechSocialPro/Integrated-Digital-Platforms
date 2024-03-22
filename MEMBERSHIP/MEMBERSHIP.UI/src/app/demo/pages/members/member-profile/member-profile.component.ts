@@ -120,7 +120,17 @@ export class MemberProfileComponent implements OnInit {
         institute: this.updateProfileForm.value.institute
       };
     }
-    this.memberService.updateProfile(updateProfile).subscribe({
+      var formData = new FormData();
+      for (let key in updateProfile) {
+        if (updateProfile.hasOwnProperty(key)) {
+          formData.append(key, (updateProfile as any)[key]);
+        }
+      }
+
+      // Append the file to the form data
+      formData.append('image', this.fileGH);
+    
+    this.memberService.updateProfile(formData).subscribe({
       next: (res) => {
         if (res.success) {
           this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });

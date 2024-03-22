@@ -61,7 +61,7 @@
 
                 <div class="form-floating mb-3">
 
-                    <select class="form-control" #country (change)="getRegions(country.value)" required>
+                    <select class="form-control" #country (change)="getRegions(country.value)" required  [disabled]="userView.regionId != ''" >
 
                         <option>Select Country Type</option>
                         <option value="ETHIOPIAN">ETHIOPIAN</option>
@@ -77,7 +77,7 @@
 
 
                 <div class="form-floating mb-3">
-                    <select class="form-control" style="font-size: 18px;" [(ngModel)]="selectedChapter">
+                    <select class="form-control" style="font-size: 18px;" [(ngModel)]="selectedChapter" [disabled]="userView.regionId != ''">
                         <option value="">Select Chapter</option>
                         <option *ngFor="let item of chapters" [value]="item.name">{{item.name}}</option>
                     </select>

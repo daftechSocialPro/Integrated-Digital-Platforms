@@ -2,7 +2,7 @@
 
 
     <div class="col-md-10 p-4 ">
-        <div class="col-lg-12 text-end p-2">
+        <div class="col-lg-12 text-end p-2" *ngIf="userView.role.includes('SuperAdmin')">
             <button type="button" class="btn btn-outline-success" (click)="addRegion()"><i class="pi pi-plus me-1"
                     style="font-size: 12px;"></i>
                     Chapter</button>
@@ -13,8 +13,10 @@
 
                     <th>Chapter Name </th>
                     <th>Country Name</th>
+                    <th *ngIf="userView.role.includes('SuperAdmin')">User Name</th>
+                    <th *ngIf="userView.role.includes('SuperAdmin')">Password</th>
 
-                    <th>Action</th>
+                    <th *ngIf="userView.role.includes('SuperAdmin')">Action</th>
 
                 </tr>
             </thead>
@@ -24,8 +26,12 @@
                     <td>{{item.regionName}}</td>
                     <td>{{item.countryName}}</td>
 
+                    <td *ngIf="userView.role.includes('SuperAdmin')">{{item.userName}}</td>
+                    <td *ngIf="userView.role.includes('SuperAdmin')"></td>
+                    
 
-                    <td>
+
+                    <td *ngIf="userView.role.includes('SuperAdmin')">
                         <button type="button" (click)="updateRegion(item)" class="btn btn-outline-warning btn-sm"><i
                                 class="ti ti-pencil"></i></button> |
                         <button type="button" (click)="removeRegion(item.id)" class="btn btn-outline-danger btn-sm"><i

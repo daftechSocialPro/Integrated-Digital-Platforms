@@ -21,11 +21,20 @@ export class TrainingService {
         training.CreatedById = this.userService.getCurrentUser().userId
         return this.http.post<ResponseMessage>(`${this.BaseURI}AddTrainingList`, training)
     }
+    UpdateTrainingList(training: ITrainingPostDto) {
+        training.CreatedById = this.userService.getCurrentUser().userId
+        return this.http.put<ResponseMessage>(`${this.BaseURI}UpdateTrainingList`, training)
+    }
+
     getSingleTraining(trainingId :string){
 
         return this.http.get<ITrainingGetDto>(this.BaseURI+"GetSingleTraining?trainingId="+trainingId)
 
     }
+
+    importFromExcel(formData:FormData){
+        return this.http.post<ResponseMessage>(this.BaseURI+"ImportTraineeFormExcel",formData)
+      }
 
     getTrainings(activityId: String) {
 
@@ -40,6 +49,27 @@ export class TrainingService {
 
         trainer.CreatedById = this.userService.getCurrentUser().userId
         return this.http.post<ResponseMessage>(`${this.BaseURI}AddTrainerList`, trainer)
+
+    }
+
+
+
+    UpdateTrainerList(trainer: ITrainerPostDto) {
+
+        trainer.CreatedById = this.userService.getCurrentUser().userId
+        return this.http.put<ResponseMessage>(`${this.BaseURI}UpdateTrainerList`, trainer)
+
+    }
+
+    DeleteTrainer(trainerId:string){
+
+        return this.http.delete<ResponseMessage>(`${this.BaseURI}DeleteTrainer?trainerId=${trainerId}`)
+
+    }
+
+    DeleteTraining(trainingId:string){
+
+        return this.http.delete<ResponseMessage>(`${this.BaseURI}DeleteTraining?trainingId=${trainingId}`)
 
     }
 
@@ -82,6 +112,11 @@ export class TrainingService {
     changeTraineeReportStatus(trainingID:string,status : string ){
 
         return this.http.post<ResponseMessage>(this.BaseURI+`ChangeTraineeReportStatus?trainingId=${trainingID}&status=${status}`,{})
+    }
+
+    deleteTrainee (traineeId:string){
+
+        return this.http.delete<ResponseMessage> (this.BaseURI+`DeleteTrainee?traineeId=${traineeId}`)
     }
 
 

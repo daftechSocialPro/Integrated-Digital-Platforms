@@ -32,7 +32,7 @@ export class MemberService {
   completeProfile(profile: FormData) {
     return this.http.post<ResponseMessage>(this.BaseURI + `/Member/CompleteProfile`, profile);
   }
-  updateProfile(profile: IMemberUpdateDto) {
+  updateProfile(profile: FormData) {
     return this.http.put<ResponseMessage>(this.BaseURI + `/Member/UpdateMember`, profile);
   }
 

@@ -221,6 +221,24 @@ namespace IntegratedDigitalAPI.Controllers.Configuration
         {
             return Ok(await _DropDownService.GetFiscalYears());
         }
+        [HttpGet]
+        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetAccountTypeDropDown()
+        {
+            return Ok(await _DropDownService.GetAccountTypeDropDown());
+        }
+        [HttpGet]
+        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetChartOfAccountsDropDown()
+        {
+            return Ok(await _DropDownService.GetChartOfAccountsDropDown());
+        }
+        [HttpGet]
+        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetAccountingPeriodDropDown()
+        {
+            return Ok(await _DropDownService.GetAccountingPeriodDropDown());
+        }
 
 
     }
