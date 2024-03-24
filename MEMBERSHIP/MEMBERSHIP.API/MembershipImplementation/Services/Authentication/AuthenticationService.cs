@@ -55,15 +55,20 @@ namespace Implementation.Services.Authentication
                     };
                 var roleList = await _userManager.GetRolesAsync(user);
                 IdentityOptions _options = new IdentityOptions();
-          
+
+              
 
                 if (user.AdminId != null)
                 {
+                    var str = System.String.Join(",", roleList);
 
+                    var admins = await _dbContext.Admins.Include(x=>x.Region).FirstOrDefaultAsync(x => x.Id == user.AdminId);
 
-                    var admins = await _dbContext.Admins.FirstOrDefaultAsync(x => x.Id == user.AdminId);
+                    var regionName = admins.RegionId != null ? admins.Region.RegionName : "";
                     if (admins != null)
                     {
+
+                        
 
                         var TokenDescriptor = new SecurityTokenDescriptor
                         {
@@ -75,7 +80,11 @@ namespace Implementation.Services.Authentication
                         new Claim("photo",admins?.ImagePath),
                         new Claim("isProfileCompleted",true.ToString()),
                         new Claim("isExpired",false.ToString()),
-                        new Claim(_options.ClaimsIdentity.RoleClaimType, "Admin"),
+                        new Claim("regionId",regionName),                      
+
+
+
+                        new Claim(_options.ClaimsIdentity.RoleClaimType, str),
 
                             }),
                             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes("1225290901686999272364748849994004994049404940")), SecurityAlgorithms.HmacSha256Signature)

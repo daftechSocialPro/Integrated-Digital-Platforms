@@ -20,6 +20,12 @@
     
     </div>
   </div>
+
+
+  <button  *ngIf="training.traineeListStatus!='SUBMITTED'" class="btn btn-outline-success text-end mb-3" (click)="file.click()"><i
+    class="bi bi-file-excel"></i> Import from Excel </button> &nbsp;
+    <input type="file" accept=".xlsx, .xls" #file hidden (change)="onFileSelected($event)" />
+
   <button  *ngIf="traininggId&&(training&&training.traineeListStatus=='SUBMITTED')" class="btn btn-outline-success text-end mb-3" (click)="exportAsExcel(training&&training.title)"><i
     class="bi bi-file-excel"></i> Export Excel </button> &nbsp;
 
@@ -37,26 +43,28 @@
     </div>
   <div class="table-container ">
     <div class="table-wrapper ">
-    <table class="table table-bordered"  #excelTable>
+    <table class="table table-bordered table-responsive"  #excelTable>
       <thead>
         <tr>
-          <th style="border: 1px solid black;" *ngIf="!traininggId && (training && training.traineeListStatus != 'SUBMITTED')"></th>
-          <th style="border: 1px solid black;">#</th>
-          <th style="border: 1px solid black;">Full Name</th>
-          <th style="border: 1px solid black;">Gender</th>
-          <th style="border: 1px solid black;">Profession</th>
-          <th style="border: 1px solid black;">Phone Number</th>
-          <th style="border: 1px solid black;">Email</th>
-          <th style="border: 1px solid black;">Age</th>
-          <th style="border: 1px solid black;">Region</th>
-          <th style="border: 1px solid black;">Zone</th>
-          <th style="border: 1px solid black;">Woreda</th>
-          <th style="border: 1px solid black;">Level of Education</th>
-          <th style="border: 1px solid black;">Educational Field</th>
-          <th style="border: 1px solid black;">Organization</th>
-          <th style="border: 1px solid black;">Type Of Organization</th>
-          <th style="border: 1px solid black;">Pre Training Summary</th>
-          <th style="border: 1px solid black;">Post Training Summary</th>
+          <th style="border: 1px solid black;" *ngIf="(training && training.traineeListStatus != 'SUBMITTED')" resizable></th>
+          <th style="border: 1px solid black;" resizable >#</th>
+          <th style="border: 1px solid black;" resizable>Full Name</th>
+          <th style="border: 1px solid black;" resizable>Gender</th>
+          <th style="border: 1px solid black;" resizable>Age</th>
+          <th style="border: 1px solid black;" resizable>Profession</th>
+          <th style="border: 1px solid black;" resizable>Level of Education</th>
+          <th style="border: 1px solid black;" resizable>Phone Number</th>
+          <th style="border: 1px solid black;" resizable>Email</th>
+          
+          <th style="border: 1px solid black;" resizable>Region</th>
+          <th style="border: 1px solid black;" resizable>Zone</th>
+          <th style="border: 1px solid black;" resizable>Woreda</th>
+         
+          <!-- <th style="border: 1px solid black;">Educational Field</th> -->
+          <th style="border: 1px solid black;" resizable>Organization</th>
+          <th style="border: 1px solid black;" resizable>Type Of Organization</th>
+          <th style="border: 1px solid black;" resizable>Pre Training Summary</th>
+          <th style="border: 1px solid black;" resizable>Post Training Summary</th>
           <th style="border: 1px solid black;" *ngIf="traininggId&&(training&&training.traineeListStatus=='SUBMITTED')">Title</th>
           <th style="border: 1px solid black;" *ngIf="traininggId&&(training&&training.traineeListStatus=='SUBMITTED')">Project</th>
           <th style="border: 1px solid black;" *ngIf="traininggId&&(training&&training.traineeListStatus=='SUBMITTED')">CEU</th>          
@@ -64,21 +72,28 @@
       </thead>
       <tbody>
         <tr *ngFor="let row of filterdTraines; let i = index">
-          <td style="border: 1px solid black;" *ngIf="!traininggId && (training && training.traineeListStatus != 'SUBMITTED')"><button class="btn btn-sm btn-outline-warning" (click)="editRow(row)">
+          <td style="border: 1px solid black;" *ngIf="(training && training.traineeListStatus != 'SUBMITTED')">
+            <button class="btn btn-sm btn-outline-warning" (click)="editRow(row)">
             <i class="bi bi-pencil"></i>
-          </button></td>
-          <td style="border: 1px solid black;">{{ i + 1 }} </td>
-          <td style="border: 1px solid black;">{{ row.fullName }}</td>
-          <td style="border: 1px solid black;">{{ row.gender }}</td>
+          </button> |
+          <button class="btn btn-sm btn-outline-danger" (click)="deleteRow(row)">
+            <i class="bi bi-trash"></i>
+          </button>
+        </td>
+          <td style="border: 1px solid black;" >{{ i + 1 }} </td>
+          <td style="border: 1px solid black;" >{{ row.fullName }}</td>
+          <td style="border: 1px solid black;" >{{ row.gender }}</td>
+          <td style="border: 1px solid black;">{{ row.age }}</td>
           <td style="border: 1px solid black;">{{ row.profession }}</td>
+          <td style="border: 1px solid black;">{{ row.educationalLevel }}</td>
           <td style="border: 1px solid black;">{{ row.phoneNumber }}</td>
           <td style="border: 1px solid black;">{{ row.email }}</td>
-          <td style="border: 1px solid black;">{{ row.age }}</td>
+         
           <td style="border: 1px solid black;">{{ row.region }}</td>
           <td style="border: 1px solid black;">{{ row.zone }}</td>
           <td style="border: 1px solid black;">{{ row.woreda }}</td>
-          <td style="border: 1px solid black;">{{ row.educationalLevel }}</td>
-          <td style="border: 1px solid black;">{{ row.educationalField }}</td>
+         
+          <!-- <td style="border: 1px solid black;">{{ row.educationalField }}</td> -->
           <td style="border: 1px solid black;">{{ row.nameofOrganizaton }}</td>
           <td style="border: 1px solid black;">{{ row.typeofOrganization }}</td>
           <td style="border: 1px solid black;">{{ row.preSummary }}</td>
@@ -108,7 +123,8 @@
         <input pInputText class="mt-2"  type="text" placeholder="Woreda" formControlName="woreda" />&nbsp;
         <p-dropdown formControlName="educationalLevel" class="mt-2"  [options]="educationalLevels" optionLabel="name"
           optionValue="id" placeholder="Select Educational Level" [filter]="true"></p-dropdown>&nbsp;
-        <input pInputText type="text" class="mt-2"  placeholder="Educational Field" formControlName="educationalField" />&nbsp;
+        <!-- <input pInputText type="text" class="mt-2"  placeholder="Educational Field" formControlName="educationalField" />&nbsp;
+        -->
         <input pInputText type="text" class="mt-2"  placeholder="Name of Organization" formControlName="nameofOrganizaton" />&nbsp;
         <input pInputText type="text" class="mt-2"  placeholder="Type of Organization" formControlName="typeofOrganization" />&nbsp;
         <input pInputText type="number" class="mt-2"  placeholder="Pre Summary" formControlName="preSummary" />&nbsp;

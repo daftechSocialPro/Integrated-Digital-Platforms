@@ -54,7 +54,7 @@ namespace IntegratedImplementation.Services.PM
 
         public async Task<List<StrategicPlanGetDto>> GetStrategicPlanList()
         {
-            var departmentList = await _dbContext.StrategicPlans.AsNoTracking().Select(x => new StrategicPlanGetDto
+            var departmentList = await _dbContext.StrategicPlans.AsNoTracking().OrderBy(x=>x.Name).Select(x => new StrategicPlanGetDto
             {
                 Id = x.Id,
                 Name = x.Name,
@@ -152,19 +152,25 @@ namespace IntegratedImplementation.Services.PM
                     IsPercentage = e.IsPercentage,
                     ProjectSourceId = e.ProjectSourceFundId,
                     ActivityLocations = e.ActivityLocations.ToList(),
-                    ProgressStatus = _dbContext.ActivityProgresses
-                                    .Where(x => x.ActivityId == e.Id)
-                                    .Select(x => x.progressStatus)
-                                    .AsQueryable()
-                                    .Any(status => status == ProgressStatus.FINALIZE) ? "FINISHED" : _dbContext.ActivityProgresses
-                                    .Where(x => x.ActivityId == e.Id)
-                                    .Select(x => x.progressStatus)
-                                    .Count() == 0 ? "NOT STARTED":
-                                    _dbContext.ActivityProgresses
-                                    .Where(x => x.ActivityId == e.Id)
-                                    .Select(x => x.progressStatus)
-                                    .All(status => status == ProgressStatus.SIMPLEPROGRESS) ? "IN PROGRESS" :
-                                    "NOT STARTED"
+                    ProgressStatus =  e.isStarted ? "IN PROGRESS" : (e.isCancelled? "CANCELLED" : (e.isCompleted? "COMPLETED": "NOT STARTED"))
+
+
+
+
+
+                    //_dbContext.ActivityProgresses
+                    //                .Where(x => x.ActivityId == e.Id)
+                    //                .Select(x => x.progressStatus)
+                    //                .AsQueryable()
+                    //                .Any(status => status == ProgressStatus.FINALIZE) ? "FINISHED" : _dbContext.ActivityProgresses
+                    //                .Where(x => x.ActivityId == e.Id)
+                    //                .Select(x => x.progressStatus)
+                    //                .Count() == 0 ? "NOT STARTED":
+                    //                _dbContext.ActivityProgresses
+                    //                .Where(x => x.ActivityId == e.Id)
+                    //                .Select(x => x.progressStatus)
+                    //                .All(status => status == ProgressStatus.SIMPLEPROGRESS) ? "IN PROGRESS" :
+                    //                "NOT STARTED"
                 }).ToListAsync();
 
             var activityGroups = activityViewDtos.GroupBy(dto => dto.TaskName)
@@ -254,19 +260,21 @@ namespace IntegratedImplementation.Services.PM
                 IsPercentage = e.IsPercentage,
                 ProjectSourceId = e.ProjectSourceFundId,
                 ActivityLocations = e.ActivityLocations.ToList(),
-                ProgressStatus = _dbContext.ActivityProgresses
-                                .Where(x => x.ActivityId == e.Id)
-                                .Select(x => x.progressStatus)
-                                .AsQueryable()
-                                .Any(status => status == ProgressStatus.FINALIZE) ? "FINISHED" : _dbContext.ActivityProgresses
-                                .Where(x => x.ActivityId == e.Id)
-                                .Select(x => x.progressStatus)
-                                .Count() == 0 ? "NOT STARTED" :
-                                _dbContext.ActivityProgresses
-                                .Where(x => x.ActivityId == e.Id)
-                                .Select(x => x.progressStatus)
-                                .All(status => status == ProgressStatus.SIMPLEPROGRESS) ? "IN PROGRESS" :
-                                "NOT STARTED"
+
+                ProgressStatus = e.isStarted ? "IN PROGRESS" : (e.isCancelled ? "CANCELLED" : (e.isCompleted ? "COMPLETED" : "NOT STARTED"))
+                //ProgressStatus = _dbContext.ActivityProgresses
+                //                .Where(x => x.ActivityId == e.Id)
+                //                .Select(x => x.progressStatus)
+                //                .AsQueryable()
+                //                .Any(status => status == ProgressStatus.FINALIZE) ? "FINISHED" : _dbContext.ActivityProgresses
+                //                .Where(x => x.ActivityId == e.Id)
+                //                .Select(x => x.progressStatus)
+                //                .Count() == 0 ? "NOT STARTED" :
+                //                _dbContext.ActivityProgresses
+                //                .Where(x => x.ActivityId == e.Id)
+                //                .Select(x => x.progressStatus)
+                //                .All(status => status == ProgressStatus.SIMPLEPROGRESS) ? "IN PROGRESS" :
+                //                "NOT STARTED"
             }).ToListAsync();
 
             return activityViewDtos;

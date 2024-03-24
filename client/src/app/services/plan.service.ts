@@ -48,12 +48,12 @@ export class PlanService {
         return this.http.delete<ResponseMessage>(this.BaseURI+`/plan/deletePlan?planId=${planId}`)
     }
 
-    getPlanPieCharts(planId:string, quarter:number){
-        return this.http.get<PlanPieChartPostDto>(this.BaseURI + "/plan/getPlanPieCharts?planId="+planId+"&quarter="+quarter)
+    getPlanPieCharts(planId:string,strategicPlanId:String, quarter:number){
+        return this.http.get<PlanPieChartPostDto>(this.BaseURI + `/plan/getPlanPieCharts?planId=${planId}&quarter=${quarter}&strategicPlanId=${strategicPlanId}`)
     }
 
-    getPlanBarCharts(planId:string){
-        return this.http.get<PlanBarChartPostDto>(this.BaseURI + "/plan/getPlanBarCharts?planId="+planId)
+    getPlanBarCharts(planId:string,strategicPlanId:String){
+        return this.http.get<PlanBarChartPostDto>(this.BaseURI + `/plan/getPlanBarCharts?planId=${planId}&strategicPlanId=${strategicPlanId}`)
     }
 
 

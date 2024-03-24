@@ -5,6 +5,8 @@ import { ConfigurationService } from 'src/app/services/configuration.service';
 import { IMembershipTypeGetDto } from 'src/models/configuration/IMembershipDto';
 import { AddMembershipTypeComponent } from './add-membership-type/add-membership-type.component';
 import { CourseComponent } from '../course/course.component';
+import { UserService } from 'src/app/services/user.service';
+import { UserView } from 'src/models/auth/userDto';
 
 @Component({
   selector: 'app-membership-types',
@@ -17,12 +19,16 @@ export class MembershipTypesComponent implements OnInit {
   MembershipType: IMembershipTypeGetDto[];
   paginatedMembershipType: IMembershipTypeGetDto[];
   formats: string[] = ['bold', 'italic'];
+
+  userView : UserView
   ngOnInit(): void {
     this.getMembershipTypes();
+    this.userView = this.userService.getCurrentUser()
   }
 
   constructor(
     private modalService: NgbModal,
+    private userService : UserService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private controlService: ConfigurationService

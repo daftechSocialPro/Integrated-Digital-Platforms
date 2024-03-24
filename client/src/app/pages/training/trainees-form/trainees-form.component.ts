@@ -30,7 +30,7 @@ export class TraineesFormComponent implements OnInit {
   educationalFields:SelectList[]=[]
   educationalLevels:SelectList[]=[]
   training !: ITrainingGetDto
-
+  selectedFile: File | null = null;
   regions:SelectList[]=[]
 
 
@@ -80,18 +80,18 @@ export class TraineesFormComponent implements OnInit {
       gender: ['', Validators.required],
       profession: ['', Validators.required],
       phoneNumber: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      age: ['', Validators.required],
+      email: ['', [ Validators.email]],
+      age: [0],
       region: ['', Validators.required],
       zone: ['', Validators.required],
       woreda: ['', Validators.required],  
       
       educationalLevel: ['', Validators.required],
-      educationalField: ['', Validators.required],
+      educationalField: ['field'],
       nameofOrganizaton: ['', Validators.required],
       typeofOrganization: ['', Validators.required],
       preSummary: ['', Validators.required],
-      postSummary: [''],
+      postSummary: [0],
    
     });
   }
@@ -195,12 +195,15 @@ export class TraineesFormComponent implements OnInit {
       next:(res)=>{
         this.traineeData = res 
         this.filterdTraines= res 
+
+      
       }
     })}
     else{
       this.trainingService.getTraineeList(this.traininggId).subscribe({
         next:(res)=>{
           this.traineeData = res 
+          this.filterdTraines= res 
         }
       })
     }
@@ -282,6 +285,24 @@ export class TraineesFormComponent implements OnInit {
     })
   }
 
+  deleteRow(row:any){
+
+    this.trainingService.deleteTrainee(row.id).subscribe({
+      next:(res)=>{
+        if(res.success){
+
+          this.messageService.add({severity:'success',detail:'Success',summary:res.message})
+          this.getTrainee()
+
+        }else {
+          this.messageService.add({severity:'error',detail:'Something went wrong !!!',summary:res.message})
+        }
+      }
+    })
+    
+
+  }
+
   exportAsExcel(name:string) {
    
     const uri = 'data:application/vnd.ms-excel;base64,';
@@ -296,6 +317,38 @@ export class TraineesFormComponent implements OnInit {
     link.download = `${name}.xls`;
     link.href = uri + base64(format(template, ctx));
     link.click();
+}
+
+
+onFileSelected(event: any) {
+  this.selectedFile = event.target.files[0] as File;
+  if (!this.selectedFile) {
+    return;
+  }
+  this.importFromExcel()
+
+}
+importFromExcel() {
+
+  const formData = new FormData();
+  formData.append('ExcelFile', this.selectedFile);
+  this.trainingService.importFromExcel(formData).subscribe({
+
+    next: (res) => {
+      if (res.success) {
+        this.messageService.add({ severity: 'success', summary: res.message, detail: res.data })
+        this.getTrainee()
+      }
+      else {
+        this.messageService.add({ severity: 'error', summary: res.message, detail: res.data })
+        this.getTrainee()
+      }
+    }
+    , error: (err) => {
+      this.messageService.add({ severity: 'error', summary: 'Something went wrong', detail: err })
+    }
+
+  })
 }
 
   

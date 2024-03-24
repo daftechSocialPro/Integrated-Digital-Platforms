@@ -4,7 +4,7 @@ import { ITrainerGetDto } from 'src/app/model/Training/TrainerDto';
 import { TrainingService } from 'src/app/services/training.service';
 import { AddTrainerComponent } from '../add-trainer/add-trainer.component';
 import { ITrainerEmailDto } from 'src/app/model/Training/TraineeDto';
-import { MessageService } from 'primeng/api';
+import { ConfirmEventType, ConfirmationService, MessageService } from 'primeng/api';
 import { ITrainingGetDto } from 'src/app/model/Training/TrainingDto';
 import { ViewChild, ElementRef } from '@angular/core';
 import { environment } from 'src/environments/environment';
@@ -27,6 +27,7 @@ export class TrainerListComponent implements OnInit {
   @Input() Training!: ITrainingGetDto
   constructor(
     private trainingService:TrainingService,
+    private confirmationService : ConfirmationService,
    
     private messageService : MessageService,
     private modalService:NgbModal){}
@@ -103,6 +104,54 @@ export class TrainerListComponent implements OnInit {
     })
 
   }
+
+  editTrainer(trainer : ITrainerGetDto)
+  {
+    let modalRef = this.modalService.open(AddTrainerComponent,{size:'lg',backdrop:'static'})
+    modalRef.componentInstance.trainer = trainer
+
+    modalRef.result.then(()=>{
+      this.getTrainerList()
+    })
+
+  }
+
+  DeleteTrainer( trainerId : string ){
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to Delete Trainer??',
+      header: 'Delete Approval !',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+          this.trainingService.DeleteTrainer(trainerId).subscribe({
+            next:(res)=>{
+              if (res.success){
+                this.messageService.add({ severity: 'success', summary: 'Successfully Deleted', detail: res.message });
+                this.getTrainerList()
+              }
+              else {
+                this.messageService.add({ severity: 'error', summary: 'Somehting went wrong !!!', detail: res.message });
+              }
+            },error:(err)=>{
+              this.messageService.add({ severity: 'error', summary: 'Rejected', detail: err.message });
+            }
+          })
+
+      },
+      reject: (type: ConfirmEventType) => {
+          switch (type) {
+              case ConfirmEventType.REJECT:
+                  this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
+                  break;
+              case ConfirmEventType.CANCEL:
+                  this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
+                  break;
+          }
+      },
+      key: 'positionDialog'
+  });
+  }
+
+
   sendEmail(trainer:ITrainerGetDto,type:string){
 
     let trainerEmail : ITrainerEmailDto={

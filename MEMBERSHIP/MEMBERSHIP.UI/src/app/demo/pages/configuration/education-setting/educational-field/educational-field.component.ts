@@ -4,6 +4,8 @@ import { ConfigurationService } from 'src/app/services/configuration.service';
 import { IEducationalFieldGetDto } from 'src/models/configuration/IEducationDto';
 import { AddEducationalFieldComponent } from './add-educational-field/add-educational-field.component';
 import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/api';
+import { UserView } from 'src/models/auth/userDto';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-educational-field',
@@ -17,12 +19,16 @@ export class EducationalFieldComponent implements OnInit {
   EducationalField:IEducationalFieldGetDto[];
   paginatedEducationalField : IEducationalFieldGetDto[];
 
+  userview : UserView
+
   ngOnInit(): void {
     this.getEducationalFields()    
+    this.userview = this.userService.getCurrentUser()
   }
 
   constructor(
     private modalService : NgbModal,
+    private userService : UserService,
     private confirmationService: ConfirmationService,
     private messageService : MessageService,
     private controlService:ConfigurationService){}

@@ -1,6 +1,7 @@
 ﻿using Implementation.Helper;
 using IntegratedImplementation.DTOS.Training;
 using IntegratedImplementation.DTOS.Vacancy;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,11 +17,15 @@ namespace IntegratedImplementation.Interfaces.Training
 
         Task<TrainingGetDto> GetSingleTraining(Guid TrainingId);
         Task<ResponseMessage> AddTraining(TrainingPostDto trainingPostDto);
+        Task<ResponseMessage> UpdateTraining(TrainingPostDto trainingPostDto);
+        Task<ResponseMessage> DeleteTraining(Guid trainingId);
 
         //trainer
 
         Task<List<TrainerGetDto>> GetTrainerList(Guid TainingId);
         Task<ResponseMessage> AddTrainer(TrainerPostDto trainingPostDto);
+        Task<ResponseMessage> UpdateTrainer(TrainerPostDto trainingPostDto);
+        Task<ResponseMessage> DeleteTrainer(Guid trainerId);
 
         //trainee 
 
@@ -28,6 +33,7 @@ namespace IntegratedImplementation.Interfaces.Training
         Task<List<TraineeGetDto>> GetTraineeList(Guid TainingId);
         Task<ResponseMessage> AddTrainee(TraineePostDto trainingPostDto);
         Task<ResponseMessage> UpdateTrainee(TraineePostDto trainerPostDto);
+        Task<ResponseMessage> DeleteTrainee(Guid traineeId);
 
 
         Task<ResponseMessage> SendEmailTrainer(TrainerEmailDto trainerEmail, string type);
@@ -38,6 +44,10 @@ namespace IntegratedImplementation.Interfaces.Training
         Task<ResponseMessage> AddTrainingReport(TrainingReportPostDto trainingPostDto);
 
         Task<ResponseMessage> ChangeTraineesStatus(string Status, Guid trainingId);
+
+        Task<ResponseMessage> ImportTraineeFormExcel(IFormFile ExcelFile);
+
+        
 
 
 

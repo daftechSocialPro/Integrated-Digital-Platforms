@@ -43,7 +43,7 @@ export class AddPaymentDetailDto{
     quantity: number
     price: number
     totalPrice: number
-    remark: string
+    remark?: string
 }
 
 export interface ApprovePaymentDto{

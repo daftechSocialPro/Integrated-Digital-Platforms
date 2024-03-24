@@ -5,6 +5,8 @@ import { CommonService } from 'src/app/services/common.service';
 import { MemberService } from 'src/app/services/member.service';
 import { IMembersGetDto } from 'src/models/auth/membersDto';
 import { ChangeIdStatusComponent } from '../change-id-status/change-id-status.component';
+import { UserView } from 'src/models/auth/userDto';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-requested-idcards',
@@ -17,13 +19,16 @@ export class RequestedIdcardsComponent implements OnInit {
   Members: IMembersGetDto[];
   paginatedMembers: IMembersGetDto[];
   searchTerm: string = '';
+  userView : UserView
   ngOnInit(): void {
     this.getMemberss();
+    this.userView = this.userService.getCurrentUser()
   }
 
   constructor(
     private modalService: NgbModal,
     private commonService: CommonService,
+    private userService : UserService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private controlService: MemberService

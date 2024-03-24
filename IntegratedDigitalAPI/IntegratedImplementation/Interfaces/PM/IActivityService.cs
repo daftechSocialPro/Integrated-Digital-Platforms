@@ -46,5 +46,10 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
         public Task<ResponseMessage> ReplaceTerminatedEmployee(List<List<TerminatedEmployeeReplacmentGetDto>> ter, string userId);
 
 
+
+        public Task<ResponseMessage> ChangeActivityStatus(Guid activityId, string? isCompleted, string? isCancel, string? isStarted);
+
+        public Task<List<ActivityViewDto>> GetActivityForPlan(Guid employeeId, List<string> roles);
+
     }
 }

@@ -23,6 +23,7 @@
                 <div class="col-3 text-start" *ngIf="!exportingToExcel">
                     <label class="form-label">Project Years</label>
                     <select class="form-control " [(ngModel)]="selectedYear" (change)="onProjectYearChange()">
+                        <option></option>
                         <option *ngFor="let year of projectYears" [value]="year.id">{{year.name}}</option>
                     </select>
                 </div>
@@ -45,6 +46,9 @@
             <h6>Period of Performance:
                 <b>{{Plans.startDate |date:"dd MMM yyyy"}} - {{Plans.endDate |date:"dd MMM yyyy"}} </b>
             </h6>
+            <h6> Planned Budget : <b>{{Plans.plannedBudget |number:'1.0-2'}} ETB</b> </h6>
+            <h6> Assigned Budget : <b>{{assignedBudget  |number:'1.0-2'}} ETB</b> </h6>
+            <h6 *ngIf="Plans.plannedBudget-assignedBudget!=0"> Not Assigned Budget : <b>{{Plans.plannedBudget-assignedBudget  |number:'1.0-2'}} ETB</b> </h6>
             
             <div class="text-end col-lg-12">
                 <button class="btn btn-outline-primary text-end mb-3" (click)="addTask()"><i
@@ -169,7 +173,7 @@
                         <ng-container *ngIf="dataLoaded">
                             <ng-template ngFor let-act [ngForOf]="taskActivities.get(task.id)" let-index2="index">
                                 <tbody>
-                                    <tr style='{{act.isCancelled ? "background-color: #dc354573;":""}}' >
+                                    <tr [ngStyle]="act.isCancelled ? {'background-color': '#dc354573'} : null">
                                         <td style="border: 1px solid black;">
                                             {{index1 + 1}}.{{index2 + 1}}
                                             <button class="btn btn-outline-primary btn-sm"
@@ -266,20 +270,7 @@
     
     
                                         <td style="background-color: antiquewhite;border: 1px solid black;">
-                                            {{ (getPerformancesByCurrentYear(act?.monthPerformance)[0]?.plannedBudget || 0) +
-                                            (getPerformancesByCurrentYear(act?.monthPerformance)[1]?.plannedBudget || 0) +
-                                            (getPerformancesByCurrentYear(act?.monthPerformance)[2]?.plannedBudget || 0) +
-                                            (getPerformancesByCurrentYear(act?.monthPerformance)[3]?.plannedBudget || 0) +
-                                            (getPerformancesByCurrentYear(act?.monthPerformance)[4]?.plannedBudget || 0) +
-                                            (getPerformancesByCurrentYear(act?.monthPerformance)[5]?.plannedBudget || 0) +
-                                            (getPerformancesByCurrentYear(act?.monthPerformance)[6]?.plannedBudget || 0) +
-                                            (getPerformancesByCurrentYear(act?.monthPerformance)[7]?.plannedBudget || 0) +
-                                            (getPerformancesByCurrentYear(act?.monthPerformance)[8]?.plannedBudget || 0) +
-                                            (getPerformancesByCurrentYear(act?.monthPerformance)[9]?.plannedBudget || 0) +
-                                            (getPerformancesByCurrentYear(act?.monthPerformance)[10]?.plannedBudget || 0) +
-                                            (getPerformancesByCurrentYear(act?.monthPerformance)[11]?.plannedBudget || 0)
-                                            }}
-    
+                                            {{act?.plannedBudget}}
                                         </td>
                                         <td style="border: 1px solid black;">{{act?.projectSource}}</td>
                                         <td style="border: 1px solid black;">
@@ -307,7 +298,9 @@
                 </table>
 
             </div>
+
         </div>
+        
     </div>
 
 </main>

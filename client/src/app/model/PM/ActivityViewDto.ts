@@ -27,6 +27,7 @@ export interface ActivityView {
     isTraining :boolean
 
     projectSource?:string
+    projectName?:string
 
     activityLocations?:any
     isCancelled: boolean

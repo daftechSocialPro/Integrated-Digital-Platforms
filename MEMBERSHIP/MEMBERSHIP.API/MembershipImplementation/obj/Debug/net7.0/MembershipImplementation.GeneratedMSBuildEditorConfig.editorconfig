@@ -9,5 +9,3 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = MembershipImplementation
 build_property.ProjectDir = C:\Users\Hp\Desktop\Kirubel Files\DAFTech Computer\Integrated-Digital-Platforms\MEMBERSHIP\MEMBERSHIP.API\MembershipImplementation\
-build_property.EnableComHosting = 
-build_property.EnableGeneratedComInterfaceComImportInterop = 

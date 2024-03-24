@@ -11,7 +11,8 @@ export interface UserView {
   photo: string;
   isProfileCompleted: string;
   role: string;
-  isExpired:string
+  isExpired:string;
+  regionId? : string
 }
 export interface ChangePasswordModel {
   UserId: string;

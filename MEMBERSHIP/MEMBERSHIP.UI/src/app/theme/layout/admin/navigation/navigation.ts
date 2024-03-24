@@ -29,7 +29,7 @@ const NavigationItems = [
         title: 'Admin-Dashboard',
         type: 'item',
         classes: 'nav-item',
-        role: 'Admin',
+        role: ['Admin','SuperAdmin','RegionAdmin'],
         url: '/admin-dashboard',
         icon: 'ti ti-dashboard',
         breadcrumbs: false
@@ -39,7 +39,7 @@ const NavigationItems = [
         title: 'Member-Dashboard',
         type: 'item',
         classes: 'nav-item',
-        role: 'Member',
+        role:['Member'],
         url: '/member-dashboard',
         icon: 'ti ti-dashboard',
         breadcrumbs: false
@@ -56,7 +56,7 @@ const NavigationItems = [
         id: 'profile',
         title: 'Profile',
         type: 'item',
-        role: 'Member',
+        role:['Member'],
         icon: 'ti ti-user-check',
         url: '/members/member-profile',
         breadcrumbs: false
@@ -65,7 +65,7 @@ const NavigationItems = [
         id: 'announcment',
         title: 'Announcment',
         type: 'item',
-        role: 'Member',
+        role:['Member'],
         icon: 'ti ti-bookmark',
         url: '/members/member-announcment',
         breadcrumbs: false
@@ -74,7 +74,7 @@ const NavigationItems = [
         id: 'Events',
         title: 'Events',
         type: 'item',
-        role: 'Member',
+        role:['Member'],
         icon: 'ti ti-link',
         url: '/members/member-course',
         breadcrumbs: false
@@ -84,7 +84,7 @@ const NavigationItems = [
         id: 'data',
         title: 'Members',
         type: 'item',
-        role: 'Admin',
+        role: ['Admin','SuperAdmin'],
         icon: 'ti ti-users',
         url: '/members/List',
         breadcrumbs: false
@@ -93,7 +93,7 @@ const NavigationItems = [
         id: 'requestd',
         title: 'Requested Id Cards',
         type: 'item',
-        role: 'Admin',
+        role: ['Admin','SuperAdmin'],
         icon: 'ti ti-layout',
         url: '/members/idcard',
         breadcrumbs: false
@@ -102,14 +102,14 @@ const NavigationItems = [
         id: 'Authentication',
         title: 'Reports',
         type: 'collapse',
-        role: 'Admin',
+        role: ['Admin','SuperAdmin','RegionAdmin'],
         icon: 'ti ti-book',
         children: [
           {
             id: 'data',
             title: 'Membership Report ',
             type: 'item',
-            role: 'Admin',
+            role: ['Admin','SuperAdmin','RegionAdmin'],
             url: '/reports/membership-report',
             breadcrumbs: false
           },
@@ -117,7 +117,7 @@ const NavigationItems = [
             id: 'total-revune',
             title : 'Total Revenue',
             type: 'item',
-            role: 'Admin',
+            role: ['Admin','SuperAdmin','RegionAdmin'],
             url: '/reports/total-revenue',
             breadcrumbs: false
             
@@ -130,14 +130,14 @@ const NavigationItems = [
         id: 'Authentication',
         title: 'Configuration',
         type: 'collapse',
-        role: 'Admin',
+        role: ['Admin','SuperAdmin'],
         icon: 'ti ti-settings',
         children: [
           {
             id: 'data',
             title: 'Announcment',
             type: 'item',
-            role: 'Admin',
+            role: ['Admin','SuperAdmin'],
             url: '/configuration/announcment',
             breadcrumbs: false
           },
@@ -145,7 +145,7 @@ const NavigationItems = [
             id: 'data',
             title: 'Membership Types ',
             type: 'item',
-            role: 'Admin',
+            role: ['Admin','SuperAdmin'],
             url: '/configuration/membership-types',
             breadcrumbs: false
           },
@@ -153,7 +153,7 @@ const NavigationItems = [
             id: 'data',
             title: 'Education Settings',
             type: 'item',
-            role: 'Admin',
+            role: ['Admin','SuperAdmin'],
             url: '/configuration/education-setting',
             breadcrumbs: false
           },
@@ -162,7 +162,7 @@ const NavigationItems = [
             id: 'data',
             title: 'Location Settings',
             type: 'item',
-            role: 'Admin',
+            role: ['Admin','SuperAdmin'],
             url: '/configuration/location-setting',
             breadcrumbs: false
           }

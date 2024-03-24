@@ -45,6 +45,14 @@ export class ProjectmanagementService {
     return this.http.put<ResponseMessage> (this.baseUrl +'/PM/Activity/UpdateActivityProgress',UpdateActivityProgress)
   }
 
+  changeActivityStatus(activityId:string,isCompleted:string,isCancel:string,isStarted:string ) {
+
+    return this.http.put<ResponseMessage> (this.baseUrl +`/PM/Activity/ChangeActivityStatus?activityId=${activityId}&isCompleted=${isCompleted}&isCancel=${isCancel}&isStarted=${isStarted}`,{})
+  }
+
+
+
+  
 
 // getActivitiesFromProject
 // (projectId:string){

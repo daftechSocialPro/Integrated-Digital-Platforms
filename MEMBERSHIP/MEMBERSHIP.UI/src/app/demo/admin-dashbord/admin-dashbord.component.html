@@ -51,7 +51,7 @@
 
 
     <div class="form-floating mb-3">
-      <select class="form-control" [(ngModel)]="selectedChapter" (change)="applyFilter()">
+      <select class="form-control" [(ngModel)]="selectedChapter" [disabled]="userView.regionId!=''" (change)="applyFilter()">
         <option value="all">ALL</option>
         <option *ngFor="let item of chapters" [value]="item.name">
           {{item.name}}

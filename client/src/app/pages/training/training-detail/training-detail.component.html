@@ -9,6 +9,19 @@
 
         <div class="card ">
             <div class="card-header">
+            <div class="col-12">
+
+                <div class="text-end">
+                    <button class="btn btn-sm btn-outline-warning" (click)="editTraining()"  >
+                        <i class="bi bi-pencil"></i>
+                      </button> |
+                      <button class="btn btn-sm btn-outline-danger" (click)="DeleteTraining()">
+                        <i class="bi bi-trash"></i>
+                      </button>
+
+                </div>
+
+            </div>
 
                 <h4>Title: <span>{{training&&training.title}}</span></h4>
                 <h5>Project: <span>{{training&&training.project}}</span></h5>

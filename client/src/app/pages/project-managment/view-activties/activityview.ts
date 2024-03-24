@@ -27,7 +27,17 @@ export interface ActivityView {
     overAllProgress: number
     isTraining :boolean
 
+
+    projectName?:string
+
     activityLocations?: any
+
+    isCancelled?:boolean
+
+    isCompleted?:boolean
+
+    isStarted?:boolean
+
 
 }
 export interface MonthPerformanceView {

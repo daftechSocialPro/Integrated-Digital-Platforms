@@ -24,10 +24,16 @@ export class AddRegionComponent implements OnInit {
     ngOnInit(): void {
       this.user = this.userService.getCurrentUser()
       this.getCountries()
+      console.log(this.Region)
   
       if(this.Region){
         this.RegionForm.controls['regionName'].setValue(this.Region.regionName)
-        this.RegionForm.controls['countryType'].setValue(this.Region.countryType)
+        this.RegionForm.controls['countryType'].setValue(this.Region.countryName)
+
+        this.RegionForm.controls['userName'].setValue(this.Region.userName)
+        this.RegionForm.controls['password'].setValue(this.Region.password)
+
+
        
       }
     }
@@ -43,6 +49,9 @@ export class AddRegionComponent implements OnInit {
       this.RegionForm = this.formBuilder.group({
         regionName: ['', Validators.required],
         countryType: ['', Validators.required],
+
+        userName :[],
+              password:[]
   
       })
   
@@ -100,7 +109,8 @@ export class AddRegionComponent implements OnInit {
           id:this.Region.id,
           regionName: this.RegionForm.value.regionName,
           countryType: this.RegionForm.value.countryType, 
-          
+          userName :this.RegionForm.value.userName,
+          password :this.RegionForm.value.password          
   
         }
   

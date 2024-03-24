@@ -4,6 +4,8 @@ import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/a
 import { ConfigurationService } from 'src/app/services/configuration.service';
 import { IRegionGetDto } from 'src/models/configuration/ILocatoinDto';
 import { AddRegionComponent } from './add-region/add-region.component';
+import { UserView } from 'src/models/auth/userDto';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-region',
@@ -17,15 +19,18 @@ export class RegionComponent implements OnInit {
   Region:IRegionGetDto[];
   paginatedRegion : IRegionGetDto[];
 
+  userView : UserView
+
   ngOnInit(): void {
-    this.getRegions()    
+    this.getRegions()   
+    this.userView = this.userService.getCurrentUser() 
   }
 
   constructor(
     private modalService : NgbModal,
     private confirmationService: ConfirmationService,
     private messageService : MessageService,
-
+    private userService : UserService,
     private controlService:ConfigurationService){}
 
 

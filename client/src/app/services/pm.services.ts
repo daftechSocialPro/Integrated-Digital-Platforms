@@ -123,6 +123,17 @@ export class PMService {
         return this.http.get<ActivityView[]>(this.BaseURI + "/Activity/getAssignedActivties?employeeId=" + empId)
     }
 
+    GetActivityForPlan(empId: string,roles:string[]) {
+
+        return this.http.post<ActivityView[]>(this.BaseURI + `/Activity/GetActivityForPlan`,{
+            employeeId : empId,
+            roles : roles
+        } )
+    }
+
+
+    
+
     getActivityForApproval(empId: string) {
         return this.http.get<ActivityView[]>(this.BaseURI + "/Activity/forApproval?employeeId=" + empId)
     }

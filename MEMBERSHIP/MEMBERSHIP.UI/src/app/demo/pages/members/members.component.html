@@ -34,16 +34,22 @@
         </div>
 
         <div class="row">
-            <div class="col-3">
+            <div class="col-xl-3 ">
                 <input type="text" placeholder="search ..." class="form-control" style="font-size: 18px;"
                     [(ngModel)]="searchTerm" (input)="applyFilter()" placeholder="Search">
             </div>
-            <div class="col-9 text-end">
-                <button class="btn btn-outline-success text-end" (click)="file.click()"><i
+           
+    
+        </div>
+        <div class="row mt-2">
+            <div class="col-12 text-end" *ngIf="user.role.includes('SuperAdmin')">
+                <button class="btn btn-sm btn-outline-success text-end" (click)="file.click()"><i
                     class="bi bi-file-excel"></i> Import from Excel </button>
+
+                    &nbsp;   <button class="btn btn-sm btn-outline-primary text-end" (click)="RegisterMember()"  ><i
+                        class="bi bi-plust"></i> Register </button>
                 <input type="file" accept=".xlsx, .xls" #file hidden (change)="onFileSelected($event)" />
             </div>
-    
         </div>
 
 
@@ -61,8 +67,10 @@
                     <th>Inistitute</th>
                     <th>Gender</th>
                     <th>Payment Status</th>
+                    <th>Last Paid </th>
                     <th>Expired Date</th>
-                    <th>Action</th>
+                    
+                    <th *ngIf="user.role.includes('SuperAdmin')" >Action</th>
 
                 </tr>
             </thead>
@@ -88,13 +96,14 @@
                             {{item.paymentStatus}}</span>
 
                     </td>
+                    <td>{{item.lastPaid | date:"dd MMM yyyy"}}</td>
                     <td>{{item.expiredDate|date:"dd MMM yyyy"}}</td>
-                    <td>
+                    <td *ngIf="user.role.includes('SuperAdmin')">
 
                         <button class="btn btn-sm btn-outline-primary" (click)="goToDetail(item)">
                             Detail
                         </button>
-                        |
+                       &nbsp;
                         <button class="btn btn-sm btn-outline-danger" (click)="DeleteMember(item.id)">
                             Delete
                         </button>

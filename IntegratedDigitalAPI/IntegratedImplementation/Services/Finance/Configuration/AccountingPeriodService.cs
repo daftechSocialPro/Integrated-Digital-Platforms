@@ -19,11 +19,32 @@ namespace IntegratedImplementation.Services.Finance.Configuration
 
         public async Task<ResponseMessage> AddAccountingPeriod(AddAccountingPeriodDto addAccountingPeriod)
         {
-            var currentPeriod = await _dbContext.AccountingPeriods.AnyAsync(x => x.StartDate >= addAccountingPeriod.StartDate || x.EndDate <= addAccountingPeriod.StartDate);
+     
+            var startDate = DateTime.Now;
+
+
+            if (addAccountingPeriod.ethiopianDate!= null&& addAccountingPeriod.CalanderType== "ETHIOPIAN")
+            {
+                var ethDate = addAccountingPeriod.ethiopianDate.Split('/');
+
+                int ethDay = Int32.Parse(ethDate[1]);
+                int ethMonth = Int32.Parse(ethDate[0]);
+                int ethYear = Int32.Parse(ethDate[2]);
+
+                 startDate = XAPI.EthiopicDateTime.GetGregorianDate(ethDay, ethMonth, ethYear);
+            }
+            else
+            {
+                startDate = (DateTime) addAccountingPeriod.StartDate;
+            }
+
+            var currentPeriod = await _dbContext.AccountingPeriods.AnyAsync(x => x.StartDate >= startDate || x.EndDate <= startDate);
             if (currentPeriod)
             {
                 return new ResponseMessage { Success = false, Message = "Accounting Period Already exists" };
             }
+
+
 
             ACCOUNTINGPERIODTYPE accountPeriod = Enum.Parse<ACCOUNTINGPERIODTYPE>(addAccountingPeriod.AccountingPeriodType);
 
@@ -35,7 +56,7 @@ namespace IntegratedImplementation.Services.Finance.Configuration
                 CreatedById = addAccountingPeriod.CreatedById,
                 CreatedDate = DateTime.Now,
                 Description = addAccountingPeriod.Description,
-                StartDate = addAccountingPeriod.StartDate,
+                StartDate = startDate,
                 Rowstatus = RowStatus.ACTIVE
             };
 
@@ -44,28 +65,34 @@ namespace IntegratedImplementation.Services.Finance.Configuration
                 DateTime LastDate = period.StartDate.AddMonths(11);
                 int lastDayofMonth = DateTime.DaysInMonth(LastDate.Year, LastDate.Month);
 
-                period.EndDate = new DateTime(LastDate.Year, LastDate.Month, lastDayofMonth);
+
+
+                period.EndDate = addAccountingPeriod.CalanderType!="ETHIOPIAN"?  new DateTime(LastDate.Year, LastDate.Month, lastDayofMonth): LastDate.AddDays(-1);
+               
             }
             else if (accountPeriod == ACCOUNTINGPERIODTYPE.TWENTYFOUR)
             {
                 DateTime LastDate = period.StartDate.AddMonths(23);
                 int lastDayofMonth = DateTime.DaysInMonth(LastDate.Year, LastDate.Month);
 
-                period.EndDate = new DateTime(LastDate.Year, LastDate.Month, lastDayofMonth);
+                period.EndDate = addAccountingPeriod.CalanderType != "ETHIOPIAN" ? new DateTime(LastDate.Year, LastDate.Month, lastDayofMonth) : LastDate.AddDays(-1);
+
             }
             else if (accountPeriod == ACCOUNTINGPERIODTYPE.THIRTYSIX)
             {
                 DateTime LastDate = period.StartDate.AddMonths(35);
                 int lastDayofMonth = DateTime.DaysInMonth(LastDate.Year, LastDate.Month);
 
-                period.EndDate = new DateTime(LastDate.Year, LastDate.Month, lastDayofMonth);
+                period.EndDate = addAccountingPeriod.CalanderType != "ETHIOPIAN" ? new DateTime(LastDate.Year, LastDate.Month, lastDayofMonth) : LastDate.AddDays(-1);
+
             }
             else
             {
                 DateTime LastDate = period.StartDate.AddMonths(47);
                 int lastDayofMonth = DateTime.DaysInMonth(LastDate.Year, LastDate.Month);
 
-                period.EndDate = new DateTime(LastDate.Year, LastDate.Month, lastDayofMonth);
+                period.EndDate = addAccountingPeriod.CalanderType != "ETHIOPIAN" ? new DateTime(LastDate.Year, LastDate.Month, lastDayofMonth) : LastDate.AddDays(-1);
+
             }
 
             await _dbContext.AccountingPeriods.AddAsync(period);
@@ -89,7 +116,9 @@ namespace IntegratedImplementation.Services.Finance.Configuration
                 DateTime endDate = details.PeriodStart;
                 int lastDayDetail = DateTime.DaysInMonth(endDate.Year, endDate.Month);
 
-                details.PeriodEnd = new DateTime(endDate.Year, endDate.Month, lastDayDetail);
+               
+
+                details.PeriodEnd = addAccountingPeriod.CalanderType != "ETHIOPIAN" ? new DateTime(endDate.Year, endDate.Month, lastDayDetail) : details.PeriodStart.AddDays(30);
 
                 await _dbContext.PeriodDetails.AddAsync(details);
                 await _dbContext.SaveChangesAsync();

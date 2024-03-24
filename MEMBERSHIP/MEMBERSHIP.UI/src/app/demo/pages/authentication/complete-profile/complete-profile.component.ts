@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/api';
 import { AuthGuard } from 'src/app/auth/auth.guard';
 import { CommonService } from 'src/app/services/common.service';
@@ -40,6 +40,8 @@ export class CompleteProfileComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private userService: UserService,
+     
+    private ngbModule : NgbModule,
     private commonService: CommonService,
     private dropdownService: DropDownService,
     private confirmationService: ConfirmationService,
@@ -58,6 +60,8 @@ export class CompleteProfileComponent implements OnInit {
     console.log("memberVar",this.memberVar)
     this.user = this.userService.getCurrentUser();
 
+    
+
     this.completeProfileForm = this.formBuilder.group({
       educationalField: ['', Validators.required],
       educationalLevelId: ['', Validators.required],
@@ -65,6 +69,29 @@ export class CompleteProfileComponent implements OnInit {
       birthDate: ['', Validators.required],
       inistituteRole: ['', Validators.required]
     });
+
+
+    if(this.memberVar.educationalField){
+
+      this.completeProfileForm.controls['educationalField'].setValue(this.memberVar.educationalField)
+    }
+
+    if(this.memberVar.instituteRole){
+
+      this.completeProfileForm.controls['inistituteRole'].setValue(this.memberVar.instituteRole)
+    }
+    if(this.memberVar.birthDate){
+
+      this.completeProfileForm.controls['birthDate'].setValue(this.memberVar.birthDate.split('T')[0])
+    }
+
+    if(this.memberVar.gender){
+
+      this.completeProfileForm.controls['gender'].setValue(this.memberVar.gender)
+    }
+
+
+    
 
     this.getMember();
 
@@ -235,6 +262,11 @@ export class CompleteProfileComponent implements OnInit {
     this.dropdownService.getEducationLevelDropdown().subscribe({
       next: (res) => {
         this.educationalLelvels = res;
+
+        if (this.memberVar.educationalLevelId){
+          this.completeProfileForm.controls['educationalLevelId'].setValue(this.memberVar.educationalLevelId.toLowerCase())
+        }
+        
       }
     });
   }
@@ -264,7 +296,7 @@ export class CompleteProfileComponent implements OnInit {
   }
 
   register() {
-    if (this.imagePath == null || this.imagePath == undefined || this.imagePath == '') {
+    if ((this.imagePath == null || this.imagePath == undefined || this.imagePath == '')&& this.memberVar.imagePath==null) {
       this.messageService.add({ severity: 'error', summary: 'Image not Found.', detail: 'Please select an image' });
       return;
     }

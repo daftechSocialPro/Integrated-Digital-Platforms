@@ -40,8 +40,8 @@
                                     <td style="min-width: 12rem;">{{accperiod.description}}</td>
                                     <td style="min-width: 10rem;">{{accperiod.accountingPeriodType}}</td>
                                     <td style="min-width: 10rem;">{{accperiod.calanderType}}</td>
-                                    <td style="min-width: 10rem;">{{accperiod.startDate | date:'yyyy-MM-dd'}}</td>
-                                    <td style="min-width: 10rem;">{{accperiod.endDate | date:'yyyy-MM-dd'}}</td>
+                                    <td style="min-width: 10rem;">{{accperiod.startDate | date:'MMM dd yyyy'}}</td>
+                                    <td style="min-width: 10rem;">{{accperiod.endDate | date:'MMM dd yyy'}}</td>
                                 </tr>
                             </ng-template>
                             <ng-template pTemplate="rowexpansion" let-accperiod>
@@ -60,8 +60,8 @@
                             <ng-template pTemplate="body" let-accItem>
                                 <tr>
                                     <td>{{accItem.periodNo}}</td>
-                                    <td>{{accItem.periodStart| date:'yyyy-MM-dd'}}</td>
-                                    <td>{{accItem.periodEnd| date:'yyyy-MM-dd'}}</td>
+                                    <td>{{accItem.periodStart| date:'MMM dd yyyy'}}</td>
+                                    <td>{{accItem.periodEnd| date:'MMM dd yyyy'}}</td>
                                     
                                 </tr>
                             </ng-template>

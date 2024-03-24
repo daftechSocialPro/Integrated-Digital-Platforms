@@ -105,11 +105,11 @@ namespace IntegratedDigitalAPI.Controllers.PM
 
         [HttpGet("getPlanPieCharts")]
 
-        public async Task<IActionResult> GetPlanPieCharts(Guid planId, int quarter )
+        public async Task<IActionResult> GetPlanPieCharts(Guid planId,Guid? StrategicPlanId, int quarter )
         {
             try
             {
-                return Ok(await _planService.GetPlanPieCharts(planId, quarter));
+                return Ok(await _planService.GetPlanPieCharts(planId, StrategicPlanId, quarter));
             }
             catch (Exception ex)
             {
@@ -118,11 +118,11 @@ namespace IntegratedDigitalAPI.Controllers.PM
         }
         [HttpGet("getPlanBarCharts")]
 
-        public async Task<IActionResult> GetPlanBarCharts(Guid planId)
+        public async Task<IActionResult> GetPlanBarCharts(Guid? planId, Guid? strategicPlanId)
         {
             try
             {
-                return Ok(await _planService.GetPlanBarCharts(planId));
+                return Ok(await _planService.GetPlanBarCharts(planId, strategicPlanId));
             }
             catch (Exception ex)
             {

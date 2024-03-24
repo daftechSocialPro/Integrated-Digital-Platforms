@@ -412,10 +412,15 @@ namespace MembershipInfrustructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("RegionId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("Rowstatus")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("RegionId");
 
                     b.ToTable("Admins");
                 });
@@ -702,6 +707,15 @@ namespace MembershipInfrustructure.Migrations
                         .HasForeignKey("RegionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Region");
+                });
+
+            modelBuilder.Entity("MembershipInfrustructure.Model.Users.Admin", b =>
+                {
+                    b.HasOne("MembershipInfrustructure.Model.Configuration.Region", "Region")
+                        .WithMany()
+                        .HasForeignKey("RegionId");
 
                     b.Navigation("Region");
                 });

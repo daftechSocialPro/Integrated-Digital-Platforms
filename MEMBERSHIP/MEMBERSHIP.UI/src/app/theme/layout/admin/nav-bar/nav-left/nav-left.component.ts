@@ -47,13 +47,13 @@ export class NavLeftComponent implements OnInit {
   }
 
   openModal() {
-    let modalRef = this.modalService.open(CompleteProfileComponent, { size: 'lg', backdrop: 'static', keyboard: false, windowClass: 'custom-modal-width' })
+    let modalRef = this.modalService.open(CompleteProfileComponent, { size: 'xl', backdrop: 'static', keyboard: false, windowClass: 'full-width-modal' })
     modalRef.componentInstance.memberVar = this.member
   }
 
 
   openRenewModal() {
-    let modalRef = this.modalService.open(RenewMemberComponent, { size: 'lg', backdrop: 'static', keyboard: false, windowClass: 'custom-modal-width' })
+    let modalRef = this.modalService.open(RenewMemberComponent, { size: 'xl', backdrop: 'static', keyboard: false, windowClass: 'full-width-modal' })
   }
 
   login() {

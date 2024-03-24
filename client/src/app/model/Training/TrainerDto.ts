@@ -1,5 +1,6 @@
 export interface ITrainerGetDto{
 
+    id? :string
     phoneNumber:string
     email:string
     fullName:string
@@ -11,4 +12,5 @@ export interface ITrainerPostDto{
     Email:string
     FullName:string
     TrainingId:string
+    Id?:string
 }

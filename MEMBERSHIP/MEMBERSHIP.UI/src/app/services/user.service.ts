@@ -72,7 +72,8 @@ export class UserService {
       photo: payLoad.photo,
       isProfileCompleted: payLoad.isProfileCompleted,
       role: payLoad.role,
-      isExpired: payLoad.isExpired
+      isExpired: payLoad.isExpired,
+      regionId : payLoad.regionId
     };
 
     return user;

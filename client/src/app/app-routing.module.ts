@@ -1,3 +1,4 @@
+
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
@@ -74,11 +75,12 @@ const routes: Routes = [
   { path: 'pm/actForApproval', canActivate: [AuthGuard], component: ActivityforapprovalComponent },
 
   { path: 'pm/planDetail/:planId', canActivate: [AuthGuard], component: PlanDetailComponent },
-  { path: 'pm/planDashboard/:planId', canActivate: [AuthGuard], component: PlanDashboardComponent },
+  { path: 'pm/planDashboard', canActivate: [AuthGuard], component: PlanDashboardComponent },
   { path: 'pm/activityDetail/:actId/:planId', canActivate: [AuthGuard], component: ActivityDetailComponent },
+
   //report
 
-  
+
   { path: 'activityLocation', canActivate: [AuthGuard], component: ActivityLocationComponent },
   { path: 'strategicplanreport', canActivate: [AuthGuard], component: StrategicPlanReportComponent },
   { path: 'planreportdetail', canActivate: [AuthGuard], component: PlanReportTodayComponent },
@@ -92,13 +94,13 @@ const routes: Routes = [
   { path: 'estimatedcoast', canActivate: [AuthGuard], component: EstimatedCoastComponent },
   { path: 'projectAchivment', canActivate: [AuthGuard], component: PlanVsAchivmentProjectComponent },
 
-  
+
 
   { path: 'pm/projectTeam', canActivate: [AuthGuard], component: ComittesComponent },
   { path: 'pm/training-dashboard', canActivate: [AuthGuard], component: TrainingDashboardComponent },
   { path: 'pm/training-detail/:id/:actId/:planId', canActivate: [AuthGuard], component: TrainingDetailComponent },
-   
- {path:'pm/weekly-activity',canActivate:[AuthGuard],component:WeeklyActivitiesComponent},
+
+  { path: 'pm/weekly-activity', canActivate: [AuthGuard], component: WeeklyActivitiesComponent },
 
   { path: 'HRM/employeeMangment', canActivate: [AuthGuard], component: EmployeeManagmentComponent, data: { permittedRoles: ['EMPLOYEE-MANAGEMENT', 'USER-MANAGER'] } },
   { path: 'HRM/volunters', canActivate: [AuthGuard], component: VolunterComponent, data: { permittedRoles: ['EMPLOYEE-MANAGEMENT', 'USER-MANAGER'] } },
@@ -123,15 +125,15 @@ const routes: Routes = [
   { path: 'HRM/disciplinary-case', canActivate: [AuthGuard], component: DisciplinaryCasesComponent, data: { permittedRoles: ['EVALUATER'] } },
   { path: 'HRM/employee-penalty', canActivate: [AuthGuard], component: EmployeePenaltyComponent, data: { permittedRoles: ['EMPLOYEE-MANAGEMENT'] } },
   { path: 'HRM/contractEndEmployees', canActivate: [AuthGuard], component: ContractEndEmployeesComponent, data: { permittedRoles: ['EMPLOYEE-MANAGEMENT'] } },
-//trainee
+  //trainee
 
-{path:'trainee-form/:trainingId',component:TraineesFormComponent},
-{path:'trainee-form/training-report-form/:trainingId',component:TrainingReportFormComponenT},
-{path:'forgetPassword',component:ForgetPasswordComponent},
+  { path: 'trainee-form/:trainingId', component: TraineesFormComponent },
+  { path: 'trainee-form/training-report-form/:trainingId', component: TrainingReportFormComponenT },
+  { path: 'forgetPassword', component: ForgetPasswordComponent },
 
-{ path: 'printout', loadChildren: () => import('./pages/print-out/print-out.module').then(m => m.PrintOutModule) },
-{ path: 'inventory', loadChildren: () => import('./pages/inventory/inventory.module').then(m => m.InventoryModule) },
-{ path: 'finance', loadChildren: () => import('./pages/finance/finance.module').then(m => m.FinanceModule) }
+  { path: 'printout', loadChildren: () => import('./pages/print-out/print-out.module').then(m => m.PrintOutModule) },
+  { path: 'inventory', loadChildren: () => import('./pages/inventory/inventory.module').then(m => m.InventoryModule) },
+  { path: 'finance', loadChildren: () => import('./pages/finance/finance.module').then(m => m.FinanceModule) }
 ];
 
 @NgModule({

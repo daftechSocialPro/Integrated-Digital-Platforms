@@ -9,6 +9,7 @@ namespace IntegratedImplementation.DTOS.Training
     public record TrainingPostDto
     {
 
+        public Guid ? Id { get; set; }
         public Guid ActivityId { get;set; }
         public string Title { get; set; } = null!;
 
