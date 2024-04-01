@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegratedInfrustructure", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegratedImplementation", "IntegratedImplementation\IntegratedImplementation.csproj", "{FA6D2876-C618-4EE0-B289-9E9542DC277C}"
 EndProject
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XAPI", "XAPI\XAPI.csproj", "{898AE86E-4A36-4ADE-94C4-7CFE1DD2A8B9}"
+EndProject
+
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

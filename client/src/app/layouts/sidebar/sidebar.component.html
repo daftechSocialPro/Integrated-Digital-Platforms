@@ -224,6 +224,19 @@
                               routerLinkActive="active">
                               <i class="bi bi-circle"></i><span>Payroll</span> </a>
                         </li>
+                        <li *ngIf="roleMatch(['HRM-CONFIGURATION'])"> <a routerLink="/finance/beginnigbalance"
+                              routerLinkActive="active">
+                              <i class="bi bi-circle"></i><span>Beginning Balance</span> </a>
+                        </li>
+                        <li *ngIf="roleMatch(['HRM-CONFIGURATION'])"> <a routerLink="/finance/loanissuance"
+                              routerLinkActive="active">
+                              <i class="bi bi-circle"></i><span>Loan Issuance</span> </a>
+                        </li>
+                        <li *ngIf="roleMatch(['HRM-CONFIGURATION'])"> <a routerLink="/finance/purchaseinvoice"
+                              routerLinkActive="active">
+                              <i class="bi bi-circle"></i><span>Purchase Invoice</span> </a>
+                        </li>
+                        
                        
                         
                   </ul>
