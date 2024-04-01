@@ -34,7 +34,7 @@ namespace IntegratedDigitalAPI.Controllers.Finance.Action
 
 
         [HttpPost]
-        public async Task<IActionResult> AddAccountingPeriod(AddPurchaseInvoiceDto addPurchaseInvoice)
+        public async Task<IActionResult> AddPurchaseInvoice(AddPurchaseInvoiceDto addPurchaseInvoice)
         {
             if (ModelState.IsValid)
             {
@@ -48,7 +48,7 @@ namespace IntegratedDigitalAPI.Controllers.Finance.Action
 
         [HttpPut]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> ApprovePayment(Guid PurchaseInvoiceId, Guid EmployeeId)
+        public async Task<IActionResult> ApprovePurchaseInvoice(Guid PurchaseInvoiceId, Guid EmployeeId)
         {
             if (ModelState.IsValid)
             {

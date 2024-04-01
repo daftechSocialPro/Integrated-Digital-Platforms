@@ -28,7 +28,7 @@ namespace IntegratedDigitalAPI.Controllers.Finance.Action
 
 
         [HttpPost]
-        public async Task<IActionResult> AddAccountingPeriod(Guid employeeLoanId)
+        public async Task<IActionResult> GiveLoan(Guid employeeLoanId)
         {
             if (ModelState.IsValid)
             {
@@ -42,7 +42,7 @@ namespace IntegratedDigitalAPI.Controllers.Finance.Action
 
         [HttpPut]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> ApprovePayment(LoanPaymentDto loanPayment)
+        public async Task<IActionResult> PayLoan(LoanPaymentDto loanPayment)
         {
             if (ModelState.IsValid)
             {

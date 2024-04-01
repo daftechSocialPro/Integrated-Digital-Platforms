@@ -17,6 +17,7 @@ namespace IntegratedImplementation.Interfaces.Finance.Action
         Task<ResponseMessage> ApprovePayment(ApprovePaymentDto approvePayment);
 
         Task<List<PaymentListDto>> GetPendingPayments();
+        Task<List<PaymentListDto>> GetApprovedPayments();
 
     }
 }

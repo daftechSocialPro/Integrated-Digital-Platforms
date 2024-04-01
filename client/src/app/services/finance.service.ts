@@ -11,6 +11,9 @@ import { SelectList } from '../model/common';
 import { BenefitPayrollGetDto, BenefitPayrollPostDto, GeneralSettingGetDto, GeneralSettingPostDto, IncomeTaxDto } from '../model/Finance/IPayrollSettingDto';
 import { ApprovePaymentDto, PaymentGetDto, PaymentPostDto } from '../model/Finance/IPaymentDto';
 import { CalculatePayrollDto, CheckOrApprovePayrollDto, PayrollGetDto } from '../model/Finance/IPayrollDto';
+import { BeginningBalanceGetDto, BeginningBalancePostDto } from '../model/Finance/IBeginningBalanceDto';
+import { PurchaseInvoiceGetDto, PurchaseInvoicePostDto } from '../model/Finance/IPurchaseInvoiceDto';
+import { ApprovedLoansDto, LoanPaymentDto } from '../model/Finance/ILoanIssuanceDto';
 
 @Injectable({
   providedIn: 'root'
@@ -106,9 +109,13 @@ export class FinanceService {
     addBenefitPayroll(benefitPayroll: BenefitPayrollPostDto){
       return this.http.post<ResponseMessage>( this.BaseURI + "/PayrollSetting/AddBenefitPayroll",benefitPayroll)
     }
+
   //Payment
   getPendingPayments(){
     return this.http.get<PaymentGetDto[]>( this.BaseURI +"/Payment/GetPendingPayments")
+  }
+  getApprovedPayments(){
+    return this.http.get<PaymentGetDto[]>( this.BaseURI +"/Payment/GetApprovedPayments")
   }
   addPayments(paymentData: FormData, ){
     return this.http.post<ResponseMessage>(this.BaseURI + "/Payment/AddPayments",paymentData)
@@ -116,6 +123,7 @@ export class FinanceService {
   approvePayment(approvePaymentData: ApprovePaymentDto){
     return this.http.put<ResponseMessage>(this.BaseURI + "/Payment/ApprovePayment",approvePaymentData)
   }
+
   //Payroll
   getPayrollDataList(){
     return this.http.get<PayrollGetDto[]>(this.BaseURI + "/Payroll/GetPayrollDataList")
@@ -128,5 +136,38 @@ export class FinanceService {
   }
   approvePayroll(approvePayrollData: CheckOrApprovePayrollDto){
     return this.http.put<ResponseMessage>(this.BaseURI + "/Payroll/ApprovePayroll",approvePayrollData)
+  }
+
+  //BeiginningBalance
+  getChartsForBegnning(periodId: string){
+    return this.http.get<ResponseMessage>(this.BaseURI + "/BegnningBalance/GetChartsForBegnning?PeriodId=" + periodId)
+  }
+  addBegnningBalance(beginningBalanceData:BeginningBalancePostDto){
+    return this.http.post<ResponseMessage>(this.BaseURI + "/BegnningBalance/AddBegnningBalance", beginningBalanceData)
+  }
+
+  //PurchaseInvoice
+  getPendingPurchaseInvoices(){
+    return this.http.get<PurchaseInvoiceGetDto[]>(this.BaseURI + "/PurchaseInvoice/GetPendingPurchaseInvoices")
+  }
+  getPurchaseInvoices(){
+    return this.http.get<PurchaseInvoiceGetDto[]>(this.BaseURI + "/PurchaseInvoice/GetPurchaseInvoices")
+  }
+  addPurchaseInvoice(purchaseInvoiceData: PurchaseInvoicePostDto){
+    return this.http.post<ResponseMessage>(this.BaseURI + "/PurchaseInvoice/AddPurchaseInvoice", purchaseInvoiceData)
+  }
+  approvePurchaseInvoice(purchaseInvoiceId: string, empolyeeId: string){
+    return this.http.put<ResponseMessage>(this.BaseURI + "/PurchaseInvoice/ApprovePurchaseInvoice?PurchaseInvoiceId="+ purchaseInvoiceId + "&EmployeeId="+ empolyeeId,{})
+  }
+
+  //LoanIssuance
+  getApprovedLoans(){
+    return this.http.get<ApprovedLoansDto[]>(this.BaseURI + "/LoanIssuance/GetApprovedLoans")
+  }
+  giveLoan(employeeLoanId: string){
+    return this.http.post<ResponseMessage>(this.BaseURI + "/LoanIssuance/GiveLoan?employeeLoanId="+employeeLoanId,{})
+  }
+  payLoan(payLoanData: LoanPaymentDto){
+    return this.http.put<ResponseMessage>(this.BaseURI + "/LoanIssuance/PayLoan",payLoanData)
   }
 }

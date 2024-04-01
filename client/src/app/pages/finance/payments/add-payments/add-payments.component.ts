@@ -205,6 +205,7 @@ if (this.paymentDetailList.length > 0) {
             this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Request Created', life: 3000 });
             this.paymentDetailList = [];
             this.addPaymentDetailList = new AddPaymentDetailDto();
+            this.goToPayments()
           }
           else {
             this.messageService.add({ severity: 'error', summary: 'Error', detail: res.message, life: 3000 });

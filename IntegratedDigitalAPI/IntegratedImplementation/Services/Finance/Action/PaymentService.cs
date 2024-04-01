@@ -146,5 +146,37 @@ namespace IntegratedImplementation.Services.Finance.Action
 
             return payments;
         }
+
+        public async Task<List<PaymentListDto>> GetApprovedPayments()
+        {
+            var payments = await _dbContext.Payments.AsNoTracking()
+                                 .Include(X => X.AccountingPeriod).Include(x => x.Supplier)
+                                 .Include(X => X.Bank).Include(x => x.PaymentDetails).ThenInclude(x => x.ChartofAccount)
+                                .Where(x => x.ApprovedById != null).Select(x => new PaymentListDto
+                                {
+                                    Id = x.Id,
+                                    AccountingPeriod = x.AccountingPeriod.Description,
+                                    Bank = x.Bank.BankName,
+                                    PaymentDate = x.PaymentDate,
+                                    PaymentNumber = x.PaymentNumber,
+                                    PaymentType = x.PaymentType.ToString(),
+                                    Remark = x.Remark,
+                                    DocumentPath = x.DocumentPath,
+                                    Supplier = x.Supplier.Name,
+                                    PaymentDetailLists = x.PaymentDetails.Select(y => new PaymentDetailListDto
+                                    {
+                                        ChartOfAccount = y.ChartofAccount.AccountNo,
+                                        Description = y.Description,
+                                        Item = y.Item.Name,
+                                        Price = y.Price,
+                                        Quantity = y.Quantity,
+                                        Remark = y.Remark,
+                                        TotalPrice = y.TotalPrice
+                                    }).ToList()
+
+                                }).ToListAsync();
+
+            return payments;
+        }
     }
 }

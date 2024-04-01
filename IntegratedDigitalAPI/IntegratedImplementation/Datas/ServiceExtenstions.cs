@@ -118,7 +118,10 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<IPayrollSettingService, PayrollSettingService>();
             services.AddScoped<IPaymentsService, PaymentService>();
             services.AddScoped<IPurchaseInvoiceService, PurchaseInvoiceService>();
-                 
+            services.AddScoped<IBegnningBalanceService, BegnningBalanceService>();
+            services.AddScoped<ILoanIssuanceService, LoanIssuanceService>();
+            services.AddScoped<IPayrollService, PayrollService>();
+
             #endregion
 
 

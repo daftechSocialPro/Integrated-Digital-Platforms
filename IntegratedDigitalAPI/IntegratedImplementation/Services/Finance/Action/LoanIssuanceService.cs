@@ -97,7 +97,7 @@ namespace IntegratedImplementation.Services.Finance.Action
                 currentLoan.LoanStatus = LoanStatus.PAID;
             }
 
-            return new ResponseMessage { Success = false, Message = "Paid Loan Succesfully!!" };
+            return new ResponseMessage { Success = true, Message = "Paid Loan Succesfully!!" };
 
         }
     }
