@@ -38,6 +38,7 @@ import { PaymentsComponent } from './payments/payments.component';
 import { AddPaymentsComponent } from './payments/add-payments/add-payments.component';
 import { PayrollComponent } from './payroll/payroll.component';
 import { FileUploadModule } from 'primeng/fileupload';
+import { PayrollReportComponent } from './finance-reports/payroll-report/payroll-report.component';
 
 
 @NgModule({
@@ -61,7 +62,8 @@ import { FileUploadModule } from 'primeng/fileupload';
     AddBenefitPayrollComponent,
     PaymentsComponent,
     AddPaymentsComponent,
-    PayrollComponent
+    PayrollComponent,
+    PayrollReportComponent
   ],
   imports: [
     CommonModule,
