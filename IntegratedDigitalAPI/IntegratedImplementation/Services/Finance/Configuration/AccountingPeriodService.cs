@@ -1,5 +1,6 @@
 ﻿using Implementation.Helper;
 using IntegratedImplementation.DTOS.Finance.Configuration;
+using IntegratedImplementation.Helper;
 using IntegratedImplementation.Interfaces.Finance.Configuration;
 using IntegratedInfrustructure.Data;
 using IntegratedInfrustructure.Model.FInance.Configuration;
@@ -31,7 +32,7 @@ namespace IntegratedImplementation.Services.Finance.Configuration
                 int ethMonth = Int32.Parse(ethDate[0]);
                 int ethYear = Int32.Parse(ethDate[2]);
 
-                 startDate = XAPI.EthiopicDateTime.GetGregorianDate(ethDay, ethMonth, ethYear);
+                 startDate = EthiopicDateTime.GetGregorianDate(ethDay, ethMonth, ethYear);
             }
             else
             {

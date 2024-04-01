@@ -38,6 +38,7 @@ import { PaymentsComponent } from './payments/payments.component';
 import { AddPaymentsComponent } from './payments/add-payments/add-payments.component';
 import { PayrollComponent } from './payroll/payroll.component';
 import { FileUploadModule } from 'primeng/fileupload';
+
 import { PendingPaymentsComponent } from './payments/pending-payments/pending-payments.component';
 import { ApprovedPaymentsComponent } from './payments/approved-payments/approved-payments.component';
 import { BeginningBalanceComponent } from './beginning-balance/beginning-balance.component';
@@ -48,6 +49,9 @@ import { AddPurchaseInvoiceComponent } from './purchase-invoice/add-purchase-inv
 import { PendingPurchaseInvoiceComponent } from './purchase-invoice/pending-purchase-invoice/pending-purchase-invoice.component';
 import { ApprovedPurchaseInvoiceComponent } from './purchase-invoice/approved-purchase-invoice/approved-purchase-invoice.component';
 import { PayLoanComponent } from './loan-issuance/pay-loan/pay-loan.component';
+
+import { PayrollReportComponent } from './finance-reports/payroll-report/payroll-report.component';
+
 
 
 @NgModule({
@@ -72,6 +76,7 @@ import { PayLoanComponent } from './loan-issuance/pay-loan/pay-loan.component';
     PaymentsComponent,
     AddPaymentsComponent,
     PayrollComponent,
+
     PendingPaymentsComponent,
     ApprovedPaymentsComponent,
     BeginningBalanceComponent,
@@ -82,6 +87,9 @@ import { PayLoanComponent } from './loan-issuance/pay-loan/pay-loan.component';
     PendingPurchaseInvoiceComponent,
     ApprovedPurchaseInvoiceComponent,
     PayLoanComponent
+
+    PayrollReportComponent
+
   ],
   imports: [
     CommonModule,

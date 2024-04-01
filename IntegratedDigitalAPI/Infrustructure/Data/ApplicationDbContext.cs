@@ -192,6 +192,8 @@ namespace IntegratedInfrustructure.Data
         public DbSet<BegningBalanceDetail> BegningBalanceDetails { get; set; }
         public DbSet<PurchaseInvoice> PurchaseInvoices { get; set; }
         public DbSet<PurchaseInvoiceDetail> PurchaseInvoiceDetails { get; set; }
+        public DbSet<Receipt> Receipts { get; set; }
+        public DbSet<ReceiptDetail> ReceiptDetails { get; set; }
 
         #endregion
 
