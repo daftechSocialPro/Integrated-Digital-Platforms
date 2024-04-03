@@ -95,7 +95,7 @@ export class AddWeeklyPlanComponent implements OnInit {
         toDate: this.LeaveRequestForm.value.toDate
 
       }
-      console.log(leaveRequestPost)
+
 
       this.pmService.addWeeklyPlan(leaveRequestPost).subscribe({
 

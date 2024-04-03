@@ -24,7 +24,6 @@ export class UpdateEmployeeEducationComponent  implements OnInit {
   user ! : UserView
   ngOnInit(): void {
 
-    console.log(this.employeeEducation)
     this.user = this.userService.getCurrentUser()
    
     this.EducationForm.controls['educationalLevelId'].setValue(this.employeeEducation.educationalLevelId)

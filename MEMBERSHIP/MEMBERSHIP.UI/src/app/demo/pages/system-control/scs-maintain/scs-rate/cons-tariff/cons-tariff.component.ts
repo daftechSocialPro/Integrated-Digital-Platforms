@@ -56,7 +56,7 @@ export class ConsTariffComponent implements OnInit {
 
     this.controlService.getConsumptionTariffs().subscribe({
       next:(res)=>{
-        console.log(res)
+   
         this.ConsumptionTariffs = res 
         this.distinctRentGroupCodes = [...new Set(res.map(record => record.rateGroupCode))];
 
@@ -78,7 +78,7 @@ export class ConsTariffComponent implements OnInit {
 
   removeConsumptionTariff(ConsumptionTariffId:number) {
 
-    console.log(ConsumptionTariffId)
+    
     this.confirmationService.confirm({
       message: 'Are You sure you want to delete this Consumption Tariff?',
       header: 'Delete Confirmation',

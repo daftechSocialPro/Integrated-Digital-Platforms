@@ -17,6 +17,10 @@ export class AddTasksComponent {
  
   taskForm!: FormGroup;
   @Input() plan!: PlanSingleview;  
+
+  remainingBudget:number ;
+
+  addedTasks:String[]=[]
   
   
 
@@ -30,10 +34,12 @@ export class AddTasksComponent {
 
   ngOnInit(): void {
 
+    this.remainingBudget  = this.plan.remainingBudget
+
     this.taskForm = this.formBuilder.group({
       TaskDescription:['',Validators.required],
       HasActvity: [false, Validators.required],
-      PlannedBudget:['',[Validators.required,Validators.max(this.plan.remainingBudget)]]
+      PlannedBudget:['',[Validators.required,Validators.max(this.remainingBudget)]]
 
     })
   
@@ -56,7 +62,17 @@ export class AddTasksComponent {
       this.taskService.createTask(taskValue).subscribe({
         next: (res) => {
           this.messageService.add({ severity: 'success', summary: 'Successfull', detail: 'Task Successfully Created' });        
-          this.closeModal()
+          //this.closeModal()
+
+          this.taskForm.controls['TaskDescription'].setValue('')
+          this.taskForm.controls['HasActvity'].setValue(false)
+          this.taskForm.controls['PlannedBudget'].setValue('')
+
+          
+          this.addedTasks.push(taskValue.TaskDescription)
+          this.remainingBudget= this.remainingBudget- Number(taskValue.PlannedBudget)
+          this.taskForm.get('PlannedBudget').setValidators([Validators.required, Validators.max(this.remainingBudget)]);
+      
 
         }, error: (err) => {
           

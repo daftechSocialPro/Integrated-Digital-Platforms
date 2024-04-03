@@ -120,7 +120,7 @@ export class DwmQrcodeComponent implements OnInit {
 
   generateQrCode (){
     this.selectedItems = this.paginationCustomer.filter(item => item.selected);
-    console.log(this.selectedItems)
+ 
     
   if (this.selectedItems.length === 0) {
     this.messageService.add({severity:'error',summary:'No Customer Selected',detail:'Please select a customer!!!'})

@@ -28,7 +28,7 @@ export class AccountTypeComponent implements OnInit {
       next:(res)=>{      
           this.accountTypes = res      
       },error:(err)=>{
-        console.log(err)
+     
       }
     })
   }

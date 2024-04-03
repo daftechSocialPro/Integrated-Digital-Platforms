@@ -64,6 +64,8 @@ namespace IntegratedDigitalAPI.DTOS.PM
         public string Goal { get; set; }
         public string Objective { get; set; }
 
+        public DateTime CreatedDate { get; set; }
+
     }
 
     public class PlanSingleViewDto
@@ -159,6 +161,8 @@ namespace IntegratedDigitalAPI.DTOS.PM
 
         public float PlannedBudget { get; set; }
         public float RemainingBudget { get; set; }
+
+        public DateTime ? CreatedDate { get; set; }
 
 
     }

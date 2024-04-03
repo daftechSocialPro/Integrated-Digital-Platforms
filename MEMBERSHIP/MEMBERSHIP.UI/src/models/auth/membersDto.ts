@@ -45,6 +45,7 @@ export interface IMembersGetDto {
   moodleStatus:string
 
   createdByDate:Date
+  currency:string
 
   membershipCategory ?:string
 
@@ -80,7 +81,7 @@ export interface IMemberUpdateDto {
 }
 
 export interface IMemberTelegramDto{
-id:string
+  id:string
   fullName: string;
   email?: string;
   phoneNumber: string;
@@ -92,6 +93,7 @@ id:string
   membershipType: string;
   membershipTypeId: string;
   url:string
+  currency: string
   
 }
 

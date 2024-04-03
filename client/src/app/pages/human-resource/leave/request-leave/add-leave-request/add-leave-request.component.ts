@@ -92,7 +92,7 @@ export class AddLeaveRequestComponent implements OnInit {
         reason: this.LeaveRequestForm.value.reason
 
       }
-      console.log(leaveRequestPost)
+      
 
       this.hrmService.requestLeave(leaveRequestPost).subscribe({
 
@@ -156,8 +156,7 @@ export class AddLeaveRequestComponent implements OnInit {
               if (result!.length > 0) {
                 var frommDate = new Date( result[0].fromDate)
                 var toDate = new Date (result[0].toDate)
-                console.log(frommDate,toDate,fromDate.getDate())
-                console.log(fromDate >= frommDate && fromDate <= toDate)
+              
 
                 if (!(fromDate.getTime() >= frommDate.getTime() && fromDate.getTime() <= toDate.getTime())) {
                   this.messageService.add({ severity: 'error', summary: 'Date Selection Error', detail: `You can not request a leave your leave plan is from ${fromDate} - ${toDate}` });

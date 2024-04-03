@@ -57,6 +57,7 @@ import { WeeklyActivitiesComponent } from './pages/project-managment/weekly-acti
 import { PlanVsAchivmentProjectComponent } from './pages/project-managment/progress-report/plan-vs-achivment-project/plan-vs-achivment-project.component';
 
 import { PlanDashboardComponent } from './pages/project-managment/plans/plan-dashboard/plan-dashboard.component';
+import { AllTrainingListComponent } from './pages/training/all-training-list/all-training-list.component';
 
 
 
@@ -128,6 +129,7 @@ const routes: Routes = [
   //trainee
 
   { path: 'trainee-form/:trainingId', component: TraineesFormComponent },
+  { path: 'trainee/allreport', component: AllTrainingListComponent },
   { path: 'trainee-form/training-report-form/:trainingId', component: TrainingReportFormComponenT },
   { path: 'forgetPassword', component: ForgetPasswordComponent },
 

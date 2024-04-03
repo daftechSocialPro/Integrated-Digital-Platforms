@@ -32,9 +32,9 @@ export class PlanReportTodayComponent implements OnInit {
     this.pmService.getProgramSelectList().subscribe({
       next: (res) => {
         this.programs = res
-        console.log(res)
+    
       }, error: (err) => {
-        console.error(err)
+ 
       }
     })
 
@@ -52,7 +52,7 @@ export class PlanReportTodayComponent implements OnInit {
 
     this.pmService.getPlanDetailReport(this.serachForm.value.BudgetYear, this.serachForm.value.ReportBy,this.serachForm.value.ProgramId).subscribe({
       next: (res) => {
-        console.log("plan report",res)
+    
 
        this.planReportDetail = res 
        this.cnt= res.MonthCounts.length

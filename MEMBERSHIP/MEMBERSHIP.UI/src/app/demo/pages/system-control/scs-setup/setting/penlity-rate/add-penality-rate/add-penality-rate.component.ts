@@ -43,7 +43,7 @@ export class AddPenalityRateComponent implements OnInit {
 
       this.controlService.getPenalityRateForUpdate(this.recordNo).subscribe({
         next: (res) => {
-          console.log(res)
+         
           this.PenalityRate = res
           this.PenalityRateForm.controls['recordno'].setValue(this.PenalityRate.recordno)
           this.PenalityRateForm.controls['penalityGroupCode'].setValue(this.PenalityRate.penalityGroupCode)
@@ -114,7 +114,7 @@ export class AddPenalityRateComponent implements OnInit {
 
         }, error: (err) => {
           this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: err.message });
-          console.log(err)
+       
         }
       })
 

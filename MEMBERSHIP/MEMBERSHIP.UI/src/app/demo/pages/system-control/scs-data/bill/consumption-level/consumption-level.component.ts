@@ -50,7 +50,7 @@ export class ConsumptionLevelComponent implements OnInit {
 
   removeConsumptionLevel(ConsumptionLevelId:number) {
 
-    console.log(ConsumptionLevelId)
+    
     this.confirmationService.confirm({
       message: 'Are You sure you want to delete this Consumption Level?',
       header: 'Delete Confirmation',

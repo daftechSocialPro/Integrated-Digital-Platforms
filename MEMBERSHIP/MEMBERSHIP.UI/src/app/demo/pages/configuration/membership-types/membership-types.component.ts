@@ -53,7 +53,7 @@ export class MembershipTypesComponent implements OnInit {
   }
 
   removeMembershipType(MembershipTypeId: string) {
-    console.log(MembershipTypeId);
+ 
     this.confirmationService.confirm({
       message: 'Are You sure you want to delete this MembershipType?',
       header: 'Delete Confirmation',

@@ -83,13 +83,13 @@ export class PlanDetailComponent implements OnInit {
   getPlans() {
     this.planService.getSinglePlans(this.planId).subscribe({
       next: (res) => {
-        console.log("projects", res)
+       
 
         this.Plans = res
         this.getProjectYears(this.Plans.startDate,this.Plans.endDate)
 
         this.ListTask(this.planId);
-        console.log('this.planTasks: ', this.planTasks);
+      
 
       },
       error: (err) => {
@@ -119,7 +119,7 @@ export class PlanDetailComponent implements OnInit {
         if (res.activityViewDtos !== undefined) {
           const result = res.activityViewDtos;
 
-          console.log("activitites",res.activityViewDtos)
+         
           this.assignedBudget += res.activityViewDtos.reduce((accumulator, item) => accumulator + item.plannedBudget, 0);
           this.taskActivities.set(taskId, result);
         }
@@ -132,25 +132,7 @@ export class PlanDetailComponent implements OnInit {
 
   }
 
-  // ListTask(planId: string) {
 
-  //   this.planService.getSinglePlans(planId).subscribe({
-  //     next: (res) => {
-  //       this.plan = res
-  //       const result = res.tasks
-  //       result.forEach((task) => {
-  //         if (task.id !== undefined) {
-  //           this.getSingleTaskActivities(task.id)
-  //         }
-
-  //       });
-
-  //       this.planTasks.set(planId, result);
-  //       console.log('this.taskActivities: ', this.taskActivities);
-
-  //     }
-  //   })
-  // }
 
   ListTask(planId: string): Promise<void> {
     return new Promise<void>((resolve, reject) => {
@@ -162,7 +144,7 @@ export class PlanDetailComponent implements OnInit {
           const promises = result.map(task => this.getSingleTaskActivities(task.id));
           Promise.all(promises).then(() => {
             this.planTasks.set(planId, result);
-            console.log('this.taskActivities: ', this.taskActivities);
+           
             resolve(); // Resolve the promise once data is loaded
           }).catch(error => {
             reject(error); // Reject the promise if there's an error
@@ -351,20 +333,7 @@ viewDetail (item:ActivityView)
 }
 
 
-// getGroupValue(order: number): boolean {
-  
-//   const groupSize = 12; 
 
-//   // Number of months in each group
-
-//   //return Math.floor((order - 1) / groupSize) + 1 === this.selectedYear;
-//   return (Math.floor(order / groupSize) * groupSize) == this.selectedYear
-// }
-
-// onProjectYearChange(){
-//   console.log("Selected Year",this.selectedYear)
-//   this.ListTask(this.planId);
-// }
 onProjectYearChange(){
   this.dataLoaded = false
 
@@ -373,17 +342,7 @@ onProjectYearChange(){
   });
 }
 
-// getPerformancesByCurrentYear(monthPerformance : any): any[] {
-  
-//   const currentYear = this.selectedYear; 
-//   // console.log("currentYear",currentYear)
-//   const filteredArray = monthPerformance.filter(item => {
-//     const itemYear = item.year
-//     return itemYear === currentYear;
-//   });
-//   console.log("filteredArray",filteredArray)
-//   return filteredArray;
-// }
+
 getPerformancesByCurrentYear(monthPerformance: any): any[] {
 
   if (!this.dataLoaded) return []; // Return empty array if data is not loaded yet

@@ -31,7 +31,7 @@ export class RegionComponent implements OnInit {
           this.Regions = res       
       
       },error:(err)=>{
-        console.log(err)
+        
       }
     })
   }

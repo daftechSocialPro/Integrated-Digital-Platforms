@@ -49,7 +49,7 @@ export class BillCycleComponent implements OnInit {
 
   removeBillCycle(BillCycleId:string) {
 
-    console.log(BillCycleId)
+
     this.confirmationService.confirm({
       message: 'Are You sure you want to delete this BillCycle?',
       header: 'Delete Confirmation',

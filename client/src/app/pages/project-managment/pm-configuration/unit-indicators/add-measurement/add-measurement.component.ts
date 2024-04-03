@@ -70,7 +70,7 @@ export class AddMeasurementComponent {
  
           if (res.success){
 
-            console.log(res)
+     
           this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });             
           
           this.closeModal();

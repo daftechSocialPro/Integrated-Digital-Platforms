@@ -114,7 +114,7 @@ export class AddProjectLocationComponent implements OnInit {
   
             if (res.success) {
   
-              console.log(res)
+             
               this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });
   
               this.closeModal();
@@ -163,7 +163,7 @@ export class AddProjectLocationComponent implements OnInit {
 
           if (res.success) {
 
-            console.log(res)
+          
             this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });
 
             this.closeModal();
@@ -190,7 +190,7 @@ export class AddProjectLocationComponent implements OnInit {
     const latlng = e.latlng;
     this.lat = latlng.lat;
     this.lng = latlng.lng;
-    console.log('Latitude: ' + this.lat + ', Longitude: ' + this.lng);
+   
 
     const greenIcon = L.icon({
       iconUrl: 'assets/marker-icon-green.png',

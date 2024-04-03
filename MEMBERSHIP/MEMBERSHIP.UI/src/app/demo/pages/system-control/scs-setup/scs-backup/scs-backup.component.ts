@@ -39,8 +39,7 @@ export class ScsBackupComponent implements OnInit {
     this.maintainService.getBackUpPath().subscribe({
       next:(res)=>{
         this.backUpPath = res.message
-        
-        console.log(this.backUpPath)
+       
       }
     })
   }

@@ -82,10 +82,12 @@
 
             <div class=" col-md-4  " *ngIf="pieChartOption && activityStatusCheckBox">
 
-                <div class="card p-2">
+                <div class="card ">
+                    <div class="chart-title">
+                        <h2 class="chart-title-text">{{ barChartData && barChartData.planName}}</h2>
+                      </div>
 
-
-                    <div class="col-4 mb-2">
+                    <div class="col-4 mb-2 p-2">
                         <label class="form-label">Select Quarter</label>
                         <select class="form-control " [(ngModel)]="Quarter" (change)="onQuarterChange($event.target)">
                             <option value=0>All Quarters</option>
@@ -95,17 +97,19 @@
                             <option value=4>Fourth Quarter</option>
                         </select>
                     </div>
-                    <h6 class="text-end">{{ barChartData && barChartData.planName}}</h6>
+                
                     <div *ngIf="pieChartOption" echarts [options]="pieChartOption"></div>
                 </div>
             </div>
 
 
             <div class=" col-md-8 p-2" *ngIf="barChartData&&bar2ChartOption &&budgetCheckeBox">
-                <div class="card p-2">
+                <div class="card ">
 
-
-                    <h6>{{ barChartData && barChartData.planName}} - Budget Utilization Rate</h6>
+                    <div class="chart-title">
+                        <h2 class="chart-title-text">{{ barChartData && barChartData.planName}} </h2>
+                      </div>
+                  
                     <div echarts [options]="bar2ChartOption"></div>
                 </div>
             </div>
@@ -115,7 +119,10 @@
 
                 <div class="card p-2">
 
-                    <h6>{{ barChartData &&barChartData.planName}} - Accomplitioment Rate</h6>
+                 
+                    <div class="chart-title">
+                        <h2 class="chart-title-text">{{ barChartData && barChartData.planName}} </h2>
+                      </div>
                     <div echarts [options]="barChartOption"></div>
 
                 </div>
@@ -125,16 +132,18 @@
         </div>
 
 
-    <div *ngFor="let item of Plans ">
+    <!-- <div *ngFor="let item of Plans ">
       
          <div class="row " *ngIf="(selectedProject||selectedStrategicPlan) && (!overAllProgress&&item.planName!='ALL')">
 
-            <div class=" col-md-4  " *ngIf="pieChartOption && activityStatusCheckBox">
+            <div class=" col-md-4" *ngIf="pieChartOption && activityStatusCheckBox">
 
-                <div class="card p-2">
+                <div class="card ">
 
-
-                    <div class="col-4 mb-2">
+                    <div class="chart-title">
+                        <h2 class="chart-title-text">{{ item.planName}} </h2>
+                      </div>
+                    <div class="col-4 mb-2 p-2">
                         <label class="form-label">Select Quarter</label>
                         <select class="form-control " #quarterValue (change)="onQuarterChange($event.target)">
                             <option value=0>All Quarters</option>
@@ -144,7 +153,7 @@
                             <option value=4>Fourth Quarter</option>
                         </select>
                     </div>
-                    <h6 class="text-end">{{ item.planName}}</h6>
+                  
                     
                     <div *ngIf="pieChartOption" echarts [options]="getPieChatData2(item.id)"></div>
                 </div>
@@ -154,9 +163,11 @@
             <div class=" col-md-8 p-2" *ngIf="barChartData&&bar2ChartOption &&budgetCheckeBox">
                 <div class="card p-2">
 
-
-                    <h6>{{ item.planName}} - Budget Utilization Rate</h6>
-                    <div echarts [options]="getBarChatOption(item.id)"></div>
+                    <div class="chart-title">
+                        <h2 class="chart-title-text">{{ item.planName}} </h2>
+                      </div>
+                
+                    <div echarts [options]="getBarChatOption2(item.id)"></div>
                 </div>
             </div>
 
@@ -165,18 +176,56 @@
 
                 <div class="card p-2">
 
-                    <h6>{{item.planName}} - Accomplitioment Rate</h6>
-                    <div echarts [options]="getBarChatOption2(item.id)"></div>
+                    <div class="chart-title">
+                        <h2 class="chart-title-text">{{ item.planName}} </h2>
+                      </div>
+                    <div echarts [options]="getBarChatOption(item.id)"></div>
 
                 </div>
 
             </div>
 
-            <hr/>
         </div>
     
-    </div>
+    </div> -->
 
+    <div class="row" *ngIf="((selectedProject||selectedStrategicPlan) && (!overAllProgress))">
+    
+        <div *ngFor="let item of Plans" class="col-md-6" [ngStyle]="{'display': item.planName !== 'ALL' ? 'block' : 'none'}" >
+                  
+          <div class="card" *ngIf="pieChartOption && activityStatusCheckBox ">
+            <div class="chart-title">
+              <h2 class="chart-title-text">{{ item.planName }}</h2>
+            </div>
+            <div class="col-12 mb-2 p-2">
+              <label class="form-label">Select Quarter</label>
+              <select class="form-control" #quarterValue (change)="onQuarterChange($event.target)">
+                <option value="0">All Quarters</option>
+                <option value="1">First Quarter</option>
+                <option value="2">Second Quarter</option>
+                <option value="3">Third Quarter</option>
+                <option value="4">Fourth Quarter</option>
+              </select>
+            </div>
+            <div *ngIf="pieChartOption" echarts [options]="getPieChatData2(item.id)"></div>
+          </div>
+      
+          <div class="card" *ngIf="barChartData && bar2ChartOption && budgetCheckeBox ">
+            <div class="chart-title">
+              <h2 class="chart-title-text">{{ item.planName }}</h2>
+            </div>
+            <div echarts [options]="getBarChatOption2(item.id)"></div>
+          </div>
+      
+          <div class="card" *ngIf="barChartData && barChartOption && accomplitiomentCheckBox">
+            <div class="chart-title">
+              <h2 class="chart-title-text">{{ item.planName }}</h2>
+            </div>
+            <div echarts [options]="getBarChatOption(item.id)"></div>
+          </div>
+
+        </div>
+      </div>
 
 
     </section>

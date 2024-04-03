@@ -58,7 +58,6 @@ export class EducationalFieldComponent implements OnInit {
 
   removeEducationalField(EducationalFieldId:string) {
 
-    console.log(EducationalFieldId)
     this.confirmationService.confirm({
       message: 'Are You sure you want to delete this EducationalField?',
       header: 'Delete Confirmation',

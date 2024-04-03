@@ -71,7 +71,7 @@ export class PlanDashboardComponent implements OnInit {
   getStrategicPlans() {
     this.dropDownService.getStrategicPlans().subscribe({
       next: (res) => {
-        console.log(res);
+   
         this.strategicPlans = res;
       },
     });
@@ -125,36 +125,88 @@ export class PlanDashboardComponent implements OnInit {
                     value: x.data,
                     name: x.label,
                   }));
-                  let pieChartOption = {
-                    title: {
-                      //text: item.id,
-                     // subtext: item.id,
-                      left: 'right',
-                      planId: item.id
-                    },
+                  let pieChartOption = 
+                  {
+                    title: { planId: item.id},
                     tooltip: {
                       trigger: 'item',
+                      formatter: '{a} <br/>{b}: {c} ({d}%)'
                     },
                     legend: {
                       orient: 'vertical',
                       left: 'left',
+                     
+                      //data: this.paymentStatusData.map(item => item.name)
                     },
                     series: [
                       {
-                        name: 'Access From',
+                        name: '',
                         type: 'pie',
-                        radius: '75%',
-                        data: chartdata,
-                        emphasis: {
-                          itemStyle: {
-                            shadowBlur: 10,
-                            shadowOffsetX: 0,
-                            shadowColor: 'rgba(0, 0, 0, 0.5)',
-                          },
+                        radius: ['50%', '70%'],
+                        avoidLabelOverlap: false,
+                        label: {
+                          show: true,
+                          position: 'center',
+                          formatter: '{b}: {c}' // Add the value placeholder {c}
                         },
-                      },
+                        emphasis: {
+                          label: {
+                            show: true,
+                            fontSize: '20',
+                            fontWeight: 'bold'
+                          }
+                        },
+                        labelLine: {
+                          show: false
+                        },
+                        data: chartdata,
+                        itemStyle: {
+                          color: function(params) {
+                            var colors = ['#FFB970', '#198754', '#dc3545'];
+                            return colors[params.dataIndex % colors.length];
+                          }
+                        }
+                      }
                     ],
+                    toolbox: {
+                      feature: {
+                        saveAsImage: {},
+                        restore: {},
+                        dataView: {},
+                        print: {} // Add the print feature
+                      }
+                    }
                   };
+                  // {
+                  //   title: {
+                  //     //text: item.id,
+                  //    // subtext: item.id,
+                  //     left: 'right',
+                  //     planId: item.id
+                  //   },
+                  //   tooltip: {
+                  //     trigger: 'item',
+                  //   },
+                  //   legend: {
+                  //     orient: 'vertical',
+                  //     left: 'left',
+                  //   },
+                  //   series: [
+                  //     {
+                  //       name: 'Access From',
+                  //       type: 'pie',
+                  //       radius: '75%',
+                  //       data: chartdata,
+                  //       emphasis: {
+                  //         itemStyle: {
+                  //           shadowBlur: 10,
+                  //           shadowOffsetX: 0,
+                  //           shadowColor: 'rgba(0, 0, 0, 0.5)',
+                  //         },
+                  //       },
+                  //     },
+                  //   ],
+                  // };
                   this.pieChartOptions.push(pieChartOption);
                 },
               });
@@ -164,7 +216,7 @@ export class PlanDashboardComponent implements OnInit {
               .getPlanBarCharts(item.id, "00000000-0000-0000-0000-000000000000")
               .subscribe({
                 next: (res) => {
-                  debugger;
+               
                   let barChartData = res;
                   let chartdata1 = barChartData?.progressChartDataSets?.map(
                     (x) => ({ value: x.data })
@@ -174,91 +226,189 @@ export class PlanDashboardComponent implements OnInit {
                   );
         
         
-                  let barChartOption = {
+                  let barChartOption =
+                  {
                     tooltip: {
                       planid:item.id,
                       trigger: 'axis',
                       axisPointer: {
-                        type: 'shadow',
-                      },
+                        type: 'shadow'
+                      }
+                    },
+                    legend: {
+                      data: ['Accomplishment Rate']
                     },
                     grid: {
                       left: '3%',
                       right: '4%',
                       bottom: '3%',
-                      containLabel: true,
+                      containLabel: true
                     },
-                    xAxis: [
-                      {
-                        type: 'category',
-                        data: [
-                          'January - March',
-                          'April - June',
-                          'July - September',
-                          'October - December',
-                        ],
-                        axisTick: {
-                          alignWithLabel: true,
-                        },
-                      },
-                    ],
-                    yAxis: [
-                      {
-                        type: 'value',
-                      },
-                    ],
-                    series: [
-                      {
-                        name: 'Accomplishment Rate',
-                        type: 'bar',
-                        barWidth: '60%',
-                        data: chartdata1,
-                      },
-                    ],
+                    xAxis: [{
+                      type: 'category',
+                      data: [
+                        'January - March',
+                        'April - June',
+                        'July - September',
+                        'October - December',
+                      ],
+                      axisTick: {
+                        alignWithLabel: true
+                      }
+                    }],
+                    yAxis: [{
+                      type: 'value'
+                    }],
+                    series: [{
+                      name: 'Accomplishment Rate',
+                      type: 'bar',
+                      barWidth: '60%',
+                      data: chartdata1
+                    }],
+                    toolbox: {
+                      feature: {
+                        saveAsImage: {},
+                        restore: {},
+                        dataView: {},
+                        print: {}
+                      }
+                    }
                   };
+                  
+                  //  {
+                  //   tooltip: {
+                  //     planid:item.id,
+                  //     trigger: 'axis',
+                  //     axisPointer: {
+                  //       type: 'shadow',
+                  //     },
+                  //   },
+                  //   grid: {
+                  //     left: '3%',
+                  //     right: '4%',
+                  //     bottom: '3%',
+                  //     containLabel: true,
+                  //   },
+                  //   xAxis: [
+                  //     {
+                  //       type: 'category',
+                  //       data: [
+                  //         'January - March',
+                  //         'April - June',
+                  //         'July - September',
+                  //         'October - December',
+                  //       ],
+                  //       axisTick: {
+                  //         alignWithLabel: true,
+                  //       },
+                  //     },
+                  //   ],
+                  //   yAxis: [
+                  //     {
+                  //       type: 'value',
+                  //     },
+                  //   ],
+                  //   series: [
+                  //     {
+                  //       name: 'Accomplishment Rate',
+                  //       type: 'bar',
+                  //       barWidth: '60%',
+                  //       data: chartdata1,
+                  //     },
+                  //   ],
+                  // };
         
-                  let bar2ChartOption = {
+                  let bar2ChartOption = 
+
+                  {
                     tooltip: {
                       planid:item.id,
                       trigger: 'axis',
                       axisPointer: {
-                        type: 'shadow',
-                      },
+                        type: 'shadow'
+                      }
+                    },
+                    legend: {
+                      data: ['Budget Utilization']
                     },
                     grid: {
                       left: '3%',
                       right: '4%',
                       bottom: '3%',
-                      containLabel: true,
+                      containLabel: true
                     },
-                    xAxis: [
-                      {
-                        type: 'category',
-                        data: [
-                          'January - March',
-                          'April - June',
-                          'July - Sep',
-                          'Oct - Dec',
-                        ],
-                        axisTick: {
-                          alignWithLabel: true,
-                        },
-                      },
-                    ],
-                    yAxis: [
-                      {
-                        type: 'value',
-                      },
-                    ],
-                    series: [
-                      {
-                        name: 'Budget Utilization',
-                        type: 'bar',
-                        barWidth: '60%',
-                        data: chartdata2,
-                      },
-                    ],
+                    xAxis: [{
+                      type: 'category',
+                      data: [
+                        'January - March',
+                        'April - June',
+                        'July - September',
+                        'October - December',
+                      ],
+                      axisTick: {
+                        alignWithLabel: true
+                      }
+                    }],
+                    yAxis: [{
+                      type: 'value'
+                    }],
+                    series: [{
+                      name: 'Budget Utilization',
+                      type: 'bar',
+                      barWidth: '60%',
+                      data: chartdata2
+                    }],
+                    toolbox: {
+                      feature: {
+                        saveAsImage: {},
+                        restore: {},
+                        dataView: {},
+                        print: {}
+                      }
+                    }
                   };
+                  // {
+                  //   tooltip: {
+                  //     planid:item.id,
+                  //     trigger: 'axis',
+                  //     axisPointer: {
+                  //       type: 'shadow',
+                  //     },
+                  //   },
+                  //   grid: {
+                  //     left: '3%',
+                  //     right: '4%',
+                  //     bottom: '3%',
+                  //     containLabel: true,
+                  //   },
+                  //   xAxis: [
+                  //     {
+                  //       type: 'category',
+                  //       data: [
+                  //         'January - March',
+                  //         'April - June',
+                  //         'July - Sep',
+                  //         'Oct - Dec',
+                  //       ],
+                  //       axisTick: {
+                  //         alignWithLabel: true,
+                  //       },
+                  //     },
+                  //   ],
+                  //   yAxis: [
+                  //     {
+                  //       type: 'value',
+                  //     },
+                  //   ],
+                  //   series: [
+                  //     {
+                  //       name: 'Budget Utilization',
+                  //       type: 'bar',
+                  //       barWidth: '60%',
+                  //       data: chartdata2,
+                  //     },
+                  //   ],
+                  // };
 
                   this.barChartOptions.push(barChartOption)
                   this.bar2ChartOptions.push(bar2ChartOption)
@@ -266,7 +416,7 @@ export class PlanDashboardComponent implements OnInit {
               });
           });
 
-          console.log('projects', res);
+       
 
           if (res) {
             this.selectedProject = plan.id;
@@ -274,13 +424,13 @@ export class PlanDashboardComponent implements OnInit {
           }
         },
         error: (err) => {
-          console.error(err);
+       
         },
       });
     } else {
       this.planService.getPlans(this.user.employeeId).subscribe({
         next: (res) => {
-          console.log('projects', res);
+   
           this.Plans = res;
           if (res) {
             this.selectedProject = res[0].id;
@@ -288,7 +438,7 @@ export class PlanDashboardComponent implements OnInit {
           }
         },
         error: (err) => {
-          console.error(err);
+        
         },
       });
     }
@@ -300,8 +450,14 @@ export class PlanDashboardComponent implements OnInit {
     this.getPieChatData(this.planId, 0);
     this.getBarChatData(this.planId);
 
+    if (this.planId != '30fc30dc-eb56-4f40-9510-54ad983e759a') {
+
+      this.overAllProgress= false
+    }
+
     if (this.planId == '30fc30dc-eb56-4f40-9510-54ad983e759a') {
       //this.fetchPieChartOptions()
+     
     }
   }
 
@@ -315,37 +471,89 @@ export class PlanDashboardComponent implements OnInit {
               value: x.data,
               name: x.label,
             })));
-          console.log('this.chartdata', this.chartdata);
+       
 
-          this.pieChartOption = {
-            title: {
-              // text: this.pieChartData.planName.length > 30 ? this.pieChartData.planName.slice(0, 30) + '...' : this.pieChartData.planName,
-              // subtext: 'Data',
-              left: 'right',
-            },
+          this.pieChartOption = 
+
+          {
             tooltip: {
               trigger: 'item',
+              formatter: '{a} <br/>{b}: {c} ({d}%)'
             },
             legend: {
               orient: 'vertical',
               left: 'left',
+              //data: this.paymentStatusData.map(item => item.name)
             },
             series: [
               {
-                name: 'Access From',
+                name: '',
                 type: 'pie',
-                radius: '75%',
-                data: this.chartdata,
-                emphasis: {
-                  itemStyle: {
-                    shadowBlur: 10,
-                    shadowOffsetX: 0,
-                    shadowColor: 'rgba(0, 0, 0, 0.5)',
-                  },
+                radius: ['50%', '70%'],
+                avoidLabelOverlap: false,
+                label: {
+                  show: true,
+                  position: 'center',
+                  formatter: '{b}: {c}' // Add the value placeholder {c}
                 },
-              },
+                emphasis: {
+                  label: {
+                    show: true,
+                    fontSize: '20',
+                    fontWeight: 'bold'
+                  }
+                },
+                labelLine: {
+                  show: false
+                },
+                data: this.chartdata,
+                itemStyle: {
+                  color: function(params) {
+                    var colors = ['#FFB970', '#198754', '#dc3545'];
+                    return colors[params.dataIndex % colors.length];
+                  }
+                }
+              }
             ],
+            toolbox: {
+              feature: {
+                saveAsImage: {},
+                restore: {},
+                dataView: {},
+                print: {} // Add the print feature
+              }
+            }
           };
+          
+          // {
+          //   title: {
+          //     // text: this.pieChartData.planName.length > 30 ? this.pieChartData.planName.slice(0, 30) + '...' : this.pieChartData.planName,
+          //     // subtext: 'Data',
+          //     left: 'right',
+          //   },
+          //   tooltip: {
+          //     trigger: 'item',
+          //   },
+          //   legend: {
+          //     orient: 'vertical',
+          //     left: 'left',
+          //   },
+          //   series: [
+          //     {
+          //       name: 'Access From',
+          //       type: 'pie',
+          //       radius: '75%',
+          //       data: this.chartdata,
+          //       emphasis: {
+          //         itemStyle: {
+          //           shadowBlur: 10,
+          //           shadowOffsetX: 0,
+          //           shadowColor: 'rgba(0, 0, 0, 0.5)',
+          //         },
+          //       },
+          //     },
+          //   ],
+          // };
         },
       });
   }
@@ -355,7 +563,7 @@ export class PlanDashboardComponent implements OnInit {
       .getPlanBarCharts(planId, this.selectedStrategicPlan)
       .subscribe({
         next: (res) => {
-          debugger;
+          
           this.barChartData = res;
           this.chartdata1 = this.barChartData?.progressChartDataSets?.map(
             (x) => ({ value: x.data })
@@ -364,102 +572,199 @@ export class PlanDashboardComponent implements OnInit {
             (x) => ({ value: x.data })
           );
 
-          console.log('this.barChartData', this.barChartData);
 
           this.barChartOption = {
             tooltip: {
               trigger: 'axis',
               axisPointer: {
-                type: 'shadow',
-              },
+                type: 'shadow'
+              }
+            },
+            legend: {
+              data: ['Accomplishment Rate']
             },
             grid: {
               left: '3%',
               right: '4%',
               bottom: '3%',
-              containLabel: true,
+              containLabel: true
             },
-            xAxis: [
-              {
-                type: 'category',
-                data: [
-                  'January - March',
-                  'April - June',
-                  'July - September',
-                  'October - December',
-                ],
-                axisTick: {
-                  alignWithLabel: true,
-                },
-              },
-            ],
-            yAxis: [
-              {
-                type: 'value',
-              },
-            ],
-            series: [
-              {
-                name: 'Accomplishment Rate',
-                type: 'bar',
-                barWidth: '60%',
-                data: this.chartdata1,
-              },
-            ],
+            xAxis: [{
+              type: 'category',
+              data: [
+                'January - March',
+                'April - June',
+                'July - September',
+                'October - December',
+              ],
+              axisTick: {
+                alignWithLabel: true
+              }
+            }],
+            yAxis: [{
+              type: 'value'
+            }],
+            series: [{
+              name: 'Accomplishment Rate',
+              type: 'bar',
+              barWidth: '60%',
+              data: this.chartdata1
+            }],
+            toolbox: {
+              feature: {
+                saveAsImage: {},
+                restore: {},
+                dataView: {},
+                print: {}
+              }
+            }
           };
+          
+          // {
+          //   tooltip: {
+          //     trigger: 'axis',
+          //     axisPointer: {
+          //       type: 'shadow',
+          //     },
+          //   },
+          //   grid: {
+          //     left: '3%',
+          //     right: '4%',
+          //     bottom: '3%',
+          //     containLabel: true,
+          //   },
+          //   xAxis: [
+          //     {
+          //       type: 'category',
+          //       data: [
+          //         'January - March',
+          //         'April - June',
+          //         'July - September',
+          //         'October - December',
+          //       ],
+          //       axisTick: {
+          //         alignWithLabel: true,
+          //       },
+          //     },
+          //   ],
+          //   yAxis: [
+          //     {
+          //       type: 'value',
+          //     },
+          //   ],
+          //   series: [
+          //     {
+          //       name: 'Accomplishment Rate',
+          //       type: 'bar',
+          //       barWidth: '60%',
+          //       data: this.chartdata1,
+          //     },
+          //   ],
+          // };
 
-          this.bar2ChartOption = {
+          this.bar2ChartOption =
+
+        {
             tooltip: {
               trigger: 'axis',
               axisPointer: {
-                type: 'shadow',
-              },
+                type: 'shadow'
+              }
+            },
+            legend: {
+              data: ['Budget Utilization']
             },
             grid: {
               left: '3%',
               right: '4%',
               bottom: '3%',
-              containLabel: true,
+              containLabel: true
             },
-            xAxis: [
-              {
-                type: 'category',
-                data: [
-                  'January - March',
-                  'April - June',
-                  'July - Sep',
-                  'Oct - Dec',
-                ],
-                axisTick: {
-                  alignWithLabel: true,
-                },
-              },
-            ],
-            yAxis: [
-              {
-                type: 'value',
-              },
-            ],
-            series: [
-              {
-                name: 'Budget Utilization',
-                type: 'bar',
-                barWidth: '60%',
-                data: this.chartdata2,
-              },
-            ],
+            xAxis: [{
+              type: 'category',
+              data: [
+                'January - March',
+                'April - June',
+                'July - September',
+                'October - December',
+              ],
+              axisTick: {
+                alignWithLabel: true
+              }
+            }],
+            yAxis: [{
+              type: 'value'
+            }],
+            series: [{
+              name: 'Budget Utilization',
+              type: 'bar',
+              barWidth: '60%',
+              data: this.chartdata2
+            }],
+            toolbox: {
+              feature: {
+                saveAsImage: {},
+                restore: {},
+                dataView: {},
+                print: {}
+              }
+            }
           };
+          
+          
+          // {
+          //   tooltip: {
+          //     trigger: 'axis',
+          //     axisPointer: {
+          //       type: 'shadow',
+          //     },
+          //   },
+          //   grid: {
+          //     left: '3%',
+          //     right: '4%',
+          //     bottom: '3%',
+          //     containLabel: true,
+          //   },
+          //   xAxis: [
+          //     {
+          //       type: 'category',
+          //       data: [
+          //         'January - March',
+          //         'April - June',
+          //         'July - Sep',
+          //         'Oct - Dec',
+          //       ],
+          //       axisTick: {
+          //         alignWithLabel: true,
+          //       },
+          //     },
+          //   ],
+          //   yAxis: [
+          //     {
+          //       type: 'value',
+          //     },
+          //   ],
+          //   series: [
+          //     {
+          //       name: 'Budget Utilization',
+          //       type: 'bar',
+          //       barWidth: '60%',
+          //       data: this.chartdata2,
+          //     },
+          //   ],
+          // };
         },
       });
   }
 
   onQuarterChange(event: any) {
     var quarter = event.value;
-    console.log('quarter', quarter);
+
     this.getPieChatData(this.planId, quarter);
   }
   getPieChatData2(planId:string){
     return this.pieChartOptions.filter((item)=> {
+      
       return (item.title.planId==planId)
     })[0]
   }

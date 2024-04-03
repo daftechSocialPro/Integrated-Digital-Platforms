@@ -34,6 +34,7 @@ namespace MembershipImplementation.Services.Configuration
                 Money  = MembershipTypePost.Money,
                 Description = MembershipTypePost.Description,
                 MembershipCategory = Enum.Parse<MembershipCategory>(MembershipTypePost.MembershipCategory),               
+                Currency = Enum.Parse<Currency>(MembershipTypePost.Currency),               
                 CreatedById = MembershipTypePost.CreatedById,
                 Rowstatus = RowStatus.ACTIVE
             };
@@ -58,8 +59,9 @@ namespace MembershipImplementation.Services.Configuration
                 Name = x.Name,
                 ShortCode  = x.ShortCode,
                 Years = x.Years,
-                Money = x.Money,
-                Description=x.Description,
+                Money =x.Money,
+                Currency = x.Currency.ToString(),
+                Description =x.Description,
                 MembershipCategory = x.MembershipCategory.ToString(),
             }).ToListAsync();
 
@@ -71,12 +73,13 @@ namespace MembershipImplementation.Services.Configuration
             var currentMembershipType = await _dbContext.MembershipTypes.FirstOrDefaultAsync(x => x.Id == MembershipTypePost.Id);
 
             if (currentMembershipType != null)
-            {
+            { 
                 currentMembershipType.Name = MembershipTypePost.Name;
                 currentMembershipType.Description = MembershipTypePost.Description;
                 currentMembershipType.Years = MembershipTypePost.Years;
                 currentMembershipType.ShortCode = MembershipTypePost.ShortCode;
                 currentMembershipType.Money = MembershipTypePost.Money;
+                currentMembershipType.Currency = Enum.Parse<Currency>(MembershipTypePost.Currency);
                 currentMembershipType.MembershipCategory = Enum.Parse<MembershipCategory>(MembershipTypePost.MembershipCategory);
                 await _dbContext.SaveChangesAsync();
                 return new ResponseMessage { Data = currentMembershipType, Success = true, Message = "Updated Successfully" };

@@ -75,8 +75,7 @@ export class StaffWeeklyPlanComponent implements OnInit {
       lastDayOfWeek.setDate(lastDayOfWeek.getDate() + (7 - this.currentDate.getDay())); // Set to Sunday
       lastDayOfWeek.setHours(0, 0, 0, 0); 
 
-      console.log(firstDayOfWeek)
-      console.log(lastDayOfWeek)
+    
       this.filterdPlans = this.staffWeeklyPlanDto.filter((item) => {
         const fromDate = new Date(item.fromDate);
         fromDate.setHours(0, 0, 0, 0); 

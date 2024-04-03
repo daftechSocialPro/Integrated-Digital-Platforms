@@ -37,7 +37,7 @@ modalRef.result.then(()=>{
     this.hrmService.getResignationList().subscribe({
       next: (res) => {
         this.resignationList = res
-        console.log(this.resignationList)
+      
       }
     })
   }

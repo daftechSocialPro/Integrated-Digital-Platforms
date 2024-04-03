@@ -47,5 +47,6 @@ namespace IntegratedImplementation.Interfaces.Configuration
         Task<List<SelectListDto>> GetAccountTypeDropDown();
         Task<List<SelectListDto>> GetAccountingPeriodDropDown();
         Task<List<SelectListDto>> GetChartOfAccountsDropDown();
+        Task<List<SelectListDto>> GetTrainingList();
     }
 }

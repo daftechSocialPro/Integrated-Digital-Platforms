@@ -49,7 +49,7 @@ export class MeterModelComponent  implements OnInit {
 
   removeMeterModel(MeterModelId:string) {
 
-    console.log(MeterModelId)
+
     this.confirmationService.confirm({
       message: 'Are You sure you want to delete this MeterModel?',
       header: 'Delete Confirmation',

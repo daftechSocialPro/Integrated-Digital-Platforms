@@ -56,7 +56,7 @@ export class CourseComponent implements OnInit {
   }
 
   removeCourse(CourseId: string) {
-    console.log(CourseId);
+  
     this.confirmationService.confirm({
       message: 'Are You sure you want to delete this Course?',
       header: 'Delete Confirmation',

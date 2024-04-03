@@ -1,0 +1,110 @@
+<main id="main" class="main">
+
+    <div class="iconcontainer" (click)="goToTrainingDashboard()">
+        <i class="bi bi-arrow-left-short"></i>
+        <div>Back to Training Dashboard</div>
+    </div>
+
+    <div class="card">
+
+        <div class="card-body">
+            <div class="row">
+
+            <div class="col-3  my-3">
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="PlannedBudget" #searchterm placeholder="filter"
+                        (change)="filterTrainees(searchterm.value)" placeholder="EndDate">
+                    <label for="PlannedBudget">Filter </label>
+
+                </div>
+
+            </div>
+            <div class="col-7 my-3">   
+                <p-multiSelect #SelectedItem  (onChange)="SelectItems($event)" [options]="trainings" placeholder="Select Trainings" optionLabel="name" class="multiselect-custom" display="chip">
+                    <ng-template let-training pTemplate="item">
+                        <div class="flex align-items-center">
+                            <span class="ml-2">{{training.name}}</span>
+                        </div>
+                        
+                    </ng-template>
+                </p-multiSelect>
+                
+            </div>
+
+            <div class="col-2 my-3">
+                <button class="btn btn-outline-success text-end mb-3" (click)="exportAsExcel('Allreports')"><i
+                    class="bi bi-file-excel"></i> Export Excel </button>
+            </div>
+        </div>
+         
+            <div class="table-container ">
+                <div class="table-wrapper ">
+                    <table class="table table-bordered table-responsive" #excelTable>
+                        <thead>
+                            <tr>
+
+                                <th style="border: 1px solid black;" resizable>#</th>
+                                <th style="border: 1px solid black;" resizable>Full Name</th>
+                                <th style="border: 1px solid black;" resizable>Gender</th>
+                                <th style="border: 1px solid black;" resizable>Age</th>
+                                <th style="border: 1px solid black;" resizable>Profession</th>
+                                <th style="border: 1px solid black;" resizable>Level of Education</th>
+                                <th style="border: 1px solid black;" resizable>Phone Number</th>
+                                <th style="border: 1px solid black;" resizable>Email</th>
+                                <th style="border: 1px solid black;" resizable>Region</th>
+                                <th style="border: 1px solid black;" resizable>Zone</th>
+                                <th style="border: 1px solid black;" resizable>Woreda</th>
+                                <!-- <th style="border: 1px solid black;">Educational Field</th> -->
+                                <th style="border: 1px solid black;" resizable>Organization</th>
+                                <th style="border: 1px solid black;" resizable>Type Of Organization</th>
+                                <th style="border: 1px solid black;" resizable>Pre Training Summary</th>
+                                <th style="border: 1px solid black;" resizable>Post Training Summary</th>
+                                <th style="border: 1px solid black;" resizable>Title</th>
+                                <th style="border: 1px solid black;" resizable>Project</th>
+                                <th style="border: 1px solid black;" resizable>Allocated CEU</th>
+                                <th style="border: 1px solid black;" resizable>Start Date</th>
+                                <th style="border: 1px solid black;" resizable>End Date</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let row of filterdTraines; let i = index">
+
+                                <td style="border: 1px solid black;">{{ i + 1 }} </td>
+                                <td style="border: 1px solid black;">{{ row.fullName }}</td>
+                                <td style="border: 1px solid black;">{{ row.gender }}</td>
+                                <td style="border: 1px solid black;">{{ row.age }}</td>
+                                <td style="border: 1px solid black;">{{ row.profession }}</td>
+                                <td style="border: 1px solid black;">{{ row.levelOfEducation }}</td>
+                                <td style="border: 1px solid black;">{{ row.phoneNumber }}</td>
+                                <td style="border: 1px solid black;">{{ row.email }}</td>
+
+                                <td style="border: 1px solid black;">{{ row.region }}</td>
+                                <td style="border: 1px solid black;">{{ row.zone }}</td>
+                                <td style="border: 1px solid black;">{{ row.woreda }}</td>
+
+                                <!-- <td style="border: 1px solid black;">{{ row.educationalField }}</td> -->
+                                <td style="border: 1px solid black;">{{ row.nameofOrganizaton }}</td>
+                                <td style="border: 1px solid black;">{{ row.typeofOrganization }}</td>
+                                <td style="border: 1px solid black;">{{ row.preTrainingSummary }}</td>
+                                <td style="border: 1px solid black;">{{ row.postTrainingSummary }}</td>
+
+                                <td style="border: 1px solid black;">{{ row.title }}</td>
+
+                                <td style="border: 1px solid black;">{{ row.project }}</td>
+
+                                <td style="border: 1px solid black;">{{ row.allocatedCEU }}</td>
+
+                                <td style="border: 1px solid black;">{{ row.startDate | date:"MMM dd yyyy" }}</td>
+                                <td style="border: 1px solid black;">{{ row.endDate | date :"MMM dd yyyy" }}</td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</main>

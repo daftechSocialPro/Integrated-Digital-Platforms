@@ -202,10 +202,11 @@ namespace IntegratedDigitalAPI.Services.PM
 
                               StructureId = p.DepartmentId.ToString(),
                               ProjectManagerId = p.ProjectManagerId.ToString(),
+                              CreatedDate = p.CreatedDate
 
 
 
-                          }).ToListAsync();
+                          }).OrderBy(x=>x.CreatedDate).ToListAsync();
 
 
 
@@ -236,9 +237,10 @@ namespace IntegratedDigitalAPI.Services.PM
                              RemainingBudget = t.PlanedBudget - _dBContext.Activities.Where(x => x.ActivityParent.TaskId == t.Id).Sum(x => x.PlanedBudget),
                              NumberofActivities = _dBContext.Activities.Include(x => x.ActivityParent).Count(x => x.TaskId == t.Id || x.ActivityParent.TaskId == t.Id),
                              NumberOfFinalized = _dBContext.Activities.Include(x => x.ActivityParent).Count(x => x.Status == Status.FINALIZED && (x.TaskId == t.Id || x.ActivityParent.TaskId == t.Id)),
-                             NumberOfTerminated = _dBContext.Activities.Include(x => x.ActivityParent).Count(x => x.Status == Status.TERMINATED && (x.TaskId == t.Id || x.ActivityParent.TaskId == t.Id))
+                             NumberOfTerminated = _dBContext.Activities.Include(x => x.ActivityParent).Count(x => x.Status == Status.TERMINATED && (x.TaskId == t.Id || x.ActivityParent.TaskId == t.Id)),
+                             CreatedDate = t.CreatedDate
 
-                         }).ToList();
+                         }).OrderBy(x=>x.CreatedDate).ToList();
 
 
             float taskBudgetsum = tasks.Sum(x => x.PlannedBudget);

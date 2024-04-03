@@ -48,7 +48,7 @@ export class MeterSizeGroupComponent implements OnInit {
 
   removeMeterSizeGroup(MeterSizeGroupId:string) {
 
-    console.log(MeterSizeGroupId)
+    
     this.confirmationService.confirm({
       message: 'Are You sure you want to delete this MeterSizeGroup?',
       header: 'Delete Confirmation',

@@ -84,7 +84,7 @@ export class UpdateTraineeComponent implements OnInit {
   }
   addRow(): void {
 
-    console.log(this.traineeForm.value)
+
     if (this.traineeForm.valid) {
       const newRow = this.traineeForm.value;
 

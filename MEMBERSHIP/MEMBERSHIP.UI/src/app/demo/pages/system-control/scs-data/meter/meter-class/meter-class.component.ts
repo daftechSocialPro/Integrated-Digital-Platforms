@@ -48,7 +48,6 @@ export class MeterClassComponent  implements OnInit {
 
   removeMeterClass(MeterClassId:string) {
 
-    console.log(MeterClassId)
     this.confirmationService.confirm({
       message: 'Are You sure you want to delete this Meter Class?',
       header: 'Delete Confirmation',

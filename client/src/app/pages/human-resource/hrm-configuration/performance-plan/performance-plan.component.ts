@@ -39,7 +39,7 @@ export class PerformancePlanComponent implements OnInit {
       next: (res) => {
         this.performanceList = res;
       }, error: (err) => {
-        console.log(err)
+        
       }
     })
   }

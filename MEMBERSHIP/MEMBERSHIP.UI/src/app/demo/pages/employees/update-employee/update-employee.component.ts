@@ -55,7 +55,6 @@ export class UpdateEmployeeComponent implements OnInit {
 
   onSubmit() {
 
-    console.log(this.EmployeeForm.value)
     if (this.EmployeeForm.valid) {
 
       const formData = new FormData();
@@ -106,7 +105,7 @@ export class UpdateEmployeeComponent implements OnInit {
   }
   onUpload(event: any) {
 
-    debugger
+    
     var file: File = event.target.files[0];
     
     this.fileGH = file

@@ -80,8 +80,6 @@ export class AddAccountingPeriodComponent implements OnInit {
           
         }
 
-
-        console.log("accountingPeriodPost",accountingPeriodPost)
         this.financeService.addAccountingPeriod(accountingPeriodPost).subscribe({
           next: (res) => {
             if (res.success) {

@@ -95,6 +95,9 @@ export class UserService {
 
     return this.http.get<UserList[]>(this.BaseURI + "/Authentication/GetUserList")
   }
+  deleteUser (userId:string){
+    return this.http.delete<ResponseMessage>(this.BaseURI + `/Authentication/DeleteUser?userId=${userId}`)
+  }
 
   createUser(body: UserPost) {
 

@@ -29,7 +29,7 @@ export class StrategicPlanComponent implements OnInit {
           this.strategicPlans = res       
       
       },error:(err)=>{
-        console.log(err)
+  
       }
     })
   }

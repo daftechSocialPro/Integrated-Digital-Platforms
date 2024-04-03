@@ -32,7 +32,6 @@ export class ComittesComponent implements OnInit {
       next:(res)=>{
         this.committees = res 
 
-        console.log("comittes", res )
       }
     })
   }

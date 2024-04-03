@@ -4702,6 +4702,12 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<float>("Begining")
                         .HasColumnType("real");
 
+                    b.Property<string>("CancelJustification")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CompletedJustification")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("CreatedById")
                         .HasColumnType("nvarchar(450)");
 
@@ -4745,6 +4751,9 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<Guid?>("ProjectTeamId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("ResceduledJustification")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Rowstatus")
                         .HasColumnType("int");
 
@@ -4773,6 +4782,9 @@ namespace IntegratedInfrustructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<bool>("isCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("isResceduled")
                         .HasColumnType("bit");
 
                     b.Property<bool>("isStarted")

@@ -104,10 +104,19 @@ namespace IntegratedInfrustructure.Models.PM
         [DefaultValue(false)]
         public bool isCancelled { get; set;}
 
+        public string ? CancelJustification { get; set; }
+
         [DefaultValue(false)]
         public bool isCompleted { get; set;}
 
+        public string ? CompletedJustification { get; set; }
+
         public bool isStarted { get; set;}
+
+        [DefaultValue(false)]
+        public bool isResceduled { get; set; }
+
+        public string ? ResceduledJustification { get; set; }
 
 
     }

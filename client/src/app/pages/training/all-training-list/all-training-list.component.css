@@ -1,0 +1,53 @@
+.iconcontainer {
+    font-size: 20px;
+    color: #8b9dbe;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  
+  .iconcontainer i {
+    margin-right: 10px;
+  
+  
+  }
+
+  .table-container {
+    position: relative;
+   
+  }
+  
+  .form-container {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  
+  table {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+  th, td {
+    border: 1px solid black;
+    padding: 5px;
+    text-align: center;
+  }
+  th {
+    font-weight: bold;
+    background-color: #eee;
+  }
+  tr:nth-child(even) {
+    background-color: #f8f8f88c;
+  }
+  
+  .table-wrapper {
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  
+  

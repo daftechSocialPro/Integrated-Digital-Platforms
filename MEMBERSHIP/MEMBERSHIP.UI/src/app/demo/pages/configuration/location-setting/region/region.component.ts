@@ -58,7 +58,6 @@ export class RegionComponent implements OnInit {
 
   removeRegion(RegionId:string) {
 
-    console.log(RegionId)
     this.confirmationService.confirm({
       message: 'Are You sure you want to delete this Region?',
       header: 'Delete Confirmation',

@@ -30,7 +30,7 @@ export class PositionComponent implements OnInit {
           this.positions = res       
       
       },error:(err)=>{
-        console.log(err)
+     
       }
     })
   }

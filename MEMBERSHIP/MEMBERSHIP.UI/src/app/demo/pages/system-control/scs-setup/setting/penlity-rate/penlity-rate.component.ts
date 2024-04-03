@@ -33,7 +33,7 @@ export class PenlityRateComponent implements OnInit {
 
     this.controlService.getPenalityRates().subscribe({
       next:(res)=>{
-        console.log(res)
+        
         this.PenalityRates = res 
         this.paginatedPenalityRate()
       }
@@ -53,7 +53,6 @@ export class PenlityRateComponent implements OnInit {
 
   removePenalityRate(PenalityRateId:number) {
 
-    console.log(PenalityRateId)
     this.confirmationService.confirm({
       message: 'Are You sure you want to delete this Penality Rate?',
       header: 'Delete Confirmation',

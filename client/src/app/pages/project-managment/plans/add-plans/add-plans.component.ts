@@ -55,7 +55,7 @@ export class AddPlansComponent implements OnInit {
     this.getDepartments();
     this.getProjectSourceFunds();
 
-    console.log("planview",this.planView)
+
 
     if(this.planView){
 
@@ -149,7 +149,7 @@ export class AddPlansComponent implements OnInit {
       next: (res) => {
         this.employeeList = res
       }, error: (err) => {
-        console.log(err)
+      
       }
     })
   }
@@ -162,7 +162,7 @@ export class AddPlansComponent implements OnInit {
 
   selectEmployeePM(event: SelectList) {
    
-    console.log("add",event)
+   
     // this.employee = event;
     this.ProjectManagerId = event
 
@@ -172,7 +172,7 @@ export class AddPlansComponent implements OnInit {
 
   selectEmployeePM2(event: SelectList) {
    
-    console.log("update",event)
+   
 
     // this.employee = event;
     this.ProjectManagerId = event
@@ -237,8 +237,6 @@ export class AddPlansComponent implements OnInit {
           this.messageService.add({ severity: 'error', summary: 'Netowrk Error', detail: "Something went wrong!!" });
 
 
-
-          console.log(err)
         }
       })
     }
@@ -246,7 +244,7 @@ export class AddPlansComponent implements OnInit {
   }
   update() {
 
-console.log("p",this.ProjectManagerId)
+
 
     if (!this.ProjectManagerId) {
 
@@ -287,7 +285,7 @@ console.log("p",this.ProjectManagerId)
 
         }, error: (err) => {
           this.messageService.add({ severity: 'error', summary: 'Netowrk Error', detail: "Something went wrong!!" });
-          console.log(err)
+      
         }
       })
     }

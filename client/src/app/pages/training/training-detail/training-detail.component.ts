@@ -47,7 +47,7 @@ export class TrainingDetailComponent implements OnInit {
     this.trainingService.getSingleTraining(this.trainingId).subscribe({
       next: (res) => {
         this.training = res
-        console.log(res)
+    
       }
     })
   }

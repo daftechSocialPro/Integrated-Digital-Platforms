@@ -50,7 +50,6 @@ export default class LoginComponent implements OnInit {
         error: (err) => {
           this.messageService.add({ severity: 'error', summary: 'Something went wron!!!', detail: err.message });
 
-          console.log(err);
         }
       });
     }

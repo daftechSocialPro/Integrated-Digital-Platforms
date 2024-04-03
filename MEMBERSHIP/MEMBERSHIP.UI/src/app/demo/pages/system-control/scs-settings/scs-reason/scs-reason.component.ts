@@ -58,7 +58,6 @@ export class ScsReasonComponent implements OnInit {
 
   removeSCReason(SCReasonId:string) {
 
-    console.log(SCReasonId)
     this.confirmationService.confirm({
       message: 'Are You sure you want to delete this SCReason?',
       header: 'Delete Confirmation',

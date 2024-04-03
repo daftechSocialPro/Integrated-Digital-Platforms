@@ -50,9 +50,9 @@ export default class RegisterComponent implements OnInit {
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       phoneNumber: ['', [Validators.required, Validators.pattern('[0-9]{10}'),Validators.min(10)]],
-      email: ['',Validators.required],
+      email: ['',[Validators.required,Validators.email]],
       membershipType: ['', Validators.required],
-      RegionId:['',Validators.required],
+      RegionId:[null,Validators.required],
       Zone: [null,Validators.required],
       woreda: [null,Validators.required],
       inistitute: ['', Validators.required]
@@ -80,24 +80,28 @@ export default class RegisterComponent implements OnInit {
   getRegions(countryType: string) {
     
     if (countryType === 'ETHIOPIAN') {
+      this.registerForm.get('RegionId').setValidators(Validators.required);
       this.registerForm.get('woreda').setValidators(Validators.required);
       this.registerForm.get('Zone').setValidators(Validators.required);
+      this.dropdownService.getRegionsDropdown(countryType).subscribe({
+        next: (res) => {
+          this.regions = res;
+        }
+      });
     } else {
+      this.registerForm.get('RegionId').clearValidators();
       this.registerForm.get('woreda').clearValidators();
       this.registerForm.get('Zone').clearValidators();
     }
 
+    this.registerForm.get('RegionId').updateValueAndValidity();
     this.registerForm.get('woreda').updateValueAndValidity();
     this.registerForm.get('Zone').updateValueAndValidity();
 
 
 
 
-    this.dropdownService.getRegionsDropdown(countryType).subscribe({
-      next: (res) => {
-        this.regions = res;
-      }
-    });
+  
   }
 
   getZones(regionId: string) {
@@ -129,7 +133,7 @@ export default class RegisterComponent implements OnInit {
         if (res.success) {
           var payment: IPaymentData = {
             amount: res.data.amount,
-            currency: 'ETB',
+            currency: res.data.currency,
             email: res.data.email,
             first_name: res.data.fullName,
             last_name: '',
@@ -138,7 +142,7 @@ export default class RegisterComponent implements OnInit {
             title: `Payment for Membership`,
             description: res.data.memberId
           };
-          debugger
+          
           this.goTOPayment(payment, res.data);
         } else {
           this.messageService.add({ severity: 'error', summary: 'Something went Wrong!!!.', detail: res.message });
@@ -147,17 +151,16 @@ export default class RegisterComponent implements OnInit {
       error: (err) => {
         this.messageService.add({ severity: 'error', summary: 'Something went wrong!!!', detail: err.message });
 
-        console.log(err);
       }
     });
   }
 
   checkIfPhoneNumberExist(phoneNumber: string) {
-    console.log(phoneNumber);
+
 
     this.memberService.checkIfPhoneNumberExist(phoneNumber).subscribe({
       next: (res) => {
-        console.log(res);
+
         if (res.exist) {
 
           let modalRef = this.modalService.open(PendingMembersComponent,{size:'lg',backdrop:'static',windowClass: 'custom-modal-width' })
@@ -171,14 +174,14 @@ export default class RegisterComponent implements OnInit {
   }
 
   goTOPayment(payment: IPaymentData, member: any) {
-    console.log('model', payment);
-
+  
     this.paymentService.payment(payment).subscribe({
       next: (res) => {
         var mapayment: IMakePayment = {
           memberId: member.id,
           membershipTypeId: member.membershipTypeId,
           payment: payment.amount,
+         
           text_Rn: res.response.tx_ref,
           url:res.response.data.checkout_url
         };
@@ -186,10 +189,10 @@ export default class RegisterComponent implements OnInit {
         var url = res.response.data.checkout_url;
         this.makePayment(mapayment, url);
 
-        console.log(res);
+
       },
       error: (err) => {
-        console.log(err);
+      
       }
     });
   }

@@ -13,12 +13,10 @@
     <div class="row">
         <div class="col-lg-3">
             <input type="text" #name (input)="searchUsers(name.value)" class="form-control" placeholder="Search">
-
         </div>
 
         <div class="col-lg-12 text-end mb-2">
             <button class="btn btn-outline-primary" (click)="addUser()">Add User</button>
-
         </div>
 
 
@@ -44,7 +42,9 @@
                             <h6>{{user.phoneNumber}}</h6>
 
                             <div class="text-end">
-                                <a class="btn btn-outline-warning" (click)="updateUser(user)">Roles </a>
+                                <a class="btn btn-outline-warning" (click)="updateUser(user)">Roles </a> |
+                                <a class="btn btn-outline-danger" (click)="deleteUser(user.id)">Delete </a> |
+                                <a class="btn btn-outline-primary" (click)="changePassword(user)">Change Password </a>
                             </div>
 
                         </div>

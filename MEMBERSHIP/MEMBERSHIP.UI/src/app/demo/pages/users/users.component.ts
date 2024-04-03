@@ -34,7 +34,7 @@ export default class UsersComponent implements OnInit {
 
     this.userService.getUserList().subscribe({
       next:(res)=>{
-        console.log("current user",res)
+    
         this.users = res 
       }
     })

@@ -26,7 +26,7 @@ export class EmployeeFingerPrintComponent implements OnInit {
       next: (res) => {
         this.fingerPrints = res;
       }, error: (err) => {
-        console.log(err);
+       
       }
     });
   }

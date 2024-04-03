@@ -117,6 +117,22 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                                 };
                                 await _dBContext.EmployeesAssignedForActivities.AddAsync(EAFA);
                                 await _dBContext.SaveChangesAsync();
+
+
+                                var selectedEmployee = await _dBContext.Employees.FindAsync(EAFA.EmployeeId);
+
+
+                                var message = $"Activities, Assigned!!!\n" +
+                                 $"Dear {selectedEmployee.FirstName} {selectedEmployee.LastName}, You have been assigned an activity.\n" +
+                                $"\r\n    Activity Name: [{activity.ActivityDescription}]\r\n    Activity Description: [{activity.ActivityNumber}]\r\n    Start Date: [{activity.ShouldStat}]\r\n    End Date: [{activity.ShouldEnd}]\r\n    Assigned Budget: [{activity.PlanedBudget}]\r\n";
+                                var email = new EmailMetadata
+                                                    (selectedEmployee.Email, "Activity Assignment!!",
+                                                        $"{message}" +
+                                                        $"\nThank you.\n\nSincerely,\nFekadu Mazengia\nExecutive Director");
+                                await _emailService.Send(email);
+
+
+
                             }
                         }
                     }
@@ -900,8 +916,11 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                            ActivityLocations = e.ActivityLocations.ToList(),
                            IsCancelled = e.isCancelled,
                            IsCompleted = e.isCompleted,
-                           IsStarted = e.isStarted
-
+                           IsStarted = e.isStarted,
+                           
+                           IsReSceduled = e.isResceduled,
+                           CancelledJustfication = e.CancelJustification,
+                           ResceduledJustification = e.ResceduledJustification,
 
 
                        }
@@ -1841,7 +1860,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
             }
         }
 
-        public async Task<ResponseMessage> ChangeActivityStatus(Guid activityId, string ? isCompleted, string? isCancel, string? isStarted)
+        public async Task<ResponseMessage> ChangeActivityStatus(Guid activityId, string ? isCompleted, string? isCancel, string? isStarted , string? isResceduled, string? remark, DateTime? startDate, DateTime? endDate)
         {
 
             try
@@ -1858,6 +1877,18 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
 
                         if (activity.isCompleted)
                         {
+                            var activityProgress =  _dBContext.ActivityProgresses.Where(x => x.ActivityId == activity.Id).Sum(x=>x.ActualWorked);
+
+                            if (activityProgress==0)
+                            {
+                                return new ResponseMessage
+                                {
+                                    Success = false,
+                                    Message = "The Activity cannot be Completed because there has been no advancement or forward motion. !!!"
+                                };
+                            }
+
+
                             activity.isStarted = false;
                             activity.isCancelled = false;
 
@@ -1871,6 +1902,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                         {
                             activity.isStarted = false;
                             activity.isCompleted = false;
+                            activity.CancelJustification = remark;
 
                         }
                     }
@@ -1885,6 +1917,16 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                             activity.isCancelled = false;
 
                         }
+                    }
+
+
+                    if (isResceduled!= "undefined")
+                    {
+                        activity.isResceduled = isResceduled.ToLower() == "true";
+
+                        activity.ShouldStat = (DateTime)startDate;
+                        activity.ShouldEnd = (DateTime)endDate;
+                        activity.ResceduledJustification = remark; 
                     }
 
                     await _dBContext.SaveChangesAsync();

@@ -57,7 +57,7 @@
                                         <input type="number" class="form-control" id="PlannedBudget"
                                             placeholder="EndDate" formControlName="PlannedBudget">
                                         <label for="PlannedBudget">Planned Budget</label>
-                                        <small style="color: red;">Remaining Budget : {{task?.remainingBudget}}</small>
+                                        <small style="color: red;">Remaining Budget : {{remainingBudget}}</small>
                                     </div>
                                 </div>
 
@@ -302,6 +302,20 @@
                             </div>
                         </div>
 
+                    </div>
+                    <div class="modal-content mt-2 ">
+                        <div class="modal-header bg-secondary text-white">
+                            <h5 class="modal-title">Added Actvities</h5>
+
+                        </div>
+
+                        <div class="modal-body"  style="background-color: #f6f9ff;">
+                          
+                            <ul>
+                                <li *ngFor="let item of addedActivities"> {{item}}</li>
+                                </ul>
+                          
+                        </div>
                     </div>
                     <div class="modal-content mt-2 " *ngIf="comitteEmployees.length>0">
                         <div class="modal-header bg-secondary text-white">

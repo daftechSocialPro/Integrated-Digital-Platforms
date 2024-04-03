@@ -81,7 +81,7 @@ export class ActivityParentsComponent implements OnInit {
     this.pmService.getActivityAttachments(this.parentId).subscribe({
       next: (res) => {
         this.attachments = res
-        console.log('attachments', res)
+   
       }, error: (err) => {
         console.error(err)
       }

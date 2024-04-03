@@ -2,7 +2,8 @@ export interface StrategicPlanGetDto {
 
     id:string
     name:string ,
-    description:string
+    description:string,
+    rowStatus : boolean
 }
 
 export interface StrategicPlanPostDto {

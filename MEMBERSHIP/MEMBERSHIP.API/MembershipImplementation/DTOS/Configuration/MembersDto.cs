@@ -93,6 +93,8 @@ namespace MembershipImplementation.DTOS.Configuration
 
         public double Amount { get; set; }
 
+        public string? Currency { get; set; }
+
         public string Text_Rn { get; set; }
 
         public DateTime ExpiredDate { get; set; }
@@ -104,6 +106,7 @@ namespace MembershipImplementation.DTOS.Configuration
         public string RejectedRemark { get; set; }
 
         public bool IsProfileCompleted { get; set; }
+
 
 
         public string? MoodleName { get; set; }
@@ -130,6 +133,8 @@ namespace MembershipImplementation.DTOS.Configuration
         public string Text_Rn { get; set; }
         public DateTime ExpiredDate { get; set; }
         public string PaymentStatus { get; set; }
+
+        public string ? Currency { get; set; }
 
         public string Url { get; set; }
         public string MembershipType { get; set; }

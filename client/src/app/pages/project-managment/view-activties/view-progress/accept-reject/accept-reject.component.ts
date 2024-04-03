@@ -47,7 +47,7 @@ this.user=this.userService.getCurrentUser()
   submit() {
 
     if (this.acceptForm.valid) {
-      console.log('value', this.acceptForm.value);
+   
 
       let approvalProgressDto: ApprovalProgressDto = {
         progressId: this.progressId,

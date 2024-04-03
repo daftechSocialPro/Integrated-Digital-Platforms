@@ -119,7 +119,7 @@ export class ApproveStoreRequestComponent implements OnInit {
  
  
    SaveReject() {
-     debugger;
+  
      this.rejectRequest.id = this.storeRequestId;
      this.inventoryService.rejectStoreRequest(this.rejectRequest).subscribe({
        next: (res) => {

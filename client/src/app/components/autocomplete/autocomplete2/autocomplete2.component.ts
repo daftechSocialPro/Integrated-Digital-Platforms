@@ -39,7 +39,7 @@ export class Autocomplete2Component {
   ngOnInit() {
 
     let key = this.data.filter(t => t.id === this.selectedId)
-    console.log("key",key)
+   
     if (key[0] != null) {   
       this.placeHolder = key[0].name
       this.selectEvent(key[0])    

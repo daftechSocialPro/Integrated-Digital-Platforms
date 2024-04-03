@@ -113,7 +113,7 @@ export class PlannedReportComponent implements OnInit {
 
     this.projectService.getStrategicPlanForReport(strategicPlanId).subscribe({
       next:(res)=>{
-        console.log(res)
+  
         this.strategicActivites.set(strategicPlanId, res);
       }
     })
@@ -126,17 +126,17 @@ export class PlannedReportComponent implements OnInit {
   getPlans() {
     this.planService.getSinglePlans(this.planId).subscribe({
       next: (res) => {
-        console.log("projects", res)
+      
 
         this.Plans = res
         this.getProjectYears(this.Plans.startDate,this.Plans.endDate)
 
         this.ListTask(this.planId);
-        console.log('this.planTasks: ', this.planTasks);
+       
 
       },
       error: (err) => {
-        console.error(err)
+   
       }
     })
   }
@@ -154,9 +154,7 @@ export class PlannedReportComponent implements OnInit {
       index+=12
     }
 
-    console.log("startYear" , this.projectYears)
-
-    
+ 
   }
 
   getSingleTaskActivities(taskId: String) {
@@ -189,8 +187,7 @@ export class PlannedReportComponent implements OnInit {
         });
 
         this.planTasks.set(planId, result);
-        console.log('this.taskActivities: ', this.taskActivities);
-
+     
       }
     })
   }
@@ -269,7 +266,6 @@ export class PlannedReportComponent implements OnInit {
 
     }
 
-    console.log(task)
     modalRef.componentInstance.task = task
     modalRef.componentInstance.requestFrom = "ACTIVITY";
     modalRef.componentInstance.requestFromId = task.id;
@@ -287,7 +283,7 @@ export class PlannedReportComponent implements OnInit {
   
       }
   
-      console.log(task)
+    
       modalRef.componentInstance.task = task
       modalRef.componentInstance.requestFrom = "ACTIVITY";
       modalRef.componentInstance.requestFromId = task.id;
@@ -383,7 +379,7 @@ getGroupValue(order: number): boolean {
 }
 
 onProjectYearChange(){
-  console.log("Selected Year",this.selectedYear)
+
   this.ListTask(this.planId);
   
 

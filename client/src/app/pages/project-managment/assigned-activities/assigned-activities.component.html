@@ -80,7 +80,7 @@
                 </div>
             </div>
         </div>
-<!-- 
+        <!-- 
         <p-table [value]="filterdActivities"   styleClass="p-datatable-gridlines"
         [tableStyle]="{'max-width': '50rem'}"
         >
@@ -262,11 +262,14 @@
                             {{ getMonthName() }}
                         </th>
 
-                      
-                        <th rowspan="2" style="border: 1px solid black;background-color: #00667d;color: white; width: 120px;;" resizable>
+
+                        <th rowspan="2"
+                            style="border: 1px solid black;background-color: #00667d;color: white; width: 120px;;"
+                            resizable>
                             Action
                         </th>
-                        <th rowspan="2" style="border: 1px solid black;background-color: #00667d;color: white; " resizable>
+                        <th rowspan="2" style="border: 1px solid black;background-color: #00667d;color: white; "
+                            resizable>
                             Progress
                         </th>
 
@@ -334,6 +337,7 @@
                         </ng-container>
 
                         <ng-container *ngIf="selectedMonth != 13">
+
                             <td style="border: 1px solid black; background-color: #e3dfdf; ">
                                 {{getMonthPeroformance(item.monthPerformance,selectedMonth)}}</td>
                             <td style="border: 1px solid black; "> <input class="form-control"
@@ -348,7 +352,6 @@
                                     (change)="onProgressBudgetAdded(item.id,months[selectedMonth],$event.target)"
                                     [min]="0" [id]="selectedMonth" /></td>
 
-
                         </ng-container>
 
 
@@ -357,23 +360,36 @@
                             <div>
                                 <label>
                                     <input type="checkbox" [checked]="item.isCancelled"
-                                        (change)="changeActivityStatus(item.id,$event.target,null,null)">
+                                        (change)="changeActivityStatus(item.id,$event.target,null,null,null)">
                                     <span style="color: red;font-weight: bolder;">Cancel</span>
-                                </label>
+                                </label><br/>
+                                <span *ngIf="item.isCancelled" style="color: rgb(240, 104, 104);" >
+                                   " {{item.cancelledJustfication}} "
+                                </span>
                             </div>
                             <div>
                                 <label>
                                     <input type="checkbox" [checked]="item.isCompleted"
-                                        (change)="changeActivityStatus(item.id,null,$event.target,null)">
+                                        (change)="changeActivityStatus(item.id,null,$event.target,null,null)">
                                     <span style="color: green;font-weight: bolder;">Complete</span>
                                 </label>
                             </div>
                             <div>
                                 <label>
                                     <input type="checkbox" [checked]="item.isStarted"
-                                        (change)="changeActivityStatus(item.id,null,null,$event.target)">
+                                        (change)="changeActivityStatus(item.id,null,null,$event.target,null)">
                                     <span style="color: rgb(164, 164, 14);font-weight: bolder;">InProgress</span>
                                 </label>
+                            </div>
+                            <div>
+                                <label>
+                                    <input type="checkbox" [checked]="item.isReSceduled"
+                                        (change)="changeActivityStatus(item.id,null,null,null,$event.target)">
+                                    <span style="color: rgb(8, 79, 112);font-weight: bolder;">Resceduled</span>
+                                </label><br/>
+                                <span *ngIf="item.isReSceduled" style="color: rgb(70, 170, 217);" >
+                                    " {{item.resceduledJustification}} "
+                                 </span>
                             </div>
 
                         </td>
@@ -387,7 +403,7 @@
                             </button>
                         </td>
 
-               
+
 
 
 
@@ -396,7 +412,7 @@
 
 
             </table>
-        </div> 
+        </div>
     </section>
 </main>
 

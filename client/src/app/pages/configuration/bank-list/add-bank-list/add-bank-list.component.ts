@@ -21,7 +21,7 @@ export class AddBankListComponent  implements OnInit {
   totDigit: number = 0;
 
   ngOnInit(): void {
-    debugger;
+
     this.user = this.userService.getCurrentUser();
     if (this.bank != null) {
       this.totDigit = this.bank.bankDigitNumber;

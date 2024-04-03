@@ -47,7 +47,7 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
 
 
 
-        public Task<ResponseMessage> ChangeActivityStatus(Guid activityId, string? isCompleted, string? isCancel, string? isStarted);
+        public Task<ResponseMessage> ChangeActivityStatus(Guid activityId, string? isCompleted, string? isCancel, string? isStarted,string? isResceduled , string? remark, DateTime? startDate, DateTime? endDate);
 
         public Task<List<ActivityViewDto>> GetActivityForPlan(Guid employeeId, List<string> roles);
 

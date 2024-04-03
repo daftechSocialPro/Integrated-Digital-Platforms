@@ -179,7 +179,7 @@ namespace IntegratedImplementation.Services.Configuration
         }
         public async Task<List<SelectListDto>> GetStrategicPlans()
         {
-            var strategicPlans = await _dbContext.StrategicPlans.OrderBy(x=>x.Name).Select(x => new SelectListDto
+            var strategicPlans = await _dbContext.StrategicPlans.Where(x=>x.Rowstatus==RowStatus.ACTIVE).OrderBy(x=>x.Name).Select(x => new SelectListDto
             {
                 Id = x.Id,
                 Name = x.Name
@@ -376,6 +376,17 @@ namespace IntegratedImplementation.Services.Configuration
 
             }).ToListAsync();
             return chartOfAccountsList;
+        }
+
+        public async Task<List<SelectListDto>> GetTrainingList()
+        {
+            var trainingList = await _dbContext.Trainings.AsNoTracking().Select(x => new SelectListDto
+            {
+                Name = x.Title,
+                Id = x.Id
+
+            }).ToListAsync();
+            return trainingList;
         }
 
     }

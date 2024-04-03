@@ -79,7 +79,7 @@ this.initMap2()
       shadowSize: [41, 41]
     });
 
-    console.log("locations")
+  
     
     this.locations.map((item)=>{
       const marker = L.marker([item.latitude, item.longtude], { icon: greenIcon }).addTo(this.map);

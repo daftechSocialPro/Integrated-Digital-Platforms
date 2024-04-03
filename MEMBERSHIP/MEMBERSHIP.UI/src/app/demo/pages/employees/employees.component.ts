@@ -36,11 +36,11 @@ export default class EmployeesComponent implements OnInit{
 
     this.hrmService.getEmployees().subscribe({
       next: (res) => {
-        console.log(res)
+      
         this.employees = res
       },
       error: (err) => {
-        console.log(err)
+       
       }
     })
   }
@@ -55,7 +55,7 @@ export default class EmployeesComponent implements OnInit{
   }
 
   updateEmployee(employee: IEmployeeGetDto){
-    console.log(employee)
+ 
 
     let modalRef = this.modalService.open(UpdateEmployeeComponent,{size:'lg',backdrop:'static'})
     

@@ -44,7 +44,7 @@ export class ScsMonthsComponent implements OnInit {
 
   removeFiscalMonth(FiscalMonthId:number) {
 
-    console.log(FiscalMonthId)
+
     this.confirmationService.confirm({
       message: 'Are You sure you want to delete this Consumption Level?',
       header: 'Delete Confirmation',

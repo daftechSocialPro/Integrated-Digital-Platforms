@@ -179,26 +179,6 @@ if (this.paymentDetailList.length > 0) {
     }
   }
 }
-
-       console.log(this.uploadedFiles)
-  
-       
-        // for (let key in addPaymentData) {
-        //   if (addPaymentData.hasOwnProperty(key)) {
-        //     formData.append(key, (addPaymentData as any)[key]);
-        //   }
-        // }
-        // for (var i = 0; i < this.paymentDetailList.length; i++) {
-        //   formData.append("addPaymentDetails", JSON.stringify(this.paymentDetailList[i]));
-        // }
-
-       
-    
-
-
-       console.log(formData)
-       
-  
        this.financeService.addPayments(formData).subscribe({
         next: (res) => {
           if (res.success) {
@@ -221,14 +201,14 @@ if (this.paymentDetailList.length > 0) {
     for(let file of event.files) {
         this.uploadedFiles.push(file);
     }
-    console.log("this.uploadedFiles", this.uploadedFiles.length)
+  
 
     this.messageService.add({severity: 'info', summary: 'File Uploaded', detail: ''});
   }
   onRemove() {
     
     this.uploadedFiles.splice(0, this.uploadedFiles.length);
-    console.log("this.uploadedFiles", this.uploadedFiles.length)
+    
 
     this.messageService.add({severity: 'error', summary: 'File Removed', detail: ''});
   }

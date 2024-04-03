@@ -10,8 +10,7 @@ import { ActivityMaps } from 'src/app/model/PM/ActivityViewDto';
 export class ActivityMapComponent implements OnInit {
 
   ngOnInit(): void {
-    
-    console.log(this.activtYMaps)
+
   }
 
   @Input() activtYMaps! :ActivityMaps[]

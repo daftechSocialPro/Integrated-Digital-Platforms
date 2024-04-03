@@ -17,6 +17,9 @@ namespace MembershipInfrustructure.Model.Configuration
 
         public double Money { get; set; }
 
+        public Currency Currency { get; set; }
+
+
         public string Description { get; set; }
 
         public MembershipCategory MembershipCategory { get; set; }
@@ -33,4 +36,10 @@ namespace MembershipInfrustructure.Model.Configuration
         MIDWIVES,
         NONMIDWIVES
     } 
+
+    public enum Currency
+    {
+        ETB,
+        USD
+    }
 }

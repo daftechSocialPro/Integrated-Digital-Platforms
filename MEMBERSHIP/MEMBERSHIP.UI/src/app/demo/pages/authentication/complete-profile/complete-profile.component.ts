@@ -57,7 +57,6 @@ export class CompleteProfileComponent implements OnInit {
 
   ngOnInit(): void {
 
-    console.log("memberVar",this.memberVar)
     this.user = this.userService.getCurrentUser();
 
     
@@ -101,7 +100,7 @@ export class CompleteProfileComponent implements OnInit {
   getMember() {
     this.memberService.getSingleMember(this.user.loginId).subscribe({
       next: (res) => {
-        console.log(res);
+   
         this.member = res;
       }
     });
@@ -111,7 +110,7 @@ export class CompleteProfileComponent implements OnInit {
 
     this.paymentService.verifyPayment(this.memberVar.text_Rn).subscribe({
       next: (res) => {
-        console.log(res);
+ 
         if (res.response) {
           if (res.response.data.status == 'success') {
             this.MakePaymentConfirmation(this.memberVar.text_Rn);
@@ -120,7 +119,7 @@ export class CompleteProfileComponent implements OnInit {
 
             var payment: IPaymentData = {
               amount: this.memberVar.amount,
-              currency: 'ETB',
+              currency: this.memberVar.currency,
               email: this.memberVar.email,
               first_name: this.memberVar.fullName,
               last_name: '',
@@ -130,10 +129,7 @@ export class CompleteProfileComponent implements OnInit {
               description: this.memberVar.memberId
             };
 
-
-
-            console.log("payment", payment)
-            debugger
+            
             this.paymentService.payment(payment).subscribe({
               next: (result) => {
 
@@ -158,7 +154,7 @@ export class CompleteProfileComponent implements OnInit {
 
           var payment: IPaymentData = {
             amount: this.memberVar.amount,
-            currency: 'ETB',
+            currency: this.memberVar.currency,
             email: this.memberVar.email,
             first_name: this.memberVar.fullName,
             last_name: '',
@@ -170,8 +166,6 @@ export class CompleteProfileComponent implements OnInit {
           };
 
 
-          console.log("payment", payment)
-          debugger
 
 
           this.paymentService.payment(payment).subscribe({
@@ -206,7 +200,7 @@ export class CompleteProfileComponent implements OnInit {
   
       var payment: IPaymentData = {
         amount: this.memberVar.amount,
-        currency: 'ETB',
+        currency: this.memberVar.currency,
         email: this.memberVar.email,
         first_name: this.memberVar.fullName,
         last_name: '',
@@ -219,12 +213,13 @@ export class CompleteProfileComponent implements OnInit {
   
       this.paymentService.payment(payment).subscribe({
         next: (res) => {
-          console.log(res)
+    
   
           var mapayment: IMakePayment = {
             memberId: this.memberVar.id,
             membershipTypeId:this.memberVar.membershipTypeId,
             payment: payment.amount,
+           
             text_Rn: res.response.tx_ref,
             url:res.response.data.checkout_url
           };
@@ -347,18 +342,18 @@ export class CompleteProfileComponent implements OnInit {
         error: (err) => {
           this.messageService.add({ severity: 'error', summary: 'Something went wrong!!!', detail: err.message });
 
-          console.log(err);
+        
         }
       });
     }
   }
 
   checkIfPhoneNumberExist(phoneNumber: string) {
-    console.log(phoneNumber);
+
 
     this.memberService.checkIfPhoneNumberExist(phoneNumber).subscribe({
       next: (res) => {
-        console.log(res);
+        
         if (res) {
           this.confirmationService.confirm({
             message: 'You have already Registerd!! you want to proceed from where you stop ?',
@@ -388,10 +383,10 @@ export class CompleteProfileComponent implements OnInit {
   verifyPayment() {
     this.memberService.getSingleMemberPayment(this.member.id).subscribe({
       next: (res) => {
-        console.log(res);
+
         this.paymentService.verifyPayment(res.text_Rn).subscribe({
           next: (re) => {
-            console.log(res);
+          
             if (re.response) {
               if (re.response.data.status === 'success') {
                 this.MakePaymentConfirmation(res.text_Rn);

@@ -48,12 +48,7 @@ export class CommonService {
         navigator.geolocation.getCurrentPosition(
           (position) => {
             if (position) {
-              console.log(
-                'Latitude: ' +
-                position.coords.latitude +
-                'Longitude: ' +
-                position.coords.longitude
-              );
+         
               let lat = position.coords.latitude;
               let lng = position.coords.longitude;
 
@@ -64,7 +59,7 @@ export class CommonService {
               resolve(location);
             }
           },
-          (error) => console.log(error)
+          (error) =>{}
         );
       } else {
         reject('Geolocation is not supported by this browser.');

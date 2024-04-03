@@ -240,9 +240,18 @@ namespace Implementation.Services.Authentication
             if (addUSer.MemberId != Guid.Empty)
             {
 
-                var currentEmployee = _userManager.Users.Any(x => x.MemberId.Equals(addUSer.MemberId));
+               
+
+                var currentEmployee = _userManager.Users.Any(x => x.UserName.Equals(addUSer.UserName));
                 if (currentEmployee)
                     return new ResponseMessage { Success = false, Message = "Member Already Exists" };
+
+                var currentUser = _userManager.Users.Where(x => x.MemberId.Equals(addUSer.MemberId)).FirstOrDefault();
+                if (currentUser!=null)
+                {
+                    _dbContext.Users.Remove(currentUser);
+                    _dbContext.SaveChanges();
+                }
 
                 var applicationUser = new ApplicationUser
                 {

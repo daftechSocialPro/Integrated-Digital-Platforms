@@ -71,7 +71,6 @@ export class FieldNameComponent implements OnInit {
 
   removeGeneralInterface(GeneralInterfaceId:number) {
 
-    console.log(GeneralInterfaceId)
     this.confirmationService.confirm({
       message: 'Are You sure you want to delete this Field Name ?',
       header: 'Delete Confirmation',

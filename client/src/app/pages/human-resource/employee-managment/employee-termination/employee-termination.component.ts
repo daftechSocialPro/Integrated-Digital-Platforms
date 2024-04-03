@@ -33,17 +33,12 @@ export class EmployeeTerminationComponent implements OnInit {
     this.hrmService.getTerminatedEmployeeList().subscribe({
       next: (res) => {
         this.terminationList = res
-        console.log(this.terminationList)
+       
       }
     })
   }
   getApprovedtermination() {
-    // this.hrmService.getApprovedtermination().subscribe({
-    //   next: (res) => {
-    //     this.terminationList = res
-    //     console.log(this.terminationList)
-    //   }
-    // })
+
   }
 
 
@@ -98,16 +93,5 @@ export class EmployeeTerminationComponent implements OnInit {
     });
   }
 
-  // filterChange(value: SelectList) {
-  //   this.selected =value
-  //   if (this.selected.id=='1') {
-  //     this.getApprovedtermination()
-  //   }
-  //   else {
-    
-  //     this.gettermination()
-  //   }
-  //   console.log(value)
-
-  // }
+ 
 }

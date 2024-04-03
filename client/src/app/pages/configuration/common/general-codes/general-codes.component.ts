@@ -26,7 +26,7 @@ export class GeneralCodesComponent implements OnInit {
       next: (res) => {
         this.generalCodes = res
       }, error: (err) => {
-        console.log(err)
+       
       }
     })
   }

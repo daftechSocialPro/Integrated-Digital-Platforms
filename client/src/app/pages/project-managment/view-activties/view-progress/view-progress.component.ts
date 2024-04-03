@@ -21,7 +21,6 @@ export class ViewProgressComponent implements OnInit {
   ngOnInit(): void { 
     
 
-    console.log(this.activity)
     
     this.getProgress() }
 
@@ -31,10 +30,10 @@ export class ViewProgressComponent implements OnInit {
     this.pmService.viewProgress(this.activity.id).subscribe({
       next:(res)=>{
         this.progress = res
-        console.log(res) 
+        
       },
       error:(err)=>{
-        console.log(err)
+  
       }
     })
 

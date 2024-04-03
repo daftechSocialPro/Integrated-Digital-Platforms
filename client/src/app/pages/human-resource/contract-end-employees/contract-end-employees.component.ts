@@ -26,7 +26,7 @@ export class ContractEndEmployeesComponent implements OnInit {
       next: (res) => {
         this.contractEndEmployees = res;
       }, error: (err) => {
-        console.log(err);
+       
       }
     });
   }

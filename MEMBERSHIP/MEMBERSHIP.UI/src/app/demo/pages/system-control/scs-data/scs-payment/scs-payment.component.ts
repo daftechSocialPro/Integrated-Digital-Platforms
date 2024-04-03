@@ -49,7 +49,7 @@ export class ScsPaymentComponent implements OnInit {
 
   removePayment(PaymentId:string) {
 
-    console.log(PaymentId)
+   
     this.confirmationService.confirm({
       message: 'Are You sure you want to delete this Payment?',
       header: 'Delete Confirmation',

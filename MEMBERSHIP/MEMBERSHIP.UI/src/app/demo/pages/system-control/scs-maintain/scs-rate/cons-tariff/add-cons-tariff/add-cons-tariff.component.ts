@@ -50,7 +50,7 @@ export class AddConsTariffComponent implements OnInit {
 
       this.controlService.getConsumptionTariffForUpdate(this.recordNo).subscribe({
         next: (res) => {
-          console.log(res)
+         
           this.ConsumptionTariff = res
           this.ConsumptionTariffForm.controls['recordno'].setValue(this.ConsumptionTariff.recordno)
           this.ConsumptionTariffForm.controls['tariffRate'].setValue(this.ConsumptionTariff.tariffRate)
@@ -128,7 +128,7 @@ export class AddConsTariffComponent implements OnInit {
 
         }, error: (err) => {
           this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: err.message });
-          console.log(err)
+   
         }
       })
 

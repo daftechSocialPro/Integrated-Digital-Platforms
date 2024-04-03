@@ -39,8 +39,10 @@ builder.Services.AddControllers().AddJsonOptions(
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.Configure<ApplicationSetting>(builder.Configuration.GetSection("ApplicationSetting"));
 
+
+var connectionString = builder.Configuration["ConnectionStrings:SqlConnection"];
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-           options.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection")));
+           options.UseSqlServer(connectionString));
 
 
 

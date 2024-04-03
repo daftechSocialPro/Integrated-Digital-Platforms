@@ -52,7 +52,6 @@ export class CustomerCategoryComponent implements OnInit {
 
   removeCustomerCategories(CustomerCategoriesId:number) {
 
-    console.log(CustomerCategoriesId)
     this.confirmationService.confirm({
       message: 'Are You sure you want to delete this Customer Category?',
       header: 'Delete Confirmation',

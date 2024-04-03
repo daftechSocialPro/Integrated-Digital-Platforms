@@ -28,7 +28,7 @@ export class EmployeePenaltyComponent implements OnInit {
       next: (res) => {
         this.employeePenalty = res;
       }, error: (err) => {
-        console.log(err);
+        
       }
     });
   }

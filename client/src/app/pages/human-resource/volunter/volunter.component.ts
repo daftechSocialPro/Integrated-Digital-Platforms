@@ -36,7 +36,7 @@ export class VolunterComponent implements OnInit {
         this.volunters = res
       },
       error: (err) => {
-        console.log(err)
+      
       }
     })
   }

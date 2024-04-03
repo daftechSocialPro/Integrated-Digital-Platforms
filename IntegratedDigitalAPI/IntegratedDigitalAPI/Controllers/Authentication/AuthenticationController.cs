@@ -160,7 +160,19 @@ namespace ERPSystems.Controllers.Authentication
             }
         }
 
+        [HttpDelete]
 
+        public async Task<IActionResult> DeleteUser(string userId)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _authenticationService.DeleteUser(userId));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
 
     }
 }

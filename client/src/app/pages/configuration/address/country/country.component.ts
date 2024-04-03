@@ -32,7 +32,7 @@ export class CountryComponent implements OnInit {
         
       
       },error:(err)=>{
-        console.log(err)
+       
       }
     })
   }

@@ -29,7 +29,7 @@ export class LoanSettingComponent implements OnInit {
         this.loanSettings = res
 
       }, error: (err) => {
-        console.log(err)
+       
       }
     })
   }

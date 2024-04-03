@@ -1,0 +1,52 @@
+<div>
+    <p>{{ message }}</p>
+    
+    <form class="" [formGroup]="messageForm" (ngSubmit)="accept()">
+
+
+        <div class="row">
+            <div class="col-md-6">
+
+
+                <div class="flex flex-column gap-2">
+                    <label htmlFor="startDate">Start Date</label>
+                    <input type="date" formControlName="StartDate" class="form-control">
+                 
+    
+                </div>
+    
+            </div>
+            <div class="col-md-6">
+                <div class="flex flex-column gap-2">
+                    <label htmlFor="startDate">End Date</label>
+
+
+                    <input type="date" formControlName="EndDate" class="form-control">
+    
+                    
+    
+                </div>
+            </div>
+        </div>
+
+        
+
+    <div class="col-12 mt-2">
+        <div class="form-floating"><textarea required class="form-control" placeholder="Remark" id="Remark"
+            formControlName="inputValue"
+                style="height: 100px;"></textarea><label for="Remark">Remark</label>
+        </div>
+    </div>
+
+
+
+    <div class="modal-footer">
+  
+        <button type="button" (click)="reject()" class="btn btn-outline-secondary"><i class="bi bi-x-lg"></i> No</button>
+        <button type="button" type="submit" [disabled]="!messageForm.valid"  class="btn btn-outline-danger"><i class="bi bi-check-lg"></i> Yes</button>
+  
+    
+    </div>
+    </form>
+
+</div>

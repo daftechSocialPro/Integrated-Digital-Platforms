@@ -48,8 +48,7 @@ export class MeterDigitComponent implements OnInit {
     }
   
     removeMeterDigit(MeterDigitId:string) {
-  
-      console.log(MeterDigitId)
+
       this.confirmationService.confirm({
         message: 'Are You sure you want to delete this MeterDigit?',
         header: 'Delete Confirmation',

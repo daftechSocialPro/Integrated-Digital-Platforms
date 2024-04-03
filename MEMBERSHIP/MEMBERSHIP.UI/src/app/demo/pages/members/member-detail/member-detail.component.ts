@@ -39,7 +39,7 @@ export class MemberDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.userService.getCurrentUser();
-    console.log(this.member)
+
     this.getEducationalLevels();
     this.getMemberships(this.member&&this.member.membershipCategory)
 
@@ -105,7 +105,7 @@ export class MemberDetailComponent implements OnInit {
     this.dropdownService.getEducationLevelDropdown().subscribe({
       next: (res) => {
         this.educationalLelvels = res;
-        console.log(this.educationalLelvels)
+        
       }
     });
   }
@@ -165,7 +165,6 @@ export class MemberDetailComponent implements OnInit {
       error: (err) => {
         this.messageService.add({ severity: 'error', summary: 'Something went wrong!!!', detail: err.message });
 
-        console.log(err);
       }
     });
   }

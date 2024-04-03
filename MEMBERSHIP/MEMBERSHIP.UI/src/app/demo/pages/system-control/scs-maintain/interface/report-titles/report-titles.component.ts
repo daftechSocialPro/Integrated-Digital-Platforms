@@ -71,7 +71,6 @@ export class ReportTitlesComponent implements OnInit {
 
   removeGeneralInterface(GeneralInterfaceId:number) {
 
-    console.log(GeneralInterfaceId)
     this.confirmationService.confirm({
       message: 'Are You sure you want to delete this inteerface ?',
       header: 'Delete Confirmation',

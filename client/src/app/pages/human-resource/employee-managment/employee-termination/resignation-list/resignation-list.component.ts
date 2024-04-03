@@ -33,7 +33,7 @@ export class ResignationListComponent implements OnInit {
     this.hrmService.getResignationList().subscribe({
       next: (res) => {
         this.resignationList = res
-        console.log(this.resignationList)
+       
       }
     })
   }
@@ -41,7 +41,7 @@ export class ResignationListComponent implements OnInit {
     this.hrmService.getApprovedResignation().subscribe({
       next: (res) => {
         this.resignationList = res
-        console.log(this.resignationList)
+       
       }
     })
   }
@@ -107,7 +107,7 @@ export class ResignationListComponent implements OnInit {
     
       this.getResignation()
     }
-    console.log(value)
+    
 
   }
 }

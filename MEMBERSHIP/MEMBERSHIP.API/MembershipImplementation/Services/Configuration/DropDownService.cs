@@ -83,7 +83,7 @@ namespace MembershipImplementation.Services.Configuration
             var membershipTypes = await _dbContext.MembershipTypes.Where(x=>x.MembershipCategory==categorry).AsNoTracking().Select(x => new SelectListDto
             {
                 Id = x.Id,
-                Name = $"{x.Name} {x.Money}ETB/{x.Years}YEAR",
+                Name = $"{x.Name} {x.Money}{x.Currency}/{x.Years}YEAR",
                 Amount =x.Money
 
             }).ToListAsync();

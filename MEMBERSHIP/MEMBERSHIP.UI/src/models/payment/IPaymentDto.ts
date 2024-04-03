@@ -8,6 +8,7 @@ export interface IPaymentData {
     return_url: string;
     title: string;
     
+    
     description: string;
   }
 
@@ -27,6 +28,7 @@ export interface IPaymentData {
     memberId: string;
     text_Rn: string;
     payment: number;
+ 
     url:string;
     membershipTypeId: string;
 

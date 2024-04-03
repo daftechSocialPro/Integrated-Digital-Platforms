@@ -54,7 +54,7 @@ export class BindShiftComponent implements OnInit {
   }
 
   submit() {
-    debugger;
+    
     if (this.bindShiftForm.valid) {
 
       var bindShift: BindShiftDto = {

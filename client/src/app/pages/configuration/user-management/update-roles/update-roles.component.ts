@@ -61,7 +61,7 @@ export class UpdateRolesComponent implements OnInit {
       next: (res) => {
         this.notAssignedRoles = res
 
-        console.log('notassigned', res)
+       
       }
     })
 
@@ -71,7 +71,7 @@ export class UpdateRolesComponent implements OnInit {
     this.userService.getAssignedRole(this.employee.id, roleCategory).subscribe({
       next: (res) => {
         this.assignedRole = res
-        console.log('assigned', res)
+       
       }
     })
   }
@@ -110,7 +110,6 @@ export class UpdateRolesComponent implements OnInit {
     }
 
 
-    console.log(selectedValues)
     return selectedValues;
   }
   removeRole(roles: any) {

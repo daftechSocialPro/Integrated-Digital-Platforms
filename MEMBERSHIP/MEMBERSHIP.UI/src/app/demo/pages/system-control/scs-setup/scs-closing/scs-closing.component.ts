@@ -47,7 +47,7 @@ export class ScsClosingComponent implements OnInit {
 
     this.controlService.getAccountPeriod().subscribe({
       next: (res) => {
-        console.log(res);
+      
         this.AccountPeriods = res
 
         this.closingPeriodForm.controls['fiscalYear'].setValue(this.AccountPeriods.fiscalYear)
@@ -77,7 +77,7 @@ if(this.closingPeriodForm.valid){
     fiscalYear:this.closingPeriodForm.value.fiscalYear,
     monthIndex:this.closingPeriodForm.value.monthIndex
   }
-  console.log(closingp)
+
   this.controlService.updateAccountPeriod(closingp).subscribe({
     next:(res)=>{
       if(res.success){
@@ -89,7 +89,7 @@ if(this.closingPeriodForm.valid){
       }
     },error:(err)=>{
       this.messageService.add({severity:'error',summary:'Something went wrong!!!',detail:err})
-      console.log(err)
+     
     }
   })
 

@@ -21,8 +21,6 @@ export class GetActivityProgressComponent implements OnInit {
       next:(res)=>{
         this.actProgress = res 
 
-        console.log(this.actProgress)
-
       },error:(err)=>{
         console.error(err)
       }
@@ -47,7 +45,6 @@ export class GetActivityProgressComponent implements OnInit {
 
   initialize(lat:number,lng:number){
 
-    console.log(lat,lng)
   let modalRef =this.modalService.open(ShowonmapComponent,{size:'xl',backdrop:'static'})
   modalRef.componentInstance.lat=lat
   modalRef.componentInstance.lng = lng

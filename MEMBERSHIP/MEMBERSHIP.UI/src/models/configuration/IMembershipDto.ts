@@ -4,6 +4,7 @@ export interface IMembershipTypePostDto {
     shortCode:String
     years: number;
     money: number;
+    currency : string;
     description: string;
     membershipCategory: string;
     createdById?: string;
@@ -15,6 +16,7 @@ export interface IMembershipTypePostDto {
     shortCode:String
     years: number;
     money: number;
+    currency : string;
     description: string;
     membershipCategory: string;
   }

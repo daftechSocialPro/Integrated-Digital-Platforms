@@ -42,12 +42,12 @@ export class AddBillDutiesComponent {
   
         this.controlService.getBillEmpDutyForUpdate(this.recordNo).subscribe({
           next: (res) => {
-            console.log(res)
+
             this.billEmpDuties = res
     
             this.billEmpDutiesForm.controls['empID'].setValue(this.billEmpDuties.empID)         
             this.billEmpDutiesForm.controls['duties'].setValue(this.billEmpDuties.duties)
-            console.log(this.billEmpDutiesForm.value)
+         
           }
         })
   

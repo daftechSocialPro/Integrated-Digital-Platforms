@@ -48,7 +48,6 @@ export class CountryOriginComponent implements OnInit {
 
   removeCountyOrgin(CountyOrginId:string) {
 
-    console.log(CountyOrginId)
     this.confirmationService.confirm({
       message: 'Are You sure you want to delete this CountyOrgin?',
       header: 'Delete Confirmation',

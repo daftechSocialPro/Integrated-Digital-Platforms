@@ -82,7 +82,6 @@ goToPage(page: number): void {
 
   removeBillOfficer(empId:string) {
 
-    console.log(empId)
     this.confirmationService.confirm({
       message: 'Are You sure you want to delete this Bill Officer?',
       header: 'Delete Confirmation',

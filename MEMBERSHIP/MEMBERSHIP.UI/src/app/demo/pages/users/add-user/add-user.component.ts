@@ -45,10 +45,10 @@ export class AddUserComponent implements OnInit {
     this.hrmService.getEmployeesNoUserSelectList().subscribe({
       next: (res) => {
         this.employeeList = res
-        console.log(res)
+       
       }
       , error: (err) => {
-        console.error(err)
+      
       }
     })
 

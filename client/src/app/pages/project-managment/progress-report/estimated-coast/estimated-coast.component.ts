@@ -53,8 +53,7 @@ export class EstimatedCoastComponent implements OnInit {
     this.pmService.GetEstimatedCost(this.serachForm.value.selectStructureId,this.serachForm.value.BudgetYear).subscribe({
       next: (res) => {
              this.estimatedCosts = res 
-             console.log(this.estimatedCosts)
-             //this.cnt=  this.plannedreport?.pMINT
+     
 
       }, error: (err) => {
         console.error(err)

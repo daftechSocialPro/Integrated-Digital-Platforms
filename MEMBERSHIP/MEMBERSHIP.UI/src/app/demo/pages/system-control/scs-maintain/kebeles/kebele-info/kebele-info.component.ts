@@ -52,7 +52,6 @@ export class KebeleInfoComponent  implements OnInit {
 
   removeKebeles(KebelesId: number) {
 
-    console.log(KebelesId)
     this.confirmationService.confirm({
       message: 'Are You sure you want to delete thisKebele info?',
       header: 'Delete Confirmation',

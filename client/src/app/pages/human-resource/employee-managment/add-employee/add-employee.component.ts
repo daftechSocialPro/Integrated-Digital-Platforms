@@ -136,7 +136,6 @@ export class AddEmployeeComponent implements OnInit {
 
   submit() {
 
-    console.log(this.EmployeeForm.value)
     
     if (this.imagePath === null) {
      

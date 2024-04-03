@@ -37,7 +37,7 @@ export class VolunterDetailComponent implements OnInit {
     this.hrmService.getVolunter(this.volunterId).subscribe({
       next: (res) => {
         this.volunter = res
-        console.log(this.volunter)
+      
       }
     })
   }

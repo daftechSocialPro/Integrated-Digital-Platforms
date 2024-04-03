@@ -48,7 +48,7 @@ export class TarifRateGroupComponent  implements OnInit {
 
   removeTarifRateGroup(TarifRateGroupId:string) {
 
-    console.log(TarifRateGroupId)
+   
     this.confirmationService.confirm({
       message: 'Are You sure you want to delete this Trif Rate Group?',
       header: 'Delete Confirmation',

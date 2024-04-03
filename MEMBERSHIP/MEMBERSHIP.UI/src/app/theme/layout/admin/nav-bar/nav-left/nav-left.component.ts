@@ -39,7 +39,6 @@ export class NavLeftComponent implements OnInit {
       next: (res) => {
         this.member = res
 
-        console.log("member",this.member)
         this.login()
       }
     }))
@@ -68,8 +67,6 @@ export class NavLeftComponent implements OnInit {
         if (res.success) {
           sessionStorage.setItem('token', res.data);
           this.user = this.userService.getCurrentUser()
-
-          console.log(this.user)
 
           if (this.user.isProfileCompleted.toLowerCase() == "false"||this.member.paymentStatus=="PENDING") {
             this.openModal()

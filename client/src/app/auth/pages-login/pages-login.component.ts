@@ -49,7 +49,7 @@ export class PagesLoginComponent implements OnInit {
         },
         error: (err) => {
 
-          console.log(err)
+    
 
         }
       })

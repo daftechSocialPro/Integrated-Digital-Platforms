@@ -69,7 +69,6 @@ export class HeaderComponent implements OnInit {
 
         this.activites = res
 
-        console.log("act",res)
 
       }, error: (err) => {
         console.error(err)

@@ -146,8 +146,7 @@ export class ActivityDetailComponent implements OnInit {
   
     const monthDifference = (endYear - startYear) * 12 + (endMonth - startMonth);
   
-    console.log('Month Difference:', monthDifference);
-
+   
     this.generateMonthsArray(monthDifference)
   
   }
@@ -203,7 +202,6 @@ export class ActivityDetailComponent implements OnInit {
       next:(res)=>{
         this.actView = res 
 
-        console.log(res)
         this.user = this.userService.getCurrentUser()
         if (this.actView.members.find(x => x.employeeId?.toLowerCase() == this.user.employeeId.toLowerCase()) ) {
           this.isMember = true;

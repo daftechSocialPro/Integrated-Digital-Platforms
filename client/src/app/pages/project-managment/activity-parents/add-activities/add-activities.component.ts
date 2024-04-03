@@ -51,9 +51,10 @@ export class AddActivitiesComponent implements OnInit {
 
   maxDate!: Date ;
 
+  addedActivities:String[]=[]
  
-
-
+  remainingBudget:number ;
+  initialFormValues: any;
 
   projectFundSources: SelectList[]
 
@@ -70,36 +71,70 @@ export class AddActivitiesComponent implements OnInit {
     private taskService : TaskService
   ) {
 
-    this.activityForm = this.formBuilder.group({
+
+    
+ 
+  }
+  ngOnInit(): void {
+
+
+
+    
+    this.remainingBudget=this.task?.remainingBudget!
+    // this.activityForm = this.formBuilder.group({
+    //   StartDate: ['', Validators.required],
+    //   EndDate: ['', Validators.required],
+    //   ActivityDescription: ['', Validators.required],
+    //   ActivityNumber:['',Validators.required],
+    //   PlannedBudget: ['', [Validators.required,Validators.max(this.remainingBudget)]],
+    //   ActivityType: [''],
+    //   OfficeWork: [0, Validators.required],
+    //   FieldWork: [0, Validators.required],
+    //   UnitOfMeasurement: ['', Validators.required],
+    //   PreviousPerformance: [0, [Validators.required,Validators.min(0)]],
+    //   Goal: [0,[Validators.required,Validators.min(0)]],
+    //   WhomToAssign: [''],
+    //   TeamId: [null],
+    //   CommiteeId: [null],
+    //   AssignedEmployee: [],
+    //   StrategicPlan:[],
+    //   StrategicPlanIndicatorId:[,Validators.required],
+    //   IsTraining:[false,Validators.required],
+    //   IsPercentage:[false,Validators.required],
+    //   IsCancelled:[false,Validators.required],  
+    //   SelectedProjectFund:['',Validators.required],
+    //   regionss: [[]],
+    //   locations: this.formBuilder.array([])
+
+
+    // })
+
+    this.initialFormValues = {
       StartDate: ['', Validators.required],
       EndDate: ['', Validators.required],
       ActivityDescription: ['', Validators.required],
-      ActivityNumber:['',Validators.required],
-      PlannedBudget: ['', [Validators.required,Validators.max(this.task?.remainingBudget!)]],
-      ActivityType: [''],
+      ActivityNumber: ['', Validators.required],
+      PlannedBudget: ['', [Validators.required, Validators.max(this.remainingBudget)]],
+      ActivityType: ['',Validators.required],
       OfficeWork: [0, Validators.required],
       FieldWork: [0, Validators.required],
       UnitOfMeasurement: ['', Validators.required],
-      PreviousPerformance: [0, [Validators.required,Validators.min(0)]],
-      Goal: [0,[Validators.required,Validators.min(0)]],
+      PreviousPerformance: [0, [Validators.required, Validators.min(0)]],
+      Goal: [0, [Validators.required, Validators.min(0)]],
       WhomToAssign: [''],
       TeamId: [null],
       CommiteeId: [null],
       AssignedEmployee: [],
-      StrategicPlan:[],
-      StrategicPlanIndicatorId:[,Validators.required],
-      IsTraining:[false,Validators.required],
-      IsPercentage:[false,Validators.required],
-      IsCancelled:[false,Validators.required],
-  
-      SelectedProjectFund:['',Validators.required],
+      StrategicPlan: [],
+      StrategicPlanIndicatorId: [, Validators.required],
+      IsTraining: [false, Validators.required],
+      IsPercentage: [false, Validators.required],
+      IsCancelled: [false, Validators.required],
+      SelectedProjectFund: ['', Validators.required],
       regionss: [[]],
       locations: this.formBuilder.array([])
-
-
-    })
-  }
-  ngOnInit(): void {
+    };
+this.resetForm()
 
     this.user = this.userService.getCurrentUser()
 
@@ -111,7 +146,7 @@ export class AddActivitiesComponent implements OnInit {
       next: (res) => {
         this.committees = res
       }, error: (err) => {
-        console.log(err)
+        
       }
     })
 
@@ -119,12 +154,11 @@ export class AddActivitiesComponent implements OnInit {
       next: (res) => {
         this.unitMeasurments = res
       }, error: (err) => {
-        console.log(err)
+        
       }
     })
 
 
-    console.log("add",this.dateAndTime)
     this.minDate = new Date();
     this.maxDate = new Date();
 
@@ -154,6 +188,11 @@ export class AddActivitiesComponent implements OnInit {
     // })
   this.getProjectFundSourse()
 
+  }
+
+    
+  resetForm() {
+    this.activityForm = this.formBuilder.group(this.initialFormValues);
   }
 
   getProjectFundSourse(){
@@ -245,7 +284,7 @@ export class AddActivitiesComponent implements OnInit {
 
   submit() {
 
-    console.log(this.activityForm.value)
+  
     if(this.requestFrom == "PLAN" || this.requestFrom == "TASK"){
         //this.addSubActivity()
     }
@@ -258,11 +297,7 @@ export class AddActivitiesComponent implements OnInit {
 
   addActivityParent(){
     
-    // if(this.lat==0||this.lng==0){
-    //   this.messageService.add({severity:'error',summary:"Location Not Selected",detail:'Please choose a location from map!!'})
-    //   return
-    // }
-    console.log("ADDED ACTIVITY XXXXXXXXXXXx",this.activityForm.value)
+    
     
     if(this.activityForm.value.Goal<=this.activityForm.value.PreviousPerformance){
       this.messageService.add({severity:'error',summary:"Baseline Target Error",detail:'Baseline can not be Greater or equal to Target !!'})
@@ -298,7 +333,7 @@ export class AddActivitiesComponent implements OnInit {
         IsCancelled:this.activityForm.value.IsCancelled
       }
 
-      console.log("rrrrrrrrrrrrr",actvityP)
+    
 
       if(this.requestFrom == "Plan"){
         actvityP.PlanId = this.requestFromId;
@@ -317,16 +352,19 @@ export class AddActivitiesComponent implements OnInit {
         CreatedBy: this.user.userId,
         ActivityDetails: activityList
       }
-      console.log("activity detail", addActivityDto)
+
       this.pmService.addActivityParent(addActivityDto).subscribe({
         next: (res) => {
       
 
           this.messageService.add({ severity: 'success', summary: 'Successfull', detail: 'Activity Successfully Created' });        
-           
-          window.location.reload()
+          
+          this.remainingBudget-=actvityP.PlannedBudget
+          this.resetForm()
+          this.addedActivities.push(actvityP.SubActivityDesctiption)
+          //window.location.reload()
          
-          this.closeModal()
+          //this.closeModal()
         }, error: (err) => {
           this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: err.message });        
     
@@ -340,12 +378,13 @@ export class AddActivitiesComponent implements OnInit {
 
 
   closeModal() {
+    window.location.reload()
     this.activeModal.close()
   }
 
   onCommiteChange(comitteId :string){
 
-    debugger
+   
 
     this.pmService.getComitteEmployees(comitteId).subscribe({
       next:(res)=>{
@@ -370,7 +409,7 @@ export class AddActivitiesComponent implements OnInit {
         longtude: res.lng,
         latitude: res.lat
       });
-      console.log(res)
+  
     })
 
     
@@ -398,7 +437,7 @@ export class AddActivitiesComponent implements OnInit {
         // Add location forms for newly selected regions
         selectedRegionIds.forEach((regionId: string) => {
 
-          console.log(regionId)
+   
             const locationFormExists = currentLocationForms.controls.some((locationForm) => {
                 const existingRegionId = (locationForm as FormGroup).get('regionId')?.value;
                 return existingRegionId === regionId;
@@ -421,7 +460,7 @@ export class AddActivitiesComponent implements OnInit {
         });
     }
 
-    console.log(this.locations.value)
+  
 }
 
 

@@ -52,7 +52,6 @@ export class MeterSizeComponent implements OnInit {
 
   removeMeterSize(meterSizeId: number) {
 
-    console.log(meterSizeId)
     this.confirmationService.confirm({
       message: 'Are You sure you want to delete this Meter Size?',
       header: 'Delete Confirmation',

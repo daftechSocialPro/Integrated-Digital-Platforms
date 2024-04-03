@@ -28,7 +28,7 @@ export class ReportingPeriodComponent implements OnInit {
           this.ReportingPeriods = res       
       
       },error:(err)=>{
-        console.log(err)
+    
       }
     })
   }

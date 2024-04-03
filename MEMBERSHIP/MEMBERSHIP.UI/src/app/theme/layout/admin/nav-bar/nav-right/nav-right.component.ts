@@ -23,7 +23,6 @@ export class NavRightComponent implements OnInit {
 
     this.currentUser = this.userService.getCurrentUser()
 
-    console.log(this.currentUser)
    if(this.currentUser.role.toUpperCase()=="MEMBER"){
     this.getMemberEvent()
    }
@@ -45,7 +44,7 @@ export class NavRightComponent implements OnInit {
     this.commonService.getMemberEvents(this.currentUser.loginId).subscribe({
       next:(res)=>{
         this.events = res 
-        console.log("events",this.events)
+      
       }
 
     })

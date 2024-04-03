@@ -48,7 +48,6 @@ export class ScsServiceChargeComponent implements  OnInit {
 
   removeServiceCharge(ServiceChargeId:string) {
 
-    console.log(ServiceChargeId)
     this.confirmationService.confirm({
       message: 'Are You sure you want to delete this ServiceCharge?',
       header: 'Delete Confirmation',

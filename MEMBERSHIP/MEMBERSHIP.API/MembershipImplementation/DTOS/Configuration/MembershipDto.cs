@@ -15,7 +15,7 @@ namespace MembershipImplementation.DTOS.Configuration
         public string ShortCode { get; set; }
 
         public int Years { get; set; }
-
+        public string Currency { get; set; }
         public double Money { get; set; }
 
         public string Description { get; set; }
@@ -34,6 +34,8 @@ namespace MembershipImplementation.DTOS.Configuration
         public string ShortCode { get; set; }
         public int Years { get; set; }
         public double Money { get; set; }
+
+        public string Currency { get; set; }
         public string Description { get; set; }
         public string MembershipCategory { get; set; }
 

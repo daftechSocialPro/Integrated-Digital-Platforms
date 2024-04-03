@@ -54,7 +54,7 @@ export class ChangeIdStatusComponent implements OnInit {
       error: (err) => {
         this.messageService.add({ severity: 'error', summary: 'Something went wrong!!!', detail: err.message });
 
-        console.log(err);
+  
       }
     })
 

@@ -5,6 +5,7 @@ import { TrainingService } from 'src/app/services/training.service';
 import { TraineesFormComponent } from '../trainees-form/trainees-form.component';
 import { TrainingReportFormComponenT } from '../training-report-form/training-report-form.component';
 import { Router } from '@angular/router';
+import { AllTrainingListComponent } from '../all-training-list/all-training-list.component';
 
 @Component({
   selector: 'app-training-dashboard',
@@ -29,6 +30,7 @@ femaleSum = 0
   constructor(
     private trainingService: TrainingService,
     private router : Router,
+   
     private modalService: NgbModal) {
 
   }
@@ -43,11 +45,13 @@ femaleSum = 0
           this.getTotalTrainees(item.id)
         }))
 
-        
-
-        console.log(res)
+   
       }
     })
+  }
+
+  viewdetail(){
+this.router.navigate(['/trainee/allreport'])
   }
 
   getTotalTrainers(trainingId: string) {

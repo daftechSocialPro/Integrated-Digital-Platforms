@@ -53,7 +53,6 @@ export class ZoneComponent implements OnInit {
 
   removeZone(Zone:string) {
 
-    console.log(Zone)
     this.confirmationService.confirm({
       message: 'Are You sure you want to delete this Zone?',
       header: 'Delete Confirmation',

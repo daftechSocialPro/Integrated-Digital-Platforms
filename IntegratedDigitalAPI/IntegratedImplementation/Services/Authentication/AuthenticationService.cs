@@ -355,7 +355,21 @@ namespace Implementation.Services.Authentication
                     Success=false,
                     Message = "User not found."};
             }
-             user.PasswordChanged = true;
+            var isPasswordCorrect = await _userManager.CheckPasswordAsync(user, model.CurrentPassword);
+
+
+            if (!isPasswordCorrect)
+            {
+                return new ResponseMessage
+                {
+
+                    Success = false,
+                    Message = "Old Password don't match !!!"
+                };
+            }
+
+
+            user.PasswordChanged = true;
                
             await _dbContext.SaveChangesAsync();
                
@@ -373,5 +387,41 @@ namespace Implementation.Services.Authentication
             return new ResponseMessage { Message = "Password changed successfully.", Success = true };
         }
 
+        public async Task<ResponseMessage> DeleteUser(string userId)
+        {
+            
+            try
+            {
+                var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Id == userId);
+                if (user != null)
+                {
+                    _dbContext.Users.Remove(user);
+                    _dbContext.SaveChanges();
+                    return new ResponseMessage
+                    {
+                        Success = true ,
+                        Message ="User Deleted Successfully !!!" 
+
+
+                    };
+                }
+                else
+                {
+                    return new ResponseMessage
+                    {
+                        Success = false,
+                        Message = "User Not Found !!!"
+                    };
+                }
+
+            }catch (Exception ex) {
+
+                return new ResponseMessage
+                {
+                    Success = false,
+                    Message = ex.Message
+                };
+            }
+        }
     }
 }

@@ -32,7 +32,7 @@ export class AddScsReasonComponent implements OnInit {
   ngOnInit(): void {
 
     if(this.SCReason){
-      console.log(this.SCReason)
+    
       this.SCReasonForm = this.formBuilder.group({
         reason: [this.SCReason.inputValues, Validators.required],
         reasonType: [this.SCReason.inputCategory, Validators.required],

@@ -46,7 +46,7 @@ export class AddVendorComponent implements OnInit{
   }
 
   saveVendor() {
-    debugger;
+
       if (this.addVendor.id) {
       this.inventoryService.updateVendor(this.addVendor).subscribe({
         next: (res) => {

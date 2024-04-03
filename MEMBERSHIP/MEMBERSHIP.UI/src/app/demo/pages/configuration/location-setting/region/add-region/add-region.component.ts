@@ -24,7 +24,7 @@ export class AddRegionComponent implements OnInit {
     ngOnInit(): void {
       this.user = this.userService.getCurrentUser()
       this.getCountries()
-      console.log(this.Region)
+     
   
       if(this.Region){
         this.RegionForm.controls['regionName'].setValue(this.Region.regionName)

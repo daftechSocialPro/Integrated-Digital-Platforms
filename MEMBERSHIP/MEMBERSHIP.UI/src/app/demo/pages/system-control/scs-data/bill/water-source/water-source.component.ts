@@ -49,7 +49,7 @@ export class WaterSourceComponent implements OnInit {
 
   removeWaterSource(WaterSourceId:string) {
 
-    console.log(WaterSourceId)
+
     this.confirmationService.confirm({
       message: 'Are You sure you want to delete this Water Source?',
       header: 'Delete Confirmation',
