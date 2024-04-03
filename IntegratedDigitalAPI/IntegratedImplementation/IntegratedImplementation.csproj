@@ -20,9 +20,13 @@
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.3.4" />
   </ItemGroup>
 
+
+  <ItemGroup>  
+
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\..\source\repos\Amhara-PM-and-Case-managemnt\XAPI\XAPI.csproj" />
+
     <ProjectReference Include="..\Infrustructure\IntegratedInfrustructure.csproj" />
+    <ProjectReference Include="..\XAPI\XAPI.csproj" />
   </ItemGroup>
 
 </Project>

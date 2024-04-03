@@ -47,6 +47,12 @@ export class AddAccountTypeComponent implements OnInit {
     { value: "OTHER_ASSET", name: "OTHER_ASSET" },
   ]
 
+  constructor(
+    private activeModal: NgbActiveModal,
+    private formBuilder: FormBuilder,
+    private financeService: FinanceService,
+    private userService: UserService,
+    private messageService: MessageService) {}
 
   ngOnInit(): void {
     this.user = this.userService.getCurrentUser()
@@ -72,14 +78,7 @@ export class AddAccountTypeComponent implements OnInit {
 
   }
 
-  constructor(
-    private activeModal: NgbActiveModal,
-    private formBuilder: FormBuilder,
-    private financeService: FinanceService,
-    private userService: UserService,
-    private messageService: MessageService) {
-
-  }
+  
 
   closeModal() {
     this.activeModal.close();

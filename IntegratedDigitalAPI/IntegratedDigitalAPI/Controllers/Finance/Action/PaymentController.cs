@@ -26,6 +26,12 @@ namespace IntegratedDigitalAPI.Controllers.Finance.Action
         {
             return Ok(await _paymentService.GetPendingPayments());
         }
+        [HttpGet]
+        [ProducesResponseType(typeof(PaymentListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetApprovedPayments()
+        {
+            return Ok(await _paymentService.GetApprovedPayments());
+        }
 
 
         [HttpPost]

@@ -40,6 +40,7 @@ namespace IntegratedImplementation.Interfaces.Configuration
         Task<List<ItemDropDownDto>> GetItemByRequest(string StoreRequestId);
         Task<List<SelectListDto>> GetMeasurementListByType(MeasurementType measurmentType);
         Task<List<SelectListDto>> GetPurchaseRequestByItem(string itemId);
+        Task<List<SelectListDto>> GetPurchaseRequestByDropDown();
         Task<List<SelectListDto>> GetStoreRequestDropDown();
         Task<List<SelectListDto>> GetVendorDropDown();
 

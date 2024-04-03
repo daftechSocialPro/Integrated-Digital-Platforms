@@ -187,8 +187,13 @@ namespace IntegratedInfrustructure.Data
         public DbSet<IncomeTaxSetting> IncomeTaxSettings { get; set; }
         public DbSet<PayrollData> PayrollDatas { get; set; }
         public DbSet<EmployeePayroll> EmployeePayrolls { get; set; }
-
         public DbSet<BenefitPayroll> BenefitPayrolls { get; set; }
+        public DbSet<BegningBalance> BegningBalances { get; set; }
+        public DbSet<BegningBalanceDetail> BegningBalanceDetails { get; set; }
+        public DbSet<PurchaseInvoice> PurchaseInvoices { get; set; }
+        public DbSet<PurchaseInvoiceDetail> PurchaseInvoiceDetails { get; set; }
+        public DbSet<Receipt> Receipts { get; set; }
+        public DbSet<ReceiptDetail> ReceiptDetails { get; set; }
 
         #endregion
 

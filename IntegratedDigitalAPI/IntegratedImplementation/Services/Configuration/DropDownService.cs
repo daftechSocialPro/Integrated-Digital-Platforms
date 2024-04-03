@@ -273,6 +273,18 @@ namespace IntegratedImplementation.Services.Configuration
             return requests;
         }
 
+        public async Task<List<SelectListDto>> GetPurchaseRequestByDropDown()
+        {
+            var requests = await _dbContext.PurchaseRequestLists.AsNoTracking()
+                                 
+                                 .Select(x => new SelectListDto
+                                 {
+                                     Id = x.Id,
+                                     Name = x.ItemRequestNo
+                                 }).ToListAsync();
+            return requests;
+        }
+
         public async Task<List<SelectListDto>> GetStoreRequestDropDown()
         {
             var requests = await _dbContext.StoreRequests.AsNoTracking().Select(x => new SelectListDto

@@ -5,12 +5,22 @@ import { FinanceConfigurationComponent } from './finance-configuration/finance-c
 import { PaymentsComponent } from './payments/payments.component';
 import { PayrollComponent } from './payroll/payroll.component';
 import { AddPaymentsComponent } from './payments/add-payments/add-payments.component';
+import { BeginningBalanceComponent } from './beginning-balance/beginning-balance.component';
+import { LoanIssuanceComponent } from './loan-issuance/loan-issuance.component';
+import { PurchaseInvoiceComponent } from './purchase-invoice/purchase-invoice.component';
+import { AddPurchaseInvoiceComponent } from './purchase-invoice/add-purchase-invoice/add-purchase-invoice.component';
 
 const routes: Routes = [
+  
   { path: 'financeconfig', canActivate: [AuthGuard], component: FinanceConfigurationComponent },
   { path: 'payments', canActivate: [AuthGuard], component: PaymentsComponent },
   { path: 'payments/addpayment', canActivate: [AuthGuard], component: AddPaymentsComponent },
   { path: 'payroll', canActivate: [AuthGuard], component: PayrollComponent },
+  { path: 'beginnigbalance', canActivate: [AuthGuard], component: BeginningBalanceComponent },
+  { path: 'loanissuance', canActivate: [AuthGuard], component: LoanIssuanceComponent },
+  { path: 'purchaseinvoice', canActivate: [AuthGuard], component: PurchaseInvoiceComponent },
+  { path: 'purchaseinvoice/addpurchaseinvoice', canActivate: [AuthGuard], component: AddPurchaseInvoiceComponent },
+
 ];
 
 

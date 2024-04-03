@@ -113,6 +113,10 @@ export class DropDownService {
         return this.http.get<SelectList[]>(this.baseUrl + `/DropDown/GetPurchaseRequestByItem?ItemId=${itemId}`);
     }
 
+    getAllPurchaseRequestDropDown() {
+        return this.http.get<SelectList[]>(this.baseUrl + '/DropDown/GetPurchaseRequestByDropDown');
+    }
+
     getFiscalYears(){
 
         return this.http.get<SelectList[]>(this.baseUrl+'/DropDown/GetFiscalYears')

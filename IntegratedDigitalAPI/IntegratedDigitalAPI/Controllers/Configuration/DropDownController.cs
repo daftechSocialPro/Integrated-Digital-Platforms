@@ -197,6 +197,13 @@ namespace IntegratedDigitalAPI.Controllers.Configuration
 
         [HttpGet]
         [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetPurchaseRequestByDropDown()
+        {
+            return Ok(await _DropDownService.GetPurchaseRequestByDropDown());
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetStoreRequestDropDown()
         {
             return Ok(await _DropDownService.GetStoreRequestDropDown());
