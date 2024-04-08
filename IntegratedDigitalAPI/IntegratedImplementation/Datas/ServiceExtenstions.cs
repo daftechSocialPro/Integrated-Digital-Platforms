@@ -10,6 +10,7 @@ using IntegratedDigitalAPI.Services.PM.ProgressReport;
 using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedImplementation.Interfaces.Finance.Action;
 using IntegratedImplementation.Interfaces.Finance.Configuration;
+using IntegratedImplementation.Interfaces.Finance.Report;
 using IntegratedImplementation.Interfaces.HRM;
 using IntegratedImplementation.Interfaces.Inventory;
 using IntegratedImplementation.Interfaces.Notification;
@@ -19,6 +20,7 @@ using IntegratedImplementation.Interfaces.Vacancy;
 using IntegratedImplementation.Services.Configuration;
 using IntegratedImplementation.Services.Finance.Action;
 using IntegratedImplementation.Services.Finance.Configuration;
+using IntegratedImplementation.Services.Finance.Report;
 using IntegratedImplementation.Services.HRM;
 using IntegratedImplementation.Services.Inventory;
 using IntegratedImplementation.Services.Notification;
@@ -121,7 +123,7 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<IBegnningBalanceService, BegnningBalanceService>();
             services.AddScoped<ILoanIssuanceService, LoanIssuanceService>();
             services.AddScoped<IPayrollService, PayrollService>();
-
+            services.AddScoped<IPayrollReportService, PayrollReportService>();
             #endregion
 
 
