@@ -9,6 +9,7 @@ import { BeginningBalanceComponent } from './beginning-balance/beginning-balance
 import { LoanIssuanceComponent } from './loan-issuance/loan-issuance.component';
 import { PurchaseInvoiceComponent } from './purchase-invoice/purchase-invoice.component';
 import { AddPurchaseInvoiceComponent } from './purchase-invoice/add-purchase-invoice/add-purchase-invoice.component';
+import { IncomeTaxDeclarationComponent } from './income-tax-declaration/income-tax-declaration.component';
 import { AccountReconcilliationComponent } from './account-reconcilliation/account-reconcilliation.component';
 import { FinanceReportComponent } from './finance-report/finance-report.component';
 // import { PensionDeclarationComponent } from './pension-declaration/pension-declaration.component';
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'beginnigbalance', canActivate: [AuthGuard], component: BeginningBalanceComponent },
   { path: 'loanissuance', canActivate: [AuthGuard], component: LoanIssuanceComponent },
   { path: 'purchaseinvoice', canActivate: [AuthGuard], component: PurchaseInvoiceComponent },
+  { path: 'income-tax-declartion', canActivate:[AuthGuard], component: IncomeTaxDeclarationComponent},
   { path: 'purchaseinvoice/addpurchaseinvoice', canActivate: [AuthGuard], component: AddPurchaseInvoiceComponent },
   { path: 'accountreconcilliation', canActivate: [AuthGuard], component: AccountReconcilliationComponent },
   { path: 'financereport', canActivate: [AuthGuard], component: FinanceReportComponent },

@@ -43,9 +43,7 @@ client/yarn-error.log
 
 #API
 /IntegratedDigitalAPI/.vs/
-
 /IntegratedDigitalAPI/global.json
-
 /IntegratedDigitalAPI/Infrustructure/bin
 /IntegratedDigitalAPI/Infrustructure/obj
 /IntegratedDigitalAPI/IntegratedDigitalAPI/bin
