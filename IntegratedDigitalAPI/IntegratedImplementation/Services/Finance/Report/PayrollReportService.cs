@@ -30,7 +30,7 @@ namespace IntegratedImplementation.Services.Finance.Report
             DateTime toDate = new DateTime(payrollMonth.Year, payrollMonth.Month, lastDayDetail);
 
             var q = await (from x in _dbContext.EmployeePayrolls.Include(x => x.Employee)
-                     where x.PayStart.Equals(payrollMonth) && x.PayEnd.Equals(toDate)
+                     where x.PayStart.Date.Equals(payrollMonth.Date) && x.PayEnd.Date.Equals(toDate.Date)
                      select x).ToListAsync();
             
 
@@ -85,7 +85,7 @@ namespace IntegratedImplementation.Services.Finance.Report
             int lastDayDetail = DateTime.DaysInMonth(payrollMonth.Year, payrollMonth.Month);
             DateTime toDate = new DateTime(payrollMonth.Year, payrollMonth.Month, lastDayDetail);
             var q = await (from x in _dbContext.EmployeePayrolls.Include(x => x.Employee)
-                           where x.PayStart.Equals(payrollMonth) && x.PayEnd.Equals(toDate)
+                           where x.PayStart.Date.Equals(payrollMonth.Date) && x.PayEnd.Date.Equals(toDate.Date)
                            select x).ToListAsync();
 
             foreach(var item in q)
@@ -131,7 +131,7 @@ namespace IntegratedImplementation.Services.Finance.Report
             int lastDayDetail = DateTime.DaysInMonth(payrollMonth.Year, payrollMonth.Month);
             DateTime toDate = new DateTime(payrollMonth.Year, payrollMonth.Month, lastDayDetail);
             var q = await (from x in _dbContext.EmployeePayrolls.Include(x => x.Employee)
-                           where x.PayStart.Equals(payrollMonth) && x.PayEnd.Equals(toDate)
+                           where x.PayStart.Date.Equals(payrollMonth.Date) && x.PayEnd.Date.Equals(toDate.Date)
                            select x).ToListAsync();
 
             foreach (var item in q)
