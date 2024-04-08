@@ -45,7 +45,7 @@ export class PensionReportComponent implements OnInit {
     });
     this.financeService.getPensionReport(formattedDate).subscribe({
       next: (res) => {
-        this.pensionReportList = res
+        
       }
     })
   }
