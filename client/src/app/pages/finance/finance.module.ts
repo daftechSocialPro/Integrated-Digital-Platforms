@@ -51,6 +51,7 @@ import { ApprovedPurchaseInvoiceComponent } from './purchase-invoice/approved-pu
 import { PayLoanComponent } from './loan-issuance/pay-loan/pay-loan.component';
 
 import { PayrollReportComponent } from './finance-reports/payroll-report/payroll-report.component';
+import { IncomeTaxDeclarationComponent } from './income-tax-declaration/income-tax-declaration.component';
 
 
 
@@ -86,9 +87,10 @@ import { PayrollReportComponent } from './finance-reports/payroll-report/payroll
     AddPurchaseInvoiceComponent,
     PendingPurchaseInvoiceComponent,
     ApprovedPurchaseInvoiceComponent,
-    PayLoanComponent
+    PayLoanComponent,
 
-    PayrollReportComponent
+    PayrollReportComponent,
+      IncomeTaxDeclarationComponent
 
   ],
   imports: [

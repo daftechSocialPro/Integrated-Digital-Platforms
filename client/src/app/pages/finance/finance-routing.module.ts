@@ -9,6 +9,7 @@ import { BeginningBalanceComponent } from './beginning-balance/beginning-balance
 import { LoanIssuanceComponent } from './loan-issuance/loan-issuance.component';
 import { PurchaseInvoiceComponent } from './purchase-invoice/purchase-invoice.component';
 import { AddPurchaseInvoiceComponent } from './purchase-invoice/add-purchase-invoice/add-purchase-invoice.component';
+import { IncomeTaxDeclarationComponent } from './income-tax-declaration/income-tax-declaration.component';
 
 const routes: Routes = [
   
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'beginnigbalance', canActivate: [AuthGuard], component: BeginningBalanceComponent },
   { path: 'loanissuance', canActivate: [AuthGuard], component: LoanIssuanceComponent },
   { path: 'purchaseinvoice', canActivate: [AuthGuard], component: PurchaseInvoiceComponent },
+  { path: 'income-tax-declartion', canActivate:[AuthGuard], component: IncomeTaxDeclarationComponent},
   { path: 'purchaseinvoice/addpurchaseinvoice', canActivate: [AuthGuard], component: AddPurchaseInvoiceComponent },
 
 ];
