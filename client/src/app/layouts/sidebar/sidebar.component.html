@@ -236,6 +236,10 @@
                               routerLinkActive="active">
                               <i class="bi bi-circle"></i><span>Purchase Invoice</span> </a>
                         </li>
+                        <li *ngIf="roleMatch(['HRM-CONFIGURATION'])"> <a routerLink="/finance/accountreconcilliation"
+                              routerLinkActive="active">
+                              <i class="bi bi-circle"></i><span>Account Reconcilliation</span> </a>
+                        </li>
                         
                        
                         

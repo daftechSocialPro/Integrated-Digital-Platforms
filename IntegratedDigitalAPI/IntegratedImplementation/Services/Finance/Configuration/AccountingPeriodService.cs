@@ -32,7 +32,7 @@ namespace IntegratedImplementation.Services.Finance.Configuration
                 int ethMonth = Int32.Parse(ethDate[0]);
                 int ethYear = Int32.Parse(ethDate[2]);
 
-                 startDate = EthiopicDateTime.GetGregorianDate(ethDay, ethMonth, ethYear);
+                 startDate = XAPI.EthiopicDateTime.GetGregorianDate(ethDay, ethMonth, ethYear);
             }
             else
             {

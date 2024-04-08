@@ -14,6 +14,7 @@ import { CalculatePayrollDto, CheckOrApprovePayrollDto, PayrollGetDto } from '..
 import { BeginningBalanceGetDto, BeginningBalancePostDto } from '../model/Finance/IBeginningBalanceDto';
 import { PurchaseInvoiceGetDto, PurchaseInvoicePostDto } from '../model/Finance/IPurchaseInvoiceDto';
 import { ApprovedLoansDto, LoanPaymentDto } from '../model/Finance/ILoanIssuanceDto';
+import { IncomeTaxReportGetDto, PayrollReportGetDto, PensionReportGetDto } from '../model/Finance/IFinanceReportDto';
 
 @Injectable({
   providedIn: 'root'
@@ -169,5 +170,16 @@ export class FinanceService {
   }
   payLoan(payLoanData: LoanPaymentDto){
     return this.http.put<ResponseMessage>(this.BaseURI + "/LoanIssuance/PayLoan",payLoanData)
+  }
+
+  //Report
+  getPayrollReport(payrollMonth: string){
+    return this.http.get<PayrollReportGetDto[]>(this.BaseURI + "/PayrollReport/GetPayrollReport?payrollMonth="+payrollMonth)
+  }
+  getPensionReport(payrollMonth: string){
+    return this.http.get<PensionReportGetDto[]>(this.BaseURI + "/PayrollReport/GetPensionReport?payrollMonth="+payrollMonth)
+  }
+  getIncomeTaxReport(payrollMonth: string){
+    return this.http.get<IncomeTaxReportGetDto[]>(this.BaseURI + "/PayrollReport/GetIncomeTaxReport?payrollMonth="+payrollMonth)
   }
 }
