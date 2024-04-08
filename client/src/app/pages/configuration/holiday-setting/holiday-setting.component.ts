@@ -29,7 +29,7 @@ export class HolidaySettingComponent  implements OnInit {
       next:(res)=>{
           this.holidays = res
       },error:(err)=>{
-        console.log(err)
+        
       }
     })
   }

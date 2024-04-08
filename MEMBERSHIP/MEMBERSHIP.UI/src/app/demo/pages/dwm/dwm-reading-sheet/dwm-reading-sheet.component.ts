@@ -88,7 +88,6 @@ mobileReadings : IMobileAppReadingDto[]=[]
 
       next:(res)=>{
 
-        console.log(res)
         this.mobileReadings = res 
       }
 
@@ -125,7 +124,7 @@ mobileReadings : IMobileAppReadingDto[]=[]
     this.pageSize = even.rows
 
     this.getGeneratedCustomers()
-    console.log(even)
+
 
   }
 }

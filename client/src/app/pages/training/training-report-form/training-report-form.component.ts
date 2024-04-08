@@ -82,7 +82,7 @@ export class TrainingReportFormComponenT implements OnInit {
     this.trainingService.getSingleTraining(trainingId).subscribe({
       next: (res) => {
         this.training = res
-        console.log(res)
+   
       }
     })
 
@@ -93,7 +93,6 @@ export class TrainingReportFormComponenT implements OnInit {
       next: (res) => {
         this.trainers = res
 
-        console.log(this.trainers)
       }
     })
   }
@@ -103,7 +102,7 @@ export class TrainingReportFormComponenT implements OnInit {
       next: (res) => {
         if (res) {
 
-          console.log(res)
+   
           this.trainingReport = res
           this.trainingReportForm.controls['Objective'].setValue(res.objective)
           this.trainingReportForm.controls['Contribution'].setValue(res.contribution)
@@ -157,8 +156,6 @@ export class TrainingReportFormComponenT implements OnInit {
         formData.append("Id", this.trainingReport.id)
       }
 
-
-      console.log(formData)
 
 if (reportStatus=='SUBMITTED'){
 

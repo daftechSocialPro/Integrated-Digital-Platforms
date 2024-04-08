@@ -66,7 +66,7 @@ export class OptionsComponent implements OnInit {
           this.optionForm.controls['option06'].setValue(this.generalOption.option06)
           this.optionForm.controls['option07'].setValue(this.generalOption.option07==='YES')
         }
-        console.log(res)
+        
       }
     })
   }

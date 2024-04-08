@@ -29,7 +29,7 @@ export class UpdateTasksComponent implements OnInit {
 
   ngOnInit(): void {
 
-    console.log("TASKKKK",this.task)
+
     this.taskForm = this.formBuilder.group({
       TaskDescription:[this.task.taskName,Validators.required],
       HasActvity: [this.task.hasActivity, Validators.required],

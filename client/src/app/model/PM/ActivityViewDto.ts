@@ -32,6 +32,12 @@ export interface ActivityView {
     activityLocations?:any
     isCancelled: boolean
 
+   isReSceduled : boolean
+   cancelledJustfication?: string
+   resceduledJustification ?: string 
+
+    
+
 
 }
 export interface MonthPerformanceView {

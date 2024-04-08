@@ -48,7 +48,7 @@ export class CommitteeEmployeeComponent implements OnInit {
       next: (res) => {
         this.employees = res
       }, error: (err) => {
-        console.log(err)
+    
       }
     })
   }
@@ -59,8 +59,6 @@ export class CommitteeEmployeeComponent implements OnInit {
 
   addEmpinCommittee() {
 
-
-    console.log(this.selectedEmployee)
     
     if (this.selectedEmployee) {
 
@@ -80,7 +78,7 @@ export class CommitteeEmployeeComponent implements OnInit {
 
           this.closeModal()
         }, error: (err) => {
-          console.log(err)
+         
         }
       })
     }
@@ -106,7 +104,7 @@ export class CommitteeEmployeeComponent implements OnInit {
         
           this.closeModal()
         }, error: (err) => {
-          console.log(err)
+      
         }
       })
     }

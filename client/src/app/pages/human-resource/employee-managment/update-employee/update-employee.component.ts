@@ -54,7 +54,7 @@ export class UpdateEmployeeComponent implements OnInit {
   ngOnInit(): void {
     this.maxBirthDate.setFullYear(this.maxBirthDate.getFullYear() - 18);
     this.user = this.userService.getCurrentUser();
-    console.log(this.selectedEmployee);
+   
     this.getCountries();
     this.getBankList();
     this.EmployeeForm = this.formBuilder.group({

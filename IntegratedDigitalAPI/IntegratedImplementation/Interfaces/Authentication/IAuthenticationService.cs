@@ -16,5 +16,8 @@ namespace Implementation.Interfaces.Authentication
         Task<ResponseMessage> ChangeStatusOfUser(string userId);
         Task<ResponseMessage> AddUser(AddUSerDto addUSer);
          Task<ResponseMessage> ChangePassword(ChangePasswordModel model);
+         Task<ResponseMessage> DeleteUser(string userId);
+
+
     }
 }

@@ -52,7 +52,6 @@ export class KetenaComponent implements OnInit {
 
   removeKetena(KetenaId: number) {
 
-    console.log(KetenaId)
     this.confirmationService.confirm({
       message: 'Are You sure you want to delete this Meter Size?',
       header: 'Delete Confirmation',

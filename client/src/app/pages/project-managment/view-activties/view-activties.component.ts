@@ -49,14 +49,14 @@ export class ViewActivtiesComponent implements OnInit {
     private userService: UserService) { }
 
   ngOnInit(): void {
-    console.log("actVIEWWWWWWW", this.actView)
+  
     this.user = this.userService.getCurrentUser()
     if (this.actView.members.find(x => x.employeeId?.toLowerCase() == this.user.employeeId.toLowerCase()) ) {
       this.isMember = true;
     }
    this.getMonthDifference(this.actView.startDate,this.actView.endDate)
 
-   console.log('performance', this.actView.monthPerformance)
+   
   }
   getImage(value: string) {
     return this.commonService.createImgPath(value)
@@ -123,7 +123,7 @@ export class ViewActivtiesComponent implements OnInit {
 
   Showonmap(lat:number,lng:number,projectLocation:string){
 
-   console.log(lat,lng)
+
   let modalRef =this.modalService.open(ShowonmapComponent,{size:'xl',backdrop:'static'})
   modalRef.componentInstance.lat=lat
   modalRef.componentInstance.lng = lng
@@ -131,19 +131,7 @@ export class ViewActivtiesComponent implements OnInit {
   }
 
 
-  // getMonthDifference(startDate: string, endDate: string) {
-  //   const startYear = new Date(startDate).getFullYear();
-  //   const startMonth = new Date(startDate).getMonth();
-  //   const endYear = new Date(endDate).getFullYear();
-  //   const endMonth = new Date(endDate).getMonth();
-  
-  //   const monthDifference = (endYear - startYear) * 12 + (endMonth - startMonth);
-  
-  //   console.log('Month Difference:', monthDifference);
-
-  //   this.generateMonthsArray(monthDifference)
-  
-  // }
+ 
 
   getMonthDifference(startDate: string, endDate: string) {
     
@@ -170,7 +158,7 @@ export class ViewActivtiesComponent implements OnInit {
       monthDifference[year] = months;
     }
   
-    console.log('Month Difference:', monthDifference);
+
     const currentYear = new Date().getFullYear();
     this.generateMonthsArray(monthDifference[currentYear])
     

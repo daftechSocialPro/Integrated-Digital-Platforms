@@ -28,7 +28,7 @@ export class BudgetYearComponent implements OnInit {
           this.BudgetYears = res       
       
       },error:(err)=>{
-        console.log(err)
+       
       }
     })
   }

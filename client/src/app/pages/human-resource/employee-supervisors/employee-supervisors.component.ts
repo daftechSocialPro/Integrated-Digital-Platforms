@@ -25,7 +25,7 @@ export class EmployeeSupervisorsComponent implements OnInit {
       next:(res)=>{
           this.employeeSupervisors = res
       },error:(err)=>{
-        console.log(err)
+      
       }
     });
   }

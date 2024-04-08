@@ -39,7 +39,7 @@ export class EmployeeManagmentComponent implements OnInit {
         this.employees = res
       },
       error: (err) => {
-        console.log(err)
+       
       }
     })
   }

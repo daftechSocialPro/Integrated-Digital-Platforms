@@ -31,7 +31,7 @@ export class AccountingPeriodComponent implements OnInit {
         this.accountingPeriods = res
         
       },error:(err)=>{
-        console.log(err)
+    
       }
     })
   }

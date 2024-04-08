@@ -235,6 +235,12 @@ namespace IntegratedDigitalAPI.Controllers.Training
         {
             return Ok(await _trainingService.GetTrainingReport(trainingId));
         }
+        [HttpGet]
+        [ProducesResponseType(typeof(TrainingGetDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetAllTraineeReport()
+        {
+            return Ok(await _trainingService.GetAllTrainingList());
+        }
 
 
         [HttpPost]

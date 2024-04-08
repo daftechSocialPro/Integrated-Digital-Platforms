@@ -48,7 +48,7 @@ export class MeterTypeComponent  implements OnInit {
 
   removeMeterType(MeterTypeId:string) {
 
-    console.log(MeterTypeId)
+
     this.confirmationService.confirm({
       message: 'Are You sure you want to delete this Meter Type?',
       header: 'Delete Confirmation',

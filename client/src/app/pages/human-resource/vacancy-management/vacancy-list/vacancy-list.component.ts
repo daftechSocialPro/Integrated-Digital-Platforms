@@ -61,7 +61,7 @@ export class VacancyListComponent implements OnInit {
 
         };
       }, error: (err) => {
-        console.log(err)
+       
       }
     })
   }

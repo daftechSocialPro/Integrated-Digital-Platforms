@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "pwyTFW36GctB0BfLruaupbrIGOwV8rmSE9HuQ6k+p1c=",
+  "Hash": "k8l9ba7v6JZC2c+kvt2EEXjlEOMH1I0ofMj/LREUQ5w=",
   "Source": "MembershipAPI",
   "BasePath": "_content/MembershipAPI",
   "Mode": "Default",
@@ -2344,6 +2344,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Member\\Marsden Payne.png"
+    },
+    {
+      "Identity": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\MEMBERSHIP\\MEMBERSHIP.API\\MembershipAPI\\wwwroot\\Member\\Mulatu  Ayele  Tadesse.jpg",
+      "SourceId": "MembershipAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\MEMBERSHIP\\MEMBERSHIP.API\\MembershipAPI\\wwwroot\\",
+      "BasePath": "_content/MembershipAPI",
+      "RelativePath": "Member/Mulatu  Ayele  Tadesse.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Member\\Mulatu  Ayele  Tadesse.jpg"
     },
     {
       "Identity": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\MEMBERSHIP\\MEMBERSHIP.API\\MembershipAPI\\wwwroot\\Member\\nahom test skjdnf`.png",

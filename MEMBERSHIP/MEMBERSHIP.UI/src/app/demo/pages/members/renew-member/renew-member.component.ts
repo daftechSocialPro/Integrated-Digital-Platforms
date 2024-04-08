@@ -76,14 +76,14 @@ export class RenewMemberComponent implements OnInit {
   getMember() {
     this.memberService.getSingleMember(this.user.loginId).subscribe({
       next: (res) => {
-        console.log(res);
+
         this.member = res;
       }
     });
   }
 
   onMembershipSelcted(item:string){
-    console.log(item)
+  
     var k = item.split('/')
     this.selectedAmount = Number.parseInt(k[1])
     this.selectedMembership=k[0]
@@ -143,18 +143,16 @@ export class RenewMemberComponent implements OnInit {
         error: (err) => {
           this.messageService.add({ severity: 'error', summary: 'Something went wrong!!!', detail: err.message });
 
-          console.log(err);
         }
       });
     }
   }
 
   checkIfPhoneNumberExist(phoneNumber: string) {
-    console.log(phoneNumber);
-
+   
     this.memberService.checkIfPhoneNumberExist(phoneNumber).subscribe({
       next: (res) => {
-        console.log(res);
+      
         if (res) {
           this.confirmationService.confirm({
             message: 'You have already Registerd!! you want to proceed from where you stop ?',
@@ -184,10 +182,10 @@ export class RenewMemberComponent implements OnInit {
   verifyPayment() {
     this.memberService.getSingleMemberPayment(this.member.id).subscribe({
       next: (res) => {
-        console.log(res);
+   
         this.paymentService.verifyPayment(res.text_Rn).subscribe({
           next: (re) => {
-            console.log(res);
+           
             if (re.response) {
               if (re.response.status === 'success') {
                 this.MakePaymentConfirmation(res.text_Rn);
@@ -219,10 +217,10 @@ export class RenewMemberComponent implements OnInit {
   }
 
 renewMembership(){
-  console.log(this.selectedMembership,this.selectedAmount)
+
   var payment: IPaymentData = {
     amount: this.selectedAmount,
-    currency: 'ETB',
+    currency: this.member.currency,
     email: this.member.email,
     first_name: this.member.fullName,
     last_name: '',
@@ -236,14 +234,14 @@ renewMembership(){
 
 
   goTOPayment(payment: IPaymentData, member: any) {
-    console.log('model', payment);
-
+   
     this.paymentService.payment(payment).subscribe({
       next: (res) => {
         var mapayment: IMakePayment = {
           memberId: member.id,
           membershipTypeId: this.selectedMembership,
           payment: payment.amount,
+          
           text_Rn: res.response.tx_ref,
           url:res.response.data.checkout_url
         };
@@ -251,10 +249,9 @@ renewMembership(){
         var url = res.response.data.checkout_url;
         this.makePayment(mapayment, url);
 
-        console.log("after payment",res);
       },
       error: (err) => {
-        console.log(err);
+    
       }
     });
   }

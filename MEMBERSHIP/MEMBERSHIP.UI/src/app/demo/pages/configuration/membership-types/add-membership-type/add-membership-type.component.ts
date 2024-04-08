@@ -27,6 +27,7 @@ export class AddMembershipTypeComponent implements OnInit {
         this.MembershipTypeForm.controls['description'].setValue(this.MembershipType.description)
         this.MembershipTypeForm.controls['years'].setValue(this.MembershipType.years)
         this.MembershipTypeForm.controls['money'].setValue(this.MembershipType.money)
+        this.MembershipTypeForm.controls['currency'].setValue(this.MembershipType.currency)
         this.MembershipTypeForm.controls['category'].setValue(this.MembershipType.membershipCategory)
       }
     }
@@ -44,6 +45,7 @@ export class AddMembershipTypeComponent implements OnInit {
         description:['',Validators.required],
         years: ['', Validators.required],
         money: ['', Validators.required],
+        currency :['',Validators.required],
         category: ['', Validators.required],
       })
   
@@ -63,6 +65,7 @@ export class AddMembershipTypeComponent implements OnInit {
           description: this.MembershipTypeForm.value.description,
           years: this.MembershipTypeForm.value.years,
           money: this.MembershipTypeForm.value.money,
+          currency: this.MembershipTypeForm.value.currency,
           membershipCategory: this.MembershipTypeForm.value.category,
           createdById: this.user.userId
   
@@ -100,6 +103,7 @@ export class AddMembershipTypeComponent implements OnInit {
           description: this.MembershipTypeForm.value.description,
           years: this.MembershipTypeForm.value.years,
           money: this.MembershipTypeForm.value.money,
+          currency : this.MembershipTypeForm.value.currency,
           membershipCategory: this.MembershipTypeForm.value.category         
   
         }

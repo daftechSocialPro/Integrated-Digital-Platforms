@@ -16,6 +16,10 @@ export class DropDownService {
         return this.http.get<SelectList[]>(this.baseUrl + "/DropDown/GetCountryDropdownList")
     }
 
+    getTrainingDropdown() {
+        return this.http.get<SelectList[]>(this.baseUrl + "/DropDown/GetTrainingList")
+    }
+
     getRegionsDropdown(countryId: string) {
         return this.http.get<SelectList[]>(this.baseUrl + "/DropDown/GetRegionDropdownList?countryId=" + countryId)
     }

@@ -247,6 +247,13 @@ namespace IntegratedDigitalAPI.Controllers.Configuration
             return Ok(await _DropDownService.GetAccountingPeriodDropDown());
         }
 
+        [HttpGet]
+        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetTrainingList()
+        {
+            return Ok(await _DropDownService.GetTrainingList());
+        }
+
 
     }
 }

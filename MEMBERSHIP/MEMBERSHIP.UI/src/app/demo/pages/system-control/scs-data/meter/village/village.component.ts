@@ -49,7 +49,7 @@ export class VillageComponent implements OnInit {
 
   removeVillage(VillageId:string) {
 
-    console.log(VillageId)
+  
     this.confirmationService.confirm({
       message: 'Are You sure you want to delete this Village?',
       header: 'Delete Confirmation',

@@ -29,7 +29,7 @@ export class DeviceSettingComponent implements OnInit {
       next: (res) => {
         this.deviceSettings = res;
       }, error: (err) => {
-        console.log(err)
+        
       }
     })
   }

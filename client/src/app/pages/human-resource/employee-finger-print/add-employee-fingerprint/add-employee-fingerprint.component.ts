@@ -61,7 +61,7 @@ export class AddEmployeeFingerprintComponent implements OnInit {
     this.dropDownService.GetEmployeeDropDown().subscribe({
       next: (res) => {        
         this.employeeList = res
-        console.log(this.employeeList)
+      
         this.selectEmployeee = this.employeeList.find(x => x.name == this.fingerPrint.fullName)?.id!
       }
       , error: (err) => {

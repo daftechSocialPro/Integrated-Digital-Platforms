@@ -80,7 +80,6 @@ exportTableToExcel(table: HTMLElement, fileName: string): void {
     this.pmService.GetProgressReport(filterationCriteria).subscribe({
       next: (res) => {
 
-        console.log("progress report ",res)
         this.progressReport = res
         this.cnt = this.progressReport?.planDuration
 

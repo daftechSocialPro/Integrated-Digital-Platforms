@@ -33,7 +33,7 @@ export class DepartmentComponent implements OnInit {
         
       
       },error:(err)=>{
-        console.log(err)
+    
       }
     })
   }

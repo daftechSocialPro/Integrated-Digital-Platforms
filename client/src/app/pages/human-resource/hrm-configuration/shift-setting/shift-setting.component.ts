@@ -29,7 +29,7 @@ export class ShiftSettingComponent implements OnInit {
       next: (res) => {
         this.shiftLists = res;
       }, error: (err) => {
-        console.log(err)
+       
       }
     })
   }

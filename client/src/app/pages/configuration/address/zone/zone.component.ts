@@ -29,7 +29,7 @@ export class ZoneComponent implements OnInit {
           this.Zones = res       
       
       },error:(err)=>{
-        console.log(err)
+    
       }
     })
   }

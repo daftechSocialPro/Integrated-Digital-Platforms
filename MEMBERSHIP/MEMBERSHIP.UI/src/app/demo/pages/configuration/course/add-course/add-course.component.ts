@@ -97,7 +97,7 @@ export class AddCourseComponent implements OnInit {
       formData.append('File', this.fileGH);
       formData.append('id', this.Course.id);
 
-      console.log(formData);
+
       this.configService.updateCourse(formData).subscribe({
         next: (res) => {
           if (res.success) {

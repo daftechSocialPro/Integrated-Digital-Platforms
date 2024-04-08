@@ -25,7 +25,7 @@ export class BankListComponent implements OnInit {
       next: (res) => {
         this.bankLists = res
       }, error: (err) => {
-        console.log(err)
+        
       }
     })
   }

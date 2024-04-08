@@ -58,7 +58,6 @@ export class EducationalLevelComponent implements OnInit {
 
   removeEducationalLevel(EducationalLevelId:string) {
 
-    console.log(EducationalLevelId)
     this.confirmationService.confirm({
       message: 'Are You sure you want to delete this EducationalLevel?',
       header: 'Delete Confirmation',

@@ -49,8 +49,7 @@ export class UserRoleComponent implements OnInit {
 
   assignRole(roles: any) {
 
-console.log({  userId: this.user.id,
-  roleName: roles})
+
 
     this.userService.assignRole({
       userId: this.user.id,
@@ -83,8 +82,6 @@ console.log({  userId: this.user.id,
       selectedValues.push(selectElement.selectedOptions[i].value);
     }
 
-
-    console.log(selectedValues)
     return selectedValues;
   }
   removeRole(roles: any) {

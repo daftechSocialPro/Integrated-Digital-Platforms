@@ -32,7 +32,7 @@ export class LeaveTypeComponent implements OnInit {
         
       
       },error:(err)=>{
-        console.log(err)
+       
       }
     })
   }

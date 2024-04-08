@@ -44,7 +44,7 @@ export class AddMeterRateComponent implements OnInit {
 
       this.controlService.getMeterSizeRentForUpdate(this.recordNo).subscribe({
         next:(res)=>{
-          console.log(res)
+        
           this.MeterRate=res
           this.MeterRateForm.controls['recordno'].setValue(this.MeterRate.recordno)
           this.MeterRateForm.controls['rentGroupCode'].setValue(this.MeterRate.rentGroupCode)
@@ -116,7 +116,7 @@ export class AddMeterRateComponent implements OnInit {
 
         }, error: (err) => {
           this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: err.message });
-console.log(err)
+
         }
       })
 

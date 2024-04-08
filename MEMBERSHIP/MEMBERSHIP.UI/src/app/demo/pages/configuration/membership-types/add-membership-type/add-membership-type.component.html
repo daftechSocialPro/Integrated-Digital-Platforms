@@ -19,7 +19,7 @@
                     <div class="col-md-6">
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" formControlName="shortCode" id="floatingInput" />
-                            <label for="floatingInput">Short COde</label>
+                            <label for="floatingInput">Short Code</label>
                         </div>
                     </div>
 
@@ -31,12 +31,26 @@
                             <label for="floatingInput">For How Many Years</label>
                         </div>
                     </div>
+
                     <div class="col-md-6">
                         <div class="form-floating mb-3">
                             <input type="number" class="form-control" formControlName="money" id="floatingInput" />
                             <label for="floatingInput">Money </label>
                         </div>
                     </div>
+
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+
+                            <select class="form-control" formControlName="currency">
+                                <option></option>
+                                <option value="ETB">ETB</option>
+                                <option value="USD">USD</option>
+                            </select>
+                            <label for="floatingInput">Currency </label>
+                        </div>
+                    </div>
+
                     <div class="col-md-6">
                         <div class="form-floating mb-3">
 
@@ -51,9 +65,7 @@
 
                     <div class="col-md-12">
                         <div class="form-floating mb-3">
-
                             <textarea class="form-control" formControlName="description" style="height: 100px;">
-
                             </textarea>
                             <label for="floatingInput">Desctiption </label>
                         </div>

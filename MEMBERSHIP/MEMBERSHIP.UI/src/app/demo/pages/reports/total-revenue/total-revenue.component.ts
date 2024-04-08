@@ -40,7 +40,7 @@ export class TotalRevenueComponent implements OnInit {
           this.reportRevenues = this.reportRevenues.filter((item)=> {return (item.regionName == this.userView.regionId)})
         }
         this.reportRevenues.map((item) => {
-          console.log(item.regionRevenue)
+        
           this.regionRevenueSum += item.regionRevenue
         }
         )

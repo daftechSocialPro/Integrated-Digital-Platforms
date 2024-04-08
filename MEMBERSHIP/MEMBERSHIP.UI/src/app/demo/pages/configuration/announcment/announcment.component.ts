@@ -55,7 +55,7 @@ export class AnnouncmentComponent implements OnInit {
   }
 
   removeAnnouncment(AnnouncmentId: string) {
-    console.log(AnnouncmentId);
+  
     this.confirmationService.confirm({
       message: 'Are You sure you want to delete this Announcment?',
       header: 'Delete Confirmation',

@@ -52,7 +52,7 @@ export class CompanyProfileComponent implements OnInit {
 
 
       }, error: (err) => {
-        console.log(err)
+  
       }
 
     })

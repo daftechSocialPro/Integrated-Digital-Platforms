@@ -25,7 +25,7 @@ export class FinanceLookupComponent implements OnInit {
       next:(res)=>{      
           this.financelookup = res      
       },error:(err)=>{
-        console.log(err)
+       
       }
     })
   }

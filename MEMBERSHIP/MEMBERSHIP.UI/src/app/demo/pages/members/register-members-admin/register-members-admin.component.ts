@@ -133,17 +133,17 @@ export class RegisterMembersAdminComponent implements OnInit {
       error: (err) => {
         this.messageService.add({ severity: 'error', summary: 'Something went wrong!!!', detail: err.message });
 
-        console.log(err);
+
       }
     });
   }
 
   checkIfPhoneNumberExist(phoneNumber: string) {
-    console.log(phoneNumber);
+
 
     this.memberService.checkIfPhoneNumberExist(phoneNumber).subscribe({
       next: (res) => {
-        console.log(res);
+  
         if (res.exist) {
 
      

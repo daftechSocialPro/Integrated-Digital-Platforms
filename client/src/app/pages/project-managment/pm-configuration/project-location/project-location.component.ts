@@ -36,7 +36,7 @@ export class ProjectLocationComponent implements OnInit {
     this.configurationService.getProjectLocations().subscribe({
       next: (res) => {
         this.projectLocations = res
-        console.log(res)
+        
       }, error: (err) => {
 
 

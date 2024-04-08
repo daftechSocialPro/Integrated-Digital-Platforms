@@ -78,7 +78,6 @@ export class ApplicantComponent implements OnInit {
       zoneId: this.employee.zoneId,
     }
 
-    console.log(applicantPost)
     var formData = new FormData();
     for (let key in applicantPost) {
       if (applicantPost.hasOwnProperty(key)) {
@@ -117,7 +116,7 @@ export class ApplicantComponent implements OnInit {
   }
 
   getItemsDropDown() {
-    console.log(this.applicantDetail.applicantStatus)
+    
     if (this.applicantDetail.applicantStatus == "APPLIED") {
       this.items = [
         {

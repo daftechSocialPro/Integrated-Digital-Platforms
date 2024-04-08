@@ -64,7 +64,7 @@ taskItems2 :number[] =Array(20).fill(0)
 
     this.dropDownService.getStrategicPlans().subscribe({
       next:(res)=>{
-        console.log(res)
+      
         this.strategicPlans = res 
         this.filterdStrategicPlans = res 
         res.forEach((str) => {
@@ -101,7 +101,7 @@ taskItems2 :number[] =Array(20).fill(0)
 
     this.projectService.getStrategicPlanForReport(strategicPlanId).subscribe({
       next:(res)=>{
-        console.log(res)
+       
         this.strategicActivites.set(strategicPlanId, res);
       }
     })

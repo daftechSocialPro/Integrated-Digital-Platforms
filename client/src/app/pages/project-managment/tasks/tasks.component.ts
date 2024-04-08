@@ -47,7 +47,7 @@ export class TasksComponent implements OnInit {
     this.pmService.getDateAndTime(this.planId).subscribe({
       next:(res)=>{
         this.dateAndTime = res 
-        console.log(this.dateAndTime)
+    
       }
     })
   }

@@ -47,7 +47,7 @@ export class GenerateIdCardComponent implements OnInit {
 
   
       const imageBlob = await this.http.get(this.getImage(this.member.imagePath!), { responseType: 'blob' }).toPromise();
-      console.log(imageBlob)
+   
       const imageUrl = URL.createObjectURL(imageBlob);
       
     
@@ -94,12 +94,11 @@ export class GenerateIdCardComponent implements OnInit {
           // this.isMobile = false; 
         })
         .catch((error) => {
-          console.error('Error generating PDF:', error);
+       
         });
    
     } else {
-      // Handle the case where the card element is not found
-      console.error('Card element not found.');
+    
     }
   }
 

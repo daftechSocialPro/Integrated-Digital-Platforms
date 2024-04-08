@@ -26,7 +26,7 @@ export class BenefitListsComponent implements OnInit {
       next:(res)=>{
           this.benefitLists = res
       },error:(err)=>{
-        console.log(err)
+   
       }
     })
   }

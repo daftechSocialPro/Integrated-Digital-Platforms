@@ -49,7 +49,6 @@ export class InvoicePrefixComponent implements OnInit {
 
   removeInvoicePrefix(InvoicePrefixId:string) {
 
-    console.log(InvoicePrefixId)
     this.confirmationService.confirm({
       message: 'Are You sure you want to delete this Invoice Prefix?',
       header: 'Delete Confirmation',

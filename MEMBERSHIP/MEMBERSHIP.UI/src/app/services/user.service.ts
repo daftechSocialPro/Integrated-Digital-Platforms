@@ -26,8 +26,7 @@ export class UserService {
   }
 
   register(body: IMembersPostDto) {
-    console.log(body);
-
+   
     return this.http.post<ResponseMessage>(this.BaseURI + '/Authentication/Register', body);
   }
 

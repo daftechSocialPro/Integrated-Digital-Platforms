@@ -31,7 +31,7 @@ export class EducationalFieldComponent implements OnInit {
         
       
       },error:(err)=>{
-        console.log(err)
+      
       }
     })
   }

@@ -21,7 +21,7 @@ export class AddHolidayComponent implements OnInit {
 
 
   ngOnInit(): void {
-    debugger;
+   
     this.user = this.userService.getCurrentUser();
     if (this.holidayField == null) {
       this.holidayFormGroup = this.formBuilder.group({
@@ -30,7 +30,7 @@ export class AddHolidayComponent implements OnInit {
       });
     }
     else {
-      console.log(this.holidayField)
+      
       this.holidayFormGroup = this.formBuilder.group({
         holidayName: [this.holidayField.holidayName, Validators.required],
         holidayDate: [this.holidayField.holidayDate, Validators.required],

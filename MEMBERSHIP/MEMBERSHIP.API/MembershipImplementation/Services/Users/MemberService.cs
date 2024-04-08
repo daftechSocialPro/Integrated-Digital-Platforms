@@ -79,7 +79,7 @@ namespace MembershipImplementation.Services.HRM
                     PhoneNumber = memberPost.PhoneNumber,
                     Email = memberPost.Email,
                     RegionId = memberPost.RegionId,
-                    Zone=memberPost.Zone,
+                    Zone = memberPost.Zone,
                     MembershipTypeId = memberPost.MembershipTypeId,
                     Woreda = memberPost.Woreda,
                     Inistitute = memberPost.Inistitute,
@@ -106,6 +106,7 @@ namespace MembershipImplementation.Services.HRM
                         Woreda = memberPost.Woreda,
                         Inistitute = memberPost.Inistitute,
                         Amount = memberType.Money,
+                        Currency = memberType.Currency.ToString()
 
                     },
                     Message = "Added Successfully",
@@ -134,7 +135,7 @@ namespace MembershipImplementation.Services.HRM
                     PhoneNumber = memberPost.PhoneNumber,
                     Email = memberPost.Email,
                     RegionId = memberPost.RegionId,
-                    Zone=memberPost.Zone,
+                    Zone = memberPost.Zone,
                     MembershipTypeId = memberPost.MembershipTypeId,
                     Woreda = memberPost.Woreda,
                     Inistitute = memberPost.Inistitute,
@@ -232,10 +233,10 @@ namespace MembershipImplementation.Services.HRM
                                      RejectedRemark = member.RejectedRemark,
 
                                      LastPaid = latestPayment != null ? latestPayment.LastPaid : DateTime.Now,
-                                     MembershipCategory= member.MembershipType.MembershipCategory.ToString(),
+                                     MembershipCategory = member.MembershipType.MembershipCategory.ToString(),
 
                                      MoodleId = member.MoodleId,
-                                     MoodlePassword = member.MoodlePassword!=null? _generalConfig.Decrypt(member.MoodlePassword!, encryption):"",
+                                     MoodlePassword = member.MoodlePassword != null ? _generalConfig.Decrypt(member.MoodlePassword!, encryption) : "",
                                      MoodleName = member.MoodleUserName,
                                      MoodleStatus = member.MoodleStatus.ToString(),
                                      createdByDate = member.CreatedDate
@@ -273,7 +274,7 @@ namespace MembershipImplementation.Services.HRM
                                      ExpiredDate = latestPayment != null ? latestPayment.ExpiredDate : DateTime.Now,
                                      PaymentStatus = latestPayment != null ? latestPayment.PaymentStatus.ToString() : null,
                                      LastPaid = latestPayment != null ? latestPayment.LastPaid : DateTime.Now,
-                                     Text_Rn = latestPayment != null ? latestPayment.Text_Rn:"",
+                                     Text_Rn = latestPayment != null ? latestPayment.Text_Rn : "",
                                      Amount = member.MembershipType.Money,
                                      IsBirthDate = member.IsBirthDate,
                                      MoodleId = member.MoodleId,
@@ -283,16 +284,17 @@ namespace MembershipImplementation.Services.HRM
                                      MoodlePassword = member.MoodlePassword != null ? _generalConfig.Decrypt(member.MoodlePassword!, encryption) : "",
                                      MoodleName = member.MoodleUserName,
                                      MoodleStatus = member.MoodleStatus.ToString(),
-                                     createdByDate = member.CreatedDate
+                                     createdByDate = member.CreatedDate,
+                                     Currency = member.MembershipType.Currency.ToString()
 
 
 
                                  }).FirstOrDefaultAsync();
 
-           
 
 
-                return members;
+
+            return members;
 
         }
 
@@ -409,7 +411,7 @@ namespace MembershipImplementation.Services.HRM
                 currentPayment.PaymentStatus = PaymentStatus.PAID;
 
                 await _dbContext.SaveChangesAsync();
-                return new ResponseMessage { Success = true, Message = "Payment Completed Successfully",Data = member  };
+                return new ResponseMessage { Success = true, Message = "Payment Completed Successfully", Data = member };
             }
             return new ResponseMessage { Success = false, Message = "Unable To Find Payment Refernece" };
 
@@ -450,7 +452,7 @@ namespace MembershipImplementation.Services.HRM
 
             try
             {
-                var currentMember = await _dbContext.Members.Include(x=>x.MembershipType).FirstOrDefaultAsync(x => x.Id == memberUpdate.Id);
+                var currentMember = await _dbContext.Members.Include(x => x.MembershipType).FirstOrDefaultAsync(x => x.Id == memberUpdate.Id);
 
                 var isChanged = false;
 
@@ -466,10 +468,11 @@ namespace MembershipImplementation.Services.HRM
                     currentMember.Woreda = memberUpdate.Woreda;
                     currentMember.Inistitute = memberUpdate.Institute;
                     currentMember.InstituteRole = memberUpdate.InstituteRole;
-                    if (memberUpdate.MembershipTypeId != null) {
+                    if (memberUpdate.MembershipTypeId != null)
+                    {
                         if (currentMember.MembershipTypeId != memberUpdate.MembershipTypeId)
                         {
-                            isChanged = true; 
+                            isChanged = true;
                         }
                         currentMember.MembershipTypeId = memberUpdate.MembershipTypeId.Value;
                     }
@@ -493,7 +496,7 @@ namespace MembershipImplementation.Services.HRM
                         currentPayment.ExpiredDate = memberUpdate.ExpiredDate;
 
 
-                       if( currentPayment.PaymentStatus == PaymentStatus.PAID && (currentMember.MemberId==null|| currentMember.MembershipTypeId != null))
+                        if (currentPayment.PaymentStatus == PaymentStatus.PAID && (currentMember.MemberId == null || currentMember.MembershipTypeId != null))
                         {
                             var mt = await _dbContext.MembershipTypes.FindAsync(currentMember.MembershipTypeId);
                             var memberID = await _generalConfig.GenerateCode(0, mt.ShortCode);
@@ -507,14 +510,14 @@ namespace MembershipImplementation.Services.HRM
                             {
                                 var memberUser = await _dbContext.Users.Where(x => x.MemberId == currentMember.Id).ToListAsync();
                                 _dbContext.Users.RemoveRange(memberUser);
-                               await  _dbContext.SaveChangesAsync();
+                                await _dbContext.SaveChangesAsync();
                             }
-                            if (isChanged||currentMember.MemberId==null)
+                            if (isChanged || currentMember.MemberId == null)
                             {
                                 currentMember.MemberId = memberID;
                             }
 
-                          
+
                             AddUSerDto addUser = new AddUSerDto
                             {
 
@@ -550,7 +553,7 @@ namespace MembershipImplementation.Services.HRM
                             MemberId = currentMember.Id,
                             MembershipTypeId = currentMember.MembershipTypeId,
                             Text_Rn = "tx-emwa_admin_register",
-                            Url=""
+                            Url = ""
 
 
                         };
@@ -569,10 +572,10 @@ namespace MembershipImplementation.Services.HRM
                                 currentMember.MemberId = memberID;
                             }
 
-                            if ((currentMember.MembershipTypeId != null && isChanged)||currentMember.MemberId==null)
+                            if ((currentMember.MembershipTypeId != null && isChanged) || currentMember.MemberId == null)
                             {
                                 var memberUser = await _dbContext.Users.Where(x => x.MemberId == currentMember.Id).ToListAsync();
-                                 _dbContext.Users.RemoveRange(memberUser);
+                                _dbContext.Users.RemoveRange(memberUser);
                                 await _dbContext.SaveChangesAsync();
                             }
 
@@ -602,6 +605,33 @@ namespace MembershipImplementation.Services.HRM
 
                         }
                         await _dbContext.MemberPayments.AddAsync(currentpay);
+                    }
+
+
+                    var user = await _userManager.FindByNameAsync(currentMember.MemberId);
+                    if (user == null && currentMember.MemberId != null)
+                    {
+                        AddUSerDto addUser = new AddUSerDto
+                        {
+
+                            MemberId = currentMember.Id,
+                            UserName = currentMember.MemberId,
+                            Password = "1234",
+
+
+
+                        };
+                        var result = await _authenticationService.AddUser(addUser);
+
+
+                        var message = $"Congratulation, being EMwA Member!!!\n" +
+                            $"We have received your payment and would like to thank you for \n being a member of Ethiopian Midwives Association. \n" +
+                            $"Your Membership ID is {currentMember.MemberId} you can login through https://emwamms.org using the provided membership Id.";
+                        var email = new EmailMetadata
+                                            (currentMember.Email, "ID Card Status",
+                                                $"{message}" +
+                                                $"\nThank you.\n\nSincerely,\nFekadu Mazengia\nExecutive Director");
+                        await _emailService.Send(email);
                     }
 
 
@@ -691,7 +721,7 @@ namespace MembershipImplementation.Services.HRM
                                      RejectedRemark = member.RejectedRemark,
 
                                      MoodleId = member.MoodleId,
-                                     MoodlePassword = member.MoodlePassword!=null? _generalConfig.Decrypt(member.MoodlePassword, encryption):"",
+                                     MoodlePassword = member.MoodlePassword != null ? _generalConfig.Decrypt(member.MoodlePassword, encryption) : "",
                                      MoodleName = member.MoodleUserName
 
                                  }).ToListAsync();
@@ -724,7 +754,7 @@ namespace MembershipImplementation.Services.HRM
                 var memberPayment = await _dbContext.MemberPayments.Where(x => x.MemberId == members.Id)
                                             .OrderByDescending(x => x.LastPaid).FirstOrDefaultAsync();
 
-               
+
                 if (memberPayment == null)
                 {
 
@@ -733,13 +763,13 @@ namespace MembershipImplementation.Services.HRM
                         FullName = members.FullName,
                         PhoneNumber = members.PhoneNumber,
                         Amount = members.MembershipType.Money,
+                        Currency = members.MembershipType.Currency.ToString(),
                         MembershipType = members.MembershipType.Name,
                         MembershipTypeId = members.MembershipTypeId.ToString(),
                         Text_Rn = null,
                         Email = members.Email,
                         PaymentStatus = null,
                         Url = null,
-                       
                         MemberId = members.MemberId,
                         Id = members.Id,
 
@@ -762,6 +792,7 @@ namespace MembershipImplementation.Services.HRM
                     {
                         FullName = members.FullName,
                         PhoneNumber = members.PhoneNumber,
+                        Currency = members.MembershipType.Currency.ToString(),
                         Email = members.Email,
                         Amount = members.MembershipType.Money,
                         MembershipType = members.MembershipType.Name,
@@ -770,7 +801,7 @@ namespace MembershipImplementation.Services.HRM
                         PaymentStatus = memberPayment.PaymentStatus.ToString(),
                         ExpiredDate = memberPayment.ExpiredDate,
                         MemberId = members.MemberId,
-                        Url= memberPayment.Url,
+                        Url = memberPayment.Url,
                         Id = members.Id,
 
 
@@ -820,10 +851,17 @@ namespace MembershipImplementation.Services.HRM
         public async Task UPdateExpiredDateStatus()
         {
             var todayDate = DateTime.Now;
-          
-            var memberPayments = await _dbContext.MemberPayments.Where(x => x.ExpiredDate< todayDate.Date && x.PaymentStatus!=PaymentStatus.EXPIRED).ToListAsync();
+            var tenDaysFromNow = todayDate.AddDays(10);
 
-            foreach(var payment in memberPayments)
+
+
+            var memberPayments = await _dbContext.MemberPayments.Where(x => x.ExpiredDate < todayDate.Date && x.PaymentStatus != PaymentStatus.EXPIRED).ToListAsync();
+
+            var memberPayments10days = await _dbContext.MemberPayments.Include(x => x.Member)
+    .Where(x => x.ExpiredDate <= tenDaysFromNow && x.PaymentStatus != PaymentStatus.EXPIRED)
+    .ToListAsync();
+
+            foreach (var payment in memberPayments)
             {
                 payment.PaymentStatus = PaymentStatus.EXPIRED;
                 _dbContext.SaveChangesAsync();
@@ -831,40 +869,59 @@ namespace MembershipImplementation.Services.HRM
 
             }
 
+            foreach (var payment in memberPayments10days)
+            {
+
+                var message = $"Membership Expiration Warning!!!\n" +
+                    $"This is a kindly reminder your Membership will expired on {payment.ExpiredDate}. \n" +
+                    $"Your Membership ID is {payment.Member.MemberId} you can login through https://emwamms.org and extend your membership .";
+                var email = new EmailMetadata
+                                    (payment.Member.Email, "Membership Status",
+                                        $"{message}" +
+                                        $"\nThank you.\n\nSincerely,\nFekadu Mazengia\nExecutive Director");
+                await _emailService.Send(email);
+
+            }
+
+
+
+
+
         }
 
 
-        public async Task<ResponseMessage> UpdateMoodleSatus(Guid memberId,string status)
+        public async Task<ResponseMessage> UpdateMoodleSatus(Guid memberId, string status)
         {
 
             var member = await _dbContext.Members.FindAsync(memberId);
 
-            if (member!=null &&member.MoodleId!= null) { 
-            try
+            if (member != null && member.MoodleId != null)
             {
-                // Create a new HttpClient instance from the factory.
-                HttpClient httpClient = _httpClientFactory.CreateClient();
-
-                // Define the Moodle API endpoint URL.
-                string apiUrl = "https://emwa-elearning.com/webservice/rest/server.php";
-
-                // Create a new FormData object and add the required parameters.
-                var formData = new MultipartFormDataContent();
-                formData.Add(new StringContent("json"), "moodlewsrestformat");
-                formData.Add(new StringContent("core_user_update_users"), "wsfunction");
-                formData.Add(new StringContent("34c8f4f0087149ff6e19312a545ae849"), "wstoken");
-                formData.Add(new StringContent(member.MoodleId), "users[0][id]");
-                formData.Add(new StringContent(status), "users[0][suspended]");
-
-                // Send the POST request to the Moodle API.
-                HttpResponseMessage response = await httpClient.PostAsync(apiUrl, formData);
-
-                if (response.IsSuccessStatusCode)
+                try
                 {
-                    // Read the response content as a string.
-                    string responseBody = await response.Content.ReadAsStringAsync();
+                    // Create a new HttpClient instance from the factory.
+                    HttpClient httpClient = _httpClientFactory.CreateClient();
 
-                        member.MoodleStatus = status=="0"? MoodleStatus.NOTSUSPENDED:MoodleStatus.SUSPENDED;
+                    // Define the Moodle API endpoint URL.
+                    string apiUrl = "https://emwa-elearning.com/webservice/rest/server.php";
+
+                    // Create a new FormData object and add the required parameters.
+                    var formData = new MultipartFormDataContent();
+                    formData.Add(new StringContent("json"), "moodlewsrestformat");
+                    formData.Add(new StringContent("core_user_update_users"), "wsfunction");
+                    formData.Add(new StringContent("34c8f4f0087149ff6e19312a545ae849"), "wstoken");
+                    formData.Add(new StringContent(member.MoodleId), "users[0][id]");
+                    formData.Add(new StringContent(status), "users[0][suspended]");
+
+                    // Send the POST request to the Moodle API.
+                    HttpResponseMessage response = await httpClient.PostAsync(apiUrl, formData);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Read the response content as a string.
+                        string responseBody = await response.Content.ReadAsStringAsync();
+
+                        member.MoodleStatus = status == "0" ? MoodleStatus.NOTSUSPENDED : MoodleStatus.SUSPENDED;
                         await _dbContext.SaveChangesAsync();
 
                         // You can process the responseBody as needed.
@@ -877,24 +934,24 @@ namespace MembershipImplementation.Services.HRM
 
                         };
 
-                   
-                }
-                else
-                {
+
+                    }
+                    else
+                    {
                         // Handle the case where the Moodle API returns an error.
 
                         return new ResponseMessage
                         {
                             Success = false,
-                          
+
                             Message = $"{(int)response.StatusCode} API call failed."
 
                         };
-                     
+
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
+                catch (Exception ex)
+                {
                     // Handle exceptions if something goes wrong with the HTTP request.
                     //  return BadRequest("An error occurred: " + ex.Message);
                     return new ResponseMessage
@@ -956,9 +1013,9 @@ namespace MembershipImplementation.Services.HRM
                 member.MoodleUserName = moodlePost.MoodleName;
                 var encryption = "2B7E151628AED2A6ABF7158809CF4F3C";
 
-                var password =   _generalConfig.Encrypt(moodlePost.MoodlePassword,encryption);
+                var password = _generalConfig.Encrypt(moodlePost.MoodlePassword, encryption);
                 member.MoodlePassword = password;
-               
+
 
                 _dbContext.SaveChangesAsync();
 
@@ -966,9 +1023,9 @@ namespace MembershipImplementation.Services.HRM
 
                 return new ResponseMessage
                 {
-                    Success = true ,
+                    Success = true,
                     Message = "Member Moodle Updated Successfully"
-                };  
+                };
             }
             else
             {
@@ -984,9 +1041,9 @@ namespace MembershipImplementation.Services.HRM
 
         public async Task<List<MemberRegionRevenueReportDto>> GetRegionRevenueReport()
         {
-            var chapters = await _dbContext.Regions.Where(x=>x.CountryType== CountryType.ETHIOPIAN).ToListAsync();
+            var chapters = await _dbContext.Regions.Where(x => x.CountryType == CountryType.ETHIOPIAN).ToListAsync();
 
-            var memberPayments = await _dbContext.MemberPayments.Include(x=>x.Member).ThenInclude(x=>x.MembershipType).Include(x => x.Member).ThenInclude(x=>x.Region).Where(x=>x.Member.RegionId!=null && x.PaymentStatus==PaymentStatus.PAID).ToListAsync();
+            var memberPayments = await _dbContext.MemberPayments.Include(x => x.Member).Include(x => x.MembershipType).Include(x => x.Member).ThenInclude(x => x.Region).Where(x => x.Member.RegionId != null && x.PaymentStatus == PaymentStatus.PAID).ToListAsync();
             var memberPaymentsForeigns = await _dbContext.MemberPayments.Include(x => x.Member).Include(x => x.MembershipType).Where(x => x.Member.RegionId == null && x.PaymentStatus == PaymentStatus.PAID).ToListAsync();
 
             var membersReports = new List<MemberRegionRevenueReportDto>();
@@ -994,12 +1051,15 @@ namespace MembershipImplementation.Services.HRM
             foreach (var chapter in chapters)
             {
 
+
                 var memberReport = new MemberRegionRevenueReportDto
                 {
                     RegionName = chapter.RegionName,
-                    RegionRevenue =  memberPayments.Where(x=>x.Member?.RegionId==chapter.Id).Sum(x=>x.MembershipType.Money),
-                    Members = _dbContext.Members.Count(x=>x.RegionId==chapter.Id),
-                    
+                    RegionRevenue = memberPayments
+    .Where(x => x.Member?.RegionId == chapter.Id)
+    .Sum(x => x.MembershipType.Money * (x.MembershipType.Currency == Currency.ETB ? 1 : 54)),
+                    Members = _dbContext.Members.Count(x => x.RegionId == chapter.Id),
+
                 };
 
                 membersReports.Add(memberReport);
@@ -1008,8 +1068,11 @@ namespace MembershipImplementation.Services.HRM
             var memberReport2 = new MemberRegionRevenueReportDto
             {
                 RegionName = CountryType.FOREIGN.ToString(),
-                RegionRevenue = memberPaymentsForeigns.Sum(x => x.MembershipTypeId!=null? x.MembershipType.Money:0),
-                Members = _dbContext.Members.Count(x=>x.RegionId==Guid.Empty),
+                RegionRevenue = memberPaymentsForeigns
+    .Where(x => x.MembershipTypeId != null)
+    .Sum(x => x.MembershipType.Money * (x.MembershipType.Currency == Currency.ETB ? 1 : 54))
+,
+                Members = _dbContext.Members.Count(x => x.RegionId == Guid.Empty || x.RegionId == null),
             };
             membersReports.Add(memberReport2);
             return membersReports;
@@ -1026,14 +1089,14 @@ namespace MembershipImplementation.Services.HRM
                     ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
 
                     int rowCount = worksheet.Dimension.Rows;
-                
+
 
                     for (int row = 2; row <= rowCount; row++) // Assuming the data starts from the second row
                     {
                         Member member = new Member();
                         var fullName = worksheet.Cells[row, 1].Value?.ToString() ?? string.Empty;
                         var PhoneNumber = worksheet.Cells[row, 2].Value?.ToString() ?? string.Empty;
-                        var birthdateExcel = worksheet.Cells[row, 11].Value?.ToString() ;
+                        var birthdateExcel = worksheet.Cells[row, 11].Value?.ToString();
 
                         DateTime birthDate = DateTime.Parse(birthdateExcel);
                         var result = await CheckIfPhoneNumberExistFromBot(PhoneNumber);
@@ -1066,7 +1129,7 @@ namespace MembershipImplementation.Services.HRM
                             var selectedEducationalLevel = await _dbContext.EducationalLevels.Where(x => x.EducationalLevelName == educationalLevel).FirstOrDefaultAsync();
 
 
-                       
+
 
                             var region = worksheet.Cells[row, 14].Value?.ToString() ?? string.Empty;
                             var selectedRegion = await _dbContext.Regions.Where(x => x.RegionName == region).FirstOrDefaultAsync();
@@ -1079,8 +1142,8 @@ namespace MembershipImplementation.Services.HRM
                             member.MembershipTypeId = selectedMembershipType.Id;
                             member.Zone = worksheet.Cells[row, 4].Value?.ToString() ?? string.Empty;
                             member.Woreda = worksheet.Cells[row, 5].Value?.ToString() ?? string.Empty;
-                            member.RegionId = selectedRegion!=null ? selectedRegion.Id : null;    
-                            member.EducationalLevelId = selectedEducationalLevel != null?selectedEducationalLevel.Id:null;
+                            member.RegionId = selectedRegion != null ? selectedRegion.Id : null;
+                            member.EducationalLevelId = selectedEducationalLevel != null ? selectedEducationalLevel.Id : null;
                             member.EducationalField = worksheet.Cells[row, 7].Value?.ToString() ?? string.Empty;
                             member.Gender = gender == "M" ? Gender.MALE : Gender.FEMALE;
                             member.Inistitute = worksheet.Cells[row, 9].Value?.ToString() ?? string.Empty;
@@ -1110,7 +1173,8 @@ namespace MembershipImplementation.Services.HRM
 
 
 
-                        } else
+                        }
+                        else
                         {
                             return new ResponseMessage
                             {
@@ -1120,10 +1184,10 @@ namespace MembershipImplementation.Services.HRM
                             };
                         }
 
-                            
 
-                         
-                        
+
+
+
 
                     }
                 }
@@ -1156,7 +1220,7 @@ namespace MembershipImplementation.Services.HRM
             {
                 return new ResponseMessage
                 {
-                   
+
                     Message = "Member Not Found!!!",
                     Success = false
                 };
@@ -1167,7 +1231,7 @@ namespace MembershipImplementation.Services.HRM
 
             if (MemberPayments != null)
             {
-                 _dbContext.MemberPayments.RemoveRange(MemberPayments);
+                _dbContext.MemberPayments.RemoveRange(MemberPayments);
                 await _dbContext.SaveChangesAsync();
             }
 
@@ -1213,12 +1277,12 @@ namespace MembershipImplementation.Services.HRM
                 };
 
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 return new ResponseMessage
                 {
                     Success = false,
-                    Message =ex.Message
+                    Message = ex.Message
                 };
             }
 

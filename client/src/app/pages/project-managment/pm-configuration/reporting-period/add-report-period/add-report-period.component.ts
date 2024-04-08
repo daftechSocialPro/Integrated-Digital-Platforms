@@ -52,7 +52,7 @@ export class AddReportPeriodComponent implements OnInit {
     private userService: UserService,
     private messageService: MessageService) {
 
-    console.log(this.ReportingPeriod)
+   
    
 
   }

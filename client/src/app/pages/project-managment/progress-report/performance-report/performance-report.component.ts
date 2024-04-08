@@ -111,7 +111,7 @@ this.OnBranchChange()
     this.pmService.GetPerformanceReport(filterationCriteria).subscribe({
       next: (res) => {
 
-        console.log("progress st",res)
+     
         this.performanceReport = res 
            // this.cnt = this.progressReportByStructure?.planDuration
 

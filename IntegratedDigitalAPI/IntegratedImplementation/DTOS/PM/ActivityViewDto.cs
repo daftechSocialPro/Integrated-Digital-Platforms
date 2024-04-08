@@ -62,6 +62,14 @@ namespace IntegratedDigitalAPI.DTOS.PM
 
         public bool ? IsCompleted { get; set; }
 
+
+        public bool ? IsReSceduled { get; set; }        
+        public string ?  ResceduledJustification { get; set; }
+
+        public string ? CancelledJustfication { get; set; }
+
+        public DateTime? CreatedDate { get; set; }
+
     }
 
     public class ActivityGroup

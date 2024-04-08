@@ -274,6 +274,11 @@ import { PlanVsAchivmentProjectComponent } from './pages/project-managment/progr
 import { ToolbarModule } from 'primeng/toolbar';
 import { PlanDashboardComponent } from './pages/project-managment/plans/plan-dashboard/plan-dashboard.component';
 import { NgxEchartsModule } from 'ngx-echarts';
+import { ResizableModule } from './components/resizable/resizable.modulte';
+import { AllTrainingListComponent } from './pages/training/all-training-list/all-training-list.component';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { ChangePasswordComponent } from './pages/configuration/user-management/change-password/change-password.component';
+import { CustomResceduleConfirtamionComponent } from './pages/project-managment/assigned-activities/custom-rescedule-confirtamion/custom-rescedule-confirtamion.component';
 
 @NgModule({
   declarations: [
@@ -597,7 +602,10 @@ import { NgxEchartsModule } from 'ngx-echarts';
 
     PlanVsAchivmentProjectComponent,
 
-    PlanDashboardComponent
+    PlanDashboardComponent,
+      AllTrainingListComponent,
+      ChangePasswordComponent,
+      CustomResceduleConfirtamionComponent
 
     //  AddMeasurementComponent,
     //  UpdateMeasurmentComponent
@@ -633,6 +641,8 @@ import { NgxEchartsModule } from 'ngx-echarts';
     NgImageSliderModule,
     TimelineModule ,
     ToolbarModule,
+    ResizableModule,
+    MultiSelectModule,
     ToastrModule.forRoot({
       preventDuplicates: true,
     }),

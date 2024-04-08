@@ -47,7 +47,7 @@ export class LeaveSettingComponent implements OnInit {
       next: (res) => {
         this.LeavePlanSettings = res
       }, error: (err) => {
-        console.log(err)
+     
       }
     })
   }
@@ -56,7 +56,7 @@ export class LeaveSettingComponent implements OnInit {
       next: (res) => {
         this.LeavePlanSettings = res
       }, error: (err) => {
-        console.log(err)
+       
       }
     })
   }
@@ -183,8 +183,7 @@ export class LeaveSettingComponent implements OnInit {
   
   
         } else {
-          // Handle reject action
-          console.log('Leave Plan Rejection Cancelled');
+      
         }
       });
   

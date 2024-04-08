@@ -74,8 +74,6 @@ export class AddProgressComponent implements OnInit {
     this.getDraftedProgress()
 
   
-
-    console.log('month performance',this.activity.monthPerformance)
   }
 
   getDraftedProgress(){
@@ -242,7 +240,7 @@ export class AddProgressComponent implements OnInit {
       const itemYear = item.year
       return itemYear === currentYear;
     });
-    console.log("filteredArray.slice(startIndex)", this.activity.monthPerformance)
+   
     this.filteredPerformanceArray = filteredArray.slice(startIndex)
    // return filteredArray.slice(startIndex);
   }

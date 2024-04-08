@@ -56,7 +56,7 @@ this.OnBranchChange()
     this.pmService.GetProgressReportByStructure('2023', this.serachForm.value.ReportBy, this.serachForm.value.selectStructureId).subscribe({
       next: (res) => {
 
-        console.log("progress st",res)
+     
              this.progressReportByStructure = res 
             this.cnt = this.progressReportByStructure?.planDuration
 

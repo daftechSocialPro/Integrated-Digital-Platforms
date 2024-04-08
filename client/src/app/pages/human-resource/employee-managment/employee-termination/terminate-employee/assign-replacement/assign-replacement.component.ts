@@ -28,14 +28,11 @@ export class AssignReplacementComponent implements OnInit {
   ){}
   ngOnInit(): void {
       this.user = this.userService.getCurrentUser()
-      console.log("TerminatedEmployeeActivites",this.TerminatedEmployeeActivites)
+      
   }
   selectEmployee(tar: TerminatedEmployeeReplacmentDto){
 
-    console.log("event",this.selectedEmployees)
-    
-    // const empId = event.target.value;
-    // console.log("this.empId",empId)
+   
      
     const foundTarIndex = this.selectedTars.findIndex(t => t.activity.id === tar.activity.id);
 
@@ -55,7 +52,7 @@ export class AssignReplacementComponent implements OnInit {
     //   }
     //   this.selectedTars[foundTarIndex].replaceEmployees.push(empSel);
     // }
-    console.log("this.selectedTars",this.selectedTars)
+   
 
 
   }

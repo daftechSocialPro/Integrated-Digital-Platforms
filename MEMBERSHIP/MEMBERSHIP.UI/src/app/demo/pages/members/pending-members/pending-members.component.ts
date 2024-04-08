@@ -76,17 +76,17 @@ export class PendingMembersComponent implements OnInit {
     })
   }
   getMember() {
-    console.log("membert", this.memberTelegram)
+   
     this.memberService.getSingleMember(this.memberTelegram.member.id).subscribe({
       next: (res) => {
-        console.log(res);
+       
         this.member = res;
       }
     });
   }
 
   onMembershipSelcted(item: string) {
-    console.log(item)
+
     var k = item.split('/')
     this.selectedAmount = Number.parseInt(k[1])
     this.selectedMembership = k[0]
@@ -146,18 +146,17 @@ export class PendingMembersComponent implements OnInit {
         error: (err) => {
           this.messageService.add({ severity: 'error', summary: 'Something went wrong!!!', detail: err.message });
 
-          console.log(err);
+     
         }
       });
     }
   }
 
   checkIfPhoneNumberExist(phoneNumber: string) {
-    console.log(phoneNumber);
-
+   
     this.memberService.checkIfPhoneNumberExist(phoneNumber).subscribe({
       next: (res) => {
-        console.log(res);
+     
         if (res) {
           this.confirmationService.confirm({
             message: 'You have already Registerd!! you want to proceed from where you stop ?',
@@ -187,10 +186,10 @@ export class PendingMembersComponent implements OnInit {
   verifyPayment() {
     this.memberService.getSingleMemberPayment(this.member.id).subscribe({
       next: (res) => {
-        console.log(res);
+
         this.paymentService.verifyPayment(res.text_Rn).subscribe({
           next: (re) => {
-            console.log(res);
+          
             if (re.response) {
               if (re.response.data.status === 'success') {
                 this.MakePaymentConfirmation(res.text_Rn);
@@ -224,10 +223,10 @@ export class PendingMembersComponent implements OnInit {
   }
 
   renewMembership() {
-    console.log(this.selectedMembership, this.selectedAmount)
+    
     var payment: IPaymentData = {
       amount: this.selectedAmount,
-      currency: 'ETB',
+      currency: this.memberTelegram.member.currency,
       email: this.memberTelegram.member.email,
       first_name: this.memberTelegram.member.fullName,
       last_name: '',
@@ -245,7 +244,7 @@ export class PendingMembersComponent implements OnInit {
 
     this.paymentService.verifyPayment(this.memberTelegram.member.text_Rn).subscribe({
       next: (res) => {
-        console.log(res);
+     
         if (res.response) {
           if (res.response.data.status == 'success') {
             this.MakePaymentConfirmation(this.memberTelegram.member.text_Rn);
@@ -254,7 +253,7 @@ export class PendingMembersComponent implements OnInit {
 
             var payment: IPaymentData = {
               amount: this.memberTelegram.member.amount,
-              currency: 'ETB',
+              currency: this.memberTelegram.member.currency,
               email: this.memberTelegram.member.email,
               first_name: this.memberTelegram.member.fullName,
               last_name: '',
@@ -265,9 +264,6 @@ export class PendingMembersComponent implements OnInit {
             };       
 
             
-        
-            console.log("payment",payment)
-            debugger
             this.paymentService.payment(payment).subscribe({
               next: (result) => {
 
@@ -292,7 +288,7 @@ export class PendingMembersComponent implements OnInit {
 
           var payment: IPaymentData = {
             amount: this.memberTelegram.member.amount,
-            currency: 'ETB',
+            currency: this.memberTelegram.member.currency,
             email: this.memberTelegram.member.email,
             first_name: this.memberTelegram.member.fullName,
             last_name: '',
@@ -303,9 +299,7 @@ export class PendingMembersComponent implements OnInit {
             description: this.memberTelegram.member.memberId
           };
       
-      
-          console.log("payment",payment)
-          debugger
+
 
 
           this.paymentService.payment(payment).subscribe({
@@ -334,11 +328,11 @@ export class PendingMembersComponent implements OnInit {
   }
   renewMembership3() {
 
-  console.log(this.memberTelegram)
+
 
     var payment: IPaymentData = {
       amount: this.memberTelegram.member.amount,
-      currency: 'ETB',
+      currency: this.memberTelegram.member.currency,
       email: this.memberTelegram.member.email,
       first_name: this.memberTelegram.member.fullName,
       last_name: '',
@@ -357,6 +351,7 @@ export class PendingMembersComponent implements OnInit {
           memberId: this.memberTelegram.member.id,
           membershipTypeId:this.memberTelegram.member.membershipTypeId,
           payment: payment.amount,
+          
           text_Rn: res.response.tx_ref,
           url:res.response.data.checkout_url
         };
@@ -390,13 +385,14 @@ export class PendingMembersComponent implements OnInit {
     this.paymentService.payment(payment).subscribe({
       next: (res) => {
 
-        console.log(res)
+   
         if (res.response){
        
         var mapayment: IMakePayment = {
           memberId: this.memberTelegram.member.id,
           membershipTypeId: this.selectedMembership,
           payment: payment.amount,
+         
           text_Rn: res.response.tx_ref,
           url: res.response.data.checkout_url
         };
@@ -404,14 +400,13 @@ export class PendingMembersComponent implements OnInit {
         var url = res.response.data.checkout_url;
         this.makePayment(mapayment, url);
 
-        console.log("after payment", res);
       }
       else {
         this.messageService.add({severity:'error',summary:'Invalid Information Please contact your admin ',detail:res.message})
       }
       },
       error: (err) => {
-        console.log(err);
+      
       }
     });
   }

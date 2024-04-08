@@ -58,8 +58,7 @@ export class MemberProfileComponent implements OnInit {
     this.memberService.getSingleMember(this.user.loginId).subscribe({
       next: (res) => {
         this.member = res;
-        console.log(res)
-
+       
         this.updateProfileForm.controls['fullName'].setValue(this.member.fullName);
         this.updateProfileForm.controls['educationalField'].setValue(this.member.educationalField);
         this.updateProfileForm.controls['educationalLevelId'].setValue(this.member.educationalLevelId.toLowerCase());
@@ -141,7 +140,7 @@ export class MemberProfileComponent implements OnInit {
       error: (err) => {
         this.messageService.add({ severity: 'error', summary: 'Something went wrong!!!', detail: err.message });
 
-        console.log(err);
+  
       }
     });
   }

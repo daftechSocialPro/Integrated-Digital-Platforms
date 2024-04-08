@@ -46,8 +46,10 @@ namespace IntegratedImplementation.Interfaces.Training
         Task<ResponseMessage> ChangeTraineesStatus(string Status, Guid trainingId);
 
         Task<ResponseMessage> ImportTraineeFormExcel(IFormFile ExcelFile);
+        Task<List<AllTraineeReportDto>> GetAllTrainingList();
 
-        
+
+
 
 
 

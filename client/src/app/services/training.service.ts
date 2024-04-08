@@ -7,6 +7,7 @@ import { UserService } from "./user.service";
 import { ITrainerGetDto, ITrainerPostDto } from "../model/Training/TrainerDto";
 import { ITraineeGetDto, ITraineePostDto, ITrainerEmailDto } from "../model/Training/TraineeDto";
 import { ITrainingReportGetDto, ITrainingReportPostDto } from "../model/Training/TrainingReportDto";
+import { IAllTraineeReportDto } from "../pages/training/all-training-list/IAllTraineeReportDto";
 
 @Injectable({
     providedIn: 'root'
@@ -52,6 +53,10 @@ export class TrainingService {
 
     }
 
+
+    getAllReportTrainees (){
+        return this.http.get<IAllTraineeReportDto[]>(this.BaseURI + "GetAllTraineeReport")
+    }
 
 
     UpdateTrainerList(trainer: ITrainerPostDto) {

@@ -121,7 +121,7 @@ export class TraineesFormComponent implements OnInit {
 
   addRow(): void {
 
-    console.log(this.traineeForm.value)
+  
     if (this.traineeForm.valid) {
       const newRow = this.traineeForm.value;
       this.traineeData.push(newRow);     
@@ -143,7 +143,7 @@ export class TraineesFormComponent implements OnInit {
     this.trainingService.getSingleTraining(trainingId).subscribe({
       next: (res) => {
         this.training = res
-        console.log(res)
+   
       }
     })
 

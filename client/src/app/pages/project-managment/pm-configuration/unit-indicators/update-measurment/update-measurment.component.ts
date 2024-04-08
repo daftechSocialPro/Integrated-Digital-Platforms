@@ -32,7 +32,7 @@ export class UpdateMeasurmentComponent {
     private messageService: MessageService, private activeModal: NgbActiveModal) { }
 
   ngOnInit(): void {
-    console.log("measurment", this.measurement)
+   
     this.getStratgicPlan()
     this.measurmentForm = this.formBuilder.group({
       name: [this.measurement.name, Validators.required],
@@ -50,7 +50,7 @@ export class UpdateMeasurmentComponent {
       next:(res)=>{
 
         this.stratgicPlans=res
-        console.log(res)
+       
         this.measurmentForm.controls['stratgicPlanId'].setValue(this.measurement.stratgicPlanId)
 
       }
@@ -76,7 +76,7 @@ export class UpdateMeasurmentComponent {
 
           if (res.success){
 
-            console.log(res)
+          
           this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });             
           
           this.closeModal();

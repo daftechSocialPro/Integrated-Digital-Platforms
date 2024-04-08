@@ -930,11 +930,11 @@ namespace IntegratedImplementation.Services.Training
                 var training = await _dbContext.Trainings.FindAsync(trainingId);
                 if (training != null)
                 {
-                    var trainerList = await _dbContext.Trainers.Where(x=>x.TrainingId == trainingId).ToListAsync();
-                    var traineeList = await _dbContext.Trainees.Where(x=>x.TrainingId == trainingId).ToListAsync();
+                    var trainerList = await _dbContext.Trainers.Where(x => x.TrainingId == trainingId).ToListAsync();
+                    var traineeList = await _dbContext.Trainees.Where(x => x.TrainingId == trainingId).ToListAsync();
 
                     _dbContext.RemoveRange(traineeList);
-                    _dbContext.RemoveRange(trainerList); 
+                    _dbContext.RemoveRange(trainerList);
                     _dbContext.RemoveRange(training);
 
                     await _dbContext.SaveChangesAsync();
@@ -985,9 +985,9 @@ namespace IntegratedImplementation.Services.Training
                         Trainee trainee = new Trainee();
                         var fullName = worksheet.Cells[row, 1].Value?.ToString() ?? string.Empty;
                         var PhoneNumber = worksheet.Cells[row, 6].Value?.ToString() ?? string.Empty;
-                        var trainingId = worksheet.Cells[row,15].Value?.ToString() ?? string.Empty;
-                     
-                        var result = _dbContext.Trainees.Where(x=>x.TrainingId==Guid.Parse(trainingId) && x.PhoneNumber==PhoneNumber && x.FullName.ToLower() == fullName.ToLower()).Any();
+                        var trainingId = worksheet.Cells[row, 15].Value?.ToString() ?? string.Empty;
+
+                        var result = _dbContext.Trainees.Where(x => x.TrainingId == Guid.Parse(trainingId) && x.PhoneNumber == PhoneNumber && x.FullName.ToLower() == fullName.ToLower()).Any();
 
                         if (!result)
                         {
@@ -1034,13 +1034,13 @@ namespace IntegratedImplementation.Services.Training
                             var preTrainingSummary = worksheet.Cells[row, 13].Value?.ToString().Trim() ?? string.Empty;
                             var postTrainingSummary = worksheet.Cells[row, 14].Value?.ToString().Trim() ?? string.Empty;
 
-                           
+
                             trainee.Id = Guid.NewGuid();
                             trainee.FullName = fullName;
                             trainee.PhoneNumber = PhoneNumber;
                             trainee.Profession = Profession;
                             trainee.TrainingId = Guid.Parse(trainingId);
-                            trainee.Gender = gender!= string.Empty?  Enum.Parse<Gender>(gender):Gender.FEMALE;
+                            trainee.Gender = gender != string.Empty ? Enum.Parse<Gender>(gender) : Gender.FEMALE;
                             trainee.Age = Int32.Parse(age);
                             trainee.EducationalLevelId = selectedlevelOfEducation.Id;
                             trainee.Email = email;
@@ -1050,19 +1050,14 @@ namespace IntegratedImplementation.Services.Training
                             trainee.NameofOrganizaton = organization;
                             trainee.EducationalField = "";
                             trainee.TypeofOrganization = organizationType;
-                            trainee.PreSummary = preTrainingSummary!=string.Empty? Int32.Parse(preTrainingSummary):0;
-                            trainee.PostSummary = postTrainingSummary!=string.Empty? Int32.Parse(postTrainingSummary):0;
-
+                            trainee.PreSummary = preTrainingSummary != string.Empty ? Int32.Parse(preTrainingSummary) : 0;
+                            trainee.PostSummary = postTrainingSummary != string.Empty ? Int32.Parse(postTrainingSummary) : 0;
 
                             await _dbContext.Trainees.AddAsync(trainee);
                             await _dbContext.SaveChangesAsync();
 
 
-
                             counter += 1;
-
-
-
 
                         }
                         else
@@ -1074,12 +1069,6 @@ namespace IntegratedImplementation.Services.Training
                                 Success = false
                             };
                         }
-
-
-
-
-
-
                     }
                 }
                 return new ResponseMessage
@@ -1100,7 +1089,47 @@ namespace IntegratedImplementation.Services.Training
                 };
             }
         }
+
+
+        public async Task<List<AllTraineeReportDto>> GetAllTrainingList()
+        {
+            try
+            {
+
+                var trainees = await _dbContext.Trainees.Include(x => x.Region).Include(x => x.EducationalLevel).Include(x => x.Training.Project).Select(x => new AllTraineeReportDto
+                {
+                    FullName = x.FullName,
+                    Gender = x.Gender.ToString(),
+                    Age = x.Age,
+                    Profession = x.Profession,
+                    LevelOfEducation = x.EducationalLevel.EducationalLevelName,
+                    PhoneNumber = x.PhoneNumber,
+                    Email = x.Email,
+                    Region = x.Region.RegionName,
+                    Woreda = x.Woreda,
+                    NameofOrganizaton = x.NameofOrganizaton,
+                    TypeofOrganization = x.TypeofOrganization,
+                    PreTrainingSummary = x.PreSummary,
+                    PostTrainingSummary = x.PostSummary,
+                    Title = x.Training.Title,
+                    Project = x.Training.Project.ProjectName,
+                    AllocatedCEU = x.Training.AllocatedCEU,
+                    StartDate = x.Training.StartDate,
+                    EndDate = x.Training.EndDate
+
+
+
+                }).OrderBy(x=>x.Title).ToListAsync();
+                return trainees;
+
+            }
+            catch (Exception ex)
+            {
+
+                return new List<AllTraineeReportDto>();
+
+            }
+        }
+
     }
-
-
 }

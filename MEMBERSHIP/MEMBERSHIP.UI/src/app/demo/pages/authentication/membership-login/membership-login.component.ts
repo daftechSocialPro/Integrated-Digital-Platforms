@@ -57,8 +57,7 @@ export default class MembershipLoginComponent implements OnInit {
         },
         error: (err) => {
           this.messageService.add({ severity: 'error', summary: 'Something went wron!!!', detail: err.message });              
-          
-          console.log(err)
+         
 
         }
       })

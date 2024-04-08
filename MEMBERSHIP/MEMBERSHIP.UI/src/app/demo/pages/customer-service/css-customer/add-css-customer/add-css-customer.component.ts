@@ -217,7 +217,7 @@ export class AddCssCustomerComponent implements OnInit {
       monthIndex :this.customerForm.value.monhtIndex,
       fiscalYear:this.customerForm.value.fiscalYear
     }
-    console.log("customer post", customerPost)
+
     this.customerService.createCustomer(customerPost).subscribe({
       next: (res) => {
         if (res.success) {

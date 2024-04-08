@@ -82,11 +82,11 @@ namespace IntegratedDigitalAPI.Controllers.PM
         }
 
         [HttpPut("ChangeActivityStatus")]
-        public async Task<IActionResult> ChangeActivityStatus(Guid activityId, string? isCompleted, string? isCancel, string? isStarted)
+        public async Task<IActionResult> ChangeActivityStatus(Guid activityId, string? isCompleted, string? isCancel, string? isStarted,string? isResceduled ,string ? remark, DateTime? startDate,DateTime? endDate)
         {
             try
             {
-                var response = await _activityService.ChangeActivityStatus(activityId,isCompleted,isCancel,isStarted);
+                var response = await _activityService.ChangeActivityStatus(activityId,isCompleted,isCancel,isStarted,isResceduled,remark,startDate,endDate);
                 return Ok(response );
             }
             catch (Exception ex)

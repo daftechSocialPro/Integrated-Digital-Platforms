@@ -62,7 +62,7 @@ export class MeterRateComponent implements OnInit {
 
     this.controlService.getMeterSizeRents().subscribe({
       next:(res)=>{
-        console.log(res)
+   
         this.MeterRates = res 
         this.distinctRentGroupCodes = [...new Set(res.map(record => record.rentGroupCode))];
         this.paginatedMeterRate(this.MeterRates)
@@ -83,7 +83,7 @@ export class MeterRateComponent implements OnInit {
 
   removeMeterRate(MeterRateId:number) {
 
-    console.log(MeterRateId)
+
     this.confirmationService.confirm({
       message: 'Are You sure you want to delete this Meter Size Rate?',
       header: 'Delete Confirmation',

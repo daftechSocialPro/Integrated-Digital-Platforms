@@ -106,9 +106,8 @@ namespace IntegratedDigitalAPI.Services.PM
                     activityViewDtos = (from a in _dBContext.ActivitiesParents.Where(x => x.TaskId == taskId)
                                         join e in _dBContext.Activities.
                                         Include(x=>x.ActivityLocations).ThenInclude(x=>x.Region).                                        
-                                        Include(x=>x.ProjectSourceFund).OrderBy(x=>x.CreatedDate)
-                                      
-                                     on a.Id equals e.ActivityParentId
+                                        Include(x=>x.ProjectSourceFund)                                      
+                                        on a.Id equals e.ActivityParentId
                                         // join ae in _dBContext.EmployeesAssignedForActivities.Include(x=>x.Employee) on e.Id equals ae.ActivityId
                                         select new ActivityViewDto
                                         {
@@ -164,10 +163,12 @@ namespace IntegratedDigitalAPI.Services.PM
                                             ProjectSourceId = e.ProjectSourceFundId,
 
                                             ActivityLocations = e.ActivityLocations.ToList(),
-                                            IsCancelled = e.isCancelled
+                                            IsCancelled = e.isCancelled,
+                                            CreatedDate = e.CreatedDate
+
 
                                         }
-                                  ).ToList();
+                                  ).OrderBy(x=>x.CreatedDate).ToList();
                 }
                 else
                 {
@@ -222,11 +223,12 @@ namespace IntegratedDigitalAPI.Services.PM
                                             StrategicPlan = e.StrategicPlanId,
                                             StrategicPlanIndicator = e.StrategicPlanIndicatorId,
                                             IsPercentage = e.IsPercentage,
-                                            ActivityLocations = e.ActivityLocations.ToList()
+                                            ActivityLocations = e.ActivityLocations.ToList(),
+                                            CreatedDate = e.CreatedDate
 
 
                                         }
-                                          ).ToList();
+                                          ).OrderBy(x=>x.CreatedDate).ToList();
                 }
 
                 return new TaskVIewDto
@@ -321,11 +323,13 @@ namespace IntegratedDigitalAPI.Services.PM
                                                 StrategicPlan = e.StrategicPlanId,
                                                 StrategicPlanIndicator = e.StrategicPlanIndicatorId,
                                                 IsPercentage = e.IsPercentage,
-                                                ActivityLocations = e.ActivityLocations.ToList()
+                                                ActivityLocations = e.ActivityLocations.ToList(),
+                                                CreatedDate = e.CreatedDate
+
 
 
                                             }
-                                            ).ToList();
+                                            ).OrderBy(x=>x.CreatedDate).ToList();
 
                     return new TaskVIewDto
                     {

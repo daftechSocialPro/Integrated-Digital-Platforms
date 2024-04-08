@@ -65,7 +65,7 @@ export class ActivityTargetComponent implements OnInit {
       this.remainingTarget  = this.activity.target- this.activity.begining
     }
 this.onTargetChange()
-    console.log('activity', this.activity)
+
   }
 
   addTargetForm() {
@@ -110,47 +110,7 @@ this.onTargetChange()
     }
   }
 
-  // addTargetForm() {
-  //   let monthDifference = this.getMonthDifference(this.activity.startDate, this.activity.endDate);
-  //   console.log('monthDifference', monthDifference);
   
-  //   this.actTargets.clear();
-  
-  //   let startMonthIndex = new Date(this.activity.startDate).getMonth();
-  
-  //   for (let i = 0; i < monthDifference; i++) {
-  //     let monthIndex = (startMonthIndex + i) % 12;
-  //     let monthName = this.months[monthIndex];
-  
-  //     let targetFormGroup = new FormGroup({
-  //       monthName: new FormControl({ value: monthName, disabled: true }),
-  //       monthValue: new FormControl(monthIndex, Validators.required),
-  //       Target: new FormControl(0, Validators.required),
-  //       Budget: new FormControl(0, Validators.required)
-  //     });
-  
-  //     const monthPerformance = this.activity.monthPerformance.find(
-  //       performance => performance.order === monthIndex
-  //     );
-
-  //     console.log("monthPerformance",monthPerformance)
-
-  
-  //     if (monthPerformance) {
-  //       targetFormGroup.patchValue({
-  //         Target: monthPerformance.planned,
-  //         Budget: monthPerformance.plannedBudget
-          
-  //       });
-        
-  //     }
-  
-  //     this.actTargets.push(targetFormGroup);
-  //   }
-
-   
- 
-  // }
 
   onTargetChange(){
     
@@ -224,7 +184,6 @@ this.onTargetChange()
 
       }
 
-      console.log("target act", ActivityTargetDivisionDto)
 
 
       this.pmService.addActivityTargetDivision(ActivityTargetDivisionDto).subscribe({
@@ -260,7 +219,7 @@ this.onTargetChange()
       // 
       
       for (let formValue of this.actTargets.value) {
-        console.log("formValue",formValue)
+     
         sumOfTarget += Number(formValue.Target)
         sumOfBudget += Number(formValue.Budget)
         
@@ -273,7 +232,7 @@ this.onTargetChange()
 
         targetDivisionDtos.push(targetDivisionDto)
       }
-      debugger
+     
      
       let ActivityTargetDivisionDto: ActivityTargetDivisionDto = {
 
@@ -304,8 +263,6 @@ this.onTargetChange()
 
       }
 
-      console.log("target act", ActivityTargetDivisionDto)
-
 
       this.pmService.updateActivityTargetDivision(ActivityTargetDivisionDto).subscribe({
         next: (res) => {
@@ -332,19 +289,7 @@ this.onTargetChange()
     this.activeModal.close()
   }
 
-  // getMonthDifference(startDate: string, endDate: string): number {
 
-  //   const startYear = new Date(startDate).getFullYear();
-  //   const startMonth = new Date(startDate).getMonth();
-  //   const endYear = new Date(endDate).getFullYear();
-  //   const endMonth = new Date(endDate).getMonth();
-
-  //   const monthDifference = (endYear - startYear) * 12 + (endMonth - startMonth);
-
-  //   console.log('Month Difference:', monthDifference);
-
-  //   return monthDifference+1;
-  // }
 
 
   getMonthDifference(startDate: string, endDate: string): { [year: number]: number } {
@@ -371,7 +316,7 @@ this.onTargetChange()
       monthDifference[year] = months;
     }
   
-    console.log('Month Difference:', monthDifference);
+  
     return monthDifference;
   }
 }

@@ -83,7 +83,7 @@ addBillEmpDuties (){
 
 removeBillEmpDuties(recordno:number) {
 
-  console.log(recordno)
+
   this.confirmationService.confirm({
     message: 'Are You sure you want to delete this Bill Officer?',
     header: 'Delete Confirmation',

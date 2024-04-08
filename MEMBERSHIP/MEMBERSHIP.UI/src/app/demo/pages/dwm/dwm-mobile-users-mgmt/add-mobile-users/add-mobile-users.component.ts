@@ -66,7 +66,6 @@ export class AddMobileUsersComponent implements OnInit {
 
   onSubmit() {
 
-    console.log(this.EmployeeForm.value)
     if (this.EmployeeForm.valid) {
 
       const formData = new FormData();

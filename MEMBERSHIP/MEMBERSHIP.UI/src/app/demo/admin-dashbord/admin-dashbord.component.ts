@@ -73,9 +73,6 @@ export default class AdminDashbordComponent {
     this.userView = this.userService.getCurrentUser()
 
 
- 
-    // console.log("User",this.userService.getCurrentUser())
-
 
   }
   getGenderChart(){
@@ -219,7 +216,7 @@ export default class AdminDashbordComponent {
   }
   applyFilter(){
 
-    debugger
+    
     if (this.selectedChapter !== "all") {
       const chapterSearchTerm = this.selectedChapter.toLowerCase();
       this.filterdMembers = this.members.filter((item) => {

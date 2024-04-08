@@ -60,7 +60,6 @@ export class LeaveCalanderComponent implements OnInit {
       }
     }
 
-    console.log(this.calanders)
     $('#calendar').evoCalendar('addCalendarEvent', this.calanders);
 
   }

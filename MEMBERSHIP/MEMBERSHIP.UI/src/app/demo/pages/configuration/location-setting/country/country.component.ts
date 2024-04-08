@@ -56,7 +56,6 @@ export class CountryComponent implements OnInit {
 
   removeCountry(CountryId:string) {
 
-    console.log(CountryId)
     this.confirmationService.confirm({
       message: 'Are You sure you want to delete this Country?',
       header: 'Delete Confirmation',

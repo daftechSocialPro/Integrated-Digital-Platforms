@@ -49,7 +49,7 @@ export class AddBudgetYearComponent implements OnInit {
     private userService: UserService,
     private messageService: MessageService) {
 
-    console.log(this.BudgetYear)
+
    
 
   }

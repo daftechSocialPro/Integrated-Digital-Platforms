@@ -47,7 +47,6 @@ export class UpdateVolunterComponent implements OnInit {
 
   ngOnInit(): void {
 
-    console.log(this.selectedvolunter.birthDate)
     this.user = this.userService.getCurrentUser();
 
     this.getCountries();

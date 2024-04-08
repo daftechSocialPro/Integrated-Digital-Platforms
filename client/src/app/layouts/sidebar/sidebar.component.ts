@@ -44,7 +44,7 @@ export class SidebarComponent implements OnInit {
       next: (res) => {
         this.Activties = res
       }, error: (err) => {
-        console.log(err)
+       
       }
     })
   }

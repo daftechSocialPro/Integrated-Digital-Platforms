@@ -41,8 +41,7 @@ export class ContractAgreementComponent implements OnInit{
       this.hrmService.getContractLetter(historyId).subscribe({
         next: (res) => {
           this.contractLetter = res;
-          console.log(this.contractLetter)
-
+        
         }
       });
       setTimeout(() => {

@@ -341,18 +341,6 @@ export class MembershipReportComponent implements OnInit {
     link.click();
 }
 
-  // getMemberReport(){
-  //   this.controlService.getMembershipReport().subscribe({
-     
-  //       next: (res) => {
-
-  //         console.log(res)
-  //         //const pdfUrl = URL.createObjectURL(res);
-  //         //this.stockReportIframe.nativeElement.src = pdfUrl;
-  //        }
-      
-  //   })
-  // }
 
   getRegions(countryType: string) { 
 

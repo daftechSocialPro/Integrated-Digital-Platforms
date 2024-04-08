@@ -74,7 +74,7 @@ export class AdjustItemsComponent implements OnInit {
   }
 
   confirmUpdateSelected() {
-    console.log(this.selectedItems)
+   
     this.selectedItems.map(x => {
       if (x.currentQuantity && x.currentQuantity >=  0 && x.adjustmentReason >= 0) {
         this.adjustmentDetails.push({

@@ -22,7 +22,8 @@ export class UpdateStrategicPlanComponent implements OnInit {
 
     this.strategicPlanForm = this.formBuilder.group({
       name: [this.strategicPlan.name, Validators.required],
-      description: [this.strategicPlan.description]
+      description: [this.strategicPlan.description],
+      isActive:[this.strategicPlan.rowStatus]
     })
   }
 
@@ -42,10 +43,10 @@ export class UpdateStrategicPlanComponent implements OnInit {
     if (this.strategicPlanForm.valid) {
 
       var strategicplanUpdate: StrategicPlanGetDto = {
-
         name: this.strategicPlanForm.value.name,
         description: this.strategicPlanForm.value.description,
-        id: this.strategicPlan.id
+        id: this.strategicPlan.id,
+        rowStatus :this.strategicPlanForm.value.isActive
       }
 
       this.pmService.updateStrategicPlan(strategicplanUpdate).subscribe({
@@ -55,8 +56,7 @@ export class UpdateStrategicPlanComponent implements OnInit {
             this.closeModal();
           }
           else {
-            this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: res.message });             
-          
+            this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: res.message }); 
           }
         },
         error:(err)=>{

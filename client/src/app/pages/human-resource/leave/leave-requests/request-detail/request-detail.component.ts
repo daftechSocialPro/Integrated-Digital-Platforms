@@ -171,8 +171,7 @@ export class RequestDetailComponent implements OnInit {
 
 
       } else {
-        // Handle reject action
-        console.log('Leave Request Rejection Cancelled');
+       
       }
     });
 

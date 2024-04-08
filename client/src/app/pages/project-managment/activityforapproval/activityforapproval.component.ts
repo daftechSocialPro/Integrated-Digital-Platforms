@@ -37,7 +37,7 @@ if(!this.Activties){
       next: (res) => {
         this.Activties = res
       }, error: (err) => {
-        console.log(err)
+     
       }
     })
   }

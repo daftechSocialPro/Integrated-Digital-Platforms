@@ -59,6 +59,7 @@ namespace IntegratedImplementation.Services.PM
                 Id = x.Id,
                 Name = x.Name,
                 Description = x.Description,
+                RowStatus = x.Rowstatus== RowStatus.ACTIVE?true:false,
             }).ToListAsync();
 
             return departmentList;
@@ -72,6 +73,7 @@ namespace IntegratedImplementation.Services.PM
             {
                 currentStrategicPlan.Name = strategicPlansGet.Name;
                 currentStrategicPlan.Description = strategicPlansGet.Description;
+                currentStrategicPlan.Rowstatus = strategicPlansGet.RowStatus? RowStatus.ACTIVE :RowStatus.INACTIVE;
                 await _dbContext.SaveChangesAsync();
                 return new ResponseMessage { Data = currentStrategicPlan, Success = true, Message = "Updated Successfully" };
             }

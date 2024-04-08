@@ -34,7 +34,7 @@ export class UpdateCpmmitteeComponent implements OnInit {
 
 
   ngOnInit(): void { 
-    console.log('form',this.comitee)
+   
     this.updateComiteeForm = this.formBuilder.group({
       CommitteeName: [this.comitee.name, Validators.required],
       Remark : [this.comitee.remark,Validators.required]

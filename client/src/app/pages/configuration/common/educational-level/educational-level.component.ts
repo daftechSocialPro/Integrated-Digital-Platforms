@@ -31,7 +31,7 @@ export class EducationalLevelComponent implements OnInit {
 
 
       }, error: (err) => {
-        console.log(err)
+       
       }
     })
   }
