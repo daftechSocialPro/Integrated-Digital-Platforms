@@ -6,7 +6,7 @@ import { AddCategoryDto, CategoryListDto } from '../model/Inventory/CategoryDto'
 import { ResponseMessage } from '../model/ResponseMessage.Model';
 import { AddVendorDto, VendorListDto } from '../model/Inventory/VendorDto';
 import { AddItemDto, ItemListDto } from '../model/Inventory/ItemDto';
-import { AddPurchaseRequestDto, ApprovePurchaseRequestDto, PurchaseRequestListDto } from '../model/Inventory/PurchaseRequestDto';
+import { AddPerformaDto, AddPurchaseRequestDto, ApprovePerformaDto, ApprovePurchaseRequestDto, ApprovedPurchaseRequestsDto, PurchaseRequestListDto } from '../model/Inventory/PurchaseRequestDto';
 import { AddProductDto, ProductListDto } from '../model/Inventory/ProductDto';
 import { StoreReceivalListDto, StoreRequestIssueDto, ApprovedItemsDto, ReciveTransportableItems, ReceiveItems, EmployeeReceivedITemsDto, AdjustReceivedITemsDto } from '../model/Inventory/StoreReceivalListDto';
 import { AddStoreRequestDto, StoreRequestItems, ApproveStoreRequest, RejectStoreRequest } from '../model/Inventory/StoreRequestDto';
@@ -93,6 +93,20 @@ export class InventoryService {
 
   approvePurchaseRequest(approvedRequest: ApprovePurchaseRequestDto[]){
     return this.http.put<ResponseMessage>(this.BaseURI + '/PurchaseRequest/ApproveItems', approvedRequest);
+  }
+
+  getApproveItems(){
+    return this.http.get<ApprovedPurchaseRequestsDto[]>(this.BaseURI + `/PurchaseRequest/GetApproveItems`);
+  }
+
+  AddPerforma(addPErforma: AddPerformaDto){
+    addPErforma.createdById = this.userService.getCurrentUser().userId;
+    return this.http.post<ResponseMessage>(this.BaseURI + '/PurchaseRequest/AddPerforma', addPErforma);
+  }
+
+  approveFinalRequest(approvePrfroma: ApprovePerformaDto){
+    approvePrfroma.employeeId = this.userService.getCurrentUser().employeeId;
+    return this.http.post<ResponseMessage>(this.BaseURI + '/PurchaseRequest/ApproveFinalRequest', approvePrfroma);
   }
 
   getProducts(){

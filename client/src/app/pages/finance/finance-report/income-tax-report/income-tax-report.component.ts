@@ -52,11 +52,11 @@ export class IncomeTaxReportComponent implements OnInit {
   }
   exportPdf() {
     import('jspdf').then((jsPDF) => {
-        import('jspdf-autotable').then((x) => {
-            const doc = new jsPDF.default('p', 'px', 'a4');
-            (doc as any).autoTable(this.exportColumns, this.incomeTaxReportList);
-            doc.save('products.pdf');
-        });
+        // import('jspdf-autotable').then((x) => {
+        //     const doc = new jsPDF.default('p', 'px', 'a4');
+        //     (doc as any).autoTable(this.exportColumns, this.incomeTaxReportList);
+        //     doc.save('products.pdf');
+        // });
     });
   }
 

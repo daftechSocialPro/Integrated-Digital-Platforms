@@ -291,6 +291,24 @@ namespace IntegratedInfrustructure.Data
             DAMAGED
         }
 
+        public enum SourceOFProduct
+        {
+            PROJECT,
+            ADMIN,
+            DONATION,
+            OTHER
+        }
+
+        public enum ProductStatus
+        {
+            GOODcONDITION,
+            LOST,
+            DAMAGED,
+            MAINTENANCE,
+            fIXED,
+            RETURNED
+        }
+
 
         public enum UsedItemsStatus
         {

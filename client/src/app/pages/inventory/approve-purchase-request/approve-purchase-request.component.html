@@ -31,7 +31,6 @@
                         <th *ngFor="let col of cols">
                             {{col.header}}
                         </th>
-                        <th>Approved Quantity</th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-requests>
@@ -56,9 +55,6 @@
                         </td>
                         <td>
                             {{requests.singlePrice}}
-                        </td>
-                        <td>
-                            <input type="number" min="0" pInputText id="name" [(ngModel)]="requests.aPrrovedQuantity" required autofocus  />
                         </td>
                     </tr>
                 </ng-template>

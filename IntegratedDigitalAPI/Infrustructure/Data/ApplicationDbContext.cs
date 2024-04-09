@@ -169,6 +169,8 @@ namespace IntegratedInfrustructure.Data
         public DbSet<ItemReceivalDetail> ItemReceivalDetails { get; set; }
         public DbSet<MaintainableItems> MaintainableItems { get; set; }
         public DbSet<UsedItems> UsedItems { get; set; }
+        public DbSet<PerformaDetail> PerformaDetails { get; set; }
+        public DbSet<ProductTag> ProductTags { get; set; }
         #endregion
 
 
