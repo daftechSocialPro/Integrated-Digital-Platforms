@@ -28,6 +28,7 @@ import { AddShiftDetail, BindShiftDto, ShiftDetailDto, ShiftListDto } from '../m
 import { AddPenaltyDto, PenaltyListDto } from '../model/HRM/IPenaltyListDto';
 import { AddEmployeeBankDto, EmployeeBankListDto } from '../model/HRM/IEmployeeBankDto';
 import { ContractEndEmployeesDto } from '../model/HRM/IContractEndEmployeesDto';
+import { HrmDashboardGetDto } from '../model/HRM/IHrmDashboard';
 
 export interface toastPayload {
     message: string;
@@ -577,6 +578,11 @@ export class HrmService {
 
     addEmployeeBank(addEmployeeBank: AddEmployeeBankDto) {
         return this.http.post<ResponseMessage>(this.baseUrl + "/Employee/AddEmployeeBank", addEmployeeBank);
+    }
+
+    //Dashboard
+    getHrmDashboard(){
+        return this.http.get<HrmDashboardGetDto>(this.baseUrl + "/HrmDashboard")
     }
     
 

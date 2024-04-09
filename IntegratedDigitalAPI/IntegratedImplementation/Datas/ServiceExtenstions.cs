@@ -61,6 +61,7 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<ILoanManagementService, LoanManagementService>();
             services.AddScoped<IHrmLetterService, HrmLetterService>();
             services.AddScoped<IEmployeeAttendanceService, EmployeeAttendanceService>();
+            services.AddScoped<IHrmDashboardService, HrmDashboardService>();
             #endregion
 
             #region Vacancy
@@ -110,6 +111,7 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<IStoreRequestService, StoreRequestService>();
             services.AddScoped<IStoreReceivalService, StoreReceivalService>();
             services.AddScoped<IInventoryReportService, InventoryReportService>();
+            services.AddScoped<IInventoryDashboard, InventoryDashboard>();
             #endregion
 
             #region finance

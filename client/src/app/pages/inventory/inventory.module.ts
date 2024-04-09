@@ -34,6 +34,7 @@ import { IssueItemsComponent } from './issue-items/issue-items.component';
 import { ReceivedItemsComponent } from './received-items/received-items.component';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { TabViewModule } from 'primeng/tabview';
+import { InventoryDashboardComponent } from './inventory-dashboard/inventory-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { TabViewModule } from 'primeng/tabview';
     ApproveStoreRequestComponent,
     IssueItemsComponent,
     ReceivedItemsComponent,
+    InventoryDashboardComponent,
   ],
   imports: [
     CommonModule,
