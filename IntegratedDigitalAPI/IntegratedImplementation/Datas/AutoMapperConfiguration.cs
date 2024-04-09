@@ -155,7 +155,6 @@ namespace IntegratedImplementation.Datas
             CreateMap<PurchaseRequestList, PurchaseRequestListDto>()
                 .ForMember(a => a.ItemName, e => e.MapFrom(mfg => mfg.Item.Name))
                 .ForMember(a => a.ItemCode, e => e.MapFrom(mfg => mfg.ItemRequestNo))
-                .ForMember(a => a.SinglePrice, e => e.MapFrom(mfg => (double)mfg.SinglePrice))
                 .ForMember(a => a.RequesterEmployee, e => e.MapFrom(mfg => $"{mfg.PurchaseRequest.RequesterEmployee.FirstName} {mfg.PurchaseRequest.RequesterEmployee.MiddleName} {mfg.PurchaseRequest.RequesterEmployee.LastName} "))
                 .ForMember(a => a.MeasurementUnitName, e => e.MapFrom(mfg => mfg.MeasurementUnit.Name));
 

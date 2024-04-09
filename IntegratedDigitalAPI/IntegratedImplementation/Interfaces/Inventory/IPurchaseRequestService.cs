@@ -13,5 +13,11 @@ namespace IntegratedImplementation.Interfaces.Inventory
         Task<ResponseMessage> AddPurchaseRequest(AddPurchaseRequestDto addPurchase);
         Task<List<PurchaseRequestListDto>> GetPendingRequests();
         Task<ResponseMessage> ApproveItems(List<ApprovePurchaseRequestDto> requestDtos);
+
+        Task<List<ApprovedPurchaseRequestsDto>> GetApproveItems();
+
+        Task<ResponseMessage> AddPerforma(AddPerformaDto addPerforma);
+
+        Task<ResponseMessage> ApproveFinalRequest(ApprovePerformaDto approvePerforma);
     }
 }

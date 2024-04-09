@@ -23,7 +23,6 @@ namespace IntegratedInfrustructure.Models.Inventory
         public virtual Item Item { get; set; } = null!;
         public double Quantity { get; set; }
         public ApprovalStatus ApprovalStatus { get; set; }
-
         public bool IsFinalApproved { get; set; }
         public Guid? FinalApproverId { get; set; }
         public virtual EmployeeList FinalApprover { get; set; } = null!;

@@ -53,19 +53,7 @@ export class ApprovePurchaseRequestComponent implements OnInit {
 
 
     approvePopup() {
-
-
-
-
-
-
-
-
-
-
         if (this.selectedItems.length > 0) {
-
-
             this.confirmationService.confirm({
                 message: 'Are you sure you want to Approve selected products??',
                 header: 'Purchase Approval !',
@@ -96,18 +84,11 @@ export class ApprovePurchaseRequestComponent implements OnInit {
     confirmApporveSelected() {
         const employeeid = this.userService.getCurrentUser().employeeId;
         this.selectedItems.map(x => {
-            if (x.aPrrovedQuantity && x.aPrrovedQuantity > 0) {
-                this.approveList.push({
-                    approverEmployeeId: employeeid,
-                    aPrrovedQuantity: x.aPrrovedQuantity,
-                    id: x.id
-                });
-                this.requestId.push(x.id);
-            }
-            else {
-                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'please add aprroved quantity to selected items', life: 3000 });
-                this.approveProductDialog = false;
-            }
+            this.approveList.push({
+                approverEmployeeId: employeeid,
+                id: x.id
+            });
+            this.requestId.push(x.id);
         });
         this.approveRequests();
     }

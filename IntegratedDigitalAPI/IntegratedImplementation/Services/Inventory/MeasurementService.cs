@@ -34,7 +34,7 @@ namespace Implementation.Services.Inventory
                 CreatedDate= DateTime.Now,
                 Name= addMeasurement.Name,
                 AmharicName = addMeasurement.AmharicName,
-                ToSIUnit = addMeasurement.ToSIUnit
+                ToSIUnit = addMeasurement.ToSIUnit == null ? 1 : addMeasurement.ToSIUnit.Value,
             };
 
             await _dbContext.MeasurmentUnits.AddAsync(measurement);
@@ -69,7 +69,7 @@ namespace Implementation.Services.Inventory
                 currentMeasurement.MeasurementType = (MeasurementType)updateMeasurement.MeasurementType;
                 currentMeasurement.Name = updateMeasurement.Name;
                 currentMeasurement.AmharicName = updateMeasurement.AmharicName;
-                currentMeasurement.ToSIUnit = updateMeasurement.ToSIUnit;
+                currentMeasurement.ToSIUnit = updateMeasurement.ToSIUnit == null ? 1 : updateMeasurement.ToSIUnit.Value;
 
                 await _dbContext.SaveChangesAsync();
                 return new ResponseMessage { Data = currentMeasurement, Success = true };
