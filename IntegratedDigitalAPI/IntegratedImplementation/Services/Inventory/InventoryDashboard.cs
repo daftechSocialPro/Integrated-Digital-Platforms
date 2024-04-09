@@ -23,6 +23,7 @@ namespace IntegratedImplementation.Services.Inventory
         public async Task<InventoryDashboardDto> GetInventoryDashboard(string employeeId)
         {
             InventoryDashboardDto dashboard = new InventoryDashboardDto();
+            var today = DateTime.Now;
 
             var pendingPurchaseRequest = await _dbContext.PurchaseRequestLists.Where(x => x.ApprovalStatus == ApprovalStatus.PENDING).CountAsync();
             var items = await _dbContext.Items.CountAsync();
@@ -31,6 +32,13 @@ namespace IntegratedImplementation.Services.Inventory
                                       x.ReceivedStatus == ItemReceivedStatus.RECIVED).CountAsync();
             var totalPurchaseRequest = await _dbContext.PurchaseRequestLists.CountAsync();
             var totalStoreRequest = await _dbContext.StoreRequestLists.CountAsync();
+            var expiredPerformas = await _dbContext.PerformaDetails.Where(x => x.PurchaseRequestList.IsFinalApproved == false && x.ToDate.Date <= today.Date)
+                .Select(x => new ExpiredPerformaDto { 
+                    VendorName = x.Vendor.Name,
+                    Description = x.Description,
+                    FromDate = x.FromDate,
+                    ToDate = x.ToDate
+            }).ToListAsync();
 
             dashboard.totalPurchaseRequest = totalPurchaseRequest;
             dashboard.totalStoreRequest = totalStoreRequest;
@@ -38,6 +46,7 @@ namespace IntegratedImplementation.Services.Inventory
             dashboard.pendingPurchaseRequest = pendingStoreRequest;
             dashboard.recivedItems = recivedItems;
             dashboard.items = items;
+            dashboard.expiredPerformas = expiredPerformas;
 
 
 

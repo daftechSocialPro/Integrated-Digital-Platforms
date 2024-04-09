@@ -11,7 +11,7 @@ import { InventoryService } from 'src/app/services/inventory.service';
 export class InventoryDashboardComponent implements OnInit {
 
   inventoryDashboardData!: InventoryDashboardGetDto
-  pieChartOption!: EChartsOption;
+  barChartOption!: EChartsOption;
 
 
 
@@ -25,6 +25,43 @@ export class InventoryDashboardComponent implements OnInit {
     this.inventoryService.getInventoryDashboard().subscribe(
       (res) => {
         this.inventoryDashboardData = res;
+      
+        this.barChartOption = {
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+              type: 'shadow'
+            }
+          },
+          grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+          },
+          xAxis: [
+            {
+              type: 'category',
+              data: ['Purchase Request', 'Store Request'],
+              axisTick: {
+                alignWithLabel: true
+              }
+            }
+          ],
+          yAxis: [
+            {
+              type: 'value'
+            }
+          ],
+          series: [
+            {
+              name: 'Items',
+              type: 'bar',
+              barWidth: '60%',
+              data: [this.inventoryDashboardData.pendingPurchaseRequest, this.inventoryDashboardData.pendingStoreRequest]
+            }
+          ]
+        };
       }
     )
     

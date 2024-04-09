@@ -13,6 +13,7 @@ import { ApproveStoreRequestComponent } from './approve-store-request/approve-st
 import { ReceivedItemsComponent } from './received-items/received-items.component';
 import { ApprovedPurchaseInvoiceComponent } from '../finance/purchase-invoice/approved-purchase-invoice/approved-purchase-invoice.component';
 import { ApprovedPurchaseRequestsComponent } from './approved-purchase-requests/approved-purchase-requests.component';
+import { InventoryDashboardComponent } from './inventory-dashboard/inventory-dashboard.component';
 
 const routes: Routes = [
   { path: 'inventorysetting', canActivate: [AuthGuard], component: InventorySettingComponent },

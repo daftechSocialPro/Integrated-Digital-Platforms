@@ -49,19 +49,13 @@ import { AddPurchaseInvoiceComponent } from './purchase-invoice/add-purchase-inv
 import { PendingPurchaseInvoiceComponent } from './purchase-invoice/pending-purchase-invoice/pending-purchase-invoice.component';
 import { ApprovedPurchaseInvoiceComponent } from './purchase-invoice/approved-purchase-invoice/approved-purchase-invoice.component';
 import { PayLoanComponent } from './loan-issuance/pay-loan/pay-loan.component';
-<<<<<<< HEAD
-=======
-import { PayrollReportComponent } from './finance-report/payroll-report/payroll-report.component';
->>>>>>> c590f6fdd0ca1da939745e3a2dc1e75a0555aa24
 import { IncomeTaxDeclarationComponent } from './income-tax-declaration/income-tax-declaration.component';
-//import { PayrollReportComponent } from './finance-reports/payroll-report/payroll-report.component';
 import { AccountReconcilliationComponent } from './account-reconcilliation/account-reconcilliation.component';
 import { FinanceReportComponent } from './finance-report/finance-report.component';
-
 import { PensionReportComponent } from './finance-report/pension-report/pension-report.component';
 import { IncomeTaxReportComponent } from './finance-report/income-tax-report/income-tax-report.component';
 import { PensionDeclarationComponent } from './pension-declaration/pension-declaration.component';
-// import { PensionDeclarationComponent } from './pension-declaration/pension-declaration.component';
+
 
 
 
@@ -101,7 +95,7 @@ import { PensionDeclarationComponent } from './pension-declaration/pension-decla
 
     IncomeTaxDeclarationComponent,
   
-    PayrollReportComponent,
+    
     AccountReconcilliationComponent,
     FinanceReportComponent,
  
