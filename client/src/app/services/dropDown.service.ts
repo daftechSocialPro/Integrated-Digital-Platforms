@@ -100,6 +100,10 @@ export class DropDownService {
         return this.http.get<SelectList[]>(this.baseUrl + '/DropDown/GetVendorDropDown');
     }
 
+    getVendorDropDownByrequestId(purchaseRequestId: string) {
+        return this.http.get<SelectList[]>(this.baseUrl + `/DropDown/GetVendorDropDownByrequestId?purchaseRequestId=${purchaseRequestId}`);
+    }
+
     getItemsDropDown() {
         return this.http.get<ItemDropDownDto[]>(this.baseUrl + '/DropDown/GetItemDropDown');
     }

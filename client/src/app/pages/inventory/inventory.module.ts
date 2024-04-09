@@ -34,6 +34,7 @@ import { IssueItemsComponent } from './issue-items/issue-items.component';
 import { ReceivedItemsComponent } from './received-items/received-items.component';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { TabViewModule } from 'primeng/tabview';
+import { ApprovedPurchaseRequestsComponent } from './approved-purchase-requests/approved-purchase-requests.component';
 import { InventoryDashboardComponent } from './inventory-dashboard/inventory-dashboard.component';
 
 @NgModule({
@@ -56,6 +57,7 @@ import { InventoryDashboardComponent } from './inventory-dashboard/inventory-das
     ApproveStoreRequestComponent,
     IssueItemsComponent,
     ReceivedItemsComponent,
+    ApprovedPurchaseRequestsComponent,
     InventoryDashboardComponent,
   ],
   imports: [

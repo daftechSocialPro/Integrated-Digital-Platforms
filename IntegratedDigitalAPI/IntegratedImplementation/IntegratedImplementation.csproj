@@ -26,7 +26,6 @@
   <ItemGroup>
 
     <ProjectReference Include="..\Infrustructure\IntegratedInfrustructure.csproj" />
-    <ProjectReference Include="..\XAPI\XAPI.csproj" />
   </ItemGroup>
 
 </Project>

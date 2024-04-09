@@ -306,6 +306,17 @@ namespace IntegratedImplementation.Services.Configuration
             return vendors;
         }
 
+        public async Task<List<SelectListDto>> GetVendorDropDownByrequestId(Guid purchaseRequestId)
+        {
+            var vendors = await _dbContext.PerformaDetails.Where(x => x.PurchaseRequestListId == purchaseRequestId).Include(x => x.Vendor).AsNoTracking()
+                .Select(x => new SelectListDto
+                {
+                    Id = x.Vendor.Id,
+                    Name = x.Vendor.Name
+                }).ToListAsync();
+            return vendors;
+        }
+
         public async Task<List<SelectListDto>> GetFiscalYears()
         {
 

@@ -1,12 +1,15 @@
 ﻿using IntegratedInfrustructure.Model.Authentication;
+using IntegratedInfrustructure.Model.HRM;
 using IntegratedInfrustructure.Model.Inventory;
 using IntegratedInfrustructure.Model.PM;
 using IntegratedInfrustructure.Models.Common;
+using IntegratedInfrustructure.Models.PM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static IntegratedInfrustructure.Data.EnumList;
 
 namespace IntegratedInfrustructure.Models.Inventory
 {
@@ -36,5 +39,10 @@ namespace IntegratedInfrustructure.Models.Inventory
         public int Packet { get; set; }
         public Guid? ProjectId { get; set; }
         public virtual Project Project { get; set; } = null!;
+
+        public SourceOFProduct SourceOfProduct { get; set; } 
+
+        public Guid EmployeeId { get; set; }
+        public virtual EmployeeList Employee { get; set; } = null!;
     }
 }

@@ -218,6 +218,13 @@ namespace IntegratedDigitalAPI.Controllers.Configuration
 
         [HttpGet]
         [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetVendorDropDownByrequestId(Guid purchaseRequestId)
+        {
+            return Ok(await _DropDownService.GetVendorDropDownByrequestId(purchaseRequestId));
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetMeasurementListByType(MeasurementType measurementType)
         {
             return Ok(await _DropDownService.GetMeasurementListByType(measurementType));

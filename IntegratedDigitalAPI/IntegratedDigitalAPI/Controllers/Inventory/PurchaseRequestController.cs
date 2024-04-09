@@ -53,5 +53,43 @@ namespace IntegratedDigitalAPI.Controllers.Inventory
                 return BadRequest();
             }
         }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(ApprovedPurchaseRequestsDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetApproveItems()
+        {
+            return Ok(await _purchaseRequest.GetApproveItems());
+        }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> AddPerforma(AddPerformaDto addPerforma)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _purchaseRequest.AddPerforma(addPerforma));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> ApproveFinalRequest(ApprovePerformaDto approvePerforma)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _purchaseRequest.ApproveFinalRequest(approvePerforma));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+
     }
 }
