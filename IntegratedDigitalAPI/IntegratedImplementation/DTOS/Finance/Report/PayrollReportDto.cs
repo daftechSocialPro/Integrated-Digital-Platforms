@@ -26,6 +26,8 @@ namespace IntegratedImplementation.DTOS.Finance.Report
         public double TotalDeduction { get; set; }
         public double NetPay { get; set; }
 
+        public string AccountNumber { get; set; }
+
     }
 
 

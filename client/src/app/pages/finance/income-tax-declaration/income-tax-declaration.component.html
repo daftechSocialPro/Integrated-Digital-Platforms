@@ -1,358 +1,329 @@
-<main id="main" class="main">
-    <div class="pagetitle">
-        <h1>Income tax Declartion </h1>
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
-                <li class="breadcrumb-item">Finance</li>
-                <li class="breadcrumb-item active">Income Tax Declaration</li>
+<section class="section">
 
-            </ol>
-        </nav>
-    </div>
-    <section class="section">
+    <div class="card p-1">
 
-        <div class="card p-2">
 
-            <div class="col-4">
-                <button class="btn btn-outline-success text-end mb-3" (click)="exportAsExcel('Income Tax Declartaion')"><i
-                    class="bi bi-file-excel"></i> </button>
-            </div>
-         
 
+        <div class="row p-2">
+            <div class="col-lg-12 d-flex align-items-center">
 
-            <div class="container" #myTable >
-                <div class="row">
-                    <div class="col-2 px-4 py-2.5 font-weight-bold border border-secondary relative">
-                        <div class="d-flex align-items-center ">
-                            <img src="../../../../assets/Federallogo.png" alt=""
-                                class="rounded-circle h-28 w-28 mt-2" />
-                        </div>
-                    </div>
-                    <div class="col-4 px-4 py-10 font-weight-bold border border-secondary bg-gray-500">
-                        <h5 class="ml-3 mt-4 text-center">
-                            ኢትዮጲያ ፌደራላዊ ዲሞከራሲያዊ ሪፐብሊክ  የኢትዮጲያ ገቢዎችና ጉሙሩክ ባለስልጣን
-                        </h5>
-                    </div>
-                    <div class="col-4 px-3 py-3 font-weight-bold border border-secondary">
-                        <h5 class="ml-3 text-center">
-                            ሠንጠረዥ "ሀ" የስራ ግብር ክፍያ ማስታወቂያ ቅጽ (ለተቀጣሪዎች)
-                           
-                            (የገቢ ግብር አዋጅ ቁጥር 976/2016 ና ገቢ ግብር ደንብ ቁጥር 410/2009)
-                        </h5>
-                    </div>
-                    <div class="col-2 px-4 py-2.5 font-weight-bold border border-secondary relative">
-                        <div class="d-flex align-items-center">
-                            <img src="../../../../assets/taxlogo.jpg" alt="" class="rounded-circle h-28 mt-2" />
-                        </div>
-                    </div>
-                    <div class="col-12 border border-secondary relative">
-                        <h6 class="text-center">ክፍል 1 የግብር ከፋይ ዝርዝር መረጃ</h6>
-                    </div>
-                    <div class="col-12 border border-secondary relative">
-                        <div class="row">
-                            <div class="col-3 px-3.5 py-2.5 border border-secondary">
-                                1. የግብር ከፋይ ስም: የኢትዮጲያ ሚዲዋይፎች ማህበር
-                            </div>
-                            <div class="col-3 px-3.5 py-2.5 border border-secondary">
-                                3. የግብር ከፋይ መለያ ቁጥር:: 0003431259
-                            </div>
-                            <div class="col-3 px-3.5 py-2.5 border border-secondary">
-                                4.የግብር ከፋይ ሂሳብ ቁጥር
-                            </div>
-                            <div class="col-3  border border-secondary">
-                                5. የክፍያ ጊዜ
-                                <div class="row">
-                                    <div class="col-6 border border-secondary">
-                                        dec 2023
-                                    </div>
-                                    <div class="col-4 border border-secondary " style="width: 50%;">
-                                        አ.ም 2016
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <!-- <input type="text" pInputText  class="form-control stdate"  id="pensionMonth"  [(ngModel)]="pensionParam.pensionMonth"
+                    placeholder="Select Date" > -->
+                <div class=" m-3">
+                    <span class="p-float-label">
+                        <p-calendar [(ngModel)]="pensionMonth" inputId="pensionMonth" view="month" dateFormat="mm/yy"
+                            [readonlyInput]="true"></p-calendar>
+                        <label for="pensionMonth">Pension Month</label>
+                    </span>
+                </div>
+                <div class="ms-2">
 
-                    <div class="col-12 border border-secondary relative">
-                        <div class="row">
-                            <div class="col-3 px-3.5 py-2.5 border border-secondary">
-                                2a. ከልል አዲስ አበባ
-                            </div>
-                            <div class="col-3 px-3.5 py-2.5 border border-secondary">
-                                2b. ዞን/ ክፍለ ከተማ ቦሌ
-                            </div>
-                            <div class="col-3 px-3.5 py-2.5 border border-secondary">
-                                5. የጡረታ መዋጮ ገቢ ሰብሳቢ መ/ቤት ስም
-                            </div>
-                            <div class="col-3  border border-secondary">
-                                የሰነድ ቁጥር (ለቢሮ አገልግሎት ብቻ)
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 border border-secondary relative">
-                        <div class="row">
-                            <div class="col-2 px-3.5 py-2.5 border border-secondary">
-                                2c. ወረዳ
-                            </div>
-                            <div class="col-2 px-3.5 py-2.5 border border-secondary">
-                                2b. ቀበሌ / ገበሬ ማህበር
-                            </div>
-                            <div class="col-2 px-3.5 py-2.5 border border-secondary">
-                                2e. የቤት ቁጥር 288
-                            </div>
-                            <div class="col-2  border border-secondary">
-                                6. የስልክ ቁጥር 0116፟-6189275
-
-                            </div>
-                            <div class="col-2  border border-secondary">
-                                7. ፋክስ ቁጥር 0116፟-633297
-
-                            </div>
-                            <div class="col-2  border border-secondary">
-
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-12 border border-secondary relative">
-                        <h6 class="text-center">ሰንጠረዥ-2 የማሳወቂያ ዝርዝር መረጃ </h6>
-                    </div>
-                    <div class="col-span-12 border border-slate-200 dark:border-zink-500 relative">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="row">
-                                    <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-                                        ሀ) ተ.ቁ
-                                    </div>
-                                    <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-                                        ለ) የሠራተኛው ግብር ከፋይ ቁጥር (TIN)
-                                    </div>
-                                    <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-                                        ሐ) የሠራተኛው ስም የአባት ስምና የአያት ስም
-                                    </div>
-                                    <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-                                        መ) የተቀጠሩበት ቀን
-                                    </div>
-                                    <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-                                        ሠ) ደምወዝ
-                                    </div>
-                                    <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-                                        ረ) ጠቅላላ የትራንስፖርት አበል /ብር/
-                                    </div>
-                                    <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-                                        ሰ) የትርፍ ሰአት ክፍያ /ብር/
-                                    </div>
-                                    <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-                                        ሸ) የስራ ንግድ ግብር የሚከፈልበት የትራንስፖርት አበል
-                                    </div>
-
-                                    <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-                                        በ) የስራ ግብር
-                                    </div>
-                                    <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-                                        ተ) የትምህርት ወጪ መጋራት
-                                    </div>
-
-                                    <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-                                        ቸ) የተጣራ ክፍያ
-                                    </div>
-
-                                    <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-                                       ነ) የሠራተኛ ፊርማ
-                                    </div>
-
-
-
-                                </div>
-                                <div class="row">
-                                    <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-                                        ""
-                                    </div>
-                                    <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-
-                                    </div>
-                                    <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-
-                                    </div>
-                                    <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-
-                                    </div>
-                                    <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-
-                                    </div>
-                                    <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-
-                                    </div>
-                                    <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-
-                                    </div>
-                                    <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-
-                                    </div>
-
-                                    <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-
-                                    </div>
-                                    <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-
-                                    </div>
-
-                                    <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-
-                                    </div>
-
-                                    <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-
-                                    </div>
-
-
-
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-                                        ""
-                                    </div>
-                                    <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-
-                                    </div>
-                                    <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-
-                                    </div>
-                                    <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-
-                                    </div>
-                                    <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-
-                                    </div>
-                                    <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-
-                                    </div>
-                                    <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-
-                                    </div>
-                                    <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-
-                                    </div>
-
-                                    <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-
-                                    </div>
-                                    <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-
-                                    </div>
-
-                                    <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-
-                                    </div>
-
-                                    <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-
-                                    </div>
-
-
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <hr />
-                    <hr />
-                    <div class="col-span-12 border border-slate-200 dark:border-zink-500 relative">
-                        <div class="row">
-                            <div class="col-4 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-                                የወሩ የተጠቃለለ ሂሳብ
-                            </div>
-                            <div class="col-4 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-                                ክፍል 4- በዚህ ወር ስራ የለቀቁ ሠራተኞች ዝርዝር መረጃ
-                            </div>
-                            <div class="col-4 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-                                ለቢሮ አገልግሎት ብቻ
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-3 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-                                በዚህ ወር ደምውዝ ሚከፈላቸው ሰራተኞች ብዛት
-                            </div>
-                            <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-                                10
-                            </div>
-                            <div class="col-2 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-                                የሠራተኛው ስም /የአባት ሰምና የአያት ስም
-                            </div>
-                            <div class="col-2 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-                                የሠራተኛው የግብር ከፋይ ቁጥር
-                            </div>
-
-                            <div class="col-2 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-
-                            </div>
-                            <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-
-                            </div>
-                            <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-                                -
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-3 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-                                የወሩ ጠቅላላ የስራ ግብር የሚከፈልበት ገቢ ከላይ ካለው ስንጠረዥ
-                            </div>
-                            <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-                                10
-                            </div>
-                            <div class="col-2 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-
-                            </div>
-                            <div class="col-2 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-
-                            </div>
-
-                            <div class="col-2 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-
-                            </div>
-                            <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-
-                            </div>
-                            <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-                                -
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-3 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-                                የወሩ ጠቅላላ የስራ ግብር የሚከፈልበት ገቢ ከላይ ካለው ስንጠረዥ
-                            </div>
-                            <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-                                10
-                            </div>
-                            <div class="col-2 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-
-                            </div>
-                            <div class="col-2 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-
-                            </div>
-
-                            <div class="col-2 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-
-                            </div>
-                            <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-
-                            </div>
-                            <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
-                                -
-                            </div>
-                        </div>
-                    </div>
+                    <button pButton pRipple *ngIf="pensionMonth" class="p-button-success" (click)="generateReport()"><i
+                            class="bi bi-calculator"></i>&nbsp; Generate Report</button>
 
                 </div>
+
             </div>
-
-
+        </div>
+        <div class="row">
+            <div class="col-12 text-end">
+                <button class="btn btn-outline-success text-end mb-3" (click)="exportPdf()"><i
+                        class="bi bi-file-excel"></i> Export</button>
+            </div>
         </div>
 
 
-    </section>
-</main>
+        <div class="container" #myTable *ngIf="pensionReportList">
+            <div class="row">
+                <div class="col-2 px-4 py-2.5 font-weight-bold border border-secondary relative">
+                    <div class="d-flex align-items-center ">
+                        <img src="../../../../assets/Federallogo.png" alt="" class="rounded-circle h-28 w-28 mt-2" />
+                    </div>
+                </div>
+                <div class="col-4 px-4 py-10 font-weight-bold border border-secondary bg-gray-500">
+                    <h5 class="ml-3 mt-4 text-center">
+                        ኢትዮጲያ ፌደራላዊ ዲሞከራሲያዊ ሪፐብሊክ የኢትዮጲያ ገቢዎችና ጉሙሩክ ባለስልጣን
+                    </h5>
+                </div>
+                <div class="col-4 px-3 py-3 font-weight-bold border border-secondary">
+                    <h5 class="ml-3 text-center">
+                        ሠንጠረዥ "ሀ" የስራ ግብር ክፍያ ማስታወቂያ ቅጽ (ለተቀጣሪዎች)
+
+                        (የገቢ ግብር አዋጅ ቁጥር 976/2016 ና ገቢ ግብር ደንብ ቁጥር 410/2009)
+                    </h5>
+                </div>
+                <div class="col-2 px-4 py-2.5 font-weight-bold border border-secondary relative">
+                    <div class="d-flex align-items-center">
+                        <img src="../../../../assets/taxlogo.jpg" alt="" class="rounded-circle h-28 mt-2" />
+                    </div>
+                </div>
+                <div class="col-12 border border-secondary relative">
+                    <h6 class="text-center">ክፍል 1 የግብር ከፋይ ዝርዝር መረጃ</h6>
+                </div>
+                <div class="col-12 border border-secondary relative">
+                    <div class="row">
+                        <div class="col-3 px-3.5 py-2.5 border border-secondary">
+                            1. የግብር ከፋይ ስም: የኢትዮጲያ ሚዲዋይፎች ማህበር
+                        </div>
+                        <div class="col-3 px-3.5 py-2.5 border border-secondary">
+                            3. የግብር ከፋይ መለያ ቁጥር:: 0003431259
+                        </div>
+                        <div class="col-3 px-3.5 py-2.5 border border-secondary">
+                            4.የግብር ከፋይ ሂሳብ ቁጥር
+                        </div>
+                        <div class="col-3  border border-secondary">
+                            5. የክፍያ ጊዜ
+                            <div class="row">
+                                <div class="col-6 border border-secondary">
+                                    dec 2023
+                                </div>
+                                <div class="col-4 border border-secondary " style="width: 50%;">
+                                    አ.ም 2016
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 border border-secondary relative">
+                    <div class="row">
+                        <div class="col-3 px-3.5 py-2.5 border border-secondary">
+                            2a. ከልል አዲስ አበባ
+                        </div>
+                        <div class="col-3 px-3.5 py-2.5 border border-secondary">
+                            2b. ዞን/ ክፍለ ከተማ ቦሌ
+                        </div>
+                        <div class="col-3 px-3.5 py-2.5 border border-secondary">
+                            5. የጡረታ መዋጮ ገቢ ሰብሳቢ መ/ቤት ስም
+                        </div>
+                        <div class="col-3  border border-secondary">
+                            የሰነድ ቁጥር (ለቢሮ አገልግሎት ብቻ)
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 border border-secondary relative">
+                    <div class="row">
+                        <div class="col-2 px-3.5 py-2.5 border border-secondary">
+                            2c. ወረዳ
+                        </div>
+                        <div class="col-2 px-3.5 py-2.5 border border-secondary">
+                            2b. ቀበሌ / ገበሬ ማህበር
+                        </div>
+                        <div class="col-2 px-3.5 py-2.5 border border-secondary">
+                            2e. የቤት ቁጥር 288
+                        </div>
+                        <div class="col-2  border border-secondary">
+                            6. የስልክ ቁጥር 0116፟-6189275
+
+                        </div>
+                        <div class="col-2  border border-secondary">
+                            7. ፋክስ ቁጥር 0116፟-633297
+
+                        </div>
+                        <div class="col-2  border border-secondary">
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 border border-secondary relative">
+                    <h6 class="text-center">ሰንጠረዥ-2 የማሳወቂያ ዝርዝር መረጃ </h6>
+                </div>
+                <div class="col-span-12 border border-slate-200 dark:border-zink-500 relative">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                    ሀ) ተ.ቁ
+                                </div>
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                    ለ) የሠራተኛው ግብር ከፋይ ቁጥር (TIN)
+                                </div>
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                    ሐ) የሠራተኛው ስም የአባት ስምና የአያት ስም
+                                </div>
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                    መ) የተቀጠሩበት ቀን
+                                </div>
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                    ሠ) ደምወዝ
+                                </div>
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                    ረ) ጠቅላላ የትራንስፖርት አበል /ብር/
+                                </div>
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                    ሰ) የትርፍ ሰአት ክፍያ /ብር/
+                                </div>
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                    ሸ) የስራ ንግድ ግብር የሚከፈልበት የትራንስፖርት አበል
+                                </div>
+
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                    በ) የስራ ግብር
+                                </div>
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                    ተ) የትምህርት ወጪ መጋራት
+                                </div>
+
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                    ቸ) የተጣራ ክፍያ
+                                </div>
+
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                    ነ) የሠራተኛ ፊርማ
+                                </div>
+
+
+
+                            </div>
+                            <div class="row"
+                                *ngFor="let item of pensionReportList&&pensionReportList.incomeTaxEmployeeDto; let i = index">
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                    {{i+1}}
+                                </div>
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                    {{item.tinNumber}}
+                                </div>
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                    {{item.employeeName}}
+                                </div>
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                    {{item.hireDate |date:"MMM dd yyyy"}}
+                                </div>
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                    {{item.basicSalary}}
+                                </div>
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                    {{item.transportAllowance}}
+                                </div>
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                    {{item.overTime}}
+                                </div>
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+
+                                    {{item.otherAllowance}}
+
+                                </div>
+
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                    {{item.incomeTax}}
+                                </div>
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+
+                                </div>
+
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+
+                                    {{item.netIncome}}
+                                </div>
+
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+
+                                </div>
+
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <hr />
+                <div class="col-span-12 border border-slate-200 dark:border-zink-500 relative">
+                    <div class="row">
+                        <div class="col-4 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                            የወሩ የተጠቃለለ ሂሳብ
+                        </div>
+                        <div class="col-4 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                            ክፍል 4- በዚህ ወር ስራ የለቀቁ ሠራተኞች ዝርዝር መረጃ
+                        </div>
+                        <div class="col-4 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                            ለቢሮ አገልግሎት ብቻ
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                            በዚህ ወር ደምውዝ ሚከፈላቸው ሰራተኞች ብዛት
+                        </div>
+                        <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                            {{pensionReportList&&pensionReportList.totalNoEmployee}}
+                        </div>
+                        <div class="col-2 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                            የሠራተኛው ስም /የአባት ሰምና የአያት ስም
+                        </div>
+                        <div class="col-2 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                            የሠራተኛው የግብር ከፋይ ቁጥር
+                        </div>
+
+                        <div class="col-2 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+
+                        </div>
+                        <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+
+                        </div>
+                        <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                            -
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                            የወሩ ጠቅላላ የስራ ግብር የሚከፈልበት ገቢ ከላይ ካለው ስንጠረዥ
+                        </div>
+                        <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                            {{pensionReportList&&pensionReportList.totalIncome}}
+                        </div>
+                        <div class="col-2 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+
+                        </div>
+                        <div class="col-2 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+
+                        </div>
+
+                        <div class="col-2 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+
+                        </div>
+                        <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+
+                        </div>
+                        <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                            -
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                            የወሩ ጠቅላላ መከፈል ያለበት የስራ ግብር ( ከላይ ካለው ስንጠረዥ )
+                        </div>
+                        <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                            {{pensionReportList&&pensionReportList.totalTax}}
+                        </div>
+                        <div class="col-2 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+
+                        </div>
+                        <div class="col-2 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+
+                        </div>
+
+                        <div class="col-2 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+
+                        </div>
+                        <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+
+                        </div>
+                        <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                            -
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+
+</section>

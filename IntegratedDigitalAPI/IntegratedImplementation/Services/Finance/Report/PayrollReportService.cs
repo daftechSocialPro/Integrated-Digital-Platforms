@@ -30,7 +30,7 @@ namespace IntegratedImplementation.Services.Finance.Report
             DateTime toDate = new DateTime(payrollMonth.Year, payrollMonth.Month, lastDayDetail);
 
             var q = await (from x in _dbContext.EmployeePayrolls.Include(x => x.Employee)
-                     where x.PayStart.Equals(payrollMonth) && x.PayEnd.Equals(toDate)
+                     where x.PayStart.Date.Equals(payrollMonth.Date) && x.PayEnd.Date.Equals(toDate.Date)
                      select x).ToListAsync();
             
 
@@ -48,6 +48,8 @@ namespace IntegratedImplementation.Services.Finance.Report
                 var basicSallary = (item.BasicSallary / totalDays) * 26;
 
                 var currentPosition = _dbContext.EmploymentDetails.Include(x => x.Position).FirstOrDefault(x => x.EmployeeId == item.EmployeeId && x.Rowstatus == RowStatus.ACTIVE);
+
+                var EmployeeBanks = _dbContext.EmployeeBanks.Where(x => x.EmployeeId == item.EmployeeId && x.IsSalaryBank );
 
                 reports.Add(new PayrollReportDto
                 {
@@ -67,7 +69,8 @@ namespace IntegratedImplementation.Services.Finance.Report
                     TaxableIncome = item.TaxableIncome,
                     TotalDeduction = item.Loan + item.IncomeTax + item.Penalty,
                     TotalEarning = item.TotalEarning,
-                    TransportFuelAllowance = item.TransportFuelAllowance
+                    TransportFuelAllowance = item.TransportFuelAllowance,
+                    AccountNumber = EmployeeBanks.Any() ? EmployeeBanks.FirstOrDefault().BankAccountNo : ""
                 });
                    
             }
@@ -85,7 +88,7 @@ namespace IntegratedImplementation.Services.Finance.Report
             int lastDayDetail = DateTime.DaysInMonth(payrollMonth.Year, payrollMonth.Month);
             DateTime toDate = new DateTime(payrollMonth.Year, payrollMonth.Month, lastDayDetail);
             var q = await (from x in _dbContext.EmployeePayrolls.Include(x => x.Employee)
-                           where x.PayStart.Equals(payrollMonth) && x.PayEnd.Equals(toDate)
+                           where x.PayStart.Date.Equals(payrollMonth.Date) && x.PayEnd.Date.Equals(toDate.Date)
                            select x).ToListAsync();
 
             foreach(var item in q)
@@ -131,7 +134,7 @@ namespace IntegratedImplementation.Services.Finance.Report
             int lastDayDetail = DateTime.DaysInMonth(payrollMonth.Year, payrollMonth.Month);
             DateTime toDate = new DateTime(payrollMonth.Year, payrollMonth.Month, lastDayDetail);
             var q = await (from x in _dbContext.EmployeePayrolls.Include(x => x.Employee)
-                           where x.PayStart.Equals(payrollMonth) && x.PayEnd.Equals(toDate)
+                           where x.PayStart.Date.Equals(payrollMonth.Date) && x.PayEnd.Date.Equals(toDate.Date)
                            select x).ToListAsync();
 
             foreach (var item in q)

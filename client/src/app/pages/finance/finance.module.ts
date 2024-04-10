@@ -50,7 +50,7 @@ import { PendingPurchaseInvoiceComponent } from './purchase-invoice/pending-purc
 import { ApprovedPurchaseInvoiceComponent } from './purchase-invoice/approved-purchase-invoice/approved-purchase-invoice.component';
 import { PayLoanComponent } from './loan-issuance/pay-loan/pay-loan.component';
 
-import { PayrollReportComponent } from './finance-reports/payroll-report/payroll-report.component';
+
 import { IncomeTaxDeclarationComponent } from './income-tax-declaration/income-tax-declaration.component';
 //import { PayrollReportComponent } from './finance-reports/payroll-report/payroll-report.component';
 import { AccountReconcilliationComponent } from './account-reconcilliation/account-reconcilliation.component';
@@ -59,6 +59,7 @@ import { FinanceReportComponent } from './finance-report/finance-report.componen
 import { PensionReportComponent } from './finance-report/pension-report/pension-report.component';
 import { IncomeTaxReportComponent } from './finance-report/income-tax-report/income-tax-report.component';
 import { PensionDeclarationComponent } from './pension-declaration/pension-declaration.component';
+import { PayrollReportComponent } from './finance-report/payroll-report/payroll-report.component';
 // import { PensionDeclarationComponent } from './pension-declaration/pension-declaration.component';
 
 
@@ -85,7 +86,7 @@ import { PensionDeclarationComponent } from './pension-declaration/pension-decla
     PaymentsComponent,
     AddPaymentsComponent,
     PayrollComponent,
-
+    PayrollReportComponent,
     PendingPaymentsComponent,
     ApprovedPaymentsComponent,
     BeginningBalanceComponent,

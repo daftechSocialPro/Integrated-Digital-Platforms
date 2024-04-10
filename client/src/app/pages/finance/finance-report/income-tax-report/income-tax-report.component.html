@@ -24,7 +24,7 @@
             <div class="card">
                 <div class="card-body">
                     
-                    <p-table #dt [columns]="cols" [value]="incomeTaxReportList" selectionMode="multiple"
+                    <p-table #dt [columns]="cols" [value]="incomeTaxReportList.incomeTaxEmployeeDto" selectionMode="multiple"
                          [(selection)]="selectedincomeTaxReportList" [exportHeader]="'customExportHeader'" 
                          [tableStyle]="{ 'min-width': '50rem' }" [paginator]="true"
                          [rows]="5"
