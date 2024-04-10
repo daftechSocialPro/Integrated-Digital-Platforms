@@ -45,17 +45,17 @@ export class PensionReportComponent implements OnInit {
     });
     this.financeService.getPensionReport(formattedDate).subscribe({
       next: (res) => {
-        this.pensionReportList = res
+        
       }
     })
   }
   exportPdf() {
     import('jspdf').then((jsPDF) => {
-        import('jspdf-autotable').then((x) => {
-            const doc = new jsPDF.default('p', 'px', 'a4');
-            (doc as any).autoTable(this.exportColumns, this.pensionReportList);
-            doc.save('products.pdf');
-        });
+        // import('jspdf-autotable').then((x) => {
+        //     const doc = new jsPDF.default('p', 'px', 'a4');
+        //     (doc as any).autoTable(this.exportColumns, this.pensionReportList);
+        //     doc.save('products.pdf');
+        // });
     });
   }
 

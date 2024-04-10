@@ -41,6 +41,53 @@ namespace IntegratedImplementation.DTOS.Inventory
     {
         public string Id { get; set; } = null!;
         public string ApproverEmployeeId { get; set; } = null!;
-        public double APrrovedQuantity { get; set; }
     }
+
+
+    public class ApprovedPurchaseRequestsDto
+    {
+        public Guid Id { get; set; }
+        public string RequestNumber { get; set; } = null!;
+        public string ItemName { get; set; } = null!;
+        public double Quantitiy { get; set; }
+        public string ApproverEmployee { get; set; } = null!;
+
+        public List<ApprovedPerformaDetailDto> PerformaDetails { get; set; } = null!;
+        
+    }
+
+    public class ApprovedPerformaDetailDto
+    {
+        public Guid Id { get; set; }
+        public string VendorName { get; set; } = null!;
+        public string Description { get; set; } = null!;
+        public double SinglePrice { get; set; }
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get; set; }
+    }
+
+
+    public class AddPerformaDto
+    {
+        public Guid PurchaseRequestListId { get; set; }
+        public Guid VendorId { get; set; }
+        public string CreatedById { get; set; } = null!;
+        public string Description { get; set; } = null!;
+        public double SinglePrice { get; set; }
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get; set; }
+
+    }
+
+
+    public class ApprovePerformaDto
+    {
+        public Guid VendorId { get; set; }
+        public Guid EmployeeId { get; set; }
+        public Guid PurchaseRequestListId { get; set; }
+        public double ApprovedQuantity { get; set; }
+        public string? Remark { get; set; } 
+
+    }
+
 }

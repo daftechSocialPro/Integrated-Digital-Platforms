@@ -11,11 +11,14 @@ import { AddGoodsReceivingNoteComponent } from './goods-receiving-note/add-goods
 import { AdjustItemsComponent } from './goods-receiving-note/adjust-items/adjust-items.component';
 import { ApproveStoreRequestComponent } from './approve-store-request/approve-store-request.component';
 import { ReceivedItemsComponent } from './received-items/received-items.component';
+import { ApprovedPurchaseInvoiceComponent } from '../finance/purchase-invoice/approved-purchase-invoice/approved-purchase-invoice.component';
+import { ApprovedPurchaseRequestsComponent } from './approved-purchase-requests/approved-purchase-requests.component';
 
 const routes: Routes = [
   { path: 'inventorysetting', canActivate: [AuthGuard], component: InventorySettingComponent },
   { path: 'purchaseRequest', canActivate: [AuthGuard], component: PurchaseRequestComponent },
   { path: 'approvePurchaseRequest', canActivate: [AuthGuard], component: ApprovePurchaseRequestComponent },
+  { path: 'approvedPurchaseRequests', canActivate: [AuthGuard], component: ApprovedPurchaseRequestsComponent },
   { path: 'goodsRecivingNote', canActivate: [AuthGuard], component: GoodsReceivingNoteComponent },
   { path: 'storeRequest', canActivate: [AuthGuard], component: StoreRequestComponent },
   { path: 'approveStoreRequest', canActivate: [AuthGuard], component: ApproveStoreRequestComponent },

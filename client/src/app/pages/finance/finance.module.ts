@@ -98,16 +98,15 @@ import { PayrollReportComponent } from './finance-report/payroll-report/payroll-
     ApprovedPurchaseInvoiceComponent,
     PayLoanComponent,
 
-      IncomeTaxDeclarationComponent,
+    IncomeTaxDeclarationComponent,
   
-    //PayrollReportComponent,
     AccountReconcilliationComponent,
     FinanceReportComponent,
  
     PensionReportComponent,
     IncomeTaxReportComponent,
     PensionDeclarationComponent,
-    // PensionDeclarationComponent
+    
 
   ],
   imports: [

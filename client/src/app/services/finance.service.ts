@@ -177,7 +177,7 @@ export class FinanceService {
     return this.http.get<PayrollReportGetDto[]>(this.BaseURI + "/PayrollReport/GetPayrollReport?payrollMonth="+payrollMonth)
   }
   getPensionReport(payrollMonth: string){
-    return this.http.get<PensionReportGetDto[]>(this.BaseURI + "/PayrollReport/GetPensionReport?payrollMonth="+payrollMonth)
+    return this.http.get<PensionReportGetDto>(this.BaseURI + "/PayrollReport/GetPensionReport?payrollMonth="+payrollMonth)
   }
   getIncomeTaxReport(payrollMonth: string){
     return this.http.get<IncomeTaxReportGetDto>(this.BaseURI + "/PayrollReport/GetIncomeTaxReport?payrollMonth="+payrollMonth)

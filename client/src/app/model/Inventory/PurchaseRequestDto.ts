@@ -9,7 +9,7 @@ export class AddPurchaseRequestDto {
 
 export class AddPurchaseRequestListDto {
     itemId: string;
-    itemName:string;
+    itemName: string;
     measurementUnit: string;
     quantity: number;
     singlePrice: number;
@@ -25,11 +25,48 @@ export class PurchaseRequestListDto {
     measurementUnitName: string;
     quantity: number;
     singlePrice: number;
-    aPrrovedQuantity: number
 }
 
 export class ApprovePurchaseRequestDto {
     id: string;
     approverEmployeeId: string;
-    aPrrovedQuantity: number
+}
+
+
+export class ApprovedPurchaseRequestsDto {
+    id: string;
+    requestNumber: string;
+    itemName: string;
+    quantitiy: number;
+    aproverEmployee: string;
+    performaDetails: ApprovedPerformaDetailDto[];
+}
+
+export class ApprovedPerformaDetailDto {
+    id: string;
+    vendorName: string;
+    description: string;
+    singlePrice: string;
+    fromDate: Date;
+    toDate: Date;
+}
+
+
+export class AddPerformaDto {
+    purchaseRequestListId: string;
+    vendorId: string;
+    createdById: string;
+    description: string;
+    singlePrice: number;
+    fromDate: Date;
+    toDate: Date;
+}
+
+
+export class ApprovePerformaDto {
+    vendorId: string;
+    employeeId: string;
+    purchaseRequestListId: string;
+    approvedQuantity: number;
+    remark: string;
 }

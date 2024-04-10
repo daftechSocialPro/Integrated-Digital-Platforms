@@ -12,7 +12,7 @@ namespace IntegratedInfrustructure.Model.Inventory
     {
         public MeasurementType MeasurementType { get; set; }
         public string Name { get; set; } = null!;
-        public string AmharicName { get; set; } = null!;
+        public string? AmharicName { get; set; } 
         public double ToSIUnit { get; set; }
     }
 }
