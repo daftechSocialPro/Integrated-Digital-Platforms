@@ -138,7 +138,7 @@ namespace IntegratedInfrustructure.Data
         public DbSet<ActivityLocation> ActivityLocations { get; set; }  
         #endregion
 
-        #region 
+        #region Training
         public DbSet<Training> Trainings { get; set; }
 
         public DbSet<Trainee> Trainees { get; set; }
@@ -152,7 +152,7 @@ namespace IntegratedInfrustructure.Data
         public DbSet<TrainingReportAttachment> TrainingReportAttachments { get; set; }
 
 
-        #endregion
+        #endregion 
 
         #region Inventory
         public DbSet<Category> Categories { get; set; }

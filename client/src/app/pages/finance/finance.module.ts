@@ -52,10 +52,8 @@ import { PayLoanComponent } from './loan-issuance/pay-loan/pay-loan.component';
 
 
 import { IncomeTaxDeclarationComponent } from './income-tax-declaration/income-tax-declaration.component';
-//import { PayrollReportComponent } from './finance-reports/payroll-report/payroll-report.component';
 import { AccountReconcilliationComponent } from './account-reconcilliation/account-reconcilliation.component';
 import { FinanceReportComponent } from './finance-report/finance-report.component';
-
 import { PensionReportComponent } from './finance-report/pension-report/pension-report.component';
 import { IncomeTaxReportComponent } from './finance-report/income-tax-report/income-tax-report.component';
 import { PensionDeclarationComponent } from './pension-declaration/pension-declaration.component';
@@ -101,6 +99,7 @@ import { NumberToWordPipe } from './finance-report/payroll-report/numberToWord.p
 
     IncomeTaxDeclarationComponent,
   
+    
     AccountReconcilliationComponent,
     FinanceReportComponent,
  

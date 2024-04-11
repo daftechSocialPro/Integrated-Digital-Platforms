@@ -35,6 +35,8 @@ import { ReceivedItemsComponent } from './received-items/received-items.componen
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { TabViewModule } from 'primeng/tabview';
 import { ApprovedPurchaseRequestsComponent } from './approved-purchase-requests/approved-purchase-requests.component';
+import { InventoryDashboardComponent } from './inventory-dashboard/inventory-dashboard.component';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 @NgModule({
   declarations: [
@@ -57,6 +59,7 @@ import { ApprovedPurchaseRequestsComponent } from './approved-purchase-requests/
     IssueItemsComponent,
     ReceivedItemsComponent,
     ApprovedPurchaseRequestsComponent,
+    InventoryDashboardComponent,
   ],
   imports: [
     CommonModule,
@@ -77,7 +80,10 @@ import { ApprovedPurchaseRequestsComponent } from './approved-purchase-requests/
     DialogModule,
     CalendarModule,
     ConfirmPopupModule,
-    TabViewModule
+    TabViewModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts'),
+    }),
   ]
 })
 export class InventoryModule { }

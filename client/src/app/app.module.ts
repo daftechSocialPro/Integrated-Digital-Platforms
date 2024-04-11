@@ -279,6 +279,7 @@ import { AllTrainingListComponent } from './pages/training/all-training-list/all
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ChangePasswordComponent } from './pages/configuration/user-management/change-password/change-password.component';
 import { CustomResceduleConfirtamionComponent } from './pages/project-managment/assigned-activities/custom-rescedule-confirtamion/custom-rescedule-confirtamion.component';
+import { HrmDashboardComponent } from './pages/human-resource/hrm-dashboard/hrm-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -605,7 +606,8 @@ import { CustomResceduleConfirtamionComponent } from './pages/project-managment/
     PlanDashboardComponent,
       AllTrainingListComponent,
       ChangePasswordComponent,
-      CustomResceduleConfirtamionComponent
+      CustomResceduleConfirtamionComponent,
+      HrmDashboardComponent
 
     //  AddMeasurementComponent,
     //  UpdateMeasurmentComponent
