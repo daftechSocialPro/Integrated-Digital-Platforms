@@ -14,7 +14,15 @@
             <div class="ms-2">
                 
                 <button pButton pRipple *ngIf="payrollMonth" class="p-button-success" (click)="generateReport()"><i class="bi bi-calculator"></i>&nbsp; Generate Report</button>
-            
+                <button *ngIf="payrollReportList" type="button" style="margin-left: 10px;" pButton pRipple icon="pi pi-file" (click)="exportAsExcel()" class="ml-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+                <!-- <button *ngIf="payrollReportList" type="button" style="margin-left: 10px;"  pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()" class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+                
+                 -->
+
+                <button *ngIf="payrollReportList" type="button" style="margin-left: 10px;"  pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf2()" class="p-button-danger mr-2" pTooltip="CSV" tooltipPosition="bottom">&nbsp; Salary Transfer Order</button>
+                 
+
+
             </div>
             
         </div>
@@ -22,7 +30,105 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
-                <div class="card-body">
+                
+                
+
+                <div class="container" id="container"  #excelTable *ngIf="payrollReportList">
+                    <img [src]="imagePath" alt="Company Logo">
+                    <h5> Ethiopian Midwives Association (EMwA)</h5>
+                    <h6>Employees payroll Sheet </h6>
+                    <h6>For the month of {{payrollMonth && payrollMonth|date:"MMMM - yyyy"}} </h6>
+                    <div class="table-responsive">
+
+             
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style=" border: 1px solid black;">Ser No</th>
+                                 <th style=" border: 1px solid black;">Employee Name</th>
+                                 <th style=" border: 1px solid black;">Position</th>
+                                 <th style=" border: 1px solid black;">Days Worked</th>
+                                 <th style=" border: 1px solid black;">Source of Fund</th>
+                                 <th style=" border: 1px solid black;">Salary</th>
+                                 <th style=" border: 1px solid black;">Transport & fuel Allowance</th>
+                                 <th style=" border: 1px solid black;">Commun. Allowance</th>
+                                 <th style=" border: 1px solid black;">Position Allowance and Over Time</th>
+                                 <th style=" border: 1px solid black;">Pension (11%) from Employer</th>
+                                 <th style=" border: 1px solid black;">Pension (7%) from Employee</th>
+                                 <th style=" border: 1px solid black;">Total Earning</th>
+                                 <th style=" border: 1px solid black;">Taxable Income</th>
+                                 <th style=" border: 1px solid black;">Payroll Tax</th>
+                                 <th style=" border: 1px solid black;">PF/Pension</th>
+                                 <th style=" border: 1px solid black;">Loan</th>
+                                <!--  <th style=" border: 1px solid black;">Salary Loan</th>                              -->
+                                 <th style=" border: 1px solid black;">Total Deduction</th>
+                                 <th style=" border: 1px solid black;">Net Pay</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of payrollReportList; let i= index">
+                                 <td style=" border: 1px solid black;">{{i+1}}</td>
+                                 <td style=" border: 1px solid black;">{{item.employeeName}}</td>
+                                 <td style=" border: 1px solid black;">{{item.position}}</td>
+                                 <td style=" border: 1px solid black;">{{item.daysWorked}}</td>
+                                 <td style=" border: 1px solid black;">{{item.sourceOfFund}}</td>
+                                 <td style=" border: 1px solid black;">{{item.salary}}</td>
+                                 <td style=" border: 1px solid black;">{{item.transportFuelAllowance}}</td>
+                                 <td style=" border: 1px solid black;">{{item.communicationAllowance}}</td>
+                                 <td style=" border: 1px solid black;">{{item.positionAllowanceOT}}</td>
+                                 <td style=" border: 1px solid black;">{{item.pFEmployerPension}}</td>
+                                 <td style=" border: 1px solid black;">{{item.employeePension}}</td>
+                                 <td style=" border: 1px solid black;">{{item.totalEarning}}</td>
+                                 <td style=" border: 1px solid black;">{{item.taxableIncome}}</td>
+                                 <td style=" border: 1px solid black;">{{item.incomeTax}}</td>
+                                 <td style=" border: 1px solid black;">{{item.pFEmployerPension}}</td>
+                                 <td style=" border: 1px solid black;">{{item.loan}}</td>
+                                 <td style=" border: 1px solid black;">{{item.totalDeduction}}</td>
+                                 <td style=" border: 1px solid black;">{{item.netPay}} </td>
+                            </tr>
+                            <!-- Add more rows for other employees -->
+                        </tbody>
+                    </table>
+                </div>
+                    <p style="text-align: center;font-weight: bolder;font-size: 26px;">Total Net Pay: {{payrollReportList&&getNetPaySummation()}}</p>
+                </div>
+
+                
+                <div class="container" id="container2" [ngClass]="{'hidden-on-screen': !printing}"    #excelTable2 *ngIf="payrollReportList">
+                    
+                    <h5 style="font-weight: bolder;">ETHIOPIAN MIDWIVES ASSOCIATION /EMwA/</h5>
+                    <h6 style="font-weight: bolder;">Employees Salary for The Month of {{payrollMonth && payrollMonth|date:"MMMM - yyyy"}}</h6>
+                    
+                    <div class="table-responsive">
+
+             
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style=" border: 1px solid black;">Ser No</th>
+                                 <th style=" border: 1px solid black;">Full Name</th>
+                                 <th style=" border: 1px solid black;">Bank Acct No</th>
+                                 <th style=" border: 1px solid black;">Amount</th>
+                                 <th style=" border: 1px solid black;"> Remark </th>
+                               
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of payrollReportList; let i= index">
+                                 <td style=" border: 1px solid black;">{{i+1}}</td>
+                                 <td style=" border: 1px solid black;">{{item.employeeName}}</td>
+                                 <td style=" border: 1px solid black;">{{item.accountNumber}}</td>
+                                 <td style=" border: 1px solid black;">{{item.netPay}}</td>
+                                 <td style=" border: 1px solid black;">""</td>
+                            </tr>
+                            <!-- Add more rows for other employees -->
+                        </tbody>
+                    </table>
+                </div>
+                    <p style="text-align: center;font-weight: bolder;font-size: 26px;">Total : {{payrollReportList&&getNetPaySummation()}}</p>
+                </div>
+                
+                <!-- <div class="card-body">
                     
                     <p-table #dt [columns]="cols" [value]="payrollReportList" selectionMode="multiple" [(selection)]="selectedPayrollReportList" [exportHeader]="'customExportHeader'" [tableStyle]="{ 'min-width': '50rem' }">
                         <ng-template pTemplate="caption">
@@ -48,7 +154,7 @@
                             </tr>
                         </ng-template>
                     </p-table>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

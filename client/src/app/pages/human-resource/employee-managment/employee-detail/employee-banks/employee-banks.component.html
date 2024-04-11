@@ -29,6 +29,13 @@
                                         formControlName="bankAccountNo">
                                 </div>
                             </div>
+                            <div class="col-md-3">
+                                <div class="form-check" style="font-size: 25px;"> <input class="form-check-input"
+                                        formControlName="isSalaryBank" type="checkbox" id="gridCheck"> <label
+                                        class="form-check-label" style="font-size: 20px;font-weight: bold;"
+                                        for="gridCheck">Is Salary Bank </label></div>
+                            </div>
+
                             <div class="col-md-2">
                                 <label ></label><br/>
                                 <button type="button"  [disabled]="!employeeBankForm.valid"  class="btn btn-outline-primary" (click)="addNew()"><i class="bi bi-plus me-1"></i>
@@ -51,6 +58,7 @@
                                     <tr>
                                         <th>Bank</th>
                                         <th>Account Number</th>
+                                        <th>Is Salary Bank </th>
                                         <th></th>
                                     </tr>
                                 </ng-template>
@@ -58,6 +66,7 @@
                                     <tr>
                                         <td>{{ bank.bankName }}</td>
                                         <td>{{ bank.accountNumber }}</td>
+                                        <td>{{ bank.isSalaryBank}}</td>
                                     </tr>
                                 </ng-template>
                             </p-table>

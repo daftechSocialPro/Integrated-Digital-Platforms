@@ -47,6 +47,7 @@ export class EmployeeBanksComponent implements OnInit {
     this.employeeBankForm = this.formBuilder.group({
       bankId: [null, Validators.required],
       bankAccountNo: [null, Validators.required],
+      isSalaryBank : [false,Validators.required]
     });
   }
 
@@ -78,6 +79,7 @@ export class EmployeeBanksComponent implements OnInit {
         bankId: this.employeeBankForm.value.bankId,
         accountNumber: this.employeeBankForm.value.bankAccountNo,
         createdById: this.user.userId,
+        isSalaryBank : this.employeeBankForm.value.isSalaryBank,
         employeeId: this.employeeId
       }
       this.hrmService.addEmployeeBank(employeeBank).subscribe(

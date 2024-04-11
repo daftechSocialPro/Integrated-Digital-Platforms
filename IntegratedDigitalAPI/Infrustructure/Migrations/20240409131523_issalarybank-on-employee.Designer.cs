@@ -4,6 +4,7 @@ using IntegratedInfrustructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IntegratedInfrustructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240409131523_issalarybank-on-employee")]
+    partial class issalarybankonemployee
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -3277,6 +3280,7 @@ namespace IntegratedInfrustructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("AmharicName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedById")
@@ -3303,95 +3307,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasIndex("CreatedById");
 
                     b.ToTable("MeasurmentUnits");
-                });
-
-            modelBuilder.Entity("IntegratedInfrustructure.Model.Inventory.PerformaDetail", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CreatedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("FromDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsWinner")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("PurchaseRequestListId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Remark")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Rowstatus")
-                        .HasColumnType("int");
-
-                    b.Property<double>("SinglePrice")
-                        .HasColumnType("float");
-
-                    b.Property<DateTime>("ToDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("VendorId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("PurchaseRequestListId");
-
-                    b.HasIndex("VendorId");
-
-                    b.ToTable("PerformaDetails");
-                });
-
-            modelBuilder.Entity("IntegratedInfrustructure.Model.Inventory.ProductTag", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CreatedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("ProductStatus")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Rowstatus")
-                        .HasColumnType("int");
-
-                    b.Property<string>("SerialNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TagNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("ProductTags");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Inventory.UsedItems", b =>
@@ -4699,9 +4614,6 @@ namespace IntegratedInfrustructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("EmployeeId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime?>("ExpireDateTime")
                         .HasColumnType("datetime2");
 
@@ -4748,17 +4660,12 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<double>("SinglePrice")
                         .HasColumnType("float");
 
-                    b.Property<int>("SourceOfProduct")
-                        .HasColumnType("int");
-
                     b.Property<Guid>("VendorId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CreatedById");
-
-                    b.HasIndex("EmployeeId");
 
                     b.HasIndex("ItemId");
 
@@ -4823,11 +4730,11 @@ namespace IntegratedInfrustructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<double?>("APrrovedQuantity")
+                        .HasColumnType("float");
+
                     b.Property<int>("ApprovalStatus")
                         .HasColumnType("int");
-
-                    b.Property<double?>("ApprovedQuantity")
-                        .HasColumnType("float");
 
                     b.Property<Guid?>("ApproverEmployeeId")
                         .HasColumnType("uniqueidentifier");
@@ -4837,12 +4744,6 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("FinalApproverId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("IsFinalApproved")
-                        .HasColumnType("bit");
 
                     b.Property<Guid>("ItemId")
                         .HasColumnType("uniqueidentifier");
@@ -4863,13 +4764,14 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<int>("Rowstatus")
                         .HasColumnType("int");
 
+                    b.Property<double>("SinglePrice")
+                        .HasColumnType("float");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ApproverEmployeeId");
 
                     b.HasIndex("CreatedById");
-
-                    b.HasIndex("FinalApproverId");
 
                     b.HasIndex("ItemId");
 
@@ -7098,48 +7000,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("CreatedBy");
                 });
 
-            modelBuilder.Entity("IntegratedInfrustructure.Model.Inventory.PerformaDetail", b =>
-                {
-                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
-
-                    b.HasOne("IntegratedInfrustructure.Models.Inventory.PurchaseRequestList", "PurchaseRequestList")
-                        .WithMany("PerformaDetails")
-                        .HasForeignKey("PurchaseRequestListId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("IntegratedInfrustructure.Models.Inventory.Vendor", "Vendor")
-                        .WithMany()
-                        .HasForeignKey("VendorId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("CreatedBy");
-
-                    b.Navigation("PurchaseRequestList");
-
-                    b.Navigation("Vendor");
-                });
-
-            modelBuilder.Entity("IntegratedInfrustructure.Model.Inventory.ProductTag", b =>
-                {
-                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
-
-                    b.HasOne("IntegratedInfrustructure.Models.Inventory.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("CreatedBy");
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("IntegratedInfrustructure.Model.Inventory.UsedItems", b =>
                 {
                     b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
@@ -7680,12 +7540,6 @@ namespace IntegratedInfrustructure.Migrations
                         .WithMany()
                         .HasForeignKey("CreatedById");
 
-                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("IntegratedInfrustructure.Models.Inventory.Item", "Item")
                         .WithMany()
                         .HasForeignKey("ItemId")
@@ -7713,8 +7567,6 @@ namespace IntegratedInfrustructure.Migrations
                         .IsRequired();
 
                     b.Navigation("CreatedBy");
-
-                    b.Navigation("Employee");
 
                     b.Navigation("Item");
 
@@ -7766,10 +7618,6 @@ namespace IntegratedInfrustructure.Migrations
                         .WithMany()
                         .HasForeignKey("CreatedById");
 
-                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "FinalApprover")
-                        .WithMany()
-                        .HasForeignKey("FinalApproverId");
-
                     b.HasOne("IntegratedInfrustructure.Models.Inventory.Item", "Item")
                         .WithMany()
                         .HasForeignKey("ItemId")
@@ -7791,8 +7639,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("ApproverEmployee");
 
                     b.Navigation("CreatedBy");
-
-                    b.Navigation("FinalApprover");
 
                     b.Navigation("Item");
 
@@ -8325,11 +8171,6 @@ namespace IntegratedInfrustructure.Migrations
             modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.PurchaseRequest", b =>
                 {
                     b.Navigation("PurchaseRequestLists");
-                });
-
-            modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.PurchaseRequestList", b =>
-                {
-                    b.Navigation("PerformaDetails");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.StoreRequest", b =>
