@@ -46,6 +46,21 @@ namespace IntegratedDigitalAPI.Controllers.Inventory
             }
         }
 
+
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> AddProductTag(AddProductTagsDto productDto)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _productService.AddProductTag(productDto));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
         [HttpPut]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> UpdateProduct(UpdateProductDto productDto)

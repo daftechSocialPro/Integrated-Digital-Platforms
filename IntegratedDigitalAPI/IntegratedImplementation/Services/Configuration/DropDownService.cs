@@ -342,26 +342,28 @@ namespace IntegratedImplementation.Services.Configuration
 
         public async Task<List<ItemDropDownDto>> GetItemDropDown()
         {
-            var items = await _dbContext.Items.AsNoTracking()
+            var items = await _dbContext.Items.Include(x => x.Category).AsNoTracking()
                        .Include(x => x.Category).
                        Select(x => new ItemDropDownDto
                        {
                            Id = x.Id,
-                           isExpirable = x.IsExpirable,
+                           IsExpirable = x.IsExpirable,
                            MeasurementType = (int)x.MeasurementType,
-                           Name = x.Name
+                           Name = x.Name,
+                           IsAsset = x.Category.CategoryType == CategoryType.ASSET ? true: false,
                        }).ToListAsync();
             return items;
         }
 
         public async Task<List<ItemDropDownDto>> GetItemByRequest(string StoreRequestId)
         {
-            var items = await _dbContext.StoreRequestLists.Include(x => x.Item).Include(x => x.StoreRequest).AsNoTracking()
+            var items = await _dbContext.StoreRequestLists.Include(x => x.Item.Category).Include(x => x.StoreRequest).AsNoTracking()
                        .Where(x => x.StoreRequestId == Guid.Parse(StoreRequestId)).
                        Select(x => new ItemDropDownDto
                        {
                            Id = x.ItemId,
-                           isExpirable = x.Item.IsExpirable,
+                           IsExpirable = x.Item.IsExpirable,
+                           IsAsset = x.Item.Category.CategoryType == CategoryType.ASSET ? true : false,
                            MeasurementType = (int)x.Item.MeasurementType,
                            Name = x.Item.Name
                        }).ToListAsync();

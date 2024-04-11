@@ -16,5 +16,7 @@ namespace IntegratedImplementation.Interfaces.Inventory
         Task<ResponseMessage> AddProduct(AddProductDto addProduct);
         Task<ResponseMessage> UpdateProduct(UpdateProductDto updateProduct);
         Task<UpdateProductDto> GetProductDetail(string productId);
+
+        Task<ResponseMessage> AddProductTag(AddProductTagsDto addProductTags);
     }
 }

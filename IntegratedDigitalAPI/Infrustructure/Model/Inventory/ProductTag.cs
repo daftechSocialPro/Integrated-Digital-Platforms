@@ -14,7 +14,7 @@ namespace IntegratedInfrustructure.Model.Inventory
         public Guid ProductId { get;set; }
         public virtual Product Product { get; set; } = null!;
         public string TagNumber { get; set; } = null!;
-        public string SerialNumber { get; set; } = null!;
+        public string? SerialNumber { get; set; }
 
         public ProductStatus ProductStatus { get; set; }
 
