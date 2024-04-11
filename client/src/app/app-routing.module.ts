@@ -64,8 +64,8 @@ import { HrmDashboardComponent } from './pages/human-resource/hrm-dashboard/hrm-
 
 
 const routes: Routes = [
-  { path: '', canActivate: [AuthGuard], component: DashboardComponent },
-  { path: 'dashboard', canActivate: [AuthGuard], component: DashboardComponent },
+  { path: '', canActivate: [AuthGuard], component: PlanDashboardComponent },
+  { path: 'dashboard', canActivate: [AuthGuard], component: PlanDashboardComponent },
   { path: 'configuration', canActivate: [AuthGuard], component: ConfigurationComponent, data: { permittedRoles: ['GENERAL-CONFIGURATION'] } },
   { path: 'pm/configuration', canActivate: [AuthGuard], component: PMConfigurationComponent },
   { path: 'pm/strategicPlans', canActivate: [AuthGuard], component: StrategicPlanComponent },

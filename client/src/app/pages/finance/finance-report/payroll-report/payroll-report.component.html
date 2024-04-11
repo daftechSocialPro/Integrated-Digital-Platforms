@@ -14,7 +14,7 @@
             <div class="ms-2">
 
                 <button pButton pRipple *ngIf="payrollMonth" class="p-button-success" (click)="generateReport()"><i
-                        class="bi bi-calculator"></i>&nbsp; Generate Report</button>
+                        class="bi bi-calculator"></i>&nbsp; Generate</button>
                 <button *ngIf="payrollReportList" type="button" style="margin-left: 10px;" pButton pRipple
                     icon="pi pi-file" (click)="exportAsExcel()" class="ml-2" pTooltip="CSV"
                     tooltipPosition="bottom"></button>
@@ -24,7 +24,7 @@
 
                 <button *ngIf="payrollReportList" type="button" style="margin-left: 10px;" pButton pRipple
                     icon="pi pi-file-pdf" (click)="exportPdf2()" class="p-button-danger mr-2" pTooltip="CSV"
-                    tooltipPosition="bottom">&nbsp; Salary Transfer Order</button>
+                    tooltipPosition="bottom">&nbsp; Salary Transfer </button>
 
 
 
@@ -261,11 +261,9 @@
         </div>
       </div> -->
     </div>
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />   <br />   <br />   <br />
+ 
+ 
+  
     <div class="tableContent">
         <table
             style="margin-left: auto; margin-right: auto;font-family: 'Times New Roman', Times, serif; font-weight: bold;font-size: large;"
