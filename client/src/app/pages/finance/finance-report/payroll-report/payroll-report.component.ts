@@ -7,6 +7,8 @@ import { Column, ExportColumn } from 'src/app/model/configuration/IColumnDto';
 import { CommonService } from 'src/app/services/common.service';
 import { FinanceService } from 'src/app/services/finance.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { ConfigurationService } from 'src/app/services/configuration.service';
+import { BankListDto } from 'src/app/model/configuration/IBankListDto';
 @Component({
   selector: 'app-payroll-report',
   templateUrl: './payroll-report.component.html',
@@ -23,19 +25,32 @@ export class PayrollReportComponent implements OnInit {
   cols!: Column[];
   imagePath: string = "'../../../../../assets/logo2.png'";
   exportColumns!: ExportColumn[];
+  todayDate:Date= new Date();
+  
+
+  bankid:string
+  bankList : BankListDto[]=[]
+  bankReport:BankListDto
 
   constructor(
     private financeService: FinanceService,
     private http: HttpClient,
     private commonService: CommonService,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    private configService: ConfigurationService, 
   ) {}
 
   ngOnInit(): void {
     this.getImage2();
+    this.getBankList();
   }
   getImage(url: string) {
     return this.commonService.createImgPath(url);
+  }
+  onBankSelect(){
+    this.bankReport = this.bankList.filter((item)=>{
+      return (item.id==this.bankid);
+    })[0]
   }
 
   async getImage2() {
@@ -98,6 +113,7 @@ export class PayrollReportComponent implements OnInit {
     
     }
   }
+
   exportPdf2() {
     this.printing = true;
     const month = this.payrollMonth.toLocaleString('default', { month: 'long' });
@@ -224,5 +240,29 @@ export class PayrollReportComponent implements OnInit {
       sum += item.netPay;
     });
     return sum;
+  }
+
+  print(){
+    this.printing = true;
+    let printContents: any;
+    printContents = document.getElementById('contractLetter')?.innerHTML;
+    const originalContents = document.body.innerHTML;
+    document.body.innerHTML = printContents;
+    window.print();
+    location.reload();
+  }
+
+
+  getBankList () {
+
+
+    this.configService.getBankList().subscribe({
+      next:(res)=>{
+        this.bankList = res;
+      }
+    })
+
+
+
   }
 }

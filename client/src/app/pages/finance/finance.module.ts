@@ -60,6 +60,7 @@ import { PensionReportComponent } from './finance-report/pension-report/pension-
 import { IncomeTaxReportComponent } from './finance-report/income-tax-report/income-tax-report.component';
 import { PensionDeclarationComponent } from './pension-declaration/pension-declaration.component';
 import { PayrollReportComponent } from './finance-report/payroll-report/payroll-report.component';
+import { NumberToWordPipe } from './finance-report/payroll-report/numberToWord.pipe';
 // import { PensionDeclarationComponent } from './pension-declaration/pension-declaration.component';
 
 
@@ -106,6 +107,7 @@ import { PayrollReportComponent } from './finance-report/payroll-report/payroll-
     PensionReportComponent,
     IncomeTaxReportComponent,
     PensionDeclarationComponent,
+    NumberToWordPipe
     
 
   ],
@@ -131,7 +133,9 @@ import { PayrollReportComponent } from './finance-report/payroll-report/payroll-
     TabViewModule,
     CheckboxModule,
     MultiSelectModule,
-    FileUploadModule
+    FileUploadModule,
+  
+
 
   ]
 })

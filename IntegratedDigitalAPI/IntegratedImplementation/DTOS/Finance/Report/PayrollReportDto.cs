@@ -27,6 +27,7 @@ namespace IntegratedImplementation.DTOS.Finance.Report
         public double NetPay { get; set; }
 
         public string AccountNumber { get; set; }
+        public string EmployeeCode { get; set; }
 
     }
 

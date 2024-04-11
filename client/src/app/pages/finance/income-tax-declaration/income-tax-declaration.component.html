@@ -27,13 +27,13 @@
         </div>
         <div class="row">
             <div class="col-12 text-end">
-                <button class="btn btn-outline-success text-end mb-3" (click)="exportPdf()"><i
+                <button class="btn btn-outline-success text-end mb-3" (click)="print()"><i
                         class="bi bi-file-excel"></i> Export</button>
             </div>
         </div>
 
 
-        <div class="container" #myTable *ngIf="pensionReportList">
+        <div class="container" id="myTable" #myTable *ngIf="pensionReportList">
             <div class="row">
                 <div class="col-2 px-4 py-2.5 font-weight-bold border border-secondary relative">
                     <div class="d-flex align-items-center ">
