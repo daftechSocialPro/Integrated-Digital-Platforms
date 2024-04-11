@@ -57,6 +57,7 @@ import { FinanceReportComponent } from './finance-report/finance-report.componen
 import { PensionReportComponent } from './finance-report/pension-report/pension-report.component';
 import { IncomeTaxReportComponent } from './finance-report/income-tax-report/income-tax-report.component';
 import { PensionDeclarationComponent } from './pension-declaration/pension-declaration.component';
+import { PayrollReportComponent } from './finance-report/payroll-report/payroll-report.component';
 
 
 
