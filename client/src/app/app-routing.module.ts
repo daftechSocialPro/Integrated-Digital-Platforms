@@ -58,6 +58,7 @@ import { PlanVsAchivmentProjectComponent } from './pages/project-managment/progr
 
 import { PlanDashboardComponent } from './pages/project-managment/plans/plan-dashboard/plan-dashboard.component';
 import { AllTrainingListComponent } from './pages/training/all-training-list/all-training-list.component';
+import { HrmDashboardComponent } from './pages/human-resource/hrm-dashboard/hrm-dashboard.component';
 
 
 
@@ -126,6 +127,7 @@ const routes: Routes = [
   { path: 'HRM/disciplinary-case', canActivate: [AuthGuard], component: DisciplinaryCasesComponent, data: { permittedRoles: ['EVALUATER'] } },
   { path: 'HRM/employee-penalty', canActivate: [AuthGuard], component: EmployeePenaltyComponent, data: { permittedRoles: ['EMPLOYEE-MANAGEMENT'] } },
   { path: 'HRM/contractEndEmployees', canActivate: [AuthGuard], component: ContractEndEmployeesComponent, data: { permittedRoles: ['EMPLOYEE-MANAGEMENT'] } },
+  { path: 'HRM/dashboard', canActivate: [AuthGuard], component: HrmDashboardComponent },
   //trainee
 
   { path: 'trainee-form/:trainingId', component: TraineesFormComponent },

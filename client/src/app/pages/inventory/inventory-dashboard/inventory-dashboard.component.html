@@ -1,0 +1,147 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+       <h1>Dashboard</h1>
+       <nav>
+          <ol class="breadcrumb">
+             <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+             <li class="breadcrumb-item active">Inventory</li>
+             <li class="breadcrumb-item active">Dashboard</li>
+          </ol>
+       </nav>
+    </div>
+    <section class="section dashboard">
+       <div class="row">
+          <div class="col-lg-12">
+             <div class="row">
+                <div class="col-xxl-3 col-xl-12">
+                    <div class="card info-card customers-card">
+                       
+                       <div class="card-body">
+                          <h5 class="card-title">Items <span>| Total</span></h5>
+                          <div class="d-flex align-items-center">
+                             <div class="card-icon card-icon1 rounded-circle d-flex align-items-center justify-content-center"> <i class="bi bi-boxes"></i></div>
+                             <div class="ps-3">
+                                <h6>{{inventoryDashboardData.items}}</h6>
+                                
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                </div>
+                <div class="col-xxl-3 col-xl-12">
+                    <div class="card info-card customers-card">
+                       
+                       <div class="card-body">
+                          <h5 class="card-title">Items <span>| My Recived Items</span></h5>
+                          <div class="d-flex align-items-center">
+                             <div class="card-icon card-icon2 rounded-circle d-flex align-items-center justify-content-center"> <i class="bi bi-box-seam"></i></div>
+                             <div class="ps-3">
+                                <h6>{{inventoryDashboardData.recivedItems}}</h6>
+                                
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                </div>
+                <div class="col-xxl-3 col-xl-12">
+                    <div class="card info-card customers-card">
+                       
+                       <div class="card-body">
+                          <h5 class="card-title">Purchase request <span>| Total</span></h5>
+                          <div class="d-flex align-items-center">
+                             <div class="card-icon card-icon3 rounded-circle d-flex align-items-center justify-content-center"> <i class="bi bi-clipboard-data"></i></div>
+                             <div class="ps-3">
+                                <h6>{{inventoryDashboardData.totalPurchaseRequest}}</h6>
+                                
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                </div>
+                <div class="col-xxl-3 col-xl-12">
+                    <div class="card info-card customers-card">
+                       
+                       <div class="card-body">
+                          <h5 class="card-title">Store Request <span>| Total</span></h5>
+                          <div class="d-flex align-items-center">
+                             <div class="card-icon card-icon1 rounded-circle d-flex align-items-center justify-content-center"> <i class="bi bi-shop-window"></i></div>
+                             <div class="ps-3">
+                                <h6>{{inventoryDashboardData.totalStoreRequest}}</h6>
+                                
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                </div>
+                
+                
+                
+             </div>
+          </div>
+
+          <div class="col-lg-12">
+            <div class="row">
+                <div class="col-6">
+                    <div class="card top-selling overflow-auto">
+                       
+                       <div class="card-body pb-0">
+                          <h5 class="card-title">Pending Items </h5>
+                          <div *ngIf="barChartOption" echarts [options]="barChartOption"></div>
+                          
+                       </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card recent-sales overflow-auto">
+                       
+                       <div class="card-body">
+                          <h5 class="card-title">Expired Performas</h5>
+                          <p-table #dt [value]="inventoryDashboardData.expiredPerformas" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['branch']"
+                                [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true"
+                                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowHover]="true"
+                                dataKey="id">
+                                
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>Vendor Name</th>
+                                        <th>Description</th>
+                                        <th>From Date</th>
+                                        <th>To Date</th>
+                                        
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-emp>
+                                    <tr>
+                                        
+                                        <td style="width:50%; min-width:10rem;">
+                                            {{emp.vendorName}}
+                                        </td>
+                                        <td style="width:50%; min-width:10rem;">
+                                            {{emp.description}}
+                                        </td>
+                                        <td style="width:50%; min-width:10rem;">
+                                            {{emp.fromDate | date: "MM-dd-yyyy"}}
+                                        </td>
+                                        <td style="width:50%; min-width:10rem;">
+                                            {{emp.toDate | date: "MM-dd-yyyy"}}
+                                        </td>
+                                        
+                                        
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                          
+                       </div>
+                    </div>
+                 </div>
+                 
+            </div>
+          </div>
+          
+
+
+          
+        
+        </div>
+    </section>
+ </main>
