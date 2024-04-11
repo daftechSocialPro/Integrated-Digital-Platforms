@@ -16,6 +16,9 @@ export interface PayrollReportGetDto{
     loan: number
     totalDeduction: number
     netPay: number
+    accountNumber : string
+
+    employeeCode :string
 }
 
 export interface PensionReportGetDto{

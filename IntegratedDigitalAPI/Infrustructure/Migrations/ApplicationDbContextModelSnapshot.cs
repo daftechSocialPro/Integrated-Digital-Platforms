@@ -1540,6 +1540,9 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<Guid>("EmployeeId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("IsSalaryBank")
+                        .HasColumnType("bit");
+
                     b.Property<int>("Rowstatus")
                         .HasColumnType("int");
 

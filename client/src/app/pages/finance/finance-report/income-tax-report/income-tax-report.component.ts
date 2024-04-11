@@ -11,7 +11,7 @@ import { FinanceService } from 'src/app/services/finance.service';
 })
 export class IncomeTaxReportComponent implements OnInit {
   incomeTaxMonth!: any
-  incomeTaxReportList!: IncomeTaxReportGetDto[]
+  incomeTaxReportList!: IncomeTaxReportGetDto
   selectedincomeTaxReportList!: IncomeTaxReportGetDto[]
   cols!: Column[];
 
@@ -62,7 +62,7 @@ export class IncomeTaxReportComponent implements OnInit {
 
   exportExcel() {
       import('xlsx').then((xlsx) => {
-          const worksheet = xlsx.utils.json_to_sheet(this.incomeTaxReportList);
+          const worksheet = xlsx.utils.json_to_sheet(this.incomeTaxReportList.incomeTaxEmployeeDto);
           const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
           const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
           this.saveAsExcelFile(excelBuffer, 'products');
@@ -76,6 +76,16 @@ export class IncomeTaxReportComponent implements OnInit {
           type: EXCEL_TYPE
       });
       FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+  }
+
+  print(){
+    
+    let printContents: any;
+    printContents = document.getElementById('contractLetter')?.innerHTML;
+    const originalContents = document.body.innerHTML;
+    document.body.innerHTML = printContents;
+    window.print();
+    location.reload();
   }
 
 }

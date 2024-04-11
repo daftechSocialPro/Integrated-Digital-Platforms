@@ -658,7 +658,8 @@ namespace IntegratedImplementation.Services.HRM
                                    {
                                        Id = x.Id,
                                        AccountNumber = x.BankAccountNo,
-                                       BankName = x.Bank.BankName
+                                       BankName = x.Bank.BankName,
+                                       IsSalaryBank = x.IsSalaryBank,
                                    }).ToListAsync();
 
             return bankLists;
@@ -684,6 +685,7 @@ namespace IntegratedImplementation.Services.HRM
                 CreatedById = employeeBank.CreatedById,
                 BankAccountNo = employeeBank.AccountNumber,
                 BankId = employeeBank.BankId,
+                IsSalaryBank = employeeBank.IsSalaryBank,
                 EmployeeId = employeeBank.EmployeeId,
                 Rowstatus = RowStatus.ACTIVE,
             };

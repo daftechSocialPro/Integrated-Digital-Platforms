@@ -49,6 +49,8 @@ namespace IntegratedImplementation.Services.Finance.Report
 
                 var currentPosition = _dbContext.EmploymentDetails.Include(x => x.Position).FirstOrDefault(x => x.EmployeeId == item.EmployeeId && x.Rowstatus == RowStatus.ACTIVE);
 
+                var EmployeeBanks = _dbContext.EmployeeBanks.Where(x => x.EmployeeId == item.EmployeeId && x.IsSalaryBank );
+
                 reports.Add(new PayrollReportDto
                 {
                     EmployeeName = $"{item.Employee.FirstName} {item.Employee.MiddleName} {item.Employee.LastName}",
@@ -67,7 +69,10 @@ namespace IntegratedImplementation.Services.Finance.Report
                     TaxableIncome = item.TaxableIncome,
                     TotalDeduction = item.Loan + item.IncomeTax + item.Penalty,
                     TotalEarning = item.TotalEarning,
-                    TransportFuelAllowance = item.TransportFuelAllowance
+                    TransportFuelAllowance = item.TransportFuelAllowance,
+                    AccountNumber = EmployeeBanks.Any() ? EmployeeBanks.FirstOrDefault().BankAccountNo : "",
+
+                    EmployeeCode=item.Employee.EmployeeCode
                 });
                    
             }

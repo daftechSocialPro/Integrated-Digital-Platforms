@@ -13,6 +13,7 @@ import { AddStoreRequestDto, StoreRequestItems, ApproveStoreRequest, RejectStore
 import { SelectList } from '../model/common';
 import { AdjustmentDetailDto, SaveAdjustmentDto } from '../model/Inventory/AdjustmentDetailDto';
 import { MeasurementUnitDto } from '../model/Inventory/MeasurementUnit.Model';
+import { InventoryDashboardGetDto } from '../model/Inventory/IInventoryDashboardDto';
 
 @Injectable({
   providedIn: 'root'
@@ -217,4 +218,10 @@ export class InventoryService {
   // getBalanceReport(balanceReport: BalanceReport){
   //   return  this.http.post(this.BaseURI + `/InventoryReport/GetBalanceReport`,balanceReport, { responseType: 'blob' })
   // }
+
+  //Dashboard
+  getInventoryDashboard(){
+    let employeeId = this.userService.getCurrentUser().employeeId;
+    return this.http.get<InventoryDashboardGetDto>(this.BaseURI + `/InventoryDashboard?employeeId=${employeeId}`);
+  }
 }
