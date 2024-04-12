@@ -113,6 +113,12 @@ export class PMService {
 
         return this.http.get<ViewProgressDto[]>(this.BaseURI + "/Activity/viewProgress?actId=" + activityId)
     }
+
+   
+
+
+
+    
     viewDraftProgress(activityId: string) {
 
         return this.http.get<ViewProgressDto>(this.BaseURI + "/Activity/viewDraftProgress?actId=" + activityId)

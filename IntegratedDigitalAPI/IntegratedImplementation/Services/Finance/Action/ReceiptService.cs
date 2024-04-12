@@ -1,4 +1,5 @@
 ﻿using Implementation.Helper;
+using IntegratedDigitalAPI.DTOS.PM;
 using IntegratedImplementation.DTOS.Finance.Action;
 using IntegratedImplementation.Interfaces.Finance.Action;
 using IntegratedInfrustructure.Data;
@@ -76,6 +77,36 @@ namespace IntegratedImplementation.Services.Finance.Action
 
 
             return new ResponseMessage { Success = true, Message = "Added Succesfully" };
+        }
+
+        public async Task<List<ProgressViewDto>> GetFinanceProgress(Guid employeeId)
+        {
+
+
+            var progressView = await(from p in _dbContext.ActivityProgresses.Include(x=>x.Activity).Where(x => x.IsApprovedByFinance==ApprovalStatus.PENDING)
+                                     select new ProgressViewDto
+                                     {
+                                         Id = p.Id,
+                                         ActalWorked = p.ActualWorked,
+                                         UsedBudget = p.ActualBudget,
+                                         IsApprovedByManager = p.IsApprovedByManager.ToString(),
+                                         IsApprovedByFinance = p.IsApprovedByFinance.ToString(),
+                                         IsApprovedByDirector = p.IsApprovedByDirector.ToString(),
+                                         ManagerApprovalRemark = p.CoordinatorApprovalRemark,
+                                         FinanceApprovalRemark = p.FinanceApprovalRemark,
+                                         DirectorApprovalRemark = p.DirectorApprovalRemark,
+                                         FinanceDocument = p.FinanceDocumentPath,
+                                         Documents = _dbContext.ProgressAttachments.Where(x => x.ActivityProgressId == p.Id).Select(y => y.FilePath).ToArray(),
+                                         CreatedAt = p.CreatedDate,
+                                         Activity =p.Activity.ActivityDescription,
+                                         ActivityNumber =p.Activity.ActivityNumber
+
+                                     }).ToListAsync();
+
+            return progressView;
+
+
+
         }
     }
 }

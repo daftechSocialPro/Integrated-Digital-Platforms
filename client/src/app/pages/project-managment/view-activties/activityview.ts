@@ -98,6 +98,9 @@ export interface ViewProgressDto {
     directorApprovalRemark: string
     createdAt: string
 
+    activity?:string
+    activityNumber?:string
+
 
 }
 

@@ -165,6 +165,11 @@ namespace IntegratedDigitalAPI.DTOS.PM
         public Guid QuarterId { get; set; }
         public DateTime CreatedAt { get; set; }
 
+        public string? Activity { get; set; } 
+
+        public string? ActivityNumber { get; set; }
+
+
 
 
     }
