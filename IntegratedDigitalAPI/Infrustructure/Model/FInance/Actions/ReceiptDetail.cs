@@ -1,4 +1,5 @@
 ﻿using IntegratedInfrustructure.Model.Authentication;
+using IntegratedInfrustructure.Model.FInance.Configuration;
 using IntegratedInfrustructure.Model.PM;
 using IntegratedInfrustructure.Models.Inventory;
 using System;
@@ -13,6 +14,8 @@ namespace IntegratedInfrustructure.Model.FInance.Actions
     {
         public Guid ReceiptId { get; set; }
         public virtual Receipt Receipt { get; set; } = null!;
+        public Guid ChartOfAccountId { get; set; }
+        public virtual ChartOfAccount ChartOfAccount { get; set; } = null!;
         public Guid? ItemId { get; set; }
         public virtual Item Item { get; set; } = null!;
         public string Description { get; set; } = null!;

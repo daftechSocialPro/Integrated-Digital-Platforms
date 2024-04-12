@@ -4,6 +4,7 @@ using IntegratedInfrustructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IntegratedInfrustructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240411172540_BegningBalanceDetail")]
+    partial class BegningBalanceDetail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -5937,7 +5940,7 @@ namespace IntegratedInfrustructure.Migrations
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.BegningBalance", b =>
                 {
-                    b.HasOne("IntegratedInfrustructure.Model.FInance.Configuration.PeriodDetails", "AccountingPeriod")
+                    b.HasOne("IntegratedInfrustructure.Model.FInance.Configuration.AccountingPeriod", "AccountingPeriod")
                         .WithMany()
                         .HasForeignKey("AccountingPeriodId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -5960,7 +5963,7 @@ namespace IntegratedInfrustructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("IntegratedInfrustructure.Model.FInance.Configuration.ChartOfAccount", "ChartOfAccount")
+                    b.HasOne("IntegratedInfrustructure.Model.FInance.Configuration.PeriodDetails", "ChartOfAccount")
                         .WithMany()
                         .HasForeignKey("ChartOfAccountId")
                         .OnDelete(DeleteBehavior.NoAction)

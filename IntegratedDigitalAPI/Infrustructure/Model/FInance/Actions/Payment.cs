@@ -23,7 +23,7 @@ namespace IntegratedInfrustructure.Model.FInance.Actions
             PaymentDetails = new HashSet<PaymentDetail>();
         }
         public Guid AccountingPeriodId { get; set; }
-        public virtual AccountingPeriod AccountingPeriod { get; set; } = null!;
+        public virtual PeriodDetails AccountingPeriod { get; set; } = null!;
         public DateTime PaymentDate { get; set; }
         public PaymentType PaymentType { get; set; }
         public string PaymentNumber { get; set; } = null!;

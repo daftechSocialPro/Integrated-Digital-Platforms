@@ -383,10 +383,10 @@ namespace IntegratedImplementation.Services.Configuration
 
         public async Task<List<SelectListDto>> GetAccountingPeriodDropDown()
         {
-
-            var accountingPeriodSelectList = await _dbContext.AccountingPeriods.AsNoTracking().Select(x => new SelectListDto
+            var accountingPeriodSelectList = await _dbContext.PeriodDetails.Include(x => x.AccountingPeriod)
+                .Where(x => x.AccountingPeriod.Rowstatus == RowStatus.ACTIVE).AsNoTracking().OrderBy(x => x.PeriodNo).Select(x => new SelectListDto
             {
-                Name = $"{x.Description} ({x.AccountingPeriodType.ToString()})",
+                Name = $"{x.PeriodNo} ({x.PeriodStart.ToString("dd/MM/yyyy")} - {x.PeriodEnd.ToString("dd/MM/yyyy")})",
                 Id = x.Id,
             }).ToListAsync();
             return accountingPeriodSelectList;
