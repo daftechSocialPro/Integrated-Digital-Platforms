@@ -18,4 +18,7 @@ export class AddReceiptDetailDto {
     quantity: number;
     isTaxable: boolean;
     projectId: string;
+    totalPrice?: number;
+    itemName? :string
+    chartOfAccountName : string
 }

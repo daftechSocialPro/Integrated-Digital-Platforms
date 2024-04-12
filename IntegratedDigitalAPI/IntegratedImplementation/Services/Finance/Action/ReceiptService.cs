@@ -34,7 +34,7 @@ namespace IntegratedImplementation.Services.Finance.Action
             }
          
 
-            if (addReceipt.Date >= DateTime.Now)
+            if (addReceipt.Date.Date >= DateTime.Now.Date)
             {
                 return new ResponseMessage { Success = false, Message = "Please correct the Payment Date" };
             }

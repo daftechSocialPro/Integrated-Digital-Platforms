@@ -16,6 +16,7 @@ import { PurchaseInvoiceGetDto, PurchaseInvoicePostDto } from '../model/Finance/
 import { ApprovedLoansDto, LoanPaymentDto } from '../model/Finance/ILoanIssuanceDto';
 import { IncomeTaxReportGetDto, PayrollReportGetDto, PensionReportGetDto } from '../model/Finance/IFinanceReportDto';
 import { ViewProgressDto } from '../pages/project-managment/view-activties/activityview';
+import { AddReceiptDto } from '../model/Finance/IReceiptModel';
 
 @Injectable({
   providedIn: 'root'
@@ -187,4 +188,10 @@ export class FinanceService {
 
     return this.http.get<ViewProgressDto[]>(this.BaseURI + "/Receipt/ViewProgress?employeeId=" + empId)
 }
+
+//recipet 
+addRecipet(paymentData: AddReceiptDto, ){
+  return this.http.post<ResponseMessage>(this.BaseURI + "/Receipt/AddReceipt",paymentData)
+}
+
 }
