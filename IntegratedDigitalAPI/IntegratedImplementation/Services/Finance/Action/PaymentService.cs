@@ -30,13 +30,13 @@ namespace IntegratedImplementation.Services.Finance.Action
 
         public async Task<ResponseMessage> AddPayments(AddPaymentDto addPayment)
         {
-            var currentPeriod = await _dbContext.AccountingPeriods.FirstOrDefaultAsync(x => x.Rowstatus == RowStatus.ACTIVE && addPayment.AccountingPeriodId == x.Id);
+            var currentPeriod = await _dbContext.PeriodDetails.Include(x => x.AccountingPeriod).FirstOrDefaultAsync(x => x.AccountingPeriod.Rowstatus == RowStatus.ACTIVE && addPayment.AccountingPeriodId == x.Id);
 
             if(currentPeriod == null) 
             {
                     return new ResponseMessage { Success = false, Message = "Please Add Accounting Period" };            
             }
-            else if(!(currentPeriod.StartDate <= addPayment.PaymentDate && currentPeriod.EndDate >= addPayment.PaymentDate))
+            else if(!(currentPeriod.AccountingPeriod.StartDate <= addPayment.PaymentDate && currentPeriod.AccountingPeriod.EndDate >= addPayment.PaymentDate))
             {
                 return new ResponseMessage { Success = false, Message = "The accounting Period is not consistent with the payment date " };
             }
@@ -123,7 +123,7 @@ namespace IntegratedImplementation.Services.Finance.Action
                                 .Where(x => x.ApprovedById == null).Select(x => new PaymentListDto
                                 {
                                     Id = x.Id,
-                                    AccountingPeriod = x.AccountingPeriod.Description,
+                                    AccountingPeriod = $"{x.AccountingPeriod.PeriodNo} {x.AccountingPeriod.PeriodStart.ToString("dd/MM/yyyy")} - {x.AccountingPeriod.PeriodNo.ToString("dd/MM/yyyy")}" ,
                                     Bank = x.Bank.BankName,
                                     PaymentDate = x.PaymentDate,
                                     PaymentNumber = x.PaymentNumber,
@@ -155,7 +155,7 @@ namespace IntegratedImplementation.Services.Finance.Action
                                 .Where(x => x.ApprovedById != null).Select(x => new PaymentListDto
                                 {
                                     Id = x.Id,
-                                    AccountingPeriod = x.AccountingPeriod.Description,
+                                    AccountingPeriod = $"{x.AccountingPeriod.PeriodNo} {x.AccountingPeriod.PeriodStart.ToString("dd/MM/yyyy")} - {x.AccountingPeriod.PeriodNo.ToString("dd/MM/yyyy")}",
                                     Bank = x.Bank.BankName,
                                     PaymentDate = x.PaymentDate,
                                     PaymentNumber = x.PaymentNumber,

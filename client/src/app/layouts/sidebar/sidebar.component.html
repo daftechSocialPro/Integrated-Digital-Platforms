@@ -229,6 +229,10 @@
                                     routerLinkActive="active">
                                     <i class="bi bi-circle"></i><span>Configuration</span> </a>
                         </li>
+                        <li *ngIf="roleMatch(['FINANCE-ADMIN','Receipt'])"> <a routerLink="/finance/receipt"
+                              routerLinkActive="active">
+                              <i class="bi bi-circle"></i><span>Receipt</span> </a>
+                         </li>
                         <li *ngIf="roleMatch(['FINANCE-ADMIN','PAYMENT-COLLECTOR'])"> <a routerLink="/finance/payments"
                                     routerLinkActive="active">
                                     <i class="bi bi-circle"></i><span>Payments</span> </a>

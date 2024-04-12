@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static IntegratedInfrustructure.Data.EnumList;
 
 namespace IntegratedImplementation.DTOS.Inventory
 {
@@ -28,6 +29,8 @@ namespace IntegratedImplementation.DTOS.Inventory
         public bool ApprovedForBranchUse { get; set; }
         public int Cartoon { get; set; }
         public int Packet { get; set; }
+        public SourceOFProduct SourceOfProduct { get; set; }
+        public Guid EmployeeId { get; set; }
     }
 
     public class UpdateProductDto: AddProductDto

@@ -41,7 +41,8 @@ namespace IntegratedImplementation.DTOS.Inventory
         public Guid Id { get; set; } 
         public string Name { get; set; } = null!;
         public int MeasurementType { get; set; }
-        public bool isExpirable { get; set; }
+        public bool IsExpirable { get; set; }
+        public bool IsAsset { get; set; }
     }
 
 

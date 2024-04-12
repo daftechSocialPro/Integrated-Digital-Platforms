@@ -11,7 +11,7 @@ namespace IntegratedInfrustructure.Model.FInance.Actions
     public class BegningBalance: WithIdModel
     {
         public Guid AccountingPeriodId { get; set; }
-        public virtual AccountingPeriod AccountingPeriod { get; set; } = null!;
+        public virtual PeriodDetails AccountingPeriod { get; set; } = null!;
         public double TotalCredit { get; set; }
         public double TotalDebit { get; set; }
         public string Remark { get; set; } = null!;

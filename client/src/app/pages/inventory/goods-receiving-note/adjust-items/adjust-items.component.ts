@@ -27,8 +27,8 @@ export class AdjustItemsComponent implements OnInit {
     { value: 0, name: "UNKNOWN" },
     { value: 1, name: "LOST" },
     { value: 2, name: "MAINTAINABLE" },
-    { value: 2, name: "BROKEN" },
-    { value: 2, name: "DAMAGED" },
+    { value: 3, name: "BROKEN" },
+    { value: 4, name: "DAMAGED" },
   ]
 
   constructor(private inventoryService: InventoryService,

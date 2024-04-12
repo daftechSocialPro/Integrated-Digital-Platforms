@@ -38,6 +38,7 @@ namespace IntegratedImplementation.Services.Configuration
                 await _dbContext.SaveChangesAsync();
                 return generatedCode;
             }
+           
             return "";
         }
 

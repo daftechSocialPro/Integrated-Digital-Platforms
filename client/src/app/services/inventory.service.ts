@@ -7,7 +7,7 @@ import { ResponseMessage } from '../model/ResponseMessage.Model';
 import { AddVendorDto, VendorListDto } from '../model/Inventory/VendorDto';
 import { AddItemDto, ItemListDto } from '../model/Inventory/ItemDto';
 import { AddPerformaDto, AddPurchaseRequestDto, ApprovePerformaDto, ApprovePurchaseRequestDto, ApprovedPurchaseRequestsDto, PurchaseRequestListDto } from '../model/Inventory/PurchaseRequestDto';
-import { AddProductDto, ProductListDto } from '../model/Inventory/ProductDto';
+import { AddProductDto, AddProductTagsDto, ProductListDto } from '../model/Inventory/ProductDto';
 import { StoreReceivalListDto, StoreRequestIssueDto, ApprovedItemsDto, ReciveTransportableItems, ReceiveItems, EmployeeReceivedITemsDto, AdjustReceivedITemsDto } from '../model/Inventory/StoreReceivalListDto';
 import { AddStoreRequestDto, StoreRequestItems, ApproveStoreRequest, RejectStoreRequest } from '../model/Inventory/StoreRequestDto';
 import { SelectList } from '../model/common';
@@ -127,6 +127,11 @@ export class InventoryService {
   addProduct(addProduct: AddProductDto){
     addProduct.createdById = this.userService.getCurrentUser().userId;
     return this.http.post<ResponseMessage>(this.BaseURI + '/Product/AddProduct', addProduct);
+  }
+
+  AddProductTag(addproductTag: AddProductTagsDto){
+    addproductTag.createdById = this.userService.getCurrentUser().userId;
+    return this.http.post<ResponseMessage>(this.BaseURI + '/Product/AddProductTag', addproductTag);
   }
 
   updateProduct(updateProduct: AddProductDto){

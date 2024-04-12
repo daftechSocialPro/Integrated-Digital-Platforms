@@ -14,6 +14,7 @@ import { AccountReconcilliationComponent } from './account-reconcilliation/accou
 import { FinanceReportComponent } from './finance-report/finance-report.component';
 import { PensionDeclarationComponent } from './pension-declaration/pension-declaration.component';
 import { ActivityProgressApproverComponent } from './activity-progress-approver/activity-progress-approver.component';
+import { ReceiptComponent } from './receipt/receipt.component';
 
 const routes: Routes = [
   
@@ -30,6 +31,7 @@ const routes: Routes = [
   { path: 'financereport', canActivate: [AuthGuard], component: FinanceReportComponent },
   { path: 'pensiondeclaration', canActivate: [AuthGuard], component: PensionDeclarationComponent },
   { path: 'activity-progress-approver', canActivate: [AuthGuard], component: ActivityProgressApproverComponent },
+  { path: 'receipt', canActivate: [AuthGuard], component: ReceiptComponent },
 
 ];
 

@@ -71,7 +71,8 @@ namespace IntegratedInfrustructure.Data
             STOREREQUEST,
             STOREITEMS,
             VENDOR,
-            PURCHASEITEMS
+            PURCHASEITEMS,
+            TAGNUMBER
         }
 
         public enum ApplicantStatus
@@ -301,7 +302,7 @@ namespace IntegratedInfrustructure.Data
 
         public enum ProductStatus
         {
-            GOODcONDITION,
+            GOODCONDITION,
             LOST,
             DAMAGED,
             MAINTENANCE,

@@ -12,6 +12,8 @@ namespace IntegratedImplementation.DTOS.Finance.Action
     {
         public string CreatedById { get; set; } = null!;
         public Guid BankId { get; set; }
+        public Guid AccountingPeriodId { get; set; }
+        
         public string ReferenceNumber { get; set; } = null!;
         public string ReceiptNumber { get; set; } = null!;
         public DateTime Date { get; set; }
@@ -22,11 +24,11 @@ namespace IntegratedImplementation.DTOS.Finance.Action
     public class AddReceiptDetailDto
     {
         public Guid? ItemId { get; set; }
+        public Guid ChartOfAccountId { get; set; }
         public string Description { get; set; } = null!;
         public double UnitPrice { get; set; }
         public double Quantity { get; set; }
         public bool IsTaxable { get; set; }
         public Guid? ProjectId { get; set; }
-        public virtual Project Project { get; set; } = null!;
     }
 }

@@ -4,6 +4,7 @@ using IntegratedInfrustructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IntegratedInfrustructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240411133027_SeriNum")]
+    partial class SeriNum
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -932,9 +935,6 @@ namespace IntegratedInfrustructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("AccountingPeriodId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("BankId")
                         .HasColumnType("uniqueidentifier");
 
@@ -959,8 +959,6 @@ namespace IntegratedInfrustructure.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AccountingPeriodId");
 
                     b.HasIndex("BankId");
 
@@ -1544,9 +1542,6 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.Property<Guid>("EmployeeId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("IsSalaryBank")
-                        .HasColumnType("bit");
 
                     b.Property<int>("Rowstatus")
                         .HasColumnType("int");
@@ -5937,7 +5932,7 @@ namespace IntegratedInfrustructure.Migrations
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.BegningBalance", b =>
                 {
-                    b.HasOne("IntegratedInfrustructure.Model.FInance.Configuration.PeriodDetails", "AccountingPeriod")
+                    b.HasOne("IntegratedInfrustructure.Model.FInance.Configuration.AccountingPeriod", "AccountingPeriod")
                         .WithMany()
                         .HasForeignKey("AccountingPeriodId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -5996,7 +5991,7 @@ namespace IntegratedInfrustructure.Migrations
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.Payment", b =>
                 {
-                    b.HasOne("IntegratedInfrustructure.Model.FInance.Configuration.PeriodDetails", "AccountingPeriod")
+                    b.HasOne("IntegratedInfrustructure.Model.FInance.Configuration.AccountingPeriod", "AccountingPeriod")
                         .WithMany()
                         .HasForeignKey("AccountingPeriodId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -6141,12 +6136,6 @@ namespace IntegratedInfrustructure.Migrations
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.Receipt", b =>
                 {
-                    b.HasOne("IntegratedInfrustructure.Model.FInance.Configuration.PeriodDetails", "AccountingPeriod")
-                        .WithMany()
-                        .HasForeignKey("AccountingPeriodId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("IntegratedInfrustructure.Model.Configuration.BankList", "Bank")
                         .WithMany()
                         .HasForeignKey("BankId")
@@ -6156,8 +6145,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedById");
-
-                    b.Navigation("AccountingPeriod");
 
                     b.Navigation("Bank");
 

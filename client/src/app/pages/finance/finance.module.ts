@@ -59,7 +59,6 @@ import { IncomeTaxReportComponent } from './finance-report/income-tax-report/inc
 import { PensionDeclarationComponent } from './pension-declaration/pension-declaration.component';
 import { PayrollReportComponent } from './finance-report/payroll-report/payroll-report.component';
 import { NumberToWordPipe } from './finance-report/payroll-report/numberToWord.pipe';
-import { ActivityProgressApproverComponent } from './activity-progress-approver/activity-progress-approver.component';
 // import { PensionDeclarationComponent } from './pension-declaration/pension-declaration.component';
 
 
@@ -107,8 +106,7 @@ import { ActivityProgressApproverComponent } from './activity-progress-approver/
     PensionReportComponent,
     IncomeTaxReportComponent,
     PensionDeclarationComponent,
-    NumberToWordPipe,
-    ActivityProgressApproverComponent
+    NumberToWordPipe
     
 
   ],
