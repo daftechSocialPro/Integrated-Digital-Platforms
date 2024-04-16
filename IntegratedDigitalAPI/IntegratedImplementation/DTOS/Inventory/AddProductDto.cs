@@ -59,4 +59,15 @@ namespace IntegratedImplementation.DTOS.Inventory
         public string? ColumnName { get; set; } = null!;
         public string? Description { get; set; } = null!;
     }
+
+
+    public class TagNumberListDto
+    {
+        public Guid Id { get; set; }
+        public string ItemName { get; set; } = null!;
+        public string ProductDetailName { get; set; } = null!;
+        public string TagNumber { get; set; } = null!;
+        public string? SerialNumber { get; set; } = null!;
+        public string BarCodePath { get; set; } = null!;
+    }
 }

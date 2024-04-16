@@ -15,7 +15,8 @@ namespace IntegratedInfrustructure.Model.Inventory
         public virtual Product Product { get; set; } = null!;
         public string TagNumber { get; set; } = null!;
         public string? SerialNumber { get; set; }
-
+        public bool Printed { get; set; }
+        public string BarCodePath { get; set; } = null!;
         public ProductStatus ProductStatus { get; set; }
 
     }

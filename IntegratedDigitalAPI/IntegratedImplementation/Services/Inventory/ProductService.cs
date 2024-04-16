@@ -17,6 +17,15 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using static IntegratedInfrustructure.Data.EnumList;
+using System.Drawing.Imaging;
+using System.Drawing;
+using ZXing.Mobile;
+using ZXing;
+using ZXing.Common;
+using System.IO;
+using DocumentFormat.OpenXml.Office2010.Excel;
+using Microsoft.AspNetCore.Http.Internal;
+using Microsoft.AspNetCore.Http;
 
 namespace IntegratedImplementation.Services.Inventory
 {
@@ -214,7 +223,40 @@ namespace IntegratedImplementation.Services.Inventory
 
             for(int i = 0; i< addProductTags.TotalQuantity; i++)
             {
+                var Id = Guid.NewGuid();
                 var tagNumber = _generalConfig.GenerateCode(GeneralCodeType.TAGNUMBER).Result;
+
+                BarcodeWriter<MemoryStream> barcodeWriter = new BarcodeWriter<MemoryStream>
+                {
+                    Format = BarcodeFormat.CODE_128, // Specify the barcode format here
+                    Options = new EncodingOptions
+                    {
+                        Height = 200, // Specify the height of the barcode image
+                        Width = 400,  // Specify the width of the barcode image
+                        Margin = 10   // Specify the margin around the barcode
+                    }
+                };
+
+                MemoryStream stream = barcodeWriter.Write(tagNumber);
+
+                byte[] barcodeBytes;
+                IFormFile barcodeFile;
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    stream.CopyTo(ms); // Copy the MemoryStream data to a new MemoryStream
+                    barcodeBytes = ms.ToArray();
+
+                    using (MemoryStream barcodeStream = new MemoryStream(barcodeBytes))
+                    {
+                        // Create an IFormFile object from the MemoryStream
+                        barcodeFile = new FormFile(barcodeStream, 0, barcodeBytes.Length, "barcode", "barcode.png")
+                        {
+                            Headers = new HeaderDictionary(),
+                            ContentType = "image/png"
+                        };                    }
+                }
+
+                string path =  _generalConfig.UploadFiles(barcodeFile, Id.ToString(), "TagNumber").Result.ToString();
 
                 ProductTag product = new ProductTag()
                 {
@@ -224,12 +266,13 @@ namespace IntegratedImplementation.Services.Inventory
                     ProductId = addProductTags.ProductId,
                     ProductStatus = ProductStatus.GOODCONDITION,
                     TagNumber = tagNumber,
-                  
+                    BarCodePath = path,
+                    Printed = false,
+                    Rowstatus = RowStatus.ACTIVE,
                 };
 
-                if (addProductTags.SerialNumber.Any())
+                if (addProductTags.SerialNumber != null)
                 {
-
                     product.SerialNumber = addProductTags.SerialNumber[i];
                 }
 
@@ -237,7 +280,38 @@ namespace IntegratedImplementation.Services.Inventory
                 await _dbContext.SaveChangesAsync();
             }
 
-            return new ResponseMessage { Success = true, Message = "Added Success Fully" };
+            return new ResponseMessage { Success = true, Message = "Added succesfully" };
+        }
+
+        public async Task<List<TagNumberListDto>> GetTagNumberLists()
+        {
+            var currentTags = await _dbContext.ProductTags.Where(X => !X.Printed).Include(x => x.Product.Item)
+                                    .AsNoTracking().Select(x => new TagNumberListDto
+                                    {
+                                        Id = x.Id,
+                                        BarCodePath = x.BarCodePath,
+                                        ItemName = x.Product.Item.Name,
+                                        ProductDetailName = x.Product.ItemDetailName,
+                                        SerialNumber = x.SerialNumber,
+                                        TagNumber = x.TagNumber
+                                    }) .ToListAsync();
+
+            return currentTags;
+        }
+
+        public async Task<ResponseMessage> PrintTagNumbers(List<Guid> tagNumberId)
+        {
+            foreach(var item in tagNumberId)
+            {
+                var currentId = await _dbContext.ProductTags.FirstOrDefaultAsync(x => x.Id == item);
+
+                if(currentId != null) 
+                {
+                    currentId.Printed = true;
+                }
+            }
+
+            return new ResponseMessage { Success = true, Message = "PrintedSuccesfully" };
         }
     }
 }
