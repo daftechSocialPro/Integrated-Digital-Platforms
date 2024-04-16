@@ -196,6 +196,7 @@ namespace IntegratedInfrustructure.Data
         public DbSet<PurchaseInvoiceDetail> PurchaseInvoiceDetails { get; set; }
         public DbSet<Receipt> Receipts { get; set; }
         public DbSet<ReceiptDetail> ReceiptDetails { get; set; }
+        public DbSet<AccountReconciliation> AccountReconciliations { get; set; }
 
         #endregion
 

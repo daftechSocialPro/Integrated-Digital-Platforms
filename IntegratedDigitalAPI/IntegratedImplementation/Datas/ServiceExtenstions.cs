@@ -126,6 +126,7 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<ILoanIssuanceService, LoanIssuanceService>();
             services.AddScoped<IPayrollService, PayrollService>();
             services.AddScoped<IPayrollReportService, PayrollReportService>();
+            services.AddScoped<IAccountReconsilationService, AccountReconsilationService>();
             #endregion
 
 

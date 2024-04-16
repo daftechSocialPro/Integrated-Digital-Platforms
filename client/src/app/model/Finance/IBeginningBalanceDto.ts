@@ -2,7 +2,8 @@ export interface BeginningBalanceGetDto{
     id: string
     description: string
     type: string
-    ammount: string
+    ammount: number,
+    remark: string,
 }
 
 export interface BeginningBalancePostDto{
@@ -19,5 +20,24 @@ export class BeginngBalanceDetailDto{
     chartOfAccountName?: string
     ammount: number
     remark: string
+}
+
+
+export class AddBegnningBalanceDto
+{
+    accountingPeriodId: string;
+    totalCredit: number;
+    totalDebit: number;
+    remark: string;
+    createdById: string;
+    begningBalanceDetails:BegningBalanceDetailDto [] ;
+
+}
+
+export class BegningBalanceDetailDto
+{
+    chartOfAccountId: string;
+    ammount: number;
+    remark: string;
 }
 

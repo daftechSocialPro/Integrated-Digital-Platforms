@@ -57,7 +57,6 @@ namespace IntegratedImplementation.DTOS.Inventory
         public string ItemRecivalId { get; set; } = null!;
         public string EmployeeId { get; set; } = null!;
         public string UserId { get; set; } = null!;
-        public bool IsBranch { get; set; }
         public string? RowName { get; set; } = null!;
         public string? ColumnName { get; set; } = null!;
     }

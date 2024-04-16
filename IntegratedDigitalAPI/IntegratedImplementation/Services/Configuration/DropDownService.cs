@@ -246,7 +246,7 @@ namespace IntegratedImplementation.Services.Configuration
             return await _dbContext.BankLists.Select(x => new BankSelectList
                          {
                             Id = x.Id,
-                            Name = x.BankName,
+                            Name = $"{x.BankName} ({x.AccountNumber})",
                             BankDigit = x.BankDigitNumber  
                          }).ToListAsync();
         }

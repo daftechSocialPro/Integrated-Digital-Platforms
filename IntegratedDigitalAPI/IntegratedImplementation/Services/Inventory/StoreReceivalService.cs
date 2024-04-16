@@ -66,23 +66,7 @@ namespace IntegratedImplementation.Services.Inventory
             return itemRequests;
         }
 
-        public async Task<List<ApprovedItemsDto>> GetTransportableItems()
-        {
-            var itemRequests = await (from x in _dbContext.ItemReceivals.Include(x => x.StoreRequestList.Item)
-                                      .Include(x => x.StoreRequestList.MeasurementUnit)
-                                      .Include(x => x.StoreRequestList.ApproverEmployee)
-                                      .Include(x => x.StoreRequestList.StoreRequest)
-                                     where x.ReceivedStatus == ItemReceivedStatus.PENDING 
-                                     select new ApprovedItemsDto
-                                     {
-                                         Id = x.Id.ToString(),
-                                         ItemName = x.StoreRequestList.Item.Name,
-                                         MeasurementUnit = x.StoreRequestList.MeasurementUnit.Name,
-                                         ApprovedQuantity = x.TotalItems,
-                                         ApproverEmployee = x.StoreRequestList.ApproverEmployee != null ? $"{x.StoreRequestList.ApproverEmployee.FirstName} {x.StoreRequestList.ApproverEmployee.MiddleName} {x.StoreRequestList.ApproverEmployee.LastName}" : "" 
-                                     }).ToListAsync();
-            return itemRequests;
-        }
+  
 
         public async Task<ResponseMessage> IssueStoreApprovedItems(StoreRequestIssueDto storeRequest)
         {
@@ -194,43 +178,9 @@ namespace IntegratedImplementation.Services.Inventory
             var issuedItems = await _dbContext.ItemReceivals.FirstOrDefaultAsync(x => x.Id.Equals(Guid.Parse(receiveItems.ItemRecivalId)));
             if(issuedItems != null)
             {
-                if (!receiveItems.IsBranch)
-                {
-                    issuedItems.ReceiverEmployeeId = Guid.Parse(receiveItems.EmployeeId);
-                    issuedItems.ReceivedStatus = ItemReceivedStatus.RECIVED;
-                    await _dbContext.SaveChangesAsync();
-                }
-               else
-                {
-                    var itemDetails = await _dbContext.ItemReceivalDetails.Include(x => x.Product).Where(x => x.ItemReceivalId.Equals(issuedItems.Id)).ToListAsync();
-                    foreach(var items in itemDetails)
-                    {
-                        AddProductDto products = new AddProductDto
-                        {
-                            VendorId = items.Product.VendorId.ToString(),
-                            ApprovedForBranchUse = true,
-                            ColumnName = receiveItems.ColumnName,
-                            RowName = receiveItems.RowName,
-                            CreatedById = receiveItems.UserId,
-                            Description = items.Product.Description,
-                            ExpireDateTime = items.Product.ExpireDateTime,
-                            ItemDetailName = items.Product.ItemDetailName,
-                            ManufactureDate = items.Product.ManufactureDate,
-                            ItemId = items.Product.ItemId.ToString(),
-                            MeasurementUnitId = items.MeasurementUnitId.ToString(),
-                            Quantity = items.Quantity,
-                            Cartoon = 1,
-                            Packet = 1,
-                            RecivingDateTime = DateTime.Now,
-                            SinglePrice = items.Product.SinglePrice
-                        };
-
-                       await _productService.AddProduct(products);
-                    }
-                    _dbContext.ItemReceivalDetails.RemoveRange(itemDetails);
-                    _dbContext.ItemReceivals.Remove(issuedItems);
-                    await _dbContext.SaveChangesAsync();
-                }
+                issuedItems.ReceiverEmployeeId = Guid.Parse(receiveItems.EmployeeId);
+                issuedItems.ReceivedStatus = ItemReceivedStatus.RECIVED;
+                await _dbContext.SaveChangesAsync();
             }
 
             return new ResponseMessage { Success = true, Message = "Success" };

@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { MessageService, ConfirmationService } from 'primeng/api';
+import { MessageService, ConfirmationService, Message } from 'primeng/api';
 import { Table } from 'primeng/table';
-import { BeginningBalanceGetDto } from 'src/app/model/Finance/IBeginningBalanceDto';
+import { AddBegnningBalanceDto, BeginngBalanceDetailDto, BeginningBalanceGetDto, BeginningBalancePostDto } from 'src/app/model/Finance/IBeginningBalanceDto';
 import { SelectList } from 'src/app/model/common';
+import { UserView } from 'src/app/model/user';
 import { DropDownService } from 'src/app/services/dropDown.service';
 import { FinanceService } from 'src/app/services/finance.service';
 import { UserService } from 'src/app/services/user.service';
-import { AddBeginningBalanceComponent } from './add-beginning-balance/add-beginning-balance.component';
 
 @Component({
   selector: 'app-beginning-balance',
@@ -18,17 +18,25 @@ export class BeginningBalanceComponent implements OnInit {
 
   beginningBalanceList!: BeginningBalanceGetDto[]
   accountingPeriodDropDown!: SelectList[]
-
+  addBeginningBalanceDetailList: AddBegnningBalanceDto = new AddBegnningBalanceDto();
+  user:UserView;
+  exists: boolean = false;
+ 
 
   constructor(
     private financeService : FinanceService, 
     private modalService:NgbModal,
     private userService: UserService,
-    private dropDownService: DropDownService
+    private dropDownService: DropDownService,
+    private messageService: MessageService,
+
   ){}
 
   ngOnInit(): void {
     this.getAccountingPeriodDropDown()
+    this.user = this.userService.getCurrentUser()
+    this.addBeginningBalanceDetailList.totalCredit = 0;
+    this.addBeginningBalanceDetailList.totalDebit = 0;
   }
 
   getAccountingPeriodDropDown(){
@@ -38,30 +46,81 @@ export class BeginningBalanceComponent implements OnInit {
       }
     })
   }
-  getBeginnigBalanceChart(periodId: any){
-    
+  getBeginnigBalanceChart(periodId: any){ 
     this.financeService.getChartsForBegnning(periodId).subscribe({
       next : (res) => {
+        this.exists = !res.success;
         if(res.success){
           this.beginningBalanceList = res.data
+          
+        }
+        else{
+          this.messageService.add({ severity: 'warn', summary: 'Information', detail: res.message, life: 3000 });
+          this.beginningBalanceList = res.data
+          this.addBeginningBalanceDetailList.totalCredit = this.beginningBalanceList.filter(x => x.type == "CREDIT").reduce((sum, balance) => {
+            return sum + (balance.ammount || 0);
+          }, 0);
+          this.addBeginningBalanceDetailList.totalDebit = this.beginningBalanceList.filter(x => x.type == "DEBT").reduce((sum, balance) => {
+            return sum + (balance.ammount || 0);
+          }, 0);
         }
         
       }
     })
   }
 
+  
+
+  getTextChanged(input: any, type: string) {
+    if (type == "CREDIT") {
+      const totalAmount = this.beginningBalanceList.filter(x => x.type == "CREDIT").reduce((sum, balance) => {
+        return sum + (balance.ammount || 0);
+      }, 0);
+      this.addBeginningBalanceDetailList.totalCredit =  totalAmount
+    }
+    else {
+      const totalAmount = this.beginningBalanceList.filter(x => x.type == "DEBT").reduce((sum, balance) => {
+        return sum + (balance.ammount || 0);
+      }, 0);
+      this.addBeginningBalanceDetailList.totalDebit =  totalAmount
+    }
+  }
+
   onAccountinPeriodChange(event: any){
     const periodId = event.value
+    this.addBeginningBalanceDetailList.accountingPeriodId = periodId;
+    this.addBeginningBalanceDetailList = new AddBegnningBalanceDto();
     this.getBeginnigBalanceChart(periodId)
   }
 
-  addBeginningBalance(){
+  addBeginningBalance() {
+    this.addBeginningBalanceDetailList.createdById = this.user.userId;
+    this.addBeginningBalanceDetailList.begningBalanceDetails = [];
+     this.beginningBalanceList.map(x => {
+      this.addBeginningBalanceDetailList.begningBalanceDetails.push({
+           ammount: x.ammount,
+           chartOfAccountId: x.id,
+           remark: x.remark
+      });
+     })
+
+      this.financeService.addBegnningBalance(this.addBeginningBalanceDetailList).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Request Created', life: 3000 });
+            this.beginningBalanceList = [];
+            this.addBeginningBalanceDetailList = new AddBegnningBalanceDto();
+          }
+          else {
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: res.message, life: 3000 });
+          }
+        }, error: (res) => {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error please check your fields', life: 3000 });
+        }
+      });
     
-    let modalRef = this.modalService.open(AddBeginningBalanceComponent,{size:'xl',backdrop:'static'})
-    modalRef.result.then(()=>{
-      this.getAccountingPeriodDropDown()
-    })
-    
+
+
   }
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
