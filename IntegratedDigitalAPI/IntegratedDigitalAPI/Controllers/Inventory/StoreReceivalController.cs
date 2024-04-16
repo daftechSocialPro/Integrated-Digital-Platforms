@@ -46,15 +46,7 @@ namespace IntegratedDigitalAPI.Controllers.Inventory
             return Ok(await _storeReceival.GetEmployeesApprovedItems(EmployeeId));
         }
 
-        [HttpGet]
-        [ProducesResponseType(typeof(ApprovedItemsDto), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetTransportableItems()
-        {
-            return Ok(await _storeReceival.GetTransportableItems());
-        }
-
-
-
+    
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> ReciveApprovedItems(ReceiveItems receiveItems)

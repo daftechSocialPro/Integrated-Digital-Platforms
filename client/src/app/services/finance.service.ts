@@ -11,12 +11,13 @@ import { SelectList } from '../model/common';
 import { BenefitPayrollGetDto, BenefitPayrollPostDto, GeneralSettingGetDto, GeneralSettingPostDto, IncomeTaxDto } from '../model/Finance/IPayrollSettingDto';
 import { ApprovePaymentDto, PaymentGetDto, PaymentPostDto } from '../model/Finance/IPaymentDto';
 import { CalculatePayrollDto, CheckOrApprovePayrollDto, PayrollGetDto } from '../model/Finance/IPayrollDto';
-import { BeginningBalanceGetDto, BeginningBalancePostDto } from '../model/Finance/IBeginningBalanceDto';
+import { AddBegnningBalanceDto, BeginningBalanceGetDto, BeginningBalancePostDto } from '../model/Finance/IBeginningBalanceDto';
 import { PurchaseInvoiceGetDto, PurchaseInvoicePostDto } from '../model/Finance/IPurchaseInvoiceDto';
 import { ApprovedLoansDto, LoanPaymentDto } from '../model/Finance/ILoanIssuanceDto';
 import { IncomeTaxReportGetDto, PayrollReportGetDto, PensionReportGetDto } from '../model/Finance/IFinanceReportDto';
 import { ViewProgressDto } from '../pages/project-managment/view-activties/activityview';
 import { AddReceiptDto } from '../model/Finance/IReceiptModel';
+import { AccountReconsilationFindDto, AccountToBeReconsiledDto, AddAccountReconsilationDto } from '../model/Finance/IAccountReconsilationDto';
 
 @Injectable({
   providedIn: 'root'
@@ -145,7 +146,8 @@ export class FinanceService {
   getChartsForBegnning(periodId: string){
     return this.http.get<ResponseMessage>(this.BaseURI + "/BegnningBalance/GetChartsForBegnning?PeriodId=" + periodId)
   }
-  addBegnningBalance(beginningBalanceData:BeginningBalancePostDto){
+
+  addBegnningBalance(beginningBalanceData:AddBegnningBalanceDto){
     return this.http.post<ResponseMessage>(this.BaseURI + "/BegnningBalance/AddBegnningBalance", beginningBalanceData)
   }
 
@@ -172,6 +174,16 @@ export class FinanceService {
   }
   payLoan(payLoanData: LoanPaymentDto){
     return this.http.put<ResponseMessage>(this.BaseURI + "/LoanIssuance/PayLoan",payLoanData)
+  }
+
+
+  //AccountReconsilation
+  getAccountToBeReconsiled( addAccountReconsilation: AccountReconsilationFindDto){
+    return this.http.post<AccountToBeReconsiledDto>(this.BaseURI + "/AccountReconsilation/GetAccountToBeReconsiled",addAccountReconsilation)
+  }
+
+  addAccountReconsilation( searchAccount: AddAccountReconsilationDto){
+    return this.http.post<ResponseMessage>(this.BaseURI + "/AccountReconsilation/AddAccountReconsilation",searchAccount)
   }
 
   //Report

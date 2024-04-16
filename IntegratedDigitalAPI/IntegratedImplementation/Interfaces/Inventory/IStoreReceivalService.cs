@@ -13,7 +13,6 @@ namespace IntegratedImplementation.Interfaces.Inventory
         Task<List<StoreReceivalListDto>> GetStoreApprovedItems();
         Task<ResponseMessage> IssueStoreApprovedItems(StoreRequestIssueDto storeRequest);
         Task<List<ApprovedItemsDto>> GetEmployeesApprovedItems(string employeeId);
-        Task<List<ApprovedItemsDto>> GetTransportableItems();
         Task<ResponseMessage> ReciveApprovedItems(ReceiveItems receiveItems);
         Task<List<EmployeeReceivedITemsDto>> GetEmployeeReceivedItems(string employeeId);
         Task<ResponseMessage> AdjustReceivedItems(AdjustReceivedITemsDto receivedITemsDto);

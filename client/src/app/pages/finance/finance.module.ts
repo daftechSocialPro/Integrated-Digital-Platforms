@@ -44,7 +44,6 @@ import { ApprovedPaymentsComponent } from './payments/approved-payments/approved
 import { BeginningBalanceComponent } from './beginning-balance/beginning-balance.component';
 import { PurchaseInvoiceComponent } from './purchase-invoice/purchase-invoice.component';
 import { LoanIssuanceComponent } from './loan-issuance/loan-issuance.component';
-import { AddBeginningBalanceComponent } from './beginning-balance/add-beginning-balance/add-beginning-balance.component';
 import { AddPurchaseInvoiceComponent } from './purchase-invoice/add-purchase-invoice/add-purchase-invoice.component';
 import { PendingPurchaseInvoiceComponent } from './purchase-invoice/pending-purchase-invoice/pending-purchase-invoice.component';
 import { ApprovedPurchaseInvoiceComponent } from './purchase-invoice/approved-purchase-invoice/approved-purchase-invoice.component';
@@ -93,7 +92,6 @@ import { ReceiptComponent } from './receipt/receipt.component';
     BeginningBalanceComponent,
     PurchaseInvoiceComponent,
     LoanIssuanceComponent,
-    AddBeginningBalanceComponent,
     AddPurchaseInvoiceComponent,
     PendingPurchaseInvoiceComponent,
     ApprovedPurchaseInvoiceComponent,
