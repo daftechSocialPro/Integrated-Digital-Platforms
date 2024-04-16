@@ -15,6 +15,8 @@ import { AddBegnningBalanceDto, BeginningBalanceGetDto, BeginningBalancePostDto 
 import { PurchaseInvoiceGetDto, PurchaseInvoicePostDto } from '../model/Finance/IPurchaseInvoiceDto';
 import { ApprovedLoansDto, LoanPaymentDto } from '../model/Finance/ILoanIssuanceDto';
 import { IncomeTaxReportGetDto, PayrollReportGetDto, PensionReportGetDto } from '../model/Finance/IFinanceReportDto';
+import { ViewProgressDto } from '../pages/project-managment/view-activties/activityview';
+import { AddReceiptDto } from '../model/Finance/IReceiptModel';
 import { AccountReconsilationFindDto, AccountToBeReconsiledDto, AddAccountReconsilationDto } from '../model/Finance/IAccountReconsilationDto';
 
 @Injectable({
@@ -194,4 +196,14 @@ export class FinanceService {
   getIncomeTaxReport(payrollMonth: string){
     return this.http.get<IncomeTaxReportGetDto>(this.BaseURI + "/PayrollReport/GetIncomeTaxReport?payrollMonth="+payrollMonth)
   }
+  viewFinanceProgress(empId: string) {
+
+    return this.http.get<ViewProgressDto[]>(this.BaseURI + "/Receipt/ViewProgress?employeeId=" + empId)
+}
+
+//recipet 
+addRecipet(paymentData: AddReceiptDto, ){
+  return this.http.post<ResponseMessage>(this.BaseURI + "/Receipt/AddReceipt",paymentData)
+}
+
 }

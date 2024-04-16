@@ -33,5 +33,20 @@ namespace IntegratedDigitalAPI.Controllers.Finance.Action
                 return BadRequest();
             }
         }
+
+
+        [HttpGet]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> ViewProgress(Guid employeeId)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _receiptService.GetFinanceProgress(employeeId));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
     }
 }

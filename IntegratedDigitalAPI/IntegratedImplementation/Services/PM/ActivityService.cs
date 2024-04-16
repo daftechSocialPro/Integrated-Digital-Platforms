@@ -822,7 +822,9 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                                           DirectorApprovalRemark = p.DirectorApprovalRemark,
                                           FinanceDocument = p.FinanceDocumentPath,
                                           Documents = _dBContext.ProgressAttachments.Where(x => x.ActivityProgressId == p.Id).Select(y => y.FilePath).ToArray(),
-                                          CreatedAt = p.CreatedDate
+                                          CreatedAt = p.CreatedDate,
+                                          Activity =p.Activity.ActivityDescription,
+                                          ActivityNumber =p.Activity.ActivityNumber
 
                                       }).ToListAsync();
 

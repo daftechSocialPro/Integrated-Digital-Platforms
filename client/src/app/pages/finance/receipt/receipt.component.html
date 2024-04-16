@@ -44,23 +44,24 @@
                                             <div class="row mb-3">
                                                 <div class="col-md-6">
                                                     <div class="form-floating">
-                                                        <select class="form-control" formControlName="paymentType">
-                                                            <option *ngFor="let item of paymentTypeList" [value]="item.value">{{item.name}}</option>
-                                                        </select>
-                                                        <label for="paymentType">Reference Numnber</label>
+                                                   
+
+                                                        <input type="text" class="form-control" id="referenceNumber"
+                                                        placeholder="referenceNumber" formControlName="referenceNumber">
+                                                        <label for="referenceNumber">Reference Numnber</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-floating">
-                                                        <input type="text" class="form-control" id="paymentNumber"
-                                                            placeholder="paymentNumber" formControlName="paymentNumber">
-                                                        <label for="paymentNumber">Receipt Number</label>
+                                                        <input type="text" class="form-control" id="receiptNumber"
+                                                            placeholder="receiptNumber" formControlName="receiptNumber">
+                                                        <label for="receiptNumber">Receipt Number</label>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="paymentNumber">Date</label>
-                                                <p-calendar  inputId="payrollMonth"   [readonlyInput]="true"></p-calendar>
+                                                <p-calendar  inputId="payrollMonth" formControlName="date"   [readonlyInput]="true"></p-calendar>
                                             </div>
                                         </div>
                                     </div>
@@ -82,9 +83,9 @@
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="col-md-12" htmlFor="lastname2">Project</label> 
-                                                <select  class="form-control" [(ngModel)]="addPaymentDetailList.itemId" id="itemId" name="itemId">
+                                                <select  class="form-control" [(ngModel)]="addPaymentDetailList.projectId" id="itemId" name="itemId">
                                                     <option></option>
-                                                    <option *ngFor="let it of itemsDropDown" [value]="it.id">{{it.name}}</option>
+                                                    <option *ngFor="let it of projectlist" [value]="it.id">{{it.name}}</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-2">
@@ -102,7 +103,7 @@
                                                                             
                                             </div>
                                             <div class="col-md-2">
-                                                <input class="form-check-input" id="serial" name="serial"  type="checkbox"  id="isTaxable"  > <br/>
+                                                <input class="form-check-input" id="serial" name="serial"  type="checkbox" [(ngModel)]="addPaymentDetailList.isTaxable"  id="isTaxable"  > <br/>
                                                 <label class="form-check-label" style="font-size: 20px;font-weight: bold;" for="isTaxable">Is Taxable</label>                     
                                             </div>
                                             <div class="col-md-2">
@@ -112,11 +113,11 @@
                                             <div class="col-md-2">
                                                 <label htmlFor="lastname2">Price</label>
                                                 <input class="form-control" type="number" min="0" name="price" required
-                                                    [(ngModel)]="addPaymentDetailList.price">
+                                                    [(ngModel)]="addPaymentDetailList.unitPrice">
                                             </div>
                                             <div class="col-md-2">
                                                 <label htmlFor="lastname2">Total price</label>
-                                                <input class="form-control" type="number" min="0" name="totalPrice" disabled [value]="addPaymentDetailList.quantity * addPaymentDetailList.price"
+                                                <input class="form-control" type="number" min="0" name="totalPrice" disabled [value]="addPaymentDetailList.quantity * addPaymentDetailList.unitPrice"
                                                     [(ngModel)]="addPaymentDetailList.totalPrice">
                                             </div>
                                             
@@ -156,10 +157,10 @@
                                                             {{purchaseRequest.quantity}}
                                                         </td>
                                                         <td>
-                                                            {{purchaseRequest.price | currency }}
+                                                            {{purchaseRequest.unitPrice | currency }}
                                                         </td>
                                                         <td>
-                                                            {{purchaseRequest.price * purchaseRequest.quantity | currency }}
+                                                            {{purchaseRequest.unitPrice * purchaseRequest.quantity | currency }}
                                                         </td>
                                                         <td style="text-align:center">
                                                             <button pButton type="button" icon="pi pi-times" class="ui-button-danger"

@@ -1,9 +1,10 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { AddPaymentDetailDto, PaymentPostDto } from 'src/app/model/Finance/IPaymentDto';
+import { AddReceiptDetailDto, AddReceiptDto } from 'src/app/model/Finance/IReceiptModel';
 import { SelectList, BankSelectList, ItemDropDownDto } from 'src/app/model/common';
 import { UserView } from 'src/app/model/user';
 import { DropDownService } from 'src/app/services/dropDown.service';
@@ -24,14 +25,15 @@ export class ReceiptComponent implements OnInit{
   supplierDropDown!: SelectList[]
   chartOfAccountDropDown!: SelectList[]
   itemsDropDown!: ItemDropDownDto[];
-  paymentTypeList = [
-    {name:"Transfer",value:"TRANSFER"},
-    {name:"Check",value:"CHECK"},
-    {name:"Cash",value:"CASH"},
-  ]
-  paymentDetailList: AddPaymentDetailDto[] = [];
-  addPaymentDetailList: AddPaymentDetailDto = new AddPaymentDetailDto();
+  
+  paymentDetailList: AddReceiptDetailDto[] = [];
+  addPaymentDetailList: AddReceiptDetailDto = new AddReceiptDetailDto();
   uploadedFiles: any[] = [];
+
+
+  addReceiptForm: FormGroup;
+
+  projectlist:SelectList[]=[]
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -40,7 +42,8 @@ export class ReceiptComponent implements OnInit{
     private routerService : Router,
     private userService: UserService,
     private messageService: MessageService,
-    private dropDownService: DropDownService
+    private dropDownService: DropDownService,
+  
   ){}
 
   ngOnInit(): void {
@@ -52,24 +55,28 @@ export class ReceiptComponent implements OnInit{
     this.getAccountingPeriodDropDown()
     this.getSupplierDropDown()
     this.getItems()
+    this.getProjects()  
 
     this.paymentForm = this.formBuilder.group({
-      accountingPeriodId:['',Validators.required],
-      paymentDate:[null,Validators.required],
-      paymentType:['',Validators.required],
-      paymentNumber:[''],
-      bankId:['',Validators.required],
-      supplierId:['',Validators.required],
-      remark:[''],
+     
+      bankId: ['', Validators.required],
+      accountingPeriodId: ['', Validators.required],
+      referenceNumber: ['', Validators.required],
+      receiptNumber: ['', Validators.required],
+      date: ['', Validators.required],
+      //addReceiptDetails: this.formBuilder.array([])
       // addPaymentDetails: this.formBuilder.array([this.createPaymentItem()])
     });  
   }
 
  
-
-
-
- 
+ getProjects (){
+  this.dropDownService.getProjectDropDowns().subscribe({
+    next:(res)=>{
+      this.projectlist = res
+    }
+  })
+ }
   getItems(){
     this.dropDownService.getItemsDropDown().subscribe({
       next: (res) => {
@@ -129,57 +136,31 @@ export class ReceiptComponent implements OnInit{
       this.paymentDetailList.unshift(this.addPaymentDetailList);
     }
     //this.items = "";
-    this.addPaymentDetailList = new AddPaymentDetailDto();
+    this.addPaymentDetailList = new AddReceiptDetailDto();
   }
   submit(){
     if(this.paymentDetailList.length <= 0){
       this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Please add atleast one payment detail', life: 3000 });
     }
     else{
-      const addPaymentData: PaymentPostDto ={
+      const addPaymentData: AddReceiptDto ={
         accountingPeriodId: this.paymentForm.value.accountingPeriodId,
-        paymentDate: this.paymentForm.value.paymentDate,
-        paymentType: this.paymentForm.value.paymentType,
-        paymentNumber: this.paymentForm.value.paymentNumber,
         bankId: this.paymentForm.value.bankId,
-        supplierId: this.paymentForm.value.supplierId,
-        // documentPath: this.uploadedFiles.length > 0 ? this.uploadedFiles[0] : null,
-        remark: this.paymentForm.value.remark,
-        createdById: this.user.userId
+        referenceNumber: this.paymentForm.value.referenceNumber,
+        receiptNumber: this.paymentForm.value.receiptNumber,
+        date: this.paymentForm.value.date,       
+        createdById: this.user.userId,
+        addReceiptDetails :this.paymentDetailList
         
        } 
 
 
-       const formData = new FormData();
-
-// Append each property of the addPaymentData object to the FormData
-Object.keys(addPaymentData).forEach(key => {
-    formData.append(key, addPaymentData[key]);
-});
-this.paymentDetailList.map(x => x.totalPrice = (x.quantity * x.price)) 
-// addPaymentData.addPaymentDetails = this.paymentDetailList
-// Append documentPath if available
-if (this.uploadedFiles.length > 0) {
-  formData.append('documentPath', this.uploadedFiles[0]);
-}
-
-// Append addPaymentDetails if available
-if (this.paymentDetailList.length > 0) {
-  for (let i = 0; i < this.paymentDetailList.length; i++) {
-    const paymentDetail = this.paymentDetailList[i];
-    for (const key in paymentDetail) {
-      if (paymentDetail.hasOwnProperty(key)) {
-        formData.append(`AddPaymentDetails[${i}].${key}`, paymentDetail[key]);
-      }
-    }
-  }
-}
-       this.financeService.addPayments(formData).subscribe({
+       this.financeService.addRecipet(addPaymentData).subscribe({
         next: (res) => {
           if (res.success) {
             this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Request Created', life: 3000 });
             this.paymentDetailList = [];
-            this.addPaymentDetailList = new AddPaymentDetailDto();
+            this.addPaymentDetailList = new AddReceiptDetailDto();
             this.goToPayments()
           }
           else {

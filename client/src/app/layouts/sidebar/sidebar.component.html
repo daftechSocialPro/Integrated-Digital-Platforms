@@ -187,34 +187,34 @@
                               class="bi bi-chevron-down ms-auto"></i>
                   </a>
                   <ul id="inventory-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                        <li *ngIf="roleMatch(['HRM-CONFIGURATION'])"> <a routerLink="/inventory/dashboard"
+                        <li *ngIf="roleMatch(['STORE'])"> <a routerLink="/inventory/dashboard"
                               routerLinkActive="active">
                               <i class="bi bi-circle"></i><span>Dashboard</span> </a></li>
-                        <li *ngIf="roleMatch(['HRM-CONFIGURATION'])"> <a routerLink="/inventory/inventorysetting"
+                        <li *ngIf="roleMatch(['STORE-CONFIGURATION'])"> <a routerLink="/inventory/inventorysetting"
                                     routerLinkActive="active">
                                     <i class="bi bi-circle"></i><span>Configuration</span> </a></li>
-                        <li *ngIf="roleMatch(['HRM-CONFIGURATION'])"> <a routerLink="/inventory/purchaseRequest"
+                        <li *ngIf="roleMatch(['PURCHASE-REQUESTER'])"> <a routerLink="/inventory/purchaseRequest"
                                     routerLinkActive="active">
                                     <i class="bi bi-circle"></i><span>Purchase Request</span> </a></li>
-                        <li *ngIf="roleMatch(['HRM-CONFIGURATION'])"> <a routerLink="/inventory/approvePurchaseRequest"
+                        <li *ngIf="roleMatch(['PURCHASE-APPROVER'])"> <a routerLink="/inventory/approvePurchaseRequest"
                                     routerLinkActive="active">
                                     <i class="bi bi-circle"></i><span>Approve Purchase Request</span> </a></li>
-                        <li *ngIf="roleMatch(['HRM-CONFIGURATION'])"> <a routerLink="/inventory/approvedPurchaseRequests"
+                        <li *ngIf="roleMatch(['PURCHASE-APPROVER'])"> <a routerLink="/inventory/approvedPurchaseRequests"
                                     routerLinkActive="active">
                                     <i class="bi bi-circle"></i><span>Approved Purchase Request</span> </a></li>
-                        <li *ngIf="roleMatch(['HRM-CONFIGURATION'])"> <a routerLink="/inventory/goodsRecivingNote"
+                        <li *ngIf="roleMatch(['STORE'])"> <a routerLink="/inventory/goodsRecivingNote"
                                     routerLinkActive="active">
                                     <i class="bi bi-circle"></i><span>Goods Receiving Note</span> </a></li>
-                        <li *ngIf="roleMatch(['HRM-CONFIGURATION'])"> <a routerLink="/inventory/storeRequest"
+                        <li *ngIf="roleMatch(['STORE-REQUESTER'])"> <a routerLink="/inventory/storeRequest"
                                     routerLinkActive="active">
                                     <i class="bi bi-circle"></i><span>Store Request</span> </a></li>
-                        <li *ngIf="roleMatch(['HRM-CONFIGURATION'])"> <a routerLink="/inventory/approveStoreRequest"
+                        <li *ngIf="roleMatch(['STORE-REQUEST-APPROVER'])"> <a routerLink="/inventory/approveStoreRequest"
                                     routerLinkActive="active">
                                     <i class="bi bi-circle"></i><span>Approve Store Request</span> </a></li>
-                        <li *ngIf="roleMatch(['HRM-CONFIGURATION'])"> <a routerLink="/inventory/issueItems"
+                        <li *ngIf="roleMatch(['STORE'])"> <a routerLink="/inventory/issueItems"
                                     routerLinkActive="active">
                                     <i class="bi bi-circle"></i><span>Issue Items</span> </a></li>
-                        <li *ngIf="roleMatch(['HRM-CONFIGURATION'])"> <a routerLink="/inventory/receivedItems"
+                        <li > <a routerLink="/inventory/receivedItems"
                                     routerLinkActive="active">
                                     <i class="bi bi-circle"></i><span>Recived Items</span> </a></li>
                   </ul>
@@ -257,10 +257,10 @@
                                     routerLinkActive="active">
                                     <i class="bi bi-circle"></i><span>Account Reconcilliation</span> </a>
                         </li>
-                        <!-- <li *ngIf="roleMatch(['HRM-CONFIGURATION'])"> <a routerLink="/finance/financereport"
+                        <li *ngIf="roleMatch(['FINANCE-ADMIN','FINANCE-ACTIVITY-APPROVER'])"> <a routerLink="/finance/activity-progress-approver"
                               routerLinkActive="active">
-                              <i class="bi bi-circle"></i><span>Finance Report</span> </a>
-                        </li> -->
+                              <i class="bi bi-circle"></i><span>Activity Progress Approver</span> </a>
+                        </li>
                         
                         <li  *ngIf="roleMatch(['FINANCE-ADMIN','FINANCE-REPORT'])" > <a routerLink="/finance/financereport"
                               routerLinkActive="active">

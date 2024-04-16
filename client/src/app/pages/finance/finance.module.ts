@@ -58,6 +58,7 @@ import { IncomeTaxReportComponent } from './finance-report/income-tax-report/inc
 import { PensionDeclarationComponent } from './pension-declaration/pension-declaration.component';
 import { PayrollReportComponent } from './finance-report/payroll-report/payroll-report.component';
 import { NumberToWordPipe } from './finance-report/payroll-report/numberToWord.pipe';
+import { ActivityProgressApproverComponent } from './activity-progress-approver/activity-progress-approver.component';
 import { ReceiptComponent } from './receipt/receipt.component';
 // import { PensionDeclarationComponent } from './pension-declaration/pension-declaration.component';
 
@@ -95,9 +96,7 @@ import { ReceiptComponent } from './receipt/receipt.component';
     PendingPurchaseInvoiceComponent,
     ApprovedPurchaseInvoiceComponent,
     PayLoanComponent,
-
-    IncomeTaxDeclarationComponent,
-  
+    IncomeTaxDeclarationComponent, 
     
     AccountReconcilliationComponent,
     FinanceReportComponent,
@@ -106,7 +105,8 @@ import { ReceiptComponent } from './receipt/receipt.component';
     IncomeTaxReportComponent,
     PensionDeclarationComponent,
     NumberToWordPipe,
-    ReceiptComponent
+    ActivityProgressApproverComponent,
+    ReceiptComponent,
     
 
   ],
