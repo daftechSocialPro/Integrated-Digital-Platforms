@@ -40,7 +40,7 @@ namespace IntegratedImplementation.Services.Configuration
             var curentCode = await _dbContext.GeneralCodes.FirstOrDefaultAsync(x => x.GeneralCodeType == GeneralCodeType);
             if (curentCode != null)
             {
-                var generatedCode = $"{curentCode.InitialName}/{curentCode.CurrentNumber.ToString().PadLeft(curentCode.Pad, '0')}/{DateTime.Now.Year}";
+                var generatedCode = $"{curentCode.InitialName}-{curentCode.CurrentNumber.ToString().PadLeft(curentCode.Pad, '0')}-{DateTime.Now.Year}";
 
                 curentCode.CurrentNumber += 1;
                 await _dbContext.SaveChangesAsync();
@@ -122,7 +122,7 @@ namespace IntegratedImplementation.Services.Configuration
         {
             try
             {
-                var myBarcode = BarcodeWriter.CreateBarcode(barcodeContent, BarcodeWriterEncoding.EAN8);
+                var myBarcode = BarcodeWriter.CreateBarcode(barcodeContent, BarcodeWriterEncoding.Code39);
 
                 string pathToSave = Path.Combine(Directory.GetCurrentDirectory(), content);
 

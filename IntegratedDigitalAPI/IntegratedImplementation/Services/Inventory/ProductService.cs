@@ -225,7 +225,7 @@ namespace IntegratedImplementation.Services.Inventory
             {
                 var Id = Guid.NewGuid();
                 var tagNumber = _generalConfig.GenerateCode(GeneralCodeType.TAGNUMBER).Result;
-                var barcodeContent = "1345678";
+                var barcodeContent = tagNumber;
                 var path = Path.Combine("wwwroot", $"Products/{barcodeContent}");
 
                 var barCodePath = _generalConfig.GenerateBarcodeAsFormFileAsync(path, barcodeContent);
