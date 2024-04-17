@@ -18,7 +18,9 @@ export class TagNumberComponent implements OnInit {
   }
 
   getTagNumberList() {
-    this.inventoryService.getTagNumberLists();
+    this.inventoryService.getTagNumberLists().subscribe((res)=>{
+      this.tagNumberLists = res;
+    });
   }
 
   getImageByPath(url:string){
