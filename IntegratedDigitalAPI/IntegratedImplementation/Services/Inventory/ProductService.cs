@@ -225,39 +225,12 @@ namespace IntegratedImplementation.Services.Inventory
             {
                 var Id = Guid.NewGuid();
                 var tagNumber = _generalConfig.GenerateCode(GeneralCodeType.TAGNUMBER).Result;
+                var barcodeContent = "1345678";
+                var path = Path.Combine("wwwroot", $"Products/{barcodeContent}");
 
-                BarcodeWriter<MemoryStream> barcodeWriter = new BarcodeWriter<MemoryStream>
-                {
-                    Format = BarcodeFormat.CODE_128, // Specify the barcode format here
-                    Options = new EncodingOptions
-                    {
-                        Height = 200, // Specify the height of the barcode image
-                        Width = 400,  // Specify the width of the barcode image
-                        Margin = 10   // Specify the margin around the barcode
-                    }
-                };
+                var barCodePath = _generalConfig.GenerateBarcodeAsFormFileAsync(path, barcodeContent);
 
-                MemoryStream stream = barcodeWriter.Write(tagNumber);
-
-                byte[] barcodeBytes;
-                IFormFile barcodeFile;
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    stream.CopyTo(ms); // Copy the MemoryStream data to a new MemoryStream
-                    barcodeBytes = ms.ToArray();
-
-                    using (MemoryStream barcodeStream = new MemoryStream(barcodeBytes))
-                    {
-                        // Create an IFormFile object from the MemoryStream
-                        barcodeFile = new FormFile(barcodeStream, 0, barcodeBytes.Length, "barcode", "barcode.png")
-                        {
-                            Headers = new HeaderDictionary(),
-                            ContentType = "image/png"
-                        };                    }
-                }
-
-                string path =  _generalConfig.UploadFiles(barcodeFile, Id.ToString(), "TagNumber").Result.ToString();
-
+                
                 ProductTag product = new ProductTag()
                 {
                     Id = Guid.NewGuid(),
@@ -266,7 +239,7 @@ namespace IntegratedImplementation.Services.Inventory
                     ProductId = addProductTags.ProductId,
                     ProductStatus = ProductStatus.GOODCONDITION,
                     TagNumber = tagNumber,
-                    BarCodePath = path,
+                    BarCodePath = barCodePath,
                     Printed = false,
                     Rowstatus = RowStatus.ACTIVE,
                 };

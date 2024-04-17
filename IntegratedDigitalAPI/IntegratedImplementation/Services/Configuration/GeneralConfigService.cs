@@ -5,6 +5,7 @@ using IntegratedImplementation.DTOS.HRM;
 using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedInfrustructure.Data;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,13 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using ZXing.Common;
+using ZXing;
+using System.Reflection.Emit;
+using IronBarCode;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using ZXing.QrCode.Internal;
 
 namespace IntegratedImplementation.Services.Configuration
 {
@@ -109,5 +117,44 @@ namespace IntegratedImplementation.Services.Configuration
 
             return new string(password);
         }
+
+        public  string GenerateBarcodeAsFormFileAsync(string content, string barcodeContent)
+        {
+            try
+            {
+                var myBarcode = BarcodeWriter.CreateBarcode(barcodeContent, BarcodeWriterEncoding.EAN8);
+
+                string pathToSave = Path.Combine(Directory.GetCurrentDirectory(), content);
+
+
+                var path = Path.Combine("wwwroot", "Tag Number");
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+                //var barcodePath = myBarcode.SaveAsPng(path);
+                string filePath = Path.Combine(path, $"{barcodeContent}.png");
+
+                
+                myBarcode.SaveAsPng(filePath);
+
+                return filePath;
+
+
+
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return "";
+            }
+       
+            
+
+
+
+        }
+
+        
     }
 }
