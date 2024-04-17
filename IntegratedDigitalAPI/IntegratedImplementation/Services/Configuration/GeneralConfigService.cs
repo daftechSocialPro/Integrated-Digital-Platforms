@@ -14,13 +14,12 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using ZXing.Common;
-using ZXing;
+
 using System.Reflection.Emit;
 using IronBarCode;
 using Microsoft.AspNetCore.Http;
 using System.IO;
-using ZXing.QrCode.Internal;
+
 
 namespace IntegratedImplementation.Services.Configuration
 {
