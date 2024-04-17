@@ -8,7 +8,7 @@ namespace IntegratedInfrustructure.Model.Inventory
     public class ItemRecivalTags: WithIdModel
     {
        
-        public Guid ItemRecivalDetailId { get; set; }
+        public Guid ItemReceivalDetailId { get; set; }
         public virtual ItemReceivalDetail ItemReceivalDetail { get; set; } = null!;
 
         public Guid ProductTagId { get; set; }

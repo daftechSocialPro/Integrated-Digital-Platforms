@@ -13,7 +13,7 @@
     <div class="card">
         <div class="card px-6 py-6">
             <p-toast></p-toast>
-            <p-table [value]="receivedItems" dataKey="name" [tableStyle]="{ 'min-width': '60rem' }">
+            <p-table [value]="receivedItems" dataKey="id" [tableStyle]="{ 'min-width': '60rem' }">
                 <ng-template pTemplate="header">
                     <tr>
                         <th></th>
@@ -63,7 +63,10 @@
                         <td>{{ employeeRecivedProducts.productDetailName }}</td>
                         <td>{{ employeeRecivedProducts.tagNumber }}</td>
                         <td>{{ employeeRecivedProducts.serialNumber }}</td>
-                        <td></td>
+                        <td>
+                            <button pButton type="button" icon="pi pi-times" class="ui-button-danger"
+                            (click)="ConfirmAdjust(employeeRecivedProducts)"></button>
+                        </td>
                     </tr>
                 </ng-template>
             </p-table>
