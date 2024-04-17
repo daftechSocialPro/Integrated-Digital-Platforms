@@ -176,7 +176,7 @@ namespace IntegratedImplementation.Services.Inventory
                             Id = Guid.NewGuid(),
                             CreatedById = storeRequest.UserId,
                             CreatedDate = DateTime.Now,
-                            ItemRecivalDetailId = itemReceivalDetail.Id,
+                            ItemReceivalDetailId = itemReceivalDetail.Id,
                             ProductTagId = tag.Id,
                             Rowstatus = RowStatus.ACTIVE,
                             UsedItemStatus = UsedItemsStatus.GIVEN,
@@ -227,7 +227,7 @@ namespace IntegratedImplementation.Services.Inventory
 
             foreach (var items in itemRequests)
             {
-                items.EmployeeRecivedProducts = await _dbContext.ItemRecivalTags.Where(x => x.ItemRecivalDetailId == Guid.Parse(items.Id)).Include(x => x.ProductTag.Product)
+                items.EmployeeRecivedProducts = await _dbContext.ItemRecivalTags.Where(x => x.ItemReceivalDetailId == Guid.Parse(items.Id)).Include(x => x.ProductTag.Product)
                         .Select(x => new EmployeeRecivedProductsDto
                         {
                             Id = x.Id.ToString(),
