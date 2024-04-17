@@ -22,7 +22,7 @@ export class AddPurchaseInvoiceComponent implements OnInit {
   supplierDropDown!: SelectList[]
   purchaseRequestDropDown!: SelectList[]
   itemsDropDown!: SelectList[]
-  purchaseInvoiceDetailList: PurchaseInvoiceDetailPostDto[]
+  purchaseInvoiceDetailList: PurchaseInvoiceDetailPostDto[]=[];
   addPurchaseInvoiceDetailList: PurchaseInvoiceDetailPostDto = new PurchaseInvoiceDetailPostDto();
 
   constructor(
@@ -95,11 +95,13 @@ export class AddPurchaseInvoiceComponent implements OnInit {
   newRow() {
     if (this.addPurchaseInvoiceDetailList.itemId) {
       
-      this.itemsDropDown.some(x => {
-        if (x.id == this.addPurchaseInvoiceDetailList.itemId) {
-          this.addPurchaseInvoiceDetailList.itemName = x.name;
-        }
-      });
+      // this.itemsDropDown.some(x => {
+      //   if (x.id == this.addPurchaseInvoiceDetailList.itemId) {
+      //     this.addPurchaseInvoiceDetailList.itemName = x.name;
+      //   }
+      // });
+
+      this.addPurchaseInvoiceDetailList.itemName = this.itemsDropDown.find((x)=>x.id==this.addPurchaseInvoiceDetailList.itemId).name
       
 
       this.purchaseInvoiceDetailList.unshift(this.addPurchaseInvoiceDetailList);

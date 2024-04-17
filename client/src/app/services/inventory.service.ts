@@ -14,6 +14,7 @@ import { SelectList } from '../model/common';
 import { AdjustmentDetailDto, SaveAdjustmentDto } from '../model/Inventory/AdjustmentDetailDto';
 import { MeasurementUnitDto } from '../model/Inventory/MeasurementUnit.Model';
 import { InventoryDashboardGetDto } from '../model/Inventory/IInventoryDashboardDto';
+import { TagNumberListDto } from '../model/Inventory/ITagNumberListDto';
 
 @Injectable({
   providedIn: 'root'
@@ -224,4 +225,13 @@ export class InventoryService {
     let employeeId = this.userService.getCurrentUser().employeeId;
     return this.http.get<InventoryDashboardGetDto>(this.BaseURI + `/InventoryDashboard?employeeId=${employeeId}`);
   }
+
+
+  getTagNumberLists (){   
+
+    return this.http.get<TagNumberListDto[]>(this.BaseURI + `/Product/GetTagNumberLists`);
+    
+  }
+
+
 }
