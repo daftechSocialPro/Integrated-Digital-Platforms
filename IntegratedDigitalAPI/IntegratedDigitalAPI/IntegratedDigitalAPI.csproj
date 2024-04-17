@@ -39,6 +39,8 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\CompanyProfile\" />
+    <Folder Include="wwwroot\NewFolder\" />
+    <Folder Include="wwwroot\Products\" />
   </ItemGroup>
 
 </Project>

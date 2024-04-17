@@ -226,28 +226,12 @@ namespace IntegratedImplementation.Services.Inventory
             {
                 var Id = Guid.NewGuid();
                 var tagNumber = _generalConfig.GenerateCode(GeneralCodeType.TAGNUMBER).Result;
+                var barcodeContent = "1345678";
+                var path = Path.Combine("wwwroot", $"Products/{barcodeContent}");
 
-                GeneratedBarcode barcode = BarcodeWriter.CreateBarcode(tagNumber, BarcodeWriterEncoding.Code128);
+                var barCodePath = _generalConfig.GenerateBarcodeAsFormFileAsync(path, barcodeContent);
 
-                barcode.ResizeTo(400, 120);
-                barcode.AddBarcodeValueTextBelowBarcode();
-                // Styling a Barcode and adding annotation text
-                barcode.ChangeBarCodeColor(System.Drawing.Color.BlueViolet);
-                barcode.SetMargins(10);
-
-                var path = Path.Combine("wwwroot", "TagNumber");
-                if (!Directory.Exists(path))
-                {
-                    Directory.CreateDirectory(path);
-                }
-                string pathToSave = Path.Combine(Directory.GetCurrentDirectory(), path);
-              
-                barcode.SaveAsPng(pathToSave);
-
-                //IFormFile barcodeFile = new CustomFormFile(barcodeBytes, "barcode.png", "image/png");
-
-               // string path =  _generalConfig.UploadFiles(barcodeFile, Id.ToString(), "TagNumber").Result.ToString();
-
+                
                 ProductTag product = new ProductTag()
                 {
                     Id = Guid.NewGuid(),
@@ -256,7 +240,7 @@ namespace IntegratedImplementation.Services.Inventory
                     ProductId = addProductTags.ProductId,
                     ProductStatus = ProductStatus.GOODCONDITION,
                     TagNumber = tagNumber,
-                    BarCodePath = path,
+                    BarCodePath = barCodePath,
                     Printed = false,
                     Rowstatus = RowStatus.ACTIVE,
                 };

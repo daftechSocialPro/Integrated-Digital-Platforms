@@ -15,6 +15,7 @@ namespace IntegratedImplementation.Interfaces.Configuration
         Task<string> UploadFiles(IFormFile formFile, string Name, string FolderName);
         Task<string> GetFiles(string path);
         Task<List<GeneralCodeDto>> GetGeneralCodes ();
-        public  string GeneratePassword();
+        string GeneratePassword();
+        string GenerateBarcodeAsFormFileAsync(string content,string barcodeContent);
     }
 }

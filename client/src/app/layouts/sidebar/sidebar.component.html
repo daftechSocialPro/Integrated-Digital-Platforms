@@ -205,6 +205,12 @@
                         <li *ngIf="roleMatch(['STORE'])"> <a routerLink="/inventory/goodsRecivingNote"
                                     routerLinkActive="active">
                                     <i class="bi bi-circle"></i><span>Goods Receiving Note</span> </a></li>
+
+                                    <li *ngIf="roleMatch(['STORE'])"> <a routerLink="/inventory/items-tag-number"
+                                          routerLinkActive="active">
+                                          <i class="bi bi-circle"></i><span>Items Tag Number</span> </a></li>
+
+
                         <li *ngIf="roleMatch(['STORE-REQUESTER'])"> <a routerLink="/inventory/storeRequest"
                                     routerLinkActive="active">
                                     <i class="bi bi-circle"></i><span>Store Request</span> </a></li>
