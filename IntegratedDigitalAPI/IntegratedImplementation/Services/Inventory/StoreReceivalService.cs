@@ -1,4 +1,5 @@
-﻿using Implementation.Helper;
+﻿using DocumentFormat.OpenXml.Drawing;
+using Implementation.Helper;
 using IntegratedImplementation.DTOS.Inventory;
 using IntegratedImplementation.Interfaces.Inventory;
 using IntegratedInfrustructure.Data;
@@ -9,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Text;
 using System.Threading.Tasks;
 using static IntegratedInfrustructure.Data.EnumList;
@@ -139,12 +141,12 @@ namespace IntegratedImplementation.Services.Inventory
                     Rowstatus = RowStatus.ACTIVE,
                     StoreRequestListId = CurrentItem.Id,
                     TotalCost = totalPrice,
-                    TotalItems = (double)CurrentItem.Quantity,
-                    RemainingItems = (double)storeRequest.Quantity
+                    TotalItems = (double)CurrentItem.Quantity
 
                 };
                 await _dbContext.ItemReceivals.AddAsync(isu);
                 await _dbContext.SaveChangesAsync();
+
 
                 foreach(var reciverDetail in productItem)
                 {
@@ -159,10 +161,31 @@ namespace IntegratedImplementation.Services.Inventory
                         Quantity = reciverDetail.Quantity,
                         Rowstatus = RowStatus.ACTIVE,
                         UnitPrice = reciverDetail.Price,
-                        IssuedDate = storeRequest.Date.AddDays(1)
+                        IssuedDate = DateTime.Now
                     };
                     await _dbContext.ItemReceivalDetails.AddAsync(itemReceivalDetail);
                     await _dbContext.SaveChangesAsync();
+
+                    int totalQuantity = Convert.ToInt32(reciverDetail.Quantity);
+
+                    var currentTags  = await _dbContext.ProductTags.Where(x => x.ProductId == reciverDetail.ProductId && (x.ProductStatus == ProductStatus.GOODCONDITION || x.ProductStatus == ProductStatus.fIXED || x.ProductStatus == ProductStatus.RETURNED)).OrderBy(x => x.TagNumber).Take(totalQuantity).ToListAsync();
+                    foreach(var tag in currentTags)
+                    {
+                        ItemRecivalTags recivalTags = new ItemRecivalTags()
+                        {
+                            Id = Guid.NewGuid(),
+                            CreatedById = storeRequest.UserId,
+                            CreatedDate = DateTime.Now,
+                            ItemRecivalDetailId = itemReceivalDetail.Id,
+                            ProductTagId = tag.Id,
+                            Rowstatus = RowStatus.ACTIVE,
+                            UsedItemStatus = UsedItemsStatus.GIVEN,
+                            ReturnApproved = false
+                        };
+                        tag.ProductStatus = ProductStatus.GIVEN;
+                        await _dbContext.ItemRecivalTags.AddAsync(recivalTags);
+                        await _dbContext.SaveChangesAsync();
+                    }
                 }
                 CurrentItem.IsIssued = true;
                 await _dbContext.SaveChangesAsync();
@@ -200,30 +223,54 @@ namespace IntegratedImplementation.Services.Inventory
                                           ItemName = x.StoreRequestList.Item.Name,
                                           MeasurementUnit = x.StoreRequestList.MeasurementUnit.Name,
                                           IssuedQuantity = x.TotalItems,
-                                          RemainingQuantity = x.RemainingItems,
                                       }).ToListAsync();
+
+            foreach (var items in itemRequests)
+            {
+                items.EmployeeRecivedProducts = await _dbContext.ItemRecivalTags.Where(x => x.ItemRecivalDetailId == Guid.Parse(items.Id)).Include(x => x.ProductTag.Product)
+                        .Select(x => new EmployeeRecivedProductsDto
+                        {
+                            Id = x.Id.ToString(),
+                            ProductDetailName = x.ProductTag.Product.ItemDetailName,
+                            SerialNumber = x.ProductTag.SerialNumber,
+                            TagNumber = x.ProductTag.TagNumber
+                        }).ToListAsync();
+            }
+
             return itemRequests;
         }
 
         public async Task<ResponseMessage> AdjustReceivedItems(AdjustReceivedITemsDto receivedITemsDto)
         {
-            var CurrentItem = await _dbContext.ItemReceivals.Include(x => x.StoreRequestList.Item.Category).FirstOrDefaultAsync(x => x.Id.Equals(Guid.Parse(receivedITemsDto.Id)));
+            var CurrentItem = await _dbContext.ItemRecivalTags.Include(x => x.ProductTag.Product.Item.Category).FirstOrDefaultAsync(x => x.Id.Equals(Guid.Parse(receivedITemsDto.Id)));
             if (CurrentItem == null)
                 return new ResponseMessage { Success = false, Message = "Item Not Found" };
 
-            UsedItems usedItems = new UsedItems()
-            {
-                Id = Guid.NewGuid(),
-                CreatedById = receivedITemsDto.CreatedById,
-                ItemReceivalId = CurrentItem.Id,
-                CreatedDate = DateTime.Now,
-                Remark = receivedITemsDto.Remark,
-                Rowstatus = RowStatus.ACTIVE,
-                TotalItems = CurrentItem.TotalItems - receivedITemsDto.usedQuantity,
-                UsedItemStatus = receivedITemsDto.UsedItemStatus
-            };
 
-            if (CurrentItem.StoreRequestList.Item.Category.CategoryType == CategoryType.ASSET && receivedITemsDto.UsedItemStatus == UsedItemsStatus.MAINTAINABLE)
+            var currentTag = await _dbContext.ProductTags.FirstOrDefaultAsync(x => x.Id == CurrentItem.ProductTagId);
+            if (currentTag == null)
+                return new ResponseMessage { Success = false, Message = "Item Not Found" };
+
+          
+
+            if (receivedITemsDto.UsedItemStatus == UsedItemsStatus.LOST)
+            {
+                currentTag.ProductStatus = ProductStatus.LOST;
+            }
+            else if (receivedITemsDto.UsedItemStatus == UsedItemsStatus.DAMAGED)
+            {
+                currentTag.ProductStatus = ProductStatus.DAMAGED;
+            }
+            else if (receivedITemsDto.UsedItemStatus == UsedItemsStatus.MAINTAINABLE)
+            {
+                currentTag.ProductStatus = ProductStatus.MAINTENANCE;
+            }
+            else if (receivedITemsDto.UsedItemStatus == UsedItemsStatus.RETURNED)
+            {
+                currentTag.ProductStatus = ProductStatus.RETURNED;
+            }
+
+            if (CurrentItem.ProductTag.Product.Item.Category.CategoryType == CategoryType.ASSET && receivedITemsDto.UsedItemStatus == UsedItemsStatus.MAINTAINABLE)
             {
                 MaintainableItems maintainableItems = new MaintainableItems()
                 {
@@ -237,8 +284,19 @@ namespace IntegratedImplementation.Services.Inventory
                 await _dbContext.MaintainableItems.AddAsync(maintainableItems);
             }
 
-            await _dbContext.UsedItems.AddAsync(usedItems);
-            CurrentItem.RemainingItems -= receivedITemsDto.usedQuantity;
+            else if (CurrentItem.ProductTag.Product.Item.Category.CategoryType == CategoryType.ASSET && receivedITemsDto.UsedItemStatus == UsedItemsStatus.RETURNED)
+            {
+               var currProduct = await _dbContext.Products.FirstOrDefaultAsync(x => x.Id == CurrentItem.ProductTag.ProductId);
+
+                if (currProduct != null)
+                {
+                    currProduct.RemainingQuantity += 1;
+                }
+                await _dbContext.SaveChangesAsync();
+            }
+
+            CurrentItem.UsedItemStatus = receivedITemsDto.UsedItemStatus;
+            CurrentItem.Remark = receivedITemsDto.Remark;
             await _dbContext.SaveChangesAsync();
 
             return new ResponseMessage { Success = true, Message = "Adjusted Successfully", Data = CurrentItem.Id.ToString() };

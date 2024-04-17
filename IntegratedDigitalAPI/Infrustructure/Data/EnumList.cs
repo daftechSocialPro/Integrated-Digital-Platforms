@@ -303,6 +303,7 @@ namespace IntegratedInfrustructure.Data
         public enum ProductStatus
         {
             GOODCONDITION,
+            GIVEN,
             LOST,
             DAMAGED,
             MAINTENANCE,
@@ -313,10 +314,8 @@ namespace IntegratedInfrustructure.Data
 
         public enum UsedItemsStatus
         {
-            USED,
-            SOLD,
+            GIVEN,
             LOST,
-            BROKEEN,
             DAMAGED,
             MAINTAINABLE,
             RETURNED

@@ -19,13 +19,14 @@ using System.Threading.Tasks;
 using static IntegratedInfrustructure.Data.EnumList;
 using System.Drawing.Imaging;
 using System.Drawing;
-using ZXing.Mobile;
-using ZXing;
-using ZXing.Common;
+using IronBarCode;
 using System.IO;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Http;
+using IntegratedImplementation.Helper;
+using DocumentFormat.OpenXml.Wordprocessing;
+
 
 namespace IntegratedImplementation.Services.Inventory
 {

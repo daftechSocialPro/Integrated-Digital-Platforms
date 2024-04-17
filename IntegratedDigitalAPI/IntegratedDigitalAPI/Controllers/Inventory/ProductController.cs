@@ -26,7 +26,7 @@ namespace IntegratedDigitalAPI.Controllers.Inventory
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(ProductListDto), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(TagNumberListDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetTagNumberLists()
         {
             return Ok(await _productService.GetTagNumberLists());

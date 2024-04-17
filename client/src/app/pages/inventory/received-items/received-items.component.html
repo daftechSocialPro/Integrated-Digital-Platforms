@@ -13,44 +13,65 @@
     <div class="card">
         <div class="card px-6 py-6">
             <p-toast></p-toast>
-            <p-table #dt [value]="receivedItems"  responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['itemName','measurementUnit']" [rows]="10" [paginator]="true"
-            [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" 
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
-            selectionMode="multiple" [rowHover]="true" dataKey="id">
-               <ng-template pTemplate="caption">
-                   <div class="flex">
-                     
-                   </div>
-               </ng-template>
-               <ng-template pTemplate="header">
-                   <tr>
-                       <th>Item Name</th>
-                       <th>Issued Quantity</th>
-                       <th>Remaining Quantity</th>
-                       <th>Measurement Unit</th>
-                       <th></th>
-                   </tr>
-               </ng-template>
-               <ng-template pTemplate="body" let-requests>
-                   <tr>
-                       <td>
-                           {{requests.itemName}}
-                       </td>
-                       <td>
-                           {{requests.issuedQuantity}}
-                       </td>
-                       <td>
-                           {{requests.remainingQuantity}}
-                       </td>
-                       <td>
-                           {{requests.measurementUnit}}
-                       </td>
-                       <td>
-                           <button (click)="ConfirmAdjust(requests.id)" pButton icon="pi pi-check" label="Adjust Items"></button>
-                       </td>
-                   </tr>
-               </ng-template>
-           </p-table>
+            <p-table [value]="receivedItems" dataKey="name" [tableStyle]="{ 'min-width': '60rem' }">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th></th>
+                        <th>Item Name</th>
+                        <th>Issued Quantity</th>
+                        <th>Remaining Quantity</th>
+                        <th>Measurement Unit</th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-requests let-expanded="expanded">
+                    <tr>
+                        <td>
+                            <button type="button" pButton pRipple [pRowToggler]="requests"
+                                class="p-button-text p-button-rounded p-button-plain"
+                                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                        </td>
+                        <td>
+                            {{requests.itemName}}
+                        </td>
+                        <td>
+                            {{requests.issuedQuantity}}
+                        </td>
+                        <td>
+                            {{requests.remainingQuantity}}
+                        </td>
+                        <td>
+                            {{requests.measurementUnit}}
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="rowexpansion" let-requests>
+                    <tr>
+                        <td colspan="7">
+                            <div class="p-3">
+                                <p-table [value]="requests.employeeRecivedProducts" dataKey="id">
+                                    <ng-template pTemplate="header">
+                    <tr>
+                        <th>Product Detail Name</th>
+                        <th>Tag Number</th>
+                        <th>Serial Number</th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-employeeRecivedProducts>
+                    <tr>
+                        <td>{{ employeeRecivedProducts.productDetailName }}</td>
+                        <td>{{ employeeRecivedProducts.tagNumber }}</td>
+                        <td>{{ employeeRecivedProducts.serialNumber }}</td>
+                        <td></td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        </td>
+        </tr>
+        </ng-template>
+        </p-table>
         </div>
 
         <p-dialog [(visible)]="confirmDialog" [style]="{width: '450px'}" header="Adjust Received Items" [modal]="true" class="p-fluid">
