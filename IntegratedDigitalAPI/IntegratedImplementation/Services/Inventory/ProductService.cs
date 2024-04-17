@@ -224,7 +224,7 @@ namespace IntegratedImplementation.Services.Inventory
 
             for(int i = 0; i< addProductTags.TotalQuantity; i++)
             {
-                var Id = Guid.NewGuid();
+                
                 var tagNumber = _generalConfig.GenerateCode(GeneralCodeType.TAGNUMBER).Result;
                 var barcodeContent = tagNumber;
                 var path = Path.Combine("wwwroot", $"Products/{barcodeContent}");
