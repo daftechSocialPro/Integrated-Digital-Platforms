@@ -19,13 +19,14 @@ using System.Threading.Tasks;
 using static IntegratedInfrustructure.Data.EnumList;
 using System.Drawing.Imaging;
 using System.Drawing;
-using ZXing.Mobile;
-using ZXing;
-using ZXing.Common;
+using IronBarCode;
 using System.IO;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Http;
+using IntegratedImplementation.Helper;
+using DocumentFormat.OpenXml.Wordprocessing;
+
 
 namespace IntegratedImplementation.Services.Inventory
 {
@@ -226,37 +227,26 @@ namespace IntegratedImplementation.Services.Inventory
                 var Id = Guid.NewGuid();
                 var tagNumber = _generalConfig.GenerateCode(GeneralCodeType.TAGNUMBER).Result;
 
-                BarcodeWriter<MemoryStream> barcodeWriter = new BarcodeWriter<MemoryStream>
+                GeneratedBarcode barcode = BarcodeWriter.CreateBarcode(tagNumber, BarcodeWriterEncoding.Code128);
+
+                barcode.ResizeTo(400, 120);
+                barcode.AddBarcodeValueTextBelowBarcode();
+                // Styling a Barcode and adding annotation text
+                barcode.ChangeBarCodeColor(System.Drawing.Color.BlueViolet);
+                barcode.SetMargins(10);
+
+                var path = Path.Combine("wwwroot", "TagNumber");
+                if (!Directory.Exists(path))
                 {
-                    Format = BarcodeFormat.CODE_128, // Specify the barcode format here
-                    Options = new EncodingOptions
-                    {
-                        Height = 200, // Specify the height of the barcode image
-                        Width = 400,  // Specify the width of the barcode image
-                        Margin = 10   // Specify the margin around the barcode
-                    }
-                };
-
-                MemoryStream stream = barcodeWriter.Write(tagNumber);
-
-                byte[] barcodeBytes;
-                IFormFile barcodeFile;
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    stream.CopyTo(ms); // Copy the MemoryStream data to a new MemoryStream
-                    barcodeBytes = ms.ToArray();
-
-                    using (MemoryStream barcodeStream = new MemoryStream(barcodeBytes))
-                    {
-                        // Create an IFormFile object from the MemoryStream
-                        barcodeFile = new FormFile(barcodeStream, 0, barcodeBytes.Length, "barcode", "barcode.png")
-                        {
-                            Headers = new HeaderDictionary(),
-                            ContentType = "image/png"
-                        };                    }
+                    Directory.CreateDirectory(path);
                 }
+                string pathToSave = Path.Combine(Directory.GetCurrentDirectory(), path);
+              
+                barcode.SaveAsPng(pathToSave);
 
-                string path =  _generalConfig.UploadFiles(barcodeFile, Id.ToString(), "TagNumber").Result.ToString();
+                //IFormFile barcodeFile = new CustomFormFile(barcodeBytes, "barcode.png", "image/png");
+
+               // string path =  _generalConfig.UploadFiles(barcodeFile, Id.ToString(), "TagNumber").Result.ToString();
 
                 ProductTag product = new ProductTag()
                 {

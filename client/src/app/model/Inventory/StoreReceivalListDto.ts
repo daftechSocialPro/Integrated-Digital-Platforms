@@ -50,7 +50,17 @@ export class EmployeeReceivedITemsDto {
     issuedQuantity: number;
     remainingQuantity: number;
     measurementUnit: string;
+    employeeRecivedProducts : EmployeeRecivedProductsDto[];
 }
+
+export class EmployeeRecivedProductsDto
+{
+    id: string;
+    productDetailName: string;
+    tagNumber: string;
+    serialNumber: string;
+}
+
 
 export class AdjustReceivedITemsDto
 {

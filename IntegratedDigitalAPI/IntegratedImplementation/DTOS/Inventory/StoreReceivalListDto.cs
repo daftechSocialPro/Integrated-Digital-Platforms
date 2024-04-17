@@ -32,7 +32,6 @@ namespace IntegratedImplementation.DTOS.Inventory
     {
         public string Id { get; set; } = null!;
         public string UserId { get; set; } = null!;
-        public DateTime Date { get; set; }
         public int Quantity { get; set; }
     }
 
@@ -69,23 +68,27 @@ namespace IntegratedImplementation.DTOS.Inventory
         public double RemainingQuantity { get; set; }
         public string MeasurementUnit { get; set; } = null!;
 
+        public List<EmployeeRecivedProductsDto> EmployeeRecivedProducts { get; set; } = null!;
+
     }
+
+    public class EmployeeRecivedProductsDto
+    {
+        public string Id { get; set; } = null!;
+        public string ProductDetailName { get; set; } = null!;
+        public string TagNumber { get; set; } = null!;
+        public string? SerialNumber { get; set; } = null!;
+    }
+
 
 
     public class AdjustReceivedITemsDto
     {
         [Required]
         public string Id { get; set; } = null!;
-
         [Required]
         public string CreatedById { get; set; } = null!;
-
-        [Required]
-        public double usedQuantity { get; set; }
-
-        [Required]
         public string Remark { get; set; } = null!;
-
         [Required]
         public UsedItemsStatus UsedItemStatus { get; set; }
     }
