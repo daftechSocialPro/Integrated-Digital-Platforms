@@ -227,7 +227,8 @@ namespace IntegratedImplementation.Services.Inventory
 
             foreach (var items in itemRequests)
             {
-                items.EmployeeRecivedProducts = await _dbContext.ItemRecivalTags.Where(x => x.ItemReceivalDetailId == Guid.Parse(items.Id)).Include(x => x.ProductTag.Product)
+
+                items.EmployeeRecivedProducts = await _dbContext.ItemRecivalTags.Where(x => x.ItemReceivalDetail.ItemReceivalId == Guid.Parse(items.Id)).Include(x => x.ProductTag.Product)
                         .Select(x => new EmployeeRecivedProductsDto
                         {
                             Id = x.Id.ToString(),
