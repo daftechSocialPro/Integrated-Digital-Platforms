@@ -93,6 +93,7 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<ITimePeriodService, TimePeriodService>();
 
             services.AddScoped<IWeeklyPlanService, WeeklyPlanService>();
+            services.AddScoped<IProjectPaymentService, ProjectPaymentService>();
 
 
             #endregion

@@ -136,6 +136,9 @@ namespace IntegratedInfrustructure.Data
         public DbSet<Tasks> Tasks { get; set; }
 
         public DbSet<ActivityLocation> ActivityLocations { get; set; }  
+
+
+        public DbSet<PaymentRequisition> PaymentRequisitions { get; set; }
         #endregion
 
         #region Training
