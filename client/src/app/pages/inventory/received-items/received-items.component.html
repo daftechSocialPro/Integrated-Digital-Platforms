@@ -64,7 +64,7 @@
                         <td>{{ employeeRecivedProducts.tagNumber }}</td>
                         <td>{{ employeeRecivedProducts.serialNumber }}</td>
                         <td>
-                            <button pButton type="button" icon="pi pi-times" class="ui-button-danger"
+                            <button pButton type="button" icon="pi pi-pencil" class="ui-button-danger"
                             (click)="ConfirmAdjust(employeeRecivedProducts)"></button>
                         </td>
                     </tr>
@@ -79,13 +79,10 @@
 
         <p-dialog [(visible)]="confirmDialog" [style]="{width: '450px'}" header="Adjust Received Items" [modal]="true" class="p-fluid">
             <ng-template pTemplate="content">
-                <div class="field">
-                    <label htmlFor="usedQuantity">Used Quantity</label>
-                    <input pInputText id="usedQuantity" [(ngModel)]="adjustReceivedItems.usedQuantity" name="usedQuantity" type="number" min="1" />
-                </div>
+               
                 <div class="field">
                     <label htmlFor="usedItemStatus">Status </label>
-                    <p-dropdown [options]="usedItemStatus" [(ngModel)]="adjustReceivedItems.usedItemStatus" optionValue="value" optionLabel="name" placeholder="Select Status" [showClear]="true"></p-dropdown>
+                    <p-dropdown [options]="usedItemStatus" [(ngModel)]="adjustReceivedItems.usedItemStatus" optionValue="value" optionLabel="name" placeholder="Select Status" [showClear]="true" appendTo="body"></p-dropdown>
                 </div>
                 <div class="field">
                     <label htmlFor="remark">Remark </label>
