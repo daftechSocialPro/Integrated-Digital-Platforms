@@ -38,6 +38,7 @@ import { ApprovedPurchaseRequestsComponent } from './approved-purchase-requests/
 import { InventoryDashboardComponent } from './inventory-dashboard/inventory-dashboard.component';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { TagNumberComponent } from './tag-number/tag-number.component';
+import { BalanceReportComponent } from './balance-report/balance-report.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { TagNumberComponent } from './tag-number/tag-number.component';
     ApprovedPurchaseRequestsComponent,
     InventoryDashboardComponent,
     TagNumberComponent,
+    BalanceReportComponent,
   ],
   imports: [
     CommonModule,

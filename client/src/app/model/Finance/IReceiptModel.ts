@@ -2,7 +2,6 @@ export class AddReceiptDto
 {
     createdById: string;
     bankId: string;
-    accountingPeriodId: string;
     referenceNumber: string;
     receiptNumber: string;
     date: Date;
@@ -17,8 +16,9 @@ export class AddReceiptDetailDto {
     unitPrice: number;
     quantity: number;
     isTaxable: boolean;
-    projectId: string;
+    projectId?: string;
     totalPrice?: number;
     itemName? :string
     chartOfAccountName : string
+    projectName: string;
 }

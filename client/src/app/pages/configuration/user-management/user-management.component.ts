@@ -40,7 +40,6 @@ export class UserManagementComponent implements OnInit {
   }
 
   getUsers() {
-
     this.userService.getUserList().subscribe({
       next: (res) => {
         this.users = res
@@ -120,13 +119,21 @@ export class UserManagementComponent implements OnInit {
   }
 
   changePassword(user:UserList){
-
     let modalRef = this.modalService.open(ChangePasswordComponent,{size:'lg',backdrop:'static'})
     modalRef.componentInstance.user=user
+    modalRef.componentInstance.isReset = false
     modalRef.result.then((res)=>{
       this.getUsers()
-    })
+    });
+  }
 
+  ResetPassword(user: UserList){
+    let modalRef = this.modalService.open(ChangePasswordComponent,{size:'lg',backdrop:'static'})
+    modalRef.componentInstance.user=user
+    modalRef.componentInstance.isReset = true
+    modalRef.result.then((res)=>{
+      this.getUsers()
+    });
   }
 
   

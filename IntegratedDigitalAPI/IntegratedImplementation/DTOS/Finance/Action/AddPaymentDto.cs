@@ -15,12 +15,14 @@ namespace IntegratedImplementation.DTOS.Finance.Action
 {
     public class AddPaymentDto
     {
-        public Guid AccountingPeriodId { get; set; }
         public DateTime PaymentDate { get; set; }
         public string PaymentType { get; set; } = null!;
         public string PaymentNumber { get; set; } = null!;
         public Guid? BankId { get; set; }
-        public Guid SupplierId { get; set; }
+        public TypeOfPayee TypeOfPayee { get; set; }
+        public Guid? SupplierId { get; set; }
+        public Guid? EmployeeId { get; set; }
+        public string? OtherBeneficiary { get; set; }
         public IFormFile? DocumentPath { get; set; }
         public string? Remark { get; set; }
         public string CreatedById { get; set; } = null!;

@@ -15,6 +15,8 @@ import { AdjustmentDetailDto, SaveAdjustmentDto } from '../model/Inventory/Adjus
 import { MeasurementUnitDto } from '../model/Inventory/MeasurementUnit.Model';
 import { InventoryDashboardGetDto } from '../model/Inventory/IInventoryDashboardDto';
 import { TagNumberListDto } from '../model/Inventory/ITagNumberListDto';
+import { BalanceReportComponent } from '../pages/inventory/balance-report/balance-report.component';
+import { BalanceTempData } from '../model/Inventory/BalanceReportDto';
 
 @Injectable({
   providedIn: 'root'
@@ -216,9 +218,9 @@ export class InventoryService {
   //   return this.http.post(this.BaseURI + `/InventoryReport/GetOutReport`, stockReportDto, { responseType: 'blob' });
   // }
 
-  // getBalanceReport(balanceReport: BalanceReport){
-  //   return  this.http.post(this.BaseURI + `/InventoryReport/GetBalanceReport`,balanceReport, { responseType: 'blob' })
-  // }
+  getBalanceReport(){
+    return  this.http.get<BalanceTempData[]>(this.BaseURI + `/InventoryReport/GetBalanceReport`)
+  }
 
   //Dashboard
   getInventoryDashboard(){

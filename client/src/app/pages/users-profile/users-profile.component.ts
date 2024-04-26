@@ -177,7 +177,8 @@ export class UsersProfileComponent implements OnInit {
       var formData: ChangePasswordModel = {
         UserId: this.user.userId,
         CurrentPassword: this.passwordForm.value.OldPassowrd,
-        NewPassword: this.passwordForm.value.NewPassword
+        NewPassword: this.passwordForm.value.NewPassword,
+        isReset: false
       }
       this.userService.changePassword(formData).subscribe({
         next: (res) => {

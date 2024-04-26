@@ -13,11 +13,7 @@ namespace IntegratedImplementation.DTOS.Inventory
         public string BranchId { get; set; } = null!;
     }
 
-    public class BalanceReportDto
-    {
-        public DateTime Date { get; set; }
-        public string BranchId { get; set; } = null!;
-    }
+
 
     public class BalanceTempData
     {
@@ -28,4 +24,5 @@ namespace IntegratedImplementation.DTOS.Inventory
         public string MeasurementUnit { get; set; } = null!;
         public double Quantity { get; set; }
     }
+
 }

@@ -26,11 +26,17 @@ namespace IntegratedImplementation.Services.Finance.Action
 
         public async Task<ResponseMessage> AddReceipt(AddReceiptDto addReceipt)
         {
-            var currentPeriod = await _dbContext.AccountingPeriods.FirstOrDefaultAsync(x => x.Rowstatus == RowStatus.ACTIVE );
+            var currentPeriod = await _dbContext.PeriodDetails.Include(x => x.AccountingPeriod).FirstOrDefaultAsync(x => x.PeriodStart.Date <= addReceipt.Date.Date && x.PeriodEnd.Date >= addReceipt.Date.Date);
+
 
             if (currentPeriod == null)
             {
                 return new ResponseMessage { Success = false, Message = "Please Add Accounting Period" };
+            }
+
+            if(currentPeriod.AccountingPeriod.Rowstatus == RowStatus.INACTIVE)
+            {
+                return new ResponseMessage { Success = false, Message = "This Accounting Period has passed please contact your Administrator" };
             }
          
 
@@ -39,7 +45,8 @@ namespace IntegratedImplementation.Services.Finance.Action
                 return new ResponseMessage { Success = false, Message = "Please correct the Payment Date" };
             }
 
-          
+
+            
 
             Receipt receipt = new Receipt()
             {
@@ -47,6 +54,7 @@ namespace IntegratedImplementation.Services.Finance.Action
                 CreatedById = addReceipt.CreatedById,
                 BankId = addReceipt.BankId,
                 CreatedDate = DateTime.Now,
+                AccountingPeriodId = currentPeriod.Id,
                 Date = addReceipt.Date,
                 ReceiptNumber = addReceipt.ReceiptNumber,
                 ReferenceNumber = addReceipt.ReferenceNumber,
@@ -69,7 +77,18 @@ namespace IntegratedImplementation.Services.Finance.Action
                     ReceiptId = receipt.Id,
                     UnitPrice = items.UnitPrice,
                     Rowstatus = RowStatus.ACTIVE,
+                    ChartOfAccountId = items.ChartOfAccountId,
+                    
+                   
                 };
+                if(items.ItemId != null)
+                {
+                    receiptDetail.ItemId = items.ItemId;
+                }
+                if(items.ProjectId != null)
+                {
+                    receiptDetail.ProjectId = items.ProjectId;
+                }
 
                 await _dbContext.ReceiptDetails.AddAsync(receiptDetail);
                 await _dbContext.SaveChangesAsync();

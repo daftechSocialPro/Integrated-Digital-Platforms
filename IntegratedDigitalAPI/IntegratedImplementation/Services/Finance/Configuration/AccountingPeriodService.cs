@@ -1,4 +1,5 @@
-﻿using Implementation.Helper;
+﻿using FluentEmail.Core;
+using Implementation.Helper;
 using IntegratedImplementation.DTOS.Finance.Configuration;
 using IntegratedImplementation.Helper;
 using IntegratedImplementation.Interfaces.Finance.Configuration;
@@ -39,12 +40,19 @@ namespace IntegratedImplementation.Services.Finance.Configuration
                 startDate = (DateTime) addAccountingPeriod.StartDate;
             }
 
-            var currentPeriod = await _dbContext.AccountingPeriods.AnyAsync(x => x.StartDate >= startDate || x.EndDate <= startDate);
+            var currentPeriod = await _dbContext.AccountingPeriods.AnyAsync(x =>  x.EndDate >= startDate);
             if (currentPeriod)
             {
                 return new ResponseMessage { Success = false, Message = "Accounting Period Already exists" };
             }
 
+            var removeCurrent = await _dbContext.AccountingPeriods.Where(x => x.Rowstatus == RowStatus.ACTIVE).ToListAsync();
+            removeCurrent.ForEach(x =>
+            {
+                x.Rowstatus = RowStatus.INACTIVE;
+            });
+
+            await _dbContext.SaveChangesAsync();
 
 
             ACCOUNTINGPERIODTYPE accountPeriod = Enum.Parse<ACCOUNTINGPERIODTYPE>(addAccountingPeriod.AccountingPeriodType);

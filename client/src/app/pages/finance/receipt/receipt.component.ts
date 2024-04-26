@@ -20,7 +20,6 @@ export class ReceiptComponent implements OnInit{
 
   user!: UserView
   paymentForm!: FormGroup;
-  accountingPeriodDropDown!: SelectList[]
   bankDropDown!: BankSelectList[]
   supplierDropDown!: SelectList[]
   chartOfAccountDropDown!: SelectList[]
@@ -52,7 +51,6 @@ export class ReceiptComponent implements OnInit{
     this.user = this.userService.getCurrentUser()
     this.getBankDropDown()
     this.getChartOfAccountDropDown()
-    this.getAccountingPeriodDropDown()
     this.getSupplierDropDown()
     this.getItems()
     this.getProjects()  
@@ -60,7 +58,6 @@ export class ReceiptComponent implements OnInit{
     this.paymentForm = this.formBuilder.group({
      
       bankId: ['', Validators.required],
-      accountingPeriodId: ['', Validators.required],
       referenceNumber: ['', Validators.required],
       receiptNumber: ['', Validators.required],
       date: ['', Validators.required],
@@ -91,13 +88,7 @@ export class ReceiptComponent implements OnInit{
       }
     })
   }
-  getAccountingPeriodDropDown(){
-    this.dropDownService.getAccountingPeriodDropDown().subscribe({
-      next: (res) => {
-        this.accountingPeriodDropDown = res
-      }
-    })
-  }
+ 
   getChartOfAccountDropDown(){
     this.dropDownService.getChartOfAccountsDropDown().subscribe({
       next: (res) => {
@@ -127,14 +118,24 @@ export class ReceiptComponent implements OnInit{
           this.addPaymentDetailList.itemName = x.name;
         }
       });
+    }
+    if(this.addPaymentDetailList.chartOfAccountId){
       this.chartOfAccountDropDown.some(x => {
         if (x.id == this.addPaymentDetailList.chartOfAccountId) {
           this.addPaymentDetailList.chartOfAccountName = x.name;
         }
       });
+    }
+    if(this.addPaymentDetailList.projectId){
+      this.projectlist.some(x => {
+        if (x.id == this.addPaymentDetailList.projectId) {
+          this.addPaymentDetailList.projectName = x.name;
+        }
+      });
+    }
 
       this.paymentDetailList.unshift(this.addPaymentDetailList);
-    }
+    
     //this.items = "";
     this.addPaymentDetailList = new AddReceiptDetailDto();
   }
@@ -144,7 +145,6 @@ export class ReceiptComponent implements OnInit{
     }
     else{
       const addPaymentData: AddReceiptDto ={
-        accountingPeriodId: this.paymentForm.value.accountingPeriodId,
         bankId: this.paymentForm.value.bankId,
         referenceNumber: this.paymentForm.value.referenceNumber,
         receiptNumber: this.paymentForm.value.receiptNumber,
@@ -161,7 +161,7 @@ export class ReceiptComponent implements OnInit{
             this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Request Created', life: 3000 });
             this.paymentDetailList = [];
             this.addPaymentDetailList = new AddReceiptDetailDto();
-            this.goToPayments()
+         //   this.goToPayments()
           }
           else {
             this.messageService.add({ severity: 'error', summary: 'Error', detail: res.message, life: 3000 });

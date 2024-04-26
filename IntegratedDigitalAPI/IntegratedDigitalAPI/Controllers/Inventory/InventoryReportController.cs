@@ -27,12 +27,11 @@ namespace IntegratedDigitalAPI.Controllers.Inventory
         /// 
         /// </summary>
         /// <returns></returns>
-        [HttpPost]
-        [ProducesResponseType(typeof(File), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetBalanceReport(BalanceReportDto balanceReport)
+        [HttpGet]
+        [ProducesResponseType(typeof(BalanceTempData), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetBalanceReport()
         {
-            var report = await _inventoryReports.GetBalanceReport(balanceReport);
-            return File(report, "application/pdf");
+            return Ok(await _inventoryReports.GetBalanceReport());
         }
 
 

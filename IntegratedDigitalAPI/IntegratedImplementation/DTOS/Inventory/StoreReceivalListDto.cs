@@ -78,6 +78,7 @@ namespace IntegratedImplementation.DTOS.Inventory
         public string ProductDetailName { get; set; } = null!;
         public string TagNumber { get; set; } = null!;
         public string? SerialNumber { get; set; } = null!;
+        public string Status { get; set; } = null!;
     }
 
 

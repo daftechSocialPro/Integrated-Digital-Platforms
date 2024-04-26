@@ -234,7 +234,8 @@ namespace IntegratedImplementation.Services.Inventory
                             Id = x.Id.ToString(),
                             ProductDetailName = x.ProductTag.Product.ItemDetailName,
                             SerialNumber = x.ProductTag.SerialNumber,
-                            TagNumber = x.ProductTag.TagNumber
+                            TagNumber = x.ProductTag.TagNumber,
+                            Status = x.UsedItemStatus.ToString(),
                         }).ToListAsync();
             }
 

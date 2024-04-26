@@ -151,8 +151,7 @@
                               class="bi bi-chevron-down ms-auto"></i>
                   </a>
                   <ul id="inventory-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                        <li *ngIf="roleMatch(['STORE'])"> <a routerLink="/inventory/dashboard"
-                                    routerLinkActive="active">
+                        <li *ngIf="roleMatch(['STORE'])"> <a routerLink="/inventory/dashboard" routerLinkActive="active">
                                     <i class="bi bi-circle"></i><span>Dashboard</span> </a></li>
                         <li *ngIf="roleMatch(['STORE-CONFIGURATION'])"> <a routerLink="/inventory/inventorysetting"
                                     routerLinkActive="active">
@@ -163,31 +162,35 @@
                         <li *ngIf="roleMatch(['PURCHASE-APPROVER'])"> <a routerLink="/inventory/approvePurchaseRequest"
                                     routerLinkActive="active">
                                     <i class="bi bi-circle"></i><span>Approve Purchase Request</span> </a></li>
-                        <li *ngIf="roleMatch(['PURCHASE-APPROVER'])"> <a
-                                    routerLink="/inventory/approvedPurchaseRequests" routerLinkActive="active">
+                        <li *ngIf="roleMatch(['PURCHASE-APPROVER'])"> <a routerLink="/inventory/approvedPurchaseRequests"
+                                    routerLinkActive="active">
                                     <i class="bi bi-circle"></i><span>Approved Purchase Request</span> </a></li>
-                        <li *ngIf="roleMatch(['STORE'])"> <a routerLink="/inventory/goodsRecivingNote"
-                                    routerLinkActive="active">
+                        <li *ngIf="roleMatch(['STORE'])"> <a routerLink="/inventory/goodsRecivingNote" routerLinkActive="active">
                                     <i class="bi bi-circle"></i><span>Goods Receiving Note</span> </a></li>
-
-                        <li *ngIf="roleMatch(['STORE'])"> <a routerLink="/inventory/items-tag-number"
-                                    routerLinkActive="active">
+                  
+                        <li *ngIf="roleMatch(['STORE'])"> <a routerLink="/inventory/items-tag-number" routerLinkActive="active">
                                     <i class="bi bi-circle"></i><span>Items Tag Number</span> </a></li>
-
-
-                        <li *ngIf="roleMatch(['STORE-REQUESTER'])"> <a routerLink="/inventory/storeRequest"
-                                    routerLinkActive="active">
+                  
+                  
+                        <li *ngIf="roleMatch(['STORE-REQUESTER'])"> <a routerLink="/inventory/storeRequest" routerLinkActive="active">
                                     <i class="bi bi-circle"></i><span>Store Request</span> </a></li>
-                        <li *ngIf="roleMatch(['STORE-REQUEST-APPROVER'])"> <a
-                                    routerLink="/inventory/approveStoreRequest" routerLinkActive="active">
-                                    <i class="bi bi-circle"></i><span>Approve Store Request</span> </a></li>
-                        <li *ngIf="roleMatch(['STORE'])"> <a routerLink="/inventory/issueItems"
+                        <li *ngIf="roleMatch(['STORE-REQUEST-APPROVER'])"> <a routerLink="/inventory/approveStoreRequest"
                                     routerLinkActive="active">
+                                    <i class="bi bi-circle"></i><span>Approve Store Request</span> </a></li>
+                        <li *ngIf="roleMatch(['STORE'])"> <a routerLink="/inventory/issueItems" routerLinkActive="active">
                                     <i class="bi bi-circle"></i><span>Issue Items</span> </a></li>
                         <li> <a routerLink="/inventory/receivedItems" routerLinkActive="active">
                                     <i class="bi bi-circle"></i><span>Recived Items</span> </a></li>
+                  
+                        <li class="nav-heading" *ngIf="roleMatch(['STORE'])">Reports</li>
+
+                        <li> <a routerLink="/inventory/balanceReport" routerLinkActive="active">
+                              <i class="bi bi-circle"></i><span>Balance Report</span> </a></li>
+            
                   </ul>
             </li>
+
+
             <li class="nav-item">
                   <a class="nav-link collapsed" data-bs-target="#finance-nav" data-bs-toggle="collapse" href="#"> <i
                               class="bi bi-menu-button-wide"></i><span>Finance</span><i

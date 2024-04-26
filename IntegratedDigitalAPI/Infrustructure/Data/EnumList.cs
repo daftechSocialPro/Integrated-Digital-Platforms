@@ -393,6 +393,13 @@ namespace IntegratedInfrustructure.Data
             CASH
         }
 
+        public enum TypeOfPayee
+        {
+            SUPPLIER,
+            EMPLOYEE,
+            OTHER
+        }
+
         public enum GeneralPSett
         {
             PENSIONEMPLOYEE,

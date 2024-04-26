@@ -29,8 +29,12 @@ namespace IntegratedInfrustructure.Model.FInance.Actions
         public string PaymentNumber { get; set; } = null!;
         public Guid? BankId { get; set; }
         public virtual BankList Bank { get; set; } = null!;
-        public Guid SupplierId { get; set; }
+        public TypeOfPayee TypeOfPayee { get; set; }
+        public Guid? SupplierId { get; set; }
         public virtual Vendor Supplier { get; set; } = null!;
+        public Guid? EmployeeId { get; set; }
+        public virtual EmployeeList Employee { get; set; } = null!;
+        public string? OtherBeneficiary { get; set; }
         public string? DocumentPath { get; set; }
         public Guid? ApprovedById { get;set ; }
         public virtual EmployeeList ApprovedBy { get; set; } = null!;

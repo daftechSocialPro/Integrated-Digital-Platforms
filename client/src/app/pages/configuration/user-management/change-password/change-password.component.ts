@@ -12,7 +12,9 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class ChangePasswordComponent implements OnInit{
  
- @Input() user !: UserList
+ @Input() user !: UserList;
+ @Input() isReset: boolean;
+
  passwordForm!: FormGroup
  constructor (
   private activeModal:NgbActiveModal,
@@ -58,12 +60,14 @@ export class ChangePasswordComponent implements OnInit{
   }
 
   submit2() {
-    if (this.passwordForm.valid) {
+    debugger;
+    if (this.passwordForm.valid || this.isReset) {
 
       var formData: ChangePasswordModel = {
         UserId: this.user.id,
-        CurrentPassword: this.passwordForm.value.OldPassowrd,
-        NewPassword: this.passwordForm.value.NewPassword
+        CurrentPassword: this.isReset ? "none" :this.passwordForm.value.OldPassowrd,
+        NewPassword: this.passwordForm.value.NewPassword,
+        isReset:  this.isReset
       }
       this.userService.changePassword(formData).subscribe({
         next: (res) => {
