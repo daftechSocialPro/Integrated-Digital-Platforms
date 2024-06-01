@@ -18,6 +18,7 @@ import { IncomeTaxReportGetDto, PayrollReportGetDto, PensionReportGetDto } from 
 import { ViewProgressDto } from '../pages/project-managment/view-activties/activityview';
 import { AddReceiptDto } from '../model/Finance/IReceiptModel';
 import { AccountReconsilationFindDto, AccountToBeReconsiledDto, AddAccountReconsilationDto } from '../model/Finance/IAccountReconsilationDto';
+import { AddClientDto, ClientsListDto } from '../model/Finance/IFinanceSettingDto';
 
 @Injectable({
   providedIn: 'root'
@@ -204,6 +205,20 @@ export class FinanceService {
 //recipet 
 addRecipet(paymentData: AddReceiptDto, ){
   return this.http.post<ResponseMessage>(this.BaseURI + "/Receipt/AddReceipt",paymentData)
+}
+
+//ClientLists
+    
+addClient(addClient: AddClientDto) {
+  return this.http.post<ResponseMessage>(this.BaseURI + "/Client/AddClient", addClient)
+}
+
+updateClient(updateClient: AddClientDto) {
+  return this.http.put<ResponseMessage>(this.BaseURI + "/Client/UpdateClient", updateClient)
+}
+
+getclientList() {
+  return this.http.get<ClientsListDto[]>(this.BaseURI + "/Client/GetClientList")
 }
 
 }

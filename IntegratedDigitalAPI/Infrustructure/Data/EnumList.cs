@@ -419,5 +419,11 @@ namespace IntegratedInfrustructure.Data
             POSITION
         }
 
+        public enum TypeOfCustomer
+        {
+            Individual,
+            Organization
+        }
+
     }
 }

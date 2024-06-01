@@ -60,6 +60,8 @@ import { PayrollReportComponent } from './finance-report/payroll-report/payroll-
 import { NumberToWordPipe } from './finance-report/payroll-report/numberToWord.pipe';
 import { ActivityProgressApproverComponent } from './activity-progress-approver/activity-progress-approver.component';
 import { ReceiptComponent } from './receipt/receipt.component';
+import { ClientListComponent } from './finance-configuration/client-list/client-list.component';
+import { AddClientComponent } from './finance-configuration/client-list/add-client/add-client.component';
 // import { PensionDeclarationComponent } from './pension-declaration/pension-declaration.component';
 
 
@@ -107,6 +109,8 @@ import { ReceiptComponent } from './receipt/receipt.component';
     NumberToWordPipe,
     ActivityProgressApproverComponent,
     ReceiptComponent,
+    ClientListComponent,
+    AddClientComponent,
     
 
   ],
