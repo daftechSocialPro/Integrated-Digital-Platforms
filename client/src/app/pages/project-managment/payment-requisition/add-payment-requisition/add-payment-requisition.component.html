@@ -1,0 +1,110 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Add Payment Requisition</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Payment Requisition Detail</h5>
+            <form class="" [formGroup]="paymentRequisitionForm" (ngSubmit)="submit()">
+                <div class="modal-body">
+
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <input type="date" class="form-control" id="Name" placeholder="date"
+                                    formControlName="date">
+                                <label for="date">Date</label>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="name" placeholder="name"
+                                    formControlName="name">
+                                <label for="name">Please Prepare Cheque/Draft in the name of </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mt-2">
+                        <div class="col-md-12">
+                            <div class="form-floating">
+                                <textarea class="form-control" id="purposeOfRequest" formControlName="purposeOfRequest">
+
+                                </textarea>
+
+                                <label for="purposeOfRequest">Purpose of Request</label>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row g-3 mt-2">
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="amountInWord" placeholder="amountInWord"
+                                    formControlName="amountInWord">
+                                <label for="amountInWord">Amount In Word</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <input type="number" class="form-control" id="description" placeholder="amount"
+                                    formControlName="amount">
+                                <label for="amount">Amount</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <select class="form-control" id="projectId" formControlName="projectId">
+                                    <option *ngFor="let item of projectDropdowns" [value]="item.id">
+                                        {{item.name}}
+                                    </option>
+
+                                </select>
+
+                                <label for="projectId">Project</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mt-2">
+                        <div class="col-md-5">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="budgetReference"
+                                    placeholder="budgetReference" formControlName="budgetReference">
+                                <label for="date">Budget Reference</label>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-floating">
+                                <input type="number" class="form-control" id="pageNumber" placeholder="pageNumber"
+                                    formControlName="pageNumber">
+                                <label for="pageNumber">Page Number</label>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="checkNumber" placeholder="checkNumber"
+                                    formControlName="checkNumber">
+                                <label for="checkNumber">Check Number</label>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+                <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
+                        (click)="closeModal()">Close</button>
+                    <button type="button" type="submit" [disabled]="!paymentRequisitionForm.valid"
+                        class="btn btn-outline-primary">Save
+                        changes</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+</div>

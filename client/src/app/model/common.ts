@@ -83,7 +83,9 @@ export class ItemDropDownDto {
     name: string;
     measurementType: number;
     isExpirable: number;
+    isAsset: boolean;
 }
+
 export interface TerminatedEmployeeReplacmentDto
 {
     activity:SelectList,

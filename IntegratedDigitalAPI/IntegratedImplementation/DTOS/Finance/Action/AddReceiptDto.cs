@@ -22,11 +22,11 @@ namespace IntegratedImplementation.DTOS.Finance.Action
     public class AddReceiptDetailDto
     {
         public Guid? ItemId { get; set; }
+        public Guid ChartOfAccountId { get; set; }
         public string Description { get; set; } = null!;
         public double UnitPrice { get; set; }
         public double Quantity { get; set; }
         public bool IsTaxable { get; set; }
         public Guid? ProjectId { get; set; }
-        public virtual Project Project { get; set; } = null!;
     }
 }

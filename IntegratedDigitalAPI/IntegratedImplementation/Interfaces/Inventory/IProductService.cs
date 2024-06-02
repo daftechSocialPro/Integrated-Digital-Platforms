@@ -11,10 +11,14 @@ namespace IntegratedImplementation.Interfaces.Inventory
     public interface IProductService
     {
         Task<List<ProductListDto>> GetProductList();
+        Task<List<TagNumberListDto>> GetTagNumberLists();
         Task<List<AdjustmentDetailDto>> GetAdjustmentDetail();
         Task<ResponseMessage> AdjustProducts(SaveAdjustmentDto saveAdjustmentDetails);
         Task<ResponseMessage> AddProduct(AddProductDto addProduct);
         Task<ResponseMessage> UpdateProduct(UpdateProductDto updateProduct);
         Task<UpdateProductDto> GetProductDetail(string productId);
+
+        Task<ResponseMessage> AddProductTag(AddProductTagsDto addProductTags);
+        Task<ResponseMessage> PrintTagNumbers(List<Guid> tagNumberId);
     }
 }

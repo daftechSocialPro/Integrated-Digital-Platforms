@@ -71,7 +71,8 @@ namespace IntegratedInfrustructure.Data
             STOREREQUEST,
             STOREITEMS,
             VENDOR,
-            PURCHASEITEMS
+            PURCHASEITEMS,
+            TAGNUMBER
         }
 
         public enum ApplicantStatus
@@ -301,7 +302,8 @@ namespace IntegratedInfrustructure.Data
 
         public enum ProductStatus
         {
-            GOODcONDITION,
+            GOODCONDITION,
+            GIVEN,
             LOST,
             DAMAGED,
             MAINTENANCE,
@@ -312,10 +314,8 @@ namespace IntegratedInfrustructure.Data
 
         public enum UsedItemsStatus
         {
-            USED,
-            SOLD,
+            GIVEN,
             LOST,
-            BROKEEN,
             DAMAGED,
             MAINTAINABLE,
             RETURNED
@@ -393,6 +393,13 @@ namespace IntegratedInfrustructure.Data
             CASH
         }
 
+        public enum TypeOfPayee
+        {
+            SUPPLIER,
+            EMPLOYEE,
+            OTHER
+        }
+
         public enum GeneralPSett
         {
             PENSIONEMPLOYEE,
@@ -410,6 +417,12 @@ namespace IntegratedInfrustructure.Data
             TRANSPORT_FUEL,
             COMMUNICATION,
             POSITION
+        }
+
+        public enum TypeOfCustomer
+        {
+            Individual,
+            Organization
         }
 
     }

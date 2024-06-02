@@ -22,11 +22,26 @@ namespace IntegratedDigitalAPI.Controllers.Finance.Action
 
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> AddPayments([FromBody] AddReceiptDto addReceipt)
+        public async Task<IActionResult> AddReceipt([FromBody] AddReceiptDto addReceipt)
         {
             if (ModelState.IsValid)
             {
                 return Ok(await _receiptService.AddReceipt(addReceipt));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+
+        [HttpGet]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> ViewProgress(Guid employeeId)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _receiptService.GetFinanceProgress(employeeId));
             }
             else
             {

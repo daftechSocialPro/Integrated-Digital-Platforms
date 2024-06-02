@@ -246,7 +246,7 @@ namespace IntegratedImplementation.Services.Configuration
             return await _dbContext.BankLists.Select(x => new BankSelectList
                          {
                             Id = x.Id,
-                            Name = x.BankName,
+                            Name = $"{x.BankName} ({x.AccountNumber})",
                             BankDigit = x.BankDigitNumber  
                          }).ToListAsync();
         }
@@ -342,26 +342,28 @@ namespace IntegratedImplementation.Services.Configuration
 
         public async Task<List<ItemDropDownDto>> GetItemDropDown()
         {
-            var items = await _dbContext.Items.AsNoTracking()
+            var items = await _dbContext.Items.Include(x => x.Category).AsNoTracking()
                        .Include(x => x.Category).
                        Select(x => new ItemDropDownDto
                        {
                            Id = x.Id,
-                           isExpirable = x.IsExpirable,
+                           IsExpirable = x.IsExpirable,
                            MeasurementType = (int)x.MeasurementType,
-                           Name = x.Name
+                           Name = x.Name,
+                           IsAsset = x.Category.CategoryType == CategoryType.ASSET ? true: false,
                        }).ToListAsync();
             return items;
         }
 
         public async Task<List<ItemDropDownDto>> GetItemByRequest(string StoreRequestId)
         {
-            var items = await _dbContext.StoreRequestLists.Include(x => x.Item).Include(x => x.StoreRequest).AsNoTracking()
+            var items = await _dbContext.StoreRequestLists.Include(x => x.Item.Category).Include(x => x.StoreRequest).AsNoTracking()
                        .Where(x => x.StoreRequestId == Guid.Parse(StoreRequestId)).
                        Select(x => new ItemDropDownDto
                        {
                            Id = x.ItemId,
-                           isExpirable = x.Item.IsExpirable,
+                           IsExpirable = x.Item.IsExpirable,
+                           IsAsset = x.Item.Category.CategoryType == CategoryType.ASSET ? true : false,
                            MeasurementType = (int)x.Item.MeasurementType,
                            Name = x.Item.Name
                        }).ToListAsync();
@@ -381,10 +383,10 @@ namespace IntegratedImplementation.Services.Configuration
 
         public async Task<List<SelectListDto>> GetAccountingPeriodDropDown()
         {
-
-            var accountingPeriodSelectList = await _dbContext.AccountingPeriods.AsNoTracking().Select(x => new SelectListDto
+            var accountingPeriodSelectList = await _dbContext.PeriodDetails.Include(x => x.AccountingPeriod)
+                .Where(x => x.AccountingPeriod.Rowstatus == RowStatus.ACTIVE).AsNoTracking().OrderBy(x => x.PeriodNo).Select(x => new SelectListDto
             {
-                Name = $"{x.Description} ({x.AccountingPeriodType.ToString()})",
+                Name = $"{x.PeriodNo} ({x.PeriodStart.ToString("dd/MM/yyyy")} - {x.PeriodEnd.ToString("dd/MM/yyyy")})",
                 Id = x.Id,
             }).ToListAsync();
             return accountingPeriodSelectList;

@@ -70,7 +70,9 @@ namespace IntegratedImplementation.Services.Finance.Report
                     TotalDeduction = item.Loan + item.IncomeTax + item.Penalty,
                     TotalEarning = item.TotalEarning,
                     TransportFuelAllowance = item.TransportFuelAllowance,
-                    AccountNumber = EmployeeBanks.Any() ? EmployeeBanks.FirstOrDefault().BankAccountNo : ""
+                    AccountNumber = EmployeeBanks.Any() ? EmployeeBanks.FirstOrDefault().BankAccountNo : "",
+
+                    EmployeeCode=item.Employee.EmployeeCode
                 });
                    
             }

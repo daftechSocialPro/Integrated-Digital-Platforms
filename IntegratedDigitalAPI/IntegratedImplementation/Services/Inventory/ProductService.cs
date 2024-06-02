@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using DocumentFormat.OpenXml.Spreadsheet;
 using Implementation.Helper;
 using IntegratedImplementation.DTOS.Inventory;
 using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedImplementation.Interfaces.Inventory;
 using IntegratedInfrustructure.Data;
+using IntegratedInfrustructure.Model.Inventory;
 using IntegratedInfrustructure.Models.Inventory;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -15,6 +17,16 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using static IntegratedInfrustructure.Data.EnumList;
+using System.Drawing.Imaging;
+using System.Drawing;
+using IronBarCode;
+using System.IO;
+using DocumentFormat.OpenXml.Office2010.Excel;
+using Microsoft.AspNetCore.Http.Internal;
+using Microsoft.AspNetCore.Http;
+using IntegratedImplementation.Helper;
+using DocumentFormat.OpenXml.Wordprocessing;
+
 
 namespace IntegratedImplementation.Services.Inventory
 {
@@ -57,6 +69,8 @@ namespace IntegratedImplementation.Services.Inventory
                 Cartoon = addProduct.Cartoon,
                 Packet = addProduct.Packet,
                 RemainingQuantity = addProduct.Quantity * addProduct.Cartoon * addProduct.Packet,
+                EmployeeId = addProduct.EmployeeId,
+                SourceOfProduct = addProduct.SourceOfProduct,
             };
             if (!String.IsNullOrEmpty(addProduct.PurchaseRequestId))
             {
@@ -107,6 +121,8 @@ namespace IntegratedImplementation.Services.Inventory
             currentProduct.Cartoon = updateProduct.Cartoon;
             currentProduct.Packet = updateProduct.Packet;
             currentProduct.RemainingQuantity = updateProduct.Quantity * updateProduct.Cartoon * updateProduct.Packet;
+            currentProduct.EmployeeId = updateProduct.EmployeeId;
+            currentProduct.SourceOfProduct = updateProduct.SourceOfProduct;
 
             if (!String.IsNullOrEmpty(updateProduct.PurchaseRequestId))
             {
@@ -200,6 +216,76 @@ namespace IntegratedImplementation.Services.Inventory
                                .ProjectTo<ProductListDto>
                                (_mapper.ConfigurationProvider).ToListAsync();
             return items;
+        }
+
+        public async Task<ResponseMessage> AddProductTag(AddProductTagsDto addProductTags)
+        {
+           
+
+            for(int i = 0; i< addProductTags.TotalQuantity; i++)
+            {
+                
+                var tagNumber = _generalConfig.GenerateCode(GeneralCodeType.TAGNUMBER).Result;
+                var barcodeContent = tagNumber;
+                var path = Path.Combine("wwwroot", $"Products/{barcodeContent}");
+
+                var barCodePath = _generalConfig.GenerateBarcodeAsFormFileAsync(path, barcodeContent);
+
+                
+                ProductTag product = new ProductTag()
+                {
+                    Id = Guid.NewGuid(),
+                    CreatedById = addProductTags.CreatedById,
+                    CreatedDate = DateTime.Now,
+                    ProductId = addProductTags.ProductId,
+                    ProductStatus = ProductStatus.GOODCONDITION,
+                    TagNumber = tagNumber,
+                    BarCodePath = barCodePath,
+                    Printed = false,
+                    Rowstatus = RowStatus.ACTIVE,
+                };
+
+                if (addProductTags.SerialNumber != null)
+                {
+                    product.SerialNumber = addProductTags.SerialNumber[i];
+                }
+
+                await _dbContext.ProductTags.AddAsync(product);
+                await _dbContext.SaveChangesAsync();
+            }
+
+            return new ResponseMessage { Success = true, Message = "Added succesfully" };
+        }
+
+        public async Task<List<TagNumberListDto>> GetTagNumberLists()
+        {
+            var currentTags = await _dbContext.ProductTags.Where(X => !X.Printed).Include(x => x.Product.Item)
+                                    .AsNoTracking().Select(x => new TagNumberListDto
+                                    {
+                                        Id = x.Id,
+                                        BarCodePath = x.BarCodePath,
+                                        ItemName = x.Product.Item.Name,
+                                        ProductDetailName = x.Product.ItemDetailName,
+                                        SerialNumber = x.SerialNumber,
+                                        TagNumber = x.TagNumber
+                                    }) .ToListAsync();
+
+            return currentTags;
+        }
+
+        public async Task<ResponseMessage> PrintTagNumbers(List<Guid> tagNumberId)
+        {
+            foreach(var item in tagNumberId)
+            {
+                var currentId = await _dbContext.ProductTags.FirstOrDefaultAsync(x => x.Id == item);
+
+                if(currentId != null) 
+                {
+                    currentId.Printed = true;
+                }
+            }
+
+            return new ResponseMessage { Success = true, Message = "PrintedSuccesfully" };
         }
     }
 }

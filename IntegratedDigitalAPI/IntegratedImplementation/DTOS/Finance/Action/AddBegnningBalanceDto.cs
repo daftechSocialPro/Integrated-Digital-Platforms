@@ -32,6 +32,7 @@ namespace IntegratedImplementation.DTOS.Finance.Action
         public string Description { get; set; } = null!;
         public string Type { get; set; } = null!;
         public double Ammount { get; set; }
+        public string? Remark { get; set; }
 
     }
 

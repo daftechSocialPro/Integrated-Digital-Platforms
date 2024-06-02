@@ -78,4 +78,14 @@ export class IncomeTaxReportComponent implements OnInit {
       FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
   }
 
+  print(){
+    
+    let printContents: any;
+    printContents = document.getElementById('contractLetter')?.innerHTML;
+    const originalContents = document.body.innerHTML;
+    document.body.innerHTML = printContents;
+    window.print();
+    location.reload();
+  }
+
 }

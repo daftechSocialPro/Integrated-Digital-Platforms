@@ -18,9 +18,26 @@
                 <div class="row mb-2">
                     <div class="col-md-3">
                         <div class="form-group">
+                            <label class="col-md-12" htmlFor="projectId">Source of fund</label>
+                            <p-dropdown [options]="sourceOFProduct" [(ngModel)]="addProduct.sourceOfProduct"
+                            optionValue="value" optionLabel="name" placeholder="Product Source"
+                            [showClear]="true" appendTo="body"></p-dropdown>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="col-md-12" htmlFor="employeeId">Employee</label>
+                            <p-dropdown [options]="employeeList" optionLabel="name" optionValue="id"  name="employeeId" 
+                            [(ngModel)]="addProduct.employeeId" placeholder="Select Employee"  [filter]="true" filterBy="name" [showClear]="true">
+                        </p-dropdown>
+                        </div>
+                    </div>
+                    <div class="col-md-3" >
+                        <div class="form-group">
                             <label class="col-md-12" htmlFor="projectId">Project</label>
                             <p-dropdown [options]="projectDropDown" optionLabel="name" optionValue="id"  name="projectId" 
-                                [(ngModel)]="addProduct.projectId" placeholder="Select Project"  [filter]="true" filterBy="name" [showClear]="true"></p-dropdown>
+                                [(ngModel)]="addProduct.projectId" placeholder="Select Project"  [filter]="true" filterBy="name" [showClear]="true">
+                            </p-dropdown>
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -130,7 +147,7 @@
                     <div class="col-md-6 mt-2">
                         <div class="form-group">
                             <label class="col-md-12" htmlFor="description">Description</label>
-                            <textarea class="form-control" rows="5" #description  ></textarea>
+                            <textarea class="form-control" rows="5" name="description" #description   [(ngModel)]="addProduct.description" ></textarea>
                             <!-- <textarea pInputText id="description" type="text" height="120" row="15" cols="10" name="description"
                                 [(ngModel)]="addProduct.description"></textarea> -->
                         </div>
@@ -143,5 +160,86 @@
                 </div>
             </form>
         </div>
+
+        <div class="card-body">
+            <p-table #dt [value]="productViews"  responsiveLayout="scroll" [rows]="10"
+            [globalFilterFields]="['name']" [rows]="10"
+            [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowHover]="true" dataKey="id">
+            <ng-template pTemplate="caption">
+                <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                    <h5 class="m-0">Saved Products</h5>
+                    
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Source</th>
+                    <th>Employee Name </th>
+                    <th>Project </th>
+                    <th>Item Name </th>
+                    <th>Vendor </th>
+                    <th>Toral Price </th>
+                    <th>Total Quantity </th>
+                    <th>Received Date</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item>
+                <tr>
+                    <td>
+                        {{item.projectSource}}
+                    </td>
+                    <td>
+                        {{item.employeeName}}
+                    </td>
+                    <td>
+                        {{item.project}}
+                    </td>
+                    <td>
+                        {{item.itemName}}
+                    </td>
+                    <td>
+                        {{item.vendor}}
+                    </td>
+                    <td>
+                        {{item.totalPrice}}
+                    </td>
+                    <td>
+                        {{item.totalquantity}}
+                    </td>
+                    <td>
+                        {{item.receivedDate | date : 'dd, MMMM, yyy'}}
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table> 
+        </div>
     </div>
+
+    <p-dialog [(visible)]="tagNumberDialog" [style]="{width: '450px'}" header="Generate Tag Number" [modal]="true"
+        class="p-fluid">
+        <ng-template pTemplate="content">
+            <div class="field">
+                <input class="form-check-input" id="serial" name="serial" [(ngModel)]="hasSerial" type="checkbox" (change)="handleCheckboxChange($event.target)" id="hasSerial"  >
+                 <label
+                class="form-check-label" style="font-size: 20px;font-weight: bold;"
+                for="hasSerial">Has Serial Number</label>
+            </div>
+            <div class="row" *ngIf="productTag.serialNumber.length > 0">
+                <label class="col-md-12" htmlFor="ser">Serial Numbers</label>
+                <div *ngFor="let ser of serialList; let i = index " class="col-md-6 mb-2">
+                    <input class="form-control"  [(ngModel)]="productTag.serialNumber[i]" [name]="'seri' + i" [id]="'seri' + i"  type="text" />
+                </div>
+            </div>
+        
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
+                (click)="hideDialog()"></button>
+            <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"
+                (click)="GenerateTagNumber()"></button>
+        </ng-template>
+
+    </p-dialog>
+
 </main>

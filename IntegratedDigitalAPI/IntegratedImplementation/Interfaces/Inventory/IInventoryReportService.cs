@@ -11,6 +11,6 @@ namespace IntegratedImplementation.Interfaces.Inventory
     {
         Task<byte[]> GetStockReport(StockReportDto stockReport);
         Task<byte[]> GetOutReport(StockReportDto stockReport);
-        Task<byte[]> GetBalanceReport(BalanceReportDto balanceReport);
+        Task<List<BalanceTempData>> GetBalanceReport();
     }
 }

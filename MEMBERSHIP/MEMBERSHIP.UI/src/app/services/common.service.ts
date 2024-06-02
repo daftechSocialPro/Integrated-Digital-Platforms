@@ -162,6 +162,31 @@ export class CommonService {
     
     return password;
   }
+
+   generateRandomId(): string {
+    const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    let id = '';
+  
+    const sections = [
+      { length: 4, separator: '-' },
+      { length: 5, separator: '-' },
+      { length: 4, separator: '-' },
+      { length: 3, separator: '-' },
+      { length: 8, separator: '-' },
+      { length: 3, separator: '' }
+    ];
+  
+    for (const section of sections) {
+      for (let i = 0; i < section.length; i++) {
+        id += characters.charAt(Math.floor(Math.random() * characters.length));
+      }
+      id += section.separator;
+    }
+  
+    return id;
+  }
+  
+  
   
 
 

@@ -18,6 +18,20 @@ export class AddProductDto {
     description: string;
     cartoon: number = 1;
     packet: number = 1;
+    sourceOfProduct: number;
+    employeeId: string;
+}
+
+
+export class ViewProductDto{
+    projectSource?: string;
+    employeeName?: string;
+    project?: string;
+    itemName?: string;
+    vendor?: string;
+    totalPrice: number;
+    totalquantity: number;
+    receivedDate: Date;
 }
 
 
@@ -37,4 +51,12 @@ export class ProductListDto {
     rowName: string;
     columnName: string;
     description: string;
+}
+
+
+export class AddProductTagsDto {
+    productId: string;
+    serialNumber: string[] = [];
+    createdById: string;
+    totalQuantity: number;
 }

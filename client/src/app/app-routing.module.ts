@@ -59,13 +59,14 @@ import { PlanVsAchivmentProjectComponent } from './pages/project-managment/progr
 import { PlanDashboardComponent } from './pages/project-managment/plans/plan-dashboard/plan-dashboard.component';
 import { AllTrainingListComponent } from './pages/training/all-training-list/all-training-list.component';
 import { HrmDashboardComponent } from './pages/human-resource/hrm-dashboard/hrm-dashboard.component';
+import { PaymentRequisitionComponent } from './pages/project-managment/payment-requisition/payment-requisition.component';
 
 
 
 
 const routes: Routes = [
-  { path: '', canActivate: [AuthGuard], component: DashboardComponent },
-  { path: 'dashboard', canActivate: [AuthGuard], component: DashboardComponent },
+  { path: '', canActivate: [AuthGuard], component: PlanDashboardComponent },
+  { path: 'dashboard', canActivate: [AuthGuard], component: PlanDashboardComponent },
   { path: 'configuration', canActivate: [AuthGuard], component: ConfigurationComponent, data: { permittedRoles: ['GENERAL-CONFIGURATION'] } },
   { path: 'pm/configuration', canActivate: [AuthGuard], component: PMConfigurationComponent },
   { path: 'pm/strategicPlans', canActivate: [AuthGuard], component: StrategicPlanComponent },
@@ -79,6 +80,10 @@ const routes: Routes = [
   { path: 'pm/planDetail/:planId', canActivate: [AuthGuard], component: PlanDetailComponent },
   { path: 'pm/planDashboard', canActivate: [AuthGuard], component: PlanDashboardComponent },
   { path: 'pm/activityDetail/:actId/:planId', canActivate: [AuthGuard], component: ActivityDetailComponent },
+
+  { path: 'pm/payment-requisition', canActivate: [AuthGuard], component: PaymentRequisitionComponent },
+
+  
 
   //report
 

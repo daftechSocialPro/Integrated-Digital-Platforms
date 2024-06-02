@@ -909,7 +909,7 @@ namespace MembershipImplementation.Services.HRM
                     var formData = new MultipartFormDataContent();
                     formData.Add(new StringContent("json"), "moodlewsrestformat");
                     formData.Add(new StringContent("core_user_update_users"), "wsfunction");
-                    formData.Add(new StringContent("34c8f4f0087149ff6e19312a545ae849"), "wstoken");
+                    formData.Add(new StringContent("a0c0c7896b48813246e45971eaa74c21"), "wstoken");
                     formData.Add(new StringContent(member.MoodleId), "users[0][id]");
                     formData.Add(new StringContent(status), "users[0][suspended]");
 

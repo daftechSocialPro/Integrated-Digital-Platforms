@@ -37,6 +37,8 @@ import { TabViewModule } from 'primeng/tabview';
 import { ApprovedPurchaseRequestsComponent } from './approved-purchase-requests/approved-purchase-requests.component';
 import { InventoryDashboardComponent } from './inventory-dashboard/inventory-dashboard.component';
 import { NgxEchartsModule } from 'ngx-echarts';
+import { TagNumberComponent } from './tag-number/tag-number.component';
+import { BalanceReportComponent } from './balance-report/balance-report.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +62,8 @@ import { NgxEchartsModule } from 'ngx-echarts';
     ReceivedItemsComponent,
     ApprovedPurchaseRequestsComponent,
     InventoryDashboardComponent,
+    TagNumberComponent,
+    BalanceReportComponent,
   ],
   imports: [
     CommonModule,

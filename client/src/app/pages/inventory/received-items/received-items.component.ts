@@ -17,24 +17,25 @@ export class ReceivedItemsComponent implements OnInit {
   adjustReceivedItems: AdjustReceivedITemsDto = new AdjustReceivedITemsDto();
 
   usedItemStatus: any[] = [
-    { value: 0, name: "USED" },
-    { value: 1, name: "SOLD" },
-    { value: 2, name: "LOST" },
-    { value: 3, name: "BROKEEN" },
-    { value: 4, name: "DAMAGED" },
-    { value: 5, name: "MAINTAINABLE" },
-    { value: 6, name: "RETURNED" },
+    { value: 1, name: "LOST" },
+    { value: 2, name: "DAMAGED" },
+    { value: 3, name: "MAINTAINABLE" },
+    { value: 4, name: "RETURNED" }
   ]
   
   constructor(private inventoryService: InventoryService, private messageService: MessageService) { }
 
   ngOnInit() {
-    this.inventoryService.getEmployeeReceivedItems().subscribe({
-      next: (res) => {
-        this.receivedItems = res;
-      }
-    });
+    this.getRecivedItems();
   }
+
+getRecivedItems(){
+  this.inventoryService.getEmployeeReceivedItems().subscribe({
+    next: (res) => {
+      this.receivedItems = res;
+    }
+  });
+}
 
   ConfirmAdjust(id: string) {
     this.adjustReceivedItems.id  = id;
@@ -49,14 +50,10 @@ export class ReceivedItemsComponent implements OnInit {
     this.inventoryService.adjustReceivedItems(this.adjustReceivedItems).subscribe({
       next: (res) => {
         if (res.success) {
-          this.receivedItems.some(x => {
-              if(x.id == res.data){
-                  x.remainingQuantity = x.remainingQuantity - this.adjustReceivedItems.usedQuantity
-              }
-            });
           this.messageService.add({ severity: 'success', summary: 'Success', detail: res.message, life: 3000 });
           this.confirmDialog = false;
           this.adjustReceivedItems = new AdjustReceivedITemsDto();
+          this.getRecivedItems();
         }
         else {
           this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error please check your fields', life: 3000 });

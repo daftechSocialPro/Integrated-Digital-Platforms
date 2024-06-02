@@ -30,7 +30,17 @@ namespace IntegratedImplementation.Services.Finance.Action
             if (alreadyExixts)
             {
 
-                return new ResponseMessage { Success = false, Message = "The balance for this accounting period has been set" };
+               var currentBalance = await _dbContext.BegningBalanceDetails.Include(x => x.BegningBalance).Where(x => x.BegningBalance.AccountingPeriodId == PeriodId)
+                                       .AsNoTracking().Include(x => x.ChartOfAccount.AccountType).Select(x => new ChartOfAccountBegningDto
+                                       {
+                                           Id = x.ChartOfAccountId,
+                                           Ammount = x.Ammount,
+                                           Description = $"{x.ChartOfAccount.AccountNo}-{x.ChartOfAccount.Description}",
+                                           Type = x.ChartOfAccount.AccountType.Normal_Balance.ToString(),
+                                           Remark = x.Remark
+                                       }).ToListAsync();
+
+                return new ResponseMessage { Success = false, Message = "The balance for this accounting period has been set", Data = currentBalance };
             }
 
             var chartsList = await _dbContext.ChartOfAccounts.Include(x => x.AccountType).Select(x => new ChartOfAccountBegningDto

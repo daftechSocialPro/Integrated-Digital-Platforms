@@ -60,24 +60,19 @@ export class UpdateRolesComponent implements OnInit {
     this.userService.getNotAssignedRole(this.employee.id, roleCategory).subscribe({
       next: (res) => {
         this.notAssignedRoles = res
-
-       
       }
     })
 
   }
   getAssignedRole(roleCategory: number) {
-
     this.userService.getAssignedRole(this.employee.id, roleCategory).subscribe({
       next: (res) => {
         this.assignedRole = res
-       
       }
     })
   }
 
   assignRole(roles: any) {
-
     this.userService.assignRole({
       userId: this.employee.id,
       roleName: roles
@@ -85,14 +80,13 @@ export class UpdateRolesComponent implements OnInit {
       next: (res) => {
         if (res.success) {
           this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });
-
           this.onRoleCategorySelected(this.selectedCategory)
 
         }
         else {
           this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: res.message });
         }
-        this.closeModal();
+     //   this.closeModal();
       }
       , error: (err) => {
         this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: err });
@@ -108,12 +102,9 @@ export class UpdateRolesComponent implements OnInit {
     for (let i = 0; i < selectElement.selectedOptions.length; i++) {
       selectedValues.push(selectElement.selectedOptions[i].value);
     }
-
-
     return selectedValues;
   }
   removeRole(roles: any) {
-
     this.userService.revokeRole({
       userId: this.employee.id,
       roleName: roles
@@ -126,7 +117,7 @@ export class UpdateRolesComponent implements OnInit {
         else {
           this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: res.message });
         }
-        this.closeModal();
+      //  this.closeModal();
       }
       , error: (err) => {
         this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: err });

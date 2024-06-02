@@ -31,10 +31,12 @@ th {
 img {
     display: block;
     margin: 0 auto;
-    max-width: 150px;
+    
     margin-bottom: 20px;
 }
-
+.nowrap {
+    white-space: nowrap;
+  }
 @media screen {
     .hidden-on-screen {
       display: none;

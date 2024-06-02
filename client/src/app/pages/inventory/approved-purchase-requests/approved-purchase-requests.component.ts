@@ -75,6 +75,8 @@ export class ApprovedPurchaseRequestsComponent implements OnInit {
 
   hideDialog() {
     this.performaDialog = false;
+    this.winnerDialog = false;
+    this.approvePerforma = new ApprovePerformaDto();
     this.addPerformas = new AddPerformaDto();
   }
 

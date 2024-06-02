@@ -136,6 +136,9 @@ namespace IntegratedInfrustructure.Data
         public DbSet<Tasks> Tasks { get; set; }
 
         public DbSet<ActivityLocation> ActivityLocations { get; set; }  
+
+
+        public DbSet<PaymentRequisition> PaymentRequisitions { get; set; }
         #endregion
 
         #region Training
@@ -168,9 +171,9 @@ namespace IntegratedInfrustructure.Data
         public DbSet<ItemReceival> ItemReceivals { get; set; }
         public DbSet<ItemReceivalDetail> ItemReceivalDetails { get; set; }
         public DbSet<MaintainableItems> MaintainableItems { get; set; }
-        public DbSet<UsedItems> UsedItems { get; set; }
         public DbSet<PerformaDetail> PerformaDetails { get; set; }
         public DbSet<ProductTag> ProductTags { get; set; }
+        public DbSet<ItemRecivalTags> ItemRecivalTags { get; set; }
         #endregion
 
 
@@ -196,6 +199,8 @@ namespace IntegratedInfrustructure.Data
         public DbSet<PurchaseInvoiceDetail> PurchaseInvoiceDetails { get; set; }
         public DbSet<Receipt> Receipts { get; set; }
         public DbSet<ReceiptDetail> ReceiptDetails { get; set; }
+        public DbSet<AccountReconciliation> AccountReconciliations { get; set; }
+        public DbSet<Clients> Clients { get; set; }
 
         #endregion
 

@@ -197,7 +197,8 @@ namespace IntegratedImplementation.Services.Inventory
 
             if(currentRequest.PerformaDetails.Count() < 3 )
             {
-                if(_userManager.IsInRoleAsync(currentUSer, "ED").Result == false || (_userManager.IsInRoleAsync(currentUSer, "DED")).Result == false)
+              
+                if (_userManager.IsInRoleAsync(currentUSer, "ED").Result == false &&  (_userManager.IsInRoleAsync(currentUSer, "DED")).Result == false)
                 {
                     return new ResponseMessage { Success = false, Message = "Since the Performa is less than three items the ED or DED need to approve the request" };
                 }

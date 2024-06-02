@@ -7,13 +7,16 @@ import { ResponseMessage } from '../model/ResponseMessage.Model';
 import { AddVendorDto, VendorListDto } from '../model/Inventory/VendorDto';
 import { AddItemDto, ItemListDto } from '../model/Inventory/ItemDto';
 import { AddPerformaDto, AddPurchaseRequestDto, ApprovePerformaDto, ApprovePurchaseRequestDto, ApprovedPurchaseRequestsDto, PurchaseRequestListDto } from '../model/Inventory/PurchaseRequestDto';
-import { AddProductDto, ProductListDto } from '../model/Inventory/ProductDto';
+import { AddProductDto, AddProductTagsDto, ProductListDto } from '../model/Inventory/ProductDto';
 import { StoreReceivalListDto, StoreRequestIssueDto, ApprovedItemsDto, ReciveTransportableItems, ReceiveItems, EmployeeReceivedITemsDto, AdjustReceivedITemsDto } from '../model/Inventory/StoreReceivalListDto';
 import { AddStoreRequestDto, StoreRequestItems, ApproveStoreRequest, RejectStoreRequest } from '../model/Inventory/StoreRequestDto';
 import { SelectList } from '../model/common';
 import { AdjustmentDetailDto, SaveAdjustmentDto } from '../model/Inventory/AdjustmentDetailDto';
 import { MeasurementUnitDto } from '../model/Inventory/MeasurementUnit.Model';
 import { InventoryDashboardGetDto } from '../model/Inventory/IInventoryDashboardDto';
+import { TagNumberListDto } from '../model/Inventory/ITagNumberListDto';
+import { BalanceReportComponent } from '../pages/inventory/balance-report/balance-report.component';
+import { BalanceTempData } from '../model/Inventory/BalanceReportDto';
 
 @Injectable({
   providedIn: 'root'
@@ -129,6 +132,11 @@ export class InventoryService {
     return this.http.post<ResponseMessage>(this.BaseURI + '/Product/AddProduct', addProduct);
   }
 
+  AddProductTag(addproductTag: AddProductTagsDto){
+    addproductTag.createdById = this.userService.getCurrentUser().userId;
+    return this.http.post<ResponseMessage>(this.BaseURI + '/Product/AddProductTag', addproductTag);
+  }
+
   updateProduct(updateProduct: AddProductDto){
     return this.http.put<ResponseMessage>(this.BaseURI + '/Product/UpdateProduct', updateProduct);
   }
@@ -210,13 +218,22 @@ export class InventoryService {
   //   return this.http.post(this.BaseURI + `/InventoryReport/GetOutReport`, stockReportDto, { responseType: 'blob' });
   // }
 
-  // getBalanceReport(balanceReport: BalanceReport){
-  //   return  this.http.post(this.BaseURI + `/InventoryReport/GetBalanceReport`,balanceReport, { responseType: 'blob' })
-  // }
+  getBalanceReport(){
+    return  this.http.get<BalanceTempData[]>(this.BaseURI + `/InventoryReport/GetBalanceReport`)
+  }
 
   //Dashboard
   getInventoryDashboard(){
     let employeeId = this.userService.getCurrentUser().employeeId;
     return this.http.get<InventoryDashboardGetDto>(this.BaseURI + `/InventoryDashboard?employeeId=${employeeId}`);
   }
+
+
+  getTagNumberLists (){   
+
+    return this.http.get<TagNumberListDto[]>(this.BaseURI + `/Product/GetTagNumberLists`);
+    
+  }
+
+
 }

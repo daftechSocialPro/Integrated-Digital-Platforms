@@ -26,6 +26,13 @@ namespace IntegratedDigitalAPI.Controllers.Inventory
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(TagNumberListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetTagNumberLists()
+        {
+            return Ok(await _productService.GetTagNumberLists());
+        }
+
+        [HttpGet]
         [ProducesResponseType(typeof(AdjustmentDetailDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAdjustmentDetail()
         {
@@ -39,6 +46,35 @@ namespace IntegratedDigitalAPI.Controllers.Inventory
             if (ModelState.IsValid)
             {
                 return Ok(await _productService.AddProduct(productDto));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> AddProductTag(AddProductTagsDto productDto)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _productService.AddProductTag(productDto));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPut]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> PrintTagNumbers(List<Guid> tagNumberId)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _productService.PrintTagNumbers(tagNumberId));
             }
             else
             {

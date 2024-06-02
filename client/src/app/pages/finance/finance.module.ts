@@ -44,7 +44,6 @@ import { ApprovedPaymentsComponent } from './payments/approved-payments/approved
 import { BeginningBalanceComponent } from './beginning-balance/beginning-balance.component';
 import { PurchaseInvoiceComponent } from './purchase-invoice/purchase-invoice.component';
 import { LoanIssuanceComponent } from './loan-issuance/loan-issuance.component';
-import { AddBeginningBalanceComponent } from './beginning-balance/add-beginning-balance/add-beginning-balance.component';
 import { AddPurchaseInvoiceComponent } from './purchase-invoice/add-purchase-invoice/add-purchase-invoice.component';
 import { PendingPurchaseInvoiceComponent } from './purchase-invoice/pending-purchase-invoice/pending-purchase-invoice.component';
 import { ApprovedPurchaseInvoiceComponent } from './purchase-invoice/approved-purchase-invoice/approved-purchase-invoice.component';
@@ -58,7 +57,12 @@ import { PensionReportComponent } from './finance-report/pension-report/pension-
 import { IncomeTaxReportComponent } from './finance-report/income-tax-report/income-tax-report.component';
 import { PensionDeclarationComponent } from './pension-declaration/pension-declaration.component';
 import { PayrollReportComponent } from './finance-report/payroll-report/payroll-report.component';
-
+import { NumberToWordPipe } from './finance-report/payroll-report/numberToWord.pipe';
+import { ActivityProgressApproverComponent } from './activity-progress-approver/activity-progress-approver.component';
+import { ReceiptComponent } from './receipt/receipt.component';
+import { ClientListComponent } from './finance-configuration/client-list/client-list.component';
+import { AddClientComponent } from './finance-configuration/client-list/add-client/add-client.component';
+// import { PensionDeclarationComponent } from './pension-declaration/pension-declaration.component';
 
 
 
@@ -90,14 +94,11 @@ import { PayrollReportComponent } from './finance-report/payroll-report/payroll-
     BeginningBalanceComponent,
     PurchaseInvoiceComponent,
     LoanIssuanceComponent,
-    AddBeginningBalanceComponent,
     AddPurchaseInvoiceComponent,
     PendingPurchaseInvoiceComponent,
     ApprovedPurchaseInvoiceComponent,
     PayLoanComponent,
-
-    IncomeTaxDeclarationComponent,
-  
+    IncomeTaxDeclarationComponent, 
     
     AccountReconcilliationComponent,
     FinanceReportComponent,
@@ -105,6 +106,11 @@ import { PayrollReportComponent } from './finance-report/payroll-report/payroll-
     PensionReportComponent,
     IncomeTaxReportComponent,
     PensionDeclarationComponent,
+    NumberToWordPipe,
+    ActivityProgressApproverComponent,
+    ReceiptComponent,
+    ClientListComponent,
+    AddClientComponent,
     
 
   ],
@@ -130,7 +136,9 @@ import { PayrollReportComponent } from './finance-report/payroll-report/payroll-
     TabViewModule,
     CheckboxModule,
     MultiSelectModule,
-    FileUploadModule
+    FileUploadModule,
+  
+
 
   ]
 })
