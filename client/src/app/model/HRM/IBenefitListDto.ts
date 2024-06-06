@@ -3,7 +3,7 @@ export interface BenefitListDto
     id: string;
     name: string;
     amharicName: string;
-    taxable: boolean;
+    taxableAmount: number;
     addOnContract: boolean;
 }
 
@@ -13,7 +13,7 @@ export interface AddBenefitListDto
     createdById: string;
     name: string;
     amharicName: string;
-    taxable: boolean;
+    taxableAmount: number;
     addOnContract: boolean;
 }
 

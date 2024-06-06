@@ -18,7 +18,7 @@ import { DOCUMENT } from '@angular/common';
   templateUrl: './add-payments.component.html',
   styleUrls: ['./add-payments.component.css']
 })
-export class AddPaymentsComponent implements OnInit{
+export class AddPaymentsComponent implements OnInit {
 
   user!: UserView
   paymentForm!: FormGroup;
@@ -27,10 +27,17 @@ export class AddPaymentsComponent implements OnInit{
   supplierDropDown!: SelectList[]
   chartOfAccountDropDown!: SelectList[]
   itemsDropDown!: ItemDropDownDto[];
+  employeeDropDown!: SelectList[];
   paymentTypeList = [
-    {name:"Transfer",value:"TRANSFER"},
-    {name:"Check",value:"CHECK"},
-    {name:"Cash",value:"CASH"},
+    { name: "Transfer", value: "TRANSFER" },
+    { name: "Check", value: "CHECK" },
+    { name: "Cash", value: "CASH" },
+  ]
+
+  typeOfPayee = [
+    { name: "Supplier", value: 0 },
+    { name: "Employee", value: 1 },
+    { name: "Other", value: 2 },
   ]
   paymentDetailList: AddPaymentDetailDto[] = [];
   addPaymentDetailList: AddPaymentDetailDto = new AddPaymentDetailDto();
@@ -40,63 +47,70 @@ export class AddPaymentsComponent implements OnInit{
     @Inject(DOCUMENT) private document: Document,
     private formBuilder: FormBuilder,
     private financeService: FinanceService,
-    private routerService : Router,
+    private routerService: Router,
     private userService: UserService,
     private messageService: MessageService,
     private dropDownService: DropDownService
-  ){}
+  ) { }
 
   ngOnInit(): void {
 
     this.document.body.classList.toggle('toggle-sidebar');
-    this.user = this.userService.getCurrentUser()
-    this.getBankDropDown()
-    this.getChartOfAccountDropDown()
-    this.getAccountingPeriodDropDown()
-    this.getSupplierDropDown()
-    this.getItems()
+    this.user = this.userService.getCurrentUser();
+    this.getBankDropDown();
+    this.getChartOfAccountDropDown();
+    this.getAccountingPeriodDropDown();
+    this.getSupplierDropDown();
+    this.getItems();
+    this.getEmployees();
+
 
     this.paymentForm = this.formBuilder.group({
-      accountingPeriodId:['',Validators.required],
-      paymentDate:[null,Validators.required],
-      paymentType:['',Validators.required],
-      paymentNumber:[''],
-      bankId:['',Validators.required],
-      supplierId:['',Validators.required],
-      remark:[''],
+      paymentDate: [null, Validators.required],
+      paymentType: ['', Validators.required],
+      paymentNumber: [''],
+      bankId: ['', Validators.required],
+      supplierId: [''],
+      employeeId: [''],
+      otherBeneficiary: [''],
+      typeOfPayee: ['', Validators.required],
+      remark: [''],
       // addPaymentDetails: this.formBuilder.array([this.createPaymentItem()])
     })
 
-   
+
   }
 
- 
-
-
-
- 
-  getItems(){
-    this.dropDownService.getItemsDropDown().subscribe({
+  getEmployees() {
+    this.dropDownService.GetEmployeeDropDown().subscribe({
       next: (res) => {
-          this.itemsDropDown = res;
+        this.employeeDropDown = res;
       }
     });
   }
-  getBankDropDown(){
+
+  getItems() {
+    this.dropDownService.getItemsDropDown().subscribe({
+      next: (res) => {
+        this.itemsDropDown = res;
+      }
+    });
+  }
+  getBankDropDown() {
     this.dropDownService.getBankDropDowns().subscribe({
       next: (res) => {
         this.bankDropDown = res
       }
     })
   }
-  getAccountingPeriodDropDown(){
+  getAccountingPeriodDropDown() {
     this.dropDownService.getAccountingPeriodDropDown().subscribe({
       next: (res) => {
         this.accountingPeriodDropDown = res
       }
     })
   }
-  getChartOfAccountDropDown(){
+  getChartOfAccountDropDown() {
     this.dropDownService.getChartOfAccountsDropDown().subscribe({
       next: (res) => {
         this.chartOfAccountDropDown = res
@@ -104,7 +118,7 @@ export class AddPaymentsComponent implements OnInit{
     })
   }
 
-  getSupplierDropDown(){
+  getSupplierDropDown() {
     this.dropDownService.getVendorDropDown().subscribe({
       next: (res) => {
         this.supplierDropDown = res
@@ -119,7 +133,7 @@ export class AddPaymentsComponent implements OnInit{
 
   newRow() {
     if (this.addPaymentDetailList.itemId) {
-      
+
       this.itemsDropDown.some(x => {
         if (x.id == this.addPaymentDetailList.itemId) {
           this.addPaymentDetailList.itemName = x.name;
@@ -136,56 +150,58 @@ export class AddPaymentsComponent implements OnInit{
     //this.items = "";
     this.addPaymentDetailList = new AddPaymentDetailDto();
   }
-  submit(){
-    if(this.paymentDetailList.length <= 0){
+  submit() {
+    if (this.paymentDetailList.length <= 0) {
       this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Please add atleast one payment detail', life: 3000 });
     }
-    else{
-      const addPaymentData: PaymentPostDto ={
-        accountingPeriodId: this.paymentForm.value.accountingPeriodId,
+    else {
+      const addPaymentData: PaymentPostDto = {
         paymentDate: this.paymentForm.value.paymentDate,
         paymentType: this.paymentForm.value.paymentType,
         paymentNumber: this.paymentForm.value.paymentNumber,
         bankId: this.paymentForm.value.bankId,
         supplierId: this.paymentForm.value.supplierId,
-        // documentPath: this.uploadedFiles.length > 0 ? this.uploadedFiles[0] : null,
+        typeOfPayee: this.paymentForm.value.typeOfPayee,
         remark: this.paymentForm.value.remark,
-        createdById: this.user.userId
-        
-       } 
-
-
-       const formData = new FormData();
-
-// Append each property of the addPaymentData object to the FormData
-Object.keys(addPaymentData).forEach(key => {
-    formData.append(key, addPaymentData[key]);
-});
-this.paymentDetailList.map(x => x.totalPrice = (x.quantity * x.price)) 
-// addPaymentData.addPaymentDetails = this.paymentDetailList
-// Append documentPath if available
-if (this.uploadedFiles.length > 0) {
-  formData.append('documentPath', this.uploadedFiles[0]);
-}
-
-// Append addPaymentDetails if available
-if (this.paymentDetailList.length > 0) {
-  for (let i = 0; i < this.paymentDetailList.length; i++) {
-    const paymentDetail = this.paymentDetailList[i];
-    for (const key in paymentDetail) {
-      if (paymentDetail.hasOwnProperty(key)) {
-        formData.append(`AddPaymentDetails[${i}].${key}`, paymentDetail[key]);
+        createdById: this.user.userId,
+        addPaymentDetails: this.paymentDetailList,
+        employeeId: this.paymentForm.value.employeeId != null ? this.paymentForm.value.employeeId : "",
+        otherBeneficiary: this.paymentForm.value.otherBeneficiary != null ? this.paymentForm.value.otherBeneficiary : ""
       }
-    }
-  }
-}
-       this.financeService.addPayments(formData).subscribe({
+
+
+      const formData = new FormData();
+
+      // Append each property of the addPaymentData object to the FormData
+      Object.keys(addPaymentData).forEach(key => {
+        formData.append(key, addPaymentData[key]);
+      });
+      this.paymentDetailList.map(x => x.totalPrice = (x.quantity * x.price))
+      // addPaymentData.addPaymentDetails = this.paymentDetailList
+      // Append documentPath if available
+      if (this.uploadedFiles.length > 0) {
+        formData.append('documentPath', this.uploadedFiles[0]);
+      }
+
+      // Append addPaymentDetails if available
+      if (this.paymentDetailList.length > 0) {
+        for (let i = 0; i < this.paymentDetailList.length; i++) {
+          const paymentDetail = this.paymentDetailList[i];
+          for (const key in paymentDetail) {
+            if (paymentDetail.hasOwnProperty(key)) {
+              formData.append(`AddPaymentDetails[${i}].${key}`, paymentDetail[key]);
+            }
+          }
+        }
+      }
+      this.financeService.addPayments(formData).subscribe({
         next: (res) => {
           if (res.success) {
             this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Request Created', life: 3000 });
             this.paymentDetailList = [];
             this.addPaymentDetailList = new AddPaymentDetailDto();
-            this.goToPayments()
+           // this.goToPayments()
+           this.paymentForm.reset();
           }
           else {
             this.messageService.add({ severity: 'error', summary: 'Error', detail: res.message, life: 3000 });
@@ -199,25 +215,25 @@ if (this.paymentDetailList.length > 0) {
   }
   onUpload(event: any) {
     this.uploadedFiles.splice(0, this.uploadedFiles.length);
-    for(let file of event.files) {
-        this.uploadedFiles.push(file);
+    for (let file of event.files) {
+      this.uploadedFiles.push(file);
     }
-  
 
-    this.messageService.add({severity: 'info', summary: 'File Uploaded', detail: ''});
+
+    this.messageService.add({ severity: 'info', summary: 'File Uploaded', detail: '' });
   }
   onRemove() {
-    
-    this.uploadedFiles.splice(0, this.uploadedFiles.length);
-    
 
-    this.messageService.add({severity: 'error', summary: 'File Removed', detail: ''});
+    this.uploadedFiles.splice(0, this.uploadedFiles.length);
+
+
+    this.messageService.add({ severity: 'error', summary: 'File Removed', detail: '' });
   }
   // closeModal() {
   //   this.activeModal.close();
   // }
 
-  goToPayments(){
+  goToPayments() {
 
     this.routerService.navigateByUrl('/finance/payments')
   }

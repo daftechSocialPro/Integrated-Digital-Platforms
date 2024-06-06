@@ -16,6 +16,7 @@ namespace IntegratedImplementation.DTOS.HRM
         public double Amount { get; set; }
         public bool Recursive { get; set; }
         public DateTime? AllowanceEndDate { get; set; }
+        public bool Taxable { get; set; }
     }
 
     public class AddEmployeeBenefitDto

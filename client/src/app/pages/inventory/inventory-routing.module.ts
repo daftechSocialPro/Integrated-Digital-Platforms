@@ -15,6 +15,7 @@ import { ApprovedPurchaseInvoiceComponent } from '../finance/purchase-invoice/ap
 import { ApprovedPurchaseRequestsComponent } from './approved-purchase-requests/approved-purchase-requests.component';
 import { InventoryDashboardComponent } from './inventory-dashboard/inventory-dashboard.component';
 import { TagNumberComponent } from './tag-number/tag-number.component';
+import { BalanceReportComponent } from './balance-report/balance-report.component';
 
 const routes: Routes = [
   { path: 'inventorysetting', canActivate: [AuthGuard], component: InventorySettingComponent },
@@ -30,6 +31,7 @@ const routes: Routes = [
   { path: 'productAdjustment', canActivate: [AuthGuard], component: AdjustItemsComponent },
   { path: 'dashboard', canActivate: [AuthGuard], component: InventoryDashboardComponent },
   { path: 'items-tag-number', canActivate: [AuthGuard], component: TagNumberComponent },
+  { path: 'balanceReport', canActivate: [AuthGuard], component: BalanceReportComponent },
 ];
 
 @NgModule({

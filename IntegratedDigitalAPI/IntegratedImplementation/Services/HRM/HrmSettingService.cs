@@ -115,7 +115,7 @@ namespace IntegratedImplementation.Services.HRM
                                 Id = x.Id,
                                 Name = x.Name,
                                 AmharicName = x.AmharicName,
-                                Taxable = x.Taxable,
+                                TaxableAmount = x.TaxableAmount,
                                 AddOnContract = x.AddOnContract
                           }).ToListAsync();
         }
@@ -134,7 +134,7 @@ namespace IntegratedImplementation.Services.HRM
                 Rowstatus = RowStatus.ACTIVE,
                 Name = addBenefitList.Name,
                 AmharicName = addBenefitList.AmharicName,
-                Taxable = addBenefitList.Taxable,
+                TaxableAmount = addBenefitList.TaxableAmount,
                 AddOnContract = addBenefitList.AddOnContract
             };
 
@@ -156,7 +156,7 @@ namespace IntegratedImplementation.Services.HRM
 
             currentBenefit.Name = updateBenefitList.Name;
             currentBenefit.AmharicName = updateBenefitList.AmharicName;
-            currentBenefit.Taxable = updateBenefitList.Taxable;
+            currentBenefit.TaxableAmount = updateBenefitList.TaxableAmount;
             currentBenefit.AddOnContract = updateBenefitList.AddOnContract;
 
             await _dbContext.SaveChangesAsync();

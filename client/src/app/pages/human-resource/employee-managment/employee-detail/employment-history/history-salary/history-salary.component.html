@@ -14,18 +14,30 @@
                         <div class="modal-body">
                             <div class="row g-3">
 
-
                                 <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" id="projectName" formControlName="projectId" required=""
+                                            aria-label="State">
+    
+                                            <option></option>
+                                            <option *ngFor="let department of projectsSelectList" [value]="department.id">{{
+                                                department.name }}</option>
+                                        </select>
+                                        <label for="projectName">Project</label>
+                                    </div>
+                                </div>
+
+                                <!-- <div class="col-md-6">
                                     <div class="form-floating"> <input type="text" class="form-control" id="projectName"
                                             placeholder="projectName" required formControlName="projectName">
                                         <label for="projectName"> Project Name</label>
                                     </div>
-                                </div>
+                                </div> -->
 
                                 <div class="col-md-6">
-                                    <div class="form-floating"> <input type="number" class="form-control" id="amount"
-                                            placeholder="amount" required formControlName="amount">
-                                        <label for="amount"> Amount</label>
+                                    <div class="form-floating"> <input type="number" class="form-control" id="percentile"
+                                            placeholder="percentile" required formControlName="percentile">
+                                        <label for="percentile"> Percentile</label>
                                     </div>
                                 </div>
 
@@ -57,8 +69,8 @@
                         <tr>
 
                             <td>{{ history.projectName }}</td>
-                            <td>{{ history.amount }}</td>
-                            <td>{{(history.amount/empHistory.salary)*100}} %
+                            <td>{{(history.percentile*empHistory.salary)/100}}</td>
+                            <td>{{history.percentile}}%
 
 
                             <td>
@@ -67,8 +79,8 @@
                                             class="bi bi-three-dots-vertical"></i></a>
                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
 
-           <li><a class="dropdown-item" (click)="updateSalaryHistory(history)"  > <i class="bi bi-pencil"></i>Update</a></li>
-           <li><a class="dropdown-item" (click)="deleteEmployeeHistory(history.id)" ><i class="bi bi-trash"></i>Delete</a></li>
+                                        <li><a class="dropdown-item" (click)="updateSalaryHistory(history)"  > <i class="bi bi-pencil"></i>Update</a></li>
+                                        <li><a class="dropdown-item" (click)="deleteEmployeeHistory(history.id)" ><i class="bi bi-trash"></i>Delete</a></li>
       
                                     </ul>
                                 </div>

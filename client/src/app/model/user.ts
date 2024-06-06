@@ -17,6 +17,7 @@ export interface ChangePasswordModel{
     UserId : string
     CurrentPassword :string
     NewPassword :string
+    isReset: boolean
    }
 
 export interface UserList {

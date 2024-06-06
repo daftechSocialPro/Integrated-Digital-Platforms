@@ -19,18 +19,21 @@
                             data-bs-target="#accountType" type="button" role="tab" aria-controls="accountType"
                             aria-selected="false">Account Type</button></li>
                     <li class="nav-item" role="presentation"> <button class="nav-link" id="lookup-tab" data-bs-toggle="tab"
-                            data-bs-target="#lookup" type="button" role="tab" aria-controls="lookup"
-                            aria-selected="false">Look Up</button></li>
+                            data-bs-target="#lookup" type="button" role="tab" aria-controls="lookup" aria-selected="false">Look
+                            Up</button></li>
                     <li class="nav-item" role="presentation"> <button class="nav-link" id="period-tab" data-bs-toggle="tab"
-                        data-bs-target="#period" type="button" role="tab" aria-controls="period"
-                        aria-selected="false">Accounting Period</button></li>
+                            data-bs-target="#period" type="button" role="tab" aria-controls="period" aria-selected="false">Accounting
+                            Period</button></li>
                     <li class="nav-item" role="presentation"> <button class="nav-link" id="chartofaccount-tab" data-bs-toggle="tab"
-                        data-bs-target="#chartofaccount" type="button" role="tab" aria-controls="chartofaccount"
-                        aria-selected="false">Chart Of Accounts</button></li>
+                            data-bs-target="#chartofaccount" type="button" role="tab" aria-controls="chartofaccount"
+                            aria-selected="false">Chart Of Accounts</button></li>
                     <li class="nav-item" role="presentation"> <button class="nav-link" id="payroll-tab" data-bs-toggle="tab"
-                        data-bs-target="#payroll" type="button" role="tab" aria-controls="payroll"
-                        aria-selected="false">Payroll Settings</button></li>
-                    
+                            data-bs-target="#payroll" type="button" role="tab" aria-controls="payroll" aria-selected="false">Payroll
+                            Settings</button></li>
+                    <li class="nav-item" role="presentation"> <button class="nav-link" id="client-tab" data-bs-toggle="tab"
+                            data-bs-target="#client" type="button" role="tab" aria-controls="client" aria-selected="false">
+                                Client List
+                           </button></li>
                 </ul>
                 <div class="tab-content pt-2" id="myTabContent">
                     <div class="tab-pane fade show active p-2" id="accountType" role="tabpanel" aria-labelledby="accountType-tab">
@@ -47,6 +50,9 @@
                     </div>
                     <div class="tab-pane fade  p-2" id="payroll" role="tabpanel" aria-labelledby="payroll-tab">
                         <app-payroll-setting/>
+                    </div>
+                    <div class="tab-pane fade  p-2" id="client" role="tabpanel" aria-labelledby="client-tab">
+                        <app-client-list/>
                     </div>
                 </div>
             </div>

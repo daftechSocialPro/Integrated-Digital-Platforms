@@ -355,6 +355,22 @@ namespace Implementation.Services.Authentication
                     Success=false,
                     Message = "User not found."};
             }
+            if (model.IsReset)
+            {
+                var loop = await _userManager.RemovePasswordAsync(user);
+                var newResult = await _userManager.AddPasswordAsync(user, model.NewPassword);
+
+                if (!newResult.Succeeded)
+                {
+                    return new ResponseMessage
+                    {
+                        Success = false,
+                        Message = newResult.Errors.ToString()
+                    };
+                }
+
+                return new ResponseMessage { Message = "Password Reseted successfully.", Success = true };
+            }
             var isPasswordCorrect = await _userManager.CheckPasswordAsync(user, model.CurrentPassword);
 
 

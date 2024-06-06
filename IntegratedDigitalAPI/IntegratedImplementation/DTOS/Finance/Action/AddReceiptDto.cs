@@ -12,7 +12,6 @@ namespace IntegratedImplementation.DTOS.Finance.Action
     {
         public string CreatedById { get; set; } = null!;
         public Guid BankId { get; set; }
-        public Guid AccountingPeriodId { get; set; }
         public string ReferenceNumber { get; set; } = null!;
         public string ReceiptNumber { get; set; } = null!;
         public DateTime Date { get; set; }

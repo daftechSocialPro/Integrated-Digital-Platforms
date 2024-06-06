@@ -30,7 +30,7 @@ namespace IntegratedImplementation.Services.Finance.Action
 
         public async Task<ResponseMessage> AddPayments(AddPaymentDto addPayment)
         {
-            var currentPeriod = await _dbContext.PeriodDetails.Include(x => x.AccountingPeriod).FirstOrDefaultAsync(x => x.AccountingPeriod.Rowstatus == RowStatus.ACTIVE && addPayment.AccountingPeriodId == x.Id);
+            var currentPeriod = await _dbContext.PeriodDetails.Include(x => x.AccountingPeriod).FirstOrDefaultAsync(x => x.AccountingPeriod.Rowstatus == RowStatus.ACTIVE && x.PeriodStart.Date <= addPayment.PaymentDate.Date && x.PeriodEnd.Date.Date >= addPayment.PaymentDate.Date);
 
             if(currentPeriod == null) 
             {
@@ -66,8 +66,20 @@ namespace IntegratedImplementation.Services.Finance.Action
                 PaymentType = Enum.Parse<PaymentType>(addPayment.PaymentType),
                 Rowstatus = RowStatus.ACTIVE,
                 Remark = addPayment.Remark,
-                SupplierId = addPayment.SupplierId,
+                TypeOfPayee = addPayment.TypeOfPayee
             };
+            if(addPayment.SupplierId == Guid.Empty)
+            {
+                payment.SupplierId = addPayment.SupplierId;
+            }
+            if (addPayment.EmployeeId == Guid.Empty)
+            {
+                payment.EmployeeId = addPayment.EmployeeId;
+            }
+            if (!string.IsNullOrEmpty(payment.OtherBeneficiary))
+            {
+                payment.OtherBeneficiary = addPayment.OtherBeneficiary;
+            }
 
             await _dbContext.Payments.AddAsync(payment);
             await _dbContext.SaveChangesAsync();

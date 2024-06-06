@@ -25,5 +25,7 @@ namespace Implementation.DTOS.Authentication
 
         [Required]
         public string NewPassword { get; set; }
+
+        public bool IsReset { get; set; }
     }
 }

@@ -18,5 +18,7 @@ namespace IntegratedInfrustructure.Model.FInance.Actions
         public Guid? ApprovedById { get; set; }
         public virtual EmployeeList ApprovedBy { get; set; } = null!;
         public double TotalAmount { get; set; }
+        public Guid? AutorizedById { get; set; }
+        public virtual EmployeeList AutorizedBy { get; set; } = null!;
     }
 }

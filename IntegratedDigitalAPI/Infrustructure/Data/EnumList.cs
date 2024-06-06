@@ -393,6 +393,13 @@ namespace IntegratedInfrustructure.Data
             CASH
         }
 
+        public enum TypeOfPayee
+        {
+            SUPPLIER,
+            EMPLOYEE,
+            OTHER
+        }
+
         public enum GeneralPSett
         {
             PENSIONEMPLOYEE,
@@ -410,6 +417,12 @@ namespace IntegratedInfrustructure.Data
             TRANSPORT_FUEL,
             COMMUNICATION,
             POSITION
+        }
+
+        public enum TypeOfCustomer
+        {
+            Individual,
+            Organization
         }
 
     }

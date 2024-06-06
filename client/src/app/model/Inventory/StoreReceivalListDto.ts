@@ -59,6 +59,7 @@ export class EmployeeRecivedProductsDto
     productDetailName: string;
     tagNumber: string;
     serialNumber: string;
+    status: string;
 }
 
 
@@ -66,7 +67,6 @@ export class AdjustReceivedITemsDto
 {
     id: string;
     createdById: string;
-    usedQuantity: number;
     remark: string;
     usedItemStatus: number;
 }

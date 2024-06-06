@@ -22,15 +22,17 @@ export interface PaymentDetailListDto{
 }
 
 export interface PaymentPostDto{
-    accountingPeriodId: string
     paymentDate: Date
     paymentType: string
     paymentNumber: string
     bankId: string
-    supplierId: string
     documentPath?: any
     remark: string
     createdById: string
+    typeOfPayee: number;
+    supplierId?: string;
+    employeeId?: string;
+    otherBeneficiary?: string;
     addPaymentDetails?: AddPaymentDetailDto[]
 }
 
