@@ -11,33 +11,27 @@
         </nav>
     </div>
     <section class="section">
-        <div class="card p-4">
-
-            <div class="row col-3 mb-3">
-                <label for="accountingPeriod">Accounting Period</label>
-                <select class="form-control" (change)="onAccountinPeriodChange($event.target)">
-                    <option></option>
-                    <option *ngFor="let item of accountingPeriodDropDown" [value]="item.id">{{item.name}}</option>
-                </select>
-            </div>
-
-            <div class="row">
-                <div class="col-md-2">
-                    <label for="totalCredit">Total Credit</label>
-                    <input type="number" class="form-control" id="totalCredit" [(ngModel)]="addBeginningBalanceDetailList.totalCredit" readonly>
-                </div>
-                <div class="col-md-2">
-                    <label for="totalDebit">Total Debit</label>
-                    <input type="number" class="form-control" id="totalDebit" [(ngModel)]="addBeginningBalanceDetailList.totalDebit" readonly>
-                </div>
-                <div class="col-md-4">
-                    <label for="remark">Remark</label>
-                    <textarea class="form-control" placeholder="Remark" [(ngModel)]="addBeginningBalanceDetailList.remark" id="remark" rows="5"></textarea>
-                </div>
-                <div *ngIf = "!exists" class="col-md-2">
-                    <label for="save"></label><br/>
-                    <button type="button" class="btn btn-outline-primary" (click)="addBeginningBalance()"><i class="bi bi-plus me-1"></i>
-                    save</button>
+        <div class="card">
+            <div class="row p-2">
+                <div class="col-lg-12 d-flex align-items-center">
+                    
+                    <div class=" col-md-4 m-3 ">
+                        <span class="p-float-label">
+                            <select class="form-control" #accperiod  (change)="onAccountinPeriodChange(accperiod.value)">
+                                <option></option>
+                                <option *ngFor="let item of accountingPeriodDropDown" [value]="item.id">{{item.name}}</option>
+                            </select>
+                            <label for="accountingPeriod">Accounting Periodd</label>
+                        </span>             
+                    </div>
+                    
+                    <div class="row p-2">
+                        <div class="col-lg-12 text-end ">
+                            <button type="button" class="btn btn-outline-primary" (click)="addBeginningBalance()"><i class="bi bi-plus me-1"></i>
+                                Add Beginning Balance</button>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
 

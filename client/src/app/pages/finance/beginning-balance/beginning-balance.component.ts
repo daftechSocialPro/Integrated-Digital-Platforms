@@ -90,8 +90,13 @@ export class BeginningBalanceComponent implements OnInit {
     const periodId = event.value
     this.addBeginningBalanceDetailList.accountingPeriodId = periodId;
     this.addBeginningBalanceDetailList = new AddBegnningBalanceDto();
-    this.getBeginnigBalanceChart(periodId)
   }
+ 
+  // onAccountinPeriodChange(value: string){
+
+  //   const periodId = value
+  //   this.getBeginnigBalanceChart(periodId)
+  // }
 
   addBeginningBalance() {
     this.addBeginningBalanceDetailList.createdById = this.user.userId;

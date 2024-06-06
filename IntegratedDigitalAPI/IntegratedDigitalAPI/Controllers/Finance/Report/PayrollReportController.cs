@@ -1,4 +1,4 @@
-﻿using Implementation.Helper;
+using Implementation.Helper;
 using IntegratedImplementation.DTOS.Finance.Action;
 using IntegratedImplementation.DTOS.Finance.Report;
 using IntegratedImplementation.Interfaces.Finance.Report;
