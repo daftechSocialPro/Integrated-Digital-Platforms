@@ -25,7 +25,7 @@ export class AddBenefitListComponent implements OnInit {
       this.benefitFormG = this.formBuilder.group({
         name: [this.benefit.name, Validators.required],
         amharicName: [this.benefit.amharicName],
-        taxable: [this.benefit.taxable, Validators.required],
+        taxableAmount: [this.benefit.taxableAmount, Validators.required],
         addOnContract: [this.benefit.addOnContract, Validators.required],
       });
     }
@@ -33,7 +33,7 @@ export class AddBenefitListComponent implements OnInit {
       this.benefitFormG = this.formBuilder.group({
         name: ['', Validators.required],
         amharicName: [''],
-        taxable: [false, Validators.required],
+        taxableAmount: [0, Validators.required],
         addOnContract: [false, Validators.required],
       });
     }
@@ -56,7 +56,7 @@ export class AddBenefitListComponent implements OnInit {
       var benefitlst: AddBenefitListDto = {
         name: this.benefitFormG.value.name,
         amharicName: this.benefitFormG.value.amharicName,
-        taxable: this.benefitFormG.value.taxable,
+        taxableAmount: this.benefitFormG.value.taxableAmount,
         addOnContract: this.benefitFormG.value.addOnContract,
         createdById: this.user.userId
       }

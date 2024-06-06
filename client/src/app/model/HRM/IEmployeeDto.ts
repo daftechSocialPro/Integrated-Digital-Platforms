@@ -119,15 +119,15 @@ export interface EmployeeHistoryPostDto {
 
 export interface EmployeeSalryPostDto {
      employeeDetailId: string,
-     projectName: String
-     amount: String,
+     projectId: String
+     percentile: String,
      createdById?: string
 }
 
 export interface EmployeeSalaryGetDto {
      id: string,
-     projectName: String
-     amount: number,
+     projectId: String
+     percentile: number,
 
 }
 

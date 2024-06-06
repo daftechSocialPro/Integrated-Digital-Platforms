@@ -61,8 +61,8 @@ namespace IntegratedImplementation.Datas
                 .ForMember(a => a.PositionName, e => e.MapFrom(mfg => mfg.Position.PositionName));
 
             CreateMap<EmployeeSalary, EmployeeSalaryGetDto>()
-                .ForMember(a => a.ProjectName, e => e.MapFrom(mfg => mfg.ProjectName))
-                .ForMember(a => a.Amount, e => e.MapFrom(mfg => mfg.Amount));
+                .ForMember(a => a.ProjectName, e => e.MapFrom(mfg => mfg.Project.ProjectName))
+                .ForMember(a => a.Percentile, e => e.MapFrom(mfg => mfg.Percentile));
 
 
 

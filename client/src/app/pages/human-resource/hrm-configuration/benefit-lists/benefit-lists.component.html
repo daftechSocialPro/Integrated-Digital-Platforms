@@ -32,7 +32,7 @@
                         <tr>
                             <th >Name</th>
                             <th >Amharic Name</th>
-                            <th >Taxable</th>
+                            <th >Taxable Amount</th>
                             <th >Included on Contract</th>
                           
                         </tr>
@@ -42,8 +42,7 @@
                             <td>{{ benefit.name }}</td>
                             <td>{{ benefit.amharicName }}</td>
                             <td> 
-                                <i class="pi" [ngClass]="{ 'text-green-500 pi-check-circle': 
-                                             benefit.taxable, 'text-red-500 pi-times-circle': !benefit.taxable }"></i>
+                                {{ benefit.taxableAmount}}
                             </td>
                             <td> 
                                 <i class="pi" [ngClass]="{ 'text-green-500 pi-check-circle': 

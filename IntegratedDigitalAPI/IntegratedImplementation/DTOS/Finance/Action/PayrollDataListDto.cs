@@ -15,6 +15,7 @@ namespace IntegratedImplementation.DTOS.Finance.Action
         public string PreparedBy { get; set; } = null!;
         public string CheckedBy { get; set; } = null!;
         public string ApprovedBy { get; set; } = null!;
+        public string AuthorizedBy { get; set; } = null!;
         public double TotalAmount { get; set; }
         public bool IsActive { get; set; }
 

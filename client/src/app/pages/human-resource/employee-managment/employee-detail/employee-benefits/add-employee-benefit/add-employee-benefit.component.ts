@@ -26,7 +26,7 @@ export class AddEmployeeBenefitComponent implements OnInit {
     {value: 1, name : "Number"},
   ];
   today: Date = new Date();
-
+  employeeBenefitList: AddEmployeeBenefitDto [] = []
   user !: UserView
 
   constructor(
@@ -81,13 +81,14 @@ export class AddEmployeeBenefitComponent implements OnInit {
         employeeBenefit.allowanceEndDate = this.employeeBenefitForm.value.allowanceEndDate;
       }
 
+      this.employeeBenefitList.push(employeeBenefit);
+
       this.hrmService.addEmployeeBenefit(employeeBenefit).subscribe(
         {
           next: (res) => {
             if (res.success) {
               this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });
 
-              this.closeModal();
             }
             else {
               this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: res.message });

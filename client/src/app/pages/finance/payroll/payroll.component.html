@@ -90,7 +90,8 @@
                                         </td> 
                                         <td>
                                             <button pButton pRipple class="p-button-info" *ngIf="!payroll.approvedBy && !payroll.checkedBy && payroll.isActive" (click)="checkPayroll(payroll.id)" >Check</button>
-                                            <button button pButton pRipple class="p-button-info" *ngIf="!payroll.approvedBy && payroll.checkedBy && payroll.isActive" (click)="approvePayroll(payroll.id)"  >Approve</button>           
+                                            <button button pButton pRipple class="p-button-info" *ngIf="!payroll.approvedBy && payroll.checkedBy && payroll.isActive" (click)="approvePayroll(payroll.id)"  >Approve</button>    
+                                            <button button pButton pRipple class="p-button-info" *ngIf="!payroll.authorizedBy && payroll.approvedBy && payroll.checkedBy && payroll.isActive" (click)="autorizePayroll(payroll.id)"  >Autorize</button>          
                                                                                                                    
                                         </td>
                                     </tr>

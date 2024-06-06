@@ -368,6 +368,12 @@ namespace IntegratedImplementation.Services.HRM
                
             };
 
+            var benefitTaxableAmount = await _dbContext.BenefitLists.Where(x => x.Id == emp.BenefitId).Select(x => x.TaxableAmount).FirstOrDefaultAsync();
+            if(emp.Amount >  benefitTaxableAmount)
+            {
+                emp.Taxable = true;
+            }
+
             await _dbContext.EmployeeBenefits.AddAsync(emp);
             await _dbContext.SaveChangesAsync();
 

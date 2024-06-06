@@ -37,7 +37,7 @@ export class EmployeeBenefitsComponent implements OnInit {
   }
 
   addNew() {
-    let modalRef = this.modalService.open(AddEmployeeBenefitComponent, { size: 'lg', backdrop: 'static' })
+    let modalRef = this.modalService.open(AddEmployeeBenefitComponent, { size: 'xl', backdrop: 'static' })
     modalRef.componentInstance.employeeId = this.employeeId
     modalRef.result.then(() => {
       this.getEmployeeBenefits()

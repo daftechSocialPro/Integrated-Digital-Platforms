@@ -4,6 +4,7 @@ using IntegratedInfrustructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IntegratedInfrustructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240602210822_ClientFinanceConfig")]
+    partial class ClientFinanceConfig
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -846,9 +849,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<Guid?>("ApprovedById")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("AutorizedById")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("CalculatedCount")
                         .HasColumnType("int");
 
@@ -876,8 +876,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ApprovedById");
-
-                    b.HasIndex("AutorizedById");
 
                     b.HasIndex("CheckedById");
 
@@ -1534,8 +1532,8 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<int>("Rowstatus")
                         .HasColumnType("int");
 
-                    b.Property<float>("TaxableAmount")
-                        .HasColumnType("real");
+                    b.Property<bool>("Taxable")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -1700,9 +1698,6 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.Property<int>("Rowstatus")
                         .HasColumnType("int");
-
-                    b.Property<bool>("Taxable")
-                        .HasColumnType("bit");
 
                     b.Property<int>("TypeOfBenefit")
                         .HasColumnType("int");
@@ -2387,6 +2382,9 @@ namespace IntegratedInfrustructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
+
                     b.Property<string>("CreatedById")
                         .HasColumnType("nvarchar(450)");
 
@@ -2396,11 +2394,9 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<Guid>("EmploymentDetailId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<double>("Percentile")
-                        .HasColumnType("float");
-
-                    b.Property<Guid>("ProjectId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("ProjectName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Rowstatus")
                         .HasColumnType("int");
@@ -2410,8 +2406,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasIndex("CreatedById");
 
                     b.HasIndex("EmploymentDetailId");
-
-                    b.HasIndex("ProjectId");
 
                     b.ToTable("EmployeeSalaries");
                 });
@@ -6307,10 +6301,6 @@ namespace IntegratedInfrustructure.Migrations
                         .WithMany()
                         .HasForeignKey("ApprovedById");
 
-                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "AutorizedBy")
-                        .WithMany()
-                        .HasForeignKey("AutorizedById");
-
                     b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "CheckedBy")
                         .WithMany()
                         .HasForeignKey("CheckedById");
@@ -6320,8 +6310,6 @@ namespace IntegratedInfrustructure.Migrations
                         .HasForeignKey("CreatedById");
 
                     b.Navigation("ApprovedBy");
-
-                    b.Navigation("AutorizedBy");
 
                     b.Navigation("CheckedBy");
 
@@ -6969,17 +6957,9 @@ namespace IntegratedInfrustructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("IntegratedInfrustructure.Model.PM.Project", "Project")
-                        .WithMany()
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.Navigation("CreatedBy");
 
                     b.Navigation("EmploymentDetail");
-
-                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeSettlement", b =>
