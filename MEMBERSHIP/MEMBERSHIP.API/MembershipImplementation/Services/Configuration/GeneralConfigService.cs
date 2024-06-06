@@ -1,27 +1,35 @@
-﻿using MembershipImplementation.Interfaces.Configuration;
+﻿using Implementation.Helper;
+using MembershipImplementation.Interfaces.Configuration;
 using MembershipInfrustructure.Data;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace MembershipImplementation.Services.Configuration
 {
-    public class GeneralConfigService :IGeneralConfigService
+    public class GeneralConfigService : IGeneralConfigService
     {
         private readonly ApplicationDbContext _dbContext;
+        private readonly IConfiguration _configuration;
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public GeneralConfigService(ApplicationDbContext dbContext)
+        public GeneralConfigService(ApplicationDbContext dbContext, IConfiguration configuration, IHttpClientFactory httpClientFactory)
         {
             _dbContext = dbContext;
+            _configuration = configuration;
+            _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<string> GenerateCode(EnumList.GeneralCodeType GeneralCodeType,string memberType)
+        public async Task<string> GenerateCode(EnumList.GeneralCodeType GeneralCodeType, string memberType)
         {
             var curentCode = await _dbContext.GeneralCodes.FirstOrDefaultAsync(x => x.GeneralCodeType == GeneralCodeType);
             if (curentCode != null)
@@ -81,7 +89,7 @@ namespace MembershipImplementation.Services.Configuration
         }
 
 
-      
+
 
         public string Encrypt(string text, string encryptionKey)
         {
@@ -129,7 +137,73 @@ namespace MembershipImplementation.Services.Configuration
             }
         }
 
+        public async Task<ResponseMessage> SendMessage(MessageRequest messageRequest)
+        {
 
+            try
+            {
+                // Validate the token
+                string token = _configuration["SMSSettings:token"];
+                // Assuming you have some logic to validate the token here...
+
+                // Get the API URL from appsettings.json
+                string apiUrl = _configuration["SMSSettings:ApiUrl"];
+
+                // Make sure apiUrl is not null or empty
+
+
+                HttpClient httpClient = _httpClientFactory.CreateClient();
+
+                // Define the Moodle API endpoint URL.
+
+
+                // Create a new FormData object and add the required parameters.
+                var formData = new MultipartFormDataContent();
+
+                formData.Add(new StringContent(messageRequest.PhoneNumber), "phone");
+                formData.Add(new StringContent(messageRequest.Message), "msg");
+                formData.Add(new StringContent(token), "token");
+                // Send the POST request to the Moodle API.
+                HttpResponseMessage response = await httpClient.PostAsync(apiUrl, formData);
+
+                if (response.IsSuccessStatusCode)
+                {
+
+
+
+                    return new ResponseMessage
+                    {
+                        Success = true,
+                        Message = "Message sent successfully."
+                    };
+
+                }
+                else
+                {
+                    return new ResponseMessage
+                    {
+                        Success = true,
+                        Message = $"{(int)response.StatusCode} Failed to send message."
+                    };
+                    // Handle unsuccessful response
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseMessage
+                {
+                    Success = true,
+                    Message = $"Internal Server Error: {ex.Message}"
+                };
+
+
+
+            }
+        }
 
     }
 }
+

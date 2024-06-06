@@ -29,7 +29,7 @@ export class PayLoanComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
-    console.log("loan",this.loan)
+    
     this.user = this.userService.getCurrentUser()
 
     this.payLoanForm = this.formBuilder.group({

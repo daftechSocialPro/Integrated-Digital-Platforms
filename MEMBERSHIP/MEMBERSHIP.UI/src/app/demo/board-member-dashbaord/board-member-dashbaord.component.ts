@@ -1,87 +1,72 @@
-// Angular Import
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
-// project import
-import { SharedModule } from 'src/app/theme/shared/shared.module';
-
-import { IMembersGetDto } from 'src/models/auth/membersDto';
-import { MemberService } from 'src/app/services/member.service';
-
-import * as echarts from 'echarts';
-import { NgxEchartsModule } from 'ngx-echarts';
+import { Component, OnInit } from '@angular/core';
 import { DropDownService } from 'src/app/services/dropDown.service';
-import { SelectList } from 'src/models/ResponseMessage.Model';
+import { MemberService } from 'src/app/services/member.service';
 import { UserService } from 'src/app/services/user.service';
+import { SelectList } from 'src/models/ResponseMessage.Model';
+import { IMembersGetDto } from 'src/models/auth/membersDto';
 import { UserView } from 'src/models/auth/userDto';
 
 @Component({
-  selector: 'app-default', 
-  templateUrl: './admin-dashbord.component.html',
-  styleUrls: ['./admin-dashbord.component.scss']
+  selector: 'app-board-member-dashbaord',
+  templateUrl: './board-member-dashbaord.component.html',
+  styleUrls: ['./board-member-dashbaord.component.scss']
 })
-export default class AdminDashbordComponent implements OnInit {
-
+export class BoardMemberDashbaordComponent implements OnInit {
   members: IMembersGetDto[];
-  filterdMembers:IMembersGetDto[]
+  filterdMembers: IMembersGetDto[];
 
   pendingNumbers: number = 0;
   maleNumbers: number;
   femaleNumbers: number;
   revenue: number = 0;
   recivable: number = 0;
-  currentYear:number;
+  currentYear: number;
 
   genderData: any[];
   chartOptions2: any;
-  loading2:boolean=true;
+  loading2: boolean = true;
 
   membershipTypeData: any[];
   chartOptions3: any;
   loading3: boolean = true;
 
-
   paymentStatusData: any[];
   chartOptions: any;
-  loading:boolean=true
+  loading: boolean = true;
 
   chartOptions4: any;
 
-  selectedChapter:string='all'
-  selectPaymentStatus:string='all'
+  selectedChapter: string = 'all';
+  selectPaymentStatus: string = 'all';
 
-  chapters:SelectList[]
+  chapters: SelectList[];
 
-  userView : UserView
   
 
   // Constructor
-  constructor(private memberService: MemberService,private dropDownService:DropDownService,private userService : UserService) {
-
-  }
-  
+  constructor(
+    private memberService: MemberService,
+    private dropDownService: DropDownService,
+    private userService: UserService
+  ) {}
 
   // Life cycle events
   ngOnInit(): void {
-
     const currentDate = new Date();
-    this.currentYear = currentDate.getFullYear();   
+    this.currentYear = currentDate.getFullYear();
 
     this.getMembers();
-    this.getChapter('ETHIOPIAN')
+    this.getChapter('ETHIOPIAN');
 
-    this.userView = this.userService.getCurrentUser()
-
-
-
+    
   }
-  getGenderChart(){
+  getGenderChart() {
     const genderCounts = this.filterdMembers.reduce((acc, item) => {
       acc[item.gender] = (acc[item.gender] || 0) + 1;
       return acc;
     }, {});
 
-    this.genderData = Object.keys(genderCounts).map(key => ({
+    this.genderData = Object.keys(genderCounts).map((key) => ({
       value: genderCounts[key],
       name: key
     }));
@@ -95,7 +80,7 @@ export default class AdminDashbordComponent implements OnInit {
       legend: {
         orient: 'vertical',
         left: 'left',
-        data: this.genderData.map(item => item.name)
+        data: this.genderData.map((item) => item.name)
       },
       series: [
         {
@@ -118,7 +103,7 @@ export default class AdminDashbordComponent implements OnInit {
           labelLine: {
             show: false
           },
-          data: this.genderData,
+          data: this.genderData
         }
       ],
       toolbox: {
@@ -131,17 +116,15 @@ export default class AdminDashbordComponent implements OnInit {
       }
     };
     this.loading2 = false; // Hide loading indicator once the chart is rendered
-  
-    
   }
 
-  getMembershipTypeChart(){
+  getMembershipTypeChart() {
     const membershipTypeCounts = this.filterdMembers.reduce((acc, item) => {
       acc[item.membershipType] = (acc[item.membershipType] || 0) + 1;
       return acc;
     }, {});
 
-    this.membershipTypeData = Object.keys(membershipTypeCounts).map(key => ({
+    this.membershipTypeData = Object.keys(membershipTypeCounts).map((key) => ({
       value: membershipTypeCounts[key],
       name: key
     }));
@@ -168,95 +151,82 @@ export default class AdminDashbordComponent implements OnInit {
       },
       yAxis: {
         type: 'category',
-        data: this.membershipTypeData.map(item => item.name)
+        data: this.membershipTypeData.map((item) => item.name)
       },
       series: [
         {
           name: 'Members',
           type: 'bar',
-          data: this.membershipTypeData.map(item => item.value),
+          data: this.membershipTypeData.map((item) => item.value),
           itemStyle: {
             color: '#FF7070' // Specify the bar color
           }
         }
-      ],toolbox: {
+      ],
+      toolbox: {
         feature: {
           saveAsImage: {},
           restore: {},
-          dataView: {},        
+          dataView: {},
           print: {} // Add the print feature
         }
       }
     };
 
     this.loading3 = false; // Hide loading indicator once the chart is rendered
-  
-
   }
 
   getMembers() {
     this.memberService.getMembers().subscribe({
       next: (res) => {
         this.members = res;
-        this.filterdMembers=res
-
-        if (this.userView.regionId!=""){
-          this.selectedChapter = this.userView.regionId
-          this.applyFilter()
-        }
+        this.filterdMembers = res;       
         this.getGenderChart();
         this.getMembershipTypeChart();
-        this.getPaymentStatusChart();        
+        this.getPaymentStatusChart();
         this.getPendingMembers();
-        this.generate(this.currentYear.toString())
-
-       
+        this.generate(this.currentYear.toString());
       }
     });
   }
-  applyFilter(){
-
-    
-    if (this.selectedChapter !== "all") {
+  applyFilter() {
+    if (this.selectedChapter !== 'all') {
       const chapterSearchTerm = this.selectedChapter.toLowerCase();
       this.filterdMembers = this.members.filter((item) => {
         return item.region && item.region.toLowerCase().includes(chapterSearchTerm);
       });
-    
-    }
-    else{
-      this.filterdMembers=this.members
+    } else {
+      this.filterdMembers = this.members;
     }
 
-    if (this.selectPaymentStatus !== "all") {
+    if (this.selectPaymentStatus !== 'all') {
       const statusSearchTerm = this.selectPaymentStatus.toLowerCase();
       this.filterdMembers = this.filterdMembers.filter((item) => {
         return item.paymentStatus.toLowerCase().includes(statusSearchTerm);
       });
     }
 
-    
-    this.getGenderChart()
-    this.getMembershipTypeChart()
-    this.getPaymentStatusChart()
-    this.getPendingMembers()
-    this.generate(this.currentYear.toString())
+    this.getGenderChart();
+    this.getMembershipTypeChart();
+    this.getPaymentStatusChart();
+    this.getPendingMembers();
+    this.generate(this.currentYear.toString());
   }
-  getChapter(value:string) {
+  getChapter(value: string) {
     this.dropDownService.getRegionsDropdown(value).subscribe({
       next: (res) => {
-        this.chapters = res
+        this.chapters = res;
       }
-    })
+    });
   }
 
-  getPaymentStatusChart(){
+  getPaymentStatusChart() {
     const paymentStatusCounts = this.filterdMembers.reduce((acc, item) => {
       acc[item.paymentStatus] = (acc[item.paymentStatus] || 0) + 1;
       return acc;
     }, {});
 
-    this.paymentStatusData = Object.keys(paymentStatusCounts).map(key => ({
+    this.paymentStatusData = Object.keys(paymentStatusCounts).map((key) => ({
       value: paymentStatusCounts[key],
       name: key
     }));
@@ -270,7 +240,7 @@ export default class AdminDashbordComponent implements OnInit {
       legend: {
         orient: 'vertical',
         left: 'left',
-        data: this.paymentStatusData.map(item => item.name)
+        data: this.paymentStatusData.map((item) => item.name)
       },
       series: [
         {
@@ -295,7 +265,7 @@ export default class AdminDashbordComponent implements OnInit {
           },
           data: this.paymentStatusData,
           itemStyle: {
-            color: function(params) {
+            color: function (params) {
               var colors = ['#FFB970', '#198754', '#dc3545'];
               return colors[params.dataIndex % colors.length];
             }
@@ -313,23 +283,18 @@ export default class AdminDashbordComponent implements OnInit {
     };
 
     this.loading = false; // Hide loading indicator once the chart is rendered
-  
-    
   }
- 
-
-
 
   getPendingMembers() {
     this.pendingNumbers = this.filterdMembers.filter((x) => x.paymentStatus != 'PAID').length;
 
-    this.revenue=0
+    this.revenue = 0;
     this.filterdMembers
       .filter((x) => x.paymentStatus == 'PAID')
       .map((item) => {
         this.revenue += item.amount;
       });
-      this.recivable=0
+    this.recivable = 0;
     this.filterdMembers
       .filter((x) => x.paymentStatus != 'PAID')
       .map((item) => {
@@ -338,47 +303,47 @@ export default class AdminDashbordComponent implements OnInit {
     //  this.recivable =  this.members.filter(x=>x.gender!="FEMALE").length
   }
 
-  generate(passedYear:string){
+  generate(passedYear: string) {
     const data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    
-  this.filterdMembers.forEach(member => {
-    const createdDate = new Date(member.createdByDate);
-    const year = createdDate.getFullYear().toString();
 
-    if (year === passedYear) {
-      const month = createdDate.getMonth();
-      data[month]++;
-    }
-  });
+    this.filterdMembers.forEach((member) => {
+      const createdDate = new Date(member.createdByDate);
+      const year = createdDate.getFullYear().toString();
 
-  this.chartOptions4 = {
-    xAxis: {
-      type: 'category',
-      data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-    },
-    yAxis: {
-      type: 'value'
-    },
-    series: [
-      {
-        type: 'bar',
-        data: data
+      if (year === passedYear) {
+        const month = createdDate.getMonth();
+        data[month]++;
       }
-    ],
-    tooltip: {
-      trigger: 'axis',
-      axisPointer: {
-        type: 'shadow'
+    });
+
+    this.chartOptions4 = {
+      xAxis: {
+        type: 'category',
+        data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          type: 'bar',
+          data: data
+        }
+      ],
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow'
+        }
+      },
+      toolbox: {
+        feature: {
+          saveAsImage: {},
+          restore: {},
+          dataView: {},
+          print: {} // Add the print feature
+        }
       }
-    },
-    toolbox: {
-      feature: {
-        saveAsImage: {},
-        restore: {},
-        dataView: {},        
-        print: {} // Add the print feature
-      }
-    }
-  };
-}
+    };
+  }
 }

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Implementation.Helper;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +17,8 @@ namespace MembershipImplementation.Interfaces.Configuration
         Task<string> GetFiles(string path);
 
         string Encrypt(string text, string encryptionKey);
+
+        Task<ResponseMessage> SendMessage(MessageRequest messageRequest);
         string Decrypt(string encryptedText, string encryptionKey);
 
     }

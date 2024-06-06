@@ -403,7 +403,12 @@ namespace MembershipImplementation.Services.HRM
                                         $"{message}" +
                                         $"\nThank you.\n\nSincerely,\nFekadu Mazengia\nExecutive Director");
                 await _emailService.Send(email);
-
+                var messageReques = new MessageRequest
+                {
+                    PhoneNumber = member.PhoneNumber,
+                    Message = message
+                };
+                await _generalConfig.SendMessage(messageReques);
 
             }
             if (currentPayment != null)

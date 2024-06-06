@@ -1,4 +1,5 @@
-﻿using MembershipImplementation.DTOS.Configuration;
+﻿using Implementation.Helper;
+using MembershipImplementation.DTOS.Configuration;
 using MembershipImplementation.Interfaces.Configuration;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +25,13 @@ namespace MembershipDigitalAPI.Controllers.Configuration
         public async Task<IActionResult> GetGeneralCodesList()
         {
             return Ok(await _generalConfigService.GenerateCode(0,"FULL"));
+        }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(GeneralCodeDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> SenMessage(MessageRequest messageRequest)
+        {
+            return Ok(await _generalConfigService.SendMessage(messageRequest));
         }
     }
 }

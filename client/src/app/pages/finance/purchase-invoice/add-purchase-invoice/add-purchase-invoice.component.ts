@@ -75,7 +75,7 @@ export class AddPurchaseInvoiceComponent implements OnInit {
     this.dropDownService.getAllPurchaseRequestDropDown().subscribe({
       next: (res) => {
         this.purchaseRequestDropDown = res
-        console.log("purchaseRequestDropDown",res)
+       
       }
     })
 

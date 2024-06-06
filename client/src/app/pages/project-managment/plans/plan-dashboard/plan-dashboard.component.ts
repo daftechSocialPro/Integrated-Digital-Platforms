@@ -39,8 +39,13 @@ export class PlanDashboardComponent implements OnInit {
 
   Quarter: number = 0;
   chartdata: any[];
-  chartdata1: any[];
+
+  chartdata1
+  chartdata1Act: any[];
+  chartdata1Pla: any[];
   chartdata2: any[];
+  chartdata2Act: any[];
+  chartdata2Pla: any[];
   Plans: PlanView[] = [];
   selectedProject: string;
 
@@ -177,36 +182,7 @@ export class PlanDashboardComponent implements OnInit {
                       }
                     }
                   };
-                  // {
-                  //   title: {
-                  //     //text: item.id,
-                  //    // subtext: item.id,
-                  //     left: 'right',
-                  //     planId: item.id
-                  //   },
-                  //   tooltip: {
-                  //     trigger: 'item',
-                  //   },
-                  //   legend: {
-                  //     orient: 'vertical',
-                  //     left: 'left',
-                  //   },
-                  //   series: [
-                  //     {
-                  //       name: 'Access From',
-                  //       type: 'pie',
-                  //       radius: '75%',
-                  //       data: chartdata,
-                  //       emphasis: {
-                  //         itemStyle: {
-                  //           shadowBlur: 10,
-                  //           shadowOffsetX: 0,
-                  //           shadowColor: 'rgba(0, 0, 0, 0.5)',
-                  //         },
-                  //       },
-                  //     },
-                  //   ],
-                  // };
+                
                   this.pieChartOptions.push(pieChartOption);
                 },
               });
@@ -218,13 +194,21 @@ export class PlanDashboardComponent implements OnInit {
                 next: (res) => {
                
                   let barChartData = res;
-                  let chartdata1 = barChartData?.progressChartDataSets?.map(
-                    (x) => ({ value: x.data })
-                  );
-                  let chartdata2 = barChartData?.budgetChartDataSets?.map(
-                    (x) => ({ value: x.data })
+                  this.chartdata1Act = barChartData?.progressChartDataSets?.map(
+                    (x) => ({ value: x.data.actual })
                   );
         
+                  this.chartdata1Pla = barChartData?.progressChartDataSets?.map(
+                    (x) => ({ value: x.data.planned })
+                  );
+        
+        
+                  this.chartdata2Act = barChartData?.budgetChartDataSets?.map(
+                    (x) => ({ value: x.data.actual })
+                  );
+                  this.chartdata2Pla = barChartData?.budgetChartDataSets?.map(
+                    (x) => ({ value: x.data.planned })
+                  );
         
                   let barChartOption =
                   {
@@ -236,7 +220,7 @@ export class PlanDashboardComponent implements OnInit {
                       }
                     },
                     legend: {
-                      data: ['Accomplishment Rate']
+                      data: ['Actual Progress','Planned Progress']
                     },
                     grid: {
                       left: '3%',
@@ -260,11 +244,19 @@ export class PlanDashboardComponent implements OnInit {
                       type: 'value'
                     }],
                     series: [{
-                      name: 'Accomplishment Rate',
+                      name: 'Actual Progress',
                       type: 'bar',
                       barWidth: '60%',
-                      data: chartdata1
-                    }],
+                      data: this.chartdata1Act
+                    },
+        
+                    {
+                      name: 'Planned Progress',
+                      type: 'bar',
+                      barWidth: '60%',
+                      data: this.chartdata1Pla
+                    }
+                  ],
                     toolbox: {
                       feature: {
                         saveAsImage: {},
@@ -274,49 +266,7 @@ export class PlanDashboardComponent implements OnInit {
                       }
                     }
                   };
-                  
-                  //  {
-                  //   tooltip: {
-                  //     planid:item.id,
-                  //     trigger: 'axis',
-                  //     axisPointer: {
-                  //       type: 'shadow',
-                  //     },
-                  //   },
-                  //   grid: {
-                  //     left: '3%',
-                  //     right: '4%',
-                  //     bottom: '3%',
-                  //     containLabel: true,
-                  //   },
-                  //   xAxis: [
-                  //     {
-                  //       type: 'category',
-                  //       data: [
-                  //         'January - March',
-                  //         'April - June',
-                  //         'July - September',
-                  //         'October - December',
-                  //       ],
-                  //       axisTick: {
-                  //         alignWithLabel: true,
-                  //       },
-                  //     },
-                  //   ],
-                  //   yAxis: [
-                  //     {
-                  //       type: 'value',
-                  //     },
-                  //   ],
-                  //   series: [
-                  //     {
-                  //       name: 'Accomplishment Rate',
-                  //       type: 'bar',
-                  //       barWidth: '60%',
-                  //       data: chartdata1,
-                  //     },
-                  //   ],
-                  // };
+             
         
                   let bar2ChartOption = 
 
@@ -329,7 +279,7 @@ export class PlanDashboardComponent implements OnInit {
                       }
                     },
                     legend: {
-                      data: ['Budget Utilization']
+                      data: ['Actual Budget','Planned Budget']
                     },
                     grid: {
                       left: '3%',
@@ -353,10 +303,16 @@ export class PlanDashboardComponent implements OnInit {
                       type: 'value'
                     }],
                     series: [{
-                      name: 'Budget Utilization',
+                      name: 'Actual Budget',
                       type: 'bar',
                       barWidth: '60%',
-                      data: chartdata2
+                      data: this.chartdata2Act
+                    },
+                    {
+                      name: 'Planned Budget',
+                      type: 'bar',
+                      barWidth: '60%',
+                      data: this.chartdata2Pla
                     }],
                     toolbox: {
                       feature: {
@@ -367,48 +323,7 @@ export class PlanDashboardComponent implements OnInit {
                       }
                     }
                   };
-                  // {
-                  //   tooltip: {
-                  //     planid:item.id,
-                  //     trigger: 'axis',
-                  //     axisPointer: {
-                  //       type: 'shadow',
-                  //     },
-                  //   },
-                  //   grid: {
-                  //     left: '3%',
-                  //     right: '4%',
-                  //     bottom: '3%',
-                  //     containLabel: true,
-                  //   },
-                  //   xAxis: [
-                  //     {
-                  //       type: 'category',
-                  //       data: [
-                  //         'January - March',
-                  //         'April - June',
-                  //         'July - Sep',
-                  //         'Oct - Dec',
-                  //       ],
-                  //       axisTick: {
-                  //         alignWithLabel: true,
-                  //       },
-                  //     },
-                  //   ],
-                  //   yAxis: [
-                  //     {
-                  //       type: 'value',
-                  //     },
-                  //   ],
-                  //   series: [
-                  //     {
-                  //       name: 'Budget Utilization',
-                  //       type: 'bar',
-                  //       barWidth: '60%',
-                  //       data: chartdata2,
-                  //     },
-                  //   ],
-                  // };
+                  
 
                   this.barChartOptions.push(barChartOption)
                   this.bar2ChartOptions.push(bar2ChartOption)
@@ -563,14 +478,26 @@ export class PlanDashboardComponent implements OnInit {
       .getPlanBarCharts(planId, this.selectedStrategicPlan)
       .subscribe({
         next: (res) => {
+
+        
           
           this.barChartData = res;
-          this.chartdata1 = this.barChartData?.progressChartDataSets?.map(
-            (x) => ({ value: x.data })
+          this.chartdata1Act = this.barChartData?.progressChartDataSets?.map(
+            (x) => ({ value: x.data.actual })
           );
-          this.chartdata2 = this.barChartData?.budgetChartDataSets?.map(
-            (x) => ({ value: x.data })
+
+          this.chartdata1Pla = this.barChartData?.progressChartDataSets?.map(
+            (x) => ({ value: x.data.planned })
           );
+
+
+          this.chartdata2Act = this.barChartData?.budgetChartDataSets?.map(
+            (x) => ({ value: x.data.actual })
+          );
+          this.chartdata2Pla = this.barChartData?.budgetChartDataSets?.map(
+            (x) => ({ value: x.data.planned })
+          );
+
 
 
           this.barChartOption = {
@@ -581,7 +508,7 @@ export class PlanDashboardComponent implements OnInit {
               }
             },
             legend: {
-              data: ['Accomplishment Rate']
+              data: ['Actual Progress','Planned Progress']
             },
             grid: {
               left: '3%',
@@ -605,11 +532,21 @@ export class PlanDashboardComponent implements OnInit {
               type: 'value'
             }],
             series: [{
-              name: 'Accomplishment Rate',
+              name: 'Actual Progress',
               type: 'bar',
               barWidth: '60%',
-              data: this.chartdata1
-            }],
+              data: this.chartdata1Act
+            },
+
+            {
+              name: 'Planned Progress',
+              type: 'bar',
+              barWidth: '60%',
+              data: this.chartdata1Pla
+            }
+          
+          
+          ],
             toolbox: {
               feature: {
                 saveAsImage: {},
@@ -619,49 +556,7 @@ export class PlanDashboardComponent implements OnInit {
               }
             }
           };
-          
-          // {
-          //   tooltip: {
-          //     trigger: 'axis',
-          //     axisPointer: {
-          //       type: 'shadow',
-          //     },
-          //   },
-          //   grid: {
-          //     left: '3%',
-          //     right: '4%',
-          //     bottom: '3%',
-          //     containLabel: true,
-          //   },
-          //   xAxis: [
-          //     {
-          //       type: 'category',
-          //       data: [
-          //         'January - March',
-          //         'April - June',
-          //         'July - September',
-          //         'October - December',
-          //       ],
-          //       axisTick: {
-          //         alignWithLabel: true,
-          //       },
-          //     },
-          //   ],
-          //   yAxis: [
-          //     {
-          //       type: 'value',
-          //     },
-          //   ],
-          //   series: [
-          //     {
-          //       name: 'Accomplishment Rate',
-          //       type: 'bar',
-          //       barWidth: '60%',
-          //       data: this.chartdata1,
-          //     },
-          //   ],
-          // };
-
+         
           this.bar2ChartOption =
 
         {
@@ -672,7 +567,7 @@ export class PlanDashboardComponent implements OnInit {
               }
             },
             legend: {
-              data: ['Budget Utilization']
+              data: ['Actual Budget','Planned Budget']
             },
             grid: {
               left: '3%',
@@ -696,10 +591,16 @@ export class PlanDashboardComponent implements OnInit {
               type: 'value'
             }],
             series: [{
-              name: 'Budget Utilization',
+              name: 'Actual Budget',
               type: 'bar',
               barWidth: '60%',
-              data: this.chartdata2
+              data: this.chartdata2Act
+            },
+            {
+              name: 'Planned Budget',
+              type: 'bar',
+              barWidth: '60%',
+              data: this.chartdata2Pla
             }],
             toolbox: {
               feature: {
@@ -712,47 +613,7 @@ export class PlanDashboardComponent implements OnInit {
           };
           
           
-          // {
-          //   tooltip: {
-          //     trigger: 'axis',
-          //     axisPointer: {
-          //       type: 'shadow',
-          //     },
-          //   },
-          //   grid: {
-          //     left: '3%',
-          //     right: '4%',
-          //     bottom: '3%',
-          //     containLabel: true,
-          //   },
-          //   xAxis: [
-          //     {
-          //       type: 'category',
-          //       data: [
-          //         'January - March',
-          //         'April - June',
-          //         'July - Sep',
-          //         'Oct - Dec',
-          //       ],
-          //       axisTick: {
-          //         alignWithLabel: true,
-          //       },
-          //     },
-          //   ],
-          //   yAxis: [
-          //     {
-          //       type: 'value',
-          //     },
-          //   ],
-          //   series: [
-          //     {
-          //       name: 'Budget Utilization',
-          //       type: 'bar',
-          //       barWidth: '60%',
-          //       data: this.chartdata2,
-          //     },
-          //   ],
-          // };
+       
         },
       });
   }

@@ -12,7 +12,8 @@ export const environment = {
   assetUrl :'http://localhost:5267',
   paymentUrl : 'https://emwamms.org/',
   //paymentUrl : 'https://node-express-vercel-wine-gamma.vercel.app/',
-  moodleUrl: 'https://emwa-elearning.com/webservice/rest/server.php'
+  moodleUrl: 'https://emwa-elearning.com/webservice/rest/server.php',
+  smsUrl:'https://api.geezsms.com/api/v1/sms/send'
 };
 
 /*

@@ -45,7 +45,7 @@ generateReport(){
   this.financeService.getPensionReport(formattedDate).subscribe({
     next: (res) => {
       this.pensionReportList = res
-      console.log("this.pensionReportList",this.pensionReportList)
+     
     }
   })
 }
