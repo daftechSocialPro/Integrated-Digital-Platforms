@@ -18,5 +18,6 @@ namespace IntegratedInfrustructure.Model.HRM
         public bool Recursive { get; set; }
         public DateTime? AllowanceEndDate { get; set; }
         public double Amount { get; set; }
+        public bool Taxable { get; set; }
     }
 }

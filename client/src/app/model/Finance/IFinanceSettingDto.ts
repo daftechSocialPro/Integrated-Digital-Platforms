@@ -19,7 +19,7 @@ export class AddClientDto
     phoneNumber: string;
     emailAddress: string;
     tinNumber: string;
-    pcountryId: string;
+    countryId: string;
     address: string;
     createdById: string;
 }

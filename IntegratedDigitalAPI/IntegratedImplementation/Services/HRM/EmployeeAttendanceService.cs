@@ -224,7 +224,7 @@ namespace IntegratedImplementation.Services.HRM
             var currSalary = await _dbContext.EmployeeSalaries.Include(x => x.EmploymentDetail).FirstOrDefaultAsync(x => x.EmploymentDetail.EmployeeId.Equals(Guid.Parse(addPenalty.EmployeeId)) && x.Rowstatus == RowStatus.ACTIVE);
 
             if (currSalary == null)
-                return new ResponseMessage { Success = false, Message = "Please set sallary first!!" };
+                return new ResponseMessage { Success = false, Message = "Please set salary first!!" };
 
             EmployeePenalty penalty = new EmployeePenalty()
             {
@@ -247,12 +247,12 @@ namespace IntegratedImplementation.Services.HRM
             {
                 if (addPenalty.PenaltyType == PenaltyType.ABSENT)
                 {
-                    var TotAmount = (currSalary.Amount / 26.0) * addPenalty.TotNumber;
+                    var TotAmount = (currSalary.EmploymentDetail.Salary / 26.0) * addPenalty.TotNumber;
                     penalty.Amount = TotAmount;
                 }
                 else if (addPenalty.PenaltyType == PenaltyType.LATE)
                 {
-                    var TotAmount = (currSalary.Amount / 208) * addPenalty.TotNumber;
+                    var TotAmount = (currSalary.EmploymentDetail.Salary / 208) * addPenalty.TotNumber;
                     penalty.Amount = TotAmount;
                 }
             }

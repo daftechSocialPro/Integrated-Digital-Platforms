@@ -11,7 +11,7 @@ namespace IntegratedImplementation.DTOS.HRM
         public Guid Id { get; set; } 
         public string Name { get; set; } = null!;
         public string AmharicName { get; set; } = null!;
-        public bool Taxable { get; set; }
+        public float TaxableAmount { get; set; }
         public bool AddOnContract { get; set; }
     }
 
@@ -20,7 +20,7 @@ namespace IntegratedImplementation.DTOS.HRM
         public string CreatedById { get; set; } = null!;
         public string Name { get; set; } = null!;
         public string AmharicName { get; set; } = null!;
-        public bool Taxable { get; set; }
+        public float TaxableAmount { get; set; }
         public bool AddOnContract { get; set; }
     }
 

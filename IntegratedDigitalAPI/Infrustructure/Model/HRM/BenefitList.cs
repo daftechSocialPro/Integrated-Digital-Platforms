@@ -11,7 +11,7 @@ namespace IntegratedInfrustructure.Model.HRM
     {
         public string Name { get; set; } = null!;
         public string AmharicName { get; set; } = null!;
-        public bool Taxable { get; set; }
+        public float TaxableAmount { get; set; }
         public bool AddOnContract { get; set; }
     }
 }

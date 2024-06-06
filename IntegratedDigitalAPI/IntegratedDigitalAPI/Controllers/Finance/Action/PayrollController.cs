@@ -70,5 +70,21 @@ namespace IntegratedDigitalAPI.Controllers.Finance.Action
         }
 
 
+        [HttpPut]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> AutorizePayroll(ApprovePayrollDataDto payrollDataDto)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _payrollService.AutorizePayroll(payrollDataDto));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+
+
     }
 }

@@ -996,8 +996,8 @@ namespace IntegratedImplementation.Services.HRM
                 Id = Guid.NewGuid(),
                 CreatedById = addEmployeeHistory.CreatedById,
                 CreatedDate = DateTime.Now,
-                ProjectName = addEmployeeHistory.ProjectName,
-                Amount = addEmployeeHistory.Amount,
+                ProjectId = addEmployeeHistory.ProjectId,
+                Percentile = addEmployeeHistory.Percentile,
                 EmploymentDetailId = addEmployeeHistory.EmployeeDetailId
 
             };
@@ -1019,8 +1019,8 @@ namespace IntegratedImplementation.Services.HRM
             if (currentEmployeeHistory != null)
             {
 
-                currentEmployeeHistory.ProjectName = updateEmployeeSalary.ProjectName;
-                currentEmployeeHistory.Amount = updateEmployeeSalary.Amount;
+                currentEmployeeHistory.ProjectId = updateEmployeeSalary.ProjectId;
+                currentEmployeeHistory.Percentile = updateEmployeeSalary.Percentile;
 
 
                 await _dbContext.SaveChangesAsync();

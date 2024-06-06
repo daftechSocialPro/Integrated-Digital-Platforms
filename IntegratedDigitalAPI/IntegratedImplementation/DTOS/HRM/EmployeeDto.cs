@@ -149,8 +149,8 @@ namespace IntegratedImplementation.DTOS.HRM
     public record EmployeeSalryPostDto
     {
         public Guid EmployeeDetailId { get; set; }
-        public string ProjectName { get; set; }=null!;
-        public double Amount { get; set; }
+        public Guid ProjectId { get; set; }
+        public double Percentile { get; set; }
         public string CreatedById { get; set; } = null!;
 
     }
@@ -158,8 +158,9 @@ namespace IntegratedImplementation.DTOS.HRM
     public record EmployeeSalaryGetDto
     {
         public Guid Id { get; set; }
-        public string ProjectName { get; set; }
-        public double Amount { get; set; }
+        public Guid ProjectId { get; set; }
+        public string? ProjectName { get; set; }
+        public double Percentile { get; set; }
 
 
     }

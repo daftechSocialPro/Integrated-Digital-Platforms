@@ -1,4 +1,5 @@
 ﻿using IntegratedInfrustructure.Model.Authentication;
+using IntegratedInfrustructure.Model.PM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,8 @@ namespace IntegratedInfrustructure.Model.HRM
 
         public Guid EmploymentDetailId { get; set; }
         public virtual EmploymentDetail EmploymentDetail { get; set; } = null!;
-        public string ProjectName { get; set; } = null!;
-        public double Amount { get; set;}       
+        public Guid ProjectId { get; set; }
+        public Project Project { get; set; }
+        public double Percentile { get; set;}       
     }
 }

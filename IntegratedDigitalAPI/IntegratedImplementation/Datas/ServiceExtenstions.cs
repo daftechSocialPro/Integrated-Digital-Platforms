@@ -130,6 +130,7 @@ namespace IntegratedImplementation.Datas
 
             services.AddScoped<IReceiptService, ReceiptService>();
             services.AddScoped<IAccountReconsilationService, AccountReconsilationService>();
+            services.AddScoped<IClientsService, ClientService>();
             #endregion
 
 

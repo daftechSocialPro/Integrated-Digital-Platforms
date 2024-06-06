@@ -3,8 +3,10 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
 import { AddClientDto, ClientsListDto } from 'src/app/model/Finance/IFinanceSettingDto';
 import { CountryGetDto } from 'src/app/model/configuration/IAddressDto';
+import { UserView } from 'src/app/model/user';
 import { ConfigurationService } from 'src/app/services/configuration.service';
 import { FinanceService } from 'src/app/services/finance.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-add-client',
@@ -16,11 +18,18 @@ export class AddClientComponent  implements OnInit{
    @Input() client :ClientsListDto;
    addClient: AddClientDto = new AddClientDto();
    countryList: CountryGetDto[] = [];
+   user!: UserView
   
-   constructor(private financeService: FinanceService, private messageService: MessageService,
-                private generalConfigService: ConfigurationService,private activeModal: NgbActiveModal){}
+   constructor(
+    private financeService: FinanceService, 
+    private messageService: MessageService,
+    private generalConfigService: ConfigurationService,
+    private activeModal: NgbActiveModal,
+    private userService: UserService,
+  ){}
    
     ngOnInit(): void {
+      this.user = this.userService.getCurrentUser()
       this.getCountryDropDown();
     }
   
@@ -31,7 +40,7 @@ export class AddClientComponent  implements OnInit{
            if(this.client && this.client.id){
             this.addClient = {
                 address: this.client.address,
-                pcountryId: this.countryList.find(x => this.client.countryName == x.countryName).id,
+                countryId: this.countryList.find(x => this.client.countryName == x.countryName).id,
                 emailAddress: this.client.emailAddress,
                 id: this.client.id,
                 name: this.client.name,
@@ -64,6 +73,7 @@ export class AddClientComponent  implements OnInit{
        
       }
       else {
+        this.addClient.createdById = this.user.userId
         this.financeService.addClient(this.addClient).subscribe({
           next: (res) => {
             if(res.success){
@@ -79,7 +89,7 @@ export class AddClientComponent  implements OnInit{
           }
         });
       }
-      this.closeModal();
+      //this.closeModal();
     }
   
   

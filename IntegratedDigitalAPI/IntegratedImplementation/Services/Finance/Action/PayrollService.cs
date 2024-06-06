@@ -36,6 +36,7 @@ namespace IntegratedImplementation.Services.Finance.Action
                                            PayrollMonth = x.PayStart.ToString("MMMM"),
                                            ApprovedBy = x.ApprovedBy == null ? "" : $"{x.ApprovedBy.FirstName} {x.ApprovedBy.MiddleName} {x.ApprovedBy.LastName}",
                                            CheckedBy = x.CheckedBy == null ? "" : $"{x.CheckedBy.FirstName} {x.CheckedBy.MiddleName} {x.CheckedBy.LastName}",
+                                           AuthorizedBy = x.AutorizedBy == null ? "" : $"{x.AutorizedBy.FirstName} {x.AutorizedBy.MiddleName} {x.AutorizedBy.LastName}",
                                            CalculatedCount = x.CalculatedCount,
                                            TotalAmount = x.TotalAmount,
                                            IsActive = x.Rowstatus == RowStatus.ACTIVE ? true : false,
@@ -87,6 +88,29 @@ namespace IntegratedImplementation.Services.Finance.Action
 
             if(currData.CheckedById == Guid.Empty)
                 return new ResponseMessage { Success = false, Message = "Please Check the payroll before approving!!" };
+
+            currData.ApprovedById = currEmp.Id;
+            await _dbContext.SaveChangesAsync();
+
+            return new ResponseMessage { Success = true, Message = "Approved Successfully" };
+        }
+
+
+        public async Task<ResponseMessage> AutorizePayroll(ApprovePayrollDataDto payrollDataDto)
+        {
+            var currEmp = await _dbContext.Employees.FirstOrDefaultAsync(x => x.Id == Guid.Parse(payrollDataDto.EmployeeId));
+            if (currEmp == null)
+                return new ResponseMessage { Success = false, Message = "Employee could not be found" };
+
+            var currData = await _dbContext.PayrollDatas.FirstOrDefaultAsync(x => x.Id == Guid.Parse(payrollDataDto.PayrollDataId));
+            if (currData == null)
+                return new ResponseMessage { Success = false, Message = "Payroll Data could not be found!!" };
+
+            if (currData.CheckedById == Guid.Empty)
+                return new ResponseMessage { Success = false, Message = "Please Check the payroll before approving!!" };
+
+            if (currData.ApprovedById == Guid.Empty)
+                return new ResponseMessage { Success = false, Message = "Please Approve the payroll before approving!!" };
 
             currData.ApprovedById = currEmp.Id;
             await _dbContext.SaveChangesAsync();

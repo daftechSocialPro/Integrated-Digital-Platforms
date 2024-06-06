@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmEventType, ConfirmationService, MessageService } from 'primeng/api';
 import { EmployeeHistoryDto, EmployeeSalaryGetDto, EmployeeSalryPostDto } from 'src/app/model/HRM/IEmployeeDto';
+import { SelectList } from 'src/app/model/common';
+import { DropDownService } from 'src/app/services/dropDown.service';
 import { HrmService } from 'src/app/services/hrm.service';
 
 @Component({
@@ -16,6 +18,7 @@ export class HistorySalaryComponent implements OnInit {
   salaryHistoryForm !: FormGroup;
   salrayHistories!: EmployeeSalaryGetDto[]
   remaining: number = 0
+  projectsSelectList: SelectList[] = []
 
   updatehistory!: any
   constructor(
@@ -23,26 +26,37 @@ export class HistorySalaryComponent implements OnInit {
     private formBuilder: FormBuilder,
     private hrmService: HrmService,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService) {
+    private confirmationService: ConfirmationService,
+    private dropdownService: DropDownService
+  ) {
 
   }
   ngOnInit(): void {
 
     this.salaryHistoryForm = this.formBuilder.group({
-      projectName: [null, Validators.required],
-      amount: [null, Validators.required],
+      projectId: [null, Validators.required],
+      percentile: [null, Validators.required],
     })
 
     this.getEmpSalary();
+    this.getProjectSelectList()
 
 
   }
 
+
+  getProjectSelectList(){
+    this.dropdownService.getProjectDropDowns().subscribe({
+      next: (res) => {
+        this.projectsSelectList = res
+      }
+    })
+  }
   getEmpSalary() {
     this.hrmService.getEmployeeSalaryHistory(this.empHistory.id).subscribe({
       next: (res) => {
         this.salrayHistories = res
-        this.remaining = this.empHistory.salary - this.salrayHistories.reduce((accumulator, currentValue) => accumulator + currentValue.amount, 0);
+        this.remaining = this.empHistory.salary - this.salrayHistories.reduce((accumulator, currentValue) => accumulator + ((currentValue.percentile * this.empHistory.salary)/ 100), 0);
       }
     })
   }
@@ -50,17 +64,17 @@ export class HistorySalaryComponent implements OnInit {
   addEmpSalary() {
     if (this.salaryHistoryForm.valid) {
 
-      var remaining = !this.updatehistory ? this.remaining : this.remaining + this.updatehistory.amount
+      var remaining = !this.updatehistory ? this.remaining : this.remaining + ((this.updatehistory.percentile* this.empHistory.salary)/ 100)
 
-      if (remaining - this.salaryHistoryForm.value.amount >= 0) {
+      if (remaining - ((this.salaryHistoryForm.value.percentile * this.empHistory.salary)/ 100) >= 0) {
 
 
 
         if (!this.updatehistory) {
           var empSalary: EmployeeSalryPostDto = {
             employeeDetailId: this.empHistory.id,
-            amount: this.salaryHistoryForm.value.amount,
-            projectName: this.salaryHistoryForm.value.projectName,
+            percentile: this.salaryHistoryForm.value.percentile,
+            projectId: this.salaryHistoryForm.value.projectId,
 
           }
           this.hrmService.addEmployeeSalaryHistory(empSalary).subscribe({
@@ -75,8 +89,8 @@ export class HistorySalaryComponent implements OnInit {
         else {
           var empSalary2: EmployeeSalaryGetDto = {
             id: this.updatehistory.id,
-            amount: this.salaryHistoryForm.value.amount,
-            projectName: this.salaryHistoryForm.value.projectName,
+            percentile: this.salaryHistoryForm.value.percentile,
+            projectId: this.salaryHistoryForm.value.projectId,
 
           }
           this.hrmService.updateEmployeeSalaryHistory(empSalary2).subscribe({
@@ -109,8 +123,8 @@ export class HistorySalaryComponent implements OnInit {
   updateSalaryHistory(item: EmployeeSalaryGetDto) {
 
     this.updatehistory = item
-    this.salaryHistoryForm.controls['projectName'].setValue(item.projectName)
-    this.salaryHistoryForm.controls['amount'].setValue(item.amount)
+    this.salaryHistoryForm.controls['projectId'].setValue(item.projectId)
+    this.salaryHistoryForm.controls['percentile'].setValue(item.percentile)
   }
 
   deleteEmployeeHistory(id: string) {

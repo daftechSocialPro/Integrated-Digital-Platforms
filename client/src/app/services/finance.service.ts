@@ -143,6 +143,9 @@ export class FinanceService {
     return this.http.put<ResponseMessage>(this.BaseURI + "/Payroll/ApprovePayroll",approvePayrollData)
   }
 
+  autorizePayroll(autorizedPayrollData: CheckOrApprovePayrollDto){
+    return this.http.put<ResponseMessage>(this.BaseURI + "/Payroll/AutorizePayroll",autorizedPayrollData)
+  }
   //BeiginningBalance
   getChartsForBegnning(periodId: string){
     return this.http.get<ResponseMessage>(this.BaseURI + "/BegnningBalance/GetChartsForBegnning?PeriodId=" + periodId)

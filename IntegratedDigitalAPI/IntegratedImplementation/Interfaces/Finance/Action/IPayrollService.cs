@@ -14,5 +14,6 @@ namespace IntegratedImplementation.Interfaces.Finance.Action
         Task<List<PayrollDataListDto>> GetPayrollDataList();
         Task<ResponseMessage> CheckPayroll(ApprovePayrollDataDto payrollDataDto);
         Task<ResponseMessage> ApprovePayroll(ApprovePayrollDataDto payrollDataDto);
+        Task<ResponseMessage> AutorizePayroll(ApprovePayrollDataDto payrollDataDto);
     }
 }
