@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmEventType, ConfirmationService, MessageService } from 'primeng/api';
 import { EmployeeBenefitListDto } from 'src/app/model/HRM/IEmployeeBenefitDto';
 import { HrmService } from 'src/app/services/hrm.service';
 import { AddEmployeeBenefitComponent } from './add-employee-benefit/add-employee-benefit.component';
@@ -44,6 +44,45 @@ export class EmployeeBenefitsComponent implements OnInit {
     });
   }
 
+  deleteEmployeeBenefit(benefitId: string) {
+
+    this.confirmationService.confirm({
+      message: 'Do you want to delete this benefit?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.hrmService.deleteEmployeeBenefit(benefitId).subscribe({
+          next: (res) => {
+
+            if (res.success) {
+              this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: res.message });
+              this.getEmployeeBenefits()
+            }
+            else {
+              this.messageService.add({ severity: 'error', summary: 'Rejected', detail: res.message });
+            }
+          }, error: (err) => {
+
+            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: err });
+
+
+          }
+        })
+
+      },
+      reject: (type: ConfirmEventType) => {
+        switch (type) {
+          case ConfirmEventType.REJECT:
+            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
+            break;
+          case ConfirmEventType.CANCEL:
+            this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
+            break;
+        }
+      },
+      key: 'positionDialog'
+    });
+  }
  
 
 }

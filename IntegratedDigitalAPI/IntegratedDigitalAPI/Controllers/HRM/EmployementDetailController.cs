@@ -217,6 +217,20 @@ namespace IntegratedDigitalAPI.Controllers.HRM
             }
         }
 
+        [HttpDelete]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> DeleteEmployeeBenefit(Guid benefitId)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _employementDetailService.DeleteEmployeeBenefit(benefitId));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
         [HttpGet]
         [ProducesResponseType(typeof(ContractEndEmployeesDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetContractEndEmployees()
