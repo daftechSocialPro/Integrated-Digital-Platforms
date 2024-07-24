@@ -20,7 +20,7 @@ import { UserView } from 'src/models/auth/userDto';
   templateUrl: './admin-dashbord.component.html',
   styleUrls: ['./admin-dashbord.component.scss']
 })
-export default class AdminDashbordComponent {
+export default class AdminDashbordComponent implements OnInit {
 
   members: IMembersGetDto[];
   filterdMembers:IMembersGetDto[]

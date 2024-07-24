@@ -19,6 +19,7 @@ import { ReceiptComponent } from './receipt/receipt.component';
 const routes: Routes = [
   
   { path: 'financeconfig', canActivate: [AuthGuard], component: FinanceConfigurationComponent },
+  { path: 'income-tax-declaration', canActivate: [AuthGuard], component: IncomeTaxDeclarationComponent },
   { path: 'payments', canActivate: [AuthGuard], component: PaymentsComponent },
   { path: 'payments/addpayment', canActivate: [AuthGuard], component: AddPaymentsComponent },
   { path: 'payroll', canActivate: [AuthGuard], component: PayrollComponent },

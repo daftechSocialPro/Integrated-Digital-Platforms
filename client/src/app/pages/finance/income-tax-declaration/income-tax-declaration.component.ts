@@ -60,7 +60,7 @@ generateReport(){
     next: (res) => {
       this.pensionReportList = res
 
-      console.log("IncomeTaxReportGetDto",res)
+   
     }
   })
 }

@@ -237,7 +237,29 @@ export class AssignedActivitiesComponent implements OnInit {
     });
   }
 
-  onProgressBudgetAdded(activityId: string, month: any, target: any) {
+  onProgressBudgetAdded(activityId: string, month: any, target: any,monthPerfr:any,selectedMonth:number) {
+
+
+    var tar = this.getMonthPeroformance3(monthPerfr, selectedMonth);
+   
+    
+
+    if (target.value > tar) {
+      var valll = this.getMonthPeroformance4(monthPerfr, selectedMonth);
+      target.value = valll;
+
+     
+
+      this.messageService.add({
+        severity: 'error',
+            summary: 'Budget Error!',
+            detail: "used budget is greater than targeted budget",
+      })
+
+      return
+    }
+
+   
     var actprogress: UpdateActivityProgressDto = {
       activityId: activityId,
       usedBudget: target.value,

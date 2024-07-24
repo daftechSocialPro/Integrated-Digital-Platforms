@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\Finance\NewFolder\**" />
+    <Content Remove="Controllers\Finance\NewFolder\**" />
+    <EmbeddedResource Remove="Controllers\Finance\NewFolder\**" />
+    <None Remove="Controllers\Finance\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="wwwroot\%2a%2a" />
   </ItemGroup>
 

@@ -8,7 +8,8 @@ export const environment = {
   baseUrl:'https://emwamms.org/api',
   assetUrl :'https://emwamms.org',
   paymentUrl : 'https://emwamms.org/',
-  moodleUrl: 'https://emwa-elearning.com/webservice/rest/server.php'
+  moodleUrl: 'https://emwa-elearning.com/webservice/rest/server.php',
+  smsUrl:'https://api.geezsms.com/api/v1/sms/send'
 
  
   // clienUrl:"http://5.75.176.87:4201",

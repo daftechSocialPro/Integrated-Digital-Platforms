@@ -6,6 +6,7 @@ using IntegratedImplementation.Interfaces.Finance.Configuration;
 using IntegratedInfrustructure.Data;
 using IntegratedInfrustructure.Model.FInance.Configuration;
 using Microsoft.EntityFrameworkCore;
+
 using static IntegratedInfrustructure.Data.EnumList;
 
 namespace IntegratedImplementation.Services.Finance.Configuration

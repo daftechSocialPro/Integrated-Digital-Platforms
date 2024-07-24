@@ -88,7 +88,7 @@ export interface PlanBarChartPostDto{
 
 export interface ChartDataSet{
     label: string
-    data: number
+    data: any
 
 }
 

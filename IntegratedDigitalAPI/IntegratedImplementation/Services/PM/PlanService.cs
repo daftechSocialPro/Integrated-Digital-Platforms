@@ -206,7 +206,7 @@ namespace IntegratedDigitalAPI.Services.PM
 
 
 
-                          }).OrderBy(x=>x.CreatedDate).ToListAsync();
+                          }).OrderBy(x => x.CreatedDate).ToListAsync();
 
 
 
@@ -240,7 +240,7 @@ namespace IntegratedDigitalAPI.Services.PM
                              NumberOfTerminated = _dBContext.Activities.Include(x => x.ActivityParent).Count(x => x.Status == Status.TERMINATED && (x.TaskId == t.Id || x.ActivityParent.TaskId == t.Id)),
                              CreatedDate = t.CreatedDate
 
-                         }).OrderBy(x=>x.CreatedDate).ToList();
+                         }).OrderBy(x => x.CreatedDate).ToList();
 
 
             float taskBudgetsum = tasks.Sum(x => x.PlannedBudget);
@@ -708,12 +708,11 @@ namespace IntegratedDigitalAPI.Services.PM
         public async Task<PlanBarChartPostDto> GetPlanBarCharts(Guid? planId, Guid? strategicPlanId)
         {
             int currentYear = DateTime.Now.Year;
-            var quarterSums = new Dictionary<int, (double overallProgress, double overallBudgetUtil)>();
+            var quarterSums = new Dictionary<int, (double overallProgress, double overallBudgetUtil, double overallPlannedProgress, double overallPlannedBudgetUtil)>();
 
 
             if (planId != Guid.Empty)
             {
-
                 var projects = await _dBContext.Projects.Include(x => x.Tasks).ToListAsync();
 
                 if (planId != Guid.Parse("30fc30dc-eb56-4f40-9510-54ad983e759a"))
@@ -721,47 +720,54 @@ namespace IntegratedDigitalAPI.Services.PM
                     projects = projects.Where(x => x.Id == planId).ToList();
                 }
 
+
                 foreach (var project in projects)
                 {
-
-
-
                     foreach (var task in project.Tasks)
                     {
-                        var activities = _dBContext.ActivitiesParents.Where(x => x.TaskId == task.Id)
-                                         .Join(_dBContext.Activities,
-                                                  a => a.Id,
-                                                  e => e.ActivityParentId,
-                                                  (a, e) => e)
-                                            .ToList();
+                        var activities = await _dBContext.ActivitiesParents
+                            .Where(x => x.TaskId == task.Id)
+                            .Join(_dBContext.Activities, a => a.Id, e => e.ActivityParentId, (a, e) => e)
+                            .ToListAsync();
 
                         foreach (var activity in activities)
                         {
+                            var quarterIds = await _dBContext.ActivityTargetDivisions
+                                .Where(x => x.ActivityId == activity.Id && x.Year == currentYear)
+                                .OrderBy(x => x.Order)
+                                .Select(x => x.Id)
+                                .ToListAsync();
 
-                            var quarterIds = _dBContext.ActivityTargetDivisions.Where(x => x.ActivityId == activity.Id && x.Year == currentYear)
-                                            .OrderBy(x => x.Order)
-                                            .Select(x => x.Id)
-                                            .ToList();
                             int index = 1;
-
                             double overallProgressSum = 0;
                             double overallBudgetUtilSum = 0;
+                            double overallPlannedProgressSum = 0;
+                            double overallPlannedBudgetUtilSum = 0;
+
                             foreach (var quarter in quarterIds)
                             {
-                                var OverAllProgress = _dBContext.ActivityProgresses
-                                .Where(x => x.ActivityId == activity.Id && x.QuarterId == quarter 
-                                //&& x.IsApprovedByDirector == EnumList.ApprovalStatus.APPROVED && x.IsApprovedByFinance == EnumList.ApprovalStatus.APPROVED && x.IsApprovedByManager == EnumList.ApprovalStatus.APPROVED
-                                )
-                                .Sum(x => x.ActualWorked) / activity.Goal;
+                                double overallProgress = await _dBContext.ActivityProgresses
+                                    .Where(x => x.ActivityId == activity.Id && x.QuarterId == quarter)
+                                    .SumAsync(x => x.ActualWorked);
 
-                                var OverAllBudgetUtil = activity.PlanedBudget != 0 ? _dBContext.ActivityProgresses
-                                .Where(x => x.ActivityId == activity.Id && x.QuarterId == quarter 
-                                //&& x.IsApprovedByDirector == EnumList.ApprovalStatus.APPROVED && x.IsApprovedByFinance == EnumList.ApprovalStatus.APPROVED && x.IsApprovedByManager == EnumList.ApprovalStatus.APPROVED
-                                )
-                                .Sum(x => x.ActualBudget) / activity.PlanedBudget : 0;
+                                double overallPlannedProgress = await _dBContext.ActivityTargetDivisions
+                                    .Where(x => x.ActivityId == activity.Id && x.Id == quarter)
+                                    .SumAsync(x => x.Target);
 
-                                overallProgressSum += OverAllProgress;
-                                overallBudgetUtilSum += OverAllBudgetUtil;
+                                double overallBudgetUtil = activity.PlanedBudget != 0
+                                    ? await _dBContext.ActivityProgresses
+                                        .Where(x => x.ActivityId == activity.Id && x.QuarterId == quarter)
+                                        .SumAsync(x => x.ActualBudget)
+                                    : 0;
+
+                                double overallPlannedBudget = await _dBContext.ActivityTargetDivisions
+                                    .Where(x => x.ActivityId == activity.Id && x.Id == quarter)
+                                    .SumAsync(x => x.TargetBudget);
+
+                                overallProgressSum += overallProgress;
+                                overallBudgetUtilSum += overallBudgetUtil;
+                                overallPlannedProgressSum += overallPlannedProgress;
+                                overallPlannedBudgetUtilSum += overallPlannedBudget;
 
                                 if (index % 3 == 0)
                                 {
@@ -771,66 +777,71 @@ namespace IntegratedDigitalAPI.Services.PM
                                         var existingSum = quarterSums[dictIndex];
                                         overallProgressSum += existingSum.overallProgress;
                                         overallBudgetUtilSum += existingSum.overallBudgetUtil;
+                                        overallPlannedProgressSum += existingSum.overallPlannedProgress;
+                                        overallPlannedBudgetUtilSum += existingSum.overallPlannedBudgetUtil;
                                     }
-                                    quarterSums[dictIndex] = (overallProgressSum, overallBudgetUtilSum);
+
+                                    quarterSums[dictIndex] = (overallProgressSum, overallBudgetUtilSum, overallPlannedProgressSum, overallPlannedBudgetUtilSum);
+
                                     overallProgressSum = 0;
                                     overallBudgetUtilSum = 0;
+                                    overallPlannedProgressSum = 0;
+                                    overallPlannedBudgetUtilSum = 0;
                                 }
                                 index++;
                             }
 
-
+                            if (index % 3 != 1)
+                            {
+                                int dictIndex = (index - 1) / 3 + 1;
+                                if (quarterSums.ContainsKey(dictIndex))
+                                {
+                                    var existingSum = quarterSums[dictIndex];
+                                    overallProgressSum += existingSum.overallProgress;
+                                    overallBudgetUtilSum += existingSum.overallBudgetUtil;
+                                    overallPlannedProgressSum += existingSum.overallPlannedProgress;
+                                    overallPlannedBudgetUtilSum += existingSum.overallPlannedBudgetUtil;
+                                }
+                                quarterSums[dictIndex] = (overallProgressSum, overallBudgetUtilSum, overallPlannedProgressSum, overallPlannedBudgetUtilSum);
+                            }
                         }
-
-
-
-
                     }
-
                 }
-                var chartDataSets = new List<ChartDataSet>();
+
+                var chartDataSets = new List<ChartDataSet2>();
+                var chartDataSets1 = new List<ChartDataSet2>();
 
                 foreach (var (status, value) in quarterSums)
                 {
+                    chartDataSets.Add(new ChartDataSet2
+                    {
+                        Label = status.ToString(),
+                        Data = new DashData
+                        {
+                            Planned = (float)value.overallPlannedProgress,
+                            Actual = (float)value.overallProgress
+                        }
+                    });
 
-                    double overallProgress = value.overallProgress;
-
-                    chartDataSets.Add(
-                      new ChartDataSet
-                      {
-                          Label = status.ToString(),
-                          Data = (float)overallProgress * 100
-                      }
-                    );
-                }
-                var chartDataSets1 = new List<ChartDataSet>();
-
-                foreach (var (status, value) in quarterSums)
-                {
-
-                    double overallBudgetUtil = value.overallBudgetUtil;
-
-                    chartDataSets1.Add(
-                      new ChartDataSet
-                      {
-                          Label = status.ToString(),
-                          Data = (float)overallBudgetUtil * 100
-                      }
-                    );
+                    chartDataSets1.Add(new ChartDataSet2
+                    {
+                        Label = status.ToString(),
+                        Data = new DashData
+                        {
+                            Planned = (float)value.overallPlannedBudgetUtil,
+                            Actual = (float)value.overallBudgetUtil
+                        }
+                    });
                 }
 
                 return new PlanBarChartPostDto
                 {
-                    PlanName = planId == Guid.Parse("30fc30dc-eb56-4f40-9510-54ad983e759a") ? "ALL" : projects.Any() ? projects.FirstOrDefault().ProjectName : "",
-
+                    PlanName = planId == Guid.Parse("30fc30dc-eb56-4f40-9510-54ad983e759a") ? "ALL" : projects.Any() ? projects.FirstOrDefault()?.ProjectName ?? "" : "",
                     BudgetChartDataSets = chartDataSets1,
                     ProgressChartDataSets = chartDataSets
-
-
                 };
-
-
             }
+
             else
             {
                 var strategicPlan = await _dBContext.StrategicPlans.Where(x => x.Id == strategicPlanId).FirstOrDefaultAsync();
@@ -853,22 +864,38 @@ namespace IntegratedDigitalAPI.Services.PM
 
                     double overallProgressSum = 0;
                     double overallBudgetUtilSum = 0;
+
+                    double overallPlannedProgressSum = 0;
+                    double overallPlannedBudgetUtilSum = 0;
                     foreach (var quarter in quarterIds)
                     {
                         var OverAllProgress = _dBContext.ActivityProgresses
-                        .Where(x => x.ActivityId == activity.Id && x.QuarterId == quarter 
-                       // && x.IsApprovedByDirector == EnumList.ApprovalStatus.APPROVED && x.IsApprovedByFinance == EnumList.ApprovalStatus.APPROVED && x.IsApprovedByManager == EnumList.ApprovalStatus.APPROVED
+                        .Where(x => x.ActivityId == activity.Id && x.QuarterId == quarter
+                        // && x.IsApprovedByDirector == EnumList.ApprovalStatus.APPROVED && x.IsApprovedByFinance == EnumList.ApprovalStatus.APPROVED && x.IsApprovedByManager == EnumList.ApprovalStatus.APPROVED
                         )
-                        .Sum(x => x.ActualWorked) / activity.Goal;
+                        .Sum(x => x.ActualWorked);
+
+                        var overAllPlannedProgress = _dBContext.ActivityTargetDivisions.
+                                   Where(x => x.ActivityId == activity.Id && x.Id == quarter).Sum(x => x.Target);
+
+
 
                         var OverAllBudgetUtil = activity.PlanedBudget != 0 ? _dBContext.ActivityProgresses
                         .Where(x => x.ActivityId == activity.Id && x.QuarterId == quarter
                         //&& x.IsApprovedByDirector == EnumList.ApprovalStatus.APPROVED && x.IsApprovedByFinance == EnumList.ApprovalStatus.APPROVED && x.IsApprovedByManager == EnumList.ApprovalStatus.APPROVED
                         )
-                        .Sum(x => x.ActualBudget) / activity.PlanedBudget : 0;
+                        .Sum(x => x.ActualBudget) : 0;
+
+
+                        var overAllPlannedBudget = _dBContext.ActivityTargetDivisions.
+    Where(x => x.ActivityId == activity.Id && x.Id == quarter).Sum(x => x.TargetBudget);
+
 
                         overallProgressSum += OverAllProgress;
                         overallBudgetUtilSum += OverAllBudgetUtil;
+
+                        overallPlannedProgressSum += overAllPlannedProgress;
+                        overallPlannedBudgetUtilSum += overAllPlannedBudget;
 
                         if (index % 3 == 0)
                         {
@@ -876,10 +903,10 @@ namespace IntegratedDigitalAPI.Services.PM
                             if (quarterSums.ContainsKey(dictIndex))
                             {
                                 var existingSum = quarterSums[dictIndex];
-                                overallProgressSum += existingSum.overallProgress;
-                                overallBudgetUtilSum += existingSum.overallBudgetUtil;
+                                //overallProgressSum += existingSum.overallProgress;
+                                //overallBudgetUtilSum += existingSum.overallBudgetUtil;
                             }
-                            quarterSums[dictIndex] = (overallProgressSum, overallBudgetUtilSum);
+                            quarterSums[dictIndex] = (overallProgressSum, overallBudgetUtilSum, overallPlannedProgressSum, overallPlannedBudgetUtilSum);
                             overallProgressSum = 0;
                             overallBudgetUtilSum = 0;
                         }
@@ -893,33 +920,48 @@ namespace IntegratedDigitalAPI.Services.PM
 
 
 
-                var chartDataSets = new List<ChartDataSet>();
+                var chartDataSets = new List<ChartDataSet2>();
 
                 foreach (var (status, value) in quarterSums)
                 {
 
                     double overallProgress = value.overallProgress;
+                    double overAllTarget = value.overallPlannedProgress;
 
                     chartDataSets.Add(
-                      new ChartDataSet
+                      new ChartDataSet2
                       {
                           Label = status.ToString(),
-                          Data = (float)overallProgress * 100
+                          Data = new DashData
+                          {
+                              Actual = (float)overallProgress,
+
+                              Planned = (float)overAllTarget
+                          }
+
+
+
+
                       }
                     );
                 }
-                var chartDataSets1 = new List<ChartDataSet>();
+                var chartDataSets1 = new List<ChartDataSet2>();
 
                 foreach (var (status, value) in quarterSums)
                 {
 
                     double overallBudgetUtil = value.overallBudgetUtil;
+                    double OverAllTarget = value.overallPlannedBudgetUtil;
 
                     chartDataSets1.Add(
-                      new ChartDataSet
+                      new ChartDataSet2
                       {
                           Label = status.ToString(),
-                          Data = (float)overallBudgetUtil * 100
+                          Data = new DashData
+                          {
+                              Planned = (float)OverAllTarget,
+                              Actual = (float)overallBudgetUtil
+                          }
                       }
                     );
                 }

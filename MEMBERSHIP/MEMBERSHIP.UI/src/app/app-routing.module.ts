@@ -6,6 +6,7 @@ import { AuthGuard } from './auth/auth.guard';
 import { MembersDashboardComponent } from './demo/pages/members/members-dashboard/members-dashboard.component';
 import AdminDashbordComponent from './demo/admin-dashbord/admin-dashbord.component';
 import { OnConstructionComponent } from './demo/on-construction/on-construction.component';
+import { BoardMemberDashbaordComponent } from './demo/board-member-dashbaord/board-member-dashbaord.component';
 
 const routes: Routes = [
   {
@@ -73,6 +74,11 @@ const routes: Routes = [
     path:'on-construction',
     component:OnConstructionComponent
 
+  },
+  {
+    path: 'board-member-dashboard',
+
+    component:BoardMemberDashbaordComponent
   },
   {
     path: '',

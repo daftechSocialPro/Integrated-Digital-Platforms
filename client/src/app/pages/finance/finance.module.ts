@@ -66,6 +66,7 @@ import { AddClientComponent } from './finance-configuration/client-list/add-clie
 
 
 
+
 @NgModule({
   declarations: [
     FinanceConfigurationComponent,
@@ -98,11 +99,9 @@ import { AddClientComponent } from './finance-configuration/client-list/add-clie
     PendingPurchaseInvoiceComponent,
     ApprovedPurchaseInvoiceComponent,
     PayLoanComponent,
-    IncomeTaxDeclarationComponent, 
-    
+    IncomeTaxDeclarationComponent,     
     AccountReconcilliationComponent,
-    FinanceReportComponent,
- 
+    FinanceReportComponent, 
     PensionReportComponent,
     IncomeTaxReportComponent,
     PensionDeclarationComponent,

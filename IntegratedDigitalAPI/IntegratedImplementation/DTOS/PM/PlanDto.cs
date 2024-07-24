@@ -115,8 +115,8 @@ namespace IntegratedDigitalAPI.DTOS.PM
     {
         public string PlanName { get; set; }
 
-        public List<ChartDataSet> BudgetChartDataSets { get; set; }
-        public List<ChartDataSet> ProgressChartDataSets { get; set; }
+        public List<ChartDataSet2> BudgetChartDataSets { get; set; }
+        public List<ChartDataSet2> ProgressChartDataSets { get; set; }
     }
 
     public record ChartDataSet
@@ -124,6 +124,24 @@ namespace IntegratedDigitalAPI.DTOS.PM
         public string Label { get; set; }
         public float Data { get; set; }
     }
+
+
+
+    public record ChartDataSet2
+    {
+        public string Label { get; set; }
+        public DashData Data { get; set; }
+    }
+
+
+
+
+    public record DashData
+    {
+        public float Planned { get; set; }
+        public float Actual { get; set; }
+    }
+    
     public class TaskVIewDto
     {
         public Guid Id { get; set; }

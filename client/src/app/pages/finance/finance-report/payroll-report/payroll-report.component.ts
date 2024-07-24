@@ -75,7 +75,7 @@ export class PayrollReportComponent implements OnInit {
     });
     this.financeService.getPayrollReport(formattedDate).subscribe({
       next: (res) => {
-        console.log('payroll report', res);
+      
         this.payrollReportList = res;
       },
     });

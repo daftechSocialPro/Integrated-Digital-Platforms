@@ -36,9 +36,12 @@
 
                                     <div class="flex flex-column gap-2">
                                         <label htmlFor="startDate">Start Date</label>
-
+<!-- 
                                         <p-calendar formControlName="StartDate" [minDate]="minDate" [maxDate]="maxDate"
-                                            inputId="yearpicker"></p-calendar>
+                                            inputId="yearpicker"></p-calendar> -->
+
+                                            <input type="date" class="form-control" id="yearpicker"  formControlName="StartDate" 
+                                            [min] = "minDate" [max] = "maxDate"> 
 
                                     </div>
 
@@ -47,8 +50,11 @@
                                     <div class="flex flex-column gap-2">
                                         <label htmlFor="startDate">End Date</label>
 
-                                        <p-calendar formControlName="EndDate" [minDate]="minDate" [maxDate]="maxDate"
-                                            inputId="yearpicker"></p-calendar>
+                                        <!-- <p-calendar formControlName="EndDate" [minDate]="minDate" [maxDate]="maxDate"
+                                            inputId="yearpicker"></p-calendar> -->
+
+                                            <input type="date" class="form-control" id="yearpicker"  formControlName="EndDate" 
+                                            [min] = "minDate" [max] = "maxDate"> 
 
                                     </div>
                                 </div>
