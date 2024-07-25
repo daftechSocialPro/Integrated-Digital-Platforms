@@ -522,6 +522,10 @@ export class HrmService {
         return this.http.post<ResponseMessage>(this.baseUrl + "/EmployementDetail/AddEmployeeBenefit", addBenefit);
     }
 
+    deleteEmployeeBenefit(benefitId: string) {
+        return this.http.delete<ResponseMessage>(this.baseUrl + "/EmployementDetail/DeleteEmployeeBenefit?benefitId=" + benefitId);
+    }
+
 
     /// Employee Finger PRint
 

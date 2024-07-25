@@ -65,6 +65,8 @@ import { AddClientComponent } from './finance-configuration/client-list/add-clie
 import { TaxRateComponent } from './finance-configuration/tax-rate/tax-rate.component';
 import { AddTaxRateComponent } from './finance-configuration/tax-rate/add-tax-rate/add-tax-rate.component';
 import { AuthorizedPaymentsComponent } from './payments/authorized-payments/authorized-payments.component';
+import { FinanceDashboardComponent } from './finance-dashboard/finance-dashboard.component';
+import { NgxEchartsModule } from 'ngx-echarts';
 // import { PensionDeclarationComponent } from './pension-declaration/pension-declaration.component';
 
 
@@ -116,6 +118,7 @@ import { AuthorizedPaymentsComponent } from './payments/authorized-payments/auth
     TaxRateComponent,
     AddTaxRateComponent,
     AuthorizedPaymentsComponent,
+    FinanceDashboardComponent,
     
 
   ],
@@ -142,6 +145,9 @@ import { AuthorizedPaymentsComponent } from './payments/authorized-payments/auth
     CheckboxModule,
     MultiSelectModule,
     FileUploadModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts'),
+    }),
   
 
 

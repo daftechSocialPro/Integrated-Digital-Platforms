@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
-import { AddEmployeeBenefitDto } from 'src/app/model/HRM/IEmployeeBenefitDto';
+import { AddEmployeeBenefitDto, EmployeeBenefitListDto } from 'src/app/model/HRM/IEmployeeBenefitDto';
 import { SelectList } from 'src/app/model/common';
 import { UserView } from 'src/app/model/user';
 import { DropDownService } from 'src/app/services/dropDown.service';
@@ -26,7 +26,7 @@ export class AddEmployeeBenefitComponent implements OnInit {
     {value: 1, name : "Number"},
   ];
   today: Date = new Date();
-  employeeBenefitList: AddEmployeeBenefitDto [] = []
+  employeeBenefitList: EmployeeBenefitListDto [] = []
   user !: UserView
 
   constructor(
@@ -81,13 +81,24 @@ export class AddEmployeeBenefitComponent implements OnInit {
         employeeBenefit.allowanceEndDate = this.employeeBenefitForm.value.allowanceEndDate;
       }
 
-      this.employeeBenefitList.push(employeeBenefit);
+      console.log("this.employeeBenefitList",this.employeeBenefitList)
+      
 
       this.hrmService.addEmployeeBenefit(employeeBenefit).subscribe(
         {
           next: (res) => {
             if (res.success) {
               this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });
+              const benefit: EmployeeBenefitListDto = {
+                id : " ",
+                typeofBenefit: this.typeOfBenefitList.find(x => x.value == this.employeeBenefitForm.value.typeOfBenefit).name,
+                benefitName: this.benefitsDropDown.find(x => x.id == this.employeeBenefitForm.value.benefitListId).name,
+                recursive: this.employeeBenefitForm.value.recursive,
+                amount: this.employeeBenefitForm.value.ammount,
+                allowanceEndDate: this.employeeBenefitForm.value.allowanceEndDate
+              }
+              this.employeeBenefitList.push(benefit);
+              this.employeeBenefitForm.reset()
 
             }
             else {

@@ -20,6 +20,7 @@ import { AddReceiptDto } from '../model/Finance/IReceiptModel';
 import { AccountReconsilationFindDto, AccountToBeReconsiledDto, AddAccountReconsilationDto } from '../model/Finance/IAccountReconsilationDto';
 import { AddClientDto, ClientsListDto } from '../model/Finance/IFinanceSettingDto';
 import { AddTaxRateDto, TaxRateDto } from '../model/Finance/ITaxRateDto';
+import { FinanceDashboardDTO, FinanceBarChartPostDto } from '../model/Finance/IFinanceDashboard';
 
 @Injectable({
   providedIn: 'root'
@@ -244,4 +245,12 @@ addTaxRate(addRate: AddTaxRateDto) {
   return this.http.post<ResponseMessage>(this.BaseURI + "/TaxRate/AddTaxRate", addRate)
 }
 
+//dashboard
+getDashboardData(){
+  return this.http.get<FinanceDashboardDTO>(this.BaseURI + "/FinanceDashboard/GetDashboardData")
+}
+
+getDashboardChart(planId : string){
+  return this.http.get<FinanceBarChartPostDto>(this.BaseURI + "/FinanceDashboard/GetDashboardChart?planId=" + planId)
+}
 }
