@@ -380,6 +380,29 @@ namespace IntegratedImplementation.Services.HRM
             return new ResponseMessage { Success = true, Message = "Successfully added Employee Benefit" };
         }
 
+        public async Task<ResponseMessage> DeleteEmployeeBenefit(Guid benefitId)
+        {
+            var empBenefit = await _dbContext.EmployeeBenefits.FindAsync(benefitId);
+
+            if(empBenefit == null)
+            {
+                return new ResponseMessage
+                {
+                    Success = false,
+                    Message = "Employee Benefit Not Found!!!"
+                };
+            }
+
+            _dbContext.EmployeeBenefits.Remove(empBenefit);
+            await _dbContext.SaveChangesAsync();
+
+            return new ResponseMessage
+            {
+                Success = true,
+                Message = "Employee Benefit Deleted Successfully!!!"
+            };
+        }
+
         public async Task<ResponseMessage> RehireEmployee(RehireEmployeeDto rehireEmployee)
         {
             var curEmployee = await _dbContext.Employees.FirstOrDefaultAsync(x => x.Id == rehireEmployee.EmployeeId);

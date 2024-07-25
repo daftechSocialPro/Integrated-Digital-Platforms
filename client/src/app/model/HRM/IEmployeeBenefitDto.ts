@@ -1,4 +1,4 @@
-export interface EmployeeBenefitListDto {
+export class EmployeeBenefitListDto {
     id: string;
     benefitName: string;
     typeofBenefit: string;
