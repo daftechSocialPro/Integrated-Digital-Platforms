@@ -49,6 +49,14 @@
                                             </div>
                                             <div class="col-md-6 ">
                                                 <div class="form-floating">
+                                                    <select class="form-control" formControlName="bankId">
+                                                        <option *ngFor="let item of bankDropDown" [value]="item.id">{{item.name}}</option>
+                                                    </select>
+                                                    <label for="bankId">Bank</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 ">
+                                                <div class="form-floating">
                                                     <select class="form-control" formControlName="typeOfPayee" #payee>
                                                         <option *ngFor="let item of typeOfPayee" [value]="item.value">{{item.name}}</option>
                                                     </select>
@@ -56,34 +64,53 @@
                                                 </div>
                                             </div>
                                         
-                                            <div *ngIf="payee.value == '0'" class="col-md-6 ">
-                                                <div class="form-floating">
-                                                    <select class="form-control" formControlName="supplierId">
-                                                        <option *ngFor="let item of supplierDropDown" [value]="item.id">{{item.name}}</option>
-                                                    </select>
-                                                    <label for="supplierId">Supplier</label>
+                                            <div *ngIf="payee.value == '0'">
+                                                <div class="col-md-6">
+                                                    <div class="form-floating">
+                                                        <select class="form-control" formControlName="supplierId" #supplier
+                                                            (change)="onSupplierChange(supplier.value)">
+                                                            <option *ngFor="let item of supplierDropDown" [value]="item.id">{{item.name}}</option>
+                                                        </select>
+                                                        <label for="supplierId">Supplier</label>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <button pButton type="button" icon="pi pi-plus" class="ui-button-info btn-sm"
+                                                            (click)="newVendor()"></button>
+                                                    </div>
                                                 </div>
+                                                <div class="form-floating col-md-6">
+                                                    <select class="form-control" #supplierAccount (change)="onAccountChange(supplierAccount.value)">
+                                                        <option *ngFor="let item of beneficiaryAccount" [value]="item.id">{{item.name}} - {{item.reason}}</option>
+                                                    </select>
+                                                    <label>Supplier Account</label>
+                                                </div>
+                                            
                                             </div>
-                                            <div *ngIf="payee.value == '1'" class="col-md-6 ">
-                                                <div class="form-floating">
-                                                    <select class="form-control" formControlName="employeeId">
+                                            
+                                            <div *ngIf="payee.value == '1'">
+                                                <div class="form-floating col-md-6">
+                                                    <select class="form-control" formControlName="employeeId" #employee (change)="onEmployeeChange(employee.value)">
                                                         <option *ngFor="let item of employeeDropDown" [value]="item.id">{{item.name}}</option>
                                                     </select>
                                                     <label for="employeeId">Employee</label>
                                                 </div>
-                                            </div>
-                                            <div *ngIf="payee.value == '2'" class="col-md-6 ">
-                                                <div class="form-floating">
-                                                    <input type="text" class="form-control" id="otherBeneficiary" formControlName="otherBeneficiary"   >
-                                                    <label for="otherBeneficiary">Name</label>
+                                                <div class="form-floating col-md-6">
+                                                    <select class="form-control" #employeeAccount (change)="onAccountChange(employeeAccount.value)">
+                                                        <option *ngFor="let item of beneficiaryAccount" [value]="item.id">{{item.name}} - {{item.reason}}
+                                                        </option>
+                                                    </select>
+                                                    <label>Employee Account</label>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6 ">
-                                                <div class="form-floating">
-                                                    <select class="form-control" formControlName="bankId">
-                                                        <option *ngFor="let item of bankDropDown" [value]="item.id">{{item.name}}</option>
-                                                    </select>
-                                                    <label for="bankId">Bank</label>
+                                            <div *ngIf="payee.value == '2'">
+                                                <div class="form-floating col-md-6">
+                                                    <input type="text" class="form-control" id="otherBeneficiary" formControlName="otherBeneficiary">
+                                                    <label for="otherBeneficiary">Name</label>
+                                                </div>
+                                                <div class="form-floating col-md-6">
+                                                    <input type="text" class="form-control" id="beneficiaryAccountNumber"
+                                                        formControlName="beneficiaryAccountNumber">
+                                                    <label for="beneficiaryAccountNumber">Account Number</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
@@ -95,20 +122,17 @@
                                                         </ul>
                                                     </ng-template>
                                                 </p-fileUpload>
-                                        
                                             </div>
                                             <div class="col-md-12">
                                                 <textarea class="form-control" placeholder="Remark" formControlName="remark" id="remark" rows="5">
-                                                                                                                                    </textarea>
+                                                </textarea>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-8">
-
                                 <div class="card">
-
                                     <div class="card-body">
                                         <h5 class="card-title">Add Payment Details</h5>
                                         <form #itemsForm="ngForm">
@@ -184,10 +208,10 @@
                                                             {{purchaseRequest.quantity}}
                                                         </td>
                                                         <td>
-                                                            {{purchaseRequest.price | currency }}
+                                                            {{purchaseRequest.price | currency : 'ETB'}}
                                                         </td>
                                                         <td>
-                                                            {{purchaseRequest.price * purchaseRequest.quantity | currency }}
+                                                            {{purchaseRequest.price * purchaseRequest.quantity | currency : 'ETB' }}
                                                         </td>
                                                         <td style="text-align:center">
                                                             <button pButton type="button" icon="pi pi-times" class="ui-button-danger"

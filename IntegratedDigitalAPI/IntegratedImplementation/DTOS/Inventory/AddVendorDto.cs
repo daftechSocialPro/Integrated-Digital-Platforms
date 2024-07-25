@@ -34,8 +34,29 @@ namespace IntegratedImplementation.DTOS.Inventory
         public string? Email { get; set; } = null!;
         public string TinNumber { get; set; } = null!;
         public string Address { get; set; } = null!;
+        public List<VendorBankAccountDto> VendorBankAccounts { get; set; } = null!;
     }
 
 
+    public class VendorBankAccountDto
+    {
+        public Guid Id { get; set; }
+        public string BankName { get; set; } = null!;
+        public string AccountNumber { get; set; } = null!;
+    }
+
+    public class AddVendorBankAccountDto
+    {
+        public Guid VendorId { get; set; }
+        public string BankName { get; set; } = null!;
+        public string AccountNumber { get; set; } = null!;
+        public string CreatedById { get; set; } = null!;
+    }
+
+
+    public class UpdateVendorBankAccountDto : AddVendorBankAccountDto
+    {
+        public Guid Id { get; set; }
+    }
 
 }

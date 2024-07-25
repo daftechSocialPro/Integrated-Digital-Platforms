@@ -1,9 +1,19 @@
 export interface BeginningBalanceGetDto{
-    id: string
-    description: string
-    type: string
-    ammount: number,
-    remark: string,
+    id: string;
+    description: string;
+    type: string;
+    ammount: number;
+    remark: string;
+    subsidaryAccountBegningDtos: SubsidaryAccountBegningDto[];
+
+}
+
+export class SubsidaryAccountBegningDto
+{
+    id: string;
+    description: string;
+    ammount: number;
+    remark: string;
 }
 
 export interface BeginningBalancePostDto{
@@ -37,6 +47,7 @@ export class AddBegnningBalanceDto
 export class BegningBalanceDetailDto
 {
     chartOfAccountId: string;
+    subsidaryAccountId?: string;
     ammount: number;
     remark: string;
 }

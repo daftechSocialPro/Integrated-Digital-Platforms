@@ -33,6 +33,7 @@ export interface PaymentPostDto{
     supplierId?: string;
     employeeId?: string;
     otherBeneficiary?: string;
+    beneficiaryAccountNumber?: string;
     addPaymentDetails?: AddPaymentDetailDto[]
 }
 
@@ -51,4 +52,20 @@ export class AddPaymentDetailDto{
 export interface ApprovePaymentDto{
     id: string
     approvedById: string
+}
+
+export class PaymentLetterDto
+{
+    bankName: string;
+    bankAddress: string;
+    branchName: string;
+    accountNumber: string;
+    totalAmmount: number;
+    ammountInWords: string;
+    receiver: string;
+    reciverAccountNumber: string;
+    approver: string;
+    approverPosition: string;
+    authorizer: string;
+    authorizerPosition: string;
 }

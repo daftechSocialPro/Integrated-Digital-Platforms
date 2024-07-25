@@ -13,6 +13,7 @@ using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedImplementation.DTOS.Inventory;
 using static IntegratedInfrustructure.Data.EnumList;
 using IntegratedInfrustructure.Models.Inventory;
+using IntegratedInfrustructure.Model.Inventory;
 
 namespace IntegratedImplementation.Services.Inventory
 {
@@ -62,11 +63,28 @@ namespace IntegratedImplementation.Services.Inventory
             };
         }
 
-      
+  
 
         public async Task<List<VendorListDto>> GetVendorList()
         {
-            var vendors = await _dbContext.Vendors.AsNoTracking().Include(x => x.Country).ProjectTo<VendorListDto>(_mapper.ConfigurationProvider).ToListAsync();
+            var vendors = await _dbContext.Vendors.AsNoTracking().Include(x => x.Country).Include(x => x.VendorBanks)
+                                .Select(x => new VendorListDto
+                                {
+                                    Id = x.Id,
+                                    CountryName = x.Country.CountryName,
+                                    Email = x.Email,
+                                    Name = x.Name,
+                                    Address = x.Address,
+                                    PhoneNumber = x.PhoneNumber,
+                                    SupplierCode = x.SupplierCode,
+                                    TinNumber = x.TinNumber,
+                                    VendorBankAccounts = x.VendorBanks.Select(y => new VendorBankAccountDto
+                                    {
+                                        Id = y.Id,
+                                        AccountNumber = y.AccountNumber,
+                                        BankName = y.BankName,
+                                    }).ToList()
+                                }).ToListAsync();
             return vendors;
         }
 
@@ -90,6 +108,52 @@ namespace IntegratedImplementation.Services.Inventory
                 return new ResponseMessage { Data = currentVendor, Success = true };
             }
             return new ResponseMessage { Success = false, Message = "Unable To Find Vendor" };
+        }
+
+        public async Task<ResponseMessage> AddVendorBank(AddVendorBankAccountDto addVendor)
+        {
+            var currentVendor = await _dbContext.VendorBankAccounts.AnyAsync(x => x.AccountNumber == addVendor.AccountNumber);
+            if (currentVendor)
+                return new ResponseMessage { Success = false, Message = "Account already Exists" };
+
+          
+            VendorBankAccounts vendor = new VendorBankAccounts
+            {
+                Id = Guid.NewGuid(),
+                CreatedDate = DateTime.Now,
+                CreatedById = addVendor.CreatedById,
+                AccountNumber = addVendor.AccountNumber,
+                BankName = addVendor.BankName,
+                Rowstatus = RowStatus.ACTIVE,
+                VendorId = addVendor.VendorId
+            };
+
+            await _dbContext.VendorBankAccounts.AddAsync(vendor);
+            await _dbContext.SaveChangesAsync();
+
+            return new ResponseMessage
+            {
+                Data = vendor,
+                Message = "Added Successfully",
+                Success = true
+            };
+        }
+        public async Task<ResponseMessage> UpdateVendorBank(UpdateVendorBankAccountDto updateVendor)
+        {
+            var currentVendor = await _dbContext.VendorBankAccounts.FirstOrDefaultAsync(x => x.Id.Equals(updateVendor.Id));
+            if (currentVendor != null)
+            {
+                var vendorExist = await _dbContext.VendorBankAccounts.AnyAsync(x => (x.AccountNumber == updateVendor.AccountNumber) && x.Id != currentVendor.Id);
+                if (vendorExist)
+                    return new ResponseMessage { Success = false, Message = "Account already Exists" };
+
+                currentVendor.AccountNumber = updateVendor.AccountNumber;
+                currentVendor.BankName = updateVendor.BankName;
+
+                await _dbContext.SaveChangesAsync();
+                return new ResponseMessage { Data = currentVendor, Success = true };
+            }
+            return new ResponseMessage { Success = false, Message = "Unable To Find Account" };
         }
     }
 }

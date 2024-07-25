@@ -33,14 +33,14 @@ export class BeginningBalanceComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
-    this.getAccountingPeriodDropDown()
+    this.getAccountingYear()
     this.user = this.userService.getCurrentUser()
     this.addBeginningBalanceDetailList.totalCredit = 0;
     this.addBeginningBalanceDetailList.totalDebit = 0;
   }
 
-  getAccountingPeriodDropDown(){
-    this.dropDownService.getAccountingPeriodDropDown().subscribe({
+  getAccountingYear(){
+    this.dropDownService.getAccountingYear().subscribe({
       next: (res) => {
         this.accountingPeriodDropDown = res
       }
@@ -75,6 +75,7 @@ export class BeginningBalanceComponent implements OnInit {
     if (type == "CREDIT") {
       const totalAmount = this.beginningBalanceList.filter(x => x.type == "CREDIT").reduce((sum, balance) => {
         return sum + (balance.ammount || 0);
+        
       }, 0);
       this.addBeginningBalanceDetailList.totalCredit =  totalAmount
     }
@@ -82,14 +83,16 @@ export class BeginningBalanceComponent implements OnInit {
       const totalAmount = this.beginningBalanceList.filter(x => x.type == "DEBT").reduce((sum, balance) => {
         return sum + (balance.ammount || 0);
       }, 0);
-      this.addBeginningBalanceDetailList.totalDebit =  totalAmount
+      this.addBeginningBalanceDetailList.totalDebit = totalAmount
     }
   }
 
+ 
+
   onAccountinPeriodChange(event: any){
-    const periodId = event.value
-    this.addBeginningBalanceDetailList.accountingPeriodId = periodId;
+    this.getBeginnigBalanceChart(event);
     this.addBeginningBalanceDetailList = new AddBegnningBalanceDto();
+    this.addBeginningBalanceDetailList.accountingPeriodId = event;
   }
  
   // onAccountinPeriodChange(value: string){
@@ -99,33 +102,59 @@ export class BeginningBalanceComponent implements OnInit {
   // }
 
   addBeginningBalance() {
+    debugger;
     this.addBeginningBalanceDetailList.createdById = this.user.userId;
     this.addBeginningBalanceDetailList.begningBalanceDetails = [];
-     this.beginningBalanceList.map(x => {
-      this.addBeginningBalanceDetailList.begningBalanceDetails.push({
-           ammount: x.ammount,
-           chartOfAccountId: x.id,
-           remark: x.remark
-      });
-     })
-
-      this.financeService.addBegnningBalance(this.addBeginningBalanceDetailList).subscribe({
-        next: (res) => {
-          if (res.success) {
-            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Request Created', life: 3000 });
-            this.beginningBalanceList = [];
-            this.addBeginningBalanceDetailList = new AddBegnningBalanceDto();
-          }
-          else {
-            this.messageService.add({ severity: 'error', summary: 'Error', detail: res.message, life: 3000 });
-          }
-        }, error: (res) => {
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error please check your fields', life: 3000 });
+    this.beginningBalanceList.map(x => {
+      if (x.subsidaryAccountBegningDtos.length == 0) {
+        this.addBeginningBalanceDetailList.begningBalanceDetails.push({
+          ammount: x.ammount,
+          chartOfAccountId: x.id,
+          remark: x.remark,
+        });
+        if(x.type == "CREDIT"){
+          this.addBeginningBalanceDetailList.totalCredit =   x.ammount
         }
-      });
-    
-
-
+        else{
+          this.addBeginningBalanceDetailList.totalDebit =   x.ammount
+        }
+      }
+      else if (x.subsidaryAccountBegningDtos.length > 0) {
+        x.subsidaryAccountBegningDtos.map(y => {
+          this.addBeginningBalanceDetailList.begningBalanceDetails.push({
+            ammount: x.ammount,
+            chartOfAccountId: x.id,
+            subsidaryAccountId: y.id,
+            remark: y.remark,
+          });
+          if(x.type == "CREDIT"){
+            this.addBeginningBalanceDetailList.totalCredit =   y.ammount
+          }
+          else{
+            this.addBeginningBalanceDetailList.totalDebit =   y.ammount
+          }
+        });
+      }
+    })
+    if(this.addBeginningBalanceDetailList.totalDebit != this.addBeginningBalanceDetailList.totalCredit){
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Credit and/or Debit are not correct', life: 3000 });
+    }
+    else{
+    this.financeService.addBegnningBalance(this.addBeginningBalanceDetailList).subscribe({
+      next: (res) => {
+        if (res.success) {
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Request Created', life: 3000 });
+          this.beginningBalanceList = [];
+          this.addBeginningBalanceDetailList = new AddBegnningBalanceDto();
+        }
+        else {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: res.message, life: 3000 });
+        }
+      }, error: (res) => {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error please check your fields', life: 3000 });
+      }
+    });
+  }
   }
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');

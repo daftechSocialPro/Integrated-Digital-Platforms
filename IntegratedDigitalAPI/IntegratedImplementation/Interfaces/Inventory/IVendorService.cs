@@ -13,5 +13,10 @@ namespace IntegratedImplementation.Interfaces.Inventory
         Task<List<VendorListDto>> GetVendorList();
         Task<ResponseMessage> AddVendor(AddVendorDto addVendor);
         Task<ResponseMessage> UpdateVendor(UpdateVendorDto updateVendor);
+
+        Task<ResponseMessage> AddVendorBank(AddVendorBankAccountDto addVendor);
+        Task<ResponseMessage> UpdateVendorBank(UpdateVendorBankAccountDto updateVendor);
+
+
     }
 }

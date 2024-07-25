@@ -9,7 +9,7 @@ import { AccountingPeriodGetDto, AccountingPeriodPostDto } from '../model/Financ
 import { ChartOfAccountsGetDto, ChartOfAccountsPostDto, SubsidiaryAccountsPostDto } from '../model/Finance/IChartOfAccountsDto';
 import { SelectList } from '../model/common';
 import { BenefitPayrollGetDto, BenefitPayrollPostDto, GeneralSettingGetDto, GeneralSettingPostDto, IncomeTaxDto } from '../model/Finance/IPayrollSettingDto';
-import { ApprovePaymentDto, PaymentGetDto, PaymentPostDto } from '../model/Finance/IPaymentDto';
+import { ApprovePaymentDto, PaymentGetDto, PaymentLetterDto, PaymentPostDto } from '../model/Finance/IPaymentDto';
 import { CalculatePayrollDto, CheckOrApprovePayrollDto, PayrollGetDto } from '../model/Finance/IPayrollDto';
 import { AddBegnningBalanceDto, BeginningBalanceGetDto, BeginningBalancePostDto } from '../model/Finance/IBeginningBalanceDto';
 import { PurchaseInvoiceGetDto, PurchaseInvoicePostDto } from '../model/Finance/IPurchaseInvoiceDto';
@@ -19,6 +19,7 @@ import { ViewProgressDto } from '../pages/project-managment/view-activties/activ
 import { AddReceiptDto } from '../model/Finance/IReceiptModel';
 import { AccountReconsilationFindDto, AccountToBeReconsiledDto, AddAccountReconsilationDto } from '../model/Finance/IAccountReconsilationDto';
 import { AddClientDto, ClientsListDto } from '../model/Finance/IFinanceSettingDto';
+import { AddTaxRateDto, TaxRateDto } from '../model/Finance/ITaxRateDto';
 
 @Injectable({
   providedIn: 'root'
@@ -122,11 +123,21 @@ export class FinanceService {
   getApprovedPayments(){
     return this.http.get<PaymentGetDto[]>( this.BaseURI +"/Payment/GetApprovedPayments")
   }
+  getAuthorizedPayments(){
+    return this.http.get<PaymentGetDto[]>( this.BaseURI +"/Payment/GetAuthorizedPayments")
+  }
+
   addPayments(paymentData: FormData, ){
     return this.http.post<ResponseMessage>(this.BaseURI + "/Payment/AddPayments",paymentData)
   }
   approvePayment(approvePaymentData: ApprovePaymentDto){
     return this.http.put<ResponseMessage>(this.BaseURI + "/Payment/ApprovePayment",approvePaymentData)
+  }
+  authorizePayment(approvePaymentData: ApprovePaymentDto){
+    return this.http.put<ResponseMessage>(this.BaseURI + "/Payment/AuthorizePayment",approvePaymentData)
+  }
+  getPaymentLetter(paymentId: string){
+    return this.http.get<PaymentLetterDto>( this.BaseURI + `/Payment/GetPaymentLetter?paymentId=${paymentId}`)
   }
 
   //Payroll
@@ -222,6 +233,15 @@ updateClient(updateClient: AddClientDto) {
 
 getclientList() {
   return this.http.get<ClientsListDto[]>(this.BaseURI + "/Client/GetClientList")
+}
+
+//Tax Rate
+getTaxRate() {
+  return this.http.get<TaxRateDto[]>(this.BaseURI + "/TaxRate/GetTaxRate")
+}
+  
+addTaxRate(addRate: AddTaxRateDto) {
+  return this.http.post<ResponseMessage>(this.BaseURI + "/TaxRate/AddTaxRate", addRate)
 }
 
 }

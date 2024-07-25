@@ -72,11 +72,58 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-secondary"
                                 (click)="closeModal()">Close</button>
-                            <button type="button" type="submit" [disabled]="!registerForm.valid"
+                            <button *ngIf="!hideButton" type="button" type="submit" [disabled]="!registerForm.valid"
                                 class="btn btn-outline-primary">Save</button>
                         </div>
                     </form>
                 </div>
+            </div>
+            <div *ngIf="hideButton" class="row">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Add Vendor Account</h5>
+                        <form #itemsForm="ngForm">
+                            <div class="row p-2 mb-2">
+                            <div class="col-md-6">
+                                <label htmlFor="lastname2">Bank Name</label>
+                                <input class="form-control" type="text" name="bankName" required [(ngModel)]="addVendorBankAccountDto.bankName">
+                            </div>
+                            <div class="col-md-6">
+                                <label htmlFor="lastname2">Account Number</label>
+                                <input class="form-control" type="text" name="accountNumber" required
+                                    [(ngModel)]="addVendorBankAccountDto.accountNumber">
+                            </div>
+                            <div class="col-md-1">
+                            <label></label><br/>
+                                <button pButton type="button" icon="pi pi-plus" [disabled]="!itemsForm.valid" class="ui-button-info btn-sm"
+                                    (click)="newRow()"></button>
+                            </div>
+                            </div>
+                        </form>
+                    
+                        <div class="p-fluid p-formgrid grid">
+                            <p-table #dt [value]="vendorBankAccountDto" responsiveLayout="scroll">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>Bank Name</th>
+                                        <th>Account Number</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-accounts>
+                                    <tr>
+                                        <td>
+                                            {{accounts.bankName}}
+                                        </td>
+                                        <td>
+                                            {{accounts.accountNumber}}
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
         </div>
     </div>

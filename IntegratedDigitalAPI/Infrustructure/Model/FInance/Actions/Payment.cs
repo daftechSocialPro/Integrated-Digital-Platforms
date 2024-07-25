@@ -35,9 +35,12 @@ namespace IntegratedInfrustructure.Model.FInance.Actions
         public Guid? EmployeeId { get; set; }
         public virtual EmployeeList Employee { get; set; } = null!;
         public string? OtherBeneficiary { get; set; }
+        public string? BeneficiaryAccountNumber { get; set; }
         public string? DocumentPath { get; set; }
         public Guid? ApprovedById { get;set ; }
         public virtual EmployeeList ApprovedBy { get; set; } = null!;
+        public Guid? AuthorizedById { get; set; }
+        public virtual EmployeeList AuthorizedBy { get; set; } = null!;
         public DateTime ApprovedDate { get; set; }
         public string? Remark { get; set; }
 

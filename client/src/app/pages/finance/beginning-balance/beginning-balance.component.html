@@ -55,41 +55,92 @@
                                 </ng-template>
                                 <ng-template pTemplate="header">
                                     <tr>
+                                        <th></th>
                                         <th>Description</th>
                                         <th>Account Type</th>
                                         <th>Amount</th>
                                         <th>remark</th>
                                     </tr>
                                 </ng-template>
-                                <ng-template pTemplate="body" let-balance let-index>
+                                <ng-template pTemplate="body" let-balance let-index let-expanded="expanded">
                                     <tr>
-
-                                        <td >
+                                        <td>
+                                            <button *ngIf="balance.subsidaryAccountBegningDtos.length > 0" type="button" pButton pRipple [pRowToggler]="balance"
+                                                class="p-button-text p-button-rounded p-button-plain"
+                                                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                                        </td>
+                                        <td>
                                             {{balance.description}}
                                         </td>
-                                        <td >
+                                        <td>
                                             {{balance.type}}
                                         </td>
                                         <td>
-                                            <span *ngIf="exists">
-                                                {{balance.ammount}}
+                                            <span *ngIf="balance.subsidaryAccountBegningDtos.length < 1">
+                                                <span *ngIf="exists">
+                                                    {{balance.ammount}}
+                                                </span>
+                                                <span *ngIf="!exists">
+                                                    <input type="number" class="form-control" id="index + 'Ammount'" required
+                                                        (change)="getTextChanged($event.target,  balance.type)"  [(ngModel)]="balance.ammount"
+                                                        [ngModelOptions]="{standalone: true}">
+                                                </span>
                                             </span>
-                                            <span *ngIf="!exists">
-                                                <input type="number" class="form-control" id="index + 'Ammount'" required (change)="getTextChanged($event.target,  balance.type)"
-                                                [(ngModel)]="balance.ammount" [ngModelOptions]="{standalone: true}">
-                                            </span>
+                                            
                                         </td>
                                         <td >
-                                            <span *ngIf="exists">
-                                                {{balance.remark}}
+                                            <span *ngIf="balance.subsidaryAccountBegningDtos.length < 1">
+                                                <span *ngIf="exists">
+                                                    {{balance.remark}}
+                                                </span>
+                                                <span *ngIf="!exists">
+                                                    <textarea class="form-control" id="index + 'remark'" [(ngModel)]="balance.remark"
+                                                        [ngModelOptions]="{standalone: true}"></textarea>
+                                                </span>
                                             </span>
-                                            <span *ngIf="!exists">
-                                                <textarea  class="form-control" id="index + 'remark'"  
-                                                [(ngModel)]="balance.remark" [ngModelOptions]="{standalone: true}"></textarea>
-                                            </span>
-                                           
                                         </td>
 
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="rowexpansion" let-balance>
+                                    <tr>
+                                        <td colspan="4">
+                                            <div class="p-3">
+                                                <p-table [value]="balance.subsidaryAccountBegningDtos" dataKey="id" responsiveLayout="scroll">
+                                                    <ng-template pTemplate="header">
+                                                        <tr>
+                                                            <th>Description</th>
+                                                            <th>Amount</th>
+                                                            <th>remark</th>
+                                                        </tr>
+                                                    </ng-template>
+                                                    <ng-template pTemplate="body" let-subAccount let-index>
+                                                        <tr>
+                                                            <td>{{subAccount.description}}</td>
+                                                            <td>
+                                                                <span *ngIf="exists">
+                                                                    {{subAccount.ammount}}
+                                                                </span>
+                                                                <span *ngIf="!exists">
+                                                                    <input type="number" class="form-control" id="index + 'Ammount'"
+                                                                    (change)="getTextChanged($event.target,  balance.type)"  required 
+                                                                    [(ngModel)]="subAccount.ammount" [ngModelOptions]="{standalone: true}">
+                                                                </span>
+                                                            </td>
+                                                            <td>
+                                                                <span *ngIf="exists">
+                                                                    {{subAccount.remark}}
+                                                                </span>
+                                                                <span *ngIf="!exists">
+                                                                    <textarea  class="form-control" id="index + 'remark'"  
+                                                                    [(ngModel)]="subAccount.remark" [ngModelOptions]="{standalone: true}"></textarea>
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                    </ng-template>
+                                                </p-table>
+                                            </div>
+                                        </td>
                                     </tr>
                                 </ng-template>
                             </p-table>

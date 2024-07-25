@@ -54,5 +54,34 @@ namespace IntegratedDigitalAPI.Controllers.Inventory
                 return BadRequest();
             }
         }
+
+
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> AddVendorBank(AddVendorBankAccountDto addVendor)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _vendorService.AddVendorBank(addVendor));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPut]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> UpdateVendorBank(UpdateVendorBankAccountDto updateVendor)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _vendorService.UpdateVendorBank(updateVendor));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
     }
 }

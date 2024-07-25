@@ -5,6 +5,8 @@ export interface BankListDto
         amharicName: string;
         address: string;
         amharicAddress: string;
+        branch: string;
+        amharicBranch: string;
         accountNumber: string;
         bankDigitNumber: number;
     }
@@ -17,6 +19,8 @@ export interface BankListDto
         amharicName: string;
         address: string;
         amharicAddress: string;
+        branch: string;
+        amharicBranch: string;
         accountNumber: string;
         bankDigitNumber: number;
     }

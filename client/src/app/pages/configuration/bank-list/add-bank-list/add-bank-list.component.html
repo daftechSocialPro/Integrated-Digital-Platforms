@@ -42,6 +42,20 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
+                                        <textarea class="form-control" formControlName="branch" placeholder="branch" id="branch"
+                                            style="height: 120px;"></textarea>
+                                        <label for="branch">Branch</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <textarea class="form-control" formControlName="amharicBranch" placeholder="amharic Branch" id="amharicBranch"
+                                            style="height: 120px;"></textarea>
+                                        <label for="amharicBranch">Amharic Branch</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
                                         <input type="number" (input)="OnDigitChange($event.target)" class="form-control" id="bankDigitNumber" placeholder="Digit"
                                             formControlName="bankDigitNumber">
                                         <label for="bankDigitNumber">Bank Digit</label>

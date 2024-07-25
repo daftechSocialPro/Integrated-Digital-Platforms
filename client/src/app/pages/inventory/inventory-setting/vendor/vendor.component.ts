@@ -47,8 +47,6 @@ export class VendorComponent implements  OnInit  {
     modalRef.result.then(()=>{
       this.getVendorList();
     })
-
-    
   }
 
   editVendor(vendor: VendorListDto) {

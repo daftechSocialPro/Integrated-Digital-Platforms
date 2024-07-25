@@ -526,81 +526,81 @@ namespace IntegratedInfrustructure.Migrations
                     b.ToTable("Zones");
                 });
 
-            modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.BegningBalance", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+            //modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.BegningBalance", b =>
+            //    {
+            //        b.Property<Guid>("Id")
+            //            .ValueGeneratedOnAdd()
+            //            .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("AccountingPeriodId")
-                        .HasColumnType("uniqueidentifier");
+            //        b.Property<Guid>("AccountingPeriodId")
+            //            .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CreatedById")
-                        .HasColumnType("nvarchar(450)");
+            //        b.Property<string>("CreatedById")
+            //            .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
+            //        b.Property<DateTime>("CreatedDate")
+            //            .HasColumnType("datetime2");
 
-                    b.Property<string>("Remark")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+            //        b.Property<string>("Remark")
+            //            .IsRequired()
+            //            .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Rowstatus")
-                        .HasColumnType("int");
+            //        b.Property<int>("Rowstatus")
+            //            .HasColumnType("int");
 
-                    b.Property<double>("TotalCredit")
-                        .HasColumnType("float");
+            //        b.Property<double>("TotalCredit")
+            //            .HasColumnType("float");
 
-                    b.Property<double>("TotalDebit")
-                        .HasColumnType("float");
+            //        b.Property<double>("TotalDebit")
+            //            .HasColumnType("float");
 
-                    b.HasKey("Id");
+            //        b.HasKey("Id");
 
-                    b.HasIndex("AccountingPeriodId");
+            //        b.HasIndex("AccountingPeriodId");
 
-                    b.HasIndex("CreatedById");
+            //        b.HasIndex("CreatedById");
 
-                    b.ToTable("BegningBalances");
-                });
+            //        b.ToTable("BegningBalances");
+            //    });
 
-            modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.BegningBalanceDetail", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+            //modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.BegningBalanceDetail", b =>
+            //    {
+            //        b.Property<Guid>("Id")
+            //            .ValueGeneratedOnAdd()
+            //            .HasColumnType("uniqueidentifier");
 
-                    b.Property<double>("Ammount")
-                        .HasColumnType("float");
+            //        b.Property<double>("Ammount")
+            //            .HasColumnType("float");
 
-                    b.Property<Guid>("BegningBalanceId")
-                        .HasColumnType("uniqueidentifier");
+            //        b.Property<Guid>("BegningBalanceId")
+            //            .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ChartOfAccountId")
-                        .HasColumnType("uniqueidentifier");
+            //        b.Property<Guid>("ChartOfAccountId")
+            //            .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CreatedById")
-                        .HasColumnType("nvarchar(450)");
+            //        b.Property<string>("CreatedById")
+            //            .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
+            //        b.Property<DateTime>("CreatedDate")
+            //            .HasColumnType("datetime2");
 
-                    b.Property<string>("Remark")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+            //        b.Property<string>("Remark")
+            //            .IsRequired()
+            //            .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Rowstatus")
-                        .HasColumnType("int");
+            //        b.Property<int>("Rowstatus")
+            //            .HasColumnType("int");
 
-                    b.HasKey("Id");
+            //        b.HasKey("Id");
 
-                    b.HasIndex("BegningBalanceId");
+            //        b.HasIndex("BegningBalanceId");
 
-                    b.HasIndex("ChartOfAccountId");
+            //        b.HasIndex("ChartOfAccountId");
 
-                    b.HasIndex("CreatedById");
+            //        b.HasIndex("CreatedById");
 
-                    b.ToTable("BegningBalanceDetails");
-                });
+            //        b.ToTable("BegningBalanceDetails");
+            //    });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.EmployeePayroll", b =>
                 {
@@ -5833,47 +5833,47 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("Region");
                 });
 
-            modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.BegningBalance", b =>
-                {
-                    b.HasOne("IntegratedInfrustructure.Model.FInance.Configuration.AccountingPeriod", "AccountingPeriod")
-                        .WithMany()
-                        .HasForeignKey("AccountingPeriodId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+            //modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.BegningBalance", b =>
+            //    {
+            //        b.HasOne("IntegratedInfrustructure.Model.FInance.Configuration.AccountingPeriod", "AccountingPeriod")
+            //            .WithMany()
+            //            .HasForeignKey("AccountingPeriodId")
+            //            .OnDelete(DeleteBehavior.NoAction)
+            //            .IsRequired();
 
-                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
+            //        b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+            //            .WithMany()
+            //            .HasForeignKey("CreatedById");
 
-                    b.Navigation("AccountingPeriod");
+            //        b.Navigation("AccountingPeriod");
 
-                    b.Navigation("CreatedBy");
-                });
+            //        b.Navigation("CreatedBy");
+            //    });
 
-            modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.BegningBalanceDetail", b =>
-                {
-                    b.HasOne("IntegratedInfrustructure.Model.FInance.Actions.BegningBalance", "BegningBalance")
-                        .WithMany()
-                        .HasForeignKey("BegningBalanceId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+            //modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.BegningBalanceDetail", b =>
+            //    {
+            //        b.HasOne("IntegratedInfrustructure.Model.FInance.Actions.BegningBalance", "BegningBalance")
+            //            .WithMany()
+            //            .HasForeignKey("BegningBalanceId")
+            //            .OnDelete(DeleteBehavior.NoAction)
+            //            .IsRequired();
 
-                    b.HasOne("IntegratedInfrustructure.Model.FInance.Configuration.ChartOfAccount", "ChartOfAccount")
-                        .WithMany()
-                        .HasForeignKey("ChartOfAccountId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+            //        b.HasOne("IntegratedInfrustructure.Model.FInance.Configuration.ChartOfAccount", "ChartOfAccount")
+            //            .WithMany()
+            //            .HasForeignKey("ChartOfAccountId")
+            //            .OnDelete(DeleteBehavior.NoAction)
+            //            .IsRequired();
 
-                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
+            //        b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+            //            .WithMany()
+            //            .HasForeignKey("CreatedById");
 
-                    b.Navigation("BegningBalance");
+            //        b.Navigation("BegningBalance");
 
-                    b.Navigation("ChartOfAccount");
+            //        b.Navigation("ChartOfAccount");
 
-                    b.Navigation("CreatedBy");
-                });
+            //        b.Navigation("CreatedBy");
+            //    });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.EmployeePayroll", b =>
                 {
