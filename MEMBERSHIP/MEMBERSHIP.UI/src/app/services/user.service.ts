@@ -72,7 +72,8 @@ export class UserService {
       isProfileCompleted: payLoad.isProfileCompleted,
       role: payLoad.role,
       isExpired: payLoad.isExpired,
-      regionId : payLoad.regionId
+      regionId : payLoad.regionId,
+      region:payLoad.region
     };
 
     return user;

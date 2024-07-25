@@ -1,4 +1,3 @@
-
 <div class="row" #componentToPrint>
   <!-- [ sample-page ] start -->
 
@@ -10,8 +9,8 @@
       <div class="card-body">
         <div class="row">
         </div>
-        <span class="text-white d-block fs-1 fw-bold my-2">{{filterdMembers&&filterdMembers.length}} <i
-            class="ti ti-users opacity-50"></i></span>
+        <span class="text-white d-block fs-1 fw-bold my-2">{{dashboardNumericalDTo&&dashboardNumericalDTo.totalMembers}}
+          <i class="ti ti-users opacity-50"></i></span>
         <p class="mb-0 opacity-50">Total Members</p>
       </div>
     </div>
@@ -23,8 +22,9 @@
       <div class="card-body">
         <div class="row">
         </div>
-        <span class="text-white d-block fs-1 fw-bold my-2">{{pendingNumbers}} <i
-            class="ti ti-users opacity-50"></i></span>
+        <span
+          class="text-white d-block fs-1 fw-bold my-2">{{dashboardNumericalDTo&&dashboardNumericalDTo.pendingMembers}}
+          <i class="ti ti-users opacity-50"></i></span>
         <p class="mb-0 opacity-50">Pending Members</p>
       </div>
     </div>
@@ -42,7 +42,13 @@
             <i class="text-white ti ti-credit-card"></i>
           </div>
           <div class="ms-2">
-            <h4 class="text-white mb-1">ETB {{revenue}} <i class="ti ti-arrow-up-right-circle opacity-50"></i></h4>
+            <h4 class="text-white mb-1">
+              ETB {{ isVisible ? dashboardNumericalDTo&&dashboardNumericalDTo.revenue : hideRevenue() }}
+
+              <i class="ti" style="font-size: 24px;"
+                [ngClass]="{'ti-eye  fs-24': !isVisible, 'ti-eye-off opacity-50 fs-24': isVisible}"
+                (click)="toggleVisibility()"></i>
+            </h4>
             <p class="mb-0 opacity-50 text-sm">Revenue</p>
           </div>
         </div>
@@ -51,9 +57,10 @@
 
 
     <div class="form-floating mb-3">
-      <select class="form-control" [(ngModel)]="selectedChapter" [disabled]="userView.regionId!=''" (change)="applyFilter()">
+      <select class="form-control" [(ngModel)]="selectedChapter" [disabled]="userView.regionId!=''"
+        (change)="applyFilter()">
         <option value="all">ALL</option>
-        <option *ngFor="let item of chapters" [value]="item.name">
+        <option *ngFor="let item of chapters" [value]="item.id">
           {{item.name}}
         </option>
       </select>
@@ -72,29 +79,62 @@
             <i class="text-warning ti ti-credit-card"></i>
           </div>
           <div class="ms-2">
-            <h4 class="mb-1">ETB {{recivable}} <i class="ti ti-arrow-up-right-circle opacity-50"></i></h4>
+            <h4 class="mb-1">
+
+              ETB {{ isVisible2 ? dashboardNumericalDTo&&dashboardNumericalDTo.receivable : hideReciveable() }}
+
+              <i class="ti" style="font-size: 24px;"
+                [ngClass]="{'ti-eye  fs-24': !isVisible2, 'ti-eye-off opacity-50 fs-24': isVisible2}"
+                (click)="toggleVisibility2()"></i>
+
+            </h4>
+
+
             <p class="mb-0 opacity-50 text-sm">Reciveable</p>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="form-floating mb-3">
-      <select class="form-control" [(ngModel)]="selectPaymentStatus" (change)="applyFilter()">
-        <option value="all">ALL</option>
-        <option value="PENDING">PENDING</option>
-        <option value="PAID">PAID</option>
-        <option value="EXPIRED">EXPIRED</option>
-      </select>
-      <label for="paymentStatus">Payment Status</label>
+    <div class="row">
+      <div class="col-7">
+        <div class="form-floating mb-3">
+          <select class="form-control" [(ngModel)]="selectPaymentStatus" (change)="applyFilter()">
+            <option value="all">ALL</option>
+            <option value="PENDING">PENDING</option>
+            <option value="PAID">PAID</option>
+            <option value="EXPIRED">EXPIRED</option>
+          </select>
+          <label for="paymentStatus">Payment Status</label>
+        </div>
+      </div>
+      <div class="col-5">
+        <div class="form-floating mb-3">
+          <select class="form-control" [(ngModel)]="selectedGender" (change)="applyFilter()">
+            <option value="all">ALL</option>
+            <option value="MALE">MALE</option>
+            <option value="FEMALE">FEMALE</option>
+          </select>
+          <label for="paymentStatus">Gender</label>
+        </div>
+      </div>
     </div>
+
+
+
+
 
 
   </div>
 
-  <h2 class="chart-title-text">SEARCH RESULT : {{selectedChapter.toUpperCase()}}  {{selectPaymentStatus!='all'? ' - '+selectPaymentStatus:''}}</h2>
+  <h2 *ngIf="selectedChapter!='all'||selectPaymentStatus!='all'||selectedGender!='all'" class="chart-title-text">SEARCH
+    RESULT : {{ (selectedChapter!='all'&&chapters) ? getName():''}} {{selectPaymentStatus!='all'? ' -
+    '+selectPaymentStatus:''}}
+
+    {{selectedGender!='all'? ' -' +selectedGender:''}}
+  </h2>
   <div class="col-xl-4 col-md-12 p-2">
-  
+
     <div class="card">
       <div class="chart-title">
         <h2 class="chart-title-text">Gender</h2>
@@ -118,22 +158,31 @@
     </div>
     <div class="card-body">
       <div class="row mb-3 align-items-center">
-        <div class="col">
-          <small>Total Growth</small>
-          <h3>ETB {{revenue}}</h3>
-        </div>
         <div class="col-auto">
+
+          <select class="form-select" [(ngModel)]='selectedReport'>
+            <option value="yearly">YEARLY</option>
+            <option value="monthly">MONTHLY</option>
+
+          </select>
+
+        </div>
+
+        <div class="col-auto" *ngIf="selectedReport=='monthly'">
           <select class="form-select" #year (change)="generate(year.value)">
-            <option [value]="currentYear-2">{{currentYear-2}}</option>
-            <option [value]="currentYear-1">{{currentYear-1}}</option>
-            <option selected  [value]="currentYear">This Year</option>
+            <option *ngFor=" let item of yearOptions" [value]="item.value">{{item.label}}</option>
+
           </select>
         </div>
       </div>
-     
-      
-        <div echarts [options]="chartOptions4" [loading]="loading" class="demo-chart"></div>
-     
+
+
+      <div *ngIf="selectedReport==='monthly'" echarts [options]="chartOptions4" [loading]="loading" class="demo-chart">
+      </div>
+
+      <div *ngIf="selectedReport==='yearly'" echarts [options]="chartOptions5" [loading]="loading" class="demo-chart">
+      </div>
+
     </div>
 
   </div>
@@ -149,4 +198,16 @@
   </div>
 
 
+</div>
+
+<div class="col-xl-12 col-md-12 p-4">
+  <div class="card">
+    <div class="chart-title">
+      <h2 class="chart-title-text">Member Count by Chapter</h2>
+    </div>
+
+    <div echarts [options]="chartOptions6" [loading]="loading" class="demo-chart">
+    
+
+  </div>
 </div>

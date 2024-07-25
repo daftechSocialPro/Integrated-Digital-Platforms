@@ -25,8 +25,6 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
 import { ToastModule } from 'primeng/toast';
 import { DropdownModule } from 'primeng/dropdown';
 
-import { AddEmployeeComponent } from './demo/pages/employees/add-employee/add-employee.component';
-import { UpdateEmployeeComponent } from './demo/pages/employees/update-employee/update-employee.component';
 import { AddUserComponent } from './demo/pages/users/add-user/add-user.component';
 import { UserRoleComponent } from './demo/pages/users/user-role/user-role.component';
 import { AutoCompleteComponent } from './components/auto-complete/auto-complete.component';
@@ -59,9 +57,7 @@ import { BoardMemberDashbaordComponent } from './demo/board-member-dashbaord/boa
     NavCollapseComponent,
     ConfigurationComponent,
     GuestComponent,
-    SpinnerComponent,
-    AddEmployeeComponent,
-    UpdateEmployeeComponent,
+    SpinnerComponent,   
     AddUserComponent,
     UserRoleComponent,
     AutoCompleteComponent,

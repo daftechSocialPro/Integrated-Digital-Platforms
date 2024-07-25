@@ -13,6 +13,7 @@ export interface UserView {
   role: string;
   isExpired:string;
   regionId? : string
+  region?:string
 }
 export interface ChangePasswordModel {
   UserId: string;

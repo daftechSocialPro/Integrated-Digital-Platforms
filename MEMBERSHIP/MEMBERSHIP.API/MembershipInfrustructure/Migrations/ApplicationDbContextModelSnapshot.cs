@@ -535,6 +535,9 @@ namespace MembershipInfrustructure.Migrations
                     b.Property<DateTime>("ExpiredDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsPaid")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("LastPaid")
                         .HasColumnType("datetime2");
 

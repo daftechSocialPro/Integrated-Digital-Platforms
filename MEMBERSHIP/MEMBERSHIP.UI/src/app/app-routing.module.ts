@@ -19,17 +19,16 @@ const routes: Routes = [
         redirectTo: '/admin-dashboard',
         pathMatch: 'full'
       },
-     
+
       {
         path: 'admin-dashboard',
 
-        component:AdminDashbordComponent
+        component: AdminDashbordComponent
       },
       {
         path: 'member-dashboard',
 
         component: MembersDashboardComponent
-
       },
 
       {
@@ -44,19 +43,13 @@ const routes: Routes = [
         path: 'sample-page',
         loadComponent: () => import('./demo/sample-page/sample-page.component')
       },
-      {
-        path: 'employees',
-        loadComponent: () => import('./demo/pages/employees/employees.component')
-      },
+    
       {
         path: 'users',
         loadComponent: () => import('./demo/pages/users/users.component')
       },
 
-      {
-        path: 'system-control',
-        loadChildren: () => import('./demo/pages/system-control/system-control.module').then((m) => m.SystemControlModule)
-      },
+     
       {
         path: 'configuration',
         loadChildren: () => import('./demo/pages/configuration/configuration-service.module').then((m) => m.ConfigurationServiceModule)
@@ -70,15 +63,14 @@ const routes: Routes = [
         loadChildren: () => import('./demo/pages/reports/reports.module').then((m) => m.ReportsModule)
       }
     ]
-  },{
-    path:'on-construction',
-    component:OnConstructionComponent
-
+  },
+  {
+    path: 'on-construction',
+    component: OnConstructionComponent
   },
   {
     path: 'board-member-dashboard',
-
-    component:BoardMemberDashbaordComponent
+    component: BoardMemberDashbaordComponent
   },
   {
     path: '',
@@ -96,4 +88,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

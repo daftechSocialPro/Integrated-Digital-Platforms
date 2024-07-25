@@ -20,6 +20,25 @@ namespace IntegratedImplementation.DTOS.PM
         public string Description { get; set; }
 
         public bool RowStatus { get; set; }
-     
+
     }
+
+
+
+    public record StrageicPlanReportDto
+    {
+        public Guid StrategicPlanId { get; set; }
+
+        public string? StrategicPlanName { get; set; }
+
+        public float ActualProgress { get; set; }
+
+        public float PlannedProgress { get; set; }
+
+        public float ActualBudget { get; set; }
+        public float PlannedBudget { get; set; }
+
+    }
+
+
 }

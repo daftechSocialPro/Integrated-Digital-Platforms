@@ -2,6 +2,7 @@
 using IntegratedDigitalAPI.DTOS.PM;
 using IntegratedDigitalAPI.Services.PM.Plan;
 using IntegratedImplementation.DTOS.Configuration;
+using IntegratedImplementation.DTOS.PM;
 using IntegratedInfrustructure.Data;
 using IntegratedInfrustructure.Model.PM;
 using Microsoft.EntityFrameworkCore;
@@ -167,12 +168,12 @@ namespace IntegratedDigitalAPI.Services.PM
 
         }
 
-        public async Task<List<PlanViewDto>> GetPlans(Guid? programId)
+        public async Task<List<PlanViewDto>> GetPlans(Guid? programId, int? year)
 
         {
 
-            var plans = programId != null ? _dBContext.Projects.Where(x => x.ProjectManagerId == programId).Include(x => x.Department).Include(x => x.ProjectManager).Include(x => x.ProjectFunds) :
-                _dBContext.Projects.Include(x => x.Department).Include(x => x.ProjectManager).Include(x => x.ProjectFunds);
+            var plans = programId != null ? _dBContext.Projects.Where(x => x.ProjectManagerId == programId).Include(x => x.Department).Include(x => x.ProjectManager).Include(x => x.ProjectFunds).AsNoTracking() :
+                _dBContext.Projects.Include(x => x.Department).Include(x => x.ProjectManager).Include(x => x.ProjectFunds).Where(x=>year !=0 &&x.PeriodStartAt.Year <= year && x.PeriodEndAt.Year>=year).AsNoTracking();
 
 
             return await (from p in plans
@@ -504,7 +505,7 @@ namespace IntegratedDigitalAPI.Services.PM
 
 
         }
-        public async Task<PlanPieChartPostDto> GetPlanPieCharts(Guid? planId, Guid? strategicPlanId, int quarter)
+        public async Task<PlanPieChartPostDto> GetPlanPieCharts(Guid? planId, Guid? strategicPlanId, int quarter, int? year)
         {
 
 
@@ -513,7 +514,7 @@ namespace IntegratedDigitalAPI.Services.PM
 
             if (planId != Guid.Empty)
             {
-                var projects = await _dBContext.Projects.Include(x => x.Tasks).ToListAsync();
+                var projects = await _dBContext.Projects.Include(x => x.Tasks).Where(x=> year != 0 && x.PeriodStartAt.Year <= year && x.PeriodEndAt.Year >= year).AsNoTracking().ToListAsync();
 
                 if (planId != Guid.Parse("30fc30dc-eb56-4f40-9510-54ad983e759a"))
                 {
@@ -539,7 +540,7 @@ namespace IntegratedDigitalAPI.Services.PM
                         {
                             if (quarter != 0)
                             {
-                                var targetQuarterStart = new DateTime(currentYear, (quarter - 1) * 3 + 1, 1);
+                                var targetQuarterStart = new DateTime(year ?? currentYear, (quarter - 1) * 3 + 1, 1);
                                 var targetQuarterEnd = targetQuarterStart.AddMonths(3).AddDays(-1);
 
 
@@ -641,7 +642,7 @@ namespace IntegratedDigitalAPI.Services.PM
                 {
                     if (quarter != 0)
                     {
-                        var targetQuarterStart = new DateTime(currentYear, (quarter - 1) * 3 + 1, 1);
+                        var targetQuarterStart = new DateTime(year??currentYear, (quarter - 1) * 3 + 1, 1);
                         var targetQuarterEnd = targetQuarterStart.AddMonths(3).AddDays(-1);
 
 
@@ -705,7 +706,7 @@ namespace IntegratedDigitalAPI.Services.PM
             }
         }
 
-        public async Task<PlanBarChartPostDto> GetPlanBarCharts(Guid? planId, Guid? strategicPlanId)
+        public async Task<PlanBarChartPostDto> GetPlanBarCharts(Guid? planId, Guid? strategicPlanId, int?year)
         {
             int currentYear = DateTime.Now.Year;
             var quarterSums = new Dictionary<int, (double overallProgress, double overallBudgetUtil, double overallPlannedProgress, double overallPlannedBudgetUtil)>();
@@ -713,7 +714,7 @@ namespace IntegratedDigitalAPI.Services.PM
 
             if (planId != Guid.Empty)
             {
-                var projects = await _dBContext.Projects.Include(x => x.Tasks).ToListAsync();
+                var projects = await _dBContext.Projects.Include(x => x.Tasks).Where(x => year != 0 && x.PeriodStartAt.Year <= year && x.PeriodEndAt.Year >= year).AsNoTracking().ToListAsync();
 
                 if (planId != Guid.Parse("30fc30dc-eb56-4f40-9510-54ad983e759a"))
                 {
@@ -980,10 +981,48 @@ namespace IntegratedDigitalAPI.Services.PM
 
         }
 
+        public async Task<List<StrageicPlanReportDto>> GetStrategicPlanReport()
+        {
 
+            try
+            {
+                // First, fetch the necessary data without performing any aggregation
+                var activities = await _dBContext.Activities
+                    .Include(x => x.ActProgress)
+                    .Select(x => new
+                    {
+                        x.StrategicPlanIndicator.StrategicPlan.Id,
+                        x.StrategicPlanIndicator.StrategicPlan.Name,
+                        ActualProgress = x.ActProgress.Select(ap => ap.ActualWorked).ToList(), // Get the list of actual worked values
+                        PlannedProgress = x.Goal - x.Begining, // Calculate planned progress
+                        ActualBudget = x.ActProgress.Select(ap => ap.ActualBudget).ToList(), // Get the list of actual budget values
+                        PlannedBudget = x.PlanedBudget
+                    })
+                    .AsNoTracking()
+                    .ToListAsync();
 
+                // Now perform the aggregation in-memory
+                var groupedActivities = activities
+                    .GroupBy(x => new { x.Id, x.Name })
+                    .Select(g => new StrageicPlanReportDto
+                    {
+                        StrategicPlanId = g.Key.Id,
+                        StrategicPlanName = g.Key.Name,
+                        ActualProgress = g.SelectMany(a => a.ActualProgress).Sum(), // Sum the actual progress values
+                        PlannedProgress = g.Sum(a => a.PlannedProgress), // Sum the planned progress values
+                        ActualBudget = g.SelectMany(a => a.ActualBudget).Sum(), // Sum the actual budget values
+                        PlannedBudget = g.Sum(a => a.PlannedBudget) // Sum the planned budget values
+                    })
+                    .ToList();
 
-
+                return groupedActivities;
+            
+            }
+            catch
+            {
+                return new List<StrageicPlanReportDto>();
+            }
+        }
 
 
     }

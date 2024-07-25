@@ -57,6 +57,8 @@ namespace MembershipImplementation.DTOS.Configuration
 
         public string? PaymentStatus { get; set; }
 
+        public string? RegionId { get; set; }
+
         public Guid ? MembershipTypeId { get; set; }
     }
 
@@ -73,10 +75,14 @@ namespace MembershipImplementation.DTOS.Configuration
         public string Email { get; set; }
         public DateTime BirthDate { get; set; }
         public string Region { get; set; }
+
+        public string? RegionId { get; set; }
         public string? Zone { get; set; }
         public string Woreda { get; set; }
         public string Inistitute { get; set; }
         public bool IsBirthDate { get; set; }
+
+        public string? MemberStatus { get; set; }
 
         public DateTime LastPaid { get; set; }
         public string MembershipTypeId { get; set; }

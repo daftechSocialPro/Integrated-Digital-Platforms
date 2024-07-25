@@ -22,7 +22,7 @@
                         <img [src]="getImage2()" alt="Profile" style="width:100%;">
                         <input #file (change)="onUpload($event)" type="file" style="display: none;" accept="image/*" />
                         <div class="pt-2">
-                            <a (click)="file.click()" style="width: 100%;"  class="btn btn-outline-primary btn-sm"
+                            <a (click)="file.click()" style="width: 100%;" class="btn btn-outline-primary btn-sm"
                                 title="Upload new profile image">
                                 <i class="bi bi-upload"></i> Upload Image
                             </a>
@@ -206,8 +206,23 @@
 
 
                             </div>
+                            <div class="col-md-4">
+                                <div class="form-floating mb-3">
+                                    <select class="form-control" formControlName="regionId">
+    
+                                        <option></option>
+                                        <option *ngFor="let item of chapters" [value]="item.id.toLowerCase()">
+                                            {{item.name}}
+                                        </option>
+    
+                                    </select>
+                                    <label for="regionId">Region </label>
+                                </div>
+                            </div>
 
                         </div>
+
+                      
                         <div class="col-12 text-end mt-4">
                             <button type="submit" [disabled]="!updateProfileForm.valid"
                                 class="btn btn-outline-warning">Update</button>

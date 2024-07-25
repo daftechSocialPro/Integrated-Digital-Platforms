@@ -65,6 +65,7 @@ namespace Implementation.Services.Authentication
                     var admins = await _dbContext.Admins.Include(x=>x.Region).FirstOrDefaultAsync(x => x.Id == user.AdminId);
 
                     var regionName = admins.RegionId != null ? admins.Region.RegionName : "";
+                    var regionId = admins.RegionId!=null? admins.RegionId.ToString():"";
                     if (admins != null)
                     {
 
@@ -80,7 +81,8 @@ namespace Implementation.Services.Authentication
                         new Claim("photo",admins?.ImagePath),
                         new Claim("isProfileCompleted",true.ToString()),
                         new Claim("isExpired",false.ToString()),
-                        new Claim("regionId",regionName),                      
+                        new Claim("regionId",regionName),  
+                        new Claim("region",regionId),
 
 
 

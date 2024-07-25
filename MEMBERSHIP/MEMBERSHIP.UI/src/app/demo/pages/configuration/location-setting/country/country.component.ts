@@ -3,9 +3,7 @@ import { ICustomerGetDto } from 'src/models/customer-service/ICustomerGetDto';
 import { AddCountryComponent } from './add-country/add-country.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/api';
-import { ScsDataService } from 'src/app/services/system-control/scs-data.service';
 import { ICustomerCategoryDto } from 'src/models/system-control/ICustomerCategoryDto';
-import { AddCustomerCategoryComponent } from '../../../system-control/scs-data/customer-category/add-customer-category/add-customer-category.component';
 import { ConfigurationService } from 'src/app/services/configuration.service';
 import { ICountryGetDto } from 'src/models/configuration/ILocatoinDto';
 

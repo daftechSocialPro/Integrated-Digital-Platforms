@@ -4,13 +4,14 @@ export interface IMembersPostDto {
   phoneNumber: string;
   email: string;
   Zone: string;
-  RegionId:string
+  RegionId: string;
   woreda: string;
   inistitute: string;
   membershipTypeId: string;
 }
 
 export interface IMembersGetDto {
+
   id: string;
   fullName: string;
   imagePath: string;
@@ -20,11 +21,11 @@ export interface IMembersGetDto {
   zone: string;
   woreda: string;
   inistitute: string;
-  birthDate:string;
+  birthDate: string;
   membershipTypeId: string;
   educationalField: string;
   educationalLevel: string;
-  lastPaid:Date
+  lastPaid: Date;
   educationalLevelId: string;
   membershipType: string;
   memberId: string;
@@ -34,22 +35,18 @@ export interface IMembersGetDto {
   text_Rn: string;
   expiredDate: Date;
   paymentStatus: string;
-  idCardStatus:string
-  rejectedRemark:string
-  isBirthDate:boolean
-
-  moodleName:string
-  moodlePassword?: string 
-  moodleId :string
-
-  moodleStatus:string
-
-  createdByDate:Date
-  currency:string
-
-  membershipCategory ?:string
-
-
+  idCardStatus: string;
+  rejectedRemark: string;
+  isBirthDate: boolean;
+  moodleName: string;
+  moodlePassword?: string;
+  moodleId: string;
+  moodleStatus: string;
+  createdByDate: Date;
+  currency: string;
+  regionId?: string;
+  memberStatus?:string;
+  membershipCategory?: string;
 }
 export interface ICompletePorfileDto {
   id: string;
@@ -72,16 +69,17 @@ export interface IMemberUpdateDto {
   birthDate: Date;
   woreda: string;
   instituteRole: string;
+  regionId? : string
 
-  lastPaid ?: Date ;
-  expiredDate ?: Date;
-  paymentStatus ?: string
+  lastPaid?: Date;
+  expiredDate?: Date;
+  paymentStatus?: string;
 
-  membershipTypeId?:string
+  membershipTypeId?: string;
 }
 
-export interface IMemberTelegramDto{
-  id:string
+export interface IMemberTelegramDto {
+  id: string;
   fullName: string;
   email?: string;
   phoneNumber: string;
@@ -92,15 +90,13 @@ export interface IMemberTelegramDto{
   paymentStatus: Date;
   membershipType: string;
   membershipTypeId: string;
-  url:string
-  currency: string
-  
+  url: string;
+  currency: string;
 }
 
 export interface MoodleUpdateDto {
-memberId :string
-moodleName:string
-moodlePassword?: string 
-moodleId :string
+  memberId: string;
+  moodleName: string;
+  moodlePassword?: string;
+  moodleId: string;
 }
-

@@ -4,6 +4,7 @@ import {
   PlanBarChartPostDto,
   PlanPieChartPostDto,
   PlanView,
+  StrategicPlanReportDto,
 } from 'src/app/model/PM/PlansDto';
 import { UserView } from 'src/app/model/user';
 import { PlanService } from 'src/app/services/plan.service';
@@ -12,8 +13,7 @@ import { EChartsOption } from 'echarts';
 import { DropDownService } from 'src/app/services/dropDown.service';
 import { SelectList } from 'src/app/model/common';
 import { DOCUMENT } from '@angular/common';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-plan-dashboard',
@@ -36,10 +36,8 @@ export class PlanDashboardComponent implements OnInit {
   barChartOption!: EChartsOption;
   bar2ChartOption!: EChartsOption;
 
-
   Quarter: number = 0;
   chartdata: any[];
-
   chartdata1
   chartdata1Act: any[];
   chartdata1Pla: any[];
@@ -48,6 +46,7 @@ export class PlanDashboardComponent implements OnInit {
   chartdata2Pla: any[];
   Plans: PlanView[] = [];
   selectedProject: string;
+  selectedYear:number =0
 
   activityStatusCheckBox: boolean = true;
   budgetCheckeBox: boolean = true;
@@ -55,7 +54,17 @@ export class PlanDashboardComponent implements OnInit {
   overAllProgress: boolean = true;
 
   strategicPlans: SelectList[];
-  selectedStrategicPlan: string;
+  selectedStrategicPlan: string='';
+  currentYear : number 
+  yearOptions:any[]=[]
+
+  strategicPlanReportDtos :StrategicPlanReportDto[]=[]
+
+
+  budgetOption:any;
+  progressOption:any;
+
+
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -68,9 +77,25 @@ export class PlanDashboardComponent implements OnInit {
   ngOnInit(): void {
     this.document.body.classList.toggle('toggle-sidebar');
     this.user = this.userService.getCurrentUser();
+    const currentDate = new Date();
+    this.currentYear = currentDate.getFullYear();
 
-    this.listPlans();
-    this.getStrategicPlans();
+    this.generateYearOptions();
+
+    this.selectedYear= this.currentYear
+    this.listPlans()
+    this.getStrategicPlans()
+    
+  }
+
+  generateYearOptions() {
+    this.yearOptions = [
+      { value: this.currentYear, label: 'This Year' },
+      { value: this.currentYear - 1, label: (this.currentYear - 1).toString() },
+      { value: this.currentYear - 2, label: (this.currentYear - 2).toString() },
+      { value: this.currentYear - 3, label: (this.currentYear - 3).toString() },
+   
+    ];
   }
 
   getStrategicPlans() {
@@ -82,17 +107,81 @@ export class PlanDashboardComponent implements OnInit {
     });
   }
 
+  getStrategicPlanReports (){
+    this.planService.getStrategicPlanReport().subscribe({
+      next:(res)=>{
+        this.strategicPlanReportDtos = res;
+        this.initCharts();
+      }
+    })
+  }
+
+
+afterSelectedYear(){
+
+  this.listPlans()
+}
+
+  resetVariables() {
+    this.planId = '';
+    this.pieChartData = {} as PlanPieChartPostDto;
+    this.barChartData = {} as PlanBarChartPostDto;
+    this.pieChartOption = {} as EChartsOption;
+  
+    this.pieChartOptions = [];
+  
+    this.barChartOptions = [];
+    this.bar2ChartOptions = [];
+  
+    this.barChartOption = {} as EChartsOption;
+    this.bar2ChartOption = {} as EChartsOption;
+  
+    this.Quarter = 0;
+    this.chartdata = [];
+    this.chartdata1 = null;
+    this.chartdata1Act = [];
+    this.chartdata1Pla = [];
+    this.chartdata2 = [];
+    this.chartdata2Act = [];
+    this.chartdata2Pla = [];
+    this.Plans = [];
+    this.selectedProject = '';
+     // this.selectedYear = 0;
+  
+    this.activityStatusCheckBox = true;
+    this.budgetCheckeBox = true;
+    this.accomplitiomentCheckBox = true;
+    this.overAllProgress = true;
+  
+    // this.strategicPlans = [];
+    // this.selectedStrategicPlan = '';
+ 
+  }
+  
+
   filterStrategicPlans() {
+
+if(this.selectedStrategicPlan=="ALL") {
+
+  this.getStrategicPlanReports()
+}else {
+
+
     this.selectedProject = '00000000-0000-0000-0000-000000000000';
     this.planId = this.selectedProject;
     this.getPieChatData(this.planId, 0);
     this.getBarChatData(this.planId);
+}
   }
 
   listPlans() {
+    debugger
+    this.resetVariables();
     if (this.user.role.includes('PM-ADMIN')) {
-      this.planService.getPlans().subscribe({
+      this.planService.getPlans(null,this.selectedYear).subscribe({
         next: (res) => {
+
+          console.log(res)
           var plan = {
             id: '30fc30dc-eb56-4f40-9510-54ad983e759a',
             planName: 'ALL',
@@ -122,7 +211,7 @@ export class PlanDashboardComponent implements OnInit {
           res.map((item) => {
             this.Plans.push(item);
             this.planService
-              .getPlanPieCharts(item.id, "00000000-0000-0000-0000-000000000000", 0)
+              .getPlanPieCharts(item.id, "00000000-0000-0000-0000-000000000000", 0,this.selectedYear)
               .subscribe({
                 next: (res) => {
                   let pieChartData = res;
@@ -189,38 +278,47 @@ export class PlanDashboardComponent implements OnInit {
 
 
               this.planService
-              .getPlanBarCharts(item.id, "00000000-0000-0000-0000-000000000000")
+              .getPlanBarCharts(item.id, "00000000-0000-0000-0000-000000000000",this.selectedYear)
               .subscribe({
                 next: (res) => {
-               
                   let barChartData = res;
                   this.chartdata1Act = barChartData?.progressChartDataSets?.map(
                     (x) => ({ value: x.data.actual })
                   );
-        
+                
                   this.chartdata1Pla = barChartData?.progressChartDataSets?.map(
                     (x) => ({ value: x.data.planned })
                   );
-        
-        
+                
                   this.chartdata2Act = barChartData?.budgetChartDataSets?.map(
                     (x) => ({ value: x.data.actual })
                   );
                   this.chartdata2Pla = barChartData?.budgetChartDataSets?.map(
                     (x) => ({ value: x.data.planned })
                   );
-        
-                  let barChartOption =
-                  {
+                
+                  let barChartOption = {
                     tooltip: {
-                      planid:item.id,
+                      planid: item.id,
                       trigger: 'axis',
                       axisPointer: {
                         type: 'shadow'
+                      },
+                      formatter: (params) => {
+                        let result = `${params[0].axisValue}<br/>`;
+                        params.forEach(item => {
+                          let percentage = 0;
+                          if (item.seriesName === 'Actual Progress') {
+                            let planned = this.chartdata1Pla[item.dataIndex]?.value || 1; // Avoid division by zero
+                            percentage = Number(((item.value / planned) * 100).toFixed(2));
+                          }
+                          result += `${item.marker} ${item.seriesName}: ${item.value}  ${item.seriesName === 'Actual Progress' ? percentage + '%' : ''}<br/>`;
+                        });
+                        return result;
                       }
                     },
                     legend: {
-                      data: ['Actual Progress','Planned Progress']
+                      data: ['Actual Progress', 'Planned Progress']
                     },
                     grid: {
                       left: '3%',
@@ -247,16 +345,24 @@ export class PlanDashboardComponent implements OnInit {
                       name: 'Actual Progress',
                       type: 'bar',
                       barWidth: '60%',
-                      data: this.chartdata1Act
+                      data: this.chartdata1Act,
+                      label: {
+                        show: true,
+                        position: 'inside',
+                        formatter: '{c}'
+                      }
                     },
-        
                     {
                       name: 'Planned Progress',
                       type: 'bar',
                       barWidth: '60%',
-                      data: this.chartdata1Pla
-                    }
-                  ],
+                      data: this.chartdata1Pla,
+                      label: {
+                        show: true,
+                        position: 'inside',
+                        formatter: '{c}'
+                      }
+                    }],
                     toolbox: {
                       feature: {
                         saveAsImage: {},
@@ -266,20 +372,29 @@ export class PlanDashboardComponent implements OnInit {
                       }
                     }
                   };
-             
-        
-                  let bar2ChartOption = 
-
-                  {
+                
+                  let bar2ChartOption = {
                     tooltip: {
-                      planid:item.id,
+                      planid: item.id,
                       trigger: 'axis',
                       axisPointer: {
                         type: 'shadow'
+                      },
+                      formatter: (params) => {
+                        let result = `${params[0].axisValue}<br/>`;
+                        params.forEach(item => {
+                          let percentage = 0;
+                          if (item.seriesName === 'Utilized Budget') {
+                            let planned = this.chartdata2Pla[item.dataIndex]?.value || 1; // Avoid division by zero
+                            percentage = Number(((item.value / planned) * 100).toFixed(2));
+                          }
+                          result += `${item.marker} ${item.seriesName}: ${item.value}  ${item.seriesName === 'Utilized Budget' ? percentage + '%' : ''}<br/>`;
+                        });
+                        return result;
                       }
                     },
                     legend: {
-                      data: ['Actual Budget','Planned Budget']
+                      data: ['Utilized Budget', 'Planned Budget']
                     },
                     grid: {
                       left: '3%',
@@ -303,16 +418,26 @@ export class PlanDashboardComponent implements OnInit {
                       type: 'value'
                     }],
                     series: [{
-                      name: 'Actual Budget',
+                      name: 'Utilized Budget',
                       type: 'bar',
                       barWidth: '60%',
-                      data: this.chartdata2Act
+                      data: this.chartdata2Act,
+                      label: {
+                        show: true,
+                        position: 'inside',
+                        formatter: '{c}'
+                      }
                     },
                     {
                       name: 'Planned Budget',
                       type: 'bar',
                       barWidth: '60%',
-                      data: this.chartdata2Pla
+                      data: this.chartdata2Pla,
+                      label: {
+                        show: true,
+                        position: 'inside',
+                        formatter: '{c}'
+                      }
                     }],
                     toolbox: {
                       feature: {
@@ -323,11 +448,12 @@ export class PlanDashboardComponent implements OnInit {
                       }
                     }
                   };
-                  
-
-                  this.barChartOptions.push(barChartOption)
-                  this.bar2ChartOptions.push(bar2ChartOption)
-                },
+                
+                  this.barChartOptions.push(barChartOption);
+                  this.bar2ChartOptions.push(bar2ChartOption);
+                }
+                
+                
               });
           });
 
@@ -343,9 +469,8 @@ export class PlanDashboardComponent implements OnInit {
         },
       });
     } else {
-      this.planService.getPlans(this.user.employeeId).subscribe({
-        next: (res) => {
-   
+      this.planService.getPlans(this.user.employeeId,this.selectedYear).subscribe({
+        next: (res) => {   
           this.Plans = res;
           if (res) {
             this.selectedProject = res[0].id;
@@ -358,6 +483,8 @@ export class PlanDashboardComponent implements OnInit {
       });
     }
   }
+
+  
 
   onProjectChange() {
     this.selectedStrategicPlan = '00000000-0000-0000-0000-000000000000';
@@ -378,7 +505,7 @@ export class PlanDashboardComponent implements OnInit {
 
   getPieChatData(planId: string, quarter: number) {
     this.planService
-      .getPlanPieCharts(planId, this.selectedStrategicPlan, quarter)
+      .getPlanPieCharts(planId, this.selectedStrategicPlan, quarter,this.selectedYear)
       .subscribe({
         next: (res) => {
           (this.pieChartData = res),
@@ -475,40 +602,46 @@ export class PlanDashboardComponent implements OnInit {
 
   getBarChatData(planId: string) {
     this.planService
-      .getPlanBarCharts(planId, this.selectedStrategicPlan)
+      .getPlanBarCharts(planId, this.selectedStrategicPlan, this.selectedYear)
       .subscribe({
         next: (res) => {
-
-        
-          
           this.barChartData = res;
           this.chartdata1Act = this.barChartData?.progressChartDataSets?.map(
             (x) => ({ value: x.data.actual })
           );
-
+        
           this.chartdata1Pla = this.barChartData?.progressChartDataSets?.map(
             (x) => ({ value: x.data.planned })
           );
-
-
+        
           this.chartdata2Act = this.barChartData?.budgetChartDataSets?.map(
             (x) => ({ value: x.data.actual })
           );
           this.chartdata2Pla = this.barChartData?.budgetChartDataSets?.map(
             (x) => ({ value: x.data.planned })
           );
-
-
-
+        
           this.barChartOption = {
             tooltip: {
               trigger: 'axis',
               axisPointer: {
                 type: 'shadow'
+              },
+              formatter: (params) => {
+                let result = `${params[0].axisValue}<br/>`;
+                params.forEach(item => {
+                  let percentage = 0;
+                  if (item.seriesName === 'Actual Progress') {
+                    let planned = this.chartdata1Pla[item.dataIndex]?.value || 1; // Avoid division by zero
+                    percentage = Number(((item.value / planned) * 100).toFixed(2));
+                  }
+                  result += `${item.marker} ${item.seriesName}: ${item.value}  ${item.seriesName === 'Actual Progress' ? percentage + '%' : ''}<br/>`;
+                });
+                return result;
               }
             },
             legend: {
-              data: ['Actual Progress','Planned Progress']
+              data: ['Actual Progress', 'Planned Progress']
             },
             grid: {
               left: '3%',
@@ -535,18 +668,24 @@ export class PlanDashboardComponent implements OnInit {
               name: 'Actual Progress',
               type: 'bar',
               barWidth: '60%',
-              data: this.chartdata1Act
+              data: this.chartdata1Act,
+              label: {
+                show: true,
+                position: 'inside',
+                formatter: '{c}'
+              }
             },
-
             {
               name: 'Planned Progress',
               type: 'bar',
               barWidth: '60%',
-              data: this.chartdata1Pla
-            }
-          
-          
-          ],
+              data: this.chartdata1Pla,
+              label: {
+                show: true,
+                position: 'inside',
+                formatter: '{c}'
+              }
+            }],
             toolbox: {
               feature: {
                 saveAsImage: {},
@@ -556,18 +695,28 @@ export class PlanDashboardComponent implements OnInit {
               }
             }
           };
-         
-          this.bar2ChartOption =
-
-        {
+        
+          this.bar2ChartOption = {
             tooltip: {
               trigger: 'axis',
               axisPointer: {
                 type: 'shadow'
+              },
+              formatter: (params) => {
+                let result = `${params[0].axisValue}<br/>`;
+                params.forEach(item => {
+                  let percentage = 0;
+                  if (item.seriesName === 'Utilized Budget') {
+                    let planned = this.chartdata2Pla[item.dataIndex]?.value || 1; // Avoid division by zero
+                    percentage = Number(((item.value / planned) * 100).toFixed(2));
+                  }
+                  result += `${item.marker} ${item.seriesName}: ${item.value}  ${item.seriesName === 'Utilized Budget' ? percentage + '%' : ''}<br/>`;
+                });
+                return result;
               }
             },
             legend: {
-              data: ['Actual Budget','Planned Budget']
+              data: ['Utilized Budget', 'Planned Budget']
             },
             grid: {
               left: '3%',
@@ -591,16 +740,26 @@ export class PlanDashboardComponent implements OnInit {
               type: 'value'
             }],
             series: [{
-              name: 'Actual Budget',
+              name: 'Utilized Budget',
               type: 'bar',
               barWidth: '60%',
-              data: this.chartdata2Act
+              data: this.chartdata2Act,
+              label: {
+                show: true,
+                position: 'inside',
+                formatter: '{c}'
+              }
             },
             {
               name: 'Planned Budget',
               type: 'bar',
               barWidth: '60%',
-              data: this.chartdata2Pla
+              data: this.chartdata2Pla,
+              label: {
+                show: true,
+                position: 'inside',
+                formatter: '{c}'
+              }
             }],
             toolbox: {
               feature: {
@@ -611,10 +770,10 @@ export class PlanDashboardComponent implements OnInit {
               }
             }
           };
-          
-          
-       
-        },
+        }
+        
+        
+        
       });
   }
 
@@ -646,6 +805,108 @@ export class PlanDashboardComponent implements OnInit {
 
    
   }
+
+
+  
+  private initCharts(): void {
+   
+   
+
+    this.progressOption = {
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow'
+        }
+      },
+      legend: {
+        data: ['Actual Progress', 'Planned Progress']
+      },
+      xAxis: {
+        type: 'category',
+        data: this.strategicPlanReportDtos.map(plan => plan.strategicPlanName)
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          name: 'Actual Progress',
+          type: 'bar',
+          data: this.strategicPlanReportDtos.map(plan => plan.actualProgress),
+          label: {
+            show: true,
+            position: 'inside',
+            formatter: '{c}'
+          }
+        },
+        {
+          name: 'Planned Progress',
+          type: 'bar',
+          data: this.strategicPlanReportDtos.map(plan => plan.plannedProgress),
+          label: {
+            show: true,
+            position: 'inside',
+            formatter: '{c}'
+          }
+        }
+      ]
+    };
+
+    this.budgetOption = {
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow'
+        },
+        formatter: (params) => {
+          let result = `${params[0].axisValue}<br/>`;
+          params.forEach(item => {
+            let percentage = 0;
+            if (item.seriesName === 'Utilized Budget') {
+              let planned = this.strategicPlanReportDtos[item.dataIndex]?.plannedBudget || 1; // Avoid division by zero
+              percentage = Number(((item.value / planned) * 100).toFixed(2));
+            }
+            result += `${item.marker} ${item.seriesName}: ${item.value} ${item.seriesName === 'Utilized Budget' ? percentage + '%' : ''}<br/>`;
+          });
+          return result;
+        }
+      },
+      legend: {
+        data: ['Utilized Budget', 'Planned Budget']
+      },
+      xAxis: {
+        type: 'category',
+        data: this.strategicPlanReportDtos.map(plan => plan.strategicPlanName)
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          name: 'Utilized Budget',
+          type: 'bar',
+          data: this.strategicPlanReportDtos.map(plan => plan.actualBudget),
+          label: {
+            show: true,
+            position: 'inside',
+            formatter: '{c}'
+          }
+        },
+        {
+          name: 'Planned Budget',
+          type: 'bar',
+          data: this.strategicPlanReportDtos.map(plan => plan.plannedBudget),
+          label: {
+            show: true,
+            position: 'inside',
+            formatter: '{c}'
+          }
+        }
+      ]
+    };
+
+ }
 
 
 }
