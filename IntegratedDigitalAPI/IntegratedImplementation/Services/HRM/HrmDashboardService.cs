@@ -2,18 +2,13 @@
 using IntegratedImplementation.Interfaces.HRM;
 using IntegratedInfrustructure.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IntegratedImplementation.Services.HRM
 {
     public class HrmDashboardService : IHrmDashboardService
     {
         private readonly ApplicationDbContext _dbContext;
-        public HrmDashboardService(ApplicationDbContext dbContext) 
+        public HrmDashboardService(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -35,7 +30,7 @@ namespace IntegratedImplementation.Services.HRM
 
             var activeVacanciesCount = activeVacancies.Count();
             var applicantsCount = 0;
-            foreach ( var vac in activeVacancies)
+            foreach (var vac in activeVacancies)
             {
                 var applicants = await _dbContext.ApplicantVacancies.Where(x => x.VacancyId == vac.Id).CountAsync();
                 applicantsCount += applicants;
@@ -43,7 +38,8 @@ namespace IntegratedImplementation.Services.HRM
 
             var tentoday = today.AddDays(-10);
             var aboutToBeTerminatedEmployees = employees.Where(x => x.EmploymentStatus == EnumList.EmploymentStatus.ACTIVE && (x.ContractEndDate >= tentoday && x.ContractEndDate <= today))
-                .Select(x => new soonTerminateDto { 
+                .Select(x => new soonTerminateDto
+                {
                     EmployeeName = $"{x.FirstName} {x.MiddleName} {x.LastName}",
                     EmploymentDate = x.EmploymentDate,
                     EmploymentType = x.EmploymentType.ToString(),

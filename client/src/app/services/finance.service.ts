@@ -19,6 +19,7 @@ import { ViewProgressDto } from '../pages/project-managment/view-activties/activ
 import { AddReceiptDto } from '../model/Finance/IReceiptModel';
 import { AccountReconsilationFindDto, AccountToBeReconsiledDto, AddAccountReconsilationDto } from '../model/Finance/IAccountReconsilationDto';
 import { AddClientDto, ClientsListDto } from '../model/Finance/IFinanceSettingDto';
+import { FinanceDashboardDTO, FinanceBarChartPostDto } from '../model/Finance/IFinanceDashboard';
 
 @Injectable({
   providedIn: 'root'
@@ -224,4 +225,12 @@ getclientList() {
   return this.http.get<ClientsListDto[]>(this.BaseURI + "/Client/GetClientList")
 }
 
+//dashboard
+getDashboardData(){
+  return this.http.get<FinanceDashboardDTO>(this.BaseURI + "/FinanceDashboard/GetDashboardData")
+}
+
+getDashboardChart(planId : string){
+  return this.http.get<FinanceBarChartPostDto>(this.BaseURI + "/FinanceDashboard/GetDashboardChart?planId=" + planId)
+}
 }
