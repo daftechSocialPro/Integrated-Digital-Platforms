@@ -62,6 +62,11 @@ import { ActivityProgressApproverComponent } from './activity-progress-approver/
 import { ReceiptComponent } from './receipt/receipt.component';
 import { ClientListComponent } from './finance-configuration/client-list/client-list.component';
 import { AddClientComponent } from './finance-configuration/client-list/add-client/add-client.component';
+import { TaxRateComponent } from './finance-configuration/tax-rate/tax-rate.component';
+import { AddTaxRateComponent } from './finance-configuration/tax-rate/add-tax-rate/add-tax-rate.component';
+import { AuthorizedPaymentsComponent } from './payments/authorized-payments/authorized-payments.component';
+import { FinanceDashboardComponent } from './finance-dashboard/finance-dashboard.component';
+import { NgxEchartsModule } from 'ngx-echarts';
 // import { PensionDeclarationComponent } from './pension-declaration/pension-declaration.component';
 
 
@@ -110,6 +115,10 @@ import { AddClientComponent } from './finance-configuration/client-list/add-clie
     ReceiptComponent,
     ClientListComponent,
     AddClientComponent,
+    TaxRateComponent,
+    AddTaxRateComponent,
+    AuthorizedPaymentsComponent,
+    FinanceDashboardComponent,
     
 
   ],
@@ -136,6 +145,9 @@ import { AddClientComponent } from './finance-configuration/client-list/add-clie
     CheckboxModule,
     MultiSelectModule,
     FileUploadModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts'),
+    }),
   
 
 

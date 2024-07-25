@@ -16,11 +16,10 @@ namespace IntegratedInfrustructure.Model.FInance.Actions
             BegningBalanceDetails = new HashSet<BegningBalanceDetail>();
         }
         public Guid AccountingPeriodId { get; set; }
-        public virtual PeriodDetails AccountingPeriod { get; set; } = null!;
+        public virtual AccountingPeriod AccountingPeriod { get; set; } = null!;
         public double TotalCredit { get; set; }
         public double TotalDebit { get; set; }
-        public string Remark { get; set; } = null!;
-
+        public string? Remark { get; set; }
 
         [InverseProperty(nameof(BegningBalanceDetail.BegningBalance))]
         public ICollection<BegningBalanceDetail> BegningBalanceDetails { get; set; }

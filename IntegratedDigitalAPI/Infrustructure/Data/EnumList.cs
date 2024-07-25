@@ -425,5 +425,15 @@ namespace IntegratedInfrustructure.Data
             Organization
         }
 
+        public enum TaxEntityType
+        {
+            NoTinTaxpayer,
+            VatRegistered,
+            TotRegisteredTwoPercent,
+            TotRegisteredTenPercent,
+            NoneTaxPayer,
+            NonTaxable,
+        }
+
     }
 }

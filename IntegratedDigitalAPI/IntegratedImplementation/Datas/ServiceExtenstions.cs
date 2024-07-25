@@ -28,11 +28,6 @@ using IntegratedImplementation.Services.PM;
 using IntegratedImplementation.Services.Training;
 using IntegratedImplementation.Services.Vacancy;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IntegratedImplementation.Datas
 {
@@ -40,13 +35,13 @@ namespace IntegratedImplementation.Datas
     {
         public static IServiceCollection AddCoreBusiness(this IServiceCollection services)
         {
-           
+
             #region Hrm Service
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IHolidayService, HolidayService>();
 
             services.AddScoped<IHrmNotificationService, HrmNotificationService>();
-           
+
             services.AddScoped<IDepartmentService, DepartmentService>();
             services.AddScoped<IPositionService, PositionService>();
             services.AddScoped<IGeneralConfigService, GeneralConfigService>();
@@ -55,7 +50,7 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<ILeaveManagementService, LeaveManagementService>();
             services.AddScoped<IEmployementDetailService, EmployementDetailService>();
             services.AddScoped<IHrmSettingService, HrmSettingService>();
-            services.AddScoped<IPerformancePlanService,PerformancePlanService>();
+            services.AddScoped<IPerformancePlanService, PerformancePlanService>();
             services.AddScoped<IEmployeePerformanceService, EmployeePerformanceService>();
             services.AddScoped<ILoanSettingService, LoanSettingService>();
             services.AddScoped<ILoanManagementService, LoanManagementService>();
@@ -116,9 +111,9 @@ namespace IntegratedImplementation.Datas
             #endregion
 
             #region finance
-            services.AddScoped<IAccountTypeService, AccountTypeService>();            
-            services.AddScoped<IFinanceLookupService, FinanceLookupService>();       
-            services.AddScoped<IChartOfAccountService, ChartOfAccountService>();       
+            services.AddScoped<IAccountTypeService, AccountTypeService>();
+            services.AddScoped<IFinanceLookupService, FinanceLookupService>();
+            services.AddScoped<IChartOfAccountService, ChartOfAccountService>();
             services.AddScoped<IAccountingPeriodService, AccountingPeriodService>();
             services.AddScoped<IPayrollSettingService, PayrollSettingService>();
             services.AddScoped<IPaymentsService, PaymentService>();
@@ -131,6 +126,8 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<IReceiptService, ReceiptService>();
             services.AddScoped<IAccountReconsilationService, AccountReconsilationService>();
             services.AddScoped<IClientsService, ClientService>();
+            services.AddScoped<ITaxRateService, TaxRateService>();
+            services.AddScoped<IFinanceDashboardService, FinanceDashboardService>();
             #endregion
 
 

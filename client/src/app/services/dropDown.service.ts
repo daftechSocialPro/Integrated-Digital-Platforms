@@ -141,5 +141,15 @@ export class DropDownService {
     getAccountingPeriodDropDown(){
         return this.http.get<SelectList[]>(this.baseUrl + '/DropDown/GetAccountingPeriodDropDown')
     }
+    getAccountingYear(){
+        return this.http.get<SelectList[]>(this.baseUrl + '/DropDown/GetAccountingYear')
+    }
 
+    getVendorAccount(vendorId: string){
+        return this.http.get<SelectList[]>(this.baseUrl + `/DropDown/GetVendorAccount?vendorId=${vendorId}`)
+    }
+
+    getEmployeeAccount(employeeId: string){
+        return this.http.get<SelectList[]>(this.baseUrl + `/DropDown/GetEmployeeAccount?employeeId=${employeeId}`)
+    }
 }

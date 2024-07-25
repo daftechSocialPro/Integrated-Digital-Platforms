@@ -37,6 +37,8 @@ namespace IntegratedImplementation.Services.Configuration
                 AccountNumber = addBank.AccountNumber,
                 Address = addBank.Address,
                 AmharicAddress = addBank.AmharicAddress,
+                Branch = addBank.Branch,
+                AmharicBranch = addBank.AmharicBranch,
                 AmharicName = addBank.AmharicName,
                 BankDigitNumber = addBank.BankDigitNumber,
                 BankName = addBank.BankName
@@ -58,6 +60,8 @@ namespace IntegratedImplementation.Services.Configuration
                             Address = x.Address,
                             AmharicAddress = x.AmharicAddress,
                             AmharicName = x.AmharicName,
+                            Branch = x.Branch,
+                            AmharicBranch = x.AmharicBranch,
                             BankDigitNumber = x.BankDigitNumber,
                             BankName = x.BankName
                         }).ToListAsync();
@@ -79,6 +83,8 @@ namespace IntegratedImplementation.Services.Configuration
             currentBank.BankDigitNumber = updateBank.BankDigitNumber;
             currentBank.Address = updateBank.Address;
             currentBank.AmharicAddress = updateBank.AmharicAddress;
+            currentBank.Branch = updateBank.Branch;
+            currentBank.AmharicBranch = updateBank.AmharicBranch;
 
             await _dbContext.SaveChangesAsync();
 

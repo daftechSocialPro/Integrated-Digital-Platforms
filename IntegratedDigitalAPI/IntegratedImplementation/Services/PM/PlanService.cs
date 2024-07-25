@@ -6,9 +6,7 @@ using IntegratedImplementation.DTOS.PM;
 using IntegratedInfrustructure.Data;
 using IntegratedInfrustructure.Model.PM;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Linq.Dynamic.Core;
-using System.Threading.Tasks;
 using static IntegratedInfrustructure.Data.EnumList;
 
 namespace IntegratedDigitalAPI.Services.PM

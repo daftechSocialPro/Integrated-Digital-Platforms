@@ -3,6 +3,7 @@ using IntegratedImplementation.DTOS.Finance.Action;
 using IntegratedImplementation.DTOS.Finance.Configuration;
 using IntegratedImplementation.Interfaces.Finance.Action;
 using IntegratedImplementation.Interfaces.Finance.Configuration;
+using IntegratedInfrustructure.Model.FInance.Actions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -26,11 +27,19 @@ namespace IntegratedDigitalAPI.Controllers.Finance.Action
         {
             return Ok(await _paymentService.GetPendingPayments());
         }
+
         [HttpGet]
         [ProducesResponseType(typeof(PaymentListDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetApprovedPayments()
         {
             return Ok(await _paymentService.GetApprovedPayments());
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(PaymentListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetAuthorizedPayments()
+        {
+            return Ok(await _paymentService.GetAuthorizedPayments());
         }
 
 
@@ -61,6 +70,27 @@ namespace IntegratedDigitalAPI.Controllers.Finance.Action
             {
                 return BadRequest();
             }
+        }
+
+        [HttpPut]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> AuthorizePayment(ApprovePaymentDto approvePayment)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _paymentService.AuthorizePayment(approvePayment));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(PaymentLetterDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetPaymentLetter(Guid paymentId)
+        {
+            return Ok(await _paymentService.GetPaymentLetter(paymentId));
         }
     }
 }

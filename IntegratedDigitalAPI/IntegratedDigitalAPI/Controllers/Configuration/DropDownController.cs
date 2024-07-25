@@ -247,6 +247,14 @@ namespace IntegratedDigitalAPI.Controllers.Configuration
         {
             return Ok(await _DropDownService.GetChartOfAccountsDropDown());
         }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetAccountingYear()
+        {
+            return Ok(await _DropDownService.GetAccountingYear());
+        }
+
         [HttpGet]
         [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAccountingPeriodDropDown()
@@ -261,6 +269,18 @@ namespace IntegratedDigitalAPI.Controllers.Configuration
             return Ok(await _DropDownService.GetTrainingList());
         }
 
+        [HttpGet]
+        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetVendorAccount(Guid vendorId)
+        {
+            return Ok(await _DropDownService.GetVendorAccount(vendorId));
+        }
 
+        [HttpGet]
+        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetEmployeeAccount(Guid employeeId)
+        {
+            return Ok(await _DropDownService.GetEmployeeAccount(employeeId));
+        }
     }
 }

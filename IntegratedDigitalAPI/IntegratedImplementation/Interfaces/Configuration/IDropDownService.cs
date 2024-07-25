@@ -47,8 +47,13 @@ namespace IntegratedImplementation.Interfaces.Configuration
 
         Task<List<SelectListDto>> GetFiscalYears();
         Task<List<SelectListDto>> GetAccountTypeDropDown();
+        Task<List<SelectListDto>> GetAccountingYear();
         Task<List<SelectListDto>> GetAccountingPeriodDropDown();
         Task<List<SelectListDto>> GetChartOfAccountsDropDown();
         Task<List<SelectListDto>> GetTrainingList();
+
+        Task<List<SelectListDto>> GetVendorAccount(Guid vendorId);
+        Task<List<SelectListDto>> GetEmployeeAccount(Guid employeeId);
+
     }
 }

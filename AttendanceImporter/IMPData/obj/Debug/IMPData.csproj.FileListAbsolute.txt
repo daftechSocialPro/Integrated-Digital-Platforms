@@ -87,3 +87,17 @@ D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\Attendan
 D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\IMPData\obj\Debug\IMPData.csproj.CopyComplete
 D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\IMPData\obj\Debug\IMPData.dll
 D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\IMPData\obj\Debug\IMPData.pdb
+D:\Applications\DAF Computer\Midwives\Integrated-Digital-Platforms\AttendanceImporter\IMPData\bin\Debug\IMPData.dll.config
+D:\Applications\DAF Computer\Midwives\Integrated-Digital-Platforms\AttendanceImporter\IMPData\bin\Debug\IMPData.dll
+D:\Applications\DAF Computer\Midwives\Integrated-Digital-Platforms\AttendanceImporter\IMPData\bin\Debug\IMPData.pdb
+D:\Applications\DAF Computer\Midwives\Integrated-Digital-Platforms\AttendanceImporter\IMPData\bin\Debug\Newtonsoft.Json.dll
+D:\Applications\DAF Computer\Midwives\Integrated-Digital-Platforms\AttendanceImporter\IMPData\bin\Debug\System.Core.dll
+D:\Applications\DAF Computer\Midwives\Integrated-Digital-Platforms\AttendanceImporter\IMPData\bin\Debug\System.Numerics.dll
+D:\Applications\DAF Computer\Midwives\Integrated-Digital-Platforms\AttendanceImporter\IMPData\bin\Debug\Newtonsoft.Json.xml
+D:\Applications\DAF Computer\Midwives\Integrated-Digital-Platforms\AttendanceImporter\IMPData\bin\Debug\System.Core.xml
+D:\Applications\DAF Computer\Midwives\Integrated-Digital-Platforms\AttendanceImporter\IMPData\bin\Debug\System.Numerics.xml
+D:\Applications\DAF Computer\Midwives\Integrated-Digital-Platforms\AttendanceImporter\IMPData\obj\Debug\IMPData.csproj.AssemblyReference.cache
+D:\Applications\DAF Computer\Midwives\Integrated-Digital-Platforms\AttendanceImporter\IMPData\obj\Debug\IMPData.csproj.CoreCompileInputs.cache
+D:\Applications\DAF Computer\Midwives\Integrated-Digital-Platforms\AttendanceImporter\IMPData\obj\Debug\IMPData.csproj.Up2Date
+D:\Applications\DAF Computer\Midwives\Integrated-Digital-Platforms\AttendanceImporter\IMPData\obj\Debug\IMPData.dll
+D:\Applications\DAF Computer\Midwives\Integrated-Digital-Platforms\AttendanceImporter\IMPData\obj\Debug\IMPData.pdb

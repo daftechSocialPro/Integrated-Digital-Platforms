@@ -30,6 +30,8 @@ export class AddBankListComponent  implements OnInit {
         amharicName: [this.bank.amharicName],
         address: [this.bank.address],
         amharicAddress: [this.bank.amharicAddress],
+        branch: [this.bank.branch],
+        amharicBranch: [this.bank.amharicBranch],
         bankDigitNumber: [this.bank.bankDigitNumber, Validators.required],
         accountNumber: [this.bank.accountNumber, Validators.required ],
       });
@@ -40,6 +42,8 @@ export class AddBankListComponent  implements OnInit {
         amharicName: [''],
         address: [''],
         amharicAddress: [''],
+        branch: [''],
+        amharicBranch: [''],
         bankDigitNumber: [null, Validators.required,,Validators.maxLength(this.totDigit), Validators.minLength(this.totDigit)],
         accountNumber: [null, Validators.required],
       });
@@ -65,6 +69,8 @@ export class AddBankListComponent  implements OnInit {
         amharicName: this.bankFormGroup.value.amharicName,
         address: this.bankFormGroup.value.address,
         amharicAddress: this.bankFormGroup.value.amharicAddress,
+        branch: this.bankFormGroup.value.branch,
+        amharicBranch: this.bankFormGroup.value.amharicBranch,
         accountNumber: this.bankFormGroup.value.accountNumber,
         bankDigitNumber: this.bankFormGroup.value.bankDigitNumber,
         createdById: this.user.userId

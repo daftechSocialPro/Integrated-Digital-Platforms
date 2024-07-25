@@ -18,5 +18,25 @@ export class VendorListDto {
     phoneNumber: string;
     email: string;
     tinNumber: string;
-    address: string;
+    address: string; 
+    vendorBankAccounts: VendorBankAccountDto[];
 }
+
+
+export class VendorBankAccountDto
+{
+    id?: string;
+    bankName: string;
+    accountNumber: string;
+}
+
+export class AddVendorBankAccountDto
+{
+    id?: string;
+    vendorId: string;
+    bankName: string;
+    accountNumber: string;
+    createdById: string;
+}
+
+
