@@ -133,7 +133,7 @@
 
     {{selectedGender!='all'? ' -' +selectedGender:''}}
   </h2>
-  <div class="col-xl-4 col-md-12 p-2">
+  <div class="col-xl-5 col-md-12 p-2">
 
     <div class="card">
       <div class="chart-title">
@@ -142,7 +142,7 @@
       <div echarts [options]="chartOptions2" [loading]="loading2" class="demo-chart"></div>
     </div>
   </div>
-  <div class="col-xl-8 col-md-12 p-2">
+  <div class="col-xl-7 col-md-12 p-2">
 
     <div class="card">
       <div class="chart-title">
@@ -152,7 +152,7 @@
     </div>
 
   </div>
-  <div class="col-xl-8 col-md-12  card">
+  <div class="col-xl-7 col-md-12  card">
     <div class="chart-title">
       <h2 class="chart-title-text">Total Growth</h2>
     </div>
@@ -162,14 +162,16 @@
 
           <select class="form-select" [(ngModel)]='selectedReport'>
             <option value="yearly">YEARLY</option>
+            <option value="quarterly">QUARTERLY</option>
             <option value="monthly">MONTHLY</option>
 
           </select>
 
         </div>
 
-        <div class="col-auto" *ngIf="selectedReport=='monthly'">
-          <select class="form-select" #year (change)="generate(year.value)">
+        <div class="col-auto" *ngIf="selectedReport=='monthly'||selectedReport=='quarterly'">
+          <select class="form-select" #year
+            (change)="selectedReport=='monthly'? generate(year.value):generateQuarter(year.value)">
             <option *ngFor=" let item of yearOptions" [value]="item.value">{{item.label}}</option>
 
           </select>
@@ -183,10 +185,14 @@
       <div *ngIf="selectedReport==='yearly'" echarts [options]="chartOptions5" [loading]="loading" class="demo-chart">
       </div>
 
+      <div *ngIf="selectedReport==='quarterly'" echarts [options]="chartOptions7" [loading]="loading"
+        class="demo-chart">
+      </div>
+
     </div>
 
   </div>
-  <div class="col-xl-4 col-md-12 p-2">
+  <div class="col-xl-5 col-md-12 p-2">
     <div class="card">
       <div class="chart-title">
         <h2 class="chart-title-text">Payment Status</h2>
@@ -198,16 +204,12 @@
   </div>
 
 
-</div>
-
-<div class="col-xl-12 col-md-12 p-4">
-  <div class="card">
-    <div class="chart-title">
-      <h2 class="chart-title-text">Member Count by Chapter</h2>
+  <div class="col-xl-12 col-md-12 p-4">
+    <div class="card">
+      <div class="chart-title">
+        <h2 class="chart-title-text">Member Count by Chapter</h2>
+      </div>
+      <div echarts [options]="chartOptions6" [loading]="loading" class="demo-chart">
+      </div>
     </div>
-
-    <div echarts [options]="chartOptions6" [loading]="loading" class="demo-chart">
-    
-
   </div>
-</div>
