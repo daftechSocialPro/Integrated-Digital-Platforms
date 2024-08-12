@@ -29,7 +29,9 @@ export class FinanceDashboardComponent implements OnInit {
   plans: PlanView[] = [];
   strategicPlans: SelectList[] = [];
   overAllProgress: boolean = true;
-  financeDashboardData!: FinanceDashboardDTO
+  financeDashboardData!: FinanceDashboardDTO;
+  currentYear : number 
+
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private planService: PlanService,
@@ -40,10 +42,13 @@ export class FinanceDashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
+    const currentDate = new Date();
+    this.currentYear = currentDate.getFullYear();
     this.user = this.userService.getCurrentUser();
     this.listPlans();
     this.getDashboardData()
+
+ 
   }
 
   getDashboardData(){
@@ -56,12 +61,10 @@ export class FinanceDashboardComponent implements OnInit {
 
   listPlans(): void {
     
-    this.planService.getPlans()
+    this.planService.getPlans(null,this.currentYear)
       .subscribe({
-      next: (res) => {
-        
-        this.plans = [this.createAllPlan(), ...res];
-       
+      next: (res) => {        
+        this.plans = [this.createAllPlan(), ...res];       
         this.processPlanData();
       },
       error: (err) => console.error('Error fetching plans:', err),
@@ -163,7 +166,7 @@ export class FinanceDashboardComponent implements OnInit {
         },
       },
       legend: {
-        data: ['Actual Budget', 'Planned Budget'],
+        data: ['Utilized Budget', 'Planned Budget'],
       },
       grid: {
         left: '3%',
@@ -183,7 +186,7 @@ export class FinanceDashboardComponent implements OnInit {
       }],
       series: [
         {
-          name: 'Actual Budget',
+          name: 'Utilized Budget',
           type: 'bar',
           barWidth: '50%',
           data: data.actual,

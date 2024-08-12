@@ -28,7 +28,7 @@ export interface Plan {
 export interface PlanView {
 
     id : string,
-    planName: String,
+    planName: string,
     planWeight: number,
     plandBudget: number,
     remainingBudget: number,
@@ -89,8 +89,17 @@ export interface PlanBarChartPostDto{
 export interface ChartDataSet{
     label: string
     data: any
-
 }
+
+export interface StrategicPlanReportDto {
+    strategicPlanId: string;
+    strategicPlanName?: string;
+    actualProgress: number;
+    plannedProgress: number;
+    actualBudget: number;
+    plannedBudget: number;
+  }
+  
 
 
 

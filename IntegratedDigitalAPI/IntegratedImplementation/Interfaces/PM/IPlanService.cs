@@ -2,6 +2,7 @@
 using Implementation.Helper;
 using IntegratedDigitalAPI.DTOS.PM;
 using IntegratedImplementation.DTOS.Configuration;
+using IntegratedImplementation.DTOS.PM;
 using System;
 using static IntegratedDigitalAPI.Services.PM.PlanService;
 
@@ -13,7 +14,7 @@ namespace IntegratedDigitalAPI.Services.PM.Plan
 
         public  Task<ResponseMessage> UpdatePlan(PlanDto plan);
 
-        public Task<List<PlanViewDto>> GetPlans(Guid? programId);
+        public Task<List<PlanViewDto>> GetPlans(Guid? programId, int? year);
 
         public Task<List<SelectListDto>> GetPlansSelectList();
 
@@ -22,8 +23,11 @@ namespace IntegratedDigitalAPI.Services.PM.Plan
         public Task<GetStartEndDate> GetDateTime(Guid planId);
 
         public Task<ResponseMessage> DeleteProject(Guid planId);
-        public Task<PlanPieChartPostDto> GetPlanPieCharts(Guid? planId,Guid? strategicPlanId , int quarter);
-        public Task<PlanBarChartPostDto> GetPlanBarCharts(Guid? planId, Guid? strategicPlanId);
+        public Task<PlanPieChartPostDto> GetPlanPieCharts(Guid? planId,Guid? strategicPlanId , int quarter, int? year);
+        public Task<PlanBarChartPostDto> GetPlanBarCharts(Guid? planId, Guid? strategicPlanId, int ? year);
+
+
+        public Task<List<StrageicPlanReportDto>> GetStrategicPlanReport();
 
 
         //public Task<int> UpdatePrograms(Programs Programs);

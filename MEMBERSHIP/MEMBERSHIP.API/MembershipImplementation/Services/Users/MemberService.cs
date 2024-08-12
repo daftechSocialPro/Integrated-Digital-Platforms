@@ -202,47 +202,145 @@ namespace MembershipImplementation.Services.HRM
         public async Task<List<MembersGetDto>> GetMembers()
         {
             var encryption = "2B7E151628AED2A6ABF7158809CF4F3C";
-            var members = await (from member in _dbContext.Members
-                                 join payment in _dbContext.MemberPayments on member.Id equals payment.MemberId into memberPayments
-                                 let latestPayment = memberPayments.OrderByDescending(x => x.LastPaid).FirstOrDefault()
-                                 select new MembersGetDto
-                                 {
-                                     Id = member.Id.ToString(),
-                                     FullName = member.FullName,
-                                     PhoneNumber = member.PhoneNumber,
-                                     ImagePath = member.ImagePath,
-                                     Email = member.Email,
-                                     Zone = member.Zone,
-                                     Region = member.Region.RegionName,
-                                     Woreda = member.Woreda,
-                                     Inistitute = member.Inistitute,
-                                     InstituteRole = member.InstituteRole,
-                                     MembershipTypeId = member.MembershipTypeId.ToString(),
-                                     MembershipType = member.MembershipType.Name,
-                                     MemberId = member.MemberId,
-                                     Gender = member.Gender.ToString(),
-                                     Amount = latestPayment != null ? latestPayment.Payment : 0.0,
-                                     Text_Rn = latestPayment != null ? latestPayment.Text_Rn : "",
-                                     ExpiredDate = latestPayment != null ? latestPayment.ExpiredDate : DateTime.Now,
-                                     EducationalField = member.EducationalField,
-                                     BirthDate = member.BirthDate,
-                                     EducationalLevel = member.EducationalLevel.EducationalLevelName,
-                                     EducationalLevelId = member.EducationalLevelId.ToString(),
-                                     IdCardStatus = member.IdCardStatus.ToString(),
-                                     PaymentStatus = latestPayment != null ? latestPayment.PaymentStatus.ToString() : PaymentStatus.PENDING.ToString(),
-                                     RejectedRemark = member.RejectedRemark,
 
-                                     LastPaid = latestPayment != null ? latestPayment.LastPaid : DateTime.Now,
-                                     MembershipCategory = member.MembershipType.MembershipCategory.ToString(),
+            // Fetch members with related data
+            var members = await _dbContext.Members
+                .AsNoTracking()
+                .Select(m => new
+                {
+                    m.Id,
+                    m.FullName,
+                    m.PhoneNumber,
+                    m.RegionId,
+                    m.ImagePath,
+                    m.Email,
+                    m.Zone,
+                    RegionName = m.Region.RegionName,
+                    m.Woreda,
+                    m.Inistitute,
+                    m.InstituteRole,
+                    m.MembershipTypeId,
+                    MembershipTypeName = m.MembershipType.Name,
+                    m.MemberId,
+                    m.Gender,
+                    m.EducationalField,
+                    m.BirthDate,
+                    EducationalLevelName = m.EducationalLevel.EducationalLevelName,
+                    m.EducationalLevelId,
+                    m.IdCardStatus,
+                    m.RejectedRemark,
+                    MembershipCategory = m.MembershipType.MembershipCategory,
+                    m.MoodleId,
+                    m.MoodlePassword,
+                    m.MoodleUserName,
+                    m.MoodleStatus,
+                    m.CreatedDate
+                })
+                .ToListAsync();
 
-                                     MoodleId = member.MoodleId,
-                                     MoodlePassword = member.MoodlePassword != null ? _generalConfig.Decrypt(member.MoodlePassword!, encryption) : "",
-                                     MoodleName = member.MoodleUserName,
-                                     MoodleStatus = member.MoodleStatus.ToString(),
-                                     createdByDate = member.CreatedDate
+            // Fetch all payments for each member
+            var allMemberPayments = await _dbContext.MemberPayments
+                .AsNoTracking()
+                .GroupBy(p => p.MemberId)
+                .Select(g => new
+                {
+                    MemberId = g.Key,
+                    Payments = g.OrderByDescending(p => p.LastPaid)
+                        .Select(p => new
+                        {
+                            p.Payment,
+                            p.Text_Rn,
+                            p.ExpiredDate,
+                            p.PaymentStatus,
+                            p.LastPaid
+                        })
+                        .ToList()
+                })
+                .ToDictionaryAsync(x => x.MemberId);
 
-                                 }).ToListAsync();
-            return members;
+            // Combine the data in memory
+            return members.Select(m =>
+            {
+                allMemberPayments.TryGetValue(m.Id, out var memberPayments);
+                var payments = memberPayments?.Payments;
+                var latestPayment = payments?.FirstOrDefault();
+                var secondLatestPayment = payments?.Skip(1).FirstOrDefault();
+                var paymentCount = payments?.Count ?? 0;
+                var memberStatus = DetermineMemberStatus(paymentCount, latestPayment?.PaymentStatus, secondLatestPayment?.PaymentStatus);
+
+                return new MembersGetDto
+                {
+                    Id = m.Id.ToString(),
+                    FullName = m.FullName,
+                    PhoneNumber = m.PhoneNumber,
+                    RegionId = m.RegionId.ToString(),
+                    ImagePath = m.ImagePath,
+                    Email = m.Email,
+                    Zone = m.Zone,
+                    Region = m.RegionName,
+                    Woreda = m.Woreda,
+                    Inistitute = m.Inistitute,
+                    InstituteRole = m.InstituteRole,
+                    MembershipTypeId = m.MembershipTypeId.ToString(),
+                    MembershipType = m.MembershipTypeName,
+                    MemberId = m.MemberId,
+                    Gender = m.Gender.ToString(),
+                    Amount = latestPayment?.Payment ?? 0.0,
+                    Text_Rn = latestPayment?.Text_Rn ?? "",
+                    ExpiredDate = latestPayment?.ExpiredDate ?? DateTime.Now,
+                    EducationalField = m.EducationalField,
+                    BirthDate = m.BirthDate,
+                    EducationalLevel = m.EducationalLevelName,
+                    EducationalLevelId = m.EducationalLevelId.ToString(),
+                    IdCardStatus = m.IdCardStatus.ToString(),
+                    PaymentStatus = latestPayment?.PaymentStatus.ToString() ?? PaymentStatus.PENDING.ToString(),
+                    RejectedRemark = m.RejectedRemark,
+                    LastPaid = latestPayment?.LastPaid ?? DateTime.Now,
+                    MembershipCategory = m.MembershipCategory.ToString(),
+                    MoodleId = m.MoodleId,
+                    MoodlePassword = m.MoodlePassword != null ? _generalConfig.Decrypt(m.MoodlePassword, encryption) : "",
+                    MoodleName = m.MoodleUserName,
+                    MoodleStatus = m.MoodleStatus.ToString(),
+                    createdByDate = m.CreatedDate,
+                    MemberStatus = memberStatus
+                };
+            }).ToList();
+        }
+
+        // Helper method to determine member status
+        private string DetermineMemberStatus(int paymentCount, PaymentStatus? latestPaymentStatus, PaymentStatus? secondLatestPaymentStatus)
+        {
+
+            if (latestPaymentStatus == PaymentStatus.EXPIRED)
+            {
+                return "Waiting for Renewal";
+            }
+
+            else if (secondLatestPaymentStatus == PaymentStatus.EXPIRED)
+            {
+                if (latestPaymentStatus == PaymentStatus.PAID)
+                {
+                    return "Renewed Member";
+                }
+                else if (latestPaymentStatus == PaymentStatus.PENDING)
+                {
+                    return "Waiting for Renewal";
+                }
+                else
+                {
+                    return "Waiting for Renewal";
+                }
+
+            }
+         
+
+
+            else
+            {
+                return "New Member";
+            }
+
+
         }
         public async Task<MembersGetDto> GetSingleMember(Guid MemberId)
         {
@@ -414,6 +512,7 @@ namespace MembershipImplementation.Services.HRM
             if (currentPayment != null)
             {
                 currentPayment.PaymentStatus = PaymentStatus.PAID;
+                currentPayment.IsPaid = true;
 
                 await _dbContext.SaveChangesAsync();
                 return new ResponseMessage { Success = true, Message = "Payment Completed Successfully", Data = member };
@@ -465,6 +564,11 @@ namespace MembershipImplementation.Services.HRM
                 {
                     currentMember.FullName = memberUpdate.FullName;
                     currentMember.PhoneNumber = memberUpdate.PhoneNumber;
+                    if (memberUpdate.RegionId != null)
+                    {
+                        currentMember.RegionId = Guid.Parse(memberUpdate.RegionId);
+                    }
+
                     currentMember.Email = memberUpdate.Email;
                     currentMember.EducationalField = memberUpdate.EducationalField;
                     currentMember.EducationalLevelId = memberUpdate.EducationalLevelId;
@@ -503,6 +607,7 @@ namespace MembershipImplementation.Services.HRM
 
                         if (currentPayment.PaymentStatus == PaymentStatus.PAID && (currentMember.MemberId == null || currentMember.MembershipTypeId != null))
                         {
+                            currentPayment.IsPaid = true;
                             var mt = await _dbContext.MembershipTypes.FindAsync(currentMember.MembershipTypeId);
                             var memberID = await _generalConfig.GenerateCode(0, mt.ShortCode);
 
@@ -564,6 +669,7 @@ namespace MembershipImplementation.Services.HRM
                         };
                         if (currentpay.PaymentStatus == PaymentStatus.PAID && (currentMember.MemberId == null || currentMember.MembershipTypeId != null))
                         {
+
                             var mt = await _dbContext.MembershipTypes.FindAsync(currentMember.MembershipTypeId);
                             var memberID = await _generalConfig.GenerateCode(0, mt.ShortCode);
 

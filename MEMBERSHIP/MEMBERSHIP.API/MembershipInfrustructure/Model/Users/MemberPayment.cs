@@ -30,6 +30,9 @@ namespace MembershipInfrustructure.Model.Users
   
         public DateTime? ModifiedDate { get; set; } = DateTime.Now;
 
+        [DefaultValue(false)]
+        public bool IsPaid { get; set; }
+
 
     }
 

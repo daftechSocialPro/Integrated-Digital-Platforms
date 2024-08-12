@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "k8l9ba7v6JZC2c+kvt2EEXjlEOMH1I0ofMj/LREUQ5w=",
+  "Hash": "8/KiBNcn8QwlCxTWRsPJwsJ8M6/S41NBQQDKnRv+Hec=",
   "Source": "MembershipAPI",
   "BasePath": "_content/MembershipAPI",
   "Mode": "Default",
@@ -2429,6 +2429,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Member\\Rhoda Nicholson.png"
+    },
+    {
+      "Identity": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\MEMBERSHIP\\MEMBERSHIP.API\\MembershipAPI\\wwwroot\\Member\\Sisay Mekonnen Jote.png",
+      "SourceId": "MembershipAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\MEMBERSHIP\\MEMBERSHIP.API\\MembershipAPI\\wwwroot\\",
+      "BasePath": "_content/MembershipAPI",
+      "RelativePath": "Member/Sisay Mekonnen Jote.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Member\\Sisay Mekonnen Jote.png"
     },
     {
       "Identity": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\MEMBERSHIP\\MEMBERSHIP.API\\MembershipAPI\\wwwroot\\Member\\Talon Cleveland.png",

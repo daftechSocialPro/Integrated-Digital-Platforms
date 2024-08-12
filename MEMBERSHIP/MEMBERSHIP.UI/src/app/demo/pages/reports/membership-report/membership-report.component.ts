@@ -21,79 +21,78 @@ export class MembershipReportComponent implements OnInit {
   filterdMembers: IMembersGetDto[];
   searchTerm: string = '';
   chapters: SelectList[];
-  memberships:SelectList[]
-  selectedMembership:String =''
+  memberships: SelectList[];
+  selectedMembership: String = '';
 
+  memberType: string = '';
   @ViewChild('stockReportIframe') stockReportIframe: ElementRef;
   @ViewChild('excelTable', { static: false }) excelTable!: ElementRef;
 
-  selectedChapter: string="";
-  selectedGender: string="";
-  selectedStatus: string="";
-  fromDate: string
-  toDate: string
+  selectedChapter: string = '';
+  selectedGender: string = '';
+  selectedStatus: string = '';
+  fromDate: string;
+  toDate: string;
 
   paymentStatusData: any[];
   chartOptions: any;
-  loading:boolean=true
+  loading: boolean = true;
 
   genderData: any[];
   chartOptions2: any;
-  loading2:boolean=true
+  loading2: boolean = true;
 
   membershipTypeData: any[];
   chartOptions3: any;
   loading3: boolean = true;
-  userView : UserView
+  userView: UserView;
 
   ngOnInit(): void {
-     this.getMemberss();
+    this.getMemberss();
 
-     this.userView = this.userService.getCurrentUser()
+    this.userView = this.userService.getCurrentUser();
 
-     if(this.userView.regionId!=''){
+    if (this.userView.regionId != '') {
+      this.getRegions('ETHIOPIAN');
+    }
 
-      this.getRegions('ETHIOPIAN')
-      
-     }
-     
-   // this.getMemberReport()
+    // this.getMemberReport()
   }
 
   constructor(
     private modalService: NgbModal,
-    private userService : UserService,
+    private userService: UserService,
     private commonService: CommonService,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService,  private controlService: MemberService,
+    private messageService: MessageService,
+    private controlService: MemberService,
     private dropDownService: DropDownService
-  ) { }
+  ) {}
 
   getMemberss() {
     this.controlService.getMembers().subscribe({
       next: (res) => {
         this.Members = res;
-       this.filterdMembers = res 
+        this.filterdMembers = res;
 
-       if(this.userView.regionId!=''){
-       
-        this.applyFilter()
-      }
+        if (this.userView.regionId != '') {
+          this.applyFilter();
+        }
 
-       this.getPaymentStatusChart()
-       this.getGenderChart()
-       this.getMembershipTypeChart()
+        this.getPaymentStatusChart();
+        this.getGenderChart();
+        this.getMembershipTypeChart();
       }
     });
   }
 
-  getPaymentStatusChart(){
+  getPaymentStatusChart() {
     const paymentStatusCounts = this.filterdMembers.reduce((acc, item) => {
       acc[item.paymentStatus] = (acc[item.paymentStatus] || 0) + 1;
       return acc;
     }, {});
 
-    this.paymentStatusData = Object.keys(paymentStatusCounts).map(key => ({
+    this.paymentStatusData = Object.keys(paymentStatusCounts).map((key) => ({
       value: paymentStatusCounts[key],
       name: key
     }));
@@ -107,7 +106,7 @@ export class MembershipReportComponent implements OnInit {
       legend: {
         orient: 'vertical',
         left: 'left',
-        data: this.paymentStatusData.map(item => item.name)
+        data: this.paymentStatusData.map((item) => item.name)
       },
       series: [
         {
@@ -131,7 +130,8 @@ export class MembershipReportComponent implements OnInit {
           },
           data: this.paymentStatusData,
           itemStyle: {
-            color: function(params) { // Use a function to define custom colors
+            color: function (params) {
+              // Use a function to define custom colors
               var colors = ['#FFB970', '#198754', '#dc3545']; // Specify your custom colors here
               return colors[params.dataIndex % colors.length];
             }
@@ -141,16 +141,14 @@ export class MembershipReportComponent implements OnInit {
     };
 
     this.loading = false; // Hide loading indicator once the chart is rendered
-  
-    
   }
-  getGenderChart(){
+  getGenderChart() {
     const genderCounts = this.filterdMembers.reduce((acc, item) => {
       acc[item.gender] = (acc[item.gender] || 0) + 1;
       return acc;
     }, {});
 
-    this.genderData = Object.keys(genderCounts).map(key => ({
+    this.genderData = Object.keys(genderCounts).map((key) => ({
       value: genderCounts[key],
       name: key
     }));
@@ -164,7 +162,7 @@ export class MembershipReportComponent implements OnInit {
       legend: {
         orient: 'vertical',
         left: 'left',
-        data: this.genderData.map(item => item.name)
+        data: this.genderData.map((item) => item.name)
       },
       series: [
         {
@@ -186,23 +184,20 @@ export class MembershipReportComponent implements OnInit {
           labelLine: {
             show: false
           },
-          data: this.genderData,
-      
+          data: this.genderData
         }
       ]
     };
 
     this.loading2 = false; // Hide loading indicator once the chart is rendered
-  
-    
   }
-  getMembershipTypeChart(){
+  getMembershipTypeChart() {
     const membershipTypeCounts = this.filterdMembers.reduce((acc, item) => {
       acc[item.membershipType] = (acc[item.membershipType] || 0) + 1;
       return acc;
     }, {});
 
-    this.membershipTypeData = Object.keys(membershipTypeCounts).map(key => ({
+    this.membershipTypeData = Object.keys(membershipTypeCounts).map((key) => ({
       value: membershipTypeCounts[key],
       name: key
     }));
@@ -229,13 +224,13 @@ export class MembershipReportComponent implements OnInit {
       },
       yAxis: {
         type: 'category',
-        data: this.membershipTypeData.map(item => item.name)
+        data: this.membershipTypeData.map((item) => item.name)
       },
       series: [
         {
           name: 'Membership Types',
           type: 'bar',
-          data: this.membershipTypeData.map(item => item.value),
+          data: this.membershipTypeData.map((item) => item.value),
           itemStyle: {
             color: '#FF7070' // Specify the bar color
           }
@@ -244,23 +239,18 @@ export class MembershipReportComponent implements OnInit {
     };
 
     this.loading3 = false; // Hide loading indicator once the chart is rendered
-  
-
   }
-  getChapter(value:string) {
+  getChapter(value: string) {
     this.dropDownService.getRegionsDropdown(value).subscribe({
       next: (res) => {
-        this.chapters = res
+        this.chapters = res;
 
-        if(this.userView.regionId!=''){
-          this.selectedChapter = this.userView.regionId
-
+        if (this.userView.regionId != '') {
+          this.selectedChapter = this.userView.regionId;
         }
       }
-    })
+    });
   }
-
-  
 
   getImagePath(url: string) {
     return this.commonService.createImgPath(url);
@@ -274,63 +264,68 @@ export class MembershipReportComponent implements OnInit {
   // }
 
   applyFilter() {
-
-    if (this.selectedChapter !== "") {
+    this.filterdMembers = this.Members;
+    if (this.selectedChapter !== '') {
       const chapterSearchTerm = this.selectedChapter.toLowerCase();
       this.filterdMembers = this.Members.filter((item) => {
         return item.region && item.region.toLowerCase().includes(chapterSearchTerm);
       });
-    
     }
 
-    if (this.selectedGender !== "") {
+    if (this.selectedGender !== '') {
       const genderSearchTerm = this.selectedGender.toLowerCase();
       this.filterdMembers = this.filterdMembers.filter((item) => {
-        return item.gender && (item.gender.toLowerCase()==genderSearchTerm);
+        return item.gender && item.gender.toLowerCase() == genderSearchTerm;
       });
-      
     }
-    
- 
-    
-    if (this.selectedStatus !== "") {
+
+    if (this.selectedStatus !== '') {
       const statusSearchTerm = this.selectedStatus.toLowerCase();
       this.filterdMembers = this.filterdMembers.filter((item) => {
         return item.paymentStatus.toLowerCase().includes(statusSearchTerm);
       });
     }
 
-    
-    if (this.selectedMembership !== "") {
+    if (this.selectedMembership !== '') {
       const statusSearchTerm = this.selectedMembership.toLowerCase();
       this.filterdMembers = this.filterdMembers.filter((item) => {
-        return item.membershipTypeId.toLowerCase()===statusSearchTerm;
+        return item.membershipTypeId.toLowerCase() === statusSearchTerm;
       });
     }
 
-    
-
-
-    if (this.fromDate !== "" && this.toDate!="") {
+    if (this.fromDate !== '' && this.toDate != '') {
       const statusSearchTerm = this.selectedStatus.toLowerCase();
       this.filterdMembers = this.filterdMembers.filter((item) => {
         return item.paymentStatus.toLowerCase().includes(statusSearchTerm);
       });
-      
     }
 
-    this.getPaymentStatusChart()
-    this.getGenderChart()
-    this.getMembershipTypeChart()
-  
+    if (this.memberType != '') {
+      const memberTypeSearchTerm = this.memberType.toLowerCase();
+      this.filterdMembers = this.filterdMembers.filter((item) => {
+        return item.memberStatus.toLowerCase().includes(memberTypeSearchTerm);
+      });
+    }
+
+    if (this.memberType !== '') {
+    }
+
+    this.getPaymentStatusChart();
+    this.getGenderChart();
+    this.getMembershipTypeChart();
   }
 
-  exportAsExcel(name:string) {
-   
+  exportAsExcel(name: string) {
     const uri = 'data:application/vnd.ms-excel;base64,';
     const template = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>`;
-    const base64 = function(s:any) { return window.btoa(unescape(encodeURIComponent(s))) };
-    const format = function(s:any, c:any) { return s.replace(/{(\w+)}/g, function(m:any, p:any) { return c[p]; }) };
+    const base64 = function (s: any) {
+      return window.btoa(unescape(encodeURIComponent(s)));
+    };
+    const format = function (s: any, c: any) {
+      return s.replace(/{(\w+)}/g, function (m: any, p: any) {
+        return c[p];
+      });
+    };
 
     const table = this.excelTable.nativeElement;
     const ctx = { worksheet: 'Worksheet', table: table.innerHTML };
@@ -339,14 +334,10 @@ export class MembershipReportComponent implements OnInit {
     link.download = `${name}.xls`;
     link.href = uri + base64(format(template, ctx));
     link.click();
-}
+  }
 
-
-  getRegions(countryType: string) { 
-
-
-
-this.getChapter(countryType)
+  getRegions(countryType: string) {
+    this.getChapter(countryType);
   }
 
   getMemberships(category: string) {
@@ -357,7 +348,7 @@ this.getChapter(countryType)
     });
   }
 
-  reset(){
-    this.filterdMembers = this.Members
+  reset() {
+    this.filterdMembers = this.Members;
   }
 }

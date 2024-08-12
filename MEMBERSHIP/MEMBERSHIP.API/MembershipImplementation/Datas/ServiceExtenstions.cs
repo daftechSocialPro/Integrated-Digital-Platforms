@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MembershipImplementation.Interfaces.Users;
+using MembershipImplementation.Services.Users;
 
 
 namespace MembershipImplementation.Datas
@@ -25,6 +27,8 @@ namespace MembershipImplementation.Datas
             services.AddScoped<IMemberService, MemberService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddHttpClient();
+
+            services.AddScoped<IDashboardService, DashboardService>();
 
             #region             
             services.AddScoped<IRegionService, RegionService>();
