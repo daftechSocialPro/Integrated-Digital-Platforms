@@ -60,9 +60,9 @@ namespace IntegratedDigitalAPI.Controllers.PM
 
         [HttpGet]
 
-        public async Task<List<PlanViewDto>> Getplan(Guid? programId)
+        public async Task<List<PlanViewDto>> Getplan(Guid? programId , int ? year)
         {
-            var response = await _planService.GetPlans(programId);
+            var response = await _planService.GetPlans(programId,year);
             return response;
         }
 
@@ -105,11 +105,11 @@ namespace IntegratedDigitalAPI.Controllers.PM
 
         [HttpGet("getPlanPieCharts")]
 
-        public async Task<IActionResult> GetPlanPieCharts(Guid planId,Guid? StrategicPlanId, int quarter )
+        public async Task<IActionResult> GetPlanPieCharts(Guid planId,Guid? StrategicPlanId, int quarter, int? year )
         {
             try
             {
-                return Ok(await _planService.GetPlanPieCharts(planId, StrategicPlanId, quarter));
+                return Ok(await _planService.GetPlanPieCharts(planId, StrategicPlanId, quarter, year ));
             }
             catch (Exception ex)
             {
@@ -118,11 +118,25 @@ namespace IntegratedDigitalAPI.Controllers.PM
         }
         [HttpGet("getPlanBarCharts")]
 
-        public async Task<IActionResult> GetPlanBarCharts(Guid? planId, Guid? strategicPlanId)
+        public async Task<IActionResult> GetPlanBarCharts(Guid? planId, Guid? strategicPlanId, int? year)
         {
             try
             {
-                return Ok(await _planService.GetPlanBarCharts(planId, strategicPlanId));
+                return Ok(await _planService.GetPlanBarCharts(planId, strategicPlanId, year));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        [HttpGet("getStrategicPlan")]
+
+        public async Task<IActionResult> GetStrategicPlans()
+        {
+            try
+            {
+                return Ok(await _planService.GetStrategicPlanReport());
             }
             catch (Exception ex)
             {

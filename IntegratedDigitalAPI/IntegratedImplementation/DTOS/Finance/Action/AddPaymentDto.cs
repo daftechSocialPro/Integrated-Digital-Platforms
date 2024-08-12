@@ -23,6 +23,7 @@ namespace IntegratedImplementation.DTOS.Finance.Action
         public Guid? SupplierId { get; set; }
         public Guid? EmployeeId { get; set; }
         public string? OtherBeneficiary { get; set; }
+        public string? BeneficiaryAccountNumber { get; set; }
         public IFormFile? DocumentPath { get; set; }
         public string? Remark { get; set; }
         public string CreatedById { get; set; } = null!;
@@ -77,5 +78,22 @@ namespace IntegratedImplementation.DTOS.Finance.Action
         public double Price { get; set; }
         public double TotalPrice { get; set; }
         public string? Remark { get; set; }
+    }
+
+
+    public class PaymentLetterDto
+    {
+        public string BankName { get; set; } = null!;
+        public string? BankAddress { get; set; } = null!;
+        public string? BranchName { get; set; } = null!;
+        public string AccountNumber { get; set; } = null!;
+        public double TotalAmmount { get; set; }
+        public string AmmountInWords { get; set; } = null!;
+        public string? Receiver { get; set; } = null!;
+        public string? ReciverAccountNumber { get; set; } = null!;
+        public string? Approver { get; set; } = null!;
+        public string? ApproverPosition { get; set; } = null!;
+        public string? Authorizer { get; set; } = null!;
+        public string? AuthorizerPosition { get; set; } = null!;
     }
 }

@@ -21,7 +21,7 @@
                             <div class="d-flex align-items-center">
                                <div class="card-icon card-icon1 rounded-circle d-flex align-items-center justify-content-center"> <i class="bi bi-hourglass-split" style="color: #ffc107;"></i></div>
                                <div class="ps-3">
-                                  <h6>{{financeDashboardData.pendingProgress}}</h6>
+                                  <h6>{{financeDashboardData&&financeDashboardData.pendingProgress}}</h6>
                                   
                                </div>
                             </div>
@@ -36,7 +36,7 @@
                             <div class="d-flex align-items-center">
                                <div class="card-icon card-icon2 rounded-circle d-flex align-items-center justify-content-center"> <i class="bi bi-check-circle" style="color: #28a745;"></i></div>
                                <div class="ps-3">
-                                  <h6>{{financeDashboardData.approvedProgress}}</h6>
+                                  <h6>{{financeDashboardData&&financeDashboardData.approvedProgress}}</h6>
                                   
                                </div>
                             </div>
@@ -51,7 +51,7 @@
                             <div class="d-flex align-items-center">
                                <div class="card-icon card-icon3 rounded-circle d-flex align-items-center justify-content-center"> <i class="bi bi-x-circle" style="color: #dc3545;"></i></div>
                                <div class="ps-3">
-                                  <h6>{{financeDashboardData.rejectedProgress}}</h6>
+                                  <h6>{{financeDashboardData&&financeDashboardData.rejectedProgress}}</h6>
                                   
                                </div>
                             </div>
@@ -123,7 +123,7 @@
                             <div class="d-flex align-items-center">
                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center"><i class="bi bi-check-square" style="color: #28a745;"></i></div>
                                <div class="ps-3">
-                                  <h6>{{financeDashboardData.totalApprovedLoan}}</h6>
+                                  <h6>{{financeDashboardData&&financeDashboardData.totalApprovedLoan}}</h6>
                                   
                                </div>
                             </div>
@@ -138,7 +138,7 @@
                             <div class="d-flex align-items-center">
                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center"><i class="bi bi-cash-stack" style="color: #17a2b8;"></i></div>
                                <div class="ps-3">
-                                  <h6>{{financeDashboardData.totalGivenLoan}}</h6>
+                                  <h6>{{financeDashboardData&&financeDashboardData.totalGivenLoan}}</h6>
                                   
                                </div>
                             </div>
@@ -153,7 +153,7 @@
                           <div class="d-flex align-items-center">
                              <div class="card-icon rounded-circle d-flex align-items-center justify-content-center"><i class="bi bi-currency-dollar" style="color: #28a745;"></i></div>
                              <div class="ps-3">
-                                <h6>{{financeDashboardData.totalPaidLoan}}</h6>
+                                <h6>{{financeDashboardData&&financeDashboardData.totalPaidLoan}}</h6>
                                 
                              </div>
                           </div>

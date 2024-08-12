@@ -137,9 +137,23 @@ export class DropDownService {
     getChartOfAccountsDropDown(){
         return this.http.get<SelectList[]>(this.baseUrl + '/DropDown/GetChartOfAccountsDropDown')
     }
+    
+    getSubsidaryAccount(chartOfAccountId: string){
+        return this.http.get<SelectList[]>(this.baseUrl + `/DropDown/GetSubsidaryAccount?ChartOfAccountId =${chartOfAccountId}`)
+    }
 
     getAccountingPeriodDropDown(){
         return this.http.get<SelectList[]>(this.baseUrl + '/DropDown/GetAccountingPeriodDropDown')
     }
+    getAccountingYear(){
+        return this.http.get<SelectList[]>(this.baseUrl + '/DropDown/GetAccountingYear')
+    }
 
+    getVendorAccount(vendorId: string){
+        return this.http.get<SelectList[]>(this.baseUrl + `/DropDown/GetVendorAccount?vendorId=${vendorId}`)
+    }
+
+    getEmployeeAccount(employeeId: string){
+        return this.http.get<SelectList[]>(this.baseUrl + `/DropDown/GetEmployeeAccount?employeeId=${employeeId}`)
+    }
 }

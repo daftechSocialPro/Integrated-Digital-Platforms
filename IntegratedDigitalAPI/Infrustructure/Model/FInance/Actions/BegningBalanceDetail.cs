@@ -14,7 +14,9 @@ namespace IntegratedInfrustructure.Model.FInance.Actions
         public virtual BegningBalance BegningBalance { get; set; } = null!;
         public Guid ChartOfAccountId { get; set; }
         public virtual ChartOfAccount ChartOfAccount { get; set; } = null!;
+        public Guid? SubsidiaryAccountId { get; set; }
+        public virtual SubsidiaryAccount SubsidiaryAccount { get; set; } = null!;
         public double Ammount { get; set; }
-        public string Remark { get; set; } = null!;
+        public string? Remark { get; set; } 
     }
 }

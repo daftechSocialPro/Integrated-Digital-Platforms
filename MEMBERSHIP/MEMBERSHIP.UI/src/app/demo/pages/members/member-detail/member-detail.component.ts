@@ -24,6 +24,7 @@ export class MemberDetailComponent implements OnInit {
   educationalFields: SelectList[];
   updateProfileForm: FormGroup;
 
+  chapters: SelectList[] = [];
 
   memberships: SelectList[];
   constructor(
@@ -33,50 +34,59 @@ export class MemberDetailComponent implements OnInit {
     private memberService: MemberService,
     private dropdownService: DropDownService,
     private formBuilder: FormBuilder,
-    private messageService: MessageService,
-
-  ) { }
+    private messageService: MessageService
+  ) {}
 
   ngOnInit(): void {
     this.user = this.userService.getCurrentUser();
 
     this.getEducationalLevels();
-    this.getMemberships(this.member&&this.member.membershipCategory)
+    this.getMemberships(this.member && this.member.membershipCategory);
+    this.getChapters();
 
-    if (this.member){}
+    if (this.member) {
+    }
     this.updateProfileForm = this.formBuilder.group({
-      fullName: [this.member.fullName,Validators.required],
-      phoneNumber :[this.member.phoneNumber,Validators.required],
+      fullName: [this.member.fullName, Validators.required],
+      phoneNumber: [this.member.phoneNumber, Validators.required],
       educationalField: [this.member.educationalField, Validators.required],
-      educationalLevelId: [this.member.educationalLevelId&& this.member.educationalLevelId.toLowerCase(), Validators.required],
+      educationalLevelId: [this.member.educationalLevelId && this.member.educationalLevelId.toLowerCase(), Validators.required],
       gender: [this.member.gender, Validators.required],
       institute: [this.member.inistitute, Validators.required],
-      email : [this.member.email],
+      email: [this.member.email],
       woreda: [this.member.woreda],
       birthDate: [this.member.birthDate.split('T')[0], Validators.required],
       instituteRole: [this.member.instituteRole, Validators.required],
-      expiredDate: [this.member.expiredDate ? this.member.expiredDate.toString().split('T')[0]:null],
-      lastPaid : [this.member.lastPaid!=null?  this.member.lastPaid.toString().split('T')[0]:null],
-      paymentStatus :[this.member.paymentStatus],
-      membershipType:[this.member.membershipTypeId]
-
-
+      expiredDate: [this.member.expiredDate ? this.member.expiredDate.toString().split('T')[0] : null],
+      lastPaid: [this.member.lastPaid != null ? this.member.lastPaid.toString().split('T')[0] : null],
+      paymentStatus: [this.member.paymentStatus],
+      regionId: [this.member.regionId, Validators.required],
+      membershipType: [this.member.membershipTypeId]
     });
-
-  
   }
-
 
   getMemberships(category: string) {
     this.dropdownService.getMembershipDropDown(category).subscribe({
       next: (res) => {
         this.memberships = res;
 
-        this.updateProfileForm.controls['membershipType'].setValue(this.member.membershipTypeId.toLowerCase())
+        this.updateProfileForm.controls['membershipType'].setValue(this.member.membershipTypeId.toLowerCase());
       }
     });
   }
 
+  getChapters() {
+    this.dropdownService.getRegionsDropdown('ETHIOPIAN').subscribe({
+      next: (res) => {
+        this.chapters = res;
+
+        this.updateProfileForm.patchValue({
+          regionId: this.member.regionId.toLowerCase()
+        });
+      },
+      error: (err) => {}
+    });
+  }
 
   getImage(url: string) {
     return this.commonService.createImgPath(url);
@@ -105,7 +115,6 @@ export class MemberDetailComponent implements OnInit {
     this.dropdownService.getEducationLevelDropdown().subscribe({
       next: (res) => {
         this.educationalLelvels = res;
-        
       }
     });
   }
@@ -116,7 +125,7 @@ export class MemberDetailComponent implements OnInit {
         id: this.member.id,
         fullName: this.updateProfileForm.value.fullName,
         phoneNumber: this.updateProfileForm.value.phoneNumber,
-        email:this.updateProfileForm.value.email,
+        email: this.updateProfileForm.value.email,
         educationalLevelId: this.updateProfileForm.value.educationalLevelId,
         educationalField: this.updateProfileForm.value.educationalField,
         birthDate: this.updateProfileForm.value.birthDate,
@@ -124,56 +133,53 @@ export class MemberDetailComponent implements OnInit {
         woreda: this.updateProfileForm.value.woreda,
         instituteRole: this.updateProfileForm.value.instituteRole,
         institute: this.updateProfileForm.value.institute,
+        regionId: this.updateProfileForm.value.regionId,
 
-        lastPaid:this.updateProfileForm.value.lastPaid,
-        expiredDate : this.updateProfileForm.value.expiredDate,
-        paymentStatus : this.updateProfileForm.value.paymentStatus,
-        membershipTypeId :this.updateProfileForm.value.membershipType
+        lastPaid: this.updateProfileForm.value.lastPaid,
+        expiredDate: this.updateProfileForm.value.expiredDate,
+        paymentStatus: this.updateProfileForm.value.paymentStatus,
+        membershipTypeId: this.updateProfileForm.value.membershipType
       };
 
       const formData = new FormData();
 
-      formData.set('id',updateProfile.id)
-      formData.set('fullName',updateProfile.fullName)
-      formData.set('phoneNumber',updateProfile.phoneNumber)
-      formData.set('email',updateProfile.email)
-      formData.set('educationalLevelId',updateProfile.educationalLevelId)
-      formData.set('educationalField',updateProfile.educationalField)
-      formData.set('birthDate',updateProfile.birthDate.toString())
-      formData.set('gender',updateProfile.gender)
-      formData.set('woreda',updateProfile.woreda)
-      formData.set('instituteRole',updateProfile.instituteRole)
-      formData.set('institute',updateProfile.institute)
+      formData.set('id', updateProfile.id);
+      formData.set('fullName', updateProfile.fullName);
+      formData.set('phoneNumber', updateProfile.phoneNumber);
+      formData.set('email', updateProfile.email);
+      formData.set('educationalLevelId', updateProfile.educationalLevelId);
+      formData.set('educationalField', updateProfile.educationalField);
+      formData.set('birthDate', updateProfile.birthDate.toString());
+      formData.set('gender', updateProfile.gender);
+      formData.set('woreda', updateProfile.woreda);
+      formData.set('instituteRole', updateProfile.instituteRole);
+      formData.set('institute', updateProfile.institute);
 
-      formData.set('lastPaid',updateProfile.lastPaid.toString())
-      formData.set('expiredDate',updateProfile.expiredDate.toString())
-      formData.set('paymentStatus',updateProfile.paymentStatus)
-      formData.set('membershipTypeId',updateProfile.membershipTypeId)
-      
-      
-      formData.append("image", this.fileGH);
-    
-    this.memberService.updateProfileFromAdmin(formData).subscribe({
-      next: (res) => {
-        if (res.success) {
-          this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });
-          this.closeModal()
-        } else {
-          this.messageService.add({ severity: 'error', summary: 'Something went wrong!!!.', detail: res.message });
+      formData.set('lastPaid', updateProfile.lastPaid.toString());
+      formData.set('expiredDate', updateProfile.expiredDate.toString());
+      formData.set('paymentStatus', updateProfile.paymentStatus);
+      formData.set('membershipTypeId', updateProfile.membershipTypeId);
+      formData.set('regionId', updateProfile.regionId);
+
+      formData.append('image', this.fileGH);
+
+      this.memberService.updateProfileFromAdmin(formData).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });
+            this.closeModal();
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Something went wrong!!!.', detail: res.message });
+          }
+        },
+        error: (err) => {
+          this.messageService.add({ severity: 'error', summary: 'Something went wrong!!!', detail: err.message });
         }
-      },
-      error: (err) => {
-        this.messageService.add({ severity: 'error', summary: 'Something went wrong!!!', detail: err.message });
-
-      }
-    });
+      });
+    }
   }
-  }
-
 
   closeModal() {
-    this.activeModal.close()
+    this.activeModal.close();
   }
-
-
 }

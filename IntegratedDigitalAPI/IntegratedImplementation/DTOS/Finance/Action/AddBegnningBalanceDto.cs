@@ -12,7 +12,7 @@ namespace IntegratedImplementation.DTOS.Finance.Action
         public Guid AccountingPeriodId { get; set; }
         public double TotalCredit { get; set; }
         public double TotalDebit { get; set; }
-        public string Remark { get; set; } = null!;
+        public string? Remark { get; set; }
         public string CreatedById { get; set; } = null!;
         public List<BegningBalanceDetailDto> BegningBalanceDetails { get; set; } = null!;
 
@@ -21,8 +21,9 @@ namespace IntegratedImplementation.DTOS.Finance.Action
     public class BegningBalanceDetailDto
     {
         public Guid ChartOfAccountId { get; set; }
+        public Guid? SubsidaryAccountId { get; set; }
         public double Ammount { get; set; }
-        public string Remark { get; set; } = null!;
+        public string? Remark { get; set; } 
     }
 
 
@@ -33,8 +34,15 @@ namespace IntegratedImplementation.DTOS.Finance.Action
         public string Type { get; set; } = null!;
         public double Ammount { get; set; }
         public string? Remark { get; set; }
+        public List<SubsidaryAccountBegningDto> SubsidaryAccountBegningDtos { get; set; } = null!;
 
     }
 
-
+    public class SubsidaryAccountBegningDto
+    {
+        public Guid Id { get; set; }
+        public string Description { get; set; } = null!;
+        public double Ammount { get; set; }
+        public string? Remark { get; set; }
+    }
 }

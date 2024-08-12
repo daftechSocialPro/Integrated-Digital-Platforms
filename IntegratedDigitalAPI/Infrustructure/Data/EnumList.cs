@@ -425,5 +425,32 @@ namespace IntegratedInfrustructure.Data
             Organization
         }
 
+        public enum TaxEntityType
+        {
+            NoTinTaxpayer,
+            VatRegistered,
+            TotRegisteredTwoPercent,
+            TotRegisteredTenPercent,
+            NoneTaxPayer,
+            NonTaxable,
+        }
+
+        public enum TypeofJV
+        {
+            Payment,
+            JournalVoucher,
+            Recivable
+        }
+
+        public enum JournalOption
+        {
+            CasherAccount,
+            BankAccount,
+            WitholdingAccount,
+            VatAccount
+        }
+
+       
+
     }
 }

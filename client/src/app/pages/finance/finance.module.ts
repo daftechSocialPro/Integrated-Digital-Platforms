@@ -62,8 +62,15 @@ import { ActivityProgressApproverComponent } from './activity-progress-approver/
 import { ReceiptComponent } from './receipt/receipt.component';
 import { ClientListComponent } from './finance-configuration/client-list/client-list.component';
 import { AddClientComponent } from './finance-configuration/client-list/add-client/add-client.component';
+import { TaxRateComponent } from './finance-configuration/tax-rate/tax-rate.component';
+import { AddTaxRateComponent } from './finance-configuration/tax-rate/add-tax-rate/add-tax-rate.component';
+import { AuthorizedPaymentsComponent } from './payments/authorized-payments/authorized-payments.component';
 import { FinanceDashboardComponent } from './finance-dashboard/finance-dashboard.component';
 import { NgxEchartsModule } from 'ngx-echarts';
+import { LedgerPostingComponent } from './finance-configuration/ledger-posting/ledger-posting.component';
+import { AddLedgerPostingComponent } from './finance-configuration/ledger-posting/add-ledger-posting/add-ledger-posting.component';
+import { JournalVoucherComponent } from './journal-voucher/journal-voucher.component';
+import { AddJournalVoucherComponent } from './journal-voucher/add-journal-voucher/add-journal-voucher.component';
 // import { PensionDeclarationComponent } from './pension-declaration/pension-declaration.component';
 
 
@@ -112,7 +119,14 @@ import { NgxEchartsModule } from 'ngx-echarts';
     ReceiptComponent,
     ClientListComponent,
     AddClientComponent,
+    TaxRateComponent,
+    AddTaxRateComponent,
+    AuthorizedPaymentsComponent,
     FinanceDashboardComponent,
+    LedgerPostingComponent,
+    AddLedgerPostingComponent,
+    JournalVoucherComponent,
+    AddJournalVoucherComponent,
     
 
   ],

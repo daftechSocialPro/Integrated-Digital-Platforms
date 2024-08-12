@@ -4,7 +4,7 @@ import { UserService } from './user.service';
 import { environment } from 'src/environments/environment';
 import { AddCategoryDto, CategoryListDto } from '../model/Inventory/CategoryDto';
 import { ResponseMessage } from '../model/ResponseMessage.Model';
-import { AddVendorDto, VendorListDto } from '../model/Inventory/VendorDto';
+import { AddVendorBankAccountDto, AddVendorDto, VendorListDto } from '../model/Inventory/VendorDto';
 import { AddItemDto, ItemListDto } from '../model/Inventory/ItemDto';
 import { AddPerformaDto, AddPurchaseRequestDto, ApprovePerformaDto, ApprovePurchaseRequestDto, ApprovedPurchaseRequestsDto, PurchaseRequestListDto } from '../model/Inventory/PurchaseRequestDto';
 import { AddProductDto, AddProductTagsDto, ProductListDto } from '../model/Inventory/ProductDto';
@@ -68,6 +68,15 @@ export class InventoryService {
 
   updateVendor(updateVendor: AddVendorDto){
     return this.http.put<ResponseMessage>(this.BaseURI + '/Vendor/UpdateVendor', updateVendor);
+  }
+
+  addVendorBank(addVendorAccount: AddVendorBankAccountDto){
+    addVendorAccount.createdById = this.userService.getCurrentUser().userId;
+    return this.http.post<ResponseMessage>(this.BaseURI + '/Vendor/AddVendorBank', addVendorAccount);
+  }
+
+  updateVendorBank(updateVendor: AddVendorBankAccountDto){
+    return this.http.put<ResponseMessage>(this.BaseURI + '/Vendor/UpdateVendorBank', updateVendor);
   }
 
 

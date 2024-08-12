@@ -381,6 +381,18 @@ namespace IntegratedImplementation.Services.Configuration
             return accountTypesSelectList;
         }
 
+        public async Task<List<SelectListDto>> GetAccountingYear()
+        {
+            var accountingPeriodSelectList = await _dbContext.AccountingPeriods
+                .Where(x => x.Rowstatus == RowStatus.ACTIVE).AsNoTracking().Select(x => new SelectListDto
+                {
+                    Name = $"{x.Description} ({x.StartDate.ToString("dd/MM/yyyy")} - {x.EndDate.ToString("dd/MM/yyyy")})",
+                    Id = x.Id,
+                }).ToListAsync();
+            return accountingPeriodSelectList;
+        }
+
+
         public async Task<List<SelectListDto>> GetAccountingPeriodDropDown()
         {
             var accountingPeriodSelectList = await _dbContext.PeriodDetails.Include(x => x.AccountingPeriod)
@@ -401,6 +413,17 @@ namespace IntegratedImplementation.Services.Configuration
 
             }).ToListAsync();
             return chartOfAccountsList;
+        } 
+        
+        public async Task<List<SelectListDto>> GetSubsidaryAccount(Guid ChartOfAccountId)
+        {
+            var chartOfAccountsList = await _dbContext.SubsidiaryAccounts.Where(x => x.Rowstatus == RowStatus.ACTIVE && x.ChartOfAccountId == ChartOfAccountId).AsNoTracking().Select(x => new SelectListDto
+            {
+                Name =$"{x.Description} ({x.AccountNo})" ,
+                Id = x.Id
+
+            }).ToListAsync();
+            return chartOfAccountsList;
         }
 
         public async Task<List<SelectListDto>> GetTrainingList()
@@ -414,5 +437,28 @@ namespace IntegratedImplementation.Services.Configuration
             return trainingList;
         }
 
+        public async Task<List<SelectListDto>> GetVendorAccount(Guid vendorId)
+        {
+            var bankList = await _dbContext.VendorBankAccounts.Where(x => x.VendorId == vendorId).AsNoTracking().Select(x => new SelectListDto
+            {
+                Name = x.BankName,
+                Id = x.Id,
+                Reason = x.AccountNumber
+
+            }).ToListAsync();
+            return bankList;
+        }
+
+        public async Task<List<SelectListDto>> GetEmployeeAccount(Guid employeeId)
+        {
+            var bankList = await _dbContext.EmployeeBanks.Where(x => x.EmployeeId == employeeId).Include(x => x.Bank).AsNoTracking().Select(x => new SelectListDto
+            {
+                Name = x.Bank.BankName,
+                Id = x.Id,
+                Reason = x.BankAccountNo
+
+            }).ToListAsync();
+            return bankList;
+        }
     }
 }

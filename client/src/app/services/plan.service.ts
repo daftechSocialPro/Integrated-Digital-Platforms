@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { Plan, PlanView,PlanSingleview, PlanPieChartPostDto, PlanBarChartPostDto } from '../model/PM/PlansDto';
+import { Plan, PlanView,PlanSingleview, PlanPieChartPostDto, PlanBarChartPostDto, StrategicPlanReportDto } from '../model/PM/PlansDto';
 import { UserService } from './user.service';
 import { ActivityView } from '../model/PM/ActivityViewDto';
 import { ResponseMessage } from '../model/ResponseMessage.Model';
@@ -28,10 +28,12 @@ export class PlanService {
     }
 
     
-    getPlans (programId ?: string){
+    getPlans (programId ?: string, year?:number){
+
+        
         if (programId)
         return this.http.get<PlanView[]>(this.BaseURI+"/plan"+"?programId="+programId)
-        return this.http.get<PlanView[]>(this.BaseURI+"/plan")
+        return this.http.get<PlanView[]>(this.BaseURI+"/plan?year="+year)
     }
 
     getSinglePlans(planId:String){
@@ -48,12 +50,18 @@ export class PlanService {
         return this.http.delete<ResponseMessage>(this.BaseURI+`/plan/deletePlan?planId=${planId}`)
     }
 
-    getPlanPieCharts(planId:string,strategicPlanId:String, quarter:number){
-        return this.http.get<PlanPieChartPostDto>(this.BaseURI + `/plan/getPlanPieCharts?planId=${planId}&quarter=${quarter}&strategicPlanId=${strategicPlanId}`)
+    getPlanPieCharts(planId:string,strategicPlanId:String, quarter:number, year?:number){
+        return this.http.get<PlanPieChartPostDto>(this.BaseURI + `/plan/getPlanPieCharts?planId=${planId}&quarter=${quarter}&strategicPlanId=${strategicPlanId}&year=${year}`)
     }
 
-    getPlanBarCharts(planId:string,strategicPlanId:String){
-        return this.http.get<PlanBarChartPostDto>(this.BaseURI + `/plan/getPlanBarCharts?planId=${planId}&strategicPlanId=${strategicPlanId}`)
+    getPlanBarCharts(planId:string,strategicPlanId:String,year?:number){
+        return this.http.get<PlanBarChartPostDto>(this.BaseURI + `/plan/getPlanBarCharts?planId=${planId}&strategicPlanId=${strategicPlanId}&year=${year}`)
+    }
+
+
+    getStrategicPlanReport(){
+        return this.http.get<StrategicPlanReportDto[]>(this.BaseURI + `/plan/getStrategicPlan`)
+  
     }
 
 

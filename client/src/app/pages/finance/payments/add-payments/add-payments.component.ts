@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
 import { BankSelectList, ItemDropDownDto, SelectList } from 'src/app/model/common';
 import { DropDownService } from 'src/app/services/dropDown.service';
@@ -10,6 +10,7 @@ import { UserView } from 'src/app/model/user';
 import { AddPaymentDetailDto, PaymentPostDto } from 'src/app/model/Finance/IPaymentDto';
 import { Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
+import { AddVendorComponent } from 'src/app/pages/inventory/inventory-setting/vendor/add-vendor/add-vendor.component';
 
 
 
@@ -28,6 +29,7 @@ export class AddPaymentsComponent implements OnInit {
   chartOfAccountDropDown!: SelectList[]
   itemsDropDown!: ItemDropDownDto[];
   employeeDropDown!: SelectList[];
+  beneficiaryAccount: SelectList[];
   paymentTypeList = [
     { name: "Transfer", value: "TRANSFER" },
     { name: "Check", value: "CHECK" },
@@ -50,7 +52,8 @@ export class AddPaymentsComponent implements OnInit {
     private routerService: Router,
     private userService: UserService,
     private messageService: MessageService,
-    private dropDownService: DropDownService
+    private dropDownService: DropDownService,
+    private modalService: NgbModal,
   ) { }
 
   ngOnInit(): void {
@@ -75,6 +78,7 @@ export class AddPaymentsComponent implements OnInit {
       otherBeneficiary: [''],
       typeOfPayee: ['', Validators.required],
       remark: [''],
+      beneficiaryAccountNumber:['']
       // addPaymentDetails: this.formBuilder.array([this.createPaymentItem()])
     })
 
@@ -151,6 +155,7 @@ export class AddPaymentsComponent implements OnInit {
     this.addPaymentDetailList = new AddPaymentDetailDto();
   }
   submit() {
+    
     if (this.paymentDetailList.length <= 0) {
       this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Please add atleast one payment detail', life: 3000 });
     }
@@ -166,10 +171,9 @@ export class AddPaymentsComponent implements OnInit {
         createdById: this.user.userId,
         addPaymentDetails: this.paymentDetailList,
         employeeId: this.paymentForm.value.employeeId != null ? this.paymentForm.value.employeeId : "",
-        otherBeneficiary: this.paymentForm.value.otherBeneficiary != null ? this.paymentForm.value.otherBeneficiary : ""
+        otherBeneficiary: this.paymentForm.value.otherBeneficiary != null ? this.paymentForm.value.otherBeneficiary : "",
+        beneficiaryAccountNumber:  this.paymentForm.value.beneficiaryAccountNumber != null ? this.paymentForm.value.beneficiaryAccountNumber : ""
       }
-
-
       const formData = new FormData();
 
       // Append each property of the addPaymentData object to the FormData
@@ -194,6 +198,7 @@ export class AddPaymentsComponent implements OnInit {
           }
         }
       }
+      debugger;
       this.financeService.addPayments(formData).subscribe({
         next: (res) => {
           if (res.success) {
@@ -236,5 +241,41 @@ export class AddPaymentsComponent implements OnInit {
   goToPayments() {
 
     this.routerService.navigateByUrl('/finance/payments')
+  }
+
+  newVendor(){
+      let modalRef = this.modalService.open(AddVendorComponent, { size: 'lg', backdrop: 'static' })
+      modalRef.result.then(()=>{
+      });
+      this.getSupplierDropDown();
+  }
+
+  onSupplierChange(vendorId: string){
+    this.beneficiaryAccount = [];
+    this.dropDownService.getVendorAccount(vendorId).subscribe({
+      next: (res) => {
+        this.beneficiaryAccount = res
+      },
+      error: (err) => {
+        console.error(err)
+      }
+
+    })
+  }
+
+  onEmployeeChange(employeeId: string){
+    this.beneficiaryAccount = [];
+    this.dropDownService.getEmployeeAccount(employeeId).subscribe({
+      next: (res) => {
+        this.beneficiaryAccount = res
+      },
+      error: (err) => {
+        console.error(err)
+      }
+    })
+  }
+  
+  onAccountChange(accountId: string){
+    this.paymentForm.value.beneficiaryAccountNumber =  this.beneficiaryAccount.find(x => x.id == accountId).reason
   }
 }

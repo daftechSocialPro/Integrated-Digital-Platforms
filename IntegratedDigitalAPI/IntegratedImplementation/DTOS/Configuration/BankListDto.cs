@@ -13,6 +13,8 @@ namespace IntegratedImplementation.DTOS.Configuration
         public string AmharicName { get; set; } = null!;
         public string? Address { get; set; }
         public string? AmharicAddress { get; set; }
+        public string? Branch { get; set; }
+        public string? AmharicBranch { get; set; }
         public string AccountNumber { get; set; } = null!;
         public int BankDigitNumber { get; set; }
     }
@@ -24,6 +26,8 @@ namespace IntegratedImplementation.DTOS.Configuration
         public string AmharicName { get; set; } = null!;
         public string? Address { get; set; }
         public string? AmharicAddress { get; set; }
+        public string? Branch { get; set; }
+        public string? AmharicBranch { get; set; }
         public string AccountNumber { get; set; } = null!;
         public int BankDigitNumber { get; set; }
     }

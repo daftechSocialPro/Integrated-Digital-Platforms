@@ -25,4 +25,6 @@ namespace IntegratedImplementation.DTOS.Configuration
         public string Name { get; set; } = null!;
         public int BankDigit { get; set; }
     }
+
+    
 }

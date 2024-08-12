@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
 import { CategoryListDto } from 'src/app/model/Inventory/CategoryDto';
-import { AddVendorDto, VendorListDto } from 'src/app/model/Inventory/VendorDto';
+import { AddVendorBankAccountDto, AddVendorDto, VendorBankAccountDto, VendorListDto } from 'src/app/model/Inventory/VendorDto';
 import { CountryGetDto } from 'src/app/model/configuration/IAddressDto';
 import { ConfigurationService } from 'src/app/services/configuration.service';
 import { InventoryService } from 'src/app/services/inventory.service';
@@ -17,6 +17,10 @@ export class AddVendorComponent implements OnInit{
 @Input() vendor :VendorListDto;
  addVendor: AddVendorDto = new AddVendorDto();
  countryList: CountryGetDto[] = [];
+ hideButton: boolean = false;
+ vendorBankAccountDto: VendorBankAccountDto[] = [];
+ addVendorBankAccountDto: AddVendorBankAccountDto = new AddVendorBankAccountDto();
+
 
  constructor(private inventoryService: InventoryService, private messageService: MessageService,
               private generalConfigService: ConfigurationService,private activeModal: NgbActiveModal){}
@@ -46,13 +50,12 @@ export class AddVendorComponent implements OnInit{
   }
 
   saveVendor() {
-
       if (this.addVendor.id) {
       this.inventoryService.updateVendor(this.addVendor).subscribe({
         next: (res) => {
           if(res.success){
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Vendor Updated', life: 3000 });
-          this.closeModal()
+          this.closeModal();
           }
           else{
             this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error please check your fields', life: 3000 });
@@ -68,8 +71,8 @@ export class AddVendorComponent implements OnInit{
         next: (res) => {
           if(res.success){
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Vendor Created', life: 3000 });
-          this.closeModal()
-    
+          this.hideButton = true;
+          this.addVendorBankAccountDto.vendorId = res.data.id;
         }
         else{
           this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error please check your fields', life: 3000 });
@@ -79,7 +82,7 @@ export class AddVendorComponent implements OnInit{
         }
       });
     }
-    this.closeModal();
+    //this.closeModal();
   }
 
 
@@ -87,5 +90,27 @@ export class AddVendorComponent implements OnInit{
     this.addVendor = new AddVendorDto();
     this.activeModal.close();
   }
+
+  newRow(){
+    
+    this.inventoryService.addVendorBank(this.addVendorBankAccountDto).subscribe({
+      next: (res) => {
+        if(res.success){
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Vendor Created', life: 3000 });
+        this.vendorBankAccountDto.unshift(this.addVendorBankAccountDto);
+        this.addVendorBankAccountDto.accountNumber = '';
+        this.addVendorBankAccountDto.bankName = '';
+
+      }
+      else{
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error please check your fields', life: 3000 });
+      }
+      },error: (res) => {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error please check your fields', life: 3000 });
+      }
+    });
+  }
+
+
 
 }

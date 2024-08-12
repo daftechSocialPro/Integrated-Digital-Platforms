@@ -120,8 +120,7 @@ namespace IntegratedImplementation.Datas
 
 
             #region Inventory
-            CreateMap<Vendor, VendorListDto>()
-              .ForMember(a => a.CountryName, e => e.MapFrom(mfg => mfg.Country.CountryName));
+       
             CreateMap<Vendor, SelectListDto>();
 
             CreateMap<Item, ItemListDto>()

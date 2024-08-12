@@ -167,6 +167,7 @@ namespace IntegratedInfrustructure.Data
         public DbSet<StoreRequest> StoreRequests { get; set; }
         public DbSet<StoreRequestList> StoreRequestLists { get; set; }
         public DbSet<Vendor> Vendors { get; set; }
+        public DbSet<VendorBankAccounts> VendorBankAccounts { get; set; }
         public DbSet<AdjustmentHistory> AdjustmentHistories { get; set; }
         public DbSet<ItemReceival> ItemReceivals { get; set; }
         public DbSet<ItemReceivalDetail> ItemReceivalDetails { get; set; }
@@ -188,6 +189,7 @@ namespace IntegratedInfrustructure.Data
         public DbSet<PeriodDetails> PeriodDetails { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<PaymentDetail> PaymentDetails { get; set; }
+        public DbSet<TaxEntityRate> TaxEntityRates { get; set; }
         public DbSet<GeneralPayrollSetting> GeneralPayrollSettings { get; set; }
         public DbSet<IncomeTaxSetting> IncomeTaxSettings { get; set; }
         public DbSet<PayrollData> PayrollDatas { get; set; }
@@ -201,6 +203,9 @@ namespace IntegratedInfrustructure.Data
         public DbSet<ReceiptDetail> ReceiptDetails { get; set; }
         public DbSet<AccountReconciliation> AccountReconciliations { get; set; }
         public DbSet<Clients> Clients { get; set; }
+        public DbSet<JournalVoucher> JournalVouchers { get; set; }
+        public DbSet<JournalVoucherDetail> JournalVoucherDetails { get; set; }
+        public DbSet<LedgerPostingAccount> LedgerPostingAccounts { get; set; }
 
         #endregion
 

@@ -128,9 +128,13 @@ namespace MembershipImplementation.Services.Configuration
                     else
                     {
                         var user = _dbContext.Users.FirstOrDefault(x => x.UserName == adminregion.FirstOrDefault().FullName);
-                        _dbContext.RemoveRange(user);
-                        _dbContext.RemoveRange(adminregion);
-                        _dbContext.SaveChanges();
+
+                        if (user != null)
+                        {
+                            _dbContext.RemoveRange(user);
+                            _dbContext.RemoveRange(adminregion);
+                            _dbContext.SaveChanges();
+                        }
 
 
                         var admin = new Admin
@@ -159,14 +163,18 @@ namespace MembershipImplementation.Services.Configuration
                             RowStatus = RowStatus.ACTIVE,
                         };
 
-                        var response = await _userManager.CreateAsync(applicationUser, RegionPost.Password);
-                        await _dbContext.SaveChangesAsync();
+                        if (RegionPost.Password != null)
+                        {
 
-                        var roles = new List<string>();
-                        roles.Add("RegionAdmin");
+                            var response = await _userManager.CreateAsync(applicationUser, RegionPost.Password);
+                            await _dbContext.SaveChangesAsync();
 
-                        await _userManager.AddToRolesAsync(applicationUser, roles);
-                        await _dbContext.SaveChangesAsync();
+                            var roles = new List<string>();
+                            roles.Add("RegionAdmin");
+
+                            await _userManager.AddToRolesAsync(applicationUser, roles);
+                            await _dbContext.SaveChangesAsync();
+                        }
 
 
                     }
@@ -196,6 +204,23 @@ namespace MembershipImplementation.Services.Configuration
 
             if (currentRegion != null)
             {
+                
+
+                var adminRegions = _dbContext.Admins.Where(x => x.RegionId == regionId).ToList();
+
+                foreach(var adminRegion in adminRegions)
+                {
+                    var user = _dbContext.Users.FirstOrDefault(x => x.UserName == adminRegion.FullName);
+
+                    if (user != null)
+                    {
+                        _dbContext.RemoveRange(user);
+
+                    }
+                    _dbContext.RemoveRange(adminRegion);
+                    _dbContext.SaveChanges();
+                }
+             
                 _dbContext.Remove(currentRegion);
 
                 await _dbContext.SaveChangesAsync();
