@@ -157,7 +157,7 @@ namespace IntegratedImplementation.Services.Finance.Action
                                 .Where(x => x.ApprovedById == null).Select(x => new PaymentListDto
                                 {
                                     Id = x.Id,
-                                    AccountingPeriod = $"{x.AccountingPeriod.PeriodNo} {x.AccountingPeriod.PeriodStart.ToString("dd/MM/yyyy")} - {x.AccountingPeriod.PeriodNo.ToString("dd/MM/yyyy")}",
+                                    AccountingPeriod = $"{x.AccountingPeriod.PeriodNo} {x.AccountingPeriod.PeriodStart.ToString("dd/MM/yyyy")} - {x.AccountingPeriod.PeriodEnd.ToString("dd/MM/yyyy")}",
                                     Bank = x.Bank.BankName,
                                     PaymentDate = x.PaymentDate,
                                     PaymentNumber = x.PaymentNumber,

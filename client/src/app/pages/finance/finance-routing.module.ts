@@ -16,6 +16,8 @@ import { PensionDeclarationComponent } from './pension-declaration/pension-decla
 import { ActivityProgressApproverComponent } from './activity-progress-approver/activity-progress-approver.component';
 import { ReceiptComponent } from './receipt/receipt.component';
 import { FinanceDashboardComponent } from './finance-dashboard/finance-dashboard.component';
+import { JournalVoucherComponent } from './journal-voucher/journal-voucher.component';
+import { AddJournalVoucherComponent } from './journal-voucher/add-journal-voucher/add-journal-voucher.component';
 
 const routes: Routes = [
   
@@ -23,6 +25,8 @@ const routes: Routes = [
   { path: 'income-tax-declaration', canActivate: [AuthGuard], component: IncomeTaxDeclarationComponent },
   { path: 'payments', canActivate: [AuthGuard], component: PaymentsComponent },
   { path: 'payments/addpayment', canActivate: [AuthGuard], component: AddPaymentsComponent },
+  { path: 'journalVoucher', canActivate: [AuthGuard], component: JournalVoucherComponent },
+  { path: 'journalVoucher/addJournalVoucher', canActivate: [AuthGuard], component: AddJournalVoucherComponent },
   { path: 'payroll', canActivate: [AuthGuard], component: PayrollComponent },
   { path: 'beginnigbalance', canActivate: [AuthGuard], component: BeginningBalanceComponent },
   { path: 'loanissuance', canActivate: [AuthGuard], component: LoanIssuanceComponent },

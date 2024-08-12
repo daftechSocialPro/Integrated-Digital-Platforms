@@ -203,6 +203,9 @@ namespace IntegratedInfrustructure.Data
         public DbSet<ReceiptDetail> ReceiptDetails { get; set; }
         public DbSet<AccountReconciliation> AccountReconciliations { get; set; }
         public DbSet<Clients> Clients { get; set; }
+        public DbSet<JournalVoucher> JournalVouchers { get; set; }
+        public DbSet<JournalVoucherDetail> JournalVoucherDetails { get; set; }
+        public DbSet<LedgerPostingAccount> LedgerPostingAccounts { get; set; }
 
         #endregion
 

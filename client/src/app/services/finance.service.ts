@@ -19,8 +19,9 @@ import { ViewProgressDto } from '../pages/project-managment/view-activties/activ
 import { AddReceiptDto } from '../model/Finance/IReceiptModel';
 import { AccountReconsilationFindDto, AccountToBeReconsiledDto, AddAccountReconsilationDto } from '../model/Finance/IAccountReconsilationDto';
 import { AddClientDto, ClientsListDto } from '../model/Finance/IFinanceSettingDto';
-import { AddTaxRateDto, TaxRateDto } from '../model/Finance/ITaxRateDto';
+import { AddLedgerPostingAccountDto, AddTaxRateDto, LedgerPostingAccountDto, TaxRateDto } from '../model/Finance/ITaxRateDto';
 import { FinanceDashboardDTO, FinanceBarChartPostDto } from '../model/Finance/IFinanceDashboard';
+import { AddJournalVochureDto } from '../model/Finance/IJournalVoucherDto';
 
 @Injectable({
   providedIn: 'root'
@@ -128,7 +129,7 @@ export class FinanceService {
     return this.http.get<PaymentGetDto[]>( this.BaseURI +"/Payment/GetAuthorizedPayments")
   }
 
-  addPayments(paymentData: FormData, ){
+  addPayments(paymentData: FormData ){
     return this.http.post<ResponseMessage>(this.BaseURI + "/Payment/AddPayments",paymentData)
   }
   approvePayment(approvePaymentData: ApprovePaymentDto){
@@ -245,6 +246,14 @@ addTaxRate(addRate: AddTaxRateDto) {
   return this.http.post<ResponseMessage>(this.BaseURI + "/TaxRate/AddTaxRate", addRate)
 }
 
+getLedgerPosting() {
+  return this.http.get<LedgerPostingAccountDto[]>(this.BaseURI + "/TaxRate/GetLedgerPosting")
+}
+  
+addLedgerPosting(addRate: AddLedgerPostingAccountDto) {
+  return this.http.post<ResponseMessage>(this.BaseURI + "/TaxRate/AddLedgerPosting", addRate)
+}
+
 //dashboard
 getDashboardData(){
   return this.http.get<FinanceDashboardDTO>(this.BaseURI + "/FinanceDashboard/GetDashboardData")
@@ -253,4 +262,11 @@ getDashboardData(){
 getDashboardChart(planId : string){
   return this.http.get<FinanceBarChartPostDto>(this.BaseURI + "/FinanceDashboard/GetDashboardChart?planId=" + planId)
 }
+
+//JournalVoucher
+  
+addJournalVochure(addJv: AddJournalVochureDto) {
+  return this.http.post<ResponseMessage>(this.BaseURI + "/JournalVoucher/AddJournalVochure", addJv)
+}
+
 }

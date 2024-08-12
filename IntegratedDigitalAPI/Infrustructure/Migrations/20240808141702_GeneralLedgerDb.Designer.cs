@@ -4,6 +4,7 @@ using IntegratedInfrustructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IntegratedInfrustructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240808141702_GeneralLedgerDb")]
+    partial class GeneralLedgerDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -727,14 +730,23 @@ namespace IntegratedInfrustructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("ChartOfAccountId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("CreatedById")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<double>("Credit")
+                        .HasColumnType("float");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
+
+                    b.Property<double>("Debit")
+                        .HasColumnType("float");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -743,17 +755,34 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<Guid>("PeriodDetailsId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("PeriodId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ReferenceNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Rowstatus")
                         .HasColumnType("int");
+
+                    b.Property<Guid?>("SubsidiaryAccountId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("TypeofJV")
                         .HasColumnType("int");
 
+                    b.Property<Guid?>("TypeofJvId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ChartOfAccountId");
 
                     b.HasIndex("CreatedById");
 
                     b.HasIndex("PeriodDetailsId");
+
+                    b.HasIndex("SubsidiaryAccountId");
 
                     b.ToTable("JournalVouchers");
                 });
@@ -3827,9 +3856,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<int>("PageNumber")
                         .HasColumnType("int");
 
-                    b.Property<int>("PaymentType")
-                        .HasColumnType("int");
-
                     b.Property<Guid>("ProjectId")
                         .HasColumnType("uniqueidentifier");
 
@@ -6390,6 +6416,12 @@ namespace IntegratedInfrustructure.Migrations
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.JournalVoucher", b =>
                 {
+                    b.HasOne("IntegratedInfrustructure.Model.FInance.Configuration.ChartOfAccount", "ChartOfAccount")
+                        .WithMany()
+                        .HasForeignKey("ChartOfAccountId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedById");
@@ -6400,9 +6432,17 @@ namespace IntegratedInfrustructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("IntegratedInfrustructure.Model.FInance.Configuration.SubsidiaryAccount", "SubsidiaryAccount")
+                        .WithMany()
+                        .HasForeignKey("SubsidiaryAccountId");
+
+                    b.Navigation("ChartOfAccount");
+
                     b.Navigation("CreatedBy");
 
                     b.Navigation("PeriodDetails");
+
+                    b.Navigation("SubsidiaryAccount");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.Payment", b =>

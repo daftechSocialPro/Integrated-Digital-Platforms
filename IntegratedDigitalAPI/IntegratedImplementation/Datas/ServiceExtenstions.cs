@@ -128,6 +128,7 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<IClientsService, ClientService>();
             services.AddScoped<ITaxRateService, TaxRateService>();
             services.AddScoped<IFinanceDashboardService, FinanceDashboardService>();
+            services.AddScoped<IJournalVochureService, JournalVoucherService>();
             #endregion
 
 

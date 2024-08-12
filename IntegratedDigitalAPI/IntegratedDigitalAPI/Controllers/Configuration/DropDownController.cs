@@ -250,6 +250,13 @@ namespace IntegratedDigitalAPI.Controllers.Configuration
 
         [HttpGet]
         [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetSubsidaryAccount(Guid ChartOfAccountId)
+        {
+            return Ok(await _DropDownService.GetSubsidaryAccount(ChartOfAccountId));
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAccountingYear()
         {
             return Ok(await _DropDownService.GetAccountingYear());

@@ -155,6 +155,7 @@ export class AddPaymentsComponent implements OnInit {
     this.addPaymentDetailList = new AddPaymentDetailDto();
   }
   submit() {
+    
     if (this.paymentDetailList.length <= 0) {
       this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Please add atleast one payment detail', life: 3000 });
     }
@@ -197,6 +198,7 @@ export class AddPaymentsComponent implements OnInit {
           }
         }
       }
+      debugger;
       this.financeService.addPayments(formData).subscribe({
         next: (res) => {
           if (res.success) {

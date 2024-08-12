@@ -137,6 +137,10 @@ export class DropDownService {
     getChartOfAccountsDropDown(){
         return this.http.get<SelectList[]>(this.baseUrl + '/DropDown/GetChartOfAccountsDropDown')
     }
+    
+    getSubsidaryAccount(chartOfAccountId: string){
+        return this.http.get<SelectList[]>(this.baseUrl + `/DropDown/GetSubsidaryAccount?ChartOfAccountId =${chartOfAccountId}`)
+    }
 
     getAccountingPeriodDropDown(){
         return this.http.get<SelectList[]>(this.baseUrl + '/DropDown/GetAccountingPeriodDropDown')

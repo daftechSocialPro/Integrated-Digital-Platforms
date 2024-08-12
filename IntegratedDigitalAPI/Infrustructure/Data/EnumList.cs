@@ -435,5 +435,22 @@ namespace IntegratedInfrustructure.Data
             NonTaxable,
         }
 
+        public enum TypeofJV
+        {
+            Payment,
+            JournalVoucher,
+            Recivable
+        }
+
+        public enum JournalOption
+        {
+            CasherAccount,
+            BankAccount,
+            WitholdingAccount,
+            VatAccount
+        }
+
+       
+
     }
 }

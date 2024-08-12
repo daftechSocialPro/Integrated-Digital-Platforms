@@ -12,5 +12,8 @@ namespace IntegratedImplementation.Interfaces.Finance.Configuration
     {
         Task<ResponseMessage> AddTaxRate(AddTaxRateDto addTaxRate);
         Task<List<TaxRateDto>> GetTaxRate();
+
+        Task<ResponseMessage> AddLedgerPosting(AddLedgerPostingAccountDto addLedger);
+        Task<List<LedgerPostingAccountDto>> GetLedgerPosting();
     }
 }
