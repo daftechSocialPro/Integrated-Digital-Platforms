@@ -758,6 +758,53 @@ namespace IntegratedInfrustructure.Migrations
                     b.ToTable("JournalVouchers");
                 });
 
+            modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.JournalVoucherDetail", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ChartOfAccountId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("Credit")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Debit")
+                        .HasColumnType("float");
+
+                    b.Property<Guid>("JournalVoucherId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Remark")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("SubsidiaryAccountId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChartOfAccountId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("JournalVoucherId");
+
+                    b.HasIndex("SubsidiaryAccountId");
+
+                    b.ToTable("JournalVoucherDetails");
+                });
+
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.Payment", b =>
                 {
                     b.Property<Guid>("Id")
@@ -6403,6 +6450,37 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("CreatedBy");
 
                     b.Navigation("PeriodDetails");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.JournalVoucherDetail", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.FInance.Configuration.ChartOfAccount", "ChartOfAccount")
+                        .WithMany()
+                        .HasForeignKey("ChartOfAccountId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("IntegratedInfrustructure.Model.FInance.Actions.JournalVoucher", "JournalVoucher")
+                        .WithMany()
+                        .HasForeignKey("JournalVoucherId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("IntegratedInfrustructure.Model.FInance.Configuration.SubsidiaryAccount", "SubsidiaryAccount")
+                        .WithMany()
+                        .HasForeignKey("SubsidiaryAccountId");
+
+                    b.Navigation("ChartOfAccount");
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("JournalVoucher");
+
+                    b.Navigation("SubsidiaryAccount");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.Payment", b =>
