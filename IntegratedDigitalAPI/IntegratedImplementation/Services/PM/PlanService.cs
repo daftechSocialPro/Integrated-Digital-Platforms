@@ -171,8 +171,13 @@ namespace IntegratedDigitalAPI.Services.PM
         {
 
             var plans = programId != null ? _dBContext.Projects.Where(x => x.ProjectManagerId == programId).Include(x => x.Department).Include(x => x.ProjectManager).Include(x => x.ProjectFunds).AsNoTracking() :
-                _dBContext.Projects.Include(x => x.Department).Include(x => x.ProjectManager).Include(x => x.ProjectFunds).Where(x=>year !=0 &&x.PeriodStartAt.Year <= year && x.PeriodEndAt.Year>=year).AsNoTracking();
+                _dBContext.Projects.Include(x => x.Department).Include(x => x.ProjectManager).Include(x => x.ProjectFunds).AsNoTracking();
 
+
+            if (year.HasValue&&year!=null&&year!=0)
+            {
+                plans = plans.Where(x => x.PeriodStartAt.Year <= year && x.PeriodEndAt.Year >= year);
+            }
 
             return await (from p in plans
 
