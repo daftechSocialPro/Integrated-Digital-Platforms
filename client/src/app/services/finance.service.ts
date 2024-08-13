@@ -22,6 +22,7 @@ import { AddClientDto, ClientsListDto } from '../model/Finance/IFinanceSettingDt
 import { AddLedgerPostingAccountDto, AddTaxRateDto, LedgerPostingAccountDto, TaxRateDto } from '../model/Finance/ITaxRateDto';
 import { FinanceDashboardDTO, FinanceBarChartPostDto } from '../model/Finance/IFinanceDashboard';
 import { AddJournalVochureDto } from '../model/Finance/IJournalVoucherDto';
+import { PendingFinanceRequestDto } from '../model/Finance/IPendingFinanceRequestDto';
 
 @Injectable({
   providedIn: 'root'
@@ -213,9 +214,9 @@ export class FinanceService {
   getIncomeTaxReport(payrollMonth: string){
     return this.http.get<IncomeTaxReportGetDto>(this.BaseURI + "/PayrollReport/GetIncomeTaxReport?payrollMonth="+payrollMonth)
   }
-  viewFinanceProgress(empId: string) {
 
-    return this.http.get<ViewProgressDto[]>(this.BaseURI + "/Receipt/ViewProgress?employeeId=" + empId)
+  viewFinanceProgress() {
+    return this.http.get<PendingFinanceRequestDto[]>(this.BaseURI + "/Payment/GetPendingProjectFinanceRequests")
 }
 
 //recipet 

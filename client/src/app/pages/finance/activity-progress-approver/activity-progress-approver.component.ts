@@ -7,6 +7,7 @@ import { ActivityView, ViewProgressDto } from '../../project-managment/view-acti
 import { FinanceService } from 'src/app/services/finance.service';
 import { UserView } from 'src/app/model/user';
 import { UserService } from 'src/app/services/user.service';
+import { PendingFinanceRequestDto } from 'src/app/model/Finance/IPendingFinanceRequestDto';
 
 @Component({
   selector: 'app-activity-progress-approver',
@@ -15,10 +16,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class ActivityProgressApproverComponent implements OnInit {
 
- 
-
-
-  progress!:ViewProgressDto[];
+  progress!:PendingFinanceRequestDto[];
   userId:string
   userType :string[]=["Director","Project Manager","Finance"]
   actionType : string []=["Accept","Reject"]
@@ -33,13 +31,11 @@ export class ActivityProgressApproverComponent implements OnInit {
 
   getProgress (){
 
-    this.financeService.viewFinanceProgress(this.userId).subscribe({
+    this.financeService.viewFinanceProgress().subscribe({
       next:(res)=>{
         this.progress = res
-        
       },
       error:(err)=>{
-  
       }
     })
 

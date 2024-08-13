@@ -102,6 +102,7 @@ namespace IntegratedImplementation.Services.Finance.Action
         {
 
 
+
             var progressView = await(from p in _dbContext.ActivityProgresses.Include(x=>x.Activity).Where(x => x.IsApprovedByFinance==ApprovalStatus.PENDING)
                                      select new ProgressViewDto
                                      {
