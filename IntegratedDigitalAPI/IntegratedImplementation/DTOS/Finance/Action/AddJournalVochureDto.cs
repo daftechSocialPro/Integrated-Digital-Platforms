@@ -1,10 +1,4 @@
-﻿using IntegratedInfrustructure.Model.FInance.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static IntegratedInfrustructure.Data.EnumList;
+﻿using static IntegratedInfrustructure.Data.EnumList;
 
 namespace IntegratedImplementation.DTOS.Finance.Action
 {
@@ -22,6 +16,24 @@ namespace IntegratedImplementation.DTOS.Finance.Action
     {
         public Guid ChartOfAccountId { get; set; }
         public Guid? SubsidiaryAccountId { get; set; }
+        public double Debit { get; set; }
+        public double Credit { get; set; }
+        public string Remark { get; set; } = null!;
+    }
+
+    public record GetJournalVoucherDto
+    {
+        public Guid Id { get; set; }
+        public DateTime Date { get; set; }
+        public string Description { get; set; } = null!;
+        public string TypeofJVName { get; set; }
+        public List<GetJournalVoucherDetailDto> GetJournalVoucherDetails { get; set; }
+    }
+
+    public record GetJournalVoucherDetailDto
+    {
+        public string ChartOfAccountDescription { get; set; }
+        public string SubsidiaryAccountDescription { get; set; }
         public double Debit { get; set; }
         public double Credit { get; set; }
         public string Remark { get; set; } = null!;

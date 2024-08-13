@@ -1,18 +1,12 @@
-﻿using IntegratedInfrustructure.Migrations;
-using IntegratedInfrustructure.Model.Authentication;
+﻿using IntegratedInfrustructure.Model.Authentication;
 using IntegratedInfrustructure.Model.FInance.Configuration;
 using IntegratedInfrustructure.Models.Inventory;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IntegratedInfrustructure.Model.FInance.Actions
 {
-    public class PaymentDetail: WithIdModel
+    public class PaymentDetail : WithIdModel
     {
-         public Guid PaymentId { get; set; }
+        public Guid PaymentId { get; set; }
         public virtual Payment Payment { get; set; } = null!;
         public Guid? ItemId { get; set; }
         public virtual Item Item { get; set; } = null!;
@@ -21,7 +15,7 @@ namespace IntegratedInfrustructure.Model.FInance.Actions
         public string Description { get; set; } = null!;
         public double Quantity { get; set; }
         public double Price { get; set; }
-        public double TotalPrice { get; set;}
+        public double TotalPrice { get; set; }
         public string? Remark { get; set; }
 
     }

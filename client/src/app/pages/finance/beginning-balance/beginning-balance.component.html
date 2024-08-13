@@ -42,7 +42,7 @@
                         <div class="card-body">
 
                             <p-table #dt [value]="beginningBalanceList" responsiveLayout="scroll" [rows]="10"
-                                [globalFilterFields]="['branch']" [rows]="10" [paginator]="true"
+                                [globalFilterFields]="['branch']"  [paginator]="true"
                                 [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true"
                                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                                 [rowHover]="true" dataKey="id">

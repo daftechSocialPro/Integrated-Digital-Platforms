@@ -2,14 +2,8 @@
 using IntegratedImplementation.DTOS.Finance.Action;
 using IntegratedImplementation.Interfaces.Finance.Action;
 using IntegratedInfrustructure.Data;
-using IntegratedInfrustructure.Migrations;
 using IntegratedInfrustructure.Model.FInance.Actions;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static IntegratedInfrustructure.Data.EnumList;
 
 namespace IntegratedImplementation.Services.Finance.Action
@@ -17,7 +11,7 @@ namespace IntegratedImplementation.Services.Finance.Action
     public class JournalVoucherService : IJournalVochureService
     {
         private ApplicationDbContext _dbContext;
-         
+
         public JournalVoucherService(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -42,7 +36,7 @@ namespace IntegratedImplementation.Services.Finance.Action
                 return new ResponseMessage { Success = false, Message = "Please correcft the Payment Date" };
             }
 
-            if(addJournalVochureDto.AddJournalVoucherDetailDtos.Sum(x => x.Credit) != addJournalVochureDto.AddJournalVoucherDetailDtos.Sum(x => x.Debit))
+            if (addJournalVochureDto.AddJournalVoucherDetailDtos.Sum(x => x.Credit) != addJournalVochureDto.AddJournalVoucherDetailDtos.Sum(x => x.Debit))
             {
                 return new ResponseMessage { Success = false, Message = "Credit and Debit are not Equal please check your fields again" };
             }
@@ -63,7 +57,7 @@ namespace IntegratedImplementation.Services.Finance.Action
             await _dbContext.SaveChangesAsync();
 
 
-            foreach(var item in addJournalVochureDto.AddJournalVoucherDetailDtos)
+            foreach (var item in addJournalVochureDto.AddJournalVoucherDetailDtos)
             {
                 JournalVoucherDetail detail = new JournalVoucherDetail()
                 {
@@ -76,9 +70,9 @@ namespace IntegratedImplementation.Services.Finance.Action
                     JournalVoucherId = jv.Id,
                     Remark = item.Remark,
                     Rowstatus = RowStatus.ACTIVE,
-                    
+
                 };
-                if(item.SubsidiaryAccountId != null)
+                if (item.SubsidiaryAccountId != null)
                 {
                     detail.SubsidiaryAccountId = item.SubsidiaryAccountId;
                 }
@@ -88,6 +82,27 @@ namespace IntegratedImplementation.Services.Finance.Action
             }
 
             return new ResponseMessage { Success = true, Message = "Journal Voucher Added Succesfully!!" };
+        }
+
+        public async Task<List<GetJournalVoucherDto>> GetJournalVochures(TypeofJV typeofJV)
+        {
+            var journalVochures = await _dbContext.JournalVouchers.Where(x => x.TypeofJV == typeofJV).Select(x => new GetJournalVoucherDto()
+            {
+                Id = x.Id,
+                Date = x.Date,
+                Description = x.Description,
+                TypeofJVName = x.TypeofJV.ToString(),
+                GetJournalVoucherDetails = _dbContext.JournalVoucherDetails.Where(jd => jd.JournalVoucherId == x.Id).Select(jd => new GetJournalVoucherDetailDto()
+                {
+                    ChartOfAccountDescription = $"{jd.ChartOfAccount.Description} ( {jd.ChartOfAccount.AccountNo} )",
+                    SubsidiaryAccountDescription = $"{jd.SubsidiaryAccount.Description} ( {jd.SubsidiaryAccount.AccountNo} )",
+                    Debit = jd.Debit,
+                    Credit = jd.Credit,
+                    Remark = jd.Remark
+                }).ToList()
+            }).ToListAsync();
+
+            return journalVochures;
         }
     }
 }

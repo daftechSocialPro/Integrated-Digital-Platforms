@@ -2,7 +2,7 @@
 
     <div class="iconcontainer" (click)="goToJV()">
         <i class="bi bi-arrow-left-short"></i>
-        <div>Back</div>
+        <div>Back To Journal Voucher</div>
     </div>
 
     <div class="p-4">
@@ -27,13 +27,13 @@
                                                     <div class="col-md-12">
                                                         <div class="form-floating">
                                                             <input type="date" class="form-control" id="date" name="date"
-                                                                [ngModel]="addJournal.date">
+                                                                [(ngModel)]="addJournal.date">
                                                             <label for="paymentDate">Date</label>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-12">
                                                         <textarea class="form-control" placeholder="Remark" name="remark"
-                                                            [ngModel]="addJournal.description" id="remark" rows="5">
+                                                            [(ngModel)]="addJournal.description" id="remark" rows="5">
                                                 </textarea>
                                                     </div>
                                                 </div>
@@ -47,7 +47,7 @@
                                                 <form #itemsForm="ngForm">
                                                     <div class="row p-2 mb-2">
 
-                                                        <div class="col-md-2">
+                                                        <div class="col-md-3">
                                                             <label class="col-md-12" htmlFor="lastname2">Chart Of
                                                                 Account</label>
                                                             <select class="form-control"
@@ -60,7 +60,7 @@
                                                                     [value]="it.id">{{it.name}}</option>
                                                             </select>
                                                         </div>
-                                                        <div class="col-md-2">
+                                                        <div class="col-md-3">
                                                             <label class="col-md-12" htmlFor="lastname2">Subsidary
                                                                 Account</label>
                                                             <select class="form-control"
@@ -71,15 +71,20 @@
                                                                     [value]="it.id">{{it.name}}</option>
                                                             </select>
                                                         </div>
-                                                        <div class="col-md-2">
+                                                        <div class="col-md-3">
                                                             <label htmlFor="lastname2">Debit</label>
                                                             <input class="form-control" type="number" min="0"
                                                                 name="debit" [(ngModel)]="addJournalDetails.debit">
                                                         </div>
-                                                        <div class="col-md-2">
+                                                        <div class="col-md-3">
                                                             <label htmlFor="lastname2">Credit</label>
                                                             <input class="form-control" type="number" min="0"
                                                                 name="credit" [(ngModel)]="addJournalDetails.credit">
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <label htmlFor="lastname2">Remark</label>
+                                                            <input class="form-control" type="text"
+                                                                name="credit" [(ngModel)]="addJournalDetails.remark">
                                                         </div>
                                                         <div class="col-md-1">
                                                             <label></label><br />
@@ -92,23 +97,24 @@
                                                 </form>
 
                                                 <div class="p-fluid p-formgrid grid">
-                                                    <p-table #dt [value]="journalDetailList" responsiveLayout="scroll">
+                                                    <p-table #dt [value]="journalDetailList" responsiveLayout="scroll" >
                                                         <ng-template pTemplate="header">
                                                             <tr>
                                                                 <th>Chart Of Account</th>
                                                                 <th>Subsidary Account</th>
                                                                 <th>Debit</th>
                                                                 <th>Credit</th>
+                                                                <th>Remark</th>
                                                                 <th style="width:8em"></th>
                                                             </tr>
                                                         </ng-template>
-                                                        <ng-template pTemplate="body" let-jvDetail>
+                                                        <ng-template pTemplate="body" let-jvDetail let-rowIndex="rowIndex">
                                                             <tr>
                                                                 <td>
                                                                     {{jvDetail.chartOfAccount}}
                                                                 </td>
                                                                 <td>
-                                                                    {{jvDetail.SubsidaryAccount}}
+                                                                    {{jvDetail.subsidaryAccount}}
                                                                 </td>
                                                                 <td>
                                                                     {{jvDetail.debit}}
@@ -116,10 +122,13 @@
                                                                 <td>
                                                                     {{jvDetail.credit}}
                                                                 </td>
+                                                                <td>
+                                                                    {{jvDetail.remark}}
+                                                                </td>
                                                                 <td style="text-align:center">
                                                                     <button pButton type="button" icon="pi pi-times"
                                                                         class="ui-button-danger"
-                                                                        (click)="removeData(jvDetail.index)"></button>
+                                                                        (click)="removeData(rowIndex)"></button>
                                                                 </td>
                                                             </tr>
                                                         </ng-template>
