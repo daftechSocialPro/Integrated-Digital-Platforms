@@ -62,6 +62,8 @@ namespace IntegratedDigitalAPI.Controllers.PM
 
         public async Task<List<PlanViewDto>> Getplan(Guid? programId , int ? year)
         {
+
+          
             var response = await _planService.GetPlans(programId,year);
             return response;
         }

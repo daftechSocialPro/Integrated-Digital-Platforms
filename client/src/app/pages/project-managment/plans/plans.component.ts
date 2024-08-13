@@ -43,7 +43,7 @@ export class PlansComponent implements OnInit {
   listPlans() {
     
     if(this.userview.role.includes('PM-ADMIN')){
-    this.planService.getPlans().subscribe({
+    this.planService.getPlans(null,0).subscribe({
       next: (res) => {
        
         this.Plans = res
@@ -54,7 +54,7 @@ export class PlansComponent implements OnInit {
       }
     })
     }else {
-      this.planService.getPlans(this.userview.employeeId).subscribe({
+      this.planService.getPlans(this.userview.employeeId,0).subscribe({
         next: (res) => {
 
           this.Plans = res

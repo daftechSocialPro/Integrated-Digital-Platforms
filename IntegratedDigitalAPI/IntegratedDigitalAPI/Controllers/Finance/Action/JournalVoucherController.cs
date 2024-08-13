@@ -1,10 +1,9 @@
 ﻿using Implementation.Helper;
 using IntegratedImplementation.DTOS.Finance.Action;
 using IntegratedImplementation.Interfaces.Finance.Action;
-using IntegratedImplementation.Services.Finance.Action;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using static IntegratedInfrustructure.Data.EnumList;
 
 namespace IntegratedDigitalAPI.Controllers.Finance.Action
 {
@@ -23,7 +22,7 @@ namespace IntegratedDigitalAPI.Controllers.Finance.Action
 
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> AddPayments([FromBody] AddJournalVochureDto addJournalVochureDto)
+        public async Task<IActionResult> AddJournalVochure(AddJournalVochureDto addJournalVochureDto)
         {
             if (ModelState.IsValid)
             {
@@ -35,6 +34,12 @@ namespace IntegratedDigitalAPI.Controllers.Finance.Action
             }
         }
 
+        [HttpGet]
+        [ProducesResponseType(typeof(List<GetJournalVoucherDto>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetJournalVochures(TypeofJV typeofJV)
+        {
+            return Ok(await _journalVoucherService.GetJournalVochures(typeofJV));
+        }
 
 
     }

@@ -21,8 +21,8 @@ import { AccountReconsilationFindDto, AccountToBeReconsiledDto, AddAccountRecons
 import { AddClientDto, ClientsListDto } from '../model/Finance/IFinanceSettingDto';
 import { AddLedgerPostingAccountDto, AddTaxRateDto, LedgerPostingAccountDto, TaxRateDto } from '../model/Finance/ITaxRateDto';
 import { FinanceDashboardDTO, FinanceBarChartPostDto } from '../model/Finance/IFinanceDashboard';
-import { AddJournalVochureDto } from '../model/Finance/IJournalVoucherDto';
 import { PendingFinanceRequestDto } from '../model/Finance/IPendingFinanceRequestDto';
+import { AddJournalVochureDto, GetJournalVoucherDto } from '../model/Finance/IJournalVoucherDto';
 
 @Injectable({
   providedIn: 'root'
@@ -270,4 +270,7 @@ addJournalVochure(addJv: AddJournalVochureDto) {
   return this.http.post<ResponseMessage>(this.BaseURI + "/JournalVoucher/AddJournalVochure", addJv)
 }
 
+getJournalVoucher(typeofJV: number){
+  return this.http.get<GetJournalVoucherDto[]>(this.BaseURI + "/JournalVoucher/GetJournalVochures?typeofJV=" + typeofJV)
+}
 }

@@ -155,7 +155,6 @@ export class AddPaymentsComponent implements OnInit {
     this.addPaymentDetailList = new AddPaymentDetailDto();
   }
   submit() {
-    
     if (this.paymentDetailList.length <= 0) {
       this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Please add atleast one payment detail', life: 3000 });
     }
@@ -169,11 +168,12 @@ export class AddPaymentsComponent implements OnInit {
         typeOfPayee: this.paymentForm.value.typeOfPayee,
         remark: this.paymentForm.value.remark,
         createdById: this.user.userId,
-        addPaymentDetails: this.paymentDetailList,
         employeeId: this.paymentForm.value.employeeId != null ? this.paymentForm.value.employeeId : "",
         otherBeneficiary: this.paymentForm.value.otherBeneficiary != null ? this.paymentForm.value.otherBeneficiary : "",
         beneficiaryAccountNumber:  this.paymentForm.value.beneficiaryAccountNumber != null ? this.paymentForm.value.beneficiaryAccountNumber : ""
       }
+
+
       const formData = new FormData();
 
       // Append each property of the addPaymentData object to the FormData
@@ -189,16 +189,12 @@ export class AddPaymentsComponent implements OnInit {
 
       // Append addPaymentDetails if available
       if (this.paymentDetailList.length > 0) {
-        for (let i = 0; i < this.paymentDetailList.length; i++) {
-          const paymentDetail = this.paymentDetailList[i];
-          for (const key in paymentDetail) {
-            if (paymentDetail.hasOwnProperty(key)) {
-              formData.append(`AddPaymentDetails[${i}].${key}`, paymentDetail[key]);
-            }
-          }
-        }
+        this.paymentDetailList.forEach((detail, index) => {
+          Object.keys(detail).forEach(key => {
+            formData.append(`addPaymentDetails[${index}].${key}`, detail[key]);
+          });
+        });
       }
-      debugger;
       this.financeService.addPayments(formData).subscribe({
         next: (res) => {
           if (res.success) {

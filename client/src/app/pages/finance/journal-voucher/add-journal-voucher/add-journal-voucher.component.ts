@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -22,11 +23,12 @@ export class AddJournalVoucherComponent implements OnInit {
   chartOfAccountDropDown!: SelectList[]
   subsidaryAccount: SelectList[] = [] ;
   addJournal: AddJournalVochureDto = new AddJournalVochureDto();
-  journalDetailList: AddJournalVoucherDetailDto[];
+  journalDetailList: AddJournalVoucherDetailDto[] = [];
   addJournalDetails: AddJournalVoucherDetailDto = new AddJournalVoucherDetailDto();
   
 
   constructor(
+    @Inject(DOCUMENT) private document: Document,
     private financeService: FinanceService,
     private routerService: Router,
     private userService: UserService,
@@ -36,6 +38,7 @@ export class AddJournalVoucherComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.document.body.classList.toggle('toggle-sidebar');
     this.user = this.userService.getCurrentUser();
     this.getChartOfAccountDropDown();
     this.getAccountingPeriodDropDown();
@@ -59,7 +62,6 @@ export class AddJournalVoucherComponent implements OnInit {
   }
 
   getSubsidaryAccount(chartOfAccountId: any) {
-    debugger;
     this.dropDownService.getSubsidaryAccount(chartOfAccountId.value).subscribe({
       next: (res) => {
         this.subsidaryAccount = res
@@ -68,9 +70,8 @@ export class AddJournalVoucherComponent implements OnInit {
   }
   
   removeData(index: number) {
-   // this.journalDetailList = this.journalDetailList.filter(x => x.index != index);
+    this.journalDetailList.splice(index, 1);
   }
-
 
 
   newRow() {
@@ -88,7 +89,6 @@ export class AddJournalVoucherComponent implements OnInit {
         }
       });
     }
-    debugger;
     this.journalDetailList.unshift(this.addJournalDetails);
     //this.items = "";
     this.addJournalDetails = new AddJournalVoucherDetailDto();
@@ -96,15 +96,17 @@ export class AddJournalVoucherComponent implements OnInit {
 
 
   submit() {
-    let totalDebit = this.journalDetailList.map(bill => bill.debit).reduce((acc, amount) => acc + amount);
-    let totalCredit = this.journalDetailList.map(bill => bill.credit).reduce((acc, amount) => acc + amount);
+    
     if (this.journalDetailList.length <= 0) {
       this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Please add atleast one Journal Voucher', life: 3000 });
     }
-    else if(totalCredit != totalDebit){
+    let totalDebit = this.journalDetailList.map(bill => bill.debit).reduce((acc, amount) => acc + amount);
+    let totalCredit = this.journalDetailList.map(bill => bill.credit).reduce((acc, amount) => acc + amount);
+    if(totalCredit != totalDebit){
       this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Total debit and credit are not equal please check your fields', life: 3000 });
     }
     else {
+      this.addJournal.addJournalVoucherDetailDtos = this.journalDetailList
       this.addJournal.createdById = this.user.userId;
       this.addJournal.typeofJV = 1;
       this.financeService.addJournalVochure(this.addJournal).subscribe({
@@ -114,6 +116,7 @@ export class AddJournalVoucherComponent implements OnInit {
             this.journalDetailList = [];
             this.addJournal = new AddJournalVochureDto();
             this.addJournalDetails = new AddJournalVoucherDetailDto();
+            this.goToJV()
           }
           else {
             this.messageService.add({ severity: 'error', summary: 'Error', detail: res.message, life: 3000 });
