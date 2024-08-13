@@ -27,9 +27,12 @@
                     <li class="nav-item" role="presentation"> <button class="nav-link" id="chartofaccount-tab" data-bs-toggle="tab"
                             data-bs-target="#chartofaccount" type="button" role="tab" aria-controls="chartofaccount"
                             aria-selected="false">Chart Of Accounts</button></li>
+                    <li class="nav-item" role="presentation"> <button class="nav-link" id="generalLedger-tab" data-bs-toggle="tab"
+                            data-bs-target="#generalLedger" type="button" role="tab" aria-controls="generalLedger" aria-selected="false">
+                            General Ledger</button></li>
                     <li class="nav-item" role="presentation"> <button class="nav-link" id="taxRate-tab" data-bs-toggle="tab"
-                    data-bs-target="#taxRate" type="button" role="tab" aria-controls="taxRate"
-                        aria-selected="false">Tax Rate</button></li>
+                            data-bs-target="#taxRate" type="button" role="tab" aria-controls="taxRate" aria-selected="false">Tax
+                            Rate</button></li>
                     <li class="nav-item" role="presentation"> <button class="nav-link" id="payroll-tab" data-bs-toggle="tab"
                             data-bs-target="#payroll" type="button" role="tab" aria-controls="payroll" aria-selected="false">Payroll
                             Settings</button></li>
@@ -53,6 +56,9 @@
                     </div>
                     <div class="tab-pane fade  p-2" id="taxRate" role="tabpanel" aria-labelledby="taxRate-tab">
                         <app-tax-rate/>
+                    </div>
+                    <div class="tab-pane fade  p-2" id="generalLedger" role="tabpanel" aria-labelledby="generalLedger-tab">
+                        <app-ledger-posting/>
                     </div>
                     <div class="tab-pane fade  p-2" id="payroll" role="tabpanel" aria-labelledby="payroll-tab">
                         <app-payroll-setting/>

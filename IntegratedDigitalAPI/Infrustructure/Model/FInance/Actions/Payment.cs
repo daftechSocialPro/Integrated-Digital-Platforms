@@ -1,25 +1,18 @@
-﻿using IntegratedInfrustructure.Migrations;
-using IntegratedInfrustructure.Model.Authentication;
+﻿using IntegratedInfrustructure.Model.Authentication;
 using IntegratedInfrustructure.Model.Configuration;
 using IntegratedInfrustructure.Model.FInance.Configuration;
 using IntegratedInfrustructure.Model.HRM;
 using IntegratedInfrustructure.Models.Inventory;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static IntegratedInfrustructure.Data.EnumList;
-using AccountingPeriod = IntegratedInfrustructure.Model.FInance.Configuration.AccountingPeriod;
 
 namespace IntegratedInfrustructure.Model.FInance.Actions
 {
-    public class Payment: WithIdModel
+    public class Payment : WithIdModel
     {
 
-        public Payment() 
-        { 
+        public Payment()
+        {
             PaymentDetails = new HashSet<PaymentDetail>();
         }
         public Guid AccountingPeriodId { get; set; }
@@ -37,7 +30,7 @@ namespace IntegratedInfrustructure.Model.FInance.Actions
         public string? OtherBeneficiary { get; set; }
         public string? BeneficiaryAccountNumber { get; set; }
         public string? DocumentPath { get; set; }
-        public Guid? ApprovedById { get;set ; }
+        public Guid? ApprovedById { get; set; }
         public virtual EmployeeList ApprovedBy { get; set; } = null!;
         public Guid? AuthorizedById { get; set; }
         public virtual EmployeeList AuthorizedBy { get; set; } = null!;

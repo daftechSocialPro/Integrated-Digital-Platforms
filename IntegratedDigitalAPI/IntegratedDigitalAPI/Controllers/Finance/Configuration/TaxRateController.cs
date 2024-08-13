@@ -40,5 +40,28 @@ namespace IntegratedDigitalAPI.Controllers.Finance.Configuration
             }
         }
 
+
+        [HttpGet]
+        [ProducesResponseType(typeof(LedgerPostingAccountDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetLedgerPosting()
+        {
+            return Ok(await _taxRateService.GetLedgerPosting());
+        }
+
+
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> AddLedgerPosting(AddLedgerPostingAccountDto addLedger)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _taxRateService.AddLedgerPosting(addLedger));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
     }
 }

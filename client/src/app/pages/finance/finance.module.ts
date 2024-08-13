@@ -67,6 +67,10 @@ import { AddTaxRateComponent } from './finance-configuration/tax-rate/add-tax-ra
 import { AuthorizedPaymentsComponent } from './payments/authorized-payments/authorized-payments.component';
 import { FinanceDashboardComponent } from './finance-dashboard/finance-dashboard.component';
 import { NgxEchartsModule } from 'ngx-echarts';
+import { LedgerPostingComponent } from './finance-configuration/ledger-posting/ledger-posting.component';
+import { AddLedgerPostingComponent } from './finance-configuration/ledger-posting/add-ledger-posting/add-ledger-posting.component';
+import { JournalVoucherComponent } from './journal-voucher/journal-voucher.component';
+import { AddJournalVoucherComponent } from './journal-voucher/add-journal-voucher/add-journal-voucher.component';
 // import { PensionDeclarationComponent } from './pension-declaration/pension-declaration.component';
 
 
@@ -119,6 +123,10 @@ import { NgxEchartsModule } from 'ngx-echarts';
     AddTaxRateComponent,
     AuthorizedPaymentsComponent,
     FinanceDashboardComponent,
+    LedgerPostingComponent,
+    AddLedgerPostingComponent,
+    JournalVoucherComponent,
+    AddJournalVoucherComponent,
     
 
   ],

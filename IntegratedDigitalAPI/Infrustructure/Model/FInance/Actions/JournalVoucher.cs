@@ -5,15 +5,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static IntegratedInfrustructure.Data.EnumList;
 
 namespace IntegratedInfrustructure.Model.FInance.Actions
 {
     public class JournalVoucher: WithIdModel
     {
-        public Guid ChartOfAccountId { get; set; }
-        public virtual ChartOfAccount ChartOfAccount { get; set; } = null!;
-        public Guid? SubsidiaryAccountId { get; set; }
-        public virtual SubsidiaryAccount SubsidiaryAccount { get; set; } = null!;
-
+        public DateTime Date { get; set; }
+        public Guid PeriodDetailsId { get; set; }
+        public virtual PeriodDetails PeriodDetails { get; set; } = null!;
+        public string Description { get; set; } = null!;
+        public TypeofJV TypeofJV { get; set; }
+       
     }
 }

@@ -413,6 +413,17 @@ namespace IntegratedImplementation.Services.Configuration
 
             }).ToListAsync();
             return chartOfAccountsList;
+        } 
+        
+        public async Task<List<SelectListDto>> GetSubsidaryAccount(Guid ChartOfAccountId)
+        {
+            var chartOfAccountsList = await _dbContext.SubsidiaryAccounts.Where(x => x.Rowstatus == RowStatus.ACTIVE && x.ChartOfAccountId == ChartOfAccountId).AsNoTracking().Select(x => new SelectListDto
+            {
+                Name =$"{x.Description} ({x.AccountNo})" ,
+                Id = x.Id
+
+            }).ToListAsync();
+            return chartOfAccountsList;
         }
 
         public async Task<List<SelectListDto>> GetTrainingList()
