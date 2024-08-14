@@ -10,6 +10,7 @@ import {
 import { FinanceService } from 'src/app/services/finance.service';
 import { UserView } from 'src/app/model/user';
 import { UserService } from 'src/app/services/user.service';
+import { PendingFinanceRequestDto } from 'src/app/model/Finance/IPendingFinanceRequestDto';
 import { AddPaymentsComponent } from '../payments/add-payments/add-payments.component';
 
 @Component({
@@ -18,29 +19,26 @@ import { AddPaymentsComponent } from '../payments/add-payments/add-payments.comp
   styleUrls: ['./activity-progress-approver.component.css'],
 })
 export class ActivityProgressApproverComponent implements OnInit {
-  progress!: ViewProgressDto[];
-  userId: string;
-  userType: string[] = ['Director', 'Project Manager', 'Finance'];
-  actionType: string[] = ['Accept', 'Reject'];
-  constructor(
-    private modalService: NgbModal,
-    private financeService: FinanceService,
-    private commonService: CommonService,
-    private userService: UserService
-  ) {}
-  ngOnInit(): void {
+
+  progress!:PendingFinanceRequestDto[];
+  userId:string
+  userType :string[]=["Director","Project Manager","Finance"]
+  actionType : string []=["Accept","Reject"]
+  constructor(private modalService : NgbModal,private financeService : FinanceService,private commonService : CommonService,private userService : UserService) { }
+  ngOnInit(): void { 
+    
     this.userId = this.userService.getCurrentUser().employeeId;
     this.getProgress();
   }
 
-  getProgress() {
-    this.financeService.viewFinanceProgress(this.userId).subscribe({
-      next: (res) => {
-        this.progress = res;
-      },
-      error: (err) => {},
-    });
-  }
+  // getProgress() {
+  //   this.financeService.viewFinanceProgress(this.userId).subscribe({
+  //     next: (res) => {
+  //       this.progress = res;
+  //     },
+  //     error: (err) => {},
+  //   });
+  // }
 
   getFilePath(value: string) {
     return this.commonService.createImgPath(value);
@@ -74,7 +72,20 @@ export class ActivityProgressApproverComponent implements OnInit {
           this.ApporveReject(pro.id, this.userType[2], this.actionType[0]);
           // Perform any additional logic or UI updates
         }
+      })}
+    
+
+
+
+  getProgress (){
+
+    this.financeService.viewFinanceProgress().subscribe({
+      next:(res)=>{
+        this.progress = res
+      },
+      error:(err)=>{
       }
-    );
+    });
   }
-}
+  }
+

@@ -1,4 +1,5 @@
 ﻿using Implementation.Helper;
+using IntegratedDigitalAPI.DTOS.PM;
 using IntegratedImplementation.DTOS.Finance.Action;
 using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedImplementation.Interfaces.Finance.Action;
@@ -289,6 +290,49 @@ namespace IntegratedImplementation.Services.Finance.Action
             }
 
             return ltr;
+        }
+
+        public async Task<List<PendingFinanceRequestDto>> GetPendingProjectFinanceRequests()
+        {
+            var dataProjects = new List<PendingFinanceRequestDto>();
+
+            var projects = await _dbContext.Projects.Select(x => new PendingFinanceRequestDto
+            {
+                Id = x.Id,
+                ProjectName = x.ProjectName,
+                AllocatedBudget = x.PlannedBudget,
+            }).ToListAsync();
+
+            foreach (var item in projects)
+            {
+                var activities = await _dbContext.Activities.Include(x => x.ActProgress).Include(x => x.Plan).Include(x => x.Task)
+                                        .Where(x => x.ActProgress.Any(x => x.IsApprovedByFinance == ApprovalStatus.PENDING) &&
+                                        ( x.PlanId == item.Id || x.Task.ProjectId == item.Id)
+                                        ).Select(x => new FinanceActivitiesDto
+                                        {
+                                            ActivityDescription = x.ActivityDescription,
+                                            ActivityNumber = x.ActivityNumber,
+                                            AllocatedBudget = x.PlanedBudget,
+                                            Indicator = x.Indicator,
+                                            PlannedWork = x.Goal,
+                                            FinanceWorkedBudgets = x.ActProgress.Select(y => new FinanceWorkedBudgetDto
+                                            {
+                                                Date = y.CreatedDate,
+                                                ActualWorked = y.ActualWorked,
+                                                UsedBudget = y.ActualBudget,
+                                                DocumentPath = y.FinanceDocumentPath,
+                                                Remark = y.Remark,
+                                            }).ToList()
+                                        }).ToListAsync();
+
+                if (activities.Any())
+                {
+                    item.FinanceActivities = activities;
+                    dataProjects.Add(item);
+                }
+            }
+
+            return dataProjects;
         }
     }
 }

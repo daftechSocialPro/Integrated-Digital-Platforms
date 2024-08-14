@@ -72,7 +72,7 @@ import { AddLedgerPostingComponent } from './finance-configuration/ledger-postin
 import { JournalVoucherComponent } from './journal-voucher/journal-voucher.component';
 import { AddJournalVoucherComponent } from './journal-voucher/add-journal-voucher/add-journal-voucher.component';
 // import { PensionDeclarationComponent } from './pension-declaration/pension-declaration.component';
-
+import { AccordionModule } from 'primeng/accordion';
 
 
 
@@ -153,6 +153,7 @@ import { AddJournalVoucherComponent } from './journal-voucher/add-journal-vouche
     CheckboxModule,
     MultiSelectModule,
     FileUploadModule,
+    AccordionModule,
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts'),
     }),
