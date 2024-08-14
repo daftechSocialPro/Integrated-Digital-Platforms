@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
@@ -11,6 +11,7 @@ import { AddPaymentDetailDto, PaymentPostDto } from 'src/app/model/Finance/IPaym
 import { Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 import { AddVendorComponent } from 'src/app/pages/inventory/inventory-setting/vendor/add-vendor/add-vendor.component';
+import { ViewProgressDto } from 'src/app/model/PM/ActivityViewDto';
 
 
 
@@ -20,6 +21,10 @@ import { AddVendorComponent } from 'src/app/pages/inventory/inventory-setting/ve
   styleUrls: ['./add-payments.component.css']
 })
 export class AddPaymentsComponent implements OnInit {
+  
+  @Output() paymentApproved = new EventEmitter<boolean>(); 
+  @Input() progress!:ViewProgressDto
+  @Input() callFrom:boolean=false
 
   user!: UserView
   paymentForm!: FormGroup;
@@ -68,19 +73,46 @@ export class AddPaymentsComponent implements OnInit {
     this.getEmployees();
 
 
-    this.paymentForm = this.formBuilder.group({
-      paymentDate: [null, Validators.required],
-      paymentType: ['', Validators.required],
-      paymentNumber: [''],
-      bankId: ['', Validators.required],
-      supplierId: [''],
-      employeeId: [''],
-      otherBeneficiary: [''],
-      typeOfPayee: ['', Validators.required],
-      remark: [''],
-      beneficiaryAccountNumber:['']
-      // addPaymentDetails: this.formBuilder.array([this.createPaymentItem()])
-    })
+    console.log("dfdf",this.progress)
+
+    if(this.callFrom){
+      this.paymentForm = this.formBuilder.group({
+        paymentDate: [null, Validators.required],
+        paymentType: ['', Validators.required],
+        paymentNumber: [''],
+        bankId: ['', Validators.required],
+        supplierId: [''],
+        employeeId: [''],
+        otherBeneficiary: [''],
+        typeOfPayee: ['', Validators.required],
+        remark: [''],
+        beneficiaryAccountNumber:['']
+        // addPaymentDetails: this.formBuilder.array([this.createPaymentItem()])
+      })
+
+      this.addPaymentDetailList.quantity= 1
+      this.addPaymentDetailList.price = this.progress.usedBudget
+      this.addPaymentDetailList.totalPrice = this.progress.usedBudget
+      this.addPaymentDetailList.description = this.progress.activity
+      this.paymentForm.get('paymentDate').disable();
+    }
+    else {
+      this.paymentForm = this.formBuilder.group({
+        paymentDate: [null, Validators.required],
+        paymentType: ['', Validators.required],
+        paymentNumber: [''],
+        bankId: ['', Validators.required],
+        supplierId: [''],
+        employeeId: [''],
+        otherBeneficiary: [''],
+        typeOfPayee: ['', Validators.required],
+        remark: [''],
+        beneficiaryAccountNumber:['']
+        // addPaymentDetails: this.formBuilder.array([this.createPaymentItem()])
+      })
+    }
+
+  
 
 
   }
@@ -89,6 +121,26 @@ export class AddPaymentsComponent implements OnInit {
     this.dropDownService.GetEmployeeDropDown().subscribe({
       next: (res) => {
         this.employeeDropDown = res;
+
+        this.onEmployeeChange(this.progress.employeeId)
+
+        if (this.callFrom) {
+          const today = new Date().toISOString().split('T')[0];
+          this.paymentForm.setValue({
+            employeeId: this.progress.employeeId.toLowerCase(),
+            paymentDate: today,
+            paymentType:'Transfer',
+            paymentNumber:'',
+            supplierId:'',
+            bankId:'',
+            otherBeneficiary:'',
+            typeOfPayee:1,
+            remark:"",
+            beneficiaryAccountNumber:""
+
+          });
+        }
+        
       }
     });
   }
@@ -136,7 +188,7 @@ export class AddPaymentsComponent implements OnInit {
 
 
   newRow() {
-    if (this.addPaymentDetailList.itemId) {
+    if (this.addPaymentDetailList.itemId||this.callFrom) {
 
       this.itemsDropDown.some(x => {
         if (x.id == this.addPaymentDetailList.itemId) {
@@ -160,7 +212,7 @@ export class AddPaymentsComponent implements OnInit {
     }
     else {
       const addPaymentData: PaymentPostDto = {
-        paymentDate: this.paymentForm.value.paymentDate,
+        paymentDate: new Date().toISOString(),
         paymentType: this.paymentForm.value.paymentType,
         paymentNumber: this.paymentForm.value.paymentNumber,
         bankId: this.paymentForm.value.bankId,
@@ -174,7 +226,11 @@ export class AddPaymentsComponent implements OnInit {
       }
 
 
+      console.log("addpayment",addPaymentData)
+
       const formData = new FormData();
+
+
 
       // Append each property of the addPaymentData object to the FormData
       Object.keys(addPaymentData).forEach(key => {
@@ -203,6 +259,9 @@ export class AddPaymentsComponent implements OnInit {
             this.addPaymentDetailList = new AddPaymentDetailDto();
            // this.goToPayments()
            this.paymentForm.reset();
+
+
+           this.paymentApproved.emit(true);
           }
           else {
             this.messageService.add({ severity: 'error', summary: 'Error', detail: res.message, life: 3000 });
@@ -273,5 +332,11 @@ export class AddPaymentsComponent implements OnInit {
   
   onAccountChange(accountId: string){
     this.paymentForm.value.beneficiaryAccountNumber =  this.beneficiaryAccount.find(x => x.id == accountId).reason
+  }
+
+  
+
+  closeModal(){
+    this.modalService.dismissAll()
   }
 }

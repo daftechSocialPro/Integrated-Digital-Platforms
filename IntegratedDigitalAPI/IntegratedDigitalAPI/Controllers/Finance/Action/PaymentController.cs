@@ -32,7 +32,7 @@ namespace IntegratedDigitalAPI.Controllers.Finance.Action
         [ProducesResponseType(typeof(PaymentListDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetApprovedPayments()
         {
-            return Ok(await _paymentService.GetApprovedPayments());
+             return Ok(await _paymentService.GetApprovedPayments());
         }
 
         [HttpGet]

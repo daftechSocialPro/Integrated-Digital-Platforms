@@ -22,7 +22,7 @@ export interface PaymentDetailListDto{
 }
 
 export interface PaymentPostDto{
-    paymentDate: Date
+    paymentDate: string
     paymentType: string
     paymentNumber: string
     bankId: string

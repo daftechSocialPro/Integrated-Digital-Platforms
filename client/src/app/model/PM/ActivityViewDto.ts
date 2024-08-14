@@ -36,6 +36,9 @@ export interface ActivityView {
    cancelledJustfication?: string
    resceduledJustification ?: string 
 
+
+   employeeId:string
+   employeeName:string
     
 
 
@@ -98,6 +101,9 @@ export interface ViewProgressDto {
     createdAt: string
     quarterId: string
 
+    employeeId? :string
+    employeeName? : string
+    activity?:string
 
 }
 
