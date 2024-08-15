@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { GetJournalVoucherDto } from 'src/app/model/Finance/IJournalVoucherDto';
+import { PaymentDetailListDto } from 'src/app/model/Finance/IPaymentDto';
 import { FinanceService } from 'src/app/services/finance.service';
 
 @Component({
