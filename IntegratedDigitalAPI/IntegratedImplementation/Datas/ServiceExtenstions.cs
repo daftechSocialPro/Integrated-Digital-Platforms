@@ -88,8 +88,7 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<ITimePeriodService, TimePeriodService>();
 
             services.AddScoped<IWeeklyPlanService, WeeklyPlanService>();
-            services.AddScoped<IProjectPaymentService, ProjectPaymentService>();
-
+            
 
             #endregion
 
@@ -129,6 +128,7 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<ITaxRateService, TaxRateService>();
             services.AddScoped<IFinanceDashboardService, FinanceDashboardService>();
             services.AddScoped<IJournalVochureService, JournalVoucherService>();
+            services.AddScoped<IPaymentRequsitionService, PaymentRequsitionService>();
             #endregion
 
 

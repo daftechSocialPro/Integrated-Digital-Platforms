@@ -938,6 +938,72 @@ namespace IntegratedInfrustructure.Migrations
                     b.ToTable("PaymentDetails");
                 });
 
+            modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.PaymetRequisitions", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ActivityId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("Ammount")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime?>("ApprovedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("ApproverId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("BudgetLine")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PaymentType")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("ProjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Purpose")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RequsitionType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("purchaseRequestId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ActivityId");
+
+                    b.HasIndex("ApproverId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("ProjectId");
+
+                    b.HasIndex("purchaseRequestId");
+
+                    b.ToTable("PaymetRequisitions");
+                });
+
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.PayrollData", b =>
                 {
                     b.Property<Guid>("Id")
@@ -3825,96 +3891,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.ToTable("BudgetYears");
                 });
 
-            modelBuilder.Entity("IntegratedInfrustructure.Model.PM.PaymentRequisition", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<double>("Amount")
-                        .HasColumnType("float");
-
-                    b.Property<string>("AmountInWord")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("ApprovedById")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("AuthorizedById")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("BudgetReference")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CheckNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("CheckedById")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CreatedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsRejected")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PageNumber")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PaymentType")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("ProjectId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("PurposeOfRequest")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RejectedRemark")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("RequestedById")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Rowstatus")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("SupportedById")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApprovedById");
-
-                    b.HasIndex("AuthorizedById");
-
-                    b.HasIndex("CheckedById");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("ProjectId");
-
-                    b.HasIndex("RequestedById");
-
-                    b.HasIndex("SupportedById");
-
-                    b.ToTable("PaymentRequisitions");
-                });
-
             modelBuilder.Entity("IntegratedInfrustructure.Model.PM.Project", b =>
                 {
                     b.Property<Guid>("Id")
@@ -6561,6 +6537,39 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("Payment");
                 });
 
+            modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.PaymetRequisitions", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Models.PM.Activity", "Activity")
+                        .WithMany()
+                        .HasForeignKey("ActivityId");
+
+                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "Approver")
+                        .WithMany()
+                        .HasForeignKey("ApproverId");
+
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("IntegratedInfrustructure.Model.PM.Project", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectId");
+
+                    b.HasOne("IntegratedInfrustructure.Models.Inventory.PurchaseRequest", "PurchaseRequest")
+                        .WithMany()
+                        .HasForeignKey("purchaseRequestId");
+
+                    b.Navigation("Activity");
+
+                    b.Navigation("Approver");
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("Project");
+
+                    b.Navigation("PurchaseRequest");
+                });
+
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.PayrollData", b =>
                 {
                     b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "ApprovedBy")
@@ -7790,55 +7799,6 @@ namespace IntegratedInfrustructure.Migrations
                         .HasForeignKey("CreatedById");
 
                     b.Navigation("CreatedBy");
-                });
-
-            modelBuilder.Entity("IntegratedInfrustructure.Model.PM.PaymentRequisition", b =>
-                {
-                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "ApprovedBy")
-                        .WithMany()
-                        .HasForeignKey("ApprovedById");
-
-                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "AuthorizedBy")
-                        .WithMany()
-                        .HasForeignKey("AuthorizedById");
-
-                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "CheckedBy")
-                        .WithMany()
-                        .HasForeignKey("CheckedById");
-
-                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
-
-                    b.HasOne("IntegratedInfrustructure.Model.PM.Project", "Project")
-                        .WithMany()
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "RequestedBy")
-                        .WithMany()
-                        .HasForeignKey("RequestedById")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "SupportedBy")
-                        .WithMany()
-                        .HasForeignKey("SupportedById");
-
-                    b.Navigation("ApprovedBy");
-
-                    b.Navigation("AuthorizedBy");
-
-                    b.Navigation("CheckedBy");
-
-                    b.Navigation("CreatedBy");
-
-                    b.Navigation("Project");
-
-                    b.Navigation("RequestedBy");
-
-                    b.Navigation("SupportedBy");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.PM.Project", b =>

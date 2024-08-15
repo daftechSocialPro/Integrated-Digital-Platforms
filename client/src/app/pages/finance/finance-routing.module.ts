@@ -18,6 +18,7 @@ import { ReceiptComponent } from './receipt/receipt.component';
 import { FinanceDashboardComponent } from './finance-dashboard/finance-dashboard.component';
 import { JournalVoucherComponent } from './journal-voucher/journal-voucher.component';
 import { AddJournalVoucherComponent } from './journal-voucher/add-journal-voucher/add-journal-voucher.component';
+import { PaymentRequisitionComponent } from './payment-requisition/payment-requisition.component';
 
 const routes: Routes = [
   
@@ -39,6 +40,9 @@ const routes: Routes = [
   { path: 'activity-progress-approver', canActivate: [AuthGuard], component: ActivityProgressApproverComponent },
   { path: 'receipt', canActivate: [AuthGuard], component: ReceiptComponent },
   { path: 'dashboard', canActivate: [AuthGuard], component: FinanceDashboardComponent },
+  { path: 'payment-requisition', canActivate: [AuthGuard], component: PaymentRequisitionComponent },
+
+  
 
 ];
 

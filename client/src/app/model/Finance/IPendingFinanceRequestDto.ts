@@ -18,6 +18,7 @@ export class FinanceActivitiesDto
 
 export class FinanceWorkedBudgetDto 
 {
+    id:string;
     remark: string;
     actualWorked: number;
     usedBudget: number;

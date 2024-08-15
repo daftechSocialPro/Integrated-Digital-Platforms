@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace IntegratedInfrustructure.Migrations
 {
     /// <inheritdoc />
-    public partial class new_migration : Migration
+    public partial class InitialMigrationFinance : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -3064,72 +3064,6 @@ namespace IntegratedInfrustructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PaymentRequisitions",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PaymentType = table.Column<int>(type: "int", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PurposeOfRequest = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AmountInWord = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Amount = table.Column<double>(type: "float", nullable: false),
-                    ProjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    BudgetReference = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PageNumber = table.Column<int>(type: "int", nullable: false),
-                    CheckNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsRejected = table.Column<bool>(type: "bit", nullable: false),
-                    RejectedRemark = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RequestedById = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SupportedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CheckedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ApprovedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    AuthorizedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedById = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    Rowstatus = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PaymentRequisitions", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_PaymentRequisitions_Employees_ApprovedById",
-                        column: x => x.ApprovedById,
-                        principalTable: "Employees",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_PaymentRequisitions_Employees_AuthorizedById",
-                        column: x => x.AuthorizedById,
-                        principalTable: "Employees",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_PaymentRequisitions_Employees_CheckedById",
-                        column: x => x.CheckedById,
-                        principalTable: "Employees",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_PaymentRequisitions_Employees_RequestedById",
-                        column: x => x.RequestedById,
-                        principalTable: "Employees",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_PaymentRequisitions_Employees_SupportedById",
-                        column: x => x.SupportedById,
-                        principalTable: "Employees",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_PaymentRequisitions_Projects_ProjectId",
-                        column: x => x.ProjectId,
-                        principalTable: "Projects",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_PaymentRequisitions_Users_CreatedById",
-                        column: x => x.CreatedById,
-                        principalTable: "Users",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Project_Funds",
                 columns: table => new
                 {
@@ -4030,6 +3964,56 @@ namespace IntegratedInfrustructure.Migrations
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_EmployeesAssignedForActivities_Users_CreatedById",
+                        column: x => x.CreatedById,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PaymetRequisitions",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PaymentType = table.Column<int>(type: "int", nullable: false),
+                    RequsitionType = table.Column<int>(type: "int", nullable: false),
+                    Purpose = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    purchaseRequestId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ActivityId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    BudgetLine = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Ammount = table.Column<double>(type: "float", nullable: false),
+                    ApproverId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ApprovedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedById = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Rowstatus = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PaymetRequisitions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PaymetRequisitions_Activities_ActivityId",
+                        column: x => x.ActivityId,
+                        principalTable: "Activities",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_PaymetRequisitions_Employees_ApproverId",
+                        column: x => x.ApproverId,
+                        principalTable: "Employees",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_PaymetRequisitions_Projects_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "Projects",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_PaymetRequisitions_PurchaseRequests_purchaseRequestId",
+                        column: x => x.purchaseRequestId,
+                        principalTable: "PurchaseRequests",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_PaymetRequisitions_Users_CreatedById",
                         column: x => x.CreatedById,
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -5428,41 +5412,6 @@ namespace IntegratedInfrustructure.Migrations
                 column: "PaymentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PaymentRequisitions_ApprovedById",
-                table: "PaymentRequisitions",
-                column: "ApprovedById");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PaymentRequisitions_AuthorizedById",
-                table: "PaymentRequisitions",
-                column: "AuthorizedById");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PaymentRequisitions_CheckedById",
-                table: "PaymentRequisitions",
-                column: "CheckedById");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PaymentRequisitions_CreatedById",
-                table: "PaymentRequisitions",
-                column: "CreatedById");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PaymentRequisitions_ProjectId",
-                table: "PaymentRequisitions",
-                column: "ProjectId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PaymentRequisitions_RequestedById",
-                table: "PaymentRequisitions",
-                column: "RequestedById");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PaymentRequisitions_SupportedById",
-                table: "PaymentRequisitions",
-                column: "SupportedById");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Payments_AccountingPeriodId",
                 table: "Payments",
                 column: "AccountingPeriodId");
@@ -5496,6 +5445,31 @@ namespace IntegratedInfrustructure.Migrations
                 name: "IX_Payments_SupplierId",
                 table: "Payments",
                 column: "SupplierId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PaymetRequisitions_ActivityId",
+                table: "PaymetRequisitions",
+                column: "ActivityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PaymetRequisitions_ApproverId",
+                table: "PaymetRequisitions",
+                column: "ApproverId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PaymetRequisitions_CreatedById",
+                table: "PaymetRequisitions",
+                column: "CreatedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PaymetRequisitions_ProjectId",
+                table: "PaymetRequisitions",
+                column: "ProjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PaymetRequisitions_purchaseRequestId",
+                table: "PaymetRequisitions",
+                column: "purchaseRequestId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PayrollDatas_ApprovedById",
@@ -6322,7 +6296,7 @@ namespace IntegratedInfrustructure.Migrations
                 name: "PaymentDetails");
 
             migrationBuilder.DropTable(
-                name: "PaymentRequisitions");
+                name: "PaymetRequisitions");
 
             migrationBuilder.DropTable(
                 name: "PayrollDatas");

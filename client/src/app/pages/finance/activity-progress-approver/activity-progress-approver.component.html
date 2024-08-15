@@ -24,7 +24,7 @@
                                 {{ tab.allocatedBudget }}
                             </p>
                         
-                            <p-table [value]="tab.financeActivities" dataKey="id" [tableStyle]="{ 'min-width': '60rem' }" >
+                            <p-table [value]="tab.financeActivities" dataKey="activityNumber" [tableStyle]="{ 'min-width': '60rem' }" >
                                 <ng-template pTemplate="header">
                                     <tr>
                                         <th style="width: 5rem"></th>
@@ -66,9 +66,31 @@
                                         <td>{{ worked.usedBudget |  currency : 'ETB' }}</td>
                                         <td> <a *ngIf="worked.financeDocument" target="_blank" class="btn btn-sm btn-secondary"
                                             href={{getFilePath(worked.financeDocument!)}}>View File</a></td>
-                                        <td>{{ worked.date }}</td>
-                                        <td>{{ worked.amount | currency : 'USD' }}</td>
-                                        <td></td>
+                                        <td>{{ worked.remark }}</td>
+                                        <td>{{ worked.date | date: 'dd/ MMMM / yyyy' }}</td>
+                                        <td>
+                                            <li style="list-style: none; text-align: right;">
+                                                <a class="nav-link nav-profile  pe-0" href="#" data-bs-toggle="dropdown">
+                                                    <span class="d-none d-md-block dropdown-toggle ps-2">Action </span> </a>
+                                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                                                    <li> <a class="dropdown-item d-flex align-items-center"
+                                                            style="cursor: pointer;"
+                                                            (click)="ApporveReject(worked.id,userType[2],actionType[0])"> <i
+                                                                class="bi bi-bookmark-check-fill text-success"></i>
+                                                            <span>Approve</span> </a></li>
+                                                    <li>
+                                                        <hr class="dropdown-divider">
+                                                    </li>
+                                                    <li> <a class="dropdown-item d-flex align-items-center"
+                                                            style="cursor: pointer;"
+                                                            (click)="ApporveReject(worked.id,userType[2],actionType[1])"> <i
+                                                                class="bi bi-bookmark-x-fill text-danger"></i>
+                                                            <span>Reject</span>
+                                                        </a></li>
+                                                    <hr class="dropdown-divider">
+                                                </ul>
+                                            </li>
+                                        </td>
                                     </tr>
                                 </ng-template>
                                 <ng-template pTemplate="emptymessage">

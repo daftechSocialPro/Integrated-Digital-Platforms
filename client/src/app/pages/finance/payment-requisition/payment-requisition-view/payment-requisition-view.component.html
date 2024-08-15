@@ -18,7 +18,7 @@
 
 
                 <p class=MsoNormal align=right style='text-align:right'>Date:  
-                    <u>{{paymentView.date|date:"MMM dd, yyyy"}}</u></p>
+                    </p>
 
                 <p class=MsoNormal>&nbsp;</p>
                 <p class=MsoNormal>To: Finance Department </p>
@@ -26,19 +26,19 @@
 
                 
 
-                <p class=MsoNormal style='line-height:150%'>Please Prepare
-                    Cheque/Draft in the name of <u>{{paymentView.name}}</u></p>
+                <!-- <p class=MsoNormal style='line-height:150%'>Please Prepare
+                    Cheque/Draft in the name of <u>{{paymentView.name}}</u></p> -->
 
                 
 
                 <p class=MsoNormal style='line-height:150%'>Purpose of Request
-                    <u>&nbsp;&nbsp;{{paymentView.purposeOfRequest}}&nbsp;&nbsp;</u>
+                    <u>&nbsp;&nbsp;{{paymentView.purpose}}&nbsp;&nbsp;</u>
                 </p>
 
 
 
                 <p class=MsoNormal style='line-height:150%'>Amount
-                    <u>&nbsp;{{paymentView.amountInWord}}&nbsp;</u>
+                    <u>&nbsp;{{paymentView.ammount}}&nbsp;</u>
                 </p>
 
                 <table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0 align=right width=0 style='width:1.95in;border-collapse:collapse;border:none;margin-left:
@@ -48,7 +48,7 @@
       padding:0in 5.4pt 0in 5.4pt;height:17.65pt'>
                             <p class=MsoNormal align=center style='text-align:center;line-height:150%'><b>Birr</b></p>
                             <p class=MsoNormal align=center style='text-align:center;line-height:150%'><b><span
-                                        style='font-size:1.0pt;line-height:150%'>&nbsp;{{paymentView.amountInWord}}</span></b></p>
+                                        style='font-size:1.0pt;line-height:150%'>&nbsp;{{paymentView.ammount}}</span></b></p>
                         </td>
                         <td width=72 valign=top style='width:.75in;border:solid windowtext 1.0pt;
       border-left:none;padding:0in 5.4pt 0in 5.4pt;height:17.65pt'>
@@ -73,14 +73,14 @@
                  <u>&nbsp;{{paymentView.project}}&nbsp;</u></p>
 
                 <p class=MsoNormal style='line-height:150%'>Budget reference:
-                    <u>&nbsp;{{paymentView.budgetReference}}&nbsp;</u></p>
+                    <u>&nbsp;{{paymentView.budgetLine}}&nbsp;</u></p>
 
    
 
-                <p class=MsoNormal style='line-height:150%'>Supporting documents attached <u>&nbsp;{{paymentView.pageNumber}}&nbsp;</u>
+                <p class=MsoNormal style='line-height:150%'>Supporting documents attached <u>&nbsp;____________&nbsp;</u>
                     pages</p>
 
-                <p class=MsoNormal style='line-height:150%'>Cheque No. <u>&nbsp;{{paymentView.checkNumber}}&nbsp;</u></p>
+                <p class=MsoNormal style='line-height:150%'>Cheque No. <u>&nbsp;________________________&nbsp;</u></p>
 
                 <p class=MsoNormal align=center style='text-align:center;line-height:150%'>    
                 </p>

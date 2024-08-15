@@ -219,6 +219,17 @@ namespace IntegratedImplementation.Services.Configuration
             return projectFunds;
         }
 
+        public async Task<List<SelectListDto>> GetActivityByProjectid(Guid projectId)
+        {
+            var activities = await _dbContext.Activities.Include(x => x.ActivityParent.Task.Project).AsNoTracking().Select(x => new SelectListDto
+            {
+                Id = x.Id,
+                Name = $"{x.ActivityNumber}/{x.ActivityDescription}"
+            }).ToListAsync();
+
+            return activities;
+        }
+
         public async Task<List<SelectListDto>> GetProjectFundSourcesForActivity(Guid projectId)
         {
             var projectFunds = await _dbContext.Project_Funds.Include(x=>x.ProjectSourceFund).Where(x=>x.ProjectId==projectId).AsNoTracking().Select(x => new SelectListDto
@@ -460,5 +471,7 @@ namespace IntegratedImplementation.Services.Configuration
             }).ToListAsync();
             return bankList;
         }
+
+   
     }
 }

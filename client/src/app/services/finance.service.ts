@@ -23,6 +23,7 @@ import { AddLedgerPostingAccountDto, AddTaxRateDto, LedgerPostingAccountDto, Tax
 import { FinanceDashboardDTO, FinanceBarChartPostDto } from '../model/Finance/IFinanceDashboard';
 import { PendingFinanceRequestDto } from '../model/Finance/IPendingFinanceRequestDto';
 import { AddJournalVochureDto, GetJournalVoucherDto } from '../model/Finance/IJournalVoucherDto';
+import { ApprovePaymentRequsition, IPaymentRequisitionGetDto, IPaymentRequisitionPostDto } from '../pages/finance/payment-requisition/IPaymentRequisition';
 
 @Injectable({
   providedIn: 'root'
@@ -273,4 +274,31 @@ addJournalVochure(addJv: AddJournalVochureDto) {
 getJournalVoucher(typeofJV: number){
   return this.http.get<GetJournalVoucherDto[]>(this.BaseURI + "/JournalVoucher/GetJournalVochures?typeofJV=" + typeofJV)
 }
+
+///
+//payment requisition
+
+addPaymentRequisition(payment: IPaymentRequisitionPostDto) {
+  return this.http.post<ResponseMessage>(
+    this.BaseURI + '/PaymentRequsition/AddPaymentRequisition',
+    payment
+  );
+}
+
+getPendingPaymentRequisitions() {
+  return this.http.get<IPaymentRequisitionGetDto[]>(
+    this.BaseURI + '/PaymentRequsition/GetPendingPaymentRequisitions'
+  );
+}
+
+getAuthorizedPaymentRequisitions() {
+  return this.http.get<IPaymentRequisitionGetDto[]>(
+    this.BaseURI + '/PaymentRequsition/GetAuthorizedPaymentRequisitions'
+  );
+}
+
+approvePaymentRequisition(approvePaymentData: ApprovePaymentRequsition){
+  return this.http.put<ResponseMessage>(this.BaseURI + "/PaymentRequsition/ApprovePaymentRequisition",approvePaymentData)
+}
+
 }

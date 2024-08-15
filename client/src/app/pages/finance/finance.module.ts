@@ -73,6 +73,11 @@ import { JournalVoucherComponent } from './journal-voucher/journal-voucher.compo
 import { AddJournalVoucherComponent } from './journal-voucher/add-journal-voucher/add-journal-voucher.component';
 // import { PensionDeclarationComponent } from './pension-declaration/pension-declaration.component';
 import { AccordionModule } from 'primeng/accordion';
+import { PaymentRequisitionComponent } from './payment-requisition/payment-requisition.component';
+import { PendingPaymentRequisitionComponent } from './payment-requisition/pending-payment-requisition/pending-payment-requisition.component';
+import { ApprovedPaymentRequisitionComponent } from './payment-requisition/approved-payment-requisition/approved-payment-requisition.component';
+import { AddPaymentRequisitionComponent } from './payment-requisition/add-payment-requisition/add-payment-requisition.component';
+import { PaymentRequisitionViewComponent } from './payment-requisition/payment-requisition-view/payment-requisition-view.component';
 
 
 
@@ -127,7 +132,11 @@ import { AccordionModule } from 'primeng/accordion';
     AddLedgerPostingComponent,
     JournalVoucherComponent,
     AddJournalVoucherComponent,
-    
+    PaymentRequisitionComponent,
+    PendingPaymentRequisitionComponent,
+    ApprovedPaymentRequisitionComponent,
+    AddPaymentRequisitionComponent,
+    PaymentRequisitionViewComponent,
 
   ],
   imports: [
@@ -157,9 +166,6 @@ import { AccordionModule } from 'primeng/accordion';
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts'),
     }),
-  
-
-
   ]
 })
 export class FinanceModule { }

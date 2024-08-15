@@ -28,6 +28,7 @@ namespace IntegratedImplementation.DTOS.Finance.Action
 
     public class FinanceWorkedBudgetDto 
     {
+        public Guid Id { get; set; }
         public string Remark { get; set; } = null!;
         public double ActualWorked { get; set; } 
         public double UsedBudget { get; set; }

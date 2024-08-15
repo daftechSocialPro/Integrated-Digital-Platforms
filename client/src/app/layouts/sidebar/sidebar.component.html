@@ -51,12 +51,6 @@
                         <li *ngIf="roleMatch(['PLANNER'])"> <a routerLink="/pm/projectTeam" routerLinkActive="active">
                                     <i class="bi bi-circle"></i><span>Project Teams</span> </a></li>
 
-                        <li> <a routerLink="/pm/payment-requisition" routerLinkActive="active">
-                                    <i class="bi bi-circle"></i><span>Payment Requisition</span> </a></li>
-
-
-
-
                         <li class="nav-heading" *ngIf="roleMatch(['PM-VIEW-REPORT','PM-ADMIN'])">Pm Reports</li>
 
                         <li *ngIf="roleMatch(['PM-VIEW-REPORT','PM-ADMIN'])"> <a routerLink="/plannedreport"
@@ -225,10 +219,12 @@
                                     routerLinkActive="active">
                                     <i class="bi bi-circle"></i><span>Loan Issuance</span> </a>
                         </li>
-                        <li *ngIf="roleMatch(['FINANCE-ADMIN','PAYMENT-COLLECTOR'])"> <a routerLink="/finance/purchaseinvoice"
+                        <li *ngIf="roleMatch(['FINANCE-ADMIN','PAYMENT-COLLECTOR'])"> <a routerLink="/finance/payment-requisition" routerLinkActive="active">
+                              <i class="bi bi-circle"></i><span>Payment Requisition</span> </a></li>
+                        <!-- <li *ngIf="roleMatch(['FINANCE-ADMIN','PAYMENT-COLLECTOR'])"> <a routerLink="/finance/purchaseinvoice"
                                     routerLinkActive="active">
                                     <i class="bi bi-circle"></i><span>Purchase Invoice</span> </a>
-                        </li>
+                        </li> -->
                         <li *ngIf="roleMatch(['FINANCE-ADMIN','ACCOUNT-RECONCILATION'])"> <a routerLink="/finance/accountreconcilliation"
                                     routerLinkActive="active">
                                     <i class="bi bi-circle"></i><span>Account Reconcilliation</span> </a>

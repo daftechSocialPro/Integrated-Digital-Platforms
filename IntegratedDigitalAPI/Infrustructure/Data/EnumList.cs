@@ -450,7 +450,13 @@ namespace IntegratedInfrustructure.Data
             VatAccount
         }
 
-       
 
+
+        public enum RequsitionType
+        {
+            Advance,
+            PettyCash,
+            Purchase
+        }
     }
 }

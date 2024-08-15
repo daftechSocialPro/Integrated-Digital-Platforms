@@ -294,45 +294,42 @@ namespace IntegratedImplementation.Services.Finance.Action
 
         public async Task<List<PendingFinanceRequestDto>> GetPendingProjectFinanceRequests()
         {
-            var dataProjects = new List<PendingFinanceRequestDto>();
 
-            var projects = await _dbContext.Projects.Select(x => new PendingFinanceRequestDto
-            {
-                Id = x.Id,
-                ProjectName = x.ProjectName,
-                AllocatedBudget = x.PlannedBudget,
-            }).ToListAsync();
-
-            foreach (var item in projects)
-            {
-                var activities = await _dbContext.Activities.Include(x => x.ActProgress).Include(x => x.Plan).Include(x => x.Task)
-                                        .Where(x => x.ActProgress.Any(x => x.IsApprovedByFinance == ApprovalStatus.PENDING) &&
-                                        ( x.PlanId == item.Id || x.Task.ProjectId == item.Id)
-                                        ).Select(x => new FinanceActivitiesDto
+            var activities = await (from p in _dbContext.Projects
+                                    join t in _dbContext.Tasks on p.Id equals t.ProjectId
+                                    join ap in _dbContext.ActivitiesParents on t.Id equals ap.TaskId
+                                    join a in _dbContext.Activities on ap.Id equals a.ActivityParentId
+                                    join b in _dbContext.ActivityProgresses on a.Id equals b.ActivityId
+                                    where b.IsApprovedByFinance == ApprovalStatus.PENDING
+                                    group new { p, t, ap, a, b } by new { p.Id, p.ProjectName, p.PlannedBudget } into grouped
+                                    select new PendingFinanceRequestDto
+                                    {
+                                        Id = grouped.Key.Id,
+                                        ProjectName = grouped.Key.ProjectName,
+                                        AllocatedBudget = grouped.Key.PlannedBudget,
+                                        FinanceActivities = grouped.Select(g => new FinanceActivitiesDto
                                         {
-                                            ActivityDescription = x.ActivityDescription,
-                                            ActivityNumber = x.ActivityNumber,
-                                            AllocatedBudget = x.PlanedBudget,
-                                            Indicator = x.Indicator,
-                                            PlannedWork = x.Goal,
-                                            FinanceWorkedBudgets = x.ActProgress.Select(y => new FinanceWorkedBudgetDto
+                                            ActivityNumber = g.a.ActivityNumber,
+                                            ActivityDescription = g.a.ActivityDescription,
+                                            AllocatedBudget = g.a.PlanedBudget,
+                                            Indicator = g.a.Indicator,
+                                            PlannedWork = g.a.Goal,
+                                            FinanceWorkedBudgets = grouped.Select(x => new FinanceWorkedBudgetDto
                                             {
-                                                Date = y.CreatedDate,
-                                                ActualWorked = y.ActualWorked,
-                                                UsedBudget = y.ActualBudget,
-                                                DocumentPath = y.FinanceDocumentPath,
-                                                Remark = y.Remark,
+                                                Id = x.b.Id,
+                                                Date = x.b.CreatedDate,
+                                                ActualWorked = x.b.ActualWorked,
+                                                DocumentPath = x.b.FinanceDocumentPath,
+                                                Remark = x.b.Remark,
+                                                UsedBudget = x.b.ActualBudget
                                             }).ToList()
-                                        }).ToListAsync();
+                                        }).ToList()
+                                    }).ToListAsync();
 
-                if (activities.Any())
-                {
-                    item.FinanceActivities = activities;
-                    dataProjects.Add(item);
-                }
-            }
 
-            return dataProjects;
+            return activities;
+
+
         }
     }
 }
