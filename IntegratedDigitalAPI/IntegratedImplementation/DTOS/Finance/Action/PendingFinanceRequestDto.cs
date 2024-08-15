@@ -35,5 +35,11 @@ namespace IntegratedImplementation.DTOS.Finance.Action
         public string? DocumentPath { get; set; }
         public DateTime Date { get; set; }
 
+        public string? Activity { get; set; }
+
+        public string? EmployeeName { get; set; }
+
+        public string? EmployeeId { get; set; }
+
     }
 }

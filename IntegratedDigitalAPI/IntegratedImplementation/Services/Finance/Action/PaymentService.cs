@@ -313,6 +313,9 @@ namespace IntegratedImplementation.Services.Finance.Action
                                                 Date = x.b.CreatedDate,
                                                 ActualWorked = x.b.ActualWorked,
                                                 DocumentPath = x.b.FinanceDocumentPath,
+                                                EmployeeId = x.b.EmployeeValueId.ToString(),
+                                                EmployeeName = $"{x.b.EmployeeValue.FirstName} {x.b.EmployeeValue.MiddleName} {x.b.EmployeeValue.LastName}",
+                                                Activity = x.b.Activity.ActivityDescription,
                                                 Remark = x.b.Remark,
                                                 UsedBudget = x.b.ActualBudget
                                             }).ToList()
