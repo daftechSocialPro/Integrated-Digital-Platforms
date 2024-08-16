@@ -204,6 +204,7 @@ namespace IntegratedInfrustructure.Data
         public DbSet<JournalVoucherDetail> JournalVoucherDetails { get; set; }
         public DbSet<LedgerPostingAccount> LedgerPostingAccounts { get; set; }
         public DbSet<PaymetRequisitions> PaymetRequisitions { get; set; }
+        public DbSet<EmployeePaymentSettlement> EmployeePaymentSettlements { get; set; }
 
         #endregion
 

@@ -14,5 +14,6 @@ namespace IntegratedImplementation.Interfaces.Finance.Action
         public Task<List<PaymentRequisitionGetDto>> GetPendingPaymentRequisitions();
         public Task<ResponseMessage> ApprovePaymentRequisition(ApprovePaymentRequsition paymentRequsition);
         public Task<List<PaymentRequisitionGetDto>> GetAuthorizedPaymentRequisitions();
+        public Task<List<ActivityForSettlementDto>> GetEmployeePaymentSettlements();
     }
 }

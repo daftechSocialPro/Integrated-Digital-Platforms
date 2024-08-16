@@ -19,6 +19,7 @@ import { FinanceDashboardComponent } from './finance-dashboard/finance-dashboard
 import { JournalVoucherComponent } from './journal-voucher/journal-voucher.component';
 import { AddJournalVoucherComponent } from './journal-voucher/add-journal-voucher/add-journal-voucher.component';
 import { PaymentRequisitionComponent } from './payment-requisition/payment-requisition.component';
+import { EmployeeSettlementsComponent } from './employee-settlements/employee-settlements.component';
 
 const routes: Routes = [
   
@@ -41,9 +42,8 @@ const routes: Routes = [
   { path: 'receipt', canActivate: [AuthGuard], component: ReceiptComponent },
   { path: 'dashboard', canActivate: [AuthGuard], component: FinanceDashboardComponent },
   { path: 'payment-requisition', canActivate: [AuthGuard], component: PaymentRequisitionComponent },
-
+  { path: 'payment-settlement', canActivate: [AuthGuard], component: EmployeeSettlementsComponent },
   
-
 ];
 
 

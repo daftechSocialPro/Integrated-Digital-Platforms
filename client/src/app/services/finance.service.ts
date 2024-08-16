@@ -24,6 +24,7 @@ import { FinanceDashboardDTO, FinanceBarChartPostDto } from '../model/Finance/IF
 import { PendingFinanceRequestDto } from '../model/Finance/IPendingFinanceRequestDto';
 import { AddJournalVochureDto, GetJournalVoucherDto } from '../model/Finance/IJournalVoucherDto';
 import { ApprovePaymentRequsition, IPaymentRequisitionGetDto, IPaymentRequisitionPostDto } from '../pages/finance/payment-requisition/IPaymentRequisition';
+import { ActivityForSettlementDto } from '../model/Finance/ActivityForSettlementDto';
 
 @Injectable({
   providedIn: 'root'
@@ -299,6 +300,12 @@ getAuthorizedPaymentRequisitions() {
 
 approvePaymentRequisition(approvePaymentData: ApprovePaymentRequsition){
   return this.http.put<ResponseMessage>(this.BaseURI + "/PaymentRequsition/ApprovePaymentRequisition",approvePaymentData)
+}
+
+getEmployeePaymentSettlements() {
+  return this.http.get<ActivityForSettlementDto[]>(
+    this.BaseURI + '/PaymentRequsition/GetEmployeePaymentSettlements'
+  );
 }
 
 }

@@ -15,10 +15,10 @@ namespace IntegratedImplementation.Services.Finance.Action
 {
     public class PaymentRequsitionService: IPaymentRequsitionService
     {
-        private readonly ApplicationDbContext _dbcontxt;
-        public PaymentRequsitionService(ApplicationDbContext dbcontxt)
+        private readonly ApplicationDbContext _dbContext;
+        public PaymentRequsitionService(ApplicationDbContext dbContext)
         {
-            _dbcontxt = dbcontxt;
+            _dbContext = dbContext;
         }
         public async Task<ResponseMessage> AddPaymentRequisition(PaymentRequisitionPostDto paymentRequisitionPostDto)
         {
@@ -51,8 +51,8 @@ namespace IntegratedImplementation.Services.Finance.Action
                     payment.ActivityId = paymentRequisitionPostDto.ActivityId;
                 }
 
-                await _dbcontxt.PaymetRequisitions.AddAsync(payment);
-                await _dbcontxt.SaveChangesAsync();
+                await _dbContext.PaymetRequisitions.AddAsync(payment);
+                await _dbContext.SaveChangesAsync();
 
                 return new ResponseMessage
                 {
@@ -74,7 +74,7 @@ namespace IntegratedImplementation.Services.Finance.Action
 
         public async Task<List<PaymentRequisitionGetDto>> GetPendingPaymentRequisitions()
         {
-            var pendingPaymentRequisitions = await _dbcontxt.PaymetRequisitions.Include(x => x.Project)
+            var pendingPaymentRequisitions = await _dbContext.PaymetRequisitions.Include(x => x.Project)
                 .Include(x => x.Activity).Include(x => x.PurchaseRequest)
                 .Include(x => x.CreatedBy).Where(x => x.ApproverId == null).Select(x => new PaymentRequisitionGetDto
                 {
@@ -88,7 +88,7 @@ namespace IntegratedImplementation.Services.Finance.Action
                     PurchaseREquest = x.PurchaseRequest != null?  x.PurchaseRequest.RequestNumber : "",
                     Purpose = x.Purpose,
                     RequsitionType = x.RequsitionType.ToString(),
-                    Requester =  _dbcontxt.Employees.Any(z => z.Id == x.CreatedBy.EmployeeId) ? _dbcontxt.Employees.Select(y => new { y.Id, y.FirstName,y.MiddleName,y.LastName}).First(z => z.Id == x.CreatedBy.EmployeeId).FirstName : "",
+                    Requester =  _dbContext.Employees.Any(z => z.Id == x.CreatedBy.EmployeeId) ? _dbContext.Employees.Select(y => new { y.Id, y.FirstName,y.MiddleName,y.LastName}).First(z => z.Id == x.CreatedBy.EmployeeId).FirstName : "",
                 }).ToListAsync();
 
             return pendingPaymentRequisitions;
@@ -96,7 +96,7 @@ namespace IntegratedImplementation.Services.Finance.Action
 
         public async Task<List<PaymentRequisitionGetDto>> GetAuthorizedPaymentRequisitions()
         {
-            var pendingPaymentRequisitions = await _dbcontxt.PaymetRequisitions.Where(x => x.ApproverId != null).Select(x => new PaymentRequisitionGetDto
+            var pendingPaymentRequisitions = await _dbContext.PaymetRequisitions.Where(x => x.ApproverId != null).Select(x => new PaymentRequisitionGetDto
             {
                 Id = x.Id,
                 Activity = x.Activity != null ? x.Activity.ActivityNumber : "",
@@ -107,7 +107,7 @@ namespace IntegratedImplementation.Services.Finance.Action
                 PurchaseREquest = x.PurchaseRequest != null ? x.PurchaseRequest.RequestNumber : "",
                 Purpose = x.Purpose,
                 RequsitionType = x.RequsitionType.ToString(),
-                Requester = _dbcontxt.Employees.Any(z => z.Id == x.CreatedBy.EmployeeId) ? _dbcontxt.Employees.Select(y => new { y.Id, y.FirstName, y.MiddleName, y.LastName }).First(z => z.Id == x.CreatedBy.EmployeeId).FirstName : "",
+                Requester = _dbContext.Employees.Any(z => z.Id == x.CreatedBy.EmployeeId) ? _dbContext.Employees.Select(y => new { y.Id, y.FirstName, y.MiddleName, y.LastName }).First(z => z.Id == x.CreatedBy.EmployeeId).FirstName : "",
                 ApprovedDate = x.ApprovedDate,
                 Approver = $"{x.Approver.FirstName} {x.Approver.MiddleName} {x.Approver.LastName}"
             }).ToListAsync();
@@ -117,7 +117,7 @@ namespace IntegratedImplementation.Services.Finance.Action
 
         public async Task<ResponseMessage> ApprovePaymentRequisition(ApprovePaymentRequsition paymentRequsition)
         {
-            var currentRequsition = await _dbcontxt.PaymetRequisitions.FirstOrDefaultAsync(x => x.Id == paymentRequsition.Id);
+            var currentRequsition = await _dbContext.PaymetRequisitions.FirstOrDefaultAsync(x => x.Id == paymentRequsition.Id);
 
             if(currentRequsition == null)
             {
@@ -127,9 +127,35 @@ namespace IntegratedImplementation.Services.Finance.Action
             currentRequsition.ApproverId = paymentRequsition.EmployeeId;
             currentRequsition.ApprovedDate = DateTime.Now;
 
-            await _dbcontxt.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
 
             return new ResponseMessage { Success = true, Message = "Approved Succesfully!!" };
+        }
+
+        public async Task<List<ActivityForSettlementDto>> GetEmployeePaymentSettlements()
+        {
+            var activities = await (from p in _dbContext.PaymetRequisitions
+                                    join t in _dbContext.Activities on p.ActivityId equals t.Id
+                                    join b in _dbContext.ActivityProgresses on t.Id equals b.ActivityId
+                                    join e in _dbContext.Users on p.CreatedById equals e.Id
+                                    where p.ApproverId != null
+                                    group new { p, t, b, e} by new {t.Id,t.PlanedBudget,t.ActivityDescription,t.ActivityNumber} into grouped
+                                    select new ActivityForSettlementDto
+                                    {
+                                        ActivityId = grouped.Key.Id,
+                                        ActivityDescription = grouped.Key.ActivityDescription,
+                                        ActivityNumber = grouped.Key.ActivityNumber,
+                                        TotalAmount = grouped.Key.PlanedBudget,
+                                        UsedAmmount = grouped.Sum(l => l.p.Ammount),
+                                       RequsitionSettlementsDtos = grouped.Select(g => new RequsitionSettlementsDto
+                                        {
+                                            RequsitionId = g.p.Id,
+                                            RequestedAmmount = g.p.Ammount,
+                                            UsedAmmount = grouped.Sum(y => y.b.ActualWorked),
+                                            Employee = g.e.UserName
+                                        }).ToList()
+                                    }).Where(y => y.TotalAmount > y.UsedAmmount).ToListAsync();
+            return activities;
         }
     }
 }

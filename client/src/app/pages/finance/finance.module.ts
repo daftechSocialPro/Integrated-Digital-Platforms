@@ -78,6 +78,7 @@ import { PendingPaymentRequisitionComponent } from './payment-requisition/pendin
 import { ApprovedPaymentRequisitionComponent } from './payment-requisition/approved-payment-requisition/approved-payment-requisition.component';
 import { AddPaymentRequisitionComponent } from './payment-requisition/add-payment-requisition/add-payment-requisition.component';
 import { PaymentRequisitionViewComponent } from './payment-requisition/payment-requisition-view/payment-requisition-view.component';
+import { EmployeeSettlementsComponent } from './employee-settlements/employee-settlements.component';
 
 
 
@@ -137,6 +138,7 @@ import { PaymentRequisitionViewComponent } from './payment-requisition/payment-r
     ApprovedPaymentRequisitionComponent,
     AddPaymentRequisitionComponent,
     PaymentRequisitionViewComponent,
+    EmployeeSettlementsComponent,
 
   ],
   imports: [

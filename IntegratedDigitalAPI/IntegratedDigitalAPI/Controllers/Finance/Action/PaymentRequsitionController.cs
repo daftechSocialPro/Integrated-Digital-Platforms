@@ -62,5 +62,12 @@ namespace IntegratedDigitalAPI.Controllers.Finance.Action
                 return BadRequest();
             }
         }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(ActivityForSettlementDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetEmployeePaymentSettlements()
+        {
+            return Ok(await _paymentRequsition.GetEmployeePaymentSettlements());
+        }
     }
 }

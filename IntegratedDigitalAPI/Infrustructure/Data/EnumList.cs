@@ -458,5 +458,13 @@ namespace IntegratedInfrustructure.Data
             PettyCash,
             Purchase
         }
+
+
+        public enum PaymentAction
+        {
+            Pending,
+            Loan,
+            Paid
+        }
     }
 }
