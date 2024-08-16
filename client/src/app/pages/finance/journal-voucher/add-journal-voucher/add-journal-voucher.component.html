@@ -1,15 +1,20 @@
-<main id="main" class="main">
+<main [attr.id]="!paymentDetailList ? 'main' : null" class="main">
 
-    <div class="iconcontainer" (click)="goToJV()">
+    <div class="iconcontainer" *ngIf="!paymentDetailList" (click)="goToJV()">
         <i class="bi bi-arrow-left-short"></i>
         <div>Back To Journal Voucher</div>
     </div>
+    
 
-    <div class="p-4">
+    <div >
 
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Add Journal</h5>
+                <div *ngIf="paymentDetailList" >
+                    
+                    <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+                </div>
                 <!-- <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button> -->
             </div>
 
@@ -19,16 +24,24 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <form class="" #jvForm="ngForm" (ngSubmit)="submit()">
-                                <div class="row">
+                                <div class="row gap-2">
                                     <div class="col-md-3">
                                         <div class="card mt-3">
                                             <div class="card-body">
-                                                <div class="row g-3">
-                                                    <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-md-12 mb-2">
                                                         <div class="form-floating">
                                                             <input type="date" class="form-control" id="date" name="date"
                                                                 [(ngModel)]="addJournal.date">
                                                             <label for="paymentDate">Date</label>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngIf="paymentDetailList" class="col-md-12 mb-2">
+                                                        <div class="form-floating">
+                                                            <select class="form-control" formControlName="taxEntityType">
+                                                                <option *ngFor="let item of taxType" [value]="item.value">{{item.name}}</option>
+                                                            </select>
+                                                            <label for="taxEntityType">Type</label>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-12">

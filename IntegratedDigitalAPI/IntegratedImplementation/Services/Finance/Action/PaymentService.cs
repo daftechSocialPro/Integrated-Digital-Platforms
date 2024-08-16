@@ -5,15 +5,8 @@ using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedImplementation.Interfaces.Finance.Action;
 using IntegratedInfrustructure.Data;
 using IntegratedInfrustructure.Model.FInance.Actions;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Linq.Dynamic.Core;
-using System.Text;
-using System.Threading.Tasks;
 using static IntegratedInfrustructure.Data.EnumList;
 
 namespace IntegratedImplementation.Services.Finance.Action
@@ -168,7 +161,7 @@ namespace IntegratedImplementation.Services.Finance.Action
                                     Supplier = x.Supplier.Name,
                                     PaymentDetailLists = x.PaymentDetails.Select(y => new PaymentDetailListDto
                                     {
-                                        ChartOfAccount = y.ChartofAccount.AccountNo,
+                                        ChartOfAccount = $"{y.ChartofAccount.Description} ({y.ChartofAccount.AccountNo})",
                                         Description = y.Description,
                                         Item = y.Item.Name,
                                         Price = y.Price,
@@ -187,7 +180,7 @@ namespace IntegratedImplementation.Services.Finance.Action
             var payments = await _dbContext.Payments.AsNoTracking()
                                  .Include(X => X.AccountingPeriod).Include(x => x.Supplier)
                                  .Include(X => X.Bank).Include(x => x.PaymentDetails).ThenInclude(x => x.ChartofAccount)
-                                .Where(x => x.ApprovedById != null  && x.AuthorizedById == null).Select(x => new PaymentListDto
+                                .Where(x => x.ApprovedById != null && x.AuthorizedById == null).Select(x => new PaymentListDto
                                 {
                                     Id = x.Id,
                                     AccountingPeriod = $"{x.AccountingPeriod.PeriodNo} {x.AccountingPeriod.PeriodStart.ToString("dd/MM/yyyy")} - {x.AccountingPeriod.PeriodNo.ToString("dd/MM/yyyy")}",
@@ -218,7 +211,7 @@ namespace IntegratedImplementation.Services.Finance.Action
             var payments = await _dbContext.Payments.AsNoTracking()
                                  .Include(X => X.AccountingPeriod).Include(x => x.Supplier)
                                  .Include(X => X.Bank).Include(x => x.PaymentDetails).ThenInclude(x => x.ChartofAccount)
-                                .Where(x => x.AuthorizedById != null ).Select(x => new PaymentListDto
+                                .Where(x => x.AuthorizedById != null).Select(x => new PaymentListDto
                                 {
                                     Id = x.Id,
                                     AccountingPeriod = $"{x.AccountingPeriod.PeriodNo} {x.AccountingPeriod.PeriodStart.ToString("dd/MM/yyyy")} - {x.AccountingPeriod.PeriodNo.ToString("dd/MM/yyyy")}",
@@ -320,6 +313,9 @@ namespace IntegratedImplementation.Services.Finance.Action
                                                 Date = x.b.CreatedDate,
                                                 ActualWorked = x.b.ActualWorked,
                                                 DocumentPath = x.b.FinanceDocumentPath,
+                                                EmployeeId = x.b.EmployeeValueId.ToString(),
+                                                EmployeeName = $"{x.b.EmployeeValue.FirstName} {x.b.EmployeeValue.MiddleName} {x.b.EmployeeValue.LastName}",
+                                                Activity = x.b.Activity.ActivityDescription,
                                                 Remark = x.b.Remark,
                                                 UsedBudget = x.b.ActualBudget
                                             }).ToList()

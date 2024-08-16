@@ -52,6 +52,7 @@
                                                 <p-table [value]="activity.financeWorkedBudgets" dataKey="id">
                                                     <ng-template pTemplate="header">
                                     <tr>
+                                        <th>Activity Name</th>
                                         <th >Actual Worked </th>
                                         <th >Used Budget </th>
                                         <th >Document</th>
@@ -62,6 +63,7 @@
                                 </ng-template>
                                 <ng-template pTemplate="body" let-worked>
                                     <tr>
+                                        <td>{{worked.activity}}</td>
                                         <td>{{ worked.actualWorked }}</td>
                                         <td>{{ worked.usedBudget |  currency : 'ETB' }}</td>
                                         <td> <a *ngIf="worked.financeDocument" target="_blank" class="btn btn-sm btn-secondary"
@@ -75,7 +77,7 @@
                                                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                                                     <li> <a class="dropdown-item d-flex align-items-center"
                                                             style="cursor: pointer;"
-                                                            (click)="ApporveReject(worked.id,userType[2],actionType[0])"> <i
+                                                            (click)="Approve(worked)"> <i
                                                                 class="bi bi-bookmark-check-fill text-success"></i>
                                                             <span>Approve</span> </a></li>
                                                     <li>

@@ -9,11 +9,13 @@ import {
 import {
   PaymentGetDto,
   ApprovePaymentDto,
+  PaymentDetailListDto,
 } from 'src/app/model/Finance/IPaymentDto';
 import { UserView } from 'src/app/model/user';
 import { CommonService } from 'src/app/services/common.service';
 import { FinanceService } from 'src/app/services/finance.service';
 import { UserService } from 'src/app/services/user.service';
+import { AddJournalVoucherComponent } from '../../journal-voucher/add-journal-voucher/add-journal-voucher.component';
 
 @Component({
   selector: 'app-pending-payments',
@@ -29,7 +31,8 @@ export class PendingPaymentsComponent implements OnInit {
     private commonService: CommonService,
     private userService: UserService,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -121,6 +124,13 @@ export class PendingPaymentsComponent implements OnInit {
     });
   }
 
+  addJV(paymentDetailList: PaymentDetailListDto[]){
+    let modalRef = this.modalService.open(AddJournalVoucherComponent,{size:'xl',backdrop:'static'})
+    modalRef.componentInstance.paymentDetailList = paymentDetailList
+    modalRef.result.then(()=>{
+      this.getPendingPayments()
+    })
+  }
   createImagePath(url: string) {
     return this.commonService.createImgPath(url);
   }

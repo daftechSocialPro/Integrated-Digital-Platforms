@@ -1,11 +1,12 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
 import { SelectList } from 'src/app/model/common';
 import { AddJournalVochureDto, AddJournalVoucherDetailDto } from 'src/app/model/Finance/IJournalVoucherDto';
+import { PaymentDetailListDto } from 'src/app/model/Finance/IPaymentDto';
 import { UserView } from 'src/app/model/user';
 import { DropDownService } from 'src/app/services/dropDown.service';
 import { FinanceService } from 'src/app/services/finance.service';
@@ -17,7 +18,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./add-journal-voucher.component.css']
 })
 export class AddJournalVoucherComponent implements OnInit {
-
+  @Input() paymentDetailList!: PaymentDetailListDto[]
   user!: UserView
   accountingPeriodDropDown!: SelectList[]
   chartOfAccountDropDown!: SelectList[]
@@ -25,7 +26,14 @@ export class AddJournalVoucherComponent implements OnInit {
   addJournal: AddJournalVochureDto = new AddJournalVochureDto();
   journalDetailList: AddJournalVoucherDetailDto[] = [];
   addJournalDetails: AddJournalVoucherDetailDto = new AddJournalVoucherDetailDto();
-  
+  taxType = [
+    { value: 0, name: "No Tin Taxpayer" },
+    { value: 1, name: "Vat Registered" },
+    { value: 2, name: "Tot Registered Two Percent" },
+    { value: 3, name: "Tot Registered Ten Percent" },
+    { value: 4, name: "None Tax Payer" },
+    { value: 5, name: "Non Taxable" },
+  ]
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -34,14 +42,19 @@ export class AddJournalVoucherComponent implements OnInit {
     private userService: UserService,
     private messageService: MessageService,
     private dropDownService: DropDownService,
-    private modalService: NgbModal,
+    private modalService: NgbModal
   ) { }
 
   ngOnInit(): void {
-    this.document.body.classList.toggle('toggle-sidebar');
+    console.log("sdfdfgdfgfgdfg",this.paymentDetailList)
+    if(!this.paymentDetailList){
+      this.document.body.classList.toggle('toggle-sidebar');
+    }
     this.user = this.userService.getCurrentUser();
     this.getChartOfAccountDropDown();
     this.getAccountingPeriodDropDown();
+    this.addJournal.typeofJV = 1;
+        
   }
 
   
@@ -57,6 +70,18 @@ export class AddJournalVoucherComponent implements OnInit {
     this.dropDownService.getChartOfAccountsDropDown().subscribe({
       next: (res) => {
         this.chartOfAccountDropDown = res
+        if(this.paymentDetailList){
+          let itemList: AddJournalVoucherDetailDto[] = this.paymentDetailList.map(x => ({
+            chartOfAccount: x.chartOfAccount,
+            debit: x.totalPrice,
+            credit: x.totalPrice,
+            chartOfAccountId: this.chartOfAccountDropDown.find(z => z.name == x.chartOfAccount).id,
+            subsidiaryAccountId: "",
+            remark:x.description
+          }))
+          this.journalDetailList = itemList
+          this.addJournal.typeofJV = 0
+        }
       }
     })
   }
@@ -108,7 +133,7 @@ export class AddJournalVoucherComponent implements OnInit {
     else {
       this.addJournal.addJournalVoucherDetailDtos = this.journalDetailList
       this.addJournal.createdById = this.user.userId;
-      this.addJournal.typeofJV = 1;
+      
       this.financeService.addJournalVochure(this.addJournal).subscribe({
         next: (res) => {
           if (res.success) {
@@ -131,8 +156,11 @@ export class AddJournalVoucherComponent implements OnInit {
  
   
   goToJV() {
+    this.document.body.classList.toggle('toggle-sidebar');
     this.routerService.navigateByUrl('/finance/journalVoucher')
   }
 
-  
+  closeModal() {
+    this.modalService.dismissAll();
+  }
 }
