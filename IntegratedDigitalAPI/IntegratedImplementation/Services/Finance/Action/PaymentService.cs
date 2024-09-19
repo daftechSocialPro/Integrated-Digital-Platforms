@@ -1,4 +1,5 @@
 ﻿using Implementation.Helper;
+using IntegratedDigitalAPI.DTOS.PM;
 using IntegratedImplementation.DTOS.Finance.Action;
 using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedImplementation.Interfaces.Finance.Action;
@@ -282,6 +283,49 @@ namespace IntegratedImplementation.Services.Finance.Action
             }
 
             return ltr;
+        }
+
+        public async Task<List<PendingFinanceRequestDto>> GetPendingProjectFinanceRequests()
+        {
+
+            var activities = await (from p in _dbContext.Projects
+                                    join t in _dbContext.Tasks on p.Id equals t.ProjectId
+                                    join ap in _dbContext.ActivitiesParents on t.Id equals ap.TaskId
+                                    join a in _dbContext.Activities on ap.Id equals a.ActivityParentId
+                                    join b in _dbContext.ActivityProgresses on a.Id equals b.ActivityId
+                                    where b.IsApprovedByFinance == ApprovalStatus.PENDING
+                                    group new { p, t, ap, a, b } by new { p.Id, p.ProjectName, p.PlannedBudget } into grouped
+                                    select new PendingFinanceRequestDto
+                                    {
+                                        Id = grouped.Key.Id,
+                                        ProjectName = grouped.Key.ProjectName,
+                                        AllocatedBudget = grouped.Key.PlannedBudget,
+                                        FinanceActivities = grouped.Select(g => new FinanceActivitiesDto
+                                        {
+                                            ActivityNumber = g.a.ActivityNumber,
+                                            ActivityDescription = g.a.ActivityDescription,
+                                            AllocatedBudget = g.a.PlanedBudget,
+                                            Indicator = g.a.Indicator,
+                                            PlannedWork = g.a.Goal,
+                                            FinanceWorkedBudgets = grouped.Select(x => new FinanceWorkedBudgetDto
+                                            {
+                                                Id = x.b.Id,
+                                                Date = x.b.CreatedDate,
+                                                ActualWorked = x.b.ActualWorked,
+                                                DocumentPath = x.b.FinanceDocumentPath,
+                                                EmployeeId = x.b.EmployeeValueId.ToString(),
+                                                EmployeeName = $"{x.b.EmployeeValue.FirstName} {x.b.EmployeeValue.MiddleName} {x.b.EmployeeValue.LastName}",
+                                                Activity = x.b.Activity.ActivityDescription,
+                                                Remark = x.b.Remark,
+                                                UsedBudget = x.b.ActualBudget
+                                            }).ToList()
+                                        }).ToList()
+                                    }).ToListAsync();
+
+
+            return activities;
+
+
         }
     }
 }

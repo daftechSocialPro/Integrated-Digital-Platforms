@@ -26,7 +26,14 @@ export class PlanDashboardComponent implements OnInit {
   barChartData!: PlanBarChartPostDto;
   pieChartOption!: EChartsOption;
 
+  progressOptionQ1: any;
+  progressOptionQ2: any;
+  progressOptionQ3: any;
+  progressOptionQ4: any;
+
   pieChartOptions: any[] = [];
+
+  pieChartOptions2: EChartsOption[] = [];
 
   barChartOptions: any[] = [];
   bar2ChartOptions: any[] = [];
@@ -74,12 +81,124 @@ export class PlanDashboardComponent implements OnInit {
     this.user = this.userService.getCurrentUser();
     const currentDate = new Date();
     this.currentYear = currentDate.getFullYear();
-
     this.generateYearOptions();
-
     this.selectedYear = this.currentYear;
     this.listPlans();
     this.getStrategicPlans();
+  }
+
+  getPieChartData(planId: string) {
+    const quarters = [1, 2, 3, 4]; // Including option for 'All Quarters'
+
+    this.pieChartOptions2 = [];
+    // Clear the previous chart options
+
+    quarters.forEach((quarter) => {
+      this.planService
+        .getPlanPieCharts(
+          planId,
+          this.selectedStrategicPlan,
+          quarter,
+          this.selectedYear
+        )
+        .subscribe({
+          next: (res) => {
+            const chartData = res?.chartDataSets?.map((x) => ({
+              value: x.data,
+              name: x.label,
+            }));
+
+            // Create a new pie chart option for each quarter
+            const pieChartOption: EChartsOption = {
+              tooltip: {
+                trigger: 'item',
+                formatter: '{a} <br/>{b}: {c} ({d}%)',
+              },
+              legend: {
+                orient: 'horizontal',
+                bottom: '0',
+                left: 'center',
+                textStyle: {
+                  fontSize: 11,
+                  fontWeight: 'bold',
+                },
+              },
+              series: [
+                {
+                  name: `Project Status Q${quarter}`,
+                  type: 'pie',
+                  radius: ['35%', '60%'],
+                  center: ['50%', '50%'], // Adjusted center to align properly
+                  avoidLabelOverlap: false,
+                  label: {
+                    show: true,
+                    position: 'outside',
+                    formatter: '{b}: {c}\n({d}%)',
+                    fontSize: 11,
+                    fontWeight: 'bold',
+                  },
+                  labelLine: {
+                    show: true,
+                    length: 10,
+                    length2: 15,
+                  },
+                  emphasis: {
+                    label: {
+                      show: true,
+                      fontSize: 13,
+                      fontWeight: 'bold',
+                    },
+                    itemStyle: {
+                      shadowBlur: 10,
+                      shadowOffsetX: 0,
+                      shadowColor: 'rgba(0, 0, 0, 0.5)',
+                    },
+                  },
+                  data: chartData,
+                  itemStyle: {
+                    color: (params) => {
+                      const colors = ['#FF9800', '#4CAF50', '#F44336'];
+                      return colors[params.dataIndex % colors.length];
+                    },
+                    borderRadius: 8,
+                    borderColor: '#fff',
+                    borderWidth: 2,
+                  },
+                },
+              ],
+              toolbox: {
+                feature: {
+                  saveAsImage: { title: 'Save as Image' },
+                  restore: { title: 'Restore' },
+                  dataView: { title: 'Data View' },
+                  print: { title: 'Print' },
+                },
+                right: '5%',
+                top: '5%',
+              },
+              backgroundColor: {
+                type: 'radial',
+                x: 0.5,
+                y: 0.5,
+                r: 0.5,
+                colorStops: [
+                  { offset: 0, color: '#f7f8fa' },
+                  { offset: 1, color: '#e6e9ee' },
+                ],
+              },
+              grid: {
+                top: '10%',
+                bottom: '10%',
+                left: '0%',
+                right: '10%',
+              },
+            };
+
+            // Add the pie chart option to the array
+            this.pieChartOptions2.push(pieChartOption);
+          },
+        });
+    });
   }
 
   generateYearOptions() {
@@ -117,15 +236,11 @@ export class PlanDashboardComponent implements OnInit {
     this.pieChartData = {} as PlanPieChartPostDto;
     this.barChartData = {} as PlanBarChartPostDto;
     this.pieChartOption = {} as EChartsOption;
-
     this.pieChartOptions = [];
-
     this.barChartOptions = [];
     this.bar2ChartOptions = [];
-
     this.barChartOption = {} as EChartsOption;
     this.bar2ChartOption = {} as EChartsOption;
-
     this.Quarter = 0;
     this.chartdata = [];
     this.chartdata1 = null;
@@ -153,13 +268,12 @@ export class PlanDashboardComponent implements OnInit {
     } else {
       this.selectedProject = '00000000-0000-0000-0000-000000000000';
       this.planId = this.selectedProject;
-      this.getPieChatData(this.planId, 0);
+      this.getPieChartData(this.planId);
       this.getBarChatData(this.planId);
     }
   }
 
   listPlans() {
-    debugger;
     this.resetVariables();
     if (this.user.role.includes('PM-ADMIN')) {
       this.planService.getPlans(null, this.selectedYear).subscribe({
@@ -193,111 +307,120 @@ export class PlanDashboardComponent implements OnInit {
           this.Plans.push(plan);
           res.map((item) => {
             this.Plans.push(item);
-            this.planService
-              .getPlanPieCharts(
-                item.id,
-                '00000000-0000-0000-0000-000000000000',
-                0,
-                this.selectedYear
-              )
-              .subscribe({
-                next: (res) => {
-                  let pieChartData = res;
-                  let chartdata = pieChartData?.chartDataSets?.map((x) => ({
-                    value: x.data,
-                    name: x.label,
-                  }));
-                  let pieChartOption = {
-                    title:{
-                      planId:item.id
-                    },
-                    tooltip: {
-                      trigger: 'item',
-                      formatter: '{a} <br/>{b}: {c} ({d}%)',
-                    },
-                    legend: {
-                      orient: 'horizontal',
-                      bottom: '0',
-                      left: 'center',
-                      textStyle: {
-                        fontSize: 11,
-                        fontWeight: 'bold',
+
+            // this.pieChartOptions.push(pieChartOption);
+
+            const quarters = [1, 2, 3, 4]; // Including option for 'All Quarters'
+
+            quarters.forEach((quarter) => {
+              this.planService
+                .getPlanPieCharts(
+                  item.id,
+                  '00000000-0000-0000-0000-000000000000',
+                  quarter,
+                  this.selectedYear
+                )
+                .subscribe({
+                  next: (res) => {
+                    const chartData = res?.chartDataSets?.map((x) => ({
+                      value: x.data,
+                      name: x.label,
+                    }));
+
+                    // Create a new pie chart option for each quarter
+                    let pieChartOption: any = {
+                      title: {
+                        planId: item.id,
                       },
-                    },
-                    series: [
-                      {
-                        name: 'Project Status',
-                        type: 'pie',
-                        radius: ['35%', '60%'],
-                        center: ['50%', '50%'], // Adjusted center to align properly
-                        avoidLabelOverlap: false,
-                        label: {
-                          show: true,
-                          position: 'outside',
-                          formatter: '{b}: {c}\n({d}%)',
+                      tooltip: {
+                        trigger: 'item',
+                        formatter: '{a} <br/>{b}: {c} ({d}%)',
+                      },
+                      legend: {
+                        orient: 'horizontal',
+                        bottom: '0',
+                        left: 'center',
+                        textStyle: {
                           fontSize: 11,
                           fontWeight: 'bold',
                         },
-                        labelLine: {
-                          show: true,
-                          length: 10,
-                          length2: 15,
-                        },
-                        emphasis: {
+                      },
+                      series: [
+                        {
+                          name: `Project Status Q${quarter}`,
+                          type: 'pie',
+                          radius: ['35%', '60%'],
+                          center: ['50%', '50%'], // Adjusted center to align properly
+                          avoidLabelOverlap: false,
                           label: {
                             show: true,
-                            fontSize: 13,
+                            position: 'outside',
+                            formatter: '{b}: {c}\n({d}%)',
+                            fontSize: 11,
                             fontWeight: 'bold',
                           },
+                          labelLine: {
+                            show: true,
+                            length: 10,
+                            length2: 15,
+                          },
+                          emphasis: {
+                            label: {
+                              show: true,
+                              fontSize: 13,
+                              fontWeight: 'bold',
+                            },
+                            itemStyle: {
+                              shadowBlur: 10,
+                              shadowOffsetX: 0,
+                              shadowColor: 'rgba(0, 0, 0, 0.5)',
+                            },
+                          },
+                          data: chartData,
                           itemStyle: {
-                            shadowBlur: 10,
-                            shadowOffsetX: 0,
-                            shadowColor: 'rgba(0, 0, 0, 0.5)',
+                            color: (params) => {
+                              const colors = ['#FF9800', '#4CAF50', '#F44336'];
+                              return colors[params.dataIndex % colors.length];
+                            },
+                            borderRadius: 8,
+                            borderColor: '#fff',
+                            borderWidth: 2,
                           },
                         },
-                        data: chartdata,
-                        itemStyle: {
-                          color: (params) => {
-                            const colors = ['#FF9800', '#4CAF50', '#F44336'];
-                            return colors[params.dataIndex % colors.length];
-                          },
-                          borderRadius: 8,
-                          borderColor: '#fff',
-                          borderWidth: 2,
-                        },
-                      },
-                    ],
-                    toolbox: {
-                      feature: {
-                        saveAsImage: { title: 'Save as Image' },
-                        restore: { title: 'Restore' },
-                        dataView: { title: 'Data View' },
-                        print: { title: 'Print' },
-                      },
-                      right: '5%',
-                      top: '5%',
-                    },
-                    backgroundColor: {
-                      type: 'radial',
-                      x: 0.5,
-                      y: 0.5,
-                      r: 0.5,
-                      colorStops: [
-                        { offset: 0, color: '#f7f8fa' },
-                        { offset: 1, color: '#e6e9ee' },
                       ],
-                    },
-                    grid: {
-                      top: '10%',
-                      bottom: '10%',
-                      left: '0%',
-                      right: '10%',
-                    },
-                  };
+                      toolbox: {
+                        feature: {
+                          saveAsImage: { title: 'Save as Image' },
+                          restore: { title: 'Restore' },
+                          dataView: { title: 'Data View' },
+                          print: { title: 'Print' },
+                        },
+                        right: '5%',
+                        top: '5%',
+                      },
+                      backgroundColor: {
+                        type: 'radial',
+                        x: 0.5,
+                        y: 0.5,
+                        r: 0.5,
+                        colorStops: [
+                          { offset: 0, color: '#f7f8fa' },
+                          { offset: 1, color: '#e6e9ee' },
+                        ],
+                      },
+                      grid: {
+                        top: '10%',
+                        bottom: '10%',
+                        left: '0%',
+                        right: '10%',
+                      },
+                    };
 
-                  this.pieChartOptions.push(pieChartOption);
-                },
-              });
+                    // Add the pie chart option to the array
+                    this.pieChartOptions.push(pieChartOption);
+                  },
+                });
+            });
 
             this.planService
               .getPlanBarCharts(
@@ -325,7 +448,7 @@ export class PlanDashboardComponent implements OnInit {
 
                   let barChartOption = {
                     tooltip: {
-                      planid:item.id,
+                      planid: item.id,
                       trigger: 'axis',
                       axisPointer: {
                         type: 'shadow',
@@ -341,11 +464,18 @@ export class PlanDashboardComponent implements OnInit {
                         params.forEach((item) => {
                           let percentage = 0;
                           if (item.seriesName === 'Actual Progress') {
-                            let planned = this.chartdata1Pla[item.dataIndex]?.value || 1; // Avoid division by zero
-                            percentage = Number(((item.value / planned) * 100).toFixed(2));
+                            let planned =
+                              this.chartdata1Pla[item.dataIndex]?.value || 1; // Avoid division by zero
+                            percentage = Number(
+                              ((item.value / planned) * 100).toFixed(2)
+                            );
                           }
-                          result += `${item.marker} ${item.seriesName}: ${item.value} ${
-                            item.seriesName === 'Actual Progress' ? percentage + '%' : ''
+                          result += `${item.marker} ${item.seriesName}: ${
+                            item.value
+                          } ${
+                            item.seriesName === 'Actual Progress'
+                              ? percentage + '%'
+                              : ''
                           }<br/>`;
                         });
                         return result;
@@ -459,10 +589,10 @@ export class PlanDashboardComponent implements OnInit {
                     },
                     backgroundColor: '#f0f0f0', // Set background color to gray
                   };
-                  
+
                   let bar2ChartOption = {
                     tooltip: {
-                      planid:item.id,
+                      planid: item.id,
                       trigger: 'axis',
                       axisPointer: {
                         type: 'shadow',
@@ -478,11 +608,18 @@ export class PlanDashboardComponent implements OnInit {
                         params.forEach((item) => {
                           let percentage = 0;
                           if (item.seriesName === 'Utilized Budget') {
-                            let planned = this.chartdata2Pla[item.dataIndex]?.value || 1; // Avoid division by zero
-                            percentage = Number(((item.value / planned) * 100).toFixed(2));
+                            let planned =
+                              this.chartdata2Pla[item.dataIndex]?.value || 1; // Avoid division by zero
+                            percentage = Number(
+                              ((item.value / planned) * 100).toFixed(2)
+                            );
                           }
-                          result += `${item.marker} ${item.seriesName}: ${item.value} ${
-                            item.seriesName === 'Utilized Budget' ? percentage + '%' : ''
+                          result += `${item.marker} ${item.seriesName}: ${
+                            item.value
+                          } ${
+                            item.seriesName === 'Utilized Budget'
+                              ? percentage + '%'
+                              : ''
                           }<br/>`;
                         });
                         return result;
@@ -596,7 +733,6 @@ export class PlanDashboardComponent implements OnInit {
                     },
                     backgroundColor: '#f0f0f0', // Set background color to gray
                   };
-                  
 
                   this.barChartOptions.push(barChartOption);
                   this.bar2ChartOptions.push(bar2ChartOption);
@@ -630,7 +766,8 @@ export class PlanDashboardComponent implements OnInit {
   onProjectChange() {
     this.selectedStrategicPlan = '00000000-0000-0000-0000-000000000000';
     this.planId = this.selectedProject;
-    this.getPieChatData(this.planId, 0);
+    this.getPieChartData(this.planId);
+    // this.getPieChatData(this.planId, 0);
     this.getBarChatData(this.planId);
 
     if (this.planId != '30fc30dc-eb56-4f40-9510-54ad983e759a') {
@@ -743,36 +880,6 @@ export class PlanDashboardComponent implements OnInit {
               right: '10%',
             },
           };
-
-          // {
-          //   title: {
-          //     // text: this.pieChartData.planName.length > 30 ? this.pieChartData.planName.slice(0, 30) + '...' : this.pieChartData.planName,
-          //     // subtext: 'Data',
-          //     left: 'right',
-          //   },
-          //   tooltip: {
-          //     trigger: 'item',
-          //   },
-          //   legend: {
-          //     orient: 'vertical',
-          //     left: 'left',
-          //   },
-          //   series: [
-          //     {
-          //       name: 'Access From',
-          //       type: 'pie',
-          //       radius: '75%',
-          //       data: this.chartdata,
-          //       emphasis: {
-          //         itemStyle: {
-          //           shadowBlur: 10,
-          //           shadowOffsetX: 0,
-          //           shadowColor: 'rgba(0, 0, 0, 0.5)',
-          //         },
-          //       },
-          //     },
-          //   ],
-          // };
         },
       });
   }
@@ -1089,14 +1196,12 @@ export class PlanDashboardComponent implements OnInit {
 
   onQuarterChange(event: any) {
     var quarter = event.value;
-
     this.getPieChatData(this.planId, quarter);
   }
   getPieChatData2(planId: string) {
     return this.pieChartOptions.filter((item) => {
-      console.log(item)
       return item.title.planId == planId;
-    })[0];
+    });
   }
 
   getBarChatOption(planId: string) {
@@ -1129,7 +1234,8 @@ export class PlanDashboardComponent implements OnInit {
             let percentage = 0;
             if (item.seriesName === 'Actual Progress') {
               let planned =
-                this.strategicPlanReportDtos[item.dataIndex]?.plannedProgress || 1; // Avoid division by zero
+                this.strategicPlanReportDtos[item.dataIndex]?.plannedProgress ||
+                1; // Avoid division by zero
               percentage = Number(((item.value / planned) * 100).toFixed(2));
             }
             result += `${item.marker} ${item.seriesName}: ${item.value} ${
@@ -1160,7 +1266,9 @@ export class PlanDashboardComponent implements OnInit {
       xAxis: [
         {
           type: 'category',
-          data: this.strategicPlanReportDtos.map((plan) => plan.strategicPlanName),
+          data: this.strategicPlanReportDtos.map(
+            (plan) => plan.strategicPlanName
+          ),
           axisTick: {
             alignWithLabel: true,
           },
@@ -1216,7 +1324,9 @@ export class PlanDashboardComponent implements OnInit {
           name: 'Planned Progress',
           type: 'bar',
           barWidth: '60%',
-          data: this.strategicPlanReportDtos.map((plan) => plan.plannedProgress),
+          data: this.strategicPlanReportDtos.map(
+            (plan) => plan.plannedProgress
+          ),
           itemStyle: {
             color: '#4CAF50', // Changed color to green for planned progress
           },
@@ -1242,7 +1352,7 @@ export class PlanDashboardComponent implements OnInit {
       },
       backgroundColor: '#f0f0f0', // Set background color to gray
     };
-  
+
     this.budgetOption = {
       tooltip: {
         trigger: 'axis',
@@ -1261,7 +1371,8 @@ export class PlanDashboardComponent implements OnInit {
             let percentage = 0;
             if (item.seriesName === 'Utilized Budget') {
               let planned =
-                this.strategicPlanReportDtos[item.dataIndex]?.plannedBudget || 1; // Avoid division by zero
+                this.strategicPlanReportDtos[item.dataIndex]?.plannedBudget ||
+                1; // Avoid division by zero
               percentage = Number(((item.value / planned) * 100).toFixed(2));
             }
             result += `${item.marker} ${item.seriesName}: ${item.value} ${
@@ -1292,7 +1403,9 @@ export class PlanDashboardComponent implements OnInit {
       xAxis: [
         {
           type: 'category',
-          data: this.strategicPlanReportDtos.map((plan) => plan.strategicPlanName),
+          data: this.strategicPlanReportDtos.map(
+            (plan) => plan.strategicPlanName
+          ),
           axisTick: {
             alignWithLabel: true,
           },
@@ -1375,5 +1488,4 @@ export class PlanDashboardComponent implements OnInit {
       backgroundColor: '#f0f0f0', // Set background color to gray
     };
   }
-  
 }

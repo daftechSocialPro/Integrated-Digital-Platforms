@@ -102,7 +102,10 @@ namespace IntegratedImplementation.Services.Finance.Action
         {
 
 
-            var progressView = await(from p in _dbContext.ActivityProgresses.Include(x=>x.Activity).Where(x => x.IsApprovedByFinance==ApprovalStatus.PENDING)
+            var progressView = await(from p in _dbContext.ActivityProgresses
+                                     .Include(x=>x.Activity)
+                                     .Include(x=> x.EmployeeValue)
+                                     .Where(x => x.IsApprovedByFinance==ApprovalStatus.PENDING)
                                      select new ProgressViewDto
                                      {
                                          Id = p.Id,
@@ -118,7 +121,10 @@ namespace IntegratedImplementation.Services.Finance.Action
                                          Documents = _dbContext.ProgressAttachments.Where(x => x.ActivityProgressId == p.Id).Select(y => y.FilePath).ToArray(),
                                          CreatedAt = p.CreatedDate,
                                          Activity =p.Activity.ActivityDescription,
-                                         ActivityNumber =p.Activity.ActivityNumber
+                                         ActivityNumber =p.Activity.ActivityNumber,
+                                         EmployeeId  = p.EmployeeValueId.ToString(),
+                                         EmployeeName  =$"{p.EmployeeValue.FirstName} {p.EmployeeValue.MiddleName} {p.EmployeeValue.LastName}",
+
 
                                      }).ToListAsync();
 

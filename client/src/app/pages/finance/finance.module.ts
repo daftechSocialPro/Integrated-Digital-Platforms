@@ -72,7 +72,13 @@ import { AddLedgerPostingComponent } from './finance-configuration/ledger-postin
 import { JournalVoucherComponent } from './journal-voucher/journal-voucher.component';
 import { AddJournalVoucherComponent } from './journal-voucher/add-journal-voucher/add-journal-voucher.component';
 // import { PensionDeclarationComponent } from './pension-declaration/pension-declaration.component';
-
+import { AccordionModule } from 'primeng/accordion';
+import { PaymentRequisitionComponent } from './payment-requisition/payment-requisition.component';
+import { PendingPaymentRequisitionComponent } from './payment-requisition/pending-payment-requisition/pending-payment-requisition.component';
+import { ApprovedPaymentRequisitionComponent } from './payment-requisition/approved-payment-requisition/approved-payment-requisition.component';
+import { AddPaymentRequisitionComponent } from './payment-requisition/add-payment-requisition/add-payment-requisition.component';
+import { PaymentRequisitionViewComponent } from './payment-requisition/payment-requisition-view/payment-requisition-view.component';
+import { EmployeeSettlementsComponent } from './employee-settlements/employee-settlements.component';
 
 
 
@@ -127,7 +133,12 @@ import { AddJournalVoucherComponent } from './journal-voucher/add-journal-vouche
     AddLedgerPostingComponent,
     JournalVoucherComponent,
     AddJournalVoucherComponent,
-    
+    PaymentRequisitionComponent,
+    PendingPaymentRequisitionComponent,
+    ApprovedPaymentRequisitionComponent,
+    AddPaymentRequisitionComponent,
+    PaymentRequisitionViewComponent,
+    EmployeeSettlementsComponent,
 
   ],
   imports: [
@@ -153,12 +164,10 @@ import { AddJournalVoucherComponent } from './journal-voucher/add-journal-vouche
     CheckboxModule,
     MultiSelectModule,
     FileUploadModule,
+    AccordionModule,
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts'),
     }),
-  
-
-
   ]
 })
 export class FinanceModule { }

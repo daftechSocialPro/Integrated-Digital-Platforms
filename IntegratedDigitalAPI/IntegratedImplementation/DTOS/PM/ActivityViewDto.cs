@@ -170,6 +170,10 @@ namespace IntegratedDigitalAPI.DTOS.PM
         public string? ActivityNumber { get; set; }
 
 
+        public string ? EmployeeId { get; set; }
+        public string? EmployeeName { get; set;}
+
+
 
 
     }

@@ -32,7 +32,7 @@ namespace IntegratedDigitalAPI.Controllers.Finance.Action
         [ProducesResponseType(typeof(PaymentListDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetApprovedPayments()
         {
-            return Ok(await _paymentService.GetApprovedPayments());
+             return Ok(await _paymentService.GetApprovedPayments());
         }
 
         [HttpGet]
@@ -91,6 +91,14 @@ namespace IntegratedDigitalAPI.Controllers.Finance.Action
         public async Task<IActionResult> GetPaymentLetter(Guid paymentId)
         {
             return Ok(await _paymentService.GetPaymentLetter(paymentId));
+        }
+
+
+        [HttpGet]
+        [ProducesResponseType(typeof(PendingFinanceRequestDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetPendingProjectFinanceRequests()
+        {
+            return Ok(await _paymentService.GetPendingProjectFinanceRequests());
         }
     }
 }

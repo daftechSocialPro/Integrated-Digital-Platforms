@@ -21,7 +21,10 @@ import { AccountReconsilationFindDto, AccountToBeReconsiledDto, AddAccountRecons
 import { AddClientDto, ClientsListDto } from '../model/Finance/IFinanceSettingDto';
 import { AddLedgerPostingAccountDto, AddTaxRateDto, LedgerPostingAccountDto, TaxRateDto } from '../model/Finance/ITaxRateDto';
 import { FinanceDashboardDTO, FinanceBarChartPostDto } from '../model/Finance/IFinanceDashboard';
+import { PendingFinanceRequestDto } from '../model/Finance/IPendingFinanceRequestDto';
 import { AddJournalVochureDto, GetJournalVoucherDto } from '../model/Finance/IJournalVoucherDto';
+import { ApprovePaymentRequsition, IPaymentRequisitionGetDto, IPaymentRequisitionPostDto } from '../pages/finance/payment-requisition/IPaymentRequisition';
+import { ActivityForSettlementDto } from '../model/Finance/ActivityForSettlementDto';
 
 @Injectable({
   providedIn: 'root'
@@ -213,9 +216,9 @@ export class FinanceService {
   getIncomeTaxReport(payrollMonth: string){
     return this.http.get<IncomeTaxReportGetDto>(this.BaseURI + "/PayrollReport/GetIncomeTaxReport?payrollMonth="+payrollMonth)
   }
-  viewFinanceProgress(empId: string) {
 
-    return this.http.get<ViewProgressDto[]>(this.BaseURI + "/Receipt/ViewProgress?employeeId=" + empId)
+  viewFinanceProgress() {
+    return this.http.get<PendingFinanceRequestDto[]>(this.BaseURI + "/Payment/GetPendingProjectFinanceRequests")
 }
 
 //recipet 
@@ -272,4 +275,37 @@ addJournalVochure(addJv: AddJournalVochureDto) {
 getJournalVoucher(typeofJV: number){
   return this.http.get<GetJournalVoucherDto[]>(this.BaseURI + "/JournalVoucher/GetJournalVochures?typeofJV=" + typeofJV)
 }
+
+///
+//payment requisition
+
+addPaymentRequisition(payment: IPaymentRequisitionPostDto) {
+  return this.http.post<ResponseMessage>(
+    this.BaseURI + '/PaymentRequsition/AddPaymentRequisition',
+    payment
+  );
+}
+
+getPendingPaymentRequisitions() {
+  return this.http.get<IPaymentRequisitionGetDto[]>(
+    this.BaseURI + '/PaymentRequsition/GetPendingPaymentRequisitions'
+  );
+}
+
+getAuthorizedPaymentRequisitions() {
+  return this.http.get<IPaymentRequisitionGetDto[]>(
+    this.BaseURI + '/PaymentRequsition/GetAuthorizedPaymentRequisitions'
+  );
+}
+
+approvePaymentRequisition(approvePaymentData: ApprovePaymentRequsition){
+  return this.http.put<ResponseMessage>(this.BaseURI + "/PaymentRequsition/ApprovePaymentRequisition",approvePaymentData)
+}
+
+getEmployeePaymentSettlements() {
+  return this.http.get<ActivityForSettlementDto[]>(
+    this.BaseURI + '/PaymentRequsition/GetEmployeePaymentSettlements'
+  );
+}
+
 }

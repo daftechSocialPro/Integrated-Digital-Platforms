@@ -1,18 +1,19 @@
 ﻿using Implementation.Helper;
-using IntegratedImplementation.DTOS.PM;
+using IntegratedImplementation.DTOS.Finance.Action;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntegratedImplementation.Interfaces.PM
+namespace IntegratedImplementation.Interfaces.Finance.Action
 {
-    public interface IProjectPaymentService
+    public interface IPaymentRequsitionService
     {
-
         public Task<ResponseMessage> AddPaymentRequisition(PaymentRequisitionPostDto paymentRequisitionPostDto);
         public Task<List<PaymentRequisitionGetDto>> GetPendingPaymentRequisitions();
+        public Task<ResponseMessage> ApprovePaymentRequisition(ApprovePaymentRequsition paymentRequsition);
         public Task<List<PaymentRequisitionGetDto>> GetAuthorizedPaymentRequisitions();
+        public Task<List<ActivityForSettlementDto>> GetEmployeePaymentSettlements();
     }
 }

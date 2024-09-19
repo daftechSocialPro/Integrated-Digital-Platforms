@@ -142,6 +142,15 @@ namespace IntegratedDigitalAPI.Controllers.Configuration
             return Ok(await _DropDownService.GetProjectDropDowns());
         }
 
+
+        [HttpGet]
+        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetActivityByProjectid(Guid projectId)
+        {
+            return Ok(await _DropDownService.GetActivityByProjectid(projectId));
+        }
+
+
         [HttpGet]
         [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetProjectFundSourcesForActivity(Guid projectId)

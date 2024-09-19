@@ -136,9 +136,6 @@ namespace IntegratedInfrustructure.Data
         public DbSet<Tasks> Tasks { get; set; }
 
         public DbSet<ActivityLocation> ActivityLocations { get; set; }  
-
-
-        public DbSet<PaymentRequisition> PaymentRequisitions { get; set; }
         #endregion
 
         #region Training
@@ -206,6 +203,8 @@ namespace IntegratedInfrustructure.Data
         public DbSet<JournalVoucher> JournalVouchers { get; set; }
         public DbSet<JournalVoucherDetail> JournalVoucherDetails { get; set; }
         public DbSet<LedgerPostingAccount> LedgerPostingAccounts { get; set; }
+        public DbSet<PaymetRequisitions> PaymetRequisitions { get; set; }
+        public DbSet<EmployeePaymentSettlement> EmployeePaymentSettlements { get; set; }
 
         #endregion
 

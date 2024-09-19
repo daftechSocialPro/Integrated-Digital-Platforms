@@ -45,7 +45,6 @@ import {
 } from '../model/PM/ITimePeriodDto';
 import { UserService } from './user.service';
 import { IWeeklyPlanDto } from '../model/PM/WeeklyPlanDto';
-import { IPaymentRequisitionGetDto, IPaymentRequisitionPostDto } from '../pages/project-managment/payment-requisition/IPaymentRequisition';
 
 @Injectable({
   providedIn: 'root',
@@ -475,24 +474,4 @@ export class PMService {
     );
   }
 
-  //payment requisition
-
-  addPaymentRequisition(payment: IPaymentRequisitionPostDto) {
-    return this.http.post<ResponseMessage>(
-      this.BaseURI + '/ProjectPayment/AddPaymentRequisition',
-      payment
-    );
-  }
-
-  getPendingPaymentRequisitions() {
-    return this.http.get<IPaymentRequisitionGetDto[]>(
-      this.BaseURI + '/ProjectPayment/GetPendingPaymentRequisitions'
-    );
-  }
-
-  getAuthorizedPaymentRequisitions() {
-    return this.http.get<IPaymentRequisitionGetDto[]>(
-      this.BaseURI + '/ProjectPayment/GetAuthorizedPaymentRequisitions'
-    );
-  }
 }

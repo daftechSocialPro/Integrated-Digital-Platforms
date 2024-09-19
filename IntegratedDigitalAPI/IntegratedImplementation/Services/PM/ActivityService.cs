@@ -55,7 +55,6 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                 else
                 {
                     activityParent.Id = Guid.NewGuid();
-
                     activityParent.CreatedDate = DateTime.Now;
                     activityParent.CreatedById = activityDetail.CreatedBy.ToString();
                     activityParent.ActivityParentDescription = activityDetail.ActivityDescription;

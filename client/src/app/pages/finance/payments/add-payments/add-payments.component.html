@@ -1,17 +1,17 @@
 
-<main id="main" class="main">
 
-    <div class="iconcontainer" (click)="goToPayments()">
+    <div *ngIf="!callFrom" class="iconcontainer" (click)="goToPayments()">
         <i class="bi bi-arrow-left-short"></i>
         <div>Back to Payments</div>
     </div>
 
-    <div class="p-4">
+ 
 
 <div class="modal-content">
     <div class="modal-header">
-        <h5 class="modal-title">Add Payment</h5>
-        <!-- <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button> -->
+        <h5 *ngIf="!callFrom" class="modal-title">Add Payment</h5>
+        <h5 *ngIf="callFrom" class="modal-title">Approve Activity and pay for {{progress.employeeName.toUpperCase()}}</h5>
+        <button *ngIf="callFrom"  type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
     </div>
 
     <div class="card">
@@ -28,7 +28,7 @@
                                         <div class="row g-3">
                                             <div class="col-md-12">
                                                 <div class="form-floating">
-                                                    <input type="date" class="form-control" id="paymentDate" formControlName="paymentDate">
+                                                    <input type="date" class="form-control" [disabled]="callFrom" id="paymentDate" formControlName="paymentDate">
                                                     <label for="paymentDate">Payment Date</label>
                                                 </div>
                                             </div>
@@ -57,7 +57,7 @@
                                             </div>
                                             <div class="col-md-6 ">
                                                 <div class="form-floating">
-                                                    <select class="form-control" formControlName="typeOfPayee" #payee>
+                                                    <select class="form-control" [disabled]="callFrom"   formControlName="typeOfPayee" #payee>
                                                         <option *ngFor="let item of typeOfPayee" [value]="item.value">{{item.name}}</option>
                                                     </select>
                                                     <label for="supplierId">Type of Payee</label>
@@ -65,6 +65,10 @@
                                             </div>
                                         
                                             <div *ngIf="payee.value == '0'">
+
+                                                <div class="row">
+
+                                             
                                                 <div class="col-md-6">
                                                     <div class="form-floating">
                                                         <select class="form-control" formControlName="supplierId" #supplier
@@ -73,7 +77,7 @@
                                                         </select>
                                                         <label for="supplierId">Supplier</label>
                                                     </div>
-                                                    <div class="col-md-2">
+                                                    <div class="col-md-2 mt-2">
                                                         <button pButton type="button" icon="pi pi-plus" class="ui-button-info btn-sm"
                                                             (click)="newVendor()"></button>
                                                     </div>
@@ -84,13 +88,17 @@
                                                     </select>
                                                     <label>Supplier Account</label>
                                                 </div>
+                                            </div>
                                             
                                             </div>
                                             
                                             <div *ngIf="payee.value == '1'">
+                                                <div class="row">
+
+                                              
                                                 <div class="form-floating col-md-6">
                                                     <select class="form-control" formControlName="employeeId" #employee (change)="onEmployeeChange(employee.value)">
-                                                        <option *ngFor="let item of employeeDropDown" [value]="item.id">{{item.name}}</option>
+                                                        <option *ngFor="let item of employeeDropDown" [value]="item.id.toLowerCase()">{{item.name}}</option>
                                                     </select>
                                                     <label for="employeeId">Employee</label>
                                                 </div>
@@ -102,7 +110,11 @@
                                                     <label>Employee Account</label>
                                                 </div>
                                             </div>
+                                            </div>
                                             <div *ngIf="payee.value == '2'">
+                                                <div class="row">
+
+                                                
                                                 <div class="form-floating col-md-6">
                                                     <input type="text" class="form-control" id="otherBeneficiary" formControlName="otherBeneficiary">
                                                     <label for="otherBeneficiary">Name</label>
@@ -112,6 +124,7 @@
                                                         formControlName="beneficiaryAccountNumber">
                                                     <label for="beneficiaryAccountNumber">Account Number</label>
                                                 </div>
+                                            </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <p-fileUpload (onSelect)="onUpload($event)" (onRemove)="onRemove()" [multiple]="false" accept="image/*"
@@ -136,17 +149,17 @@
                                     <div class="card-body">
                                         <h5 class="card-title">Add Payment Details</h5>
                                         <form #itemsForm="ngForm">
-                                            <div class="row p-2 mb-2">
+                                            <div class="row p-1 mb-2">
                                             <div class="col-md-2">
-                                                <label class="col-md-12" htmlFor="lastname2">Item</label> 
-                                                <select  class="form-control" [(ngModel)]="addPaymentDetailList.itemId" id="itemId" required
+                                                <label htmlFor="lastname2">Item</label> 
+                                                <select  class="form-control" [disabled]="callFrom" [(ngModel)]="addPaymentDetailList.itemId" id="itemId" 
                                                     name="itemId">
                                                     <option></option>
                                                     <option *ngFor="let it of itemsDropDown" [value]="it.id">{{it.name}}</option>
                                                 </select>
                                             </div>
-                                            <div class="col-md-2">
-                                                <label class="col-md-12" htmlFor="lastname2">Chart Of Account</label>
+                                            <div class="col-md-4">
+                                                <label htmlFor="lastname2">Chart Of Account</label>
                                                 <select  class="form-control"   [(ngModel)]="addPaymentDetailList.chartOfAccountId" id="chartOfAccountId" required
                                                     name="chartOfAccountId">
                                                     <option></option>
@@ -155,11 +168,11 @@
                                             </div>
                                             <div class="col-md-2">
                                                 <label htmlFor="lastname2">Quantity</label>
-                                                <input class="form-control" type="number" min="0" name="quantity" required [(ngModel)]="addPaymentDetailList.quantity">
+                                                <input class="form-control" [disabled]="callFrom" type="number" min="0" name="quantity" required [(ngModel)]="addPaymentDetailList.quantity">
                                             </div>
                                             <div class="col-md-2">
                                                 <label htmlFor="lastname2">Price</label>
-                                                <input class="form-control" type="number" min="0" name="price" required
+                                                <input class="form-control" [disabled]="callFrom"  type="number" min="0" name="price" required
                                                     [(ngModel)]="addPaymentDetailList.price">
                                             </div>
                                             <div class="col-md-2">
@@ -167,12 +180,12 @@
                                                 <input class="form-control" type="number" min="0" name="totalPrice" disabled [value]="addPaymentDetailList.quantity * addPaymentDetailList.price"
                                                     [(ngModel)]="addPaymentDetailList.totalPrice">
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-8 mt-2">
                                                 <label htmlFor="lastname2">Description</label>
                                                 <textarea class="form-control" placeholder="description" [(ngModel)]="addPaymentDetailList.description" [ngModelOptions]="{standalone: true}" >
                                                 </textarea>
                                             </div>
-                                            <div class="col-md-1">
+                                            <div class="col-md-2 mt-2">
                                             <label></label><br/>
                                                 <button pButton type="button" icon="pi pi-plus" [disabled]="!itemsForm.valid" class="ui-button-info btn-sm"
                                                     (click)="newRow()"></button>
@@ -190,7 +203,8 @@
                                                         <th>Quantity</th>
                                                         <th>Price</th>
                                                         <th>Total Price</th>
-                                                        <th style="width:8em"></th>
+                                                        <th></th>
+                                                      
                                                     </tr>
                                                 </ng-template>
                                                 <ng-template pTemplate="body" let-purchaseRequest>
@@ -240,5 +254,5 @@
     </div>
 </div>
 
-</div>
-</main>
+
+

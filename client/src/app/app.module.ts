@@ -280,11 +280,6 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { ChangePasswordComponent } from './pages/configuration/user-management/change-password/change-password.component';
 import { CustomResceduleConfirtamionComponent } from './pages/project-managment/assigned-activities/custom-rescedule-confirtamion/custom-rescedule-confirtamion.component';
 import { HrmDashboardComponent } from './pages/human-resource/hrm-dashboard/hrm-dashboard.component';
-import { PaymentRequisitionComponent } from './pages/project-managment/payment-requisition/payment-requisition.component';
-import { PendingPaymentRequisitionComponent } from './pages/project-managment/payment-requisition/pending-payment-requisition/pending-payment-requisition.component';
-import { ApprovedPaymentRequisitionComponent } from './pages/project-managment/payment-requisition/approved-payment-requisition/approved-payment-requisition.component';
-import { AddPaymentRequisitionComponent } from './pages/project-managment/payment-requisition/add-payment-requisition/add-payment-requisition.component';
-import { PaymentRequisitionViewComponent } from './pages/project-managment/payment-requisition/payment-requisition-view/payment-requisition-view.component';
 
 @NgModule({
   declarations: [
@@ -612,12 +607,7 @@ import { PaymentRequisitionViewComponent } from './pages/project-managment/payme
       AllTrainingListComponent,
       ChangePasswordComponent,
       CustomResceduleConfirtamionComponent,
-      HrmDashboardComponent,
-      PaymentRequisitionComponent,
-      PendingPaymentRequisitionComponent,
-      ApprovedPaymentRequisitionComponent,
-      AddPaymentRequisitionComponent,
-      PaymentRequisitionViewComponent
+      HrmDashboardComponent
 
     //  AddMeasurementComponent,
     //  UpdateMeasurmentComponent
