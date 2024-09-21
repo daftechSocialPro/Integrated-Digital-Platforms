@@ -33,6 +33,8 @@
                         <tr>
                             <th >Name</th>
                             <th >Amharic Name</th>
+                            <th >Has Severance</th>
+                            <th >Severance Percentage</th>
                             <th >Action</th>
                           
                         </tr>
@@ -41,6 +43,8 @@
                         <tr>
                             <td>{{ position.positionName }}</td>
                             <td>{{ position.amharicName }}</td>
+                            <td>{{ position.hasSeverance }}</td>
+                            <td>{{ position.severancePercentage }}</td>
                             <td>
                              
                                 <button type="button" (click)="updatePosition(position)" class="btn btn-outline-warning"><i

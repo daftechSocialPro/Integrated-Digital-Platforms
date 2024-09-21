@@ -1,15 +1,9 @@
 ﻿using Implementation.Helper;
-using IntegratedImplementation.DTOS.Configuration;
 using IntegratedImplementation.DTOS.HRM;
 using IntegratedImplementation.Interfaces.HRM;
 using IntegratedInfrustructure.Data;
 using IntegratedInfrustructure.Model.HRM;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static IntegratedInfrustructure.Data.EnumList;
 
 namespace IntegratedImplementation.Services.HRM
@@ -35,6 +29,8 @@ namespace IntegratedImplementation.Services.HRM
                 Id = Guid.NewGuid(),
                 PositionName = PositionPost.PositionName,
                 AmharicName = PositionPost.AmharicName,
+                HasSeverance = PositionPost.HasSeverance,
+                SeverancePercentage = PositionPost.SeverancePercentage,
                 CreatedById = PositionPost.CreatedById,
                 Rowstatus = RowStatus.ACTIVE
             };
@@ -58,11 +54,13 @@ namespace IntegratedImplementation.Services.HRM
                 Id = x.Id.ToString(),
                 PositionName = x.PositionName,
                 AmharicName = x.AmharicName,
+                HasSeverance = x.HasSeverance,
+                SeverancePercentage = x.SeverancePercentage,
             }).ToListAsync();
 
             return PositionList;
         }
-        
+
         public async Task<ResponseMessage> UpdatePosition(PositionGetDto Position)
         {
 
@@ -76,8 +74,11 @@ namespace IntegratedImplementation.Services.HRM
             {
                 currentPosition.PositionName = Position.PositionName;
                 currentPosition.AmharicName = Position.AmharicName;
+                currentPosition.HasSeverance = Position.HasSeverance;
+                currentPosition.SeverancePercentage = Position.SeverancePercentage;
+
                 await _dbContext.SaveChangesAsync();
-                return new ResponseMessage { Message="Position Updated Successfully", Success = true };
+                return new ResponseMessage { Message = "Position Updated Successfully", Success = true };
             }
             return new ResponseMessage { Success = false, Message = "Unable To Find Position" };
         }

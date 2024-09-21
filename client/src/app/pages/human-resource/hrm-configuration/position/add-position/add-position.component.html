@@ -25,7 +25,20 @@
                                             formControlName="amharicName">
                                         <label for="amharicName">Amharic Name</label>
                                     </div>
-                                </div>                                                         
+                                </div> 
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label htmlFor="fromSalary" class="col-12">Has Severance</label>
+                                        <p-inputSwitch (onChange)="fromSalaryChange($event)" formControlName="hasSeverance"  
+                                            name="fromSalary"></p-inputSwitch>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6" *ngIf="fromSalary">
+                                    <label htmlFor="ammount" class="col-12">Severance Percentage</label>
+                                    <input type="number" pInputText id="ammount" formControlName="severancePercentage" 
+                                         />
+                                </div>                                                        
                             </div>
                         </div>
                         <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"

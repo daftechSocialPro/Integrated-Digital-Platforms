@@ -1,23 +1,17 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Implementation.Helper;
-using IntegratedImplementation.DTOS.Configuration;
 using IntegratedImplementation.DTOS.HRM;
 using IntegratedImplementation.Interfaces.HRM;
 using IntegratedInfrustructure.Data;
 using IntegratedInfrustructure.Model.Configuration;
 using IntegratedInfrustructure.Model.HRM;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static IntegratedInfrustructure.Data.EnumList;
 
 namespace IntegratedImplementation.Services.HRM
 {
-    public class HrmSettingService:IHrmSettingService
+    public class HrmSettingService : IHrmSettingService
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly IMapper _mapper;
@@ -43,7 +37,7 @@ namespace IntegratedImplementation.Services.HRM
             HrmSetting HrmSetting = new HrmSetting
             {
                 Id = Guid.NewGuid(),
-                GeneralSetting =Enum.Parse<GeneralHrmSetting>(HrmSettingPost.GeneralSetting),
+                GeneralSetting = Enum.Parse<GeneralHrmSetting>(HrmSettingPost.GeneralSetting),
                 Value = HrmSettingPost.value,
                 CreatedById = HrmSettingPost.CreatedById,
                 Rowstatus = RowStatus.ACTIVE
@@ -66,7 +60,7 @@ namespace IntegratedImplementation.Services.HRM
 
             if (currentHrmSetting != null)
             {
-                
+
                 currentHrmSetting.Value = HrmSetting.value;
                 await _dbContext.SaveChangesAsync();
                 return new ResponseMessage { Data = currentHrmSetting, Success = true, Message = "Updated Successfully" };
@@ -88,7 +82,7 @@ namespace IntegratedImplementation.Services.HRM
 
         public async Task<ResponseMessage> AddPerformanceSetting(PerformanceSettingDto performanceSetting)
         {
-          
+
             PerformanceSetting performance = new PerformanceSetting
             {
                 Id = Guid.NewGuid(),
@@ -112,11 +106,11 @@ namespace IntegratedImplementation.Services.HRM
             return await _dbContext.BenefitLists.Select(x =>
                           new BenefitListDto
                           {
-                                Id = x.Id,
-                                Name = x.Name,
-                                AmharicName = x.AmharicName,
-                                TaxableAmount = x.TaxableAmount,
-                                AddOnContract = x.AddOnContract
+                              Id = x.Id,
+                              Name = x.Name,
+                              AmharicName = x.AmharicName,
+                              TaxableAmount = x.TaxableAmount,
+                              AddOnContract = x.AddOnContract
                           }).ToListAsync();
         }
 
@@ -233,6 +227,63 @@ namespace IntegratedImplementation.Services.HRM
             return new ResponseMessage { Success = false, Message = "Device Setting Could Not be Found" };
         }
 
+        //    public async Task<ResponseMessage> AddSeveranceSetting(SeveranceSettingDto severanceSetteingDto)
+        //    {
+        //        SeveranceSetting severance = new()
+        //        {
+        //            Id = Guid.NewGuid(),
+        //            PositionId = severanceSetteingDto.PositionId,
+        //            Percentage = severanceSetteingDto.Percentage,
+        //            CreatedById = severanceSetteingDto.CreatedById,
+        //            CreatedDate = DateTime.Now,
+        //            Rowstatus = RowStatus.ACTIVE
+
+        //        };
+
+        //        await _dbContext.AddAsync(severance);
+        //        await _dbContext.SaveChangesAsync();
+
+        //        return new ResponseMessage { Success = true, Message = "Severance Setting Added Successfully" };
+        //    }
+
+        //    public async Task<ResponseMessage> UpdateSeveranceSetting(SeveranceSettingDto severanceSettingDto)
+        //    {
+        //        var severance = await _dbContext.SeveranceSettings.FindAsync(severanceSettingDto.Id);
+
+        //        if (severance == null)
+        //        {
+        //            return new ResponseMessage
+        //            {
+        //                Success = false,
+        //                Message = "Severance Setting Not Found"
+        //            };
+        //        }
+
+        //        severance.PositionId = severanceSettingDto.PositionId;
+        //        severance.Percentage = severanceSettingDto.Percentage;
+        //        severance.Rowstatus = severanceSettingDto.RowStatus;
+
+
+        //        await _dbContext.SaveChangesAsync();
+
+        //        return new ResponseMessage { Success = true, Message = "Severance Setting Updated Successfully" };
+        //    }
+
+        //    public async Task<List<SeveranceSettingDto>> GetAllSeveranceSetting()
+        //    {
+        //        List<SeveranceSettingDto> severance = await _dbContext.SeveranceSettings.Select(x => new SeveranceSettingDto
+        //        {
+        //            Id = x.Id,
+        //            PositionId = x.PositionId,
+        //            PositionName = x.Position.PositionName,
+        //            Percentage = x.Percentage,
+        //            RowStatus = x.Rowstatus,
+        //            CreatedById = x.CreatedById,
+
+        //        }).ToListAsync();
+
+        //        return severance;
+        //    }
 
 
     }

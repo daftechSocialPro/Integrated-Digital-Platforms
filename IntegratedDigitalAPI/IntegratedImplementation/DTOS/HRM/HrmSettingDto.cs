@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace IntegratedImplementation.DTOS.HRM
+﻿namespace IntegratedImplementation.DTOS.HRM
 {
     public record HrmSettingDto
     {
@@ -13,7 +7,7 @@ namespace IntegratedImplementation.DTOS.HRM
         public string GeneralSetting { get; set; } = null!;
         public double value { get; set; }
 
-       
+
     }
     public record HrmSettingPostDto
     {
@@ -23,4 +17,14 @@ namespace IntegratedImplementation.DTOS.HRM
 
         public string CreatedById { get; set; } = null!;
     }
+
+    //public class SeveranceSettingDto
+    //{
+    //    public Guid? Id { get; set; }
+    //    public Guid PositionId { get; set; }
+    //    public string? PositionName { get; set; }
+    //    public double Percentage { get; set; }
+    //    public string CreatedById { get; set; }
+    //    public RowStatus RowStatus { get; set; }
+    //}
 }

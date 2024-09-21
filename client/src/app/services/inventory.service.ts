@@ -16,7 +16,7 @@ import { MeasurementUnitDto } from '../model/Inventory/MeasurementUnit.Model';
 import { InventoryDashboardGetDto } from '../model/Inventory/IInventoryDashboardDto';
 import { TagNumberListDto } from '../model/Inventory/ITagNumberListDto';
 import { BalanceReportComponent } from '../pages/inventory/balance-report/balance-report.component';
-import { BalanceTempData } from '../model/Inventory/BalanceReportDto';
+import { BalanceTempData, GroupedGoodsReceivingReport, InventorySettlementReport } from '../model/Inventory/BalanceReportDto';
 
 @Injectable({
   providedIn: 'root'
@@ -231,6 +231,13 @@ export class InventoryService {
     return  this.http.get<BalanceTempData[]>(this.BaseURI + `/InventoryReport/GetBalanceReport`)
   }
 
+  getGroupedGoodsReceivingReport(fromDate: string, toDate: string){
+    return this.http.get<GroupedGoodsReceivingReport[]>(this.BaseURI + `/InventoryReport/GetGroupedGoodsReceivingReport?fromDate=${fromDate}&toDate=${toDate}`)
+  }
+
+  getSettelementReport(fromDate: string, toDate: string){
+    return this.http.get<InventorySettlementReport[]>(this.BaseURI + `/InventoryReport/GetSettelementReport?fromDate=${fromDate}&toDate=${toDate}`)
+  }
   //Dashboard
   getInventoryDashboard(){
     let employeeId = this.userService.getCurrentUser().employeeId;
