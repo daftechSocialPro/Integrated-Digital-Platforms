@@ -50,14 +50,18 @@
                                     <div class="p-3">
                                         <div class="row">
                                             <div class="d-flex justify-content-end gap-2">
+                                                <button *ngIf="payment.typeOfPayee == 'Multiple'" type="button" class="btn btn-outline-primary btn-sm"
+                                                (click)="addPayeeDetail(payment.id)"><i
+                                                    class="bi bi-book me-1"></i>
+                                                Add Journal Vocher</button> &nbsp;
                                                 <button type="button" class="btn btn-outline-primary btn-sm"
                                                     (click)="addJV(payment.paymentDetailLists)"><i
                                                         class="bi bi-book me-1"></i>
-                                                    Add Journal Vocher</button>
+                                                    Add Journal Vocher</button> &nbsp;
                                                     <button *ngIf="roleMatch(['PAYMENT-APPROVER'])" type="button" class="btn btn-outline-success btn-sm"
                                                     (click)="approvePayment(payment.id, payment.paymentNumber, payment.paymentType, payment.paymentDate,payment.bank,payment.supplier,payment.remark)"><i
                                                         class="bi bi-check me-1"></i>
-                                                    Approve</button>
+                                                    Approve</button> &nbsp;
                                             </div>
                                             
                                         </div>

@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'admindashboard';
+  
   constructor(private elementRef: ElementRef,  public  _router: Router) { }
 
   ngOnInit() {

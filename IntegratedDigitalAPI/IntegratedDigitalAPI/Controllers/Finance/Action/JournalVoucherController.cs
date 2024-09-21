@@ -42,5 +42,13 @@ namespace IntegratedDigitalAPI.Controllers.Finance.Action
         }
 
 
+
+
+        [HttpGet]
+        [ProducesResponseType(typeof(AddJournalVoucherDetailDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetJournalByTaxPayerType(TaxEntityType typeofJV)
+        {
+            return Ok(await _journalVoucherService.GetJournalByTaxPayerType(typeofJV));
+        }
     }
 }

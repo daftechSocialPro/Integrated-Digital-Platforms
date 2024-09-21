@@ -24,7 +24,7 @@
 
                 <button *ngIf="payrollReportList" type="button" style="margin-left: 10px;" pButton pRipple
                     icon="pi pi-file-pdf" (click)="exportPdf2()" class="p-button-danger mr-2" pTooltip="CSV"
-                    tooltipPosition="bottom">&nbsp; Salary Transfer </button>
+                    tooltipPosition="bottom">&nbsp; </button>
 
 
 
@@ -68,7 +68,8 @@
                                     <th style=" border: 1px solid black;">Salary</th>
                                     <th style=" border: 1px solid black;">Transport & fuel Allowance</th>
                                     <th style=" border: 1px solid black;">Commun. Allowance</th>
-                                    <th style=" border: 1px solid black;">Position Allowance and Over Time</th>
+                                    <th style=" border: 1px solid black;">Position Allowance </th>
+                                    <th style=" border: 1px solid black;">Over Time </th>
                                     <th style=" border: 1px solid black;">Pension (11%) from Employer</th>
                                     <th style=" border: 1px solid black;">Pension (7%) from Employee</th>
                                     <th style=" border: 1px solid black;">Total Earning</th>
@@ -85,22 +86,23 @@
                                 <tr *ngFor="let item of payrollReportList; let i= index">
                                     <td style=" border: 1px solid black;">{{i+1}}</td>
                                     <td style=" border: 1px solid black;">{{item.employeeName}}</td>
-                                    <td style=" border: 1px solid black;">{{item.position}}</td>
+                                    <td style=" border: 1px solid black;">{{item.position }}</td>
                                     <td style=" border: 1px solid black;">{{item.daysWorked}}</td>
                                     <td style=" border: 1px solid black;">{{item.sourceOfFund}}</td>
-                                    <td style=" border: 1px solid black;">{{item.salary}}</td>
-                                    <td style=" border: 1px solid black;">{{item.transportFuelAllowance}}</td>
-                                    <td style=" border: 1px solid black;">{{item.communicationAllowance}}</td>
-                                    <td style=" border: 1px solid black;">{{item.positionAllowanceOT}}</td>
-                                    <td style=" border: 1px solid black;">{{item.pFEmployerPension}}</td>
-                                    <td style=" border: 1px solid black;">{{item.employeePension}}</td>
-                                    <td style=" border: 1px solid black;">{{item.totalEarning}}</td>
-                                    <td style=" border: 1px solid black;">{{item.taxableIncome}}</td>
-                                    <td style=" border: 1px solid black;">{{item.incomeTax}}</td>
-                                    <td style=" border: 1px solid black;">{{item.pFEmployerPension}}</td>
-                                    <td style=" border: 1px solid black;">{{item.loan}}</td>
-                                    <td style=" border: 1px solid black;">{{item.totalDeduction}}</td>
-                                    <td style=" border: 1px solid black;">{{item.netPay}} </td>
+                                    <td style=" border: 1px solid black;">{{item.salary | number: "0.01"}}</td>
+                                    <td style=" border: 1px solid black;">{{item.transportFuelAllowance | number: "0.01"}}</td>
+                                    <td style=" border: 1px solid black;">{{item.communicationAllowance | number: "0.01"}}</td>
+                                    <td style=" border: 1px solid black;">{{item.positionAllowanceOT | number: "0.01"}}</td>
+                                    <td style=" border: 1px solid black;">{{item.overTime | number: "0.01"}}</td>
+                                    <td style=" border: 1px solid black;">{{item.pFEmployerPension | number: "0.01"}}</td>
+                                    <td style=" border: 1px solid black;">{{item.employeePension | number: "0.01"}}</td>
+                                    <td style=" border: 1px solid black;">{{item.totalEarning | number: "0.01"}}</td>
+                                    <td style=" border: 1px solid black;">{{item.taxableIncome | number: "0.01"}}</td>
+                                    <td style=" border: 1px solid black;">{{item.incomeTax | number: "0.01"}}</td>
+                                    <td style=" border: 1px solid black;">{{item.pFEmployerPension | number: "0.01"}}</td>
+                                    <td style=" border: 1px solid black;">{{item.loan | number: "0.01"}}</td>
+                                    <td style=" border: 1px solid black;">{{item.totalDeduction | number: "0.01"}}</td>
+                                    <td style=" border: 1px solid black;">{{item.netPay | number: "0.01"}} </td>
                                 </tr>
                                 <!-- Add more rows for other employees -->
                             </tbody>

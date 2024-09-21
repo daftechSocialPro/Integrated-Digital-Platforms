@@ -1,27 +1,27 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
-import { StrategicPlanPostDto } from 'src/app/model/PM/StrategicPlanDto';
 import { SelectList } from 'src/app/model/common';
-import { DropDownService } from 'src/app/services/dropDown.service';
-import { IPaymentRequisitionPostDto } from '../IPaymentRequisition';
-import { UserService } from 'src/app/services/user.service';
 import { UserView } from 'src/app/model/user';
+import { BudgetByActivityDto, IPaymentRequisitionPostDto } from 'src/app/pages/finance/payment-requisition/IPaymentRequisition';
+import { DropDownService } from 'src/app/services/dropDown.service';
 import { FinanceService } from 'src/app/services/finance.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  selector: 'app-add-payment-requisition',
-  templateUrl: './add-payment-requisition.component.html',
-  styleUrls: ['./add-payment-requisition.component.css']
+  selector: 'app-request-payment',
+  templateUrl: './request-payment.component.html',
+  styleUrls: ['./request-payment.component.css']
 })
-export class AddPaymentRequisitionComponent implements OnInit {
+export class RequestPaymentComponent implements OnInit {
 
   paymentRequisitionForm!: FormGroup
   projectDropdowns:SelectList[]=[];
   activityDropDown:SelectList[]=[];
   purchaseRequests: SelectList[]=[];
-  user: UserView
+  user: UserView;
+  budgetByActivity:BudgetByActivityDto;
 
   paymentTypeList = [
     { name: "Transfer", value: 0 },
@@ -88,10 +88,18 @@ getActivityByProject(projectId:any){
   })
 }
 
+getBudgetByActivity(activityId: any){
+  this.budgetByActivity = new BudgetByActivityDto(); 
+  this.financeService.getBudgetByActivity(activityId.value).subscribe({
+    next:(res)=>{
+      this.budgetByActivity = res;
+    }
+  });
+}
+
   submit() {
-
+    
     if (this.paymentRequisitionForm.valid) {
-
       var paymentRequisition: IPaymentRequisitionPostDto = {
         ammount: this.paymentRequisitionForm.value.ammount,
         budgetLine: this.paymentRequisitionForm.value.budgetLine,
@@ -101,7 +109,6 @@ getActivityByProject(projectId:any){
         purpose : this.paymentRequisitionForm.value.purpose,
         createdById:  this.user.userId  
       }
-      debugger;
       if(this.paymentRequisitionForm.value.purchaseRequestId != null ){
         paymentRequisition.purchaseRequestId = this.paymentRequisitionForm.value.purchaseRequestId
       }
@@ -111,6 +118,11 @@ getActivityByProject(projectId:any){
       if(this.paymentRequisitionForm.value.activityId != null ){
         paymentRequisition.activityId = this.paymentRequisitionForm.value.activityId
       }
+
+      if(this.budgetByActivity.usedBudget + paymentRequisition.ammount > this.budgetByActivity.allocatedBudget){
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'There is no enough budget' });
+      }
+      else{
       this.financeService.addPaymentRequisition(paymentRequisition).subscribe({
 
         next: (res) => {
@@ -127,6 +139,7 @@ getActivityByProject(projectId:any){
         }
       }
       );
+    }
     }
 
   }

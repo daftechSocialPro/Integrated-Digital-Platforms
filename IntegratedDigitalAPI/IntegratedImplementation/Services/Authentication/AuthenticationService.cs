@@ -54,6 +54,18 @@ namespace Implementation.Services.Authentication
                             Success = false,
                             Message = "Error!! please contact Your Admin"
                         };
+
+                    var paymentSettlment = await _dbContext.PaymetRequisitions.AnyAsync(x => x.CreatedById == user.Id && !x.IsSettled && x.CreatedDate.AddDays(7) <= DateTime.Now);
+                    if (paymentSettlment)
+                    {
+                        return new ResponseMessage()
+                        {
+                            Success = false,
+                            Message = "Error!! Please go to finance and settle your payment"
+                        };
+                    }
+
+
                     var roleList = await _userManager.GetRolesAsync(user);
                     IdentityOptions _options = new IdentityOptions();
                     var str = String.Join(",", roleList);

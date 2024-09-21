@@ -53,7 +53,7 @@
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-worked>
-                            <tr>
+                            <tr  [ngStyle]="{'background-color': worked.isExpired? '#ff000045' : 'transparent'}">
                                 <td>{{ worked.employee }}</td>
                                 <td>{{ worked.requestedAmmount |  currency : 'ETB' }}</td>
                                 <td>{{ worked.usedAmmount |  currency : 'ETB' }}</td>

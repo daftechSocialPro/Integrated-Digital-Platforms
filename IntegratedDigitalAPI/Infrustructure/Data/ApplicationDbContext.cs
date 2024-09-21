@@ -200,7 +200,7 @@ namespace IntegratedInfrustructure.Data
         public DbSet<LedgerPostingAccount> LedgerPostingAccounts { get; set; }
         public DbSet<PaymetRequisitions> PaymetRequisitions { get; set; }
         public DbSet<EmployeePaymentSettlement> EmployeePaymentSettlements { get; set; }
-
+        public DbSet<PayeeDetailesPayment> PayeeDetailesPayments { get; set; }
         #endregion
 
 

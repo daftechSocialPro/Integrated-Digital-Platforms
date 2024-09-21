@@ -76,9 +76,9 @@ import { AccordionModule } from 'primeng/accordion';
 import { PaymentRequisitionComponent } from './payment-requisition/payment-requisition.component';
 import { PendingPaymentRequisitionComponent } from './payment-requisition/pending-payment-requisition/pending-payment-requisition.component';
 import { ApprovedPaymentRequisitionComponent } from './payment-requisition/approved-payment-requisition/approved-payment-requisition.component';
-import { AddPaymentRequisitionComponent } from './payment-requisition/add-payment-requisition/add-payment-requisition.component';
 import { PaymentRequisitionViewComponent } from './payment-requisition/payment-requisition-view/payment-requisition-view.component';
 import { EmployeeSettlementsComponent } from './employee-settlements/employee-settlements.component';
+import { AddPayeeDetailsComponent } from './payments/pending-payments/add-payee-details/add-payee-details.component';
 
 
 
@@ -136,9 +136,9 @@ import { EmployeeSettlementsComponent } from './employee-settlements/employee-se
     PaymentRequisitionComponent,
     PendingPaymentRequisitionComponent,
     ApprovedPaymentRequisitionComponent,
-    AddPaymentRequisitionComponent,
     PaymentRequisitionViewComponent,
     EmployeeSettlementsComponent,
+    AddPayeeDetailsComponent,
 
   ],
   imports: [

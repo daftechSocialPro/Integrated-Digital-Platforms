@@ -69,5 +69,29 @@ namespace IntegratedDigitalAPI.Controllers.Finance.Action
         {
             return Ok(await _paymentRequsition.GetEmployeePaymentSettlements());
         }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(EmployeeRequsitionsDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetEmployeeRequsitions(string userId)
+        {
+            return Ok(await _paymentRequsition.GetEmployeeRequsitions(userId));
+        }
+
+
+        [HttpGet]
+        [ProducesResponseType(typeof(PendingRequestAmmountDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetPendignRequestsByProjectManager(Guid employeeId)
+        {
+            return Ok(await _paymentRequsition.GetPendignRequestsByProjectManager(employeeId));
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(BudgetByActivityDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetBudgetByActivity(Guid activityId)
+        {
+            return Ok(await _paymentRequsition.GetBudgetByActivity(activityId));
+        }
+
+        
     }
 }
