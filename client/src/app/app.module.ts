@@ -280,6 +280,10 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { ChangePasswordComponent } from './pages/configuration/user-management/change-password/change-password.component';
 import { CustomResceduleConfirtamionComponent } from './pages/project-managment/assigned-activities/custom-rescedule-confirtamion/custom-rescedule-confirtamion.component';
 import { HrmDashboardComponent } from './pages/human-resource/hrm-dashboard/hrm-dashboard.component';
+import { PaymentSetlmentsComponent } from './pages/users-profile/payment-setlments/payment-setlments.component';
+import { RequestPaymentComponent } from './pages/users-profile/payment-setlments/request-payment/request-payment.component';
+import {SidebarModule} from 'primeng/sidebar';
+import { DataViewModule } from 'primeng/dataview';
 
 @NgModule({
   declarations: [
@@ -607,12 +611,15 @@ import { HrmDashboardComponent } from './pages/human-resource/hrm-dashboard/hrm-
       AllTrainingListComponent,
       ChangePasswordComponent,
       CustomResceduleConfirtamionComponent,
-      HrmDashboardComponent
+      HrmDashboardComponent,
+      PaymentSetlmentsComponent,
+      RequestPaymentComponent
 
     //  AddMeasurementComponent,
     //  UpdateMeasurmentComponent
   ],
   imports: [
+    SidebarModule,
     BrowserModule,
     FormsModule,
     AppRoutingModule,
@@ -645,12 +652,14 @@ import { HrmDashboardComponent } from './pages/human-resource/hrm-dashboard/hrm-
     ToolbarModule,
     ResizableModule,
     MultiSelectModule,
+    DataViewModule ,
     ToastrModule.forRoot({
       preventDuplicates: true,
     }),
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts'),
     }),
+    
   ],
   providers: [
     {

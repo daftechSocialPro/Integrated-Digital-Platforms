@@ -159,6 +159,7 @@ namespace IntegratedImplementation.Services.Finance.Action
                                     Remark = x.Remark,
                                     DocumentPath = x.DocumentPath,
                                     Supplier = x.Supplier.Name,
+                                    TypeOfPayee = x.TypeOfPayee.ToString(),
                                     PaymentDetailLists = x.PaymentDetails.Select(y => new PaymentDetailListDto
                                     {
                                         ChartOfAccount = $"{y.ChartofAccount.Description} ({y.ChartofAccount.AccountNo})",
@@ -326,6 +327,59 @@ namespace IntegratedImplementation.Services.Finance.Action
             return activities;
 
 
+        }
+
+        public async Task<ResponseMessage> AddPayeeDetail(AddPayeeDetailsDto addPayeeDetails)
+        {
+            var accountexists = await _dbContext.PayeeDetailesPayments.AnyAsync(x => x.PaymentId == addPayeeDetails.PaymentId && x.AccountNumber == addPayeeDetails.AccountNumber);
+
+            if (accountexists)
+            {
+                return new ResponseMessage { Success = false, Message = "Account already Exists" };
+            }
+
+            PayeeDetailesPayment payeeDetailes = new PayeeDetailesPayment()
+            {
+                Id = Guid.NewGuid(),
+                AccountNumber = addPayeeDetails.AccountNumber,
+                Ammount = addPayeeDetails.Ammount,
+                CreatedById = addPayeeDetails.CreatedById,
+                CreatedDate = DateTime.Now,
+                FullName = addPayeeDetails.FullName,
+                PaymentId = addPayeeDetails.PaymentId,
+                Remark = addPayeeDetails.Remark,
+                Rowstatus = RowStatus.ACTIVE
+            };
+
+            await _dbContext.PayeeDetailesPayments.AddAsync(payeeDetailes);
+            await _dbContext.SaveChangesAsync();
+
+            return new ResponseMessage { Success = true, Message = "Added Succesfully", Data = payeeDetailes.Id };
+        }
+
+        public async Task<List<PayeeDetailListsDto>> GetPayeeDetails(Guid PaymentId)
+        {
+            var payeeLists = await _dbContext.PayeeDetailesPayments.Where(x => x.PaymentId == PaymentId).Select(x => new PayeeDetailListsDto
+            {
+                Id = x.Id,
+                AccountNumber = x.AccountNumber,
+                Ammount = x.Ammount,
+                FullName = x.FullName,
+                Remark = x.Remark
+            }).ToListAsync();
+
+            return payeeLists;
+        }
+
+        public async Task<ResponseMessage> RemovePayeeDetail(Guid id)
+        {
+            int payeeDetail = await _dbContext.PayeeDetailesPayments.Where(x => x.Id == id).ExecuteDeleteAsync();
+
+            return new ResponseMessage
+            {
+                Success = payeeDetail > 0 ? true : false,
+                Message = "Removed Succesfully"
+            };
         }
     }
 }

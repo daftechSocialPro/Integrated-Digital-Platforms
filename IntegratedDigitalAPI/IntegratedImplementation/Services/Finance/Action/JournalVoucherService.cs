@@ -84,6 +84,8 @@ namespace IntegratedImplementation.Services.Finance.Action
             return new ResponseMessage { Success = true, Message = "Journal Voucher Added Succesfully!!" };
         }
 
+       
+
         public async Task<List<GetJournalVoucherDto>> GetJournalVochures(TypeofJV typeofJV)
         {
             var journalVochures = await _dbContext.JournalVouchers.Where(x => x.TypeofJV == typeofJV).Select(x => new GetJournalVoucherDto()
@@ -103,6 +105,22 @@ namespace IntegratedImplementation.Services.Finance.Action
             }).ToListAsync();
 
             return journalVochures;
+        }
+
+        public async Task<AddJournalVoucherDetailDto> GetJournalByTaxPayerType(TaxEntityType typeofJV)
+        {
+            var currentChartAccount = await _dbContext.LedgerPostingAccounts.Where(x => x.JournalOption == JournalOption.WitholdingAccount)
+                                    .Include(x => x.ChartOfAccount)
+                                    .FirstAsync();
+
+
+            if (currentChartAccount == null)
+            {
+                return new AddJournalVoucherDetailDto();
+            }
+
+            var selectedentity = await _dbContext.TaxEntityRates.Where(x => x.TaxEntityType == typeofJV).FirstOrDefaultAsync();
+            return new AddJournalVoucherDetailDto();
         }
     }
 }

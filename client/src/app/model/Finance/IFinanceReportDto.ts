@@ -12,6 +12,7 @@ export interface PayrollReportGetDto{
     totalEarning: number
     taxableIncome: number
     incomeTax: number
+    overTime: number;
     pension: number
     loan: number
     totalDeduction: number

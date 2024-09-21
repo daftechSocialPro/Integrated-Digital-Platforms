@@ -100,5 +100,42 @@ namespace IntegratedDigitalAPI.Controllers.Finance.Action
         {
             return Ok(await _paymentService.GetPendingProjectFinanceRequests());
         }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(PayeeDetailListsDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetPayeeDetails(Guid PaymentId)
+        {
+            return Ok(await _paymentService.GetPayeeDetails(PaymentId));
+        }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> AddPayeeDetail([FromBody] AddPayeeDetailsDto addPayeeDetails)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _paymentService.AddPayeeDetail(addPayeeDetails));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpDelete]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> RemovePayeeDetail(Guid id)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _paymentService.RemovePayeeDetail(id));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+
     }
 }

@@ -22,5 +22,7 @@ namespace IntegratedImplementation.DTOS.Finance.Action
         public string? Employee { get; set; } = null!;
         public double RequestedAmmount { get; set; }
         public double UsedAmmount { get; set; }
+        public bool IsExpired { get; set; }
+       
     }
 }

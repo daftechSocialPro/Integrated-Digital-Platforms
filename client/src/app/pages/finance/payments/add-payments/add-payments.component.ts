@@ -45,6 +45,7 @@ export class AddPaymentsComponent implements OnInit {
     { name: "Supplier", value: 0 },
     { name: "Employee", value: 1 },
     { name: "Other", value: 2 },
+    { name: "Multiple", value: 3 },
   ]
   paymentDetailList: AddPaymentDetailDto[] = [];
   addPaymentDetailList: AddPaymentDetailDto = new AddPaymentDetailDto();

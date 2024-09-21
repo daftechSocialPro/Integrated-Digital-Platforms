@@ -29,5 +29,13 @@ namespace IntegratedInfrustructure.Model.FInance.Actions
         public Guid? ApproverId { get; set; }
         public virtual EmployeeList Approver { get; set; } = null!;
         public DateTime?  ApprovedDate { get; set; }
+
+        public Guid? AuthorizerId { get; set; }
+        public virtual EmployeeList Authorizer { get; set; } = null!;
+        public DateTime? AuthorizedDate { get; set; }
+        public bool IsSettled { get; set; }
+        public DateTime? SettledDate { get; set; }
+        public Guid? SettledById { get; set; }
+        public virtual EmployeeList SettledBy { get; set; } = null!;
     }
 }

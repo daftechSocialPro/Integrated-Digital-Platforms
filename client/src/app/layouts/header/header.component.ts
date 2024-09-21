@@ -11,6 +11,9 @@ import { SelectList } from 'src/app/model/common';
 import { HrmService } from 'src/app/services/hrm.service';
 import { ActivityView } from 'src/app/model/PM/ActivityViewDto';
 import { PMService } from 'src/app/services/pm.services';
+import { FinanceService } from 'src/app/services/finance.service';
+import { ApprovePaymentRequsition, PendingRequestAmmountDto } from 'src/app/pages/finance/payment-requisition/IPaymentRequisition';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-header',
@@ -23,6 +26,9 @@ export class HeaderComponent implements OnInit {
   user !: UserView
   contactEndEMployees!: SelectList[]
   vacancies!: NotificationDto[]
+  visibleSidebar2: boolean;
+  pendingPayments: PendingRequestAmmountDto[] = [];
+
   constructor(@Inject(DOCUMENT) private document: Document,
     private authGuard: AuthGuard,
     private route: Router,
@@ -30,21 +36,26 @@ export class HeaderComponent implements OnInit {
     private userService: UserService,
     private notificationService: NotificationService,
     private commonService: CommonService,
-    private pmService:PMService) { }
+    private pmService: PMService,
+    private financeService: FinanceService,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,) { }
 
   ngOnInit(): void {
-    this.user = this.userService.getCurrentUser()
-    this.getVacancyList()
-    this.getContractEndEmp()
-    this.getActivityForApproval()
-
+    this.visibleSidebar2 = true;
+    this.user = this.userService.getCurrentUser();
+    this.getVacancyList();
+    this.getContractEndEmp();
+    this.getActivityForApproval();
+    this.getPendingPaymentRequsitions();
   }
+
   sidebarToggle() {
     //toggle sidebar function
     this.document.body.classList.toggle('toggle-sidebar');
   }
-  logOut() {
 
+  logOut() {
     this.authGuard.logout();
   }
 
@@ -53,53 +64,91 @@ export class HeaderComponent implements OnInit {
   }
 
   getVacancyList() {
-
     this.notificationService.getVacanciesNotification().subscribe({
-
       next: (res) => {
         this.vacancies = res
       }
-    })
-
+    });
   }
-  getActivityForApproval() {
 
+  getActivityForApproval() {
     this.pmService.getActivityForApproval(this.user.employeeId).subscribe({
       next: (res) => {
-
         this.activites = res
-
-
       }, error: (err) => {
         console.error(err)
       }
     })
   }
+
   navigateToDetail(id: string) {
-
     this.route.navigate(['/HRM/vacancyDetail', id])
-
-  } navigateToempDetail(id: string) {
-
-
+  }
+  navigateToempDetail(id: string) {
     this.route.navigate(['HRM/employeeDetail', { employeeId: id }])
   }
-  routeToApproval (act:ActivityView){
-    
-    this.route.navigate(['pm/actForApproval',{Activties:act}])
+
+  getPendingPaymentRequsitions() {
+    this.financeService.getPendignRequestsByProjectManager(this.user.employeeId).subscribe({
+      next: (res) => {
+        this.pendingPayments = res
+      }, error: (err) => {
+        console.error(err)
+      }
+    });
   }
+
+
+  routeToApproval(act: ActivityView) {
+    this.route.navigate(['pm/actForApproval', { Activties: act }])
+  }
+
   roleMatch(value: string[]) {
     return this.userService.roleMatch(value)
   }
 
   getContractEndEmp() {
-
     this.hrmService.getEmployeeswithContractend().subscribe({
       next: (res) => {
         this.contactEndEMployees = res
       }
     })
-
-
   }
+
+  approvePayment(id: string) {
+    this.confirmationService.confirm({
+      target: event.target,
+      message: `Are you sure that you want to Approve Payment ?`,
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        let item: ApprovePaymentRequsition = {
+          id: id,
+          approve: true,
+          employeeId: this.user.employeeId
+        }
+        this.financeService.approvePaymentRequisition(item).subscribe({
+          next: (res) => {
+            if (res.success) {
+              this.messageService.add({ severity: 'success', summary: 'Success', detail: res.message });
+            }
+            else {
+              this.messageService.add({ severity: 'error', summary: 'Error', detail: res.message });
+            }
+          }, error: (err) => {
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Please Try Again or contact your administrator' });
+            console.error(err)
+          }
+        });
+      },
+      reject: () => {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'You have rejected the request' });
+      }
+    });
+  }
+
+
+
 }
+
+
+

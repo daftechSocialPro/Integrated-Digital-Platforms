@@ -4,6 +4,7 @@ using IntegratedInfrustructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IntegratedInfrustructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240916135444_PaymentSetlmentAgain")]
+    partial class PaymentSetlmentAgain
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,7 +46,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("RoleCategoryId");
 
-                    b.ToTable("Roles", (string)null);
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Authentication.ApplicationUser", b =>
@@ -107,7 +110,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Authentication.RoleCategory", b =>
@@ -124,7 +127,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RoleCategories", (string)null);
+                    b.ToTable("RoleCategories");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Configuration.BankList", b =>
@@ -176,7 +179,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("BankLists", (string)null);
+                    b.ToTable("BankLists");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Configuration.CompanyProfile", b =>
@@ -221,7 +224,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("CompanyProfiles", (string)null);
+                    b.ToTable("CompanyProfiles");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Configuration.Country", b =>
@@ -258,7 +261,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("Countries", (string)null);
+                    b.ToTable("Countries");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Configuration.DeviceSetting", b =>
@@ -298,7 +301,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("DeviceSettings", (string)null);
+                    b.ToTable("DeviceSettings");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Configuration.EducationalField", b =>
@@ -330,7 +333,7 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasIndex("EducationalFieldName")
                         .IsUnique();
 
-                    b.ToTable("EducationalFields", (string)null);
+                    b.ToTable("EducationalFields");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Configuration.EducationalLevel", b =>
@@ -362,7 +365,7 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasIndex("EducationalLevelName")
                         .IsUnique();
 
-                    b.ToTable("EducationalLevels", (string)null);
+                    b.ToTable("EducationalLevels");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Configuration.GeneralCodes", b =>
@@ -400,7 +403,7 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasIndex("GeneralCodeType")
                         .IsUnique();
 
-                    b.ToTable("GeneralCodes", (string)null);
+                    b.ToTable("GeneralCodes");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Configuration.HolidayLst", b =>
@@ -429,7 +432,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("Holidays", (string)null);
+                    b.ToTable("Holidays");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Configuration.ProjectFundSource", b =>
@@ -458,7 +461,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("ProjectFundSources", (string)null);
+                    b.ToTable("ProjectFundSources");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Configuration.Region", b =>
@@ -492,7 +495,7 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasIndex("RegionName")
                         .IsUnique();
 
-                    b.ToTable("Regions", (string)null);
+                    b.ToTable("Regions");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Configuration.Zone", b =>
@@ -526,7 +529,7 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasIndex("ZoneName")
                         .IsUnique();
 
-                    b.ToTable("Zones", (string)null);
+                    b.ToTable("Zones");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.AccountReconciliation", b =>
@@ -564,7 +567,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("PeriodId");
 
-                    b.ToTable("AccountReconciliations", (string)null);
+                    b.ToTable("AccountReconciliations");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.BegningBalance", b =>
@@ -600,7 +603,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("BegningBalances", (string)null);
+                    b.ToTable("BegningBalances");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.BegningBalanceDetail", b =>
@@ -643,7 +646,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("SubsidiaryAccountId");
 
-                    b.ToTable("BegningBalanceDetails", (string)null);
+                    b.ToTable("BegningBalanceDetails");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.EmployeePaymentSettlement", b =>
@@ -681,7 +684,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("PaymentRequisitionId");
 
-                    b.ToTable("EmployeePaymentSettlements", (string)null);
+                    b.ToTable("EmployeePaymentSettlements");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.EmployeePayroll", b =>
@@ -756,7 +759,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("EmployeePayrolls", (string)null);
+                    b.ToTable("EmployeePayrolls");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.JournalVoucher", b =>
@@ -793,7 +796,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("PeriodDetailsId");
 
-                    b.ToTable("JournalVouchers", (string)null);
+                    b.ToTable("JournalVouchers");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.JournalVoucherDetail", b =>
@@ -840,7 +843,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("SubsidiaryAccountId");
 
-                    b.ToTable("JournalVoucherDetails", (string)null);
+                    b.ToTable("JournalVoucherDetails");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.Payment", b =>
@@ -920,7 +923,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("SupplierId");
 
-                    b.ToTable("Payments", (string)null);
+                    b.ToTable("Payments");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.PaymentDetail", b =>
@@ -973,7 +976,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("PaymentId");
 
-                    b.ToTable("PaymentDetails", (string)null);
+                    b.ToTable("PaymentDetails");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.PaymetRequisitions", b =>
@@ -1058,7 +1061,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("purchaseRequestId");
 
-                    b.ToTable("PaymetRequisitions", (string)null);
+                    b.ToTable("PaymetRequisitions");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.PayrollData", b =>
@@ -1107,7 +1110,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("PayrollDatas", (string)null);
+                    b.ToTable("PayrollDatas");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.PurchaseInvoice", b =>
@@ -1163,7 +1166,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("SupplierId");
 
-                    b.ToTable("PurchaseInvoices", (string)null);
+                    b.ToTable("PurchaseInvoices");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.PurchaseInvoiceDetail", b =>
@@ -1201,7 +1204,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("PurchaseInvoiceId");
 
-                    b.ToTable("PurchaseInvoiceDetails", (string)null);
+                    b.ToTable("PurchaseInvoiceDetails");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.Receipt", b =>
@@ -1244,7 +1247,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("Receipts", (string)null);
+                    b.ToTable("Receipts");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.ReceiptDetail", b =>
@@ -1299,7 +1302,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("ReceiptId");
 
-                    b.ToTable("ReceiptDetails", (string)null);
+                    b.ToTable("ReceiptDetails");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Configuration.AccountType", b =>
@@ -1338,7 +1341,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("AccountTypes", (string)null);
+                    b.ToTable("AccountTypes");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Configuration.AccountingPeriod", b =>
@@ -1376,7 +1379,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("AccountingPeriods", (string)null);
+                    b.ToTable("AccountingPeriods");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Configuration.BenefitPayroll", b =>
@@ -1409,7 +1412,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("BenefitPayrolls", (string)null);
+                    b.ToTable("BenefitPayrolls");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Configuration.ChartOfAccount", b =>
@@ -1447,7 +1450,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("ChartOfAccounts", (string)null);
+                    b.ToTable("ChartOfAccounts");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Configuration.Clients", b =>
@@ -1497,7 +1500,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("Clients", (string)null);
+                    b.ToTable("Clients");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Configuration.FinanceLookup", b =>
@@ -1540,7 +1543,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("FinanceLookups", (string)null);
+                    b.ToTable("FinanceLookups");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Configuration.GeneralPayrollSetting", b =>
@@ -1568,7 +1571,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("GeneralPayrollSettings", (string)null);
+                    b.ToTable("GeneralPayrollSettings");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Configuration.IncomeTaxSetting", b =>
@@ -1605,7 +1608,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("IncomeTaxSettings", (string)null);
+                    b.ToTable("IncomeTaxSettings");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Configuration.LedgerPostingAccount", b =>
@@ -1635,7 +1638,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("LedgerPostingAccounts", (string)null);
+                    b.ToTable("LedgerPostingAccounts");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Configuration.PeriodDetails", b =>
@@ -1671,7 +1674,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("PeriodDetails", (string)null);
+                    b.ToTable("PeriodDetails");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Configuration.SubsidiaryAccount", b =>
@@ -1709,7 +1712,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("SubsidiaryAccounts", (string)null);
+                    b.ToTable("SubsidiaryAccounts");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Configuration.TaxEntityRate", b =>
@@ -1740,7 +1743,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("TaxEntityRates", (string)null);
+                    b.ToTable("TaxEntityRates");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.AttendanceLogFile", b =>
@@ -1790,7 +1793,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("DeviceSettingId");
 
-                    b.ToTable("AttendanceLogFiles", (string)null);
+                    b.ToTable("AttendanceLogFiles");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.BenefitList", b =>
@@ -1829,7 +1832,7 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("BenefitLists", (string)null);
+                    b.ToTable("BenefitLists");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.Department", b =>
@@ -1865,7 +1868,7 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasIndex("DepartmentName")
                         .IsUnique();
 
-                    b.ToTable("Departments", (string)null);
+                    b.ToTable("Departments");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeAttendance", b =>
@@ -1914,7 +1917,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("FingerPrintId");
 
-                    b.ToTable("EmployeeAttendances", (string)null);
+                    b.ToTable("EmployeeAttendances");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeBank", b =>
@@ -1953,7 +1956,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("EmployeeBanks", (string)null);
+                    b.ToTable("EmployeeBanks");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeBenefits", b =>
@@ -2001,7 +2004,7 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasIndex("BenefitId", "EmployeeId")
                         .IsUnique();
 
-                    b.ToTable("EmployeeBenefits", (string)null);
+                    b.ToTable("EmployeeBenefits");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeDevelopmentPlan", b =>
@@ -2050,7 +2053,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("EmployeePerformanceId");
 
-                    b.ToTable("EmployeeDevelopmentPlans", (string)null);
+                    b.ToTable("EmployeeDevelopmentPlans");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeDisciplinaryCase", b =>
@@ -2099,7 +2102,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("EmployeeDisciplinaryCases", (string)null);
+                    b.ToTable("EmployeeDisciplinaryCases");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeDocuments", b =>
@@ -2134,7 +2137,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("EmployeeDocuments", (string)null);
+                    b.ToTable("EmployeeDocuments");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeEducation", b =>
@@ -2184,7 +2187,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("EmployeeEducations", (string)null);
+                    b.ToTable("EmployeeEducations");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeFamily", b =>
@@ -2227,7 +2230,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("EmployeeFamilies", (string)null);
+                    b.ToTable("EmployeeFamilies");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeFile", b =>
@@ -2262,7 +2265,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("EmployeeFiles", (string)null);
+                    b.ToTable("EmployeeFiles");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeFingerPrint", b =>
@@ -2292,7 +2295,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("EmployeeFingerPrints", (string)null);
+                    b.ToTable("EmployeeFingerPrints");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeLeave", b =>
@@ -2350,7 +2353,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("LeaveTypeId");
 
-                    b.ToTable("EmployeeLeaves", (string)null);
+                    b.ToTable("EmployeeLeaves");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeList", b =>
@@ -2468,7 +2471,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("ZoneId");
 
-                    b.ToTable("Employees", (string)null);
+                    b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeLoan", b =>
@@ -2520,7 +2523,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("SecondApproverId");
 
-                    b.ToTable("EmployeeLoans", (string)null);
+                    b.ToTable("EmployeeLoans");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeePenalty", b =>
@@ -2572,7 +2575,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("EmployeePenalty", (string)null);
+                    b.ToTable("EmployeePenalty");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeePerformance", b =>
@@ -2622,7 +2625,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("EmployeePerformances", (string)null);
+                    b.ToTable("EmployeePerformances");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeePerformancePlan", b =>
@@ -2663,7 +2666,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("PerformancePlanDetailId");
 
-                    b.ToTable("EmployeePerformancePlans", (string)null);
+                    b.ToTable("EmployeePerformancePlans");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeSalary", b =>
@@ -2698,7 +2701,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("EmployeeSalaries", (string)null);
+                    b.ToTable("EmployeeSalaries");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeSettlement", b =>
@@ -2731,7 +2734,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("EmployeeLoanId");
 
-                    b.ToTable("EmployeeSettlements", (string)null);
+                    b.ToTable("EmployeeSettlements");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeShift", b =>
@@ -2763,7 +2766,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("ShiftListId");
 
-                    b.ToTable("EmployeeShifts", (string)null);
+                    b.ToTable("EmployeeShifts");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeSupervisors", b =>
@@ -2800,7 +2803,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("SupervisorId");
 
-                    b.ToTable("EmployeeSupervisors", (string)null);
+                    b.ToTable("EmployeeSupervisors");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeSupport", b =>
@@ -2831,7 +2834,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("EmployeePerformanceId");
 
-                    b.ToTable("EmploeeSupports", (string)null);
+                    b.ToTable("EmploeeSupports");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeSurety", b =>
@@ -2890,7 +2893,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("EmployeeSureties", (string)null);
+                    b.ToTable("EmployeeSureties");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeWorkExperiance", b =>
@@ -2937,7 +2940,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("EmployeeWorkExperiances", (string)null);
+                    b.ToTable("EmployeeWorkExperiances");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmploymentDetail", b =>
@@ -2995,7 +2998,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("PositionId");
 
-                    b.ToTable("EmploymentDetails", (string)null);
+                    b.ToTable("EmploymentDetails");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.HrmSetting", b =>
@@ -3023,7 +3026,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("HrmSettings", (string)null);
+                    b.ToTable("HrmSettings");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.LeaveBalance", b =>
@@ -3065,7 +3068,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("LeaveBalances", (string)null);
+                    b.ToTable("LeaveBalances");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.LeavePlanSetting", b =>
@@ -3104,7 +3107,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("LeavePlanSetting", (string)null);
+                    b.ToTable("LeavePlanSetting");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.LeaveType", b =>
@@ -3149,7 +3152,7 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("LeaveTypes", (string)null);
+                    b.ToTable("LeaveTypes");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.LeaveTypeDetails", b =>
@@ -3184,7 +3187,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("TakeFromLeaveTypeId");
 
-                    b.ToTable("LeaveTypeDetails", (string)null);
+                    b.ToTable("LeaveTypeDetails");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.LoanRequest", b =>
@@ -3222,7 +3225,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("RequesterId");
 
-                    b.ToTable("LoanRequests", (string)null);
+                    b.ToTable("LoanRequests");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.LoanSetting", b =>
@@ -3273,7 +3276,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("LoanSettings", (string)null);
+                    b.ToTable("LoanSettings");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.OverTime", b =>
@@ -3318,7 +3321,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("OverTimes", (string)null);
+                    b.ToTable("OverTimes");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.PerformancePlan", b =>
@@ -3354,7 +3357,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("PerformancePlans", (string)null);
+                    b.ToTable("PerformancePlans");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.PerformancePlanDetail", b =>
@@ -3392,7 +3395,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("PerformancePlanId");
 
-                    b.ToTable("PerformancePlanDetails", (string)null);
+                    b.ToTable("PerformancePlanDetails");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.PerformanceSetting", b =>
@@ -3427,7 +3430,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("PerformanceSettings", (string)null);
+                    b.ToTable("PerformanceSettings");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.Position", b =>
@@ -3460,7 +3463,7 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasIndex("PositionName")
                         .IsUnique();
 
-                    b.ToTable("Positions", (string)null);
+                    b.ToTable("Positions");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.ResignationRequest", b =>
@@ -3512,7 +3515,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("ResignationRequests", (string)null);
+                    b.ToTable("ResignationRequests");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.ShiftDetail", b =>
@@ -3546,7 +3549,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("ShiftId");
 
-                    b.ToTable("ShiftDetails", (string)null);
+                    b.ToTable("ShiftDetails");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.ShiftList", b =>
@@ -3582,7 +3585,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("ShiftLists", (string)null);
+                    b.ToTable("ShiftLists");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.Volunter", b =>
@@ -3670,7 +3673,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("ZoneId");
 
-                    b.ToTable("Volunters", (string)null);
+                    b.ToTable("Volunters");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Inventory.ItemRecivalTags", b =>
@@ -3711,7 +3714,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("ProductTagId");
 
-                    b.ToTable("ItemRecivalTags", (string)null);
+                    b.ToTable("ItemRecivalTags");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Inventory.MeasurmentUnit", b =>
@@ -3746,7 +3749,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("MeasurmentUnits", (string)null);
+                    b.ToTable("MeasurmentUnits");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Inventory.PerformaDetail", b =>
@@ -3797,7 +3800,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("VendorId");
 
-                    b.ToTable("PerformaDetails", (string)null);
+                    b.ToTable("PerformaDetails");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Inventory.ProductTag", b =>
@@ -3841,7 +3844,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductTags", (string)null);
+                    b.ToTable("ProductTags");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Inventory.VendorBankAccounts", b =>
@@ -3876,7 +3879,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("VendorId");
 
-                    b.ToTable("VendorBankAccounts", (string)null);
+                    b.ToTable("VendorBankAccounts");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.PM.ActivityLocation", b =>
@@ -3920,7 +3923,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("RegionId");
 
-                    b.ToTable("ActivityLocations", (string)null);
+                    b.ToTable("ActivityLocations");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.PM.BudgetYear", b =>
@@ -3945,7 +3948,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("BudgetYears", (string)null);
+                    b.ToTable("BudgetYears");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.PM.Project", b =>
@@ -4005,7 +4008,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("ProjectManagerId");
 
-                    b.ToTable("Projects", (string)null);
+                    b.ToTable("Projects");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.PM.Project_Fund", b =>
@@ -4040,7 +4043,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("ProjectSourceFundId");
 
-                    b.ToTable("Project_Funds", (string)null);
+                    b.ToTable("Project_Funds");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.PM.ReportingPeriod", b =>
@@ -4068,7 +4071,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("ReportingPeriods", (string)null);
+                    b.ToTable("ReportingPeriods");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.PM.StrategicPlan", b =>
@@ -4098,7 +4101,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("StrategicPlans", (string)null);
+                    b.ToTable("StrategicPlans");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.PM.Tasks", b =>
@@ -4159,7 +4162,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("Tasks", (string)null);
+                    b.ToTable("Tasks");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.PM.WeeklyReport", b =>
@@ -4212,7 +4215,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("WeeklyReports", (string)null);
+                    b.ToTable("WeeklyReports");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Training.Trainee", b =>
@@ -4286,7 +4289,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("TrainingId");
 
-                    b.ToTable("Trainees", (string)null);
+                    b.ToTable("Trainees");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Training.TraineesPicture", b =>
@@ -4317,7 +4320,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("TrainingId");
 
-                    b.ToTable("TraineesPictures", (string)null);
+                    b.ToTable("TraineesPictures");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Training.Trainers", b =>
@@ -4359,7 +4362,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("TrainingId");
 
-                    b.ToTable("Trainers", (string)null);
+                    b.ToTable("Trainers");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Training.Training", b =>
@@ -4414,7 +4417,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("Trainings", (string)null);
+                    b.ToTable("Trainings");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Training.TrainingReport", b =>
@@ -4465,7 +4468,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("TrainingId");
 
-                    b.ToTable("TrainingReports", (string)null);
+                    b.ToTable("TrainingReports");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Training.TrainingReportAttachment", b =>
@@ -4488,7 +4491,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("TrainingReportId");
 
-                    b.ToTable("TrainingReportAttachments", (string)null);
+                    b.ToTable("TrainingReportAttachments");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Vacancy.ApplcantDocuments", b =>
@@ -4511,7 +4514,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("ApplicantVacnncyId");
 
-                    b.ToTable("ApplcantDocuments", (string)null);
+                    b.ToTable("ApplcantDocuments");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Vacancy.Applicant", b =>
@@ -4580,7 +4583,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("ZoneId");
 
-                    b.ToTable("Applicants", (string)null);
+                    b.ToTable("Applicants");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Vacancy.ApplicantEducation", b =>
@@ -4625,7 +4628,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("EducationalLevelId");
 
-                    b.ToTable("ApplicantEducations", (string)null);
+                    b.ToTable("ApplicantEducations");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Vacancy.ApplicantVacancy", b =>
@@ -4649,7 +4652,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("VacancyId");
 
-                    b.ToTable("ApplicantVacancies", (string)null);
+                    b.ToTable("ApplicantVacancies");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Vacancy.ApplicantWorkExperiance", b =>
@@ -4688,7 +4691,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("ApplicantId");
 
-                    b.ToTable("ApplicantWorkExperiances", (string)null);
+                    b.ToTable("ApplicantWorkExperiances");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Vacancy.VacancyDocuments", b =>
@@ -4723,7 +4726,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("VacancyId");
 
-                    b.ToTable("VacancyDocuments", (string)null);
+                    b.ToTable("VacancyDocuments");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Vacancy.VacancyList", b =>
@@ -4794,7 +4797,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("PositionId");
 
-                    b.ToTable("VacancyLists", (string)null);
+                    b.ToTable("VacancyLists");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Vacancy.VacancyStatus", b =>
@@ -4839,7 +4842,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("ApplicantVacancyId");
 
-                    b.ToTable("VacancyStatuses", (string)null);
+                    b.ToTable("VacancyStatuses");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.Common.Indicator", b =>
@@ -4873,7 +4876,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("StrategicPlanId");
 
-                    b.ToTable("Indicators", (string)null);
+                    b.ToTable("Indicators");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.AdjustmentHistory", b =>
@@ -4912,7 +4915,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("AdjustmentHistories", (string)null);
+                    b.ToTable("AdjustmentHistories");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.Category", b =>
@@ -4944,7 +4947,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.Item", b =>
@@ -4994,7 +4997,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("Items", (string)null);
+                    b.ToTable("Items");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.ItemReceival", b =>
@@ -5035,7 +5038,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("StoreRequestListId");
 
-                    b.ToTable("ItemReceivals", (string)null);
+                    b.ToTable("ItemReceivals");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.ItemReceivalDetail", b =>
@@ -5081,7 +5084,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ItemReceivalDetails", (string)null);
+                    b.ToTable("ItemReceivalDetails");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.MaintainableItems", b =>
@@ -5118,7 +5121,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("MaintainableItems", (string)null);
+                    b.ToTable("MaintainableItems");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.Product", b =>
@@ -5217,7 +5220,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("VendorId");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.PurchaseRequest", b =>
@@ -5261,7 +5264,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("StoreRequestId");
 
-                    b.ToTable("PurchaseRequests", (string)null);
+                    b.ToTable("PurchaseRequests");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.PurchaseRequestList", b =>
@@ -5324,7 +5327,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("PurchaseRequestId");
 
-                    b.ToTable("PurchaseRequestLists", (string)null);
+                    b.ToTable("PurchaseRequestLists");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.StoreRequest", b =>
@@ -5360,7 +5363,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("RequesterEmployeeId");
 
-                    b.ToTable("StoreRequests", (string)null);
+                    b.ToTable("StoreRequests");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.StoreRequestList", b =>
@@ -5423,7 +5426,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("StoreRequestId");
 
-                    b.ToTable("StoreRequestLists", (string)null);
+                    b.ToTable("StoreRequestLists");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.Inventory.Vendor", b =>
@@ -5473,7 +5476,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("Vendors", (string)null);
+                    b.ToTable("Vendors");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.PM.Activity", b =>
@@ -5622,7 +5625,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("TaskId");
 
-                    b.ToTable("Activities", (string)null);
+                    b.ToTable("Activities");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.PM.ActivityParent", b =>
@@ -5686,7 +5689,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("TaskId");
 
-                    b.ToTable("ActivitiesParents", (string)null);
+                    b.ToTable("ActivitiesParents");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.PM.ActivityProgress", b =>
@@ -5768,7 +5771,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("QuarterId");
 
-                    b.ToTable("ActivityProgresses", (string)null);
+                    b.ToTable("ActivityProgresses");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.PM.ActivityTargetDivision", b =>
@@ -5807,7 +5810,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("ActivityTargetDivisions", (string)null);
+                    b.ToTable("ActivityTargetDivisions");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.PM.ActivityTerminationHistories", b =>
@@ -5871,7 +5874,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("TopProjectTeamId");
 
-                    b.ToTable("ActivityTerminationHistories", (string)null);
+                    b.ToTable("ActivityTerminationHistories");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.PM.EmployeesAssignedForActivities", b =>
@@ -5903,7 +5906,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("EmployeesAssignedForActivities", (string)null);
+                    b.ToTable("EmployeesAssignedForActivities");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.PM.ProgressAttachment", b =>
@@ -5934,7 +5937,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("ProgressAttachments", (string)null);
+                    b.ToTable("ProgressAttachments");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.PM.ProjectTeam", b =>
@@ -5960,7 +5963,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("ProjectTeams", (string)null);
+                    b.ToTable("ProjectTeams");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.PM.ProjectTeamEmployees", b =>
@@ -5995,7 +5998,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("ProjectTeamId");
 
-                    b.ToTable("ProjectTeamEmployees", (string)null);
+                    b.ToTable("ProjectTeamEmployees");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.PM.QuarterSetting", b =>
@@ -6030,7 +6033,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("QuarterSettings", (string)null);
+                    b.ToTable("QuarterSettings");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.PM.TaskMembers", b =>
@@ -6072,7 +6075,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("TaskId");
 
-                    b.ToTable("TaskMembers", (string)null);
+                    b.ToTable("TaskMembers");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.PM.TaskMemo", b =>
@@ -6118,7 +6121,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("TaskId");
 
-                    b.ToTable("TaskMemos", (string)null);
+                    b.ToTable("TaskMemos");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Models.PM.TaskMemoReply", b =>
@@ -6154,7 +6157,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("TaskMemoId");
 
-                    b.ToTable("TaskMemoReply", (string)null);
+                    b.ToTable("TaskMemoReply");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -6176,7 +6179,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RoleClaims", (string)null);
+                    b.ToTable("RoleClaims");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -6198,7 +6201,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserClaims", (string)null);
+                    b.ToTable("UserClaims");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -6217,7 +6220,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
-                    b.ToTable("UserLogins", (string)null);
+                    b.ToTable("UserLogins");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
@@ -6230,7 +6233,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasKey("UserId", "RoleId");
 
-                    b.ToTable("UserRoles", (string)null);
+                    b.ToTable("UserRoles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -6249,7 +6252,7 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("UserTokens", (string)null);
+                    b.ToTable("UserTokens");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.Authentication.ApplicationRole", b =>
