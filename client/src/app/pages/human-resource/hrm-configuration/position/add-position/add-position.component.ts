@@ -19,6 +19,8 @@ export class AddPositionComponent implements OnInit {
 
   PositionForm!: FormGroup;
   user !: UserView
+  fromSalary: boolean = false;
+
   ngOnInit(): void {
     this.user  = this.userService.getCurrentUser()   
   }
@@ -27,12 +29,14 @@ export class AddPositionComponent implements OnInit {
     private activeModal: NgbActiveModal,
     private formBuilder: FormBuilder,
     private hrmService : HrmService,
-private messageService : MessageService,
+    private messageService : MessageService,
     private userService : UserService) { 
 
       this.PositionForm = this.formBuilder.group({
         PositionName: ['', Validators.required],
-        amharicName: ['', Validators.required]
+        amharicName: ['', Validators.required],
+        hasSeverance: [false,Validators.required],
+        severancePercentage: [null]
         
     })
   
@@ -49,6 +53,8 @@ private messageService : MessageService,
         
         positionName : this.PositionForm.value.PositionName,
         amharicName : this.PositionForm.value.amharicName,
+        hasSeverance: this.PositionForm.value.hasSeverance,
+        severancePercentage: this.PositionForm.value.severancePercentage,
         createdById : this.user.userId
 
       }
@@ -74,4 +80,14 @@ private messageService : MessageService,
 
   }
 
+  fromSalaryChange(e: any){
+    this.fromSalary = e.checked
+    if(this.fromSalary == true){
+      this.PositionForm.get('severancePercentage').setValidators([Validators.required])
+    }
+    else{
+      this.PositionForm.get('severancePercentage').clearValidators()
+    }
+    this.PositionForm.get('severancePercentage').updateValueAndValidity()
+  }
 }

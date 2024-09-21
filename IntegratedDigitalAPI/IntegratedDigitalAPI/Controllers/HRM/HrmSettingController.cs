@@ -1,10 +1,6 @@
 ﻿using Implementation.Helper;
-using IntegratedImplementation.DTOS.Configuration;
 using IntegratedImplementation.DTOS.HRM;
-using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedImplementation.Interfaces.HRM;
-using IntegratedImplementation.Services.HRM;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -159,6 +155,7 @@ namespace IntegratedDigitalAPI.Controllers.HRM
                 return BadRequest();
             }
         }
+
 
     }
 }

@@ -1,11 +1,5 @@
 ﻿using Implementation.Helper;
-using IntegratedImplementation.DTOS.Configuration;
 using IntegratedImplementation.DTOS.HRM;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IntegratedImplementation.Interfaces.HRM
 {
@@ -29,5 +23,10 @@ namespace IntegratedImplementation.Interfaces.HRM
 
         Task<List<PerformanceSettingDto>> GetPerformanceSettings();
         Task<ResponseMessage> AddPerformanceSetting(PerformanceSettingDto performanceSetting);
+
+
+        //Task<ResponseMessage> AddSeveranceSetting(SeveranceSettingDto severanceSetteingDto);
+        //Task<ResponseMessage> UpdateSeveranceSetting(SeveranceSettingDto severanceSettingDto);
+        //Task<List<SeveranceSettingDto>> GetAllSeveranceSetting();
     }
 }

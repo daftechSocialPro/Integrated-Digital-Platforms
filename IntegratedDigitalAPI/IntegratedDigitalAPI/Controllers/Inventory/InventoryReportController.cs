@@ -1,11 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System.Data;
-using System.Collections.Generic;
-using System.Net;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using IntegratedImplementation.DTOS.Inventory;
 using IntegratedImplementation.Interfaces.Inventory;
-using IntegratedImplementation.DTOS.Inventory;
+using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace IntegratedDigitalAPI.Controllers.Inventory
 {
@@ -34,6 +30,19 @@ namespace IntegratedDigitalAPI.Controllers.Inventory
             return Ok(await _inventoryReports.GetBalanceReport());
         }
 
+        [HttpGet]
+        [ProducesResponseType(typeof(List<GroupedGoodsReceivingReport>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetGroupedGoodsReceivingReport(DateTime fromDate, DateTime toDate)
+        {
+            return Ok(await _inventoryReports.GetGroupedGoodsReceivingReport(fromDate, toDate));
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(List<InventorySettelmentReport>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetSettelementReport(DateTime fromDate, DateTime toDate)
+        {
+            return Ok(await _inventoryReports.GetSettelementReport(fromDate, toDate));
+        }
 
         [HttpPost]
         [ProducesResponseType(typeof(File), (int)HttpStatusCode.OK)]

@@ -19,11 +19,14 @@ export class UpdatePositionComponent implements OnInit {
 
   PositionForm!: FormGroup;
   user !: UserView
+  fromSalary: boolean = false;
   ngOnInit(): void {
 
     this.PositionForm = this.formBuilder.group({
       PositionName: [this.Position.positionName, Validators.required],
-      amharicName: [this.Position.amharicName, Validators.required]      
+      amharicName: [this.Position.amharicName, Validators.required],
+      hasSeverance: [this.Position.hasSeverance,Validators.required],
+      severancePercentage: [this.Position.severancePercentage]      
   })
   }
 
@@ -46,7 +49,9 @@ export class UpdatePositionComponent implements OnInit {
         
         positionName : this.PositionForm.value.PositionName,
         amharicName : this.PositionForm.value.amharicName,
-        id : this.Position.id
+        id : this.Position.id,
+        hasSeverance: this.PositionForm.value.hasSeverance,
+        severancePercentage: this.PositionForm.value.severancePercentage,
       }
 
       this.hrmService.updatePosition(PositionUpdate).subscribe({
@@ -70,4 +75,7 @@ export class UpdatePositionComponent implements OnInit {
 
   }
 
+  fromSalaryChange(e: any){
+    this.fromSalary = e.checked
+  }
 }

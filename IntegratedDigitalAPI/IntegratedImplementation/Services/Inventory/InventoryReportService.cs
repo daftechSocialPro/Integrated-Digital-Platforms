@@ -3,13 +3,7 @@ using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedImplementation.Interfaces.Inventory;
 using IntegratedInfrustructure.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IntegratedImplementation.Services.Inventory
 {
@@ -26,7 +20,7 @@ namespace IntegratedImplementation.Services.Inventory
 
         public async Task<List<BalanceTempData>> GetBalanceReport()
         {
-          
+
             List<BalanceTempData> dailyReport = await _dbContext.Products.Include(x => x.Item.Category).
                                     Where(x => x.RemainingQuantity > 0).GroupBy(x => x.ItemId)
                                     .Select(x => new BalanceTempData
@@ -40,6 +34,56 @@ namespace IntegratedImplementation.Services.Inventory
                                     }).ToListAsync();
 
             return dailyReport;
+        }
+
+        public async Task<List<GroupedGoodsReceivingReport>> GetGroupedGoodsReceivingReport(DateTime fromDate, DateTime toDate)
+        {
+            var groupedReports = await _dbContext.Products
+                .Where(x => x.RecivingDateTime >= fromDate && x.RecivingDateTime <= toDate)
+                .GroupBy(x => new { x.ItemId, x.Item.Name })
+                .Select(g => new GroupedGoodsReceivingReport
+                {
+                    ItemId = g.Key.ItemId,
+                    ItemName = g.Key.Name,
+                    Details = g.Select(p => new GoodsReceivingReportDetail
+                    {
+                        RecivedDate = p.RecivingDateTime,
+                        Row = p.RowName,
+                        Column = p.ColumnName,
+                        Quantity = p.Quantiy,
+                        MeasurementUnit = p.MeasurementUnit.Name,
+                        SinglePrice = p.SinglePrice,
+                        TotalPrice = p.SinglePrice * p.Quantiy
+                    }).ToList()
+                })
+                .ToListAsync();
+
+            return groupedReports;
+        }
+
+        public async Task<List<InventorySettelmentReport>> GetSettelementReport(DateTime fromDate, DateTime toDate)
+        {
+            var groupedReports = await _dbContext.AdjustmentHistories
+                .Where(x => x.CreatedDate >= fromDate && x.CreatedDate <= toDate)
+                .GroupBy(x => new { x.Product.ItemId, x.Product.Item.Name })
+                .Select(g => new InventorySettelmentReport
+                {
+                    ItemId = g.Key.ItemId,
+                    ItemName = g.Key.Name,
+                    Details = g.Select(p => new InventorySettelmentReportDetail
+                    {
+                        AdjustmentDate = p.CreatedDate,
+                        MeasurementUnit = p.Product.MeasurementUnit.Name,
+                        PreviousQuantity = p.From,
+                        AdjustedQuantity = p.To,
+                        Variance = p.To - p.From,
+                        AdjustmentReason = p.AdjustmentReason.ToString(),
+                        AdjustedBy = _dbContext.Employees.Where(x => x.Id == p.CreatedBy.EmployeeId).Select(x => x.FirstName + " " + x.MiddleName + " " + x.LastName).FirstOrDefault()
+                    }).ToList()
+                })
+                .ToListAsync();
+
+            return groupedReports;
         }
 
         public async Task<byte[]> GetOutReport(StockReportDto stockReport)
