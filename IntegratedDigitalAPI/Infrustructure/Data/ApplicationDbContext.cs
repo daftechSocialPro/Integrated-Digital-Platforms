@@ -1,26 +1,19 @@
 ﻿using IntegratedInfrustructure.Model.Authentication;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.Metrics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using IntegratedInfrustructure.Model.Configuration;
-using IntegratedInfrustructure.Model.HRM;
-using IntegratedInfrustructure.Model.Vacancy;
-using System.Diagnostics;
-using IntegratedInfrustructure.Models.PM;
-using Activity = IntegratedInfrustructure.Models.PM.Activity;
-using IntegratedInfrustructure.Model.PM;
-using IntegratedInfrustructure.Models.Common;
-using IntegratedInfrustructure.Model.Training;
-using IntegratedInfrustructure.Models.Inventory;
-using IntegratedInfrustructure.Model.Inventory;
-using IntegratedInfrustructure.Model.FInance.Configuration;
 using IntegratedInfrustructure.Model.FInance.Actions;
+using IntegratedInfrustructure.Model.FInance.Configuration;
+using IntegratedInfrustructure.Model.HRM;
+using IntegratedInfrustructure.Model.Inventory;
+using IntegratedInfrustructure.Model.PM;
+using IntegratedInfrustructure.Model.Training;
+using IntegratedInfrustructure.Model.Vacancy;
+using IntegratedInfrustructure.Models.Common;
+using IntegratedInfrustructure.Models.Inventory;
+using IntegratedInfrustructure.Models.PM;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using Activity = IntegratedInfrustructure.Models.PM.Activity;
 
 namespace IntegratedInfrustructure.Data
 {
@@ -28,10 +21,10 @@ namespace IntegratedInfrustructure.Data
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
-  
+
         public DbSet<RoleCategory> RoleCategories { get; set; }
-     
-              
+
+
         #region configuration
 
         public DbSet<CompanyProfile> CompanyProfiles { get; set; }
@@ -46,8 +39,8 @@ namespace IntegratedInfrustructure.Data
         public DbSet<Project_Fund> Project_Funds { get; set; }
 
         public DbSet<Indicator> Indicators { get; set; }
-        
-       
+
+
         public DbSet<BankList> BankLists { get; set; }
         #endregion
 
@@ -58,8 +51,8 @@ namespace IntegratedInfrustructure.Data
         public DbSet<EmployeeLeave> EmployeeLeaves { get; set; }
         public DbSet<EmployeeList> Employees { get; set; }
         public DbSet<EmployeeWorkExperiance> EmployeeWorkExperiances { get; set; }
-        public DbSet <EmploymentDetail> EmploymentDetails { get; set; }
-        public DbSet <EmployeeFile> EmployeeFiles { get; set; }
+        public DbSet<EmploymentDetail> EmploymentDetails { get; set; }
+        public DbSet<EmployeeFile> EmployeeFiles { get; set; }
         public DbSet<EmployeeSurety> EmployeeSureties { get; set; }
         public DbSet<LeavePlanSetting> LeavePlanSetting { get; set; }
         public DbSet<EmployeeSalary> EmployeeSalaries { get; set; }
@@ -72,7 +65,7 @@ namespace IntegratedInfrustructure.Data
         public DbSet<EmployeeSupervisors> EmployeeSupervisors { get; set; }
         public DbSet<PerformanceSetting> PerformanceSettings { get; set; }
         public DbSet<PerformancePlan> PerformancePlans { get; set; }
-        public DbSet<PerformancePlanDetail> PerformancePlanDetails { get; set; }  
+        public DbSet<PerformancePlanDetail> PerformancePlanDetails { get; set; }
         public DbSet<EmployeePerformance> EmployeePerformances { get; set; }
         public DbSet<EmployeePerformancePlan> EmployeePerformancePlans { get; set; }
         public DbSet<EmployeeDevelopmentPlan> EmployeeDevelopmentPlans { get; set; }
@@ -92,12 +85,13 @@ namespace IntegratedInfrustructure.Data
         public DbSet<OverTime> OverTimes { get; set; }
         public DbSet<ShiftList> ShiftLists { get; set; }
         public DbSet<ShiftDetail> ShiftDetails { get; set; }
-        
+
         public DbSet<EmployeeShift> EmployeeShifts { get; set; }
         public DbSet<EmployeePenalty> EmployeePenalty { get; set; }
         public DbSet<LeaveTypeDetails> LeaveTypeDetails { get; set; }
         public DbSet<EmployeeBank> EmployeeBanks { get; set; }
-      
+
+
         #endregion
 
         #region Vacancy
@@ -112,8 +106,8 @@ namespace IntegratedInfrustructure.Data
         #endregion
 
         #region PM
-        public DbSet<ReportingPeriod> ReportingPeriods { get; set; }    
-        public DbSet<BudgetYear> BudgetYears { get; set; }    
+        public DbSet<ReportingPeriod> ReportingPeriods { get; set; }
+        public DbSet<BudgetYear> BudgetYears { get; set; }
 
 
 
@@ -125,7 +119,7 @@ namespace IntegratedInfrustructure.Data
         public DbSet<ActivityTerminationHistories> ActivityTerminationHistories { get; set; }
         public DbSet<EmployeesAssignedForActivities> EmployeesAssignedForActivities { get; set; }
         public DbSet<ProgressAttachment> ProgressAttachments { get; set; }
-        public DbSet<Project>Projects { get; set; }
+        public DbSet<Project> Projects { get; set; }
         public DbSet<ProjectTeamEmployees> ProjectTeamEmployees { get; set; }
         public DbSet<ProjectTeam> ProjectTeams { get; set; }
         public DbSet<QuarterSetting> QuarterSettings { get; set; }
@@ -135,7 +129,7 @@ namespace IntegratedInfrustructure.Data
         public DbSet<TaskMemoReply> TaskMemoReply { get; set; }
         public DbSet<Tasks> Tasks { get; set; }
 
-        public DbSet<ActivityLocation> ActivityLocations { get; set; }  
+        public DbSet<ActivityLocation> ActivityLocations { get; set; }
         #endregion
 
         #region Training
@@ -205,7 +199,7 @@ namespace IntegratedInfrustructure.Data
         public DbSet<LedgerPostingAccount> LedgerPostingAccounts { get; set; }
         public DbSet<PaymetRequisitions> PaymetRequisitions { get; set; }
         public DbSet<EmployeePaymentSettlement> EmployeePaymentSettlements { get; set; }
-
+        public DbSet<PayeeDetailesPayment> PayeeDetailesPayments { get; set; }
         #endregion
 
 
@@ -238,10 +232,10 @@ namespace IntegratedInfrustructure.Data
 
             modelBuilder.Entity<GeneralCodes>()
                .HasIndex(b => b.GeneralCodeType).IsUnique();
-            modelBuilder.Entity<Country>().HasIndex(b=>b.CountryName).IsUnique();
-            modelBuilder.Entity<EducationalField>().HasIndex(b=>b.EducationalFieldName).IsUnique();
-            modelBuilder.Entity<EducationalLevel>().HasIndex(b=>b.EducationalLevelName).IsUnique();
-            modelBuilder.Entity<Region>().HasIndex(b=>b.RegionName).IsUnique();
+            modelBuilder.Entity<Country>().HasIndex(b => b.CountryName).IsUnique();
+            modelBuilder.Entity<EducationalField>().HasIndex(b => b.EducationalFieldName).IsUnique();
+            modelBuilder.Entity<EducationalLevel>().HasIndex(b => b.EducationalLevelName).IsUnique();
+            modelBuilder.Entity<Region>().HasIndex(b => b.RegionName).IsUnique();
             modelBuilder.Entity<Zone>().HasIndex(b => b.ZoneName).IsUnique();
             modelBuilder.Entity<Applicant>().HasIndex(b => b.Email).IsUnique();
             modelBuilder.Entity<Position>().HasIndex(b => b.PositionName).IsUnique();
@@ -250,7 +244,7 @@ namespace IntegratedInfrustructure.Data
             modelBuilder.Entity<BankList>().HasIndex(b => b.BankName).IsUnique();
             modelBuilder.Entity<BenefitList>().HasIndex(b => b.Name).IsUnique();
             modelBuilder.Entity<EmployeeBenefits>().HasIndex(b => new { b.BenefitId, b.EmployeeId }).IsUnique();
-        
+
 
 
 

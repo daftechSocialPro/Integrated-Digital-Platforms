@@ -9,7 +9,7 @@ import { AccountingPeriodGetDto, AccountingPeriodPostDto } from '../model/Financ
 import { ChartOfAccountsGetDto, ChartOfAccountsPostDto, SubsidiaryAccountsPostDto } from '../model/Finance/IChartOfAccountsDto';
 import { SelectList } from '../model/common';
 import { BenefitPayrollGetDto, BenefitPayrollPostDto, GeneralSettingGetDto, GeneralSettingPostDto, IncomeTaxDto } from '../model/Finance/IPayrollSettingDto';
-import { ApprovePaymentDto, PaymentGetDto, PaymentLetterDto, PaymentPostDto } from '../model/Finance/IPaymentDto';
+import { AddPayeeDetailsDto, ApprovePaymentDto, PayeeDetailListsDto, PaymentGetDto, PaymentLetterDto, PaymentPostDto } from '../model/Finance/IPaymentDto';
 import { CalculatePayrollDto, CheckOrApprovePayrollDto, PayrollGetDto } from '../model/Finance/IPayrollDto';
 import { AddBegnningBalanceDto, BeginningBalanceGetDto, BeginningBalancePostDto } from '../model/Finance/IBeginningBalanceDto';
 import { PurchaseInvoiceGetDto, PurchaseInvoicePostDto } from '../model/Finance/IPurchaseInvoiceDto';
@@ -23,8 +23,9 @@ import { AddLedgerPostingAccountDto, AddTaxRateDto, LedgerPostingAccountDto, Tax
 import { FinanceDashboardDTO, FinanceBarChartPostDto } from '../model/Finance/IFinanceDashboard';
 import { PendingFinanceRequestDto } from '../model/Finance/IPendingFinanceRequestDto';
 import { AddJournalVochureDto, GetJournalVoucherDto } from '../model/Finance/IJournalVoucherDto';
-import { ApprovePaymentRequsition, IPaymentRequisitionGetDto, IPaymentRequisitionPostDto } from '../pages/finance/payment-requisition/IPaymentRequisition';
+import { ApprovePaymentRequsition, BudgetByActivityDto, IPaymentRequisitionGetDto, IPaymentRequisitionPostDto, PendingRequestAmmountDto } from '../pages/finance/payment-requisition/IPaymentRequisition';
 import { ActivityForSettlementDto } from '../model/Finance/ActivityForSettlementDto';
+import { EmployeeRequsitionsDto } from '../pages/users-profile/payment-setlments/IEmployee-payment.model';
 
 @Injectable({
   providedIn: 'root'
@@ -143,6 +144,18 @@ export class FinanceService {
   }
   getPaymentLetter(paymentId: string){
     return this.http.get<PaymentLetterDto>( this.BaseURI + `/Payment/GetPaymentLetter?paymentId=${paymentId}`)
+  }
+
+  addPayeeDetail(payeeDetail: AddPayeeDetailsDto ){
+    return this.http.post<ResponseMessage>(this.BaseURI + "/Payment/AddPayeeDetail",payeeDetail)
+  }
+
+  getPayeeDetails(paymentId: string){
+    return this.http.get<PayeeDetailListsDto[]>( this.BaseURI + `/Payment/GetPayeeDetails?PaymentId=${paymentId}`)
+  }
+
+  RemovePayeeDetail(id: string){
+    return this.http.delete<ResponseMessage>(this.BaseURI + `/Payment/RemovePayeeDetail?id=${id}`)
   }
 
   //Payroll
@@ -286,9 +299,27 @@ addPaymentRequisition(payment: IPaymentRequisitionPostDto) {
   );
 }
 
+getBudgetByActivity(activityId: string){
+  return this.http.get<BudgetByActivityDto>(
+    this.BaseURI + `/PaymentRequsition/GetBudgetByActivity?activityId=${activityId}`,
+  );
+}
+
 getPendingPaymentRequisitions() {
   return this.http.get<IPaymentRequisitionGetDto[]>(
     this.BaseURI + '/PaymentRequsition/GetPendingPaymentRequisitions'
+  );
+}
+
+getEmployeeRequsitions(userId: string) {
+  return this.http.get<EmployeeRequsitionsDto[]>(
+    this.BaseURI + `/PaymentRequsition/GetEmployeeRequsitions?userId=${userId}`
+  );
+}
+
+getPendignRequestsByProjectManager(employeeId: string) {
+  return this.http.get<PendingRequestAmmountDto[]>(
+    this.BaseURI + `/PaymentRequsition/GetPendignRequestsByProjectManager?employeeId=${employeeId}`
   );
 }
 

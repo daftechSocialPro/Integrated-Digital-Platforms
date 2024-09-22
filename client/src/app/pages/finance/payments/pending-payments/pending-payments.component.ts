@@ -134,4 +134,12 @@ export class PendingPaymentsComponent implements OnInit {
   createImagePath(url: string) {
     return this.commonService.createImgPath(url);
   }
+
+  addPayeeDetail(paymentId: string){
+    let modalRef = this.modalService.open(AddJournalVoucherComponent,{size:'xl',backdrop:'static'})
+    modalRef.componentInstance.paymentId = paymentId
+    modalRef.result.then(()=>{
+      this.getPendingPayments()
+    })
+  }
 }

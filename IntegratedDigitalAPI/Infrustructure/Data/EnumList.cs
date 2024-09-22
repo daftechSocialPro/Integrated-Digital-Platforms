@@ -397,7 +397,8 @@ namespace IntegratedInfrustructure.Data
         {
             SUPPLIER,
             EMPLOYEE,
-            OTHER
+            OTHER,
+            Multiple
         }
 
         public enum GeneralPSett

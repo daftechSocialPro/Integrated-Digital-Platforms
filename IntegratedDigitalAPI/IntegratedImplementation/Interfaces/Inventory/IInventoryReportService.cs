@@ -1,9 +1,4 @@
 ﻿using IntegratedImplementation.DTOS.Inventory;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IntegratedImplementation.Interfaces.Inventory
 {
@@ -12,5 +7,7 @@ namespace IntegratedImplementation.Interfaces.Inventory
         Task<byte[]> GetStockReport(StockReportDto stockReport);
         Task<byte[]> GetOutReport(StockReportDto stockReport);
         Task<List<BalanceTempData>> GetBalanceReport();
+        Task<List<GroupedGoodsReceivingReport>> GetGroupedGoodsReceivingReport(DateTime fromDate, DateTime toDate);
+        Task<List<InventorySettelmentReport>> GetSettelementReport(DateTime fromDate, DateTime toDate);
     }
 }

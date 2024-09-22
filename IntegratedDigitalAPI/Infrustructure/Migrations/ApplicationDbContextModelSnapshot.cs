@@ -646,6 +646,44 @@ namespace IntegratedInfrustructure.Migrations
                     b.ToTable("BegningBalanceDetails");
                 });
 
+            modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.EmployeePaymentSettlement", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("PaymentAction")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("PaymentRequisitionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("RemainingAmmount")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("PaymentRequisitionId");
+
+                    b.ToTable("EmployeePaymentSettlements");
+                });
+
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.EmployeePayroll", b =>
                 {
                     b.Property<Guid>("Id")
@@ -805,6 +843,47 @@ namespace IntegratedInfrustructure.Migrations
                     b.ToTable("JournalVoucherDetails");
                 });
 
+            modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.PayeeDetailesPayment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AccountNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Ammount")
+                        .HasColumnType("float");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("PaymentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Remark")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("PaymentId");
+
+                    b.ToTable("PayeeDetailesPayments");
+                });
+
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.Payment", b =>
                 {
                     b.Property<Guid>("Id")
@@ -956,6 +1035,12 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<Guid?>("ApproverId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime?>("AuthorizedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("AuthorizerId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("BudgetLine")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -969,6 +1054,9 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsSettled")
+                        .HasColumnType("bit");
 
                     b.Property<int>("PaymentType")
                         .HasColumnType("int");
@@ -986,6 +1074,12 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<int>("Rowstatus")
                         .HasColumnType("int");
 
+                    b.Property<Guid?>("SettledById")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("SettledDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<Guid?>("purchaseRequestId")
                         .HasColumnType("uniqueidentifier");
 
@@ -995,9 +1089,13 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("ApproverId");
 
+                    b.HasIndex("AuthorizerId");
+
                     b.HasIndex("CreatedById");
 
                     b.HasIndex("ProjectId");
+
+                    b.HasIndex("SettledById");
 
                     b.HasIndex("purchaseRequestId");
 
@@ -3389,12 +3487,18 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("HasSeverance")
+                        .HasColumnType("bit");
+
                     b.Property<string>("PositionName")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Rowstatus")
                         .HasColumnType("int");
+
+                    b.Property<double?>("SeverancePercentage")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -6394,6 +6498,31 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("SubsidiaryAccount");
                 });
 
+            modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.EmployeePaymentSettlement", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("IntegratedInfrustructure.Model.FInance.Actions.PaymetRequisitions", "PaymentRequisition")
+                        .WithMany()
+                        .HasForeignKey("PaymentRequisitionId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("PaymentRequisition");
+                });
+
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.EmployeePayroll", b =>
                 {
                     b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
@@ -6457,6 +6586,23 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("JournalVoucher");
 
                     b.Navigation("SubsidiaryAccount");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.PayeeDetailesPayment", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("IntegratedInfrustructure.Model.FInance.Actions.Payment", "Payment")
+                        .WithMany()
+                        .HasForeignKey("PaymentId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("Payment");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.Payment", b =>
@@ -6547,6 +6693,10 @@ namespace IntegratedInfrustructure.Migrations
                         .WithMany()
                         .HasForeignKey("ApproverId");
 
+                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "Authorizer")
+                        .WithMany()
+                        .HasForeignKey("AuthorizerId");
+
                     b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedById");
@@ -6554,6 +6704,10 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasOne("IntegratedInfrustructure.Model.PM.Project", "Project")
                         .WithMany()
                         .HasForeignKey("ProjectId");
+
+                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "SettledBy")
+                        .WithMany()
+                        .HasForeignKey("SettledById");
 
                     b.HasOne("IntegratedInfrustructure.Models.Inventory.PurchaseRequest", "PurchaseRequest")
                         .WithMany()
@@ -6563,11 +6717,15 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.Navigation("Approver");
 
+                    b.Navigation("Authorizer");
+
                     b.Navigation("CreatedBy");
 
                     b.Navigation("Project");
 
                     b.Navigation("PurchaseRequest");
+
+                    b.Navigation("SettledBy");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Actions.PayrollData", b =>

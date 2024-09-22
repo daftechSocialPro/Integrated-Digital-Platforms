@@ -8,6 +8,7 @@ namespace IntegratedImplementation.Interfaces.Finance.Action
     {
         Task<ResponseMessage> AddJournalVochure(AddJournalVochureDto addJournalVochureDto);
         Task<List<GetJournalVoucherDto>> GetJournalVochures(TypeofJV typeofJV);
+        Task<AddJournalVoucherDetailDto> GetJournalByTaxPayerType(TaxEntityType typeofJV);
 
 
     }

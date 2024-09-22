@@ -14,4 +14,5 @@ export class RequsitionSettlementsDto
     employee: string;
     requestedAmmount: number;
     usedAmmount: number;
+    isExpired: boolean;
 }

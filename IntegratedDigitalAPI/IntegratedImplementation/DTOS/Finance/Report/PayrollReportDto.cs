@@ -19,6 +19,7 @@ namespace IntegratedImplementation.DTOS.Finance.Report
         public double PFEmployerPension { get; set; }
         public double EmployeePension { get; set; }
         public double TotalEarning { get; set; }
+        public double OverTime { get; set; }
         public double TaxableIncome { get; set; }
         public double IncomeTax { get; set;}
         public double Pension { get; set; }
@@ -26,8 +27,8 @@ namespace IntegratedImplementation.DTOS.Finance.Report
         public double TotalDeduction { get; set; }
         public double NetPay { get; set; }
 
-        public string AccountNumber { get; set; }
-        public string EmployeeCode { get; set; }
+        public string AccountNumber { get; set; } = null!;
+        public string EmployeeCode { get; set; } = null!;
 
     }
 

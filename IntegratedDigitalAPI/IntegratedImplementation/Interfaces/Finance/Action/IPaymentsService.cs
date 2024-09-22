@@ -12,8 +12,13 @@ namespace IntegratedImplementation.Interfaces.Finance.Action
     public interface IPaymentsService
     {
         Task<ResponseMessage> AddPayments(AddPaymentDto addPayment);
+
+
         Task<ResponseMessage> ApprovePayment(ApprovePaymentDto approvePayment);
         Task<ResponseMessage> AuthorizePayment(ApprovePaymentDto approvePayment);
+        Task<ResponseMessage> AddPayeeDetail(AddPayeeDetailsDto addPayeeDetails);
+        Task<List<PayeeDetailListsDto>> GetPayeeDetails(Guid PaymentId);
+        Task<ResponseMessage> RemovePayeeDetail(Guid id);
 
         Task<List<PendingFinanceRequestDto>> GetPendingProjectFinanceRequests();
         Task<List<PaymentListDto>> GetPendingPayments();

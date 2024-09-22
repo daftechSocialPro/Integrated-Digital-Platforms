@@ -1,14 +1,15 @@
 export interface PaymentGetDto{
-    id: string
-    accountingPeriod: string
-    paymentDate: Date
-    paymentType: string
-    paymentNumber: string
-    bank: string
-    supplier: string
-    documentPath: string
-    remark: string
-    paymentDetailLists: PaymentDetailListDto[]
+    id: string;
+    accountingPeriod: string;
+    paymentDate: Date;
+    paymentType: string;
+    typeOfPayee: string;
+    paymentNumber: string;
+    bank: string;
+    supplier: string;
+    documentPath: string;
+    remark: string;
+    paymentDetailLists: PaymentDetailListDto[];
 }
 
 export interface PaymentDetailListDto{
@@ -68,4 +69,23 @@ export class PaymentLetterDto
     approverPosition: string;
     authorizer: string;
     authorizerPosition: string;
+}
+
+
+export class AddPayeeDetailsDto {
+    paymentId: string;
+    createdById: string;
+    fullName: string;
+    accountNumber: string;
+    ammount: number;
+    remark: string;
+}
+
+
+export class PayeeDetailListsDto {
+    id: string;
+    fullName: string;
+    accountNumber: string;
+    ammount: number;
+    remark: string;
 }

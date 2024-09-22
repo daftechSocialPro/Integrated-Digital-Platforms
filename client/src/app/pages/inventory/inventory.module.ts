@@ -39,6 +39,8 @@ import { InventoryDashboardComponent } from './inventory-dashboard/inventory-das
 import { NgxEchartsModule } from 'ngx-echarts';
 import { TagNumberComponent } from './tag-number/tag-number.component';
 import { BalanceReportComponent } from './balance-report/balance-report.component';
+import { GoodsReceivingReportComponent } from './goods-receiving-report/goods-receiving-report.component';
+import { SettelmentReportComponent } from './settelment-report/settelment-report.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +66,8 @@ import { BalanceReportComponent } from './balance-report/balance-report.componen
     InventoryDashboardComponent,
     TagNumberComponent,
     BalanceReportComponent,
+    GoodsReceivingReportComponent,
+    SettelmentReportComponent,
   ],
   imports: [
     CommonModule,

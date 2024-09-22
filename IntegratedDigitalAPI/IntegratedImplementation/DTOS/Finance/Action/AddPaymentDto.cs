@@ -61,6 +61,7 @@ namespace IntegratedImplementation.DTOS.Finance.Action
         public string AccountingPeriod { get; set; } = null!;
         public DateTime PaymentDate { get; set; }
         public string PaymentType { get; set; } = null!;
+        public string TypeOfPayee { get; set; } = null!;
         public string PaymentNumber { get; set; } = null!;
         public string Bank { get; set; } = null!;
         public string Supplier { get; set; } = null!;
@@ -80,6 +81,26 @@ namespace IntegratedImplementation.DTOS.Finance.Action
         public string? Remark { get; set; }
     }
 
+
+    public class AddPayeeDetailsDto
+    {
+        public Guid PaymentId { get; set; }
+        public string CreatedById { get; set; } = null!;
+        public string FullName { get; set; } = null!;
+        public string AccountNumber { get; set; } = null!;
+        public double Ammount { get; set; }
+        public string? Remark { get; set; }
+    }
+
+
+    public class PayeeDetailListsDto
+    {
+        public Guid Id { get; set; }
+        public string FullName { get; set; } = null!;
+        public string AccountNumber { get; set; } = null!;
+        public double Ammount { get; set; }
+        public string? Remark { get; set; }
+    }
 
     public class PaymentLetterDto
     {
