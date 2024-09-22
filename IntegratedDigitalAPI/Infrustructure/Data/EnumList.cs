@@ -466,5 +466,8 @@ namespace IntegratedInfrustructure.Data
             Loan,
             Paid
         }
+
+      
+
     }
 }
