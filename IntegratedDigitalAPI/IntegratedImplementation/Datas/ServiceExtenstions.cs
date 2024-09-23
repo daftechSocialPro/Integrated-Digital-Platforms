@@ -57,6 +57,7 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<IHrmLetterService, HrmLetterService>();
             services.AddScoped<IEmployeeAttendanceService, EmployeeAttendanceService>();
             services.AddScoped<IHrmDashboardService, HrmDashboardService>();
+            services.AddScoped<IEmployeeSeveranceService, EmployeeSeveranceService>();
             #endregion
 
             #region Vacancy
@@ -88,7 +89,7 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<ITimePeriodService, TimePeriodService>();
 
             services.AddScoped<IWeeklyPlanService, WeeklyPlanService>();
-            
+
 
             #endregion
 
