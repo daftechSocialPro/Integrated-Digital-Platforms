@@ -62,6 +62,8 @@
                         <th > Termination Reason</th>
                         <th > Is BlackListed</th>
                         <th > Terminated Date</th>
+                        <th > Has Severance</th>
+                        <th > Total Severance Amount</th>
                         <th > Remark</th>
                     </tr>
                 </ng-template>
@@ -73,10 +75,10 @@
                         <td>{{ termination.terminationReason }}</td>
                         <td>{{ termination.isBlackListed }}</td>
                         <td>{{ termination.terminatedDate|date:"dd MMM yyyy" }}</td>
+                        <td>{{ termination.hasSeverance }}</td>
+                        <td>{{ termination.hasSeverance ? termination.totalSeveranceAmount : "-" }}</td>
                         <td>{{ termination.remark }}</td>
-                       
-                        
-                     
+  
                     </tr>
                 </ng-template>
                

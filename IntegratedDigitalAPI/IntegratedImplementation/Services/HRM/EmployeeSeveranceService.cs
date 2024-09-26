@@ -61,6 +61,7 @@ namespace IntegratedImplementation.Services.HRM
         public async Task<double> GetEmployeeSeverance(Guid employeeId)
         {
             var employeeSeverance = await _dbContext.EmployeeSeverances.Where(x => x.EmploymentDetail.EmployeeId == employeeId).SumAsync(x => x.Amount);
+
             return employeeSeverance;
         }
     }

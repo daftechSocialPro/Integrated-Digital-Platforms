@@ -229,7 +229,7 @@ namespace IntegratedImplementation.Services.Finance.Action
 
                 if (Salary != null)
                 {
-                    _employeeSeveranceService.CalculateEmployeeSeverance(Salary.Id);
+                    await _employeeSeveranceService.CalculateEmployeeSeverance(Salary.Id);
                 }
 
 
