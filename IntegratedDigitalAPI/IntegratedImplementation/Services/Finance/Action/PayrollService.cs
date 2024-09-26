@@ -1,17 +1,11 @@
-﻿using DocumentFormat.OpenXml.Drawing.Charts;
-using DocumentFormat.OpenXml.Wordprocessing;
-using Implementation.Helper;
+﻿using Implementation.Helper;
 using IntegratedImplementation.DTOS.Finance.Action;
 using IntegratedImplementation.Interfaces.Finance.Action;
+using IntegratedImplementation.Interfaces.HRM;
 using IntegratedInfrustructure.Data;
 using IntegratedInfrustructure.Model.FInance.Actions;
 using IntegratedInfrustructure.Model.HRM;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static IntegratedInfrustructure.Data.EnumList;
 
 namespace IntegratedImplementation.Services.Finance.Action
@@ -19,13 +13,15 @@ namespace IntegratedImplementation.Services.Finance.Action
     public class PayrollService : IPayrollService
     {
         private readonly ApplicationDbContext _dbContext;
+        private readonly IEmployeeSeveranceService _employeeSeveranceService;
 
-        public PayrollService(ApplicationDbContext dbContext)
+        public PayrollService(ApplicationDbContext dbContext, IEmployeeSeveranceService employeeSeveranceService)
         {
             _dbContext = dbContext;
+            _employeeSeveranceService = employeeSeveranceService;
         }
 
-       
+
 
         public async Task<List<PayrollDataListDto>> GetPayrollDataList()
         {
@@ -73,9 +69,9 @@ namespace IntegratedImplementation.Services.Finance.Action
             await _dbContext.SaveChangesAsync();
 
             return new ResponseMessage { Success = true, Message = "Checked Successfully" };
-        }  
-        
-        
+        }
+
+
         public async Task<ResponseMessage> ApprovePayroll(ApprovePayrollDataDto payrollDataDto)
         {
             var currEmp = await _dbContext.Employees.FirstOrDefaultAsync(x => x.Id == Guid.Parse(payrollDataDto.EmployeeId));
@@ -86,7 +82,7 @@ namespace IntegratedImplementation.Services.Finance.Action
             if (currData == null)
                 return new ResponseMessage { Success = false, Message = "Payroll Data could not be found!!" };
 
-            if(currData.CheckedById == Guid.Empty)
+            if (currData.CheckedById == Guid.Empty)
                 return new ResponseMessage { Success = false, Message = "Please Check the payroll before approving!!" };
 
             currData.ApprovedById = currEmp.Id;
@@ -133,10 +129,10 @@ namespace IntegratedImplementation.Services.Finance.Action
 
 
             int lastDayDetail = DateTime.DaysInMonth(payrollParams.PayrollMonth.Year, payrollParams.PayrollMonth.Month);
-            DateTime toDate =  new DateTime(payrollParams.PayrollMonth.Year, payrollParams.PayrollMonth.Month, lastDayDetail); ;
+            DateTime toDate = new DateTime(payrollParams.PayrollMonth.Year, payrollParams.PayrollMonth.Month, lastDayDetail); ;
 
             var q = (from x in _dbContext.EmployeePayrolls.Include(x => x.Employee)
-                     where x.PayStart.Equals(payrollParams.PayrollMonth) && x.PayEnd.Equals(toDate) 
+                     where x.PayStart.Equals(payrollParams.PayrollMonth) && x.PayEnd.Equals(toDate)
                      select x).ToList();
             if (q.Count > 0 && !payrollParams.Recalculate)
             {
@@ -146,17 +142,17 @@ namespace IntegratedImplementation.Services.Finance.Action
             int PensionCompany = Convert.ToInt32(ComPension.Value);
             int ProvidentFund = Convert.ToInt32(PF.Value);
 
-            bool result = await Calculate(payrollParams.PayrollMonth, toDate, PensionEmployee, PensionCompany,ProvidentFund, payrollParams.UserId, payrollParams.Recalculate);
+            bool result = await Calculate(payrollParams.PayrollMonth, toDate, PensionEmployee, PensionCompany, ProvidentFund, payrollParams.UserId, payrollParams.Recalculate);
 
             if (result)
                 return new ResponseMessage { Success = true, Message = "Successfully calculated payroll!!" };
 
             return new ResponseMessage { Success = false, Message = "Error Calculating Payroll!!" };
         }
-        public async Task<bool> Calculate(DateTime startdate, DateTime enddate,  int EmpPension, int CompPension,int PF, string UserId, bool recalculate)
+        public async Task<bool> Calculate(DateTime startdate, DateTime enddate, int EmpPension, int CompPension, int PF, string UserId, bool recalculate)
         {
             var q = (from x in _dbContext.EmployeePayrolls.Include(x => x.Employee)
-                     where x.PayStart.Equals(startdate)  && x.PayEnd.Equals(enddate)
+                     where x.PayStart.Equals(startdate) && x.PayEnd.Equals(enddate)
                      select x).ToList();
             if (q.Count > 0)
             {
@@ -179,7 +175,7 @@ namespace IntegratedImplementation.Services.Finance.Action
             double transportAndFuel = 0.0;
             bool isTransportTaxable = false;
             double communicationAllowance = 0.0;
-            bool isCommunicationTaxable =  false;
+            bool isCommunicationTaxable = false;
             double positionAllowance = 0.0;
             bool isPositionTaxable = false;
             double overtime = 0.0;
@@ -205,45 +201,51 @@ namespace IntegratedImplementation.Services.Finance.Action
                        select x).ToList();
             foreach (var item in emp)
             {
-                 basicsalary = 0.0;
-                 transportAndFuel = 0.0;
-                 isTransportTaxable = false;
-                 communicationAllowance = 0.0;
-                 isCommunicationTaxable = false;
-                 positionAllowance = 0.0;
-                 isPositionTaxable = false;
-                 overtime = 0.0;
-                 loan = 0.0;
-                 pensionemployee = 0.0;
-                 pensioncompany = 0.0;
-                 providentFund = 0.0;
-                 totalEarning = 0.0;
-                 taxableIncome = 0.0;
-                 incometax = 0.0;
-                 ot125 = 0.0;
-                 ot150 = 0.0;
-                 ot200 = 0.0;
-                 ot250 = 0.0;
-                 netpay = 0.0;
-                 nonTaxableAllowance = 0.0;
-                 penalty = 0.0;  
+                basicsalary = 0.0;
+                transportAndFuel = 0.0;
+                isTransportTaxable = false;
+                communicationAllowance = 0.0;
+                isCommunicationTaxable = false;
+                positionAllowance = 0.0;
+                isPositionTaxable = false;
+                overtime = 0.0;
+                loan = 0.0;
+                pensionemployee = 0.0;
+                pensioncompany = 0.0;
+                providentFund = 0.0;
+                totalEarning = 0.0;
+                taxableIncome = 0.0;
+                incometax = 0.0;
+                ot125 = 0.0;
+                ot150 = 0.0;
+                ot200 = 0.0;
+                ot250 = 0.0;
+                netpay = 0.0;
+                nonTaxableAllowance = 0.0;
+                penalty = 0.0;
 
-                double Salary = _dbContext.EmploymentDetails.Any(x => x.EmployeeId == item.Id && x.Rowstatus == RowStatus.ACTIVE) ?
-                                     _dbContext.EmploymentDetails.First(x => x.EmployeeId == item.Id  && x.Rowstatus == RowStatus.ACTIVE).Salary : 0.0;
+                var Salary = _dbContext.EmploymentDetails.Any(x => x.EmployeeId == item.Id && x.Rowstatus == RowStatus.ACTIVE) ?
+                                     _dbContext.EmploymentDetails.Where(x => x.EmployeeId == item.Id && x.Rowstatus == RowStatus.ACTIVE).Select(x => new { x.Salary, x.Id }).FirstOrDefault() : null;
+
+                if (Salary != null)
+                {
+                    _employeeSeveranceService.CalculateEmployeeSeverance(Salary.Id);
+                }
+
 
                 if (item.TerminatedDate > startdate && item.TerminatedDate < enddate)
                 {
                     int totday = Convert.ToInt32((enddate - item.TerminatedDate.Value).TotalDays);
-                    basicsalary = Salary / 26 * totday;
+                    basicsalary = Salary != null ? Salary.Salary : 0 / 26 * totday;
                 }
                 else if (item.EmploymentDate > startdate && item.EmploymentDate < enddate)
                 {
                     int totday = Convert.ToInt32((enddate - item.EmploymentDate).TotalDays);
-                    basicsalary = Salary / 26 * totday;
+                    basicsalary = Salary != null ? Salary.Salary : 0 / 26 * totday;
                 }
                 else
                 {
-                    basicsalary = Salary;
+                    basicsalary = Salary != null ? Salary.Salary : 0;
                 }
 
                 var qal = _dbContext.EmployeeBenefits.Include(x => x.Benefit).Where(P => P.EmployeeId.Equals(item.Id)).ToList();
@@ -281,10 +283,10 @@ namespace IntegratedImplementation.Services.Finance.Action
                     ot200 += otlst.DayoffOT != 0 ? otlst.DayoffOT : 0;
                     ot250 += otlst.HolidayOT != 0 ? otlst.HolidayOT : 0;
                 }
-                overtime += ((((Salary / 26) / 8) * ot125) * NormalOt);
-                overtime += ((((Salary / 26) / 8) * ot150) * NightOt);
-                overtime += ((((Salary / 26) / 8) * ot200) * DayoffOt);
-                overtime += ((((Salary / 26) / 8) * ot250) * HolidayOt);
+                overtime += ((((Salary != null ? Salary.Salary : 0 / 26) / 8) * ot125) * NormalOt);
+                overtime += ((((Salary != null ? Salary.Salary : 0 / 26) / 8) * ot150) * NightOt);
+                overtime += ((((Salary != null ? Salary.Salary : 0 / 26) / 8) * ot200) * DayoffOt);
+                overtime += ((((Salary != null ? Salary.Salary : 0 / 26) / 8) * ot250) * HolidayOt);
 
 
                 taxableIncome = basicsalary + overtime;
@@ -316,10 +318,10 @@ namespace IntegratedImplementation.Services.Finance.Action
 
 
                 var empLoans = await _dbContext.EmployeeLoans.Include(x => x.LoanRequest).Include(x => x.EmployeeSettlements).Where(x => x.LoanRequest.RequesterId == item.Id && x.LoanStatus == LoanStatus.GIVEN).ToListAsync();
-                
-                foreach(var ln in empLoans)
+
+                foreach (var ln in empLoans)
                 {
-                    if(ln.EmployeeSettlements.Sum(x => x.PaidMoney) >= ln.ApprovedAmmount)
+                    if (ln.EmployeeSettlements.Sum(x => x.PaidMoney) >= ln.ApprovedAmmount)
                     {
                         ln.LoanStatus = LoanStatus.PAID;
                         ln.PaymentEndDate = startdate.AddMonths(-1);
@@ -351,8 +353,8 @@ namespace IntegratedImplementation.Services.Finance.Action
 
                 var qincomtax = await _dbContext.IncomeTaxSettings.FirstOrDefaultAsync(P => P.StartingAmount <= taxableIncome && (P.EndingAmount >= taxableIncome || P.EndingAmount == 0) && P.Rowstatus == RowStatus.ACTIVE);
                 if (qincomtax != null)
-                { 
-                    incometax = (taxableIncome * (qincomtax.Percent / 100)) - qincomtax.Deductable;   
+                {
+                    incometax = (taxableIncome * (qincomtax.Percent / 100)) - qincomtax.Deductable;
                 }
 
                 totalEarning = taxableIncome + nonTaxableAllowance;
@@ -388,7 +390,7 @@ namespace IntegratedImplementation.Services.Finance.Action
                 await _dbContext.SaveChangesAsync();
             }
 
-            var previous = await _dbContext.PayrollDatas.Where(x => x.Rowstatus == RowStatus.ACTIVE &&  !(x.PayStart == startdate && x.PayEnd == enddate)).ToListAsync();
+            var previous = await _dbContext.PayrollDatas.Where(x => x.Rowstatus == RowStatus.ACTIVE && !(x.PayStart == startdate && x.PayEnd == enddate)).ToListAsync();
             previous.ForEach(x =>
             {
                 x.Rowstatus = RowStatus.INACTIVE;
@@ -414,10 +416,10 @@ namespace IntegratedImplementation.Services.Finance.Action
             else
             {
                 payrollData.CalculatedCount = payrollData.CalculatedCount + 1;
-                payrollData.ApprovedById =null;
-                payrollData.CheckedById =null;
+                payrollData.ApprovedById = null;
+                payrollData.CheckedById = null;
                 payrollData.TotalAmount = TotalNetPay;
-               // payrollData.Rowstatus = RowStatus.ACTIVE;
+                // payrollData.Rowstatus = RowStatus.ACTIVE;
 
 
             }
@@ -425,5 +427,5 @@ namespace IntegratedImplementation.Services.Finance.Action
             return true;
         }
     }
-  
+
 }
