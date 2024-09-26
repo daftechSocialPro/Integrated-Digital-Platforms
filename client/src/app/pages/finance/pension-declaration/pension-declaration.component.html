@@ -1,0 +1,439 @@
+<div class="card">
+    <div class="row p-2">
+        <div class="col-lg-12 d-flex align-items-center">
+
+            <!-- <input type="text" pInputText  class="form-control stdate"  id="pensionMonth"  [(ngModel)]="pensionParam.pensionMonth"
+            placeholder="Select Date" > -->
+            <div class=" m-3">
+                <span class="p-float-label">
+                    <p-calendar [(ngModel)]="pensionMonth" inputId="pensionMonth" view="month" dateFormat="mm/yy"
+                        [readonlyInput]="true"></p-calendar>
+                    <label for="pensionMonth">Pension Month</label>
+                </span>
+            </div>
+            <div class="ms-2">
+
+                <button pButton pRipple *ngIf="pensionMonth" class="p-button-success" (click)="generateReport()"><i
+                        class="bi bi-calculator"></i>&nbsp; Generate Report</button>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="card p-2">
+
+        <div class="col-4">
+            <button class="btn btn-outline-success text-end mb-3" (click)="exportAsExcel('Pension Declartaion')"><i
+                    class="bi bi-file-excel"></i> </button>
+        </div>
+
+
+
+        <div class="container" #myTable>
+            <div class="row">
+                <div class="col-2 px-4 py-2.5 font-weight-bold border border-secondary relative">
+                    <div class="d-flex align-items-center ">
+                        <img src="../../../../assets/Federallogo.png" alt="" class="rounded-circle h-28 w-28 mt-2" />
+                    </div>
+                </div>
+                <div class="col-4 px-4 py-10 font-weight-bold border border-secondary bg-gray-500">
+                    <h5 class="ml-3 mt-4 text-center">
+                        ኢትዮጲያ ፌደራላዊ ዲሞከራሲያዊ ሪፐብሊክ የኢትዮጲያ ገቢዎችና ጉሙሩክ ባለስልጣን
+                    </h5>
+                </div>
+                <div class="col-4 px-3 py-3 font-weight-bold border border-secondary">
+                    <h5 class="ml-3 text-center">
+                        ሠንጠረዥ "ሀ" የስራ ግብር ክፍያ ማስታወቂያ ቅጽ (ለተቀጣሪዎች)
+
+                        (የገቢ ግብር አዋጅ ቁጥር 976/2016 ና ገቢ ግብር ደንብ ቁጥር 410/2009)
+                    </h5>
+                </div>
+                <div class="col-2 px-4 py-2.5 font-weight-bold border border-secondary relative">
+                    <div class="d-flex align-items-center">
+                        <img src="../../../../assets/taxlogo.jpg" alt="" class="rounded-circle h-28 mt-2" />
+                    </div>
+                </div>
+                <div class="col-12 border border-secondary relative">
+                    <h6 class="text-center">ክፍል 1 የጡረታ መዋጮውን የሚከፍለው ድርጅት ዝርዝር መረጃ </h6>
+                </div>
+                <div class="col-12 border border-secondary relative">
+                    <div class="row">
+                        <div class="col-3 px-3.5 py-2.5 border border-secondary">
+                            1. የግብር ከፋይ ስም: የኢትዮጲያ ሚዲዋይፎች ማህበር
+                        </div>
+                        <div class="col-3 px-3.5 py-2.5 border border-secondary">
+                            3. የግብር ከፋይ መለያ ቁጥር:: 0003431259
+                        </div>
+                        <div class="col-3 px-3.5 py-2.5 border border-secondary">
+                            4.የግብር ከፋይ ሂሳብ ቁጥር
+                        </div>
+                        <div class="col-3  border border-secondary">
+                            5. የክፍያ ጊዜ
+                            <div class="row">
+                                <div class="col-6 border border-secondary">
+                                    dec 2023
+                                </div>
+                                <div class="col-4 border border-secondary " style="width: 50%;">
+                                    አ.ም 2016
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 border border-secondary relative">
+                    <div class="row">
+                        <div class="col-3 px-3.5 py-2.5 border border-secondary">
+                            2a. ከልል አዲስ አበባ
+                        </div>
+                        <div class="col-3 px-3.5 py-2.5 border border-secondary">
+                            2b. ዞን/ ክፍለ ከተማ ቦሌ
+                        </div>
+                        <div class="col-3 px-3.5 py-2.5 border border-secondary">
+                            5. የጡረታ መዋጮ ገቢ ሰብሳቢ መ/ቤት ስም
+                        </div>
+                        <div class="col-3  border border-secondary">
+                            የሰነድ ቁጥር (ለቢሮ አገልግሎት ብቻ)
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 border border-secondary relative">
+                    <div class="row">
+                        <div class="col-2 px-3.5 py-2.5 border border-secondary">
+                            2c. ወረዳ
+                        </div>
+                        <div class="col-2 px-3.5 py-2.5 border border-secondary">
+                            2b. ቀበሌ / ገበሬ ማህበር
+                        </div>
+                        <div class="col-2 px-3.5 py-2.5 border border-secondary">
+                            2e. የቤት ቁጥር 288
+                        </div>
+                        <div class="col-2  border border-secondary">
+                            6. የስልክ ቁጥር 0116፟-6189275
+
+                        </div>
+                        <div class="col-2  border border-secondary">
+                            7. ፋክስ ቁጥር 0116፟-633297
+
+                        </div>
+                        <div class="col-2  border border-secondary">
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 border border-secondary relative">
+                    <h6 class="text-center">ሰንጠረዥ-2 የማሳወቂያ ዝርዝር መረጃ </h6>
+                </div>
+                <div class="col-span-12 border border-slate-200 dark:border-zink-500 relative">
+                    <div  class="row">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                    ሀ) ተ.ቁ
+                                </div>
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                    ለ) የቋሚ ሠራተኛው
+                                </div>
+                                <div class="col-3 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                    ሐ) የሠራተኛው ስም የአባት ስምና የአያት ስም
+                                </div>
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                    መ) የተቀጠሩበት ቀን
+                                </div>
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                    ሠ) ደምወዝ
+                                </div>
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                    ረ) የሰራተኛው መዋጮ መጠን
+                                </div>
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                    ሰ) የአሰሪው መዋጮ
+                                </div>
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                    ሸ) በአሰሪው የሚገባ ጥቅል
+                                </div>
+
+                                <div class="col-2 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                    ነ) የሠራተኛ ፊርማ
+                                </div>
+
+
+
+                            </div>
+                            <div *ngFor="let emp of pensionReportList?.pensionEmployees; index as i"  class="row">
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                    {{i + 1}}
+                                </div>
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                    {{emp.tinNumber}}
+                                </div>
+                                <div class="col-3 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                    {{emp.employeeName}}
+                                </div>
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                    {{emp.employmentDate | date:"MM-dd-yyyy"}}
+                                </div>
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                    {{emp.salary}}
+                                </div>
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                    {{emp.employeePension}}
+                                </div>
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                    {{emp.employerPension}}
+                                </div>
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                    {{emp.total}}
+                                </div>
+
+                                <div class="col-2 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+
+                                </div>
+
+
+
+
+                            </div>
+
+                            <!-- <div class="row">
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                    ""
+                                </div>
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+
+                                </div>
+                                <div class="col-3 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+
+                                </div>
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+
+                                </div>
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+
+                                </div>
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+
+                                </div>
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+
+                                </div>
+                                <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+
+                                </div>
+                                <div class="col-2 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+
+                                </div>
+
+
+
+
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <hr />
+                <div class="row">
+                    <div class="col-span-5 border border-slate-200 dark:border-zink-500 relative">
+                        <div class="row">
+                            <div class="col-4 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                ክፍል 3- የወሩ የተጠቃለለ ሂሳብ
+                            </div>
+                            
+                        </div>
+                        <div class="row">
+                            <div class="col-3 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                በዚህ ወር ደምውዝ ሚከፈላቸው ሰራተኞች ብዛት
+                            </div>
+                            <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                {{pensionReportList?.totalEmployees}}
+                            </div>
+                            
+
+                        </div>
+                        <div class="row">
+                            <div class="col-3 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                የወሩ ጠቅላላ
+                            </div>
+                            <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                {{pensionReportList?.totalEmployeePension}}
+                            </div>
+                            
+                        </div>
+                        <div class="row">
+                            <div class="col-3 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                የወሩ ጠቅላላ
+                            </div>
+                            <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                
+                            </div>
+                            
+                        </div>
+                        <div class="row">
+                            <div class="col-3 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                የወሩ ጠቅላላ የአሰሪ
+                            </div>
+                            <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                {{pensionReportList?.totalEmployerPension}}
+                            </div>
+                            
+                        </div>
+                        <div class="row">
+                            <div class="col-3 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                የወሩ ጠቅላላ የመዋጮ
+                            </div>
+                            <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                {{pensionReportList?.totalPension}}
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div *ngFor="let emp of pensionReportList?.terminatedEmployees!" class="col-span-5 border border-slate-200 dark:border-zink-500 relative">
+                        <div class="row">
+                            
+                            <div class="col-4 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                ክፍል 4- በዚህ ወር ስራ የለቀቁ ሠራተኞች ዝርዝር መረጃ
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            
+                            <div class="col-2 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                የሠራተኛው ስም /የአባት ሰምና የአያት ስም
+                            </div>
+                            <div class="col-2 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                የሠራተኛው የግብር ከፋይ ቁጥር
+                            </div>
+
+                           
+
+                        </div>
+                        <div class="row">
+                            
+                            <div class="col-2 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                {{emp.employeeName}}
+                            </div>
+                            <div class="col-2 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                {{emp.tinNumber}}
+                            </div>
+
+                           
+
+                        </div>
+                        <div class="row">
+                            
+                            <div class="col-2 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+
+                            </div>
+                            <div class="col-2 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+
+                            </div>
+
+                            
+
+                        </div>
+                        <div class="row">
+                            
+                            <div class="col-2 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+
+                            </div>
+                            <div class="col-2 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+
+                            </div>
+
+                            
+
+                        </div>
+                        <div class="row">
+                            
+                            <div class="col-2 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+
+                            </div>
+                            <div class="col-2 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+
+                            </div>
+
+                            
+
+                        </div>
+                    </div>
+                    <div  class="col-span-5 border border-slate-200 dark:border-zink-500 relative">
+                        <div class="row">
+                            
+                            <div class="col-4 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                <!-- ክፍል 4- በዚህ ወር ስራ የለቀቁ ሠራተኞች ዝርዝር መረጃ -->
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            
+                            
+
+                            <div class="col-2 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                የተከፈለበት ቀን
+                            </div>
+                            <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            
+                            
+
+                            <div class="col-2 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                የደረሰኝ ቁጥር
+                            </div>
+                            <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            
+                            
+
+                            <div class="col-2 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                የገንዘብ ልክ
+                            </div>
+                            <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            
+                            
+
+                            <div class="col-2 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                ቼክ ቁጥር
+                            </div>
+                            <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            
+                           
+
+                            <div class="col-2 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+                                የገንዘብ ተቀባይ ፊርማ
+                            </div>
+                            <div class="col-1 px-3.5 py-2.5 border border-slate-200 dark:border-zink-500">
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+</div>

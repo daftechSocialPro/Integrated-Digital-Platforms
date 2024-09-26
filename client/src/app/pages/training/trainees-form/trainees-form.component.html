@@ -1,0 +1,138 @@
+
+<div class="p-4">
+
+  <div *ngIf="!traininggId" class="card p-4">
+    <div class="text-center">
+      <img src="../../../../assets/logo.png" height="80px" />
+      <h3>Ethiopian Midwives Association</h3>
+      
+      <p class="mt-2"><b>Title: </b><span>{{training&&training.title}} </span></p>
+      <p><b>Allocated CEU: </b><span>{{training&&training.allocatedCEU}}</span></p>
+      <p><b>Duration: </b><span>{{training&&training.startDate|date:"dd MMM yyyy"}} --- {{training&&training.endDate|date:"dd MMM yyyy"}}</span></p>
+      <p><b>Venue of the training: </b><span> {{training&&training.courseVenue}} </span></p>
+     
+      <p><b>Dear trainers: </b> Please add the trainees for <span style="font-size: 20px;color:#1b419f">{{TrainingTitle}}</span>
+        on the table below</p>
+
+          <button *ngIf="!traininggId&&(training&&training.traineeListStatus!='SUBMITTED')" class="btn btn-outline-primary text-end" (click)="changeTraineeReportStatus()">
+            Submit
+          </button>
+    
+    </div>
+  </div>
+
+
+  <button  *ngIf="training.traineeListStatus!='SUBMITTED'" class="btn btn-outline-success text-end mb-3" (click)="file.click()"><i
+    class="bi bi-file-excel"></i> Import from Excel </button> &nbsp;
+    <input type="file" accept=".xlsx, .xls" #file hidden (change)="onFileSelected($event)" />
+
+  <button  *ngIf="traininggId&&(training&&training.traineeListStatus=='SUBMITTED')" class="btn btn-outline-success text-end mb-3" (click)="exportAsExcel(training&&training.title)"><i
+    class="bi bi-file-excel"></i> Export Excel </button> &nbsp;
+
+    <button  *ngIf="traininggId&&(training&&training.traineeListStatus=='SUBMITTED')" class="btn btn-outline-primary text-end mb-3" (click)="revertStatus()"> Revert Report Status </button>
+
+    <div class="card p-2">
+    <div class="col-3  my-3" >
+      <div class="form-floating">
+        <input type="text" class="form-control" id="PlannedBudget" #searchterm  placeholder="filter" (change)="filterTrainees(searchterm.value)"
+            placeholder="EndDate" >
+        <label for="PlannedBudget">Filter </label>
+       
+    </div>
+      
+    </div>
+  <div class="table-container ">
+    <div class="table-wrapper ">
+    <table class="table table-bordered table-responsive"  #excelTable>
+      <thead>
+        <tr>
+          <th style="border: 1px solid black;" *ngIf="(training && training.traineeListStatus != 'SUBMITTED')" resizable></th>
+          <th style="border: 1px solid black;" resizable >#</th>
+          <th style="border: 1px solid black;" resizable>Full Name</th>
+          <th style="border: 1px solid black;" resizable>Gender</th>
+          <th style="border: 1px solid black;" resizable>Age</th>
+          <th style="border: 1px solid black;" resizable>Profession</th>
+          <th style="border: 1px solid black;" resizable>Level of Education</th>
+          <th style="border: 1px solid black;" resizable>Phone Number</th>
+          <th style="border: 1px solid black;" resizable>Email</th>
+          
+          <th style="border: 1px solid black;" resizable>Region</th>
+          <th style="border: 1px solid black;" resizable>Zone</th>
+          <th style="border: 1px solid black;" resizable>Woreda</th>
+         
+          <!-- <th style="border: 1px solid black;">Educational Field</th> -->
+          <th style="border: 1px solid black;" resizable>Organization</th>
+          <th style="border: 1px solid black;" resizable>Type Of Organization</th>
+          <th style="border: 1px solid black;" resizable>Pre Training Summary</th>
+          <th style="border: 1px solid black;" resizable>Post Training Summary</th>
+          <th style="border: 1px solid black;" *ngIf="traininggId&&(training&&training.traineeListStatus=='SUBMITTED')">Title</th>
+          <th style="border: 1px solid black;" *ngIf="traininggId&&(training&&training.traineeListStatus=='SUBMITTED')">Project</th>
+          <th style="border: 1px solid black;" *ngIf="traininggId&&(training&&training.traineeListStatus=='SUBMITTED')">CEU</th>          
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of filterdTraines; let i = index">
+          <td style="border: 1px solid black;" *ngIf="(training && training.traineeListStatus != 'SUBMITTED')">
+            <button class="btn btn-sm btn-outline-warning" (click)="editRow(row)">
+            <i class="bi bi-pencil"></i>
+          </button> |
+          <button class="btn btn-sm btn-outline-danger" (click)="deleteRow(row)">
+            <i class="bi bi-trash"></i>
+          </button>
+        </td>
+          <td style="border: 1px solid black;" >{{ i + 1 }} </td>
+          <td style="border: 1px solid black;" >{{ row.fullName }}</td>
+          <td style="border: 1px solid black;" >{{ row.gender }}</td>
+          <td style="border: 1px solid black;">{{ row.age }}</td>
+          <td style="border: 1px solid black;">{{ row.profession }}</td>
+          <td style="border: 1px solid black;">{{ row.educationalLevel }}</td>
+          <td style="border: 1px solid black;">{{ row.phoneNumber }}</td>
+          <td style="border: 1px solid black;">{{ row.email }}</td>
+         
+          <td style="border: 1px solid black;">{{ row.region }}</td>
+          <td style="border: 1px solid black;">{{ row.zone }}</td>
+          <td style="border: 1px solid black;">{{ row.woreda }}</td>
+         
+          <!-- <td style="border: 1px solid black;">{{ row.educationalField }}</td> -->
+          <td style="border: 1px solid black;">{{ row.nameofOrganizaton }}</td>
+          <td style="border: 1px solid black;">{{ row.typeofOrganization }}</td>
+          <td style="border: 1px solid black;">{{ row.preSummary }}</td>
+          <td style="border: 1px solid black;">{{ row.postSummary }}</td>
+          <td style="border: 1px solid black;" *ngIf="traininggId&&(training&&training.traineeListStatus=='SUBMITTED')">{{ training&&training.title }}</td>
+          <td style="border: 1px solid black;" *ngIf="traininggId&&(training&&training.traineeListStatus=='SUBMITTED')">{{  training&&training.project }}</td>
+          <td style="border: 1px solid black;" *ngIf="traininggId&&(training&&training.traineeListStatus=='SUBMITTED')">{{  training&&training.allocatedCEU }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+    <div class="form-container" *ngIf="!traininggId && (training && training.traineeListStatus != 'SUBMITTED')">
+      <form [formGroup]="traineeForm">
+        <!-- Form inputs go here -->
+        <input pInputText type="text" placeholder="Full Name" formControlName="fullName" />&nbsp;
+        <p-dropdown formControlName="gender" [options]="genders" optionLabel="label" optionValue="value"
+          placeholder="Select Gender"></p-dropdown>&nbsp;
+        <input pInputText type="text" placeholder="Profession" formControlName="profession" />&nbsp;
+        <input pInputText type="text" placeholder="Phone Number" formControlName="phoneNumber" />&nbsp;
+        <input pInputText type="email" placeholder="Email" formControlName="email" />&nbsp;
+        <input pInputText type="number" formControlName="age" />&nbsp;
+        <p-dropdown formControlName="region" class="mt-2"  [options]="regions" optionLabel="name"
+        optionValue="id" placeholder="Select Region" [filter]="true"></p-dropdown>&nbsp;
+   
+        <input pInputText class="mt-2" type="text" placeholder="Zone" formControlName="zone" />&nbsp;
+        <input pInputText class="mt-2"  type="text" placeholder="Woreda" formControlName="woreda" />&nbsp;
+        <p-dropdown formControlName="educationalLevel" class="mt-2"  [options]="educationalLevels" optionLabel="name"
+          optionValue="id" placeholder="Select Educational Level" [filter]="true"></p-dropdown>&nbsp;
+        <!-- <input pInputText type="text" class="mt-2"  placeholder="Educational Field" formControlName="educationalField" />&nbsp;
+        -->
+        <input pInputText type="text" class="mt-2"  placeholder="Name of Organization" formControlName="nameofOrganizaton" />&nbsp;
+        <input pInputText type="text" class="mt-2"  placeholder="Type of Organization" formControlName="typeofOrganization" />&nbsp;
+        <input pInputText type="number" class="mt-2"  placeholder="Pre Summary" formControlName="preSummary" />&nbsp;
+        <input pInputText type="number" class="mt-2"  placeholder="Post Summary" formControlName="postSummary" />&nbsp;
+        
+        <button type="button"  [disabled]="!traineeForm.valid" class="btn btn-outline-primary" (click)="addRow()">+</button>
+      </form>
+    </div>
+  </div>
+</div>
+  

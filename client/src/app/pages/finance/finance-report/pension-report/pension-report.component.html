@@ -1,0 +1,143 @@
+<div class="card">
+    <div class="row p-2">
+        <div class="col-lg-12 d-flex align-items-center">
+       
+            <div class=" m-3">
+                <span class="p-float-label">
+                    <p-calendar [(ngModel)]="pensionMonth" inputId="pensionMonth" 
+                     view="month" dateFormat="mm/yy" [readonlyInput]="true"></p-calendar>
+                    <label for="pensionMonth">Pension Month</label>
+                </span>             
+            </div>
+            <div class="ms-2">
+                
+                <button pButton pRipple *ngIf="pensionMonth" class="p-button-success" (click)="generateReport()"><i class="bi bi-calculator"></i>&nbsp; Generate Report</button>
+            
+            </div>
+            
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    
+                    <p-table #dt 
+                    [columns]="cols" 
+                    [value]="pensionReportList" 
+                    selectionMode="multiple"
+                         [(selection)]="selectedPensionReportList" [exportHeader]="'customExportHeader'" 
+                         [tableStyle]="{ 'min-width': '50rem' }" [paginator]="true"
+                         [rows]="5"
+                         [showCurrentPageReport]="true"
+                         [tableStyle]="{ 'min-width': '50rem' }"
+                         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                         [rowsPerPageOptions]="[5, 25, 50]"
+                         styleClass="p-datatable-sm"
+                         dataKey="itemId"
+                         >
+                        <ng-template pTemplate="caption">
+                            <div class="flex">
+                                <button type="button" pButton pRipple icon="pi pi-file" (click)="dt.exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+                                <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
+                                <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()" class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+                                <button type="button" pButton pRipple icon="pi pi-filter" (click)="dt.exportCSV({ selectionOnly: true })" class="p-button-info ml-auto" pTooltip="Selection Only" tooltipPosition="bottom"></button>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header" let-columns>
+                            <tr>
+                                <th></th>
+                                <th *ngFor="let col of columns">
+                                    {{ col.header }}
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowData let-columns="columns" let-expanded="expanded">
+                            <tr [pSelectableRow]="rowData">
+                                <td>
+                                    <button type="button" pButton pRipple [pRowToggler]="rowData"
+                                        class="p-button-text p-button-rounded p-button-plain"
+                                        [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                                </td>
+                                <td *ngFor="let col of columns">
+                                    {{ rowData[col.field] }}
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="rowexpansion" let-payment>
+                            <tr>
+                                <td colspan="8">
+                                    <div class="p-3">
+                                        
+                                        
+                                        <p-table [value]="payment.pensionEmployees" dataKey="id" responsiveLayout="scroll">
+                                            <ng-template pTemplate="header">
+                                                <tr>
+                                                    <th>Employee Name</th>
+                                                    <th>Tin Number</th>
+                                                    <th>Employment Date</th>
+                                                    <th>Salary</th>
+                                                    <th>Employee Pension</th>
+                                                    <th>Employer Pension</th>
+                                                    <th>Total</th>
+                                                                                                    
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template pTemplate="body" let-reportdetail>
+                                                <tr>
+                                                    <td>{{reportdetail.employeeName}}</td>
+                                                    <td>{{reportdetail.tinNumber}}</td>
+                                                    <td>{{reportdetail.employmentDate}}</td>
+                                                    <td>{{reportdetail.salary}}</td>
+                                                    <td>{{reportdetail.employeePension}}</td>
+                                                    <td>{{reportdetail.employerPension}}</td>
+                                                    <td>{{reportdetail.total}}</td>
+                                                    
+                                                    
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template pTemplate="emptymessage">
+                                                <tr>
+                                                    <td colspan="4">There are no Employee Pension Details for this Pension Report yet.</td>
+                                                </tr>
+                                            </ng-template>
+                                        </p-table>
+                                    </div>
+                                </td>
+                                <td colspan="8">
+                                    <div class="p-3">
+                                        
+                                        
+                                        <p-table [value]="payment.terminatedEmployees" dataKey="id" responsiveLayout="scroll">
+                                            <ng-template pTemplate="header">
+                                                <tr>
+                                                    <th>Employee Name</th>
+                                                    <th>Tin Number</th>
+                                                    
+                                                                                                                
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template pTemplate="body" let-reportdetail>
+                                                <tr>
+                                                    <td>{{reportdetail.employeeName}}</td>
+                                                    <td>{{reportdetail.tinNumber}}</td>
+                                                    
+                                                    
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template pTemplate="emptymessage">
+                                                <tr>
+                                                    <td colspan="4">There are no Terminated Employee Details for this Pension Report yet.</td>
+                                                </tr>
+                                            </ng-template>
+                                        </p-table>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

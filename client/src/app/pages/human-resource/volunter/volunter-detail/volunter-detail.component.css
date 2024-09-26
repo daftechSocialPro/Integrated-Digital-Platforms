@@ -1,0 +1,72 @@
+.employee-details {
+    display: flex;
+    align-items: center;
+    padding: 20px
+  }
+  
+  .employee-details2 {  
+    padding: 30px;
+    background-color: #f6f9ff;
+  }
+  
+  .employee-info {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+  }
+  
+  .employee-name {
+    font-weight: bold;
+    text-align: right;
+    font-size: 1.5rem;
+  }
+  
+  .employee-code {
+    margin-top: 6px;
+    color: gray;
+    font-size: 0.8rem;
+  }
+  
+  .employee-code span {
+    background: #f6f9ff;
+    padding: 6px;
+    border-radius: 10px;
+    color: black;
+  }
+  
+  .table-container {
+    padding: 10px;
+    border-radius: 20px;
+    border: 2px solid #b1b2b3;
+  }
+  
+  .table-head th{
+    font-weight: lighter;
+    color: gray;
+    font-size: 14px;
+     
+  }
+  
+  .table-body td{
+    font-weight: bolder;
+  
+  }
+  .divider {
+    border-top: 2px solid rgb(172, 170, 170);
+    margin: 10px 0;
+  }
+  .iconcontainer {
+    font-size: 20px;
+    color: #8b9dbe;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  
+  .iconcontainer i {
+    margin-right: 10px;
+  
+  
+  }

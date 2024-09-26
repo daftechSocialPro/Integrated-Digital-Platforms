@@ -1,0 +1,179 @@
+<header id="header" class="header fixed-top d-flex align-items-center">
+   <div class="d-flex align-items-center justify-content-between">
+      <a routerLink="/dashboard" class="logo d-flex align-items-center ">
+         <img src="assets/logo2.png" alt=""> <span class="d-none d-lg-block text-center"
+            style="font-size: 18px!important;">Ethiopian Midwives Association</span> </a> <i (click)="sidebarToggle()"
+         class="bi bi-list toggle-sidebar-btn"></i>
+   </div>
+   <!-- <div class="search-bar">
+       <form class="search-form d-flex align-items-center" method="POST" action="#"> <input type="text" name="query" placeholder="Search" title="Enter search keyword"> <button type="submit" title="Search"><i class="bi bi-search"></i></button></form>
+    </div> -->
+   <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+         <li class="nav-item d-block d-lg-none"> <a class="nav-link nav-icon search-bar-toggle " href="#"> <i
+                  class="bi bi-search"></i> </a></li>
+         <li class="nav-item dropdown">
+            <a class="nav-link nav-icon" href="#" (click)="visibleSidebar2 = true"> <i class="bi bi-bell"></i> <span
+                  class="badge bg-primary badge-number">{{pendingPayments?.length}}</span> </a>
+      
+         </li>
+         <li class="nav-item dropdown">
+            <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown"> <i class="bi bi-bell"></i> <span
+                  class="badge bg-primary badge-number">{{activites?.length}}</span> </a>
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications"
+               style="max-height:400px;overflow-x: scroll;">
+               <li class="dropdown-header"> You have {{activites?.length}} new notifications <a href="/actForApproval"><span
+                        class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+               </li>
+      
+               <li>
+                  <hr class="dropdown-divider">
+               </li>
+      
+               <ng-container *ngFor="let act of activites">
+                  <li class="notification-item" (click)="routeToApproval(act)">
+                     <i class="bi bi-exclamation-circle text-warning"></i>
+                     <div>
+                        <h4>{{act.name}}</h4>
+                        <p>Needs Approval</p>
+                        <span class="badge bg-danger text-white">{{act?.progresscreatedAt| date:'fullDate'}}</span>
+                     </div>
+                  </li>
+                  <li>
+                     <hr class="dropdown-divider">
+                  </li>
+      
+               </ng-container>
+      
+      
+      
+               <li class="dropdown-footer"> <a href="/actForApproval">Show all activities</a></li>
+            </ul>
+         </li>
+      
+         <li class="nav-item dropdown" *ngIf="roleMatch(['EMPLOYEE-MANAGEMENT'])">
+            <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown"> <i class="bi bi-bell"></i> <span
+                  class="badge bg-primary badge-number">{{contactEndEMployees&&contactEndEMployees.length}}</span> </a>
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications"
+               style=" width: 260px;  max-height:400px;overflow-x: scroll;">
+               <li class="dropdown-header"> You have {{contactEndEMployees&&contactEndEMployees.length}} Contract
+                  Expiration </li>
+               <li>
+                  <hr class="dropdown-divider">
+               </li>
+               <div *ngFor="let item of contactEndEMployees">
+      
+      
+                  <li class="notification-item" (click)="navigateToempDetail(item.id)">
+                     <i class="bi bi-exclamation-circle text-warning"></i>
+                     <div>
+                        <h4>{{item.name}}</h4>
+                        <p>{{item.reason}}</p>
+                        <!-- <p>30 min. ago</p> -->
+                     </div>
+      
+                  </li>
+                  <li>
+                     <hr class="dropdown-divider">
+                  </li>
+               </div>
+      
+            </ul>
+         </li>
+         <li class="nav-item dropdown">
+            <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown"> <i class="bi bi-megaphone"
+                  style="font-size: 22px;"></i> <span
+                  class="badge bg-success badge-number">{{vacancies&&vacancies.length}}</span> </a>
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages"
+               style=" width: 260px;  max-height:400px;overflow-x: scroll;">
+               <li class="dropdown-header"> You have {{vacancies&&vacancies.length}} Vacancies </li>
+               <li>
+                  <hr class="dropdown-divider">
+               </li>
+               <div *ngFor="let item of vacancies">
+                  <li class="message-item">
+                     <a (click)="navigateToDetail(item.id)">
+      
+                        <div>
+                           <h4>{{item.name}}</h4>
+                           <p>{{item.description}}</p>
+      
+                        </div>
+                     </a>
+      
+                  </li>
+                  <li>
+                     <hr class="dropdown-divider">
+                  </li>
+      
+               </div>
+      
+      
+      
+            </ul>
+         </li>
+         <li class="nav-item dropdown pe-3">
+            <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown"> <img
+                  [src]="createImagePath(user.photo)" alt="Profile" class="rounded-circle"> <span
+                  class="d-none d-md-block dropdown-toggle ps-2">{{this.user.fullName}}</span> </a>
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile"
+               style="max-height:400px;overflow-x: scroll;">
+               <li class="dropdown-header">
+                  <h6>{{this.user.fullName}}</h6>
+                  <!-- <span>{{this.user.role}}</span> -->
+               </li>
+               <li>
+                  <hr class="dropdown-divider">
+               </li>
+               <li> <a class="dropdown-item d-flex align-items-center" routerLink="/user-profile"> <i
+                        class="bi bi-person"></i> <span>My Profile</span> </a></li>
+               <li>
+                  <hr class="dropdown-divider">
+               </li>
+               <li> <a class="dropdown-item d-flex align-items-center " style="cursor: pointer;" (click)="logOut()"> <i
+                        class="bi bi-box-arrow-right"></i> <span>Sign Out</span> </a>
+               </li>
+            </ul>
+         </li>
+      </ul>
+   </nav>
+  
+<p-sidebar [(visible)]="visibleSidebar2" position="right" [baseZIndex]="10000">
+   <h3>Payment Requsitions for approval</h3>
+   <p-dataView #dv [value]="pendingPayments">
+      <ng-template pTemplate="list" let-payments>
+          <div class="grid grid-nogutter">
+              <div class="col-12" *ngFor="let item of payments; let first = first" class="col-12">
+                  <div class="flex flex-column sm:flex-row sm:align-items-center p-4 gap-3" [ngClass]="{ 'border-top-1 surface-border': !first }">
+                     <div class="md:w-10rem relative">
+                        <h5>{{ item.project }}</h5>
+                     </div>
+                      <div class="flex flex-column md:flex-row justify-content-between md:align-items-center flex-1 gap-4">
+                          <div class="flex flex-row md:flex-column justify-content-between align-items-start gap-2">
+                              <div>
+                                  <span class="font-medium text-secondary text-sm">{{ item.activity }}</span>
+                                  <div class="text-lg font-medium text-900 mt-2">{{ item.description }}</div>
+                              </div>
+                              <div class="surface-100 p-1" style="border-radius: 30px">
+                                  <div class="surface-0 flex align-items-center gap-2 justify-content-center py-1 px-2" style="border-radius: 30px; box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.04), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)">
+                                      <span class="text-900 font-medium text-sm">Allocated Budget:  {{ item.allocatedBudget }}</span>
+                                      <span class="text-900 font-medium text-sm">Used Budget:  {{ item.usedBudget }}</span>
+                                     
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="flex flex-column md:align-items-end gap-5">
+                              <span class="text-xl font-semibold text-900">Requested ammount {{  item.ammount }}</span>
+                              <div class="flex flex-row-reverse md:flex-row gap-2">
+                                  <p-button icon="pi pi-heart"  />
+                                  <p-button icon="pi pi-check" (onClick)="approvePayment(item.id)" class="flex-auto md:flex-initial white-space-nowrap" label="Approve" />
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </ng-template>
+  </p-dataView>
+</p-sidebar>
+</header>

@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="IntegratedDigitalH" Class="DataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=DESKTOP-DUIHOS9;Initial Catalog=IntegratedDigitalH;Integrated Security=True" SettingsObjectName="AttendanceImporter.Properties.Settings" SettingsPropertyName="IntegratedDigitalHConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Employees" Member="Employees">
+    <Type Name="Employee">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="EmployeeCode" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="MiddleName" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="LastName" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="AmharicMiddleName" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="PhoneNumber" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="ZoneId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Woreda" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Gender" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="BirthDate" Type="System.DateTime" DbType="DateTime2 NOT NULL" CanBeNull="false" />
+      <Column Name="MaritalStatus" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ImagePath" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="EmploymentType" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PaymentType" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EmploymentDate" Type="System.DateTime" DbType="DateTime2 NOT NULL" CanBeNull="false" />
+      <Column Name="ContractEndDate" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
+      <Column Name="TerminatedDate" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
+      <Column Name="IsPension" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="EmploymentStatus" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PensionCode" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="TinNumber" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="ExistingEmployee" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsApproved" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime2 NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedById" Type="System.String" DbType="NVarChar(450)" CanBeNull="true" />
+      <Column Name="Rowstatus" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="AmharicFirstName" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="AmharicLastName" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="IdGenerated" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Employee_EmployeeFingerPrint" Member="EmployeeFingerPrints" ThisKey="Id" OtherKey="EmployeeId" Type="EmployeeFingerPrint" />
+      <Association Name="Employee_EmployeeLeave" Member="EmployeeLeaves" ThisKey="Id" OtherKey="ApproverEmployeeId" Type="EmployeeLeave" />
+      <Association Name="Employee_EmployeeLeave1" Member="EmployeeLeaves1" ThisKey="Id" OtherKey="EmployeeId" Type="EmployeeLeave" />
+      <Association Name="Employee_OverTime" Member="OverTimes" ThisKey="Id" OtherKey="EmployeeId" Type="OverTime" />
+      <Association Name="Employee_EmployeeShift" Member="EmployeeShifts" ThisKey="Id" OtherKey="EmployeeId" Type="EmployeeShift" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ShiftLists" Member="ShiftLists">
+    <Type Name="ShiftList">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ShiftName" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="AmharicShiftName" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="CheckIn" Type="System.TimeSpan" DbType="Time NOT NULL" CanBeNull="false" />
+      <Column Name="CheckOut" Type="System.TimeSpan" DbType="Time NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime2 NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedById" Type="System.String" DbType="NVarChar(450)" CanBeNull="true" />
+      <Column Name="Rowstatus" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="ShiftList_ShiftDetail" Member="ShiftDetails" ThisKey="Id" OtherKey="ShiftId" Type="ShiftDetail" />
+      <Association Name="ShiftList_EmployeeShift" Member="EmployeeShifts" ThisKey="Id" OtherKey="ShiftListId" Type="EmployeeShift" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ShiftDetails" Member="ShiftDetails">
+    <Type Name="ShiftDetail">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ShiftId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="WeekDays" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="BreakTime" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime2 NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedById" Type="System.String" DbType="NVarChar(450)" CanBeNull="true" />
+      <Column Name="Rowstatus" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="ShiftList_ShiftDetail" Member="ShiftList" ThisKey="ShiftId" OtherKey="Id" Type="ShiftList" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EmployeeFingerPrints" Member="EmployeeFingerPrints">
+    <Type Name="EmployeeFingerPrint">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="EmployeeId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="FingerPrintCode" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime2 NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedById" Type="System.String" DbType="NVarChar(450)" CanBeNull="true" />
+      <Column Name="Rowstatus" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="EmployeeFingerPrint_EmployeeAttendance" Member="EmployeeAttendances" ThisKey="Id" OtherKey="FingerPrintId" Type="EmployeeAttendance" />
+      <Association Name="Employee_EmployeeFingerPrint" Member="Employee" ThisKey="EmployeeId" OtherKey="Id" Type="Employee" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EmployeeLeaves" Member="EmployeeLeaves">
+    <Type Name="EmployeeLeave">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="EmployeeId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="LeaveTypeId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="FromDate" Type="System.DateTime" DbType="DateTime2 NOT NULL" CanBeNull="false" />
+      <Column Name="ToDate" Type="System.DateTime" DbType="DateTime2 NOT NULL" CanBeNull="false" />
+      <Column Name="TotalDate" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="LeaveStatus" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ApprovedDate" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
+      <Column Name="ApproverEmployeeId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="Reason" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Remark" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime2 NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedById" Type="System.String" DbType="NVarChar(450)" CanBeNull="true" />
+      <Column Name="Rowstatus" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Employee_EmployeeLeave" Member="Employee" ThisKey="ApproverEmployeeId" OtherKey="Id" Type="Employee" IsForeignKey="true" />
+      <Association Name="Employee_EmployeeLeave1" Member="Employee1" ThisKey="EmployeeId" OtherKey="Id" Type="Employee" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.OverTimes" Member="OverTimes">
+    <Type Name="OverTime">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="EmployeeId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="NormalOT" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="NightOT" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="DayoffOT" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="HolidayOT" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="OverTimeDate" Type="System.DateTime" DbType="DateTime2 NOT NULL" CanBeNull="false" />
+      <Column Name="Approved" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime2 NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedById" Type="System.String" DbType="NVarChar(450)" CanBeNull="true" />
+      <Column Name="Rowstatus" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Employee_OverTime" Member="Employee" ThisKey="EmployeeId" OtherKey="Id" Type="Employee" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DeviceSettings" Member="DeviceSettings">
+    <Type Name="DeviceSetting">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Model" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Ip" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Port" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Com" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime2 NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedById" Type="System.String" DbType="NVarChar(450)" CanBeNull="true" />
+      <Column Name="Rowstatus" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="DeviceSetting_AttendanceLogFile" Member="AttendanceLogFiles" ThisKey="Id" OtherKey="DeviceSettingId" Type="AttendanceLogFile" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Holidays" Member="Holidays">
+    <Type Name="Holiday">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime2 NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime2 NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedById" Type="System.String" DbType="NVarChar(450)" CanBeNull="true" />
+      <Column Name="Rowstatus" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EmployeeAttendances" Member="EmployeeAttendances">
+    <Type Name="EmployeeAttendance">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CheckIn" Type="System.TimeSpan" DbType="Time NOT NULL" CanBeNull="false" />
+      <Column Name="CheckOut" Type="System.TimeSpan" DbType="Time NOT NULL" CanBeNull="false" />
+      <Column Name="AttendanceDate" Type="System.DateTime" DbType="DateTime2 NOT NULL" CanBeNull="false" />
+      <Column Name="AttencanceType" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="TotalTime" Type="System.TimeSpan" DbType="Time NOT NULL" CanBeNull="false" />
+      <Column Name="FingerPrintId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="TakeFromVacation" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="AbsentReason" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime2 NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedById" Type="System.String" DbType="NVarChar(450)" CanBeNull="true" />
+      <Column Name="Rowstatus" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="EmployeeFingerPrint_EmployeeAttendance" Member="EmployeeFingerPrint" ThisKey="FingerPrintId" OtherKey="Id" Type="EmployeeFingerPrint" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AttendanceLogFiles" Member="AttendanceLogFiles">
+    <Type Name="AttendanceLogFile">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="EnrollNo" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Year" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Month" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Day" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Hour" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Minute" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Second" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="VerifyMode" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="InOutMode" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="WorkCode" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DeviceSettingId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="AttendanceDate" Type="System.DateTime" DbType="DateTime2 NOT NULL" CanBeNull="false" />
+      <Association Name="DeviceSetting_AttendanceLogFile" Member="DeviceSetting" ThisKey="DeviceSettingId" OtherKey="Id" Type="DeviceSetting" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EmployeeShifts" Member="EmployeeShifts">
+    <Type Name="EmployeeShift">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="EmployeeId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="ShiftListId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime2 NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedById" Type="System.String" DbType="NVarChar(450)" CanBeNull="true" />
+      <Column Name="Rowstatus" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Employee_EmployeeShift" Member="Employee" ThisKey="EmployeeId" OtherKey="Id" Type="Employee" IsForeignKey="true" />
+      <Association Name="ShiftList_EmployeeShift" Member="ShiftList" ThisKey="ShiftListId" OtherKey="Id" Type="ShiftList" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

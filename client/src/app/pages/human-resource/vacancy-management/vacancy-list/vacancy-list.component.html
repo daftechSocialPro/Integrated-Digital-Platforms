@@ -1,0 +1,181 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Vacancy List</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+                <li class="breadcrumb-item">HRM</li>
+                <li class="breadcrumb-item active">Vacancy List</li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="card">
+
+        <div class="col-lg-12 text-end p-2">
+            <button type="button" class="btn btn-outline-primary" (click)="addNew()"><i class="pi pi-plus me-1"></i>
+                Vacancy</button>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Vacancies</h5>
+            <div class="row col-12">
+                <div class="col-2">
+                    <select class="form-select" id="status" [(ngModel)]="vacancyFilter && vacancyFilter.status" aria-label="State">
+                        <option></option>
+                        <option [value]=true>Approved</option>
+                        <option [value]=false>Pending</option>
+                    </select> 
+                </div>
+                <div class="col-2">
+                    <select class="form-select" id="Departments" [(ngModel)]="vacancyFilter &&  vacancyFilter.departmentId"
+                        aria-label="State">
+                        <option></option>
+                        <option *ngFor="let department of departments" [value]="department.id">{{
+                            department.name }}</option>
+                    </select>
+                </div>
+                <div class="col-2">
+                    <select class="form-select" id="positionId" [(ngModel)]="vacancyFilter &&  vacancyFilter.positionId"
+                        aria-label="State">
+                        <option></option>
+                        <option *ngFor="let position of positions" [value]="position.id">{{
+                            position.name }}</option>
+                    </select> 
+                </div>
+                <div class="col-3">
+                    <input type="date" class="form-control" id="date" placeholder="EmploymentDate" required
+                    [(ngModel)]=" vacancyFilter &&  vacancyFilter.date"> 
+                </div>
+                <div class="col-2">
+                    <button pButton (click)="getVacnacy()" pRipple type="button" icon="pi pi-search" class="p-button-rounded p-button-success p-button-outlined"></button>
+                </div>
+            </div>
+            <p-table #dt [value]="vacancyList" [rows]="5" [paginator]="true" styleClass="p-datatable-sm"
+                [globalFilterFields]="['vacancyName', 'position', 'department', 'educationalField']"
+                [tableStyle]="{'min-width': '75rem'}" dataKey="id"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [showCurrentPageReport]="true">
+                <ng-template pTemplate="caption">
+                    <div class="row">
+                        <span class="text-end">
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..."
+                                class="w-full sm:w-auto" />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 5rem"></th>
+                        <th pSortableColumn="vacancyName">Name <p-sortIcon field="vacancyName"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="position">Position <p-sortIcon field="position"></p-sortIcon></th>
+                        <th pSortableColumn="department">Department <p-sortIcon field="department"></p-sortIcon>
+                        </th>
+                        <th>Quantity </th>
+                        <th>Start Date </th>
+                        <th>End Date</th>
+                        <th>Approved</th>
+                        <th>Action</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-vacancy let-expanded="expanded">
+                    <tr>
+                        <td>
+                            <button type="button" pButton pRipple [pRowToggler]="vacancy"
+                                class="p-button-text p-button-rounded p-button-plain"
+                                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                        </td>
+                        <td (click)="goToDetails(vacancy.id)">{{ vacancy.vacancyName }}</td>
+                        <td>{{ vacancy.position}} </td>
+                        <td>{{ vacancy.department }}</td>
+                        <td>{{ vacancy.quantity }}</td>
+                        <td>{{ vacancy.vaccancyStartDate | date:"MMM dd, YYY" }}</td>
+                        <td>{{ vacancy.vaccancyEndDate | date:"MMM dd, YYY" }}</td>
+                        <td class="text-center">
+                            <i class="pi"
+                                [ngClass]="{'true-icon pi-check-circle text-success ': vacancy.isApproved, 'false-icon pi-times-circle text-danger ': !vacancy.isApproved}"></i>
+                        </td>
+                        <td class="text-center">
+                            <div class="filter">
+                                <a class="icon" href="#" data-bs-toggle="dropdown">
+                                    <i class="bi bi-three-dots-vertical"></i></a>
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                    <li *ngIf="!vacancy.isApproved"><a class="dropdown-item text-warning"
+                                            (click)="edit(vacancy.id)"> <i class="pi pi-pencil"></i>Edit</a>
+                                    </li>
+                                    <li *ngIf="!vacancy.isApproved"><a class="dropdown-item text-success"
+                                            (click)="approveVaccancy(vacancy.id)"> <i
+                                                class="pi pi-check-square"></i>Approve</a></li>
+
+                                    <li *ngIf="!vacancy.isApproved"><a class="dropdown-item text-secondary"
+                                            (click)="addDocuments(vacancy.id)"> <i class="pi pi-plus"></i>Add
+                                            Documents</a></li>
+                                    <li><a class="dropdown-item text-secondary" (click)="goToDetails(vacancy.id)">
+                                            <i class="pi pi-ellipsis-h"></i>
+                                            Details</a></li>
+
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="rowexpansion" let-vacancy>
+                    <tr>
+                        <td colspan="7">
+                            <div class="p-3">
+                                <p-table [value]="vacancy.vaccancyDocuments" dataKey="id">
+                                    <ng-template pTemplate="header">
+                    <tr>
+                        <th># </th>
+                        <th>Document Name </th>
+                        <th>Document </th>
+                        <th>Action </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-doc index="">
+                    <tr>
+                        <td>
+                        </td>
+                        <td>
+                            {{doc.docuemntName}}
+
+                        </td>
+                        <td>
+                            <a target="_blank" [href]="getImage(doc.documentPath) " class="btn btn-outline-primary">View
+                                File</a>
+
+                        </td>
+                        <td>
+                            <div class="filter">
+                                <a *ngIf="!vacancy.isApproved" class="icon" href="#" data-bs-toggle="dropdown">
+                                    <i class="bi bi-three-dots-vertical"></i></a>
+                                <ul *ngIf="!vacancy.isApproved"
+                                    class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                    <li *ngIf="!vacancy.isApproved"><a class="dropdown-item text-danger"
+                                            (click)="deleteDocument(doc.id,vacancy.vacancyName)"> <i
+                                                class="pi pi-trash"></i>Delete</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+
+                        </td>
+
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="3">There are no vaccancy Document yet.</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        </td>
+        </tr>
+        </ng-template>
+
+            </p-table>
+    </div>
+    </div>
+
+</main>

@@ -1,0 +1,334 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Plan vs Achivment </h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+                <li class="breadcrumb-item active">Plan vs Achivement </li>
+            </ol>
+        </nav>
+    </div>
+
+
+    <section class="section dashboard">
+
+
+        <div class="row">
+
+            <div class="col-12">
+                <div class="card p-2">
+                    <div class="d-flex justify-content-start ">
+
+
+                        <div class="form-floating col-3 me-2">
+                            <select class="form-control " [(ngModel)]="selectedProject" (change)="onProjectChange()">
+                                <option></option>
+                                <option *ngFor="let item of Projects" [value]="item">{{item}}</option>
+
+                            </select>
+
+                            <label for="projects">Projects</label>
+                        </div>
+
+
+                        <div class="form-floating col-3 me-2">
+                            <select class="form-control " [(ngModel)]="Quarter" (change)="onQuarterChange()">
+
+                                <option value=4>October - December {{currentYear}}</option>
+                                <option value=3>July - Augest {{currentYear}}</option>
+                                <option value=2>April - June {{currentYear}}</option>
+                                <option value=1>January - March {{currentYear}}</option>
+                            </select>
+
+                            <label for="ReportBy">Quarter Report</label>
+                        </div>
+
+                        <div class="form-floating col-3 me-2">
+                            <select class="form-control " [(ngModel)]="selectedMonth" (change)="onMonthSelected()">
+                                <option value="13"></option>
+                                <option *ngFor="let item of months" [value]="item.value">{{item.label}}</option>
+
+                            </select>
+
+                            <label for="months">Months</label>
+                        </div>
+
+
+
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="PlannedBudget" #searchterm placeholder="filter"
+                                (change)="filterActivites(searchterm.value)" placeholder="EndDate">
+                            <label for="PlannedBudget">Filter </label>
+
+                        </div>
+
+
+
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+        <div class="text-end col-lg-12 mt-2">
+
+            <button class="btn btn-outline-success text-end mb-3" (click)="exportAsExcel('Plan vs Achivment')"><i
+                    class="bi bi-file-excel"></i> Export Excel </button>
+        </div>
+        <div #excelTable class="table-responsive card">
+            <table class="table table-bordered mt-2 " id="myTable" style="table-layout: auto;">
+                <thead>
+                    <tr>
+                        <th scope="col" rowspan="2" resizable
+                            style="border: 1px solid black;background-color: #00667d;color: white;">ID
+                        </th>
+                        <th scope="col" rowspan="2" resizable
+                            style="border: 1px solid black;background-color: #00667d;color: white;">
+                            Task/Activity</th>
+
+                        <th scope="col" rowspan="2" resizable
+                            style="border: 1px solid black;background-color: #00667d;color: white;">
+                            Indicator
+                        </th>
+
+                        <th scope="col" *ngFor="let item of months" [colSpan]="4" resizable
+                            style="border: 1px solid black;background-color: #00667d;color: white;"
+                            [ngClass]="{'d-none': selectedMonth != 13}">
+                            {{ item.label }}
+                        </th>
+
+                        <th scope="col" [colSpan]="4" *ngIf="selectedMonth != 13" resizable
+                            style="border: 1px solid black;background-color: #00667d;color: white;">
+                            {{ getMonthName() }}
+                        </th>
+
+
+                        <th rowspan="2"
+                            style="border: 1px solid black;background-color: #00667d;color: white; width: 120px;;"
+                            resizable>
+                            Status
+                        </th>
+
+
+
+                    </tr>
+                    <tr>
+                        <ng-container *ngFor="let item of months">
+                            <th style="border: 1px solid black;background-color: #a3a1a1;color: white;"
+                                [ngClass]="{'d-none': selectedMonth != 13}">Target</th>
+                            <th style="border: 1px solid black;background-color: #a3a1a1;color: white;"
+                                [ngClass]="{'d-none': selectedMonth != 13}">Actual</th>
+                            <th style="border: 1px solid black;background-color: #a3a1a1;color: white;"
+                                [ngClass]="{'d-none': selectedMonth != 13}">Budget</th>
+                            <th style="border: 1px solid black;background-color: #a3a1a1;color: white;"
+                                [ngClass]="{'d-none': selectedMonth != 13}">Used</th>
+                        </ng-container>
+
+                        <ng-container *ngIf="selectedMonth != 13">
+                            <th style="border: 1px solid black;background-color: #a3a1a1;color: white;">Target</th>
+                            <th style="border: 1px solid black;background-color: #a3a1a1;color: white;">Actual</th>
+                            <th style="border: 1px solid black;background-color: #a3a1a1;color: white;">Budget</th>
+                            <th style="border: 1px solid black;background-color: #a3a1a1;color: white;">Used</th>
+                        </ng-container>
+
+
+                    </tr>
+
+
+
+
+
+                </thead>
+
+                <tbody class="labels">
+                    <tr *ngFor="let item of filterdActivities" [ngStyle]="{
+                        'background-color': item.isCancelled ? '#dc3545a1' : (item.isCompleted ? '#28a745a3' : (item.isStarted ? '#ffc10775' : '')),
+                        'color': item.isCancelled||item.isCompleted?'white':''
+                    }">
+
+
+                        <td style="border: 1px solid black; "> {{item.activityNumber}}</td>
+                        <td style="border: 1px solid black; ">{{item.name}}</td>
+                        <td style="border: 1px solid black; ">{{item.unitOfMeasurment}}</td>
+
+
+                        <ng-container *ngFor="let month of months">
+                            <td [ngClass]="{'d-none': selectedMonth != 13}"
+                                style="border: 1px solid black; background-color: #e3dfdf; ">
+                                {{getMonthPeroformance(item.monthPerformance,month.value)}}</td>
+                            <td [ngClass]="{'d-none': selectedMonth != 13}" style="border: 1px solid black; ">
+                                <span>{{getMonthPeroformance2(item.monthPerformance,month.value)}}</span>
+
+
+                            </td>
+                            <td [ngClass]="{'d-none': selectedMonth != 13}"
+                                style="border: 1px solid black; background-color: #e3dfdf; ">
+                                {{getMonthPeroformance3(item.monthPerformance,month.value)}}</td>
+                            <td [ngClass]="{'d-none': selectedMonth != 13}" style="border: 1px solid black; ">
+
+                                <span>{{getMonthPeroformance4(item.monthPerformance,month.value)}}</span>
+
+
+                            </td>
+
+
+                        </ng-container>
+
+                        <ng-container *ngIf="selectedMonth != 13">
+                            <td style="border: 1px solid black; background-color: #e3dfdf; ">
+                                {{getMonthPeroformance(item.monthPerformance,selectedMonth)}}</td>
+                            <td style="border: 1px solid black; "> 
+                                <span>{{getMonthPeroformance2(item.monthPerformance,selectedMonth)}} </span>
+                             
+                                    
+                            </td>
+                            <td style="border: 1px solid black; background-color: #e3dfdf; ">
+                                {{getMonthPeroformance3(item.monthPerformance,selectedMonth)}}</td>
+                            <td style="border: 1px solid black; ">
+                                <span>{{getMonthPeroformance4(item.monthPerformance,selectedMonth)}}</span>                               
+                            </td>
+
+
+                        </ng-container>
+
+
+                        <td style="border: 1px solid black;background: white; ">
+
+
+                            <span *ngIf="item.isCancelled" style="color: red;font-weight: bolder;">Cancel</span>
+
+                            <span *ngIf="item.isCompleted" style="color: green;font-weight: bolder;">Complete</span>
+
+                            <span *ngIf="item.isStarted"
+                                style="color: rgb(164, 164, 14);font-weight: bolder;">InProgress</span>
+
+                            <span *ngIf="!item.isStarted&&!item.isCompleted&&!item.isCancelled"
+                                style="color: rgb(164, 164, 14);font-weight: bolder;">Not Started</span>
+
+
+                        </td>
+
+
+
+
+
+
+
+
+
+                    </tr>
+                </tbody>
+
+
+            </table>
+        </div>
+    </section>
+</main>
+<!-- <section class="section dashboard">
+
+
+        <div class="row">
+
+            <div class="col-12">
+                <div class="card p-2">
+                    <div class="d-flex justify-content-start ">
+                        <div class="form-floating col-3 me-2">
+                            <select class="form-control" [(ngModel)]="selectedProject" (change)="onPorjectCHange()"
+                                id="StrategicPlanId" placeholder="StrategicPlanId">
+                                <option></option>
+                                <option *ngFor="let item of projects" value={{item.id}}>{{item.planName}}</option>
+                            </select>
+                            <label for="StrategicPlanId">Projects</label>
+                        </div>
+
+
+                        <div class="form-floating col-3 me-2">
+                            <select class="form-control " [(ngModel)]="Quarter" (change)="onQuarterChange()">
+                                <option></option>
+                                <option value=4>October - December {{currentYear}}</option>
+                                <option value=3>July - Augest {{currentYear}}</option>
+                                <option value=2>April - June {{currentYear}}</option>
+                                <option value=1>January - March {{currentYear}}</option>
+                            </select>
+
+                            <label for="ReportBy">Quarter Report</label>
+                        </div>
+
+
+
+
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+        <div class="text-end col-lg-12 mt-2">
+
+            <button class="btn btn-outline-success text-end mb-3" (click)="exportAsExcel('Plan vs Achivment')"><i
+                    class="bi bi-file-excel"></i> Export Excel </button>
+        </div>
+        <div #excelTable class="table-responsive card">
+            <table class="table table-bordered mt-2 " id="myTable">
+                <thead>
+                    <tr>
+                        <th scope="col" style="border: 1px solid black;background-color: #00667d;color: white;">ID
+                        </th>
+                        <th scope="col" style="border: 1px solid black;background-color: #00667d;color: white;">
+                            Task/Activity</th>
+
+                        <th scope="col" style="border: 1px solid black;background-color: #00667d;color: white;">
+                            Indicator
+                        </th>
+
+                        <th scope="col" style="border: 1px solid black;background-color: #00667d;color: white;">
+                            Target</th>
+                        <th scope="col" style="border: 1px solid black;background-color: #00667d;color: white;">
+                            Achivments
+                        </th>
+                        <th scope="col" style="border: 1px solid black;background-color: #00667d;color: white;"> Annual
+                            Budget
+                        </th>
+                        <th scope="col" style="border: 1px solid black;background-color: #00667d;color: white;">Utilized
+                            Budget
+                            To Date</th>
+
+                        <th scope="col" style="border: 1px solid black;background-color: #00667d;color: white;">Status
+                        </th>
+
+                    </tr>
+
+
+
+
+
+                </thead>
+
+                <tbody class="labels">
+                    <tr *ngFor="let item of filterdActivities">
+                        <td style="border: 1px solid black; "> {{item.activityNumber}}</td>
+                        <td style="border: 1px solid black; ">{{item.name}}</td>
+                        <td style="border: 1px solid black; ">{{item.unitOfMeasurment}}</td>
+                        <td style="border: 1px solid black; ">{{getMonthPeroformance(item.monthPerformance)}}</td>
+                        <td style="border: 1px solid black; ">{{getMonthPeroformance2(item.monthPerformance)}}</td>
+                        <td style="border: 1px solid black; ">{{getMonthPeroformance3(item.monthPerformance)}}</td>
+                        <th style="border: 1px solid black; ">{{getMonthPeroformance4(item.monthPerformance)}}</th>
+                        <th style="border: 1px solid black; ">
+
+                            <span
+                                [ngStyle]="item.progressStatus === 'NOT STARTED' ? {'background-color': '#ffd174','color':'white','padding':'5px'} : {'background-color': '#a7f482','color':'white','padding':'5px'}">
+                                {{ item.progressStatus }}
+                            </span>
+
+                        </th>
+
+
+                    </tr>
+                </tbody>
+
+
+            </table>
+        </div>
+    </section> -->

@@ -1,0 +1,89 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Activity Progress {{draftedProgress?"( Drafted )":""}}</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+
+        <form [formGroup]="progressForm" >
+        <div class="card-body">
+            <h5 class="card-title">{{ProgressStatus=="0"?"Add":"Finalize"}} Activity Progress for {{activity.name}}</h5>
+            <hr />
+
+            <div class="row mt-2">
+
+                <div class="col-md-4">
+                    <div class="form-floating mb-3">
+                        <select class="form-select" formControlName="QuarterId">
+
+                            <option *ngFor="let perform of filteredPerformanceArray ;let i= index;" value={{i+1}}
+                                value={{perform.id}}>
+                                {{months[perform.order]}} ( overall {{perform.planned}} ) </option>
+                        </select>
+                        <label for="QuarterId">Month</label>
+                    </div>
+                </div>
+
+
+                <div class="col-md-4">
+                    <div class="form-floating">
+                        <input type="number" formControlName="ActualWorked" class="form-control" id="ActualWorked"
+                            placeholder="ActualWorked">
+                        <label for="ActualWorked">Actual progress </label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-floating">
+                        <input type="number" formControlName="ActualBudget" class="form-control" id="ActualBudget"
+                            placeholder="ActualBudget">
+                        <label for="ActualBudget">Used Budget </label>
+                    </div>
+                </div>
+
+
+                <div class="col-12">
+                    <div class="form-floating"><textarea class="form-control" formControlName="Remark"
+                            placeholder="Address" id="Remark" style="height: 120px;"></textarea><label
+                            for="Remark">Remark</label>
+                    </div>
+                </div>
+
+                <div class="mt-2 row">
+                    <div class="col-6">
+                        <label for="inputNumber" class="col-sm-12 col-form-label">Documents</label>
+                        <div class="col-sm-12"> <input (change)="onFileSelected($event)"  class="form-control" multiple type="file" id="formFile"></div>
+                    
+
+                        <div *ngIf="draftedProgress">
+
+                        <ng-container *ngFor="let file of draftedProgress.documents;let i = index;">
+                            <a target="_blank" class="btn btn-sm btn-secondary m-2" href={{getFilePath(file)}}>View
+                                File {{i+1}}</a>
+                        </ng-container>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <label for="inputNumber" class="col-sm-12 col-form-label">Finance Documents</label>
+                        <div class="col-sm-12"> <input (change)="onFinanceFileSelected($event)"  class="form-control" type="file" id="formFile2"></div>
+                        <a target="_blank" *ngIf="draftedProgress" class="btn btn-sm btn-secondary mt-2"
+                        href={{getFilePath(draftedProgress&&draftedProgress.financeDocument!)}}>View File</a>
+                    </div>
+
+                </div>
+              
+
+
+            </div>
+
+        </div>
+        <div class="modal-footer"> 
+                     
+            <button type="button" type="submit" [disabled]="!progressForm.valid" class="btn btn-outline-secondary" (click)="submit(true)"> Draft</button>
+            <button type="button" type="submit" [disabled]="!progressForm.valid"  (click)="submit(false)" class="btn btn-outline-primary">Create</button>
+
+        </div>
+    </form>
+    </div>
+</div>

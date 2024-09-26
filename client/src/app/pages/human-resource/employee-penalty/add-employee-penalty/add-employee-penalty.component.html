@@ -1,0 +1,105 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Add Penalty</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-12">
+                    <form class="" [formGroup]="employeePenaltyForm" (ngSubmit)="savePenalty()">
+                        <div class="modal-body">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label htmlFor="lastname2" class="col-12">Employee</label>
+                                        <p-dropdown [options]="employeeList" formControlName="employeeId" 
+                                            optionValue="id" [required]="true" optionLabel="name"
+                                            placeholder="Select Employee" [showClear]="true"></p-dropdown>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label htmlFor="penaltyType" class="col-12">Penalty Type</label>
+                                        <select pInputText class="form-control" id="penaltyType" #penaltyType
+                                        formControlName="penaltyType" aria-label="State">
+                                        <option></option>
+                                        <option value=0>ABSENT</option>
+                                        <option value=1>LATE</option>
+                                        <option value=2>OTHER</option>
+                                    </select>
+                                    
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label htmlFor="penaltyDate" class="col-12">Penalty Date</label>
+                                      
+                                        <p-calendar [showIcon]="true" formControlName="penaltyDate"  
+                                            name="penaltyDate" [appendTo]="attachHere" [required]="true"
+                                            inputId="icon"></p-calendar>
+                                            <div #attachHere></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label htmlFor="fromSalary" class="col-12">From Salary</label>
+                                        <p-inputSwitch (onChange)="fromSalaryChange($event)" formControlName="fromSalary"  
+                                            name="fromSalary"></p-inputSwitch>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div *ngIf="fromSalary">
+                                        <label htmlFor="totNumber" class="col-12">Total Days/Hours</label>
+                                        <input type="number" pInputText id="totNumber"
+                                        formControlName="totNumber"    />
+                                    </div>
+
+                                    <div *ngIf="!fromSalary">
+                                        <label htmlFor="ammount" class="col-12">Amount</label>
+                                        <input type="number" pInputText id="ammount" formControlName="amount" 
+                                             />
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label htmlFor="recursive" class="col-12">Recursive</label>
+                                        <p-inputSwitch (onChange)="handleChange($event)"  formControlName="recursive" 
+                                            name="recursive"></p-inputSwitch>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" *ngIf="recursive">
+                                    <div class="form-group">
+                                        <label htmlFor="penalityendDate" class="col-12">Penalty End Date</label>
+                                        <p-calendar [showIcon]="true" formControlName="penalityendDate"  
+                                            name="penalityendDate" [appendTo]="'body'" inputId="icon"></p-calendar>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label htmlFor="Remark" class="col-12">Remark</label>
+                                            <textarea class="form-control"  formControlName="remark"   placeholder="Remark" id="Remark"
+                                            style="height: 120px;"></textarea>
+                                       
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                                
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary"
+                                (click)="closeModal()">Close</button>
+                            <button type="button" type="submit"  [disabled]="!employeePenaltyForm.valid"
+                                class="btn btn-outline-primary">Save  changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        
+        </div>
+    </div>
+</div>

@@ -1,0 +1,70 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Activity target</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+
+        <div class="card-body">
+            <h5 class="card-title">Assign Target for {{activity.name}}</h5>
+
+            <h5 style="text-align: right!important ;">
+                <b>{{activity.startDate|date:"dd MMMM, yyyy"}} - {{activity.endDate|date:"dd MMMM, yyyy"}}</b><br />
+                Overall Target : <b>{{activity.target - activity.begining}} {{activity.unitOfMeasurment}}</b>
+                Remaining Target:<span style="color: red;"> {{remainingTarget}} {{activity.unitOfMeasurment}}</span> <br />
+                Overall Budget : <b> {{activity.plannedBudget}} ETB</b>
+                Remaining Budget : <span style="color:red"> {{remainingBudget}} ETB</span>
+
+                <br />
+
+            </h5>
+            <hr />
+
+
+
+            <div class="row gy-3 gx-3 ">
+
+
+                <div class="col-md-4" *ngFor="let tar of actTargets.controls;">
+                    <ng-container [formGroup]="tar">
+                        <div style="text-align:center; padding: 25px; background-color : #f6f9ff;">
+                            <span style="text-align: center !important;">
+                                <input class="form-control" formControlName="monthName" />
+                                <input class="form-control" formControlName="year" readonly />
+                            </span>
+                            <div class="row mt-2">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="number" formControlName="Target" class="form-control" id="Target" (change)="onTargetChange()"
+                                            placeholder="Target">
+                                        <label for="Target">Target</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="number" class="form-control" id="Budget" placeholder="Budget" (change)="onTargetChange()"
+                                            formControlName="Budget">
+                                        <label for="Budget">Budget</label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </ng-container>
+                </div>
+
+
+
+
+            </div>
+            <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
+                    (click)="closeModal()">Close</button>
+                <button type="button" type="submit" (click)="activity?.monthPerformance.length!=0?updateTarget():submitTarget()" [class]="activity?.monthPerformance.length!=0?'btn btn-outline-warning':'btn btn-outline-primary'">
+                    
+                   {{activity?.monthPerformance.length!=0?'Update':'Assign'}}
+                    Target </button>
+            </div>
+        </div>
+    </div>

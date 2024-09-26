@@ -1,0 +1,238 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Update Employee</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" data-bs-dismiss="modal"
+            aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Employee Detail</h5>
+            <form [formGroup]="volunterForm" (submit)="submit()">
+
+                <div class="row mb-3">
+                    <div class="col-md-3 ">
+                        <img [src]="getImage2()" alt="Profile"
+                            style="width: 100%;">
+                        <input #file (change)="onUpload($event)" type="file" style="display: none;" accept="image/*" />
+                        <div class="pt-2">
+                            <a (click)="file.click()" style="width: 100%;" class="btn btn-outline-primary btn-sm"
+                                title="Upload new profile image">
+                                <i class="bi bi-upload"></i> Upload Image
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="row g-3">
+                            <!-- Existing code for personal information fields -->
+
+                            <div class="col-md-3">
+                                <div class="form-floating"> <input type="text" class="form-control" id="FirstName"
+                                        placeholder="FirstName" required formControlName="firstName">
+                                    <label for="FirstName"> First Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-floating"> <input type="text" class="form-control" id="MiddleName"
+                                        placeholder="MiddleName" required formControlName="middleName">
+                                    <label for="MiddleName"> Middle Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-floating"> <input type="text" class="form-control" id="LastName"
+                                        placeholder="LastName" required formControlName="lastName">
+                                    <label for="LastName"> Last Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-floating"> <input type="text" class="form-control" id="amharicName"
+                                        placeholder="amharicName" required formControlName="amharicName">
+                                    <label for="amharicName"> Amharic Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-floating"> <input type="text" class="form-control" id="PhoneNumber"
+                                        placeholder="PhoneNumber" required formControlName="phoneNumber">
+                                    <label for="PhoneNumber"> Phone Number</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-floating"> <input type="text" class="form-control" id="email"
+                                        placeholder="email" required formControlName="email">
+                                    <label for="email"> Email</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="Gender" formControlName="gender" aria-label="State">
+
+                                        <option></option>
+                                        <option value="MALE">MALE</option>
+                                        <option value="FEMALE">FEMALE</option>
+
+
+                                    </select>
+                                    <label for="Gender">Gender</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-floating"> <input type="date" class="form-control" id="BirthDate"
+                                        placeholder="BirthDate" required formControlName="birthDate">
+                                    <label for="BirthDate"> Birth Date</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="MaritalStatus" formControlName="maritalStatus"
+                                        aria-label="State">
+
+                                        <option></option>
+                                        <option value="SINGLE">SINGLE</option>
+                                        <option value="MARRIED">MARRIED</option>
+                                        <option value="DIVORCE">DIVORCE</option>
+                                        <option value="WIDOW">WIDOW</option>
+
+
+                                    </select>
+                                    <label for="MaritalStatus">Marital Status</label>
+                                </div>
+                            </div>
+                        
+                            <div class="col-md-3">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="PaymentType" formControlName="paymentType"
+                                        aria-label="State">
+
+                                        <option></option>
+                                        <option value="PERDAY">PERDAY</option>
+                                        <option value="PERWEEK">PERWEEK</option>
+                                        <option value="PERMONTH">PERMONTH</option>
+                                    </select>
+                                    <label for="PaymentType">Payment Type</label>
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-md-3">
+                                <div class="form-floating"> <input type="date" class="form-control" id="EmploymentDate"
+                                        placeholder="EmploymentDate" required formControlName="employmentDate">
+                                    <label for="EmploymentDate"> Employment Date</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3" >
+                                <div class="form-floating"> <input type="date" class="form-control" id="ContractEndDate"
+                                        placeholder="ContractEndDate" formControlName="ContractEndDate">
+                                    <label for="ContractEndDate"> Contract End Date </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <div class="row mb-3">
+
+
+
+                    <div class="col-md-12">
+                        <div class="row g-3">
+
+
+
+                      
+
+
+
+
+                            
+
+
+
+                            <div class="col-md-4">
+                                <div class="form-floating"> <input type="number" class="form-control" id="BankAccountNo"
+                                        placeholder="BankAccountNo" required formControlName="bankAccountNo">
+                                    <label for="BankAccountNo"> Bank Account No</label>
+                                </div>
+                            </div>
+
+                           
+
+                            <div class="col-md-4">
+                                <div class="form-floating"> <input type="number" class="form-control" id="salary"
+                                        placeholder="salary" required formControlName="salary">
+                                    <label for="salary"> Salary</label>
+                                </div>
+                            </div>
+
+                            
+                            <div class="col-md-4">
+                                <div class="form-floating"> <input type="text" class="form-control" id="sourceOfSalary"
+                                        placeholder="sourceOfSalary" required formControlName="sourceOfSalary">
+                                    <label for="sourceOfSalary"> Source of Salary</label>
+                                </div>
+                            </div>
+
+
+                   
+
+                           
+                            <div class="col-md-3">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="countryId" #country formControlName="countryId"
+                                        (change)="getRegions(country.value)" aria-label="State">
+                                        <option></option>
+                                        <option *ngFor="let country of countries" [value]="country.id">{{
+                                            country.name }}</option>
+                                    </select>
+                                    <label for="countryId">Country</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" (change)="getZones(region.value)" #region formControlName="regionId" id="regionId" 
+                                        aria-label="State">
+                                        <option></option>
+                                        <option *ngFor="let region of regions" [value]="region.id">{{
+                                            region.name }}</option>
+                                    </select>
+                                    <label for="countryId">Region</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="zoneId" formControlName="zoneId" aria-label="State">
+                                        <option></option>
+                                        <option *ngFor="let zone of zones" [value]="zone.id">{{
+                                            zone.name }}</option>
+                                    </select>
+                                    <label for="zoneId"> Zone</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-floating"> <input type="text" class="form-control" id="woreda"
+                                        placeholder="woreda" required formControlName="woreda">
+                                    <label for="woreda"> Woreda</label>
+                                </div>
+                            </div>
+
+
+                            <!-- Existing code for the remaining fields -->
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
+                        (click)="closeModal()">Close</button> <button type="button" type="submit"
+                        [disabled]="!volunterForm.valid" class="btn btn-outline-primary">Save
+                        changes</button></div>
+            </form>
+
+        </div>
+    </div>
+</div>

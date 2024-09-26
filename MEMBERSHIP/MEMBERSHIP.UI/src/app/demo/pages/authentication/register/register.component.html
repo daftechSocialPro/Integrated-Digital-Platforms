@@ -1,0 +1,186 @@
+<div class="auth-main">
+  <div class="auth-wrapper v3 row">
+    <div class="auth-form col-md-8  col-sm-12">
+      <div class="card my-2" style="max-width: 800px!important;">
+        <div class="card-body">
+          <a href="#" class="d-flex justify-content-center">
+            <img src="../../../../../assets/logo2.png" height="100" />
+          </a>
+          <div class="row">
+            <div class="d-flex justify-content-center">
+              <div class="auth-header">
+                <h2 class="text-secondary mt-2"><b>Ethipian Midwives Association </b></h2>
+                <p class="fs-4 mt-2">Enter your information to be a Member</p>
+                <hr />
+              </div>
+            </div>
+          </div>
+          <div class="d-grid">
+
+          </div>
+          <form [formGroup]="registerForm">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" id="firstName" formControlName="firstName" />
+                  <label for="firstName">First Name</label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" id="lastName" formControlName="lastName" />
+                  <label for="lastName">Last Name</label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-floating mb-3">
+
+                  <input type="text" class="form-control" #phoneNumbe
+                    (change)="checkIfPhoneNumberExist(phoneNumbe.value)" id="phoneNumber"
+                    formControlName="phoneNumber" />
+
+                  <label for="phoneNumber">Phone Number (09-9999-9999)</label>
+                </div>
+
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-floating mb-3">
+                  <input type="email" class="form-control" id="email" formControlName="email" />
+                  <label for="email">Email address </label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-floating mb-3">
+
+                  <select class="form-control" #category (change)="getMemberships(category.value)">
+                    <option></option>
+                    <option value="MIDWIVES">MIDWIVES</option>
+                    <option value="NONMIDWIVES">NONMIDWIVES</option>
+
+                  </select>
+                  <label for="email">Membership Category</label>
+                </div>
+              </div>
+
+
+
+              <div class="col-md-4">
+
+                <div class="form-floating mb-3">
+
+                  <select class="form-control" formControlName="membershipType">
+                    <option></option>
+                    <option *ngFor="let item of memberships" [value]="item.id">{{item.name}}</option>
+
+                  </select>
+
+                  <label for="membershipType">Membership Types</label>
+                </div>
+
+
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-floating mb-3">
+
+                  <select class="form-control" #country (change)="getRegions(country.value)" required>
+
+                    <option></option>
+                    <option value="ETHIOPIAN">ETHIOPIAN</option>
+                    <option value="FOREIGN">FOREIGN</option>
+
+                  </select>
+                  <label for="floatingInput">Country Type</label>
+                </div>
+
+              </div>
+              <div class="col-md-4">
+
+                <div class="form-floating mb-3">
+
+                  <select class="form-control" id="region" formControlName="RegionId" >
+                  
+                    <option *ngFor="let item of regions" [value]="item.id">{{item.name}}</option>
+
+
+                  </select>
+
+                  <label for="region">Region</label>
+                </div>
+              </div>
+              <div class="col-md-4">
+
+                <div class="form-floating mb-3">
+
+                  <input type="text" class="form-control" id="Zone" formControlName="Zone" />
+
+                  <label for="country">Zone</label>
+                </div>
+
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-floating mb-3">
+
+                  <input type="text" class="form-control" id="Woreda" formControlName="woreda" />
+
+                  <label for="Woreda">Woreda</label>
+                </div>
+
+              </div>
+              <div class="col-md-6">
+
+                <div class="form-floating mb-3">
+
+                  <input type="text" class="form-control" id="inistitute" formControlName="inistitute" />
+
+                  <label for="inistitute">Inistitute Name</label>
+                </div>
+              </div>
+
+            </div>
+
+
+            <div class="d-grid mt-4">
+
+              <button type="submit" [disabled]="!registerForm.valid" (click)="register()"
+                class="btn btn-secondary">Register</button>
+            </div>
+            <hr />
+            <h5 >
+              Already have an account?  <a class="text-secondary" style="cursor: pointer; cursor: pointer;
+              font-size: 15px;
+              font-weight: bolder;
+              border: 1px solid #673ab7;
+              border-radius: 10px;
+              padding: 6px;" (click)="loginasMember()">Login!</a>
+            </h5>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4  col-sm-12">
+      <div class="member-info text-center">
+        <img src="../../../../../assets/image_1212.png" alt="Member Image" style="max-height: 260px;"
+          class="img-fluid bounce-image">
+        <h4 class="text-center mt-4 animated-heading">Welcome to our Midwives Membership!</h4>
+        <p class="text-center animated-paragraph">
+          
+          Joining our Midwives Membership is an 
+          excellent opportunity for midwives to connect, 
+          collaborate, and access valuable resources within our 
+          community.By becoming a member, you will gain exclusive  
+          benefits and support tailored specifically to midwifery professionals.
+        </p>
+
+      
+      </div>
+    </div>
+  </div>
+</div>

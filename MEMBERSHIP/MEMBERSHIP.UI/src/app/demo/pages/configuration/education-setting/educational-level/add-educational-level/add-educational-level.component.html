@@ -1,0 +1,38 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">{{EducationalLevel?"Update":"Add"}} Educational Level</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" data-bs-dismiss="modal"
+            aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <form class="" [formGroup]="EducationalLevelForm" (ngSubmit)="EducationalLevel?update():submit()">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" formControlName="educationalLevelName" id="floatingInput" />
+                            <label for="floatingInput">Educational Level</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" formControlName="remark" id="floatingInput" />
+                            <label for="floatingInput">Remark </label>
+                        </div>
+                    </div>
+                  
+
+                </div>
+
+            <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
+                (click)="closeModal()">Close</button> <button type="button" type="submit"
+                [disabled]="!EducationalLevelForm.valid"   
+                class="btn btn-outline-success">{{EducationalLevel?"Update":"Create"}}</button></div>
+            </form>
+    </div>
+</div>
+
+</div>

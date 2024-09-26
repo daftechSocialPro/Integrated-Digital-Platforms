@@ -1,0 +1,81 @@
+<main id="main" class="main">
+
+    <div class="iconcontainer" (click)="goToRequestList()">
+        <i class="bi bi-arrow-left-short"></i>
+        <div>Request List</div>
+    </div>
+
+    <section class="section">
+        <div class="card" *ngIf="employee">
+            <div class="employee-details">
+                <img [src]="getImagePath(employee.imagePath!)" height="150" alt="user png" style="border-radius: 10px;
+                border: 10px solid #f4f4f4;">
+                <div class="employee-info mt-2">
+                    <div class="employee-name">{{ employee.employeeName }}</div>
+                    <div class="employee-code"> Employee Code : <span>{{ employee.employeeCode.toUpperCase()}}</span>
+                    </div>
+                    <div class="employee-code"> Total Annual Leave :
+                        <span>{{LeaveBalance&&LeaveBalance.totalBalance}} days</span>
+                    </div>
+                    <div class="employee-code"> Used : <span>{{LeaveBalance&&LeaveBalance.leavesTaken}} days</span>
+                    </div>
+                    <div class="employee-code"> Balance : <span>{{LeaveBalance&&LeaveBalance.currentBalance}}
+                            days</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h5 class="card-title " style="margin-left: 20px;">Request Details</h5>
+            <div class="divider"></div>
+            <div class="employee-details2">
+                <div class="col-lg-8" *ngIf="employee">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr class="table-head">
+                                <th >Leave Type</th>
+                                <th class="text-center">Leave Days</th>
+                                <th class="text-center">From</th>
+                                <th class="text-center">To</th>
+                                <th class="text-center">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="table-body">
+                                <td >{{leaveRequest.typeOfLeave}}</td>
+                                <td class="text-center">
+                                    {{callcuclateDate(leaveRequest.leaveDate,leaveRequest.backToWorkOn)}}</td>
+                                <td class="text-center">{{leaveRequest.leaveDate | date:"MMM dd, YYYY"}}</td>
+                                <td class="text-center">{{leaveRequest.backToWorkOn | date:"MMM dd, YYYY"}}</td>
+                                <td class="text-center">
+                                    <p-overlayPanel #op>
+                                        <strong>Reason for Rejection</strong>
+                                         <P>{{leaveRequest.remark}}</P>
+                                     </p-overlayPanel>
+                                     
+                                     <p-badge [value]="leaveRequest.leaveStatus" (click)="leaveRequest.leaveStatus=='REJECTED'&&op.toggle($event)" [severity]="getBadge(leaveRequest.leaveStatus)"></p-badge>
+                                 </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+            <div style="padding:20px;">
+               <h6>  <strong> Reason</strong></h6>
+               <p>
+                {{leaveRequest&&leaveRequest.reason}} </p>
+                </div>
+            
+            <div class="modal-footer" *ngIf="leaveRequest.leaveStatus=='PENDING'">
+                <button type="button" (click)="rejectRequest()" class="btn btn-outline-danger"><i class="bi bi-x-lg"></i> Decline Leave</button>
+                <button type="button" type="submit" (click)="approveRequest()" class="btn btn-outline-success"><i class="bi bi-check-lg"></i> Approve Leave</button>
+            </div>
+        </div>
+
+
+
+    </section>
+</main>

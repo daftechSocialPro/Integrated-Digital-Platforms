@@ -1,0 +1,60 @@
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title"> Weak Plan Requests</h5>
+    
+        <p-table [value]="weeklyPlans" [paginator]="true" [rows]="5" [showCurrentPageReport]="true"
+                    [tableStyle]="{ 'min-width': '50rem' }"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                    [rowsPerPageOptions]="[5, 25, 50]" styleClass="p-datatable-sm">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>Activity</th>
+                            <th>Place of Work </th>
+                            <th>From Date</th>
+                            <th>To Date </th>
+                            <th>Request Status</th>
+                            <th>Work Status</th>
+                            <th>Remark</th>
+                            <th>Action</th>
+                       
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-plan>
+                        <tr>
+                            <td>{{plan.activity}}</td>
+                            <td>{{plan.placeOfWork}}</td>
+                            <td>{{plan.fromDate|date:"dd-MMM-yyyy"}}</td>
+                            <td>{{plan.toDate|date:"dd-MMM-yyyy"}}</td>
+                            <td>{{plan.weeklyPlanStatus}}</td>
+                            <td>{{ plan.weeklyPlanStatus=='REQUESTED'?'---': plan.workStatus}}</td>                          
+                            <td>{{plan.remark?plan.remark:"----"}}</td>
+                            <td>
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-outline-primary">Action</button>
+                                    <ul class="dropdown-content">
+                                      <li><a style="cursor: pointer;" (click)="changeWorkStatus('Approve',plan.id)">Approve</a></li>
+                                      <li><a  style="cursor: pointer;" (click)="changeWorkStatus('Reject',plan.id)">Reject</a></li>
+                                    </ul>
+                                  </div>
+
+                            </td>
+                            
+                            <!-- <td >
+                                
+                                <p-overlayPanel #op>
+                                   <strong>Reason for Rejection</strong>
+                                    <P>{{leave.remark}}</P>
+                                </p-overlayPanel>
+                                
+                                <p-badge [value]="leave.leaveStatus" (click)="leave.leaveStatus=='REJECTED'&&op.toggle($event)" [severity]="getBadge(leave.leaveStatus)"></p-badge>
+                            
+                            
+                            </td>
+                            <td><p-button (onClick)="goToDetails(leave.id)" icon="pi pi-ellipsis-h" styleClass="p-button-outlined p-button-sm" ></p-button></td>
+     -->
+
+                        </tr>
+                    </ng-template>
+                </p-table>
+    </div>
+</div>

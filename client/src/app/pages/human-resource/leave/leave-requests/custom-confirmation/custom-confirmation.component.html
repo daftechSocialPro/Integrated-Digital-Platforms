@@ -1,0 +1,22 @@
+<div>
+    <p>{{ message }}</p>
+    
+    <form class="" [formGroup]="messageForm" (ngSubmit)="accept()">
+
+    <div class="col-12">
+        <div class="form-floating"><textarea required class="form-control" placeholder="Remark" id="Remark"
+            formControlName="inputValue"
+                style="height: 100px;"></textarea><label for="Remark">Remark</label>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+  
+        <button type="button" (click)="reject()" class="btn btn-outline-secondary"><i class="bi bi-x-lg"></i> No</button>
+        <button type="button" type="submit" [disabled]="!messageForm.valid"  class="btn btn-outline-danger"><i class="bi bi-check-lg"></i> Yes</button>
+  
+    
+    </div>
+    </form>
+
+</div>

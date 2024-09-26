@@ -1,0 +1,15 @@
+D:\Projects\ERP\AttendanceImporter\DataConnection\bin\Debug\net6.0\DataConnection.deps.json
+D:\Projects\ERP\AttendanceImporter\DataConnection\bin\Debug\net6.0\DataConnection.dll
+D:\Projects\ERP\AttendanceImporter\DataConnection\bin\Debug\net6.0\DataConnection.pdb
+D:\Projects\ERP\AttendanceImporter\DataConnection\bin\Debug\net6.0\Newtonsoft.Json.dll
+D:\Projects\ERP\AttendanceImporter\DataConnection\bin\Debug\net6.0\Newtonsoft.Json.xml
+D:\Projects\ERP\AttendanceImporter\DataConnection\obj\Debug\net6.0\DataConnection.csproj.AssemblyReference.cache
+D:\Projects\ERP\AttendanceImporter\DataConnection\obj\Debug\net6.0\DataConnection.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\ERP\AttendanceImporter\DataConnection\obj\Debug\net6.0\DataConnection.AssemblyInfoInputs.cache
+D:\Projects\ERP\AttendanceImporter\DataConnection\obj\Debug\net6.0\DataConnection.AssemblyInfo.cs
+D:\Projects\ERP\AttendanceImporter\DataConnection\obj\Debug\net6.0\DataConnection.csproj.CoreCompileInputs.cache
+D:\Projects\ERP\AttendanceImporter\DataConnection\obj\Debug\net6.0\DataConnection.csproj.CopyComplete
+D:\Projects\ERP\AttendanceImporter\DataConnection\obj\Debug\net6.0\DataConnection.dll
+D:\Projects\ERP\AttendanceImporter\DataConnection\obj\Debug\net6.0\refint\DataConnection.dll
+D:\Projects\ERP\AttendanceImporter\DataConnection\obj\Debug\net6.0\DataConnection.pdb
+D:\Projects\ERP\AttendanceImporter\DataConnection\obj\Debug\net6.0\ref\DataConnection.dll

@@ -1,0 +1,65 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Add Disciplinary Case </h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Employee case </h5>
+            <div class="row">
+                <div class="col-lg-12">
+                    <form class="" [formGroup]="disciplinaryCaseForm" (ngSubmit)="submit()">
+                        <div class="modal-body">
+                            <div class="row g-3">
+
+                                <div class="col-md-4">
+                                    <div class="form-floating"> 
+                                        <app-autocomplete *ngIf="employeeDropDown.length>0" [data]="employeeDropDown"
+                                            (selectedItem)="selectEmployee($event)"></app-autocomplete>
+                                        <label for="institution"> Employee</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" id="warningType"
+                                            formControlName="warningType" aria-label="State">
+                                            <option></option>
+                                            <option value=0>Oral</option>
+                                            <option value=1>Letter</option>
+                                        </select>
+                                        <label for="warningType">Warning Type</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                         <input type="date" class="form-control" id="date"
+                                            placeholder="date" required formControlName="date">
+                                        <label for="date"> Date</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                         <input type="text" class="form-control" id="fault"
+                                            placeholder="fault" required formControlName="fault">
+                                        <label for="fault"> Fault</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-floating mb-3"><textarea formControlName="detailDescription"
+                                        class="form-control" placeholder="Leave a comment here" id="detailDescription"
+                                      style="height: 100px;"></textarea><label for="detailDescription">Detail Description</label></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
+                                (click)="closeModal()">Close</button> <button type="button" type="submit"
+                                [disabled]="!disciplinaryCaseForm.valid" class="btn btn-outline-primary">Save
+                                changes</button></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

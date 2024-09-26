@@ -1,0 +1,73 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Configuration</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+                <li class="breadcrumb-item">Finance</li>
+                <li class="breadcrumb-item active">Configuration</li>
+
+            </ol>
+        </nav>
+    </div>
+    <section class="section">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Finance Configuration</h5>
+                <ul class="nav nav-tabs nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation"> <button class="nav-link active" id="accountType-tab" data-bs-toggle="tab"
+                            data-bs-target="#accountType" type="button" role="tab" aria-controls="accountType"
+                            aria-selected="false">Account Type</button></li>
+                    <li class="nav-item" role="presentation"> <button class="nav-link" id="lookup-tab" data-bs-toggle="tab"
+                            data-bs-target="#lookup" type="button" role="tab" aria-controls="lookup" aria-selected="false">Look
+                            Up</button></li>
+                    <li class="nav-item" role="presentation"> <button class="nav-link" id="period-tab" data-bs-toggle="tab"
+                            data-bs-target="#period" type="button" role="tab" aria-controls="period" aria-selected="false">Accounting
+                            Period</button></li>
+                    <li class="nav-item" role="presentation"> <button class="nav-link" id="chartofaccount-tab" data-bs-toggle="tab"
+                            data-bs-target="#chartofaccount" type="button" role="tab" aria-controls="chartofaccount"
+                            aria-selected="false">Chart Of Accounts</button></li>
+                    <li class="nav-item" role="presentation"> <button class="nav-link" id="generalLedger-tab" data-bs-toggle="tab"
+                            data-bs-target="#generalLedger" type="button" role="tab" aria-controls="generalLedger" aria-selected="false">
+                            General Ledger</button></li>
+                    <li class="nav-item" role="presentation"> <button class="nav-link" id="taxRate-tab" data-bs-toggle="tab"
+                            data-bs-target="#taxRate" type="button" role="tab" aria-controls="taxRate" aria-selected="false">Tax
+                            Rate</button></li>
+                    <li class="nav-item" role="presentation"> <button class="nav-link" id="payroll-tab" data-bs-toggle="tab"
+                            data-bs-target="#payroll" type="button" role="tab" aria-controls="payroll" aria-selected="false">Payroll
+                            Settings</button></li>
+                    <li class="nav-item" role="presentation"> <button class="nav-link" id="client-tab" data-bs-toggle="tab"
+                            data-bs-target="#client" type="button" role="tab" aria-controls="client" aria-selected="false">
+                                Client List
+                           </button></li>
+                </ul>
+                <div class="tab-content pt-2" id="myTabContent">
+                    <div class="tab-pane fade show active p-2" id="accountType" role="tabpanel" aria-labelledby="accountType-tab">
+                        <app-account-type/>
+                    </div>
+                    <div class="tab-pane fade  p-2" id="lookup" role="tabpanel" aria-labelledby="lookup-tab">
+                        <app-finance-lookup/>
+                    </div>
+                    <div class="tab-pane fade  p-2" id="period" role="tabpanel" aria-labelledby="period-tab">
+                        <app-accounting-period/>
+                    </div>
+                    <div class="tab-pane fade  p-2" id="chartofaccount" role="tabpanel" aria-labelledby="chartofaccount-tab">
+                        <app-chart-of-accounts/>
+                    </div>
+                    <div class="tab-pane fade  p-2" id="taxRate" role="tabpanel" aria-labelledby="taxRate-tab">
+                        <app-tax-rate/>
+                    </div>
+                    <div class="tab-pane fade  p-2" id="generalLedger" role="tabpanel" aria-labelledby="generalLedger-tab">
+                        <app-ledger-posting/>
+                    </div>
+                    <div class="tab-pane fade  p-2" id="payroll" role="tabpanel" aria-labelledby="payroll-tab">
+                        <app-payroll-setting/>
+                    </div>
+                    <div class="tab-pane fade  p-2" id="client" role="tabpanel" aria-labelledby="client-tab">
+                        <app-client-list/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

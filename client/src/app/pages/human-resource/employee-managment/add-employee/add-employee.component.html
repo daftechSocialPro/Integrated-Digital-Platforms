@@ -1,0 +1,233 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Add Employee</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" data-bs-dismiss="modal"
+            aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Employee Detail</h5>
+            <form [formGroup]="EmployeeForm" (submit)="submit()">
+
+                <div class="row mb-3">
+                    <div class="col-md-3 ">
+                        <img [src]="imagePath ? imagePath : 'assets/img/profile.jpg'" alt="Profile"
+                            style="width: 100%;">
+                        <input #file (change)="onUpload($event)" type="file" style="display: none;" accept="image/*" />
+                        <div class="pt-2">
+                            <a (click)="file.click()" style="width: 100%;" class="btn btn-outline-primary btn-sm"
+                                title="Upload new profile image">
+                                <i class="bi bi-upload"></i> Upload Image
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="row g-3">
+                            <!-- Existing code for personal information fields -->
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="FirstName"> First Name </label>
+                                    <input pInputText pattern="^[a-zA-Z]+" class="form-control"
+                                        formControlName="firstName" id="FirstName" required />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="MiddleName"> Middle Name</label>
+                                    <input pInputText pattern="^[a-zA-Z]+" class="form-control"
+                                        formControlName="middleName" id="middleName" required />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="LastName"> Last Name</label>
+                                    <input pInputText pattern="^[a-zA-Z]+" class="form-control"
+                                        formControlName="lastName" id="lastName" required />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="FirstName">Amharic First Name</label>
+                                    <input pInputText class="form-control" formControlName="amharicfirstName"
+                                        id="amharicfirstName" required />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="MiddleName">Amharic Middle Name</label>
+                                    <input pInputText class="form-control" formControlName="amharicmiddleName"
+                                        id="amharicmiddleName" required />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="LastName">Amharic Last Name</label>
+                                    <input pInputText class="form-control" formControlName="amhariclastName"
+                                        id="amhariclastName" required />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+
+                                <div class="form-group">
+                                    <label for="EmploymentDate"> Employment Date</label>
+                                    <p-calendar formControlName="employmentDate" [maxDate]="maxHireDate"
+                                        [readonlyInput]="true"></p-calendar>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="BirthDate"> Birth Date</label>
+                                    <p-calendar formControlName="birthDate" #birthDate [maxDate]="maxBirthDate"
+                                        [readonlyInput]="true"></p-calendar>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+
+                                <div class="form-group">
+                                    <label for="PhoneNumber"> Phone Number</label>
+                                    <p-inputMask mask="(999) 999-999999" formControlName="phoneNumber"
+                                        placeholder="(999) 999-999999"></p-inputMask>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="countryId">Country</label>
+                            <select pInputText class="form-select" required="" #country
+                                (change)="getRegions(country.value)" aria-label="State">
+                                <option></option>
+                                <option *ngFor="let country of countries" [value]="country.id">{{
+                                    country.name }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="countryId">Region</label>
+                            <select pInputText class="form-select" #regionId required=""
+                                (change)="getZones(region.value)" #region id="regionId" aria-label="State">
+                                <option></option>
+                                <option *ngFor="let region of regions" [value]="region.id">{{
+                                    region.name }}</option>
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="zoneId"> Zone</label>
+                            <select pInputText class="form-select" id="zoneId" #zoneId
+                                [class]="zoneId ? 'ng-valid'  :'ng-invalid ng-dirty'" formControlName="zoneId"
+                                aria-label="State">
+                                <option></option>
+                                <option *ngFor="let zone of zones" [value]="zone.id">{{
+                                    zone.name }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="woreda"> Woreda</label>
+                            <input pInputText class="form-control" formControlName="woreda" id="woreda" required />
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+
+                        <div class="form-group">
+                            <label for="MaritalStatus">Marital Status</label>
+                            <select pInputText class="form-control" id="MaritalStatus" #MaritalStatus
+                                formControlName="maritalStatus" aria-label="State">
+                                <option></option>
+                                <option value="SINGLE">SINGLE</option>
+                                <option value="MARRIED">MARRIED</option>
+                                <option value="DIVORCE">DIVORCE</option>
+                                <option value="WIDOW">WIDOW</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="email"> Email</label><br />
+                            <input pInputText class="form-control" formControlName="email" id="email" required />
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-3 mt-2">
+                        <div class="form-group">
+                            <label for="EmploymentType">Employment Type</label>
+                            <select pInputText class="form-select" #employmentType id="EmploymentType"
+                                formControlName="employmentType" aria-label="State">
+                                <option></option>
+                                <option value="PERMANENT">PERMANENT</option>
+                                <option value="CONTRAT">CONTRAT</option>
+                                <option value="TEMPORARY">TEMPORARY</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mt-2">
+                        <div class="form-group">
+                            <label for="PaymentType">Payment Type</label>
+                            <select pInputText class="form-select" id="PaymentType" formControlName="paymentType"
+                                aria-label="State">
+                                <option></option>
+                                <option value="PERDAY">PERDAY</option>
+                                <option value="PERWEEK">PERWEEK</option>
+                                <option value="PERMONTH">PERMONTH</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-3 mt-2">
+                        <div class="form-group">
+                            <label for="Gender">Gender</label>
+
+                            <select pInputText class="form-select" id="Gender" #gender formControlName="gender"
+                                aria-label="State" required="">
+                                <option></option>
+                                <option value="MALE">MALE</option>
+                                <option value="FEMALE">FEMALE</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="col-md-3 mt-2" *ngIf="employmentType.value==='CONTRAT'">
+                        <div class="form-group">
+                            <label for="ContractEndDate"> Contract End Date </label>
+                            <p-calendar formControlName="ContractEndDate" [minDate]="maxHireDate"
+                                [readonlyInput]="true"></p-calendar>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 mt-2">
+                        <div class="form-group">
+                            <label for="PensionCode"> Pension Code</label>
+                            <input pInputText type="text" pattern="[0-9]+" class="form-control" id="PensionCode"
+                                placeholder="PensionCode" required formControlName="pensionCode">
+                        </div>
+                    </div>
+                    <div class="col-md-3 mt-2">
+                        <div class="form-group">
+                            <label for="TinNumber"> Tin Number</label>
+                            <input pInputText type="text" pattern="[0-9]+" class="form-control" id="TinNumber"
+                                placeholder="TinNumber" required formControlName="tinNumber">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" (click)="closeModal()">Close</button>
+                    <button type="button" type="submit" [disabled]="!EmployeeForm.valid"
+                        class="btn btn-outline-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

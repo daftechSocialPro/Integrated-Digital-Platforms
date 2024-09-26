@@ -1,0 +1,16 @@
+<!-- [ Sidebar Menu ] start -->
+<nav>
+  <div class="navbar-wrapper">
+    <div class="m-header">
+      <!-- [ Header Topbar ] start -->
+      <a [routerLink]="['/admin-dashboard']" class="b-brand">
+        <!-- ========   change your logo hear   ============ -->
+        <img  src="assets/logo2.png" height="85px" class="logo logo-lg text-center" /> <br/>
+        <span class="text-center" style="margin-left: 2px;  font-size: 12px;color:#6d42b9">EMwA Membership</span>
+   
+      </a>
+    </div>
+    <app-nav-content (NavCollapsedMob)="navCollapseMob()" class="scroll-div w-100"></app-nav-content>
+  </div>
+</nav>
+<!-- [ Sidebar Menu ] end -->

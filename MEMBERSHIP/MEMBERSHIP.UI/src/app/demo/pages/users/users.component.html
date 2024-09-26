@@ -1,0 +1,64 @@
+<div class="page-header ng-star-inserted">
+  <div class="page-block">
+      <div class="row align-items-center">
+          <div class="col-md-12">
+              <div class="page-header-title"><!----><!---->
+                  <h5 class="mb-2 ng-star-inserted"> Configuration </h5>
+              </div>
+              <ul class="breadcrumb">
+                  <li class="breadcrumb-item"><a _>System Users</a></li>
+                  <li class="breadcrumb-item ng-star-inserted">
+                      <a href="javascript:">
+                          Users List
+                      </a>
+              </ul>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="main-body">
+  <div class="row">
+    <!-- [ Typography ] start -->
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header">
+          <h5>Users List </h5>
+          <div class="col-lg-12 text-end p-2">
+            <button type="button" class="btn btn-outline-primary" (click)="addUser()"><i class="pi pi-user-plus me-1"></i>
+              User</button>
+          </div>
+        </div>
+  
+        <div class="card-body p-4">
+  
+          <div class="row">
+            <div *ngFor="let user of users" class="col-4">
+              <div class="card custom-card text-gray-900 hover:shadow overflow-hidden" (click)="userRoles(user)">
+                <span class="round small"></span>
+                <span class="round big"></span>
+                <div class="card-body">
+                  <div class="row">
+                  
+                    <div class="col-auto">
+                      <div class="btn-group" ngbDropdown>
+                        <img [src]="getImagePath(user.imagePath)" width="40" alt="user png" class="rounded-circle">
+                        <ul class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                          <!-- Dropdown menu items here -->
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <span class="text-gray-600 d-block text-[1.5rem] fw-bold my-2">{{user.name}} <i class="ti ti-arrow-up-right-circle opacity-50"></i></span>
+                  <p class="mb-0 opacity-50">{{user.email}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+     
+   
+</div>

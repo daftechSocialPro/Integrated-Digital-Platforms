@@ -1,0 +1,144 @@
+<main id="main" class="main">
+
+    <div class="iconcontainer" (click)="goToVacancyList()">
+        <i class="bi bi-arrow-left-short"></i>
+        <div>Vacancy List</div>
+    </div>
+
+    <section>
+        <div class="card">
+            <h5 class="card-title " style="margin-left: 20px;">Vacancy Details</h5>
+            <div class="divider"></div>
+            <div class="employee-details2">
+                <div class="col-lg-10">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr class="table-head">
+                                <th class="text-center"> Job Title </th>
+                                <th class="text-center"> Department </th>
+                                <th class="text-center"> Position </th>
+                                <th class="text-center"> Eudctional Field</th>
+                                <th class="text-center"> Eudctional Level </th>
+                                <th class="text-center"> GPA</th>
+                                <th class="text-center"> Quantitiy </th>
+                                <th class="text-center"> Employment Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="table-body">
+                                <td class="text-center"> {{vacancyDetail&&vacancyDetail.vacancyName}}</td>
+                                <td class="text-center">{{vacancyDetail&&vacancyDetail.department}}</td>
+                                <td class="text-center">{{vacancyDetail&&vacancyDetail.position}}</td>
+                                <td class="text-center">{{vacancyDetail&&vacancyDetail.educationalField}}</td>
+                                <td class="text-center">{{vacancyDetail&&vacancyDetail.educationalLevel}}</td>
+                                <td class="text-center">{{vacancyDetail&&vacancyDetail.gpa}}</td>
+                                <td class="text-center">{{vacancyDetail&&vacancyDetail.quantity}}</td>
+                                <td class="text-center">{{vacancyDetail&&vacancyDetail.employmentType}}</td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <div class="divider"></div>
+            <div style="padding:20px;">
+                <div class="row col-10">
+                    <div class="col-6">
+                        <h6> <strong> Job Desctiption</strong></h6>
+                        <p>
+                            {{vacancyDetail&&vacancyDetail.vaccancyDescription}} </p>
+                    </div>
+                    <div *ngIf="vacancyDetail && vacancyDetail.vaccancyDocuments" class="col-6">
+                        <h6> <strong> Attachments</strong></h6>
+                        <div class="p-2 text-primary" *ngFor="let item of vacancyDetail.vaccancyDocuments">
+                            <a target="_blank" [href]="getFIle(item.documentPath)"> <i
+                                    class="pi pi-file-pdf text-primary p-2"
+                                    style="font-size: 22px;background-color: #5c1d1612; border-radius: 50%;"></i>
+                                <span> {{item.docuemntName}}</span> &nbsp;&nbsp;
+                                <i class="pi pi-download text-primary" style="font-size: 18px;"></i></a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="modal-footer" *ngIf="leaveRequest.leaveStatus=='PENDING'">
+                <button type="button" (click)="rejectRequest()" class="btn btn-outline-danger"><i class="bi bi-x-lg"></i> Decline Leave</button>
+                <button type="button" type="submit" (click)="approveRequest()" class="btn btn-outline-success"><i class="bi bi-check-lg"></i> Approve Leave</button>
+            </div> -->
+        </div>
+
+
+        <div class="card">
+
+            <div class="col-lg-12 text-end p-2">
+                <button type="button" class="btn btn-outline-primary" (click)="apply()"><i class="pi pi-plus me-1"></i>
+                    Apply</button>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title"> Candidates</h5>
+                <div class="row col-12">
+                    <div class="col-2">
+                        <select class="form-select" id="status" [(ngModel)]="applicantFind && applicantFind.applicantType" aria-label="State">
+                            <option></option>
+                            <option [value]=0>Internal</option>
+                            <option [value]=1>External</option>
+                        </select> 
+                    </div>
+                    <div class="col-2">
+                        <select class="form-select" id="status" [(ngModel)]="applicantFind && applicantFind.applicantStatus" aria-label="State">
+                            <option></option>
+                            <option [value]=0>Pending</option>
+                            <option [value]=1>Applied</option>
+                            <option [value]=2>Exam</option>
+                            <option [value]=3>Interview</option>
+                            <option [value]=4>Rejected</option>
+                            <option [value]=5>Hired</option>
+                            <option [value]=6>Black List</option>
+                        </select> 
+                    </div>
+                    
+                    
+                    <div class="col-2">
+                        <button pButton (click)="getApplicantList()" pRipple type="button" icon="pi pi-search" class="p-button-rounded p-button-success p-button-outlined"></button>
+                    </div>
+                </div>
+                <p-table #dt [columns]="cols" [value]="vaccancyEmployees" 
+                 [exportHeader]="'customExportHeader'" 
+                 [(selection)]="selectedApplicants"
+                 [tableStyle]="{ 'min-width': '50rem' }">
+                    <ng-template pTemplate="caption">
+                        <div class="flex">
+                            <button type="button" pButton pRipple icon="pi pi-file" (click)="dt.exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button> &nbsp;&nbsp;
+                            <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button> &nbsp;
+                            <button type="button" pButton pRipple  icon="pi pi-upload"class="mr-2"></button>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th></th>
+                            <th *ngFor="let col of columns">
+                                {{ col.header }}
+                            </th>
+                            <th></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns">
+                        <tr [pSelectableRow]="rowData">
+                            <td>
+                                <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+                            </td>
+                            <td *ngFor="let col of columns">
+                                {{ rowData[col.field] }}
+                            </td>
+                            <td><p-button (onClick)="goToDetails(rowData.id)" icon="pi pi-ellipsis-h"
+                                styleClass="p-button-outlined p-button-sm"></p-button></td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+
+    </section>
+</main>

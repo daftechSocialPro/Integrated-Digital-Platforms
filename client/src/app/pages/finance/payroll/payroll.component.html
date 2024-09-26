@@ -1,0 +1,106 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Payroll</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+                <li class="breadcrumb-item">Finance</li>
+                <li class="breadcrumb-item active">Payroll</li>
+
+            </ol>
+        </nav>
+    </div>
+    <section class="section">
+        <div class="card">
+            <div class="row p-2">
+                <div class="col-lg-12 d-flex align-items-center">
+                    
+                    <!-- <input type="text" pInputText  class="form-control stdate"  id="payrollMonth"  [(ngModel)]="payrollParam.payrollMonth"
+                    placeholder="Select Date" > -->
+                    <div class=" m-3">
+                        <span class="p-float-label">
+                            <p-calendar [(ngModel)]="payrollParam.payrollMonth" inputId="payrollMonth" [minDate]="minDate" [maxDate]="maxDate"
+                            view="month" dateFormat="mm/yy" [readonlyInput]="true"></p-calendar>
+                            <label for="payrollMonth">Payroll Month</label>
+                        </span>             
+                    </div>
+                    <div class="ms-2">
+                        
+                        <button pButton pRipple *ngIf="payrollParam.payrollMonth" class="p-button-success" (click)="calculatePayroll()"><i class="bi bi-calculator"></i>&nbsp; Calculate</button>
+                    
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            
+                            <p-table #dt [value]="payrollDataList" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['branch']"
+                                [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true"
+                                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowHover]="true"
+                                dataKey="id">
+                                <ng-template pTemplate="caption">
+                                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                                        <h5 class="m-0">Payroll List </h5>
+                                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                                            <i class="pi pi-search"></i>
+                                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..."
+                                                class="w-full sm:w-auto" />
+                                        </span>
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>Payroll Month</th>
+                                        <th>Total Count</th>
+                                        <th>Prepared By</th>
+                                        <th>Checked By</th>
+                                        <th>Approved By</th>
+                                        <th>Total Amount</th>
+                                        <th>Active</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-payroll>
+                                    <tr>
+                                        
+                                        <td style="width:50%; min-width:10rem;">
+                                            {{payroll.payrollMonth}}
+                                        </td>
+                                        <td style="width:50%; min-width:10rem;">
+                                            {{payroll.calculatedCount}}
+                                        </td>
+                                        <td style="width:50%; min-width:10rem;">
+                                            {{payroll.preparedBy}}
+                                        </td>
+                                        <td style="width:50%; min-width:10rem;">
+                                            {{payroll.checkedBy}}
+                                        </td>
+                                        <td style="width:50%; min-width:10rem;">
+                                            {{payroll.approvedBy}}
+                                        </td>
+                                        <td style="width:50%; min-width:10rem;">
+                                            {{payroll.totalAmount}}
+                                        </td>
+                                        <td style="width:50%; min-width:10rem;">
+                                            <i class="pi" [ngClass]="{ 'text-green-500 pi-check-circle': 
+                                            payroll.isActive, 'text-red-500 pi-times-circle': !payroll.isActive }"></i>
+                                        </td> 
+                                        <td>
+                                            <button pButton pRipple class="p-button-info" *ngIf="!payroll.approvedBy && !payroll.checkedBy && payroll.isActive" (click)="checkPayroll(payroll.id)" >Check</button>
+                                            <button button pButton pRipple class="p-button-info" *ngIf="!payroll.approvedBy && payroll.checkedBy && payroll.isActive" (click)="approvePayroll(payroll.id)"  >Approve</button>    
+                                            <button button pButton pRipple class="p-button-info" *ngIf="!payroll.authorizedBy && payroll.approvedBy && payroll.checkedBy && payroll.isActive" (click)="autorizePayroll(payroll.id)"  >Autorize</button>          
+                                                                                                                   
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

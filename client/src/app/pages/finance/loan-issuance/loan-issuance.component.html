@@ -1,0 +1,107 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Loan Issuance</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+                <li class="breadcrumb-item">Finance</li>
+                <li class="breadcrumb-item active">Loan Issuance</li>
+
+            </ol>
+        </nav>
+    </div>
+    <section class="section">
+        <div class="card">
+            <div class="row p-2">
+                <div class="col-lg-12 d-flex align-items-center">
+                    
+                    
+                    
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            
+                            <p-table #dt [value]="approvedLoanList" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['branch']"
+                                [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true"
+                                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowHover]="true"
+                                dataKey="id">
+                                <ng-template pTemplate="caption">
+                                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                                        <h5 class="m-0">Approved Loan List </h5>
+                                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                                            <i class="pi pi-search"></i>
+                                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..."
+                                                class="w-full sm:w-auto" />
+                                        </span>
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>Employee Code</th>
+                                        <th>Employee Name</th>
+                                        <th>Current Salary</th>
+                                        <th>Given Amount</th>
+                                        <th>Monthly Payment</th>
+                                        <th>Return Period</th>
+                                        <th>Total Payment</th>
+                                        <th>Initial Approver</th>
+                                        <th>Second Approver</th>
+                                        <th>Loan Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-loan>
+                                    <tr>
+                                        
+                                        <td style="width:50%; min-width:10rem;">
+                                            {{loan.employeeCode}}
+                                        </td>
+                                        <td style="width:50%; min-width:10rem;">
+                                            {{loan.employeeName}}
+                                        </td>
+                                        <td style="width:50%; min-width:10rem;">
+                                            {{loan.currentSalary}}
+                                        </td>
+                                        <td style="width:50%; min-width:10rem;">
+                                            {{loan.givenAmmount}}
+                                        </td>
+                                        <td style="width:50%; min-width:10rem;">
+                                            {{loan.monthlyPayment}}
+                                        </td>
+                                        <td style="width:50%; min-width:10rem;">
+                                            {{loan.returnPeriod}}
+                                        </td>
+                                        <td style="width:50%; min-width:10rem;">
+                                            {{loan.totalPayment}}
+                                        </td>
+                                        <td style="width:50%; min-width:10rem;">
+                                            {{loan.initialApprover}}
+                                        </td>
+                                        <td style="width:50%; min-width:10rem;">
+                                            {{loan.secondApprover}}
+                                        </td>
+                                        <td style="width:50%; min-width:10rem;">
+                                            {{loan.loanStatus}}
+                                        </td>
+                                        <!-- <td style="width:50%; min-width:10rem;">
+                                            <i class="pi" [ngClass]="{ 'text-green-500 pi-check-circle': 
+                                            payroll.isActive, 'text-red-500 pi-times-circle': !payroll.isActive }"></i>
+                                        </td>  -->
+                                        <td>
+                                            <button type="button"  class="btn btn-outline-primary"  (click)="giveLoan(loan.id)">Give Loan</button> | 
+                                            <button type="button"  class="btn btn-outline-primary"  (click)="payLoan(loan.id)">Pay Loan</button>           
+                                                                                                                   
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

@@ -1,0 +1,13 @@
+
+
+.chart-title {
+  background-color: #f8f9fa;
+  padding: 10px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.chart-title-text {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 500;
+}

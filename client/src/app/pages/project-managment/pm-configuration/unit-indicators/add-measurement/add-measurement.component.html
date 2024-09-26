@@ -1,0 +1,59 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Add Strategic plan Indicator </h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Indicator Detail</h5>
+            <form class="" [formGroup]="measurmentForm" (ngSubmit)="submit()">
+                <div class="modal-body">
+                    <div class="row g-3">
+                        <div class="col-md-12">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="Name" placeholder="Name"
+                                    formControlName="name">
+                                <label for="Name">Name</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <select class="form-select" formControlName="stratgicPlanId">
+                                    <option *ngFor="let item of stratgicPlans" [value]="item.id">{{item.name}}</option>
+
+                                </select>
+                                <label for="stratgicPlanId">Strategic Plan</label>
+                              
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="Type" formControlName="type" aria-label="Type">
+
+
+                                    <option value="INPUT">INPUT</option>
+                                    <option value="OUTPUT">OUTPUT</option>
+                                    <option value="OUTCOME">OUTCOME</option>
+
+
+                                </select>
+                                <label for="Type">Type</label>
+                            </div>
+                        </div>
+                
+
+                    </div>
+
+                </div>
+                <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
+                        (click)="closeModal()">Close</button>
+                    <button type="button" type="submit" [disabled]="!measurmentForm.valid" class="btn btn-outline-primary">Save
+                        changes</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,52 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">{{projectLocation?'Update':'Add'}} Project Fund Source</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{calledFrom==0?'Project':'Activity'}} Fund Source Detail</h5>
+            <form class="" [formGroup]="projectLocationForm" (ngSubmit)="submit()">
+                <div class="modal-body">
+                    <div class="row g-3">
+                        <div class="col-md-6" *ngIf="calledFrom==0" >
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="Name" placeholder="Name"
+                                    formControlName="name">
+                                <label for="Name">Name</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6" *ngIf="calledFrom==0" >
+                            <div class="form-floating">
+                                <input type="number" class="form-control" id="Budget" placeholder="Budget"
+                                    formControlName="budget">
+                                <label for="Budget">Budget</label>
+                            </div>
+                        </div>
+             
+
+
+                        <div class="col-md-12">
+                            <div id="map" [hidden]="calledFrom==0" style="height: 300px;"></div>
+                        </div>
+                 
+                    </div>
+
+                </div>
+                <div  class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
+                        (click)="closeModal()">Close</button>
+                    <button type="button" *ngIf="calledFrom==0" type="submit" [disabled]="!projectLocationForm.valid"  class="btn btn-outline-primary">
+                        {{projectLocation?'Update':'Add'}}
+                        changes</button>
+
+                        <button type="button" *ngIf="calledFrom==1" [disabled]="lat==9.1450"  (click)="submitMap()"  class="btn btn-outline-primary">
+                            Submit 
+                            changes</button>  
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,55 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Add Benefit Lists</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Add Benefits</h5>
+            <div class="row">
+                <div class="col-lg-12">
+                    <form class="" [formGroup]="benefitFormG" (ngSubmit)="submit()">
+                        <div class="modal-body">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="name" placeholder="name"
+                                            formControlName="name">
+                                        <label for="name">Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="amharicName"
+                                            placeholder="amharic name" formControlName="amharicName">
+                                        <label for="name">Amharic Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="number" class="form-control" id="taxableAmount"
+                                            placeholder="Taxable Amount" formControlName="taxableAmount">
+                                        <label for="name">Taxable Amount</label>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <p-inputSwitch formControlName="addOnContract"></p-inputSwitch>
+                                        <label for="name">Add On Contract</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
+                                (click)="closeModal()">Close</button>
+                            <button type="button" type="submit" [disabled]="!benefitFormG.valid"
+                                class="btn btn-outline-primary">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

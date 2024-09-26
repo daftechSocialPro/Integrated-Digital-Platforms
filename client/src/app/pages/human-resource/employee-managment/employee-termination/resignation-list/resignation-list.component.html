@@ -1,0 +1,70 @@
+
+<div class="row p-2">
+    <div class="col-lg-12 ">
+        <p-dropdown [options]="filters" #drop (onChange)="filterChange(drop.value)" optionLabel="name"></p-dropdown>
+   
+    </div>
+</div>
+<div class="row">
+
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Resignation</h5>
+
+                <p-table
+                [value]="resignationList"
+                [paginator]="true"
+                [rows]="5"
+                [showCurrentPageReport]="true"
+                [tableStyle]="{ 'min-width': '50rem' }"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [rowsPerPageOptions]="[5, 25, 50]"
+                styleClass="p-datatable-sm"
+            >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th >Employee Name</th>
+                        <th > {{selected.id=='1'?"Approved Date":"Resignation Date"}}</th>
+                        <th >{{selected.id=='1'?"Approved By":"Reason For Resignation"}}</th>
+                        <th *ngIf="selected.id=='2'"> Resignation Letter</th>
+                        <th *ngIf="selected.id=='2'"> Action</th>
+                      
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-resign>
+                    <tr>
+                        <td>{{ resign.employeeName }}</td>
+                        <td>{{ selected.id=='1'?(resign.approvedDate|date:"dd MMM yyyy"):(resign.resignationDate|date:"dd MMM yyyy") }}</td>
+                        <td> {{ selected.id=='1'?(resign.approverEmployee):(resign.reasonForResignation ) }}</td>
+                        <td *ngIf="selected.id=='2'" >
+                            
+                      
+                            <div style="text-align: center;">
+                          <a (click)="viewPdf(resign.resignationLetterPath)" class="btn btn-outline-primary">View Letter</a>
+                       </div>
+                        </td>
+                        <td *ngIf="selected.id=='2'">
+                            <div class="filter">
+                                <a class="icon" href="#" data-bs-toggle="dropdown"> <i class="bi bi-three-dots-vertical"></i></a>
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                   
+                                   <li><a class="dropdown-item text-success" (click)="approveRequest(resign.id)"   > <i class="bi bi-check"></i>Approve</a></li>
+                               </ul>
+                             </div>
+                        </td>
+                        
+
+                        
+                     
+                    </tr>
+                </ng-template>
+               
+               
+            </p-table>
+      
+              
+            </div>
+        </div>
+    </div>
+</div>

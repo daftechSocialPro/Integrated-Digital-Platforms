@@ -1,0 +1,50 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Payments</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+                <li class="breadcrumb-item">Finance</li>
+                <li class="breadcrumb-item active">Payments</li>
+
+            </ol>
+        </nav>
+    </div>
+    <section class="section">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Payments</h5>
+                <div class="row p-2">
+                    <div class="col-lg-12 text-end ">
+                        <button type="button" class="btn btn-outline-primary" (click)="addPayment()"><i class="bi bi-plus me-1"></i>
+                            Add Payments</button>
+                    </div>
+                </div>
+                <ul class="nav nav-tabs nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation"> <button class="nav-link active" id="pendingPayments-tab"
+                            data-bs-toggle="tab" data-bs-target="#pendingPayments" type="button" role="tab"
+                            aria-controls="pendingPayments" aria-selected="false">Pending Payments</button></li>
+                    <li class="nav-item" role="presentation"> <button class="nav-link" id="approvedPayments-tab" data-bs-toggle="tab"
+                            data-bs-target="#approvedPayments" type="button" role="tab" aria-controls="approvedPayments"
+                            aria-selected="false">Approved Payments</button></li>
+                    <li class="nav-item" role="presentation"> <button class="nav-link" id="authorizePayment-tab" data-bs-toggle="tab"
+                            data-bs-target="#authorizePayment" type="button" role="tab" aria-controls="authorizePayment"
+                            aria-selected="false">Authorized Payments</button></li>
+                
+                
+                </ul>
+                <div class="tab-content pt-2" id="myTabContent">
+                    <div class="tab-pane fade show active p-2" id="pendingPayments" role="tabpanel" aria-labelledby="pendingPayments-tab">
+                        <app-pending-payments/>
+                    </div>
+                    <div class="tab-pane fade  p-2" id="approvedPayments" role="tabpanel" aria-labelledby="approvedPayments-tab">
+                        <app-approved-payments/>
+                    </div>
+                    <div class="tab-pane fade  p-2" id="authorizePayment" role="tabpanel" aria-labelledby="authorizePayment-tab">
+                        <app-authorized-payments/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

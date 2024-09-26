@@ -1,0 +1,312 @@
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Planned Report</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+                <li class="breadcrumb-item active">Planned Report By Strategic Plan</li>
+            </ol>
+        </nav>
+    </div>
+    <section class="section dashboard">
+
+
+        <div class="row">
+
+            <div class="col-12">
+                <div class="card p-2">
+
+
+                    <!--  -->
+
+
+                </div>
+            </div>
+        </div>
+        <div class="card" #excelTable>
+            <div class="card-body p-2" *ngIf="strategicPlans">
+    
+    
+    
+                <div class="row">
+                    <div class="col-9">
+    
+                    </div>
+    
+               
+    
+                    <div class="col-3 text-end" >
+                        <label class="form-label">Filter By</label>
+                        <select class="form-control " [(ngModel)]="filterBy" (change)="onFilterByChange()">
+    
+                            <option value=0>Monthly</option>
+                            <option value=1>Quarterly</option>
+                        </select>
+                    </div>
+    
+                </div>
+                
+    
+             
+                
+                <div class="text-end col-lg-12 mt-2">
+                    
+                    <button class="btn btn-outline-success text-end mb-3" (click)="exportAsExcel('Strategic Plan Report')"><i
+                            class="bi bi-file-excel"></i> Export Excel </button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered mt-2 " id="myTable">
+                        <thead>
+                            <tr>
+                                <th scope="col" [attr.rowspan]="filterBy==0?3:2" style="border: 1px solid black;">
+                                    Task/Activity</th>
+                                <th scope="col" [attr.rowspan]="filterBy==0?3:2" style="border: 1px solid black">Description
+                                </th>
+                                <th scope="col" [attr.rowspan]="filterBy==0?3:2" style="border: 1px solid black;">Indicator
+                                </th>
+                                <th scope="col" [attr.rowspan]="filterBy==0?3:2" style="border: 1px solid black;">Baseline
+                                </th>
+                                <th scope="col" [attr.rowspan]="filterBy==0?3:2" style="border: 1px solid black;">Annual
+                                    Target</th>
+                                <th scope="col" [attr.colspan]="filterBy==0?16:4" style="border: 1px solid black;">Target
+                                </th>
+                                <th scope="col" [attr.colspan]="filterBy==0?17:5" style="border: 1px solid black;">Budget
+                                </th>
+                                <th scope="col" [attr.rowspan]="filterBy==0?3:2" style="border: 1px solid black;">Source of
+                                    Budget</th>
+                                    <th scope="col" [attr.rowspan]="filterBy==0?3:2" style="border: 1px solid black;">Project</th>
+                             
+                            </tr>
+    
+                            <tr>
+                                <th scope="col" [attr.colspan]="filterBy==0?4:0" style="border: 1px solid black;">Q1</th>
+                                <th scope="col" [attr.colspan]="filterBy==0?4:0" style="border: 1px solid black;">Q2</th>
+                                <th scope="col" [attr.colspan]="filterBy==0?4:0" style="border: 1px solid black;">Q3</th>
+                                <th scope="col" [attr.colspan]="filterBy==0?4:0" style="border: 1px solid black;">Q4</th>
+                                <th scope="col" [attr.colspan]="filterBy==0?4:0" style="border: 1px solid black;">Q1</th>
+                                <th scope="col" [attr.colspan]="filterBy==0?4:0" style="border: 1px solid black;">Q2</th>
+                                <th scope="col" [attr.colspan]="filterBy==0?4:0" style="border: 1px solid black;">Q3</th>
+                                <th scope="col" [attr.colspan]="filterBy==0?4:0" style="border: 1px solid black;">Q4</th>
+                                <th scope="col" [attr.rowspan]="filterBy==0?2:1" style="border: 1px solid black;">Total
+                                    Budget</th>
+                            </tr>
+                            <tr *ngIf="filterBy==0">
+                                <th scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q1 T</th>
+                                <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Jan</th>
+                                <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Feb</th>
+                                <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Mar</th>
+    
+                                <th scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q2 T</th>
+                                <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Apr</th>
+                                <th scope="col" style="border: 1px solid black;background-color: #fdf584;">May</th>
+                                <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Jun</th>
+    
+                                <th scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q3 T</th>
+                                <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Jul</th>
+                                <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Aug</th>
+                                <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Sep</th>
+    
+                                <th scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q4 T</th>
+                                <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Oct</th>
+                                <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Nov</th>
+                                <th scope="col" style="border: 1px solid black;background-color: #fdf584;">Dec</th>
+    
+    
+                                <th scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q1 B</th>
+                                <th scope="col" style="border: 1px solid black">Jan</th>
+                                <th scope="col" style="border: 1px solid black">Feb</th>
+                                <th scope="col" style="border: 1px solid black">Mar</th>
+    
+                                <th scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q2 B</th>
+                                <th scope="col" style="border: 1px solid black">Apr</th>
+                                <th scope="col" style="border: 1px solid black">May</th>
+                                <th scope="col" style="border: 1px solid black">Jun</th>
+    
+                                <th scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q3 B</th>
+                                <th scope="col" style="border: 1px solid black">Jul</th>
+                                <th scope="col" style="border: 1px solid black">Aug</th>
+                                <th scope="col" style="border: 1px solid black">Sep</th>
+    
+                                <th scope="col" style="border: 1px solid black;background-color: #e8ffde;">Q4 B</th>
+                                <th scope="col" style="border: 1px solid black">Oct</th>
+                                <th scope="col" style="border: 1px solid black">Nov</th>
+                                <th scope="col" style="border: 1px solid black">Dec</th>
+    
+                            </tr>
+    
+                        </thead>
+    
+                        <tbody class="labels">
+                            <tr>
+    
+                                <td [attr.colspan]="filterBy==0?40:16"
+                                    style="border: 1px solid black; background-color: #D5FFFF"> </td>
+                            </tr>
+                        </tbody>
+
+                        <ng-template ngFor let-strategicPlan [ngForOf]="strategicPlans" let-index1="index">
+                            <tbody class="labels">
+                                <tr>
+                                   
+                                    <td  [attr.colspan]="filterBy==0?40:16"  style="border: 1px solid black;  background-color: #e8ffde;width: 200px;font-size: larger;">
+                                        {{strategicPlan.name}}
+                                    </td>
+                                    <!-- <td   *ngFor="let item of filterBy==0?taskItems:taskItems2" style="border: 1px solid black;"></td>
+                                  -->
+                                    <!-- <ng-container *ngFor="let item of items; index as i">
+                                        <td style="border: 1px solid black; background-color: #eee"></td>
+                                    </ng-container> -->
+    
+                                </tr>
+                            </tbody>
+
+                            <ng-template ngFor let-task [ngForOf]="strategicActivites.get(strategicPlan.id)" let-index2="index">
+                                <tbody>
+                                    <tr>
+                                        <td [attr.colspan]="3"  style="border: 1px solid black;  background-color: #e8ffde;width: 200px;">
+                                          Objective  {{index2 + 1}} {{task.taskName}}
+                                        </td>
+                                        <td *ngFor="let item of filterBy==0?taskItems:taskItems2"style="border: 1px solid black;  background-color: #e8ffde;width: 200px;"></td>
+                                    </tr>
+                                    </tbody>
+                                  
+                            <ng-template ngFor let-act [ngForOf]="task.activityViewDtos" let-index3="index">
+                                <tbody>
+                                    <tr>
+                                        <td style="border: 1px solid black;">
+                                            {{index2 + 1}}.{{index3 + 1}}
+                                          
+                                        </td>
+                                        <td style="border: 1px solid black;cursor:pointer " (click)="viewDetail(act)">
+    
+    
+    
+    
+                                            {{act.name}}
+                                            <span class="badge" *ngIf="act.isTraining">Training</span>
+    
+                                           
+    
+                                        </td>
+    
+                                        <td style="border: 1px solid black;">{{act.unitOfMeasurment}}</td>
+                                        <td style="border: 1px solid black;">{{act.begining}}</td>
+                                        <td style="border: 1px solid black;">{{act.target}}</td>
+    
+                                        <ng-container *ngFor=" let item of act?.monthPerformance; let i= index ">
+                                            <td *ngIf="i==(0+selectedYear)" style="border: 1px solid black;background-color: #e8ffde;">{{
+                                                
+                                                (act?.monthPerformance[0+selectedYear]?.planned || 0) +
+                                                (act?.monthPerformance[1+selectedYear]?.planned || 0) +
+                                                (act?.monthPerformance[2+selectedYear]?.planned || 0) 
+                                     
+                                                }}</td>
+                                            <td *ngIf="i==(3+selectedYear)" style="border: 1px solid black;background-color: #e8ffde;">{{
+                                                (act?.monthPerformance[3+selectedYear]?.planned || 0) +
+                                                (act?.monthPerformance[4+selectedYear]?.planned || 0) +
+                                                (act?.monthPerformance[5+selectedYear]?.planned || 0)
+                                                }}</td>
+                                            <td *ngIf="i==(6+selectedYear)" style="border: 1px solid black;background-color: #e8ffde;">{{
+                                                (act?.monthPerformance[6+selectedYear]?.planned || 0) +
+                                                (act?.monthPerformance[7+selectedYear]?.planned || 0) +
+                                                (act?.monthPerformance[8+selectedYear]?.planned || 0)
+                                                }}</td>
+                                            <td *ngIf="i==(9+selectedYear)" style="border: 1px solid black;background-color: #e8ffde;">
+    
+                                                {{
+                                                (act?.monthPerformance[9+selectedYear]?.planned ||0) +
+                                                (act?.monthPerformance[10+selectedYear]?.planned ||0) +
+                                                (act?.monthPerformance[11+selectedYear]?.planned ||0)}}
+                                            </td>
+    
+    
+                                            <td *ngIf="filterBy==0 && getGroupValue(i)"
+                                                style="border: 1px solid black;background-color: #fdf584;"> {{item.planned}}
+                                            </td>
+                                        </ng-container>
+    
+                                        <ng-container *ngFor=" let item of act?.monthPerformance; let i= index ">
+    
+    
+                                            <td *ngIf="i==(0+selectedYear)" style="border: 1px solid black;background-color: #e8ffde;">{{
+                                                (act?.monthPerformance[0+selectedYear]?.plannedBudget || 0) +
+                                                (act?.monthPerformance[1+selectedYear]?.plannedBudget || 0) +
+                                                (act?.monthPerformance[2+selectedYear]?.plannedBudget || 0)
+                                                }}</td>
+                                            <td *ngIf="i==(3+selectedYear)" style="border: 1px solid black;background-color: #e8ffde;">{{
+                                                (act?.monthPerformance[3+selectedYear]?.plannedBudget || 0) +
+                                                (act?.monthPerformance[4+selectedYear]?.plannedBudget || 0) +
+                                                (act?.monthPerformance[5+selectedYear]?.plannedBudget || 0)
+                                                }}</td>
+                                            <td *ngIf="i==(6+selectedYear)" style="border: 1px solid black;background-color: #e8ffde;">{{
+                                                (act?.monthPerformance[6+selectedYear]?.plannedBudget || 0) +
+                                                (act?.monthPerformance[7+selectedYear]?.plannedBudget || 0) +
+                                                (act?.monthPerformance[8+selectedYear]?.plannedBudget || 0)
+                                                }}</td>
+                                            <td *ngIf="i==(9+selectedYear)" style="border: 1px solid black;background-color: #e8ffde;">{{
+                                                (act?.monthPerformance[9+selectedYear]?.plannedBudget || 0) +
+                                                (act?.monthPerformance[10+selectedYear]?.plannedBudget || 0) +
+                                                (act?.monthPerformance[11+selectedYear]?.plannedBudget || 0) }}
+    
+    
+    
+                                            </td>
+    
+    
+                                            <td *ngIf="filterBy==0 && getGroupValue(i)"
+                                                style="border: 1px solid black;background-color: #fdcd84;">
+                                                {{item.plannedBudget}}</td>
+    
+                                        </ng-container>
+    
+    
+    
+                                        <ng-container *ngIf="(act.monthPerformance!.length===0)">
+                                            <td *ngFor="let item of items2" style="border: 1px solid black;"> </td>
+                                        </ng-container> 
+    
+    
+                                        <td style="background-color: antiquewhite;border: 1px solid black;">
+                                            {{ (act?.monthPerformance[0+selectedYear]?.plannedBudget || 0) +
+                                            (act?.monthPerformance[1+selectedYear]?.plannedBudget || 0) +
+                                            (act?.monthPerformance[2+selectedYear]?.plannedBudget || 0) +
+                                            (act?.monthPerformance[3+selectedYear]?.plannedBudget || 0) +
+                                            (act?.monthPerformance[4+selectedYear]?.plannedBudget || 0) +
+                                            (act?.monthPerformance[5+selectedYear]?.plannedBudget || 0) +
+                                            (act?.monthPerformance[6+selectedYear]?.plannedBudget || 0) +
+                                            (act?.monthPerformance[7+selectedYear]?.plannedBudget || 0) +
+                                            (act?.monthPerformance[8+selectedYear]?.plannedBudget || 0) +
+                                            (act?.monthPerformance[9+selectedYear]?.plannedBudget || 0) +
+                                            (act?.monthPerformance[10+selectedYear]?.plannedBudget || 0) +
+                                            (act?.monthPerformance[11+selectedYear]?.plannedBudget || 0)
+                                            }}
+    
+                                        </td>
+                                        <td style="border: 1px solid black;">{{act?.projectSource}}</td>
+                                        <td style="border: 1px solid black;">{{act?.projectName}}</td>
+
+                                        
+                                   
+    
+                                            
+    
+    
+    
+                                    </tr>
+                                </tbody>
+                            </ng-template>
+                        </ng-template>
+
+                     
+                        </ng-template>
+                   
+    
+                    </table>
+    
+                </div>
+            </div>
+        </div>
+
+    </section>
+</main>

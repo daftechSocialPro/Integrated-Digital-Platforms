@@ -1,0 +1,28 @@
+<div class="card">
+   <p-tabView styleClass="tabview-custom">
+       <p-tabPanel>
+           <ng-template pTemplate="header">
+
+               <span>Country</span>
+           </ng-template>
+         
+              <app-country/>
+           
+       </p-tabPanel>
+       <p-tabPanel header="Header II">
+           <ng-template pTemplate="header">
+
+               <span>Region</span>
+           </ng-template>
+          <app-region/>
+       </p-tabPanel>
+       <p-tabPanel header="Header III">
+           <ng-template pTemplate="header">
+              
+               <span>Zone</span>
+              
+           </ng-template>
+          <app-zone/>
+       </p-tabPanel>
+   </p-tabView>
+</div>

@@ -1,0 +1,98 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Add Employment History </h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Employment History Detail </h5>
+            <div class="row">
+                <div class="col-lg-12">
+                    <form class="" [formGroup]="HistoryForm" (ngSubmit)="submit()">
+                        <div class="modal-body">
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" id="Departments" formControlName="departmentId"
+                                            aria-label="State">
+    
+                                            <option></option>
+                                            <option *ngFor="let department of departments" [value]="department.id">{{
+                                                department.name }}</option>
+                                        </select>
+                                        <label for="Departments">Departments</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" id="positionId" formControlName="positionId"
+                                            aria-label="State">
+    
+                                            <option></option>
+                                            <option *ngFor="let position of positions" [value]="position.id">{{
+                                                position.name }}</option>
+                                        </select>
+                                        <label for="positionId">Positions</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" id="SourceOfSalary" formControlName="sourceOfSalary"
+                                            aria-label="State">
+    
+                                            <option value="PROJECT"> PROJECT </option>
+                                            <option value="OTHER"> OTHER</option>
+                                            
+                                        </select>
+                                        <label for="SourceOfSalary">Salary Source</label>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-4">
+                                    <div class="form-floating"> <input type="number" class="form-control" id="salary"
+                                            placeholder="salary" required formControlName="salary">
+                                        <label for="salary"> Salary</label>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <p-calendar formControlName="startDate" [minDate]="today" [required]= "true"
+                                        [readonlyInput]="true" (onSelect)="getminEndDate($event)" placeholder="Start Date"></p-calendar>
+                                      
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating"> 
+                                        <p-calendar formControlName="endDate" [minDate]="minDate"
+                                        [readonlyInput]="true"  placeholder="End date"></p-calendar>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-floating"><textarea  class="form-control"
+                                            formControlName="remark" placeholder="remark" id="remark"
+                                            style="height: 100px;"></textarea><label for="remark">Remark</label>
+                                    </div>
+                                </div>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
+                            (click)="closeModal()">Close</button> <button type="button" type="submit"
+                            [disabled]="!HistoryForm.valid" class="btn btn-outline-primary">Save
+                            changes</button></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>

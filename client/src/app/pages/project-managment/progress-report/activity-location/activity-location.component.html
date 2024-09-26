@@ -1,0 +1,139 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Activity Locations Detail</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+                <li class="breadcrumb-item active">Activity Locations </li>
+            </ol>
+        </nav>
+    </div>
+    <section class="section dashboard">
+
+
+        <div class="row">
+
+            <div class="col-12">
+                <div class="card p-2">
+
+
+                    <form [formGroup]="serachForm" (submit)="Search()">
+                        <div class="d-flex justify-content-start ">
+                            <div class="form-floating col-2 me-2">
+                                <input type="number" class="form-control" id="budgetYear" formControlName="BudgetYear"
+                                    placeholder="Budget Year (yyyy)">
+                                <label for="budgetYear">Budget Year (yyyy)</label>
+                            </div>
+                            <div class="col-md-2 me-2">
+                                <div class="form-floating mb-2">
+                                    <select class="form-select" id="countryId" #country
+                                        (change)="getRegions(country.value)" aria-label="State">
+                                        <option></option>
+                                        <option *ngFor="let country of countries" [value]="country.id">{{
+                                            country.name }}</option>
+                                    </select>
+                                    <label for="countryId">Country</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2 me-2">
+                                <div class="form-floating mb-2">
+                                    <select class="form-select" (change)="getZones(region.value)" #region
+                                        id="regionId" aria-label="State">
+                                        <option></option>
+                                        <option *ngFor="let region of regions" [value]="region.id">{{
+                                            region.name }}</option>
+                                    </select>
+                                    <label for="countryId">Region</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2 me-2">
+                                <div class="form-floating mb-2">
+                                    <select class="form-select" id="zoneId" formControlName="locationId"
+                                        aria-label="State">
+                                        <option></option>
+                                        <option *ngFor="let zone of zones" [value]="zone.id">{{
+                                            zone.name }}</option>
+                                    </select>
+                                    <label for="zoneId"> Zone</label>
+                                </div>
+                            </div>
+
+                         
+
+
+                            <button pButton type="submit" icon="pi pi-search" [disabled]="!serachForm.valid"
+                                class="p-button-text bg-success text-white"></button>
+
+                        </div>
+                    </form>
+                  
+
+
+                    <div class="row mt-2">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="col-12 text-end p-2" *ngIf="activities">
+                                    <button  type="button" class="btn btn-outline-primary" (click)="viewOnMap()"><i
+                                        class="pi pi-map-marker me-1"></i>
+                                   </button>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">Activities</h5>
+                
+                                    <p-table
+                                    [value]="activities"
+                                    [paginator]="true"
+                                    [rows]="5"
+                                    [showCurrentPageReport]="true"
+                                    [tableStyle]="{ 'min-width': '50rem' }"
+                                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                                    [rowsPerPageOptions]="[5, 25, 50]"
+                                    styleClass="p-datatable-sm"
+                                >
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th >Activity Number</th>
+                                            <th >Activity Description</th>
+                                            <th >Activity Type</th>
+                                            <th >Baseline</th>
+                                            <th >Target</th>
+                                            <th>Indicator</th>
+                                            <th >Start Date</th>
+                                            <th >End Date</th>
+                                            <th >Project Location</th>
+                                            <th >Responsible</th>
+                                          
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-activity>
+                                        <tr>
+                                            <td>{{ activity.activityNumber }}</td>
+                                            <td>{{ activity.name }}</td>
+                                            <td>{{ activity.activityType }}</td>
+                                            <td>{{ activity.begining }}</td>
+                                            <td>{{ activity.target }}</td>
+                                            <td>{{ activity.unitOfMeasurment}}</td>
+                                            <td>{{ activity.startDate|date:"dd MMM, yyyy" }}</td>
+                                            <td>{{ activity.endDate|date:"dd MMM, yyyy" }}</td>
+                                            <td>{{ activity.projectLocation }}</td>
+                                            <td><span *ngFor="let member of activity.members">
+                                                {{member.name}}
+
+                                            </span></td>
+                                        </tr>
+                                    </ng-template>
+                                   
+                                   
+                                </p-table>
+                          
+                                  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+
+                </div>
+            </div>
+        </div>

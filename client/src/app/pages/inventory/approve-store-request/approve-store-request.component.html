@@ -1,0 +1,128 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Approve Store Request</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+                <li class="breadcrumb-item">Inventory</li>
+                <li class="breadcrumb-item active">Approve Store</li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="card">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <p-table [value]="storeRequestList" dataKey="itemId" responsiveLayout="scroll">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th></th>
+                        <th>Item Name</th>
+                        <th>Measurement Unit</th>
+                        <th>Remaining Quantity</th>
+                        <th>Store Approved Quantity</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-request let-expanded="expanded">
+                    <tr>
+                        <td>
+                            <button type="button" pButton pRipple [pRowToggler]="request"
+                                class="p-button-text p-button-rounded p-button-plain"
+                                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                        </td>
+                        <td style="min-width: 12rem;">{{request.itemName}}</td>
+                        <td style="min-width: 8rem;">{{request.measurementUnitName}}</td>
+                        <td style="min-width: 10rem;">{{request.remainingQuantity | number : '1.2-2'}}</td>
+                        <td style="min-width: 10rem;">{{request.storeApprovedQuantity | number : '1.2-2'}}</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="rowexpansion" let-request>
+                    <tr>
+                        <td colspan="3">
+                            <div class="p-3">
+                                <p-table [value]="request.storeRequests" dataKey="id" responsiveLayout="scroll">
+                                    <ng-template pTemplate="header">
+                    <tr>
+                        <th>Requester Employee</th>
+                        <th>Measurement Unit</th>
+                        <th>Requested Quantity</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-reqItem>
+                    <tr>
+                        <td>{{reqItem.requesterEmployee}}</td>
+                        <td>{{reqItem.measurementUnitName}}</td>
+                        <td>{{reqItem.quantity | number : '1.2-2'}}</td>
+                        <td>
+                            <p-button icon="pi pi-check" class="p-button-success" *ngIf="reqItem.approvalStatus == 0"
+                                (onClick)="approveItems(reqItem,request.remainingQuantity,request.storeApprovedQuantity)"></p-button>
+                            
+                            &nbsp;
+                            <p-button icon="pi pi-check" class="p-button-success" *ngIf="reqItem.approvalStatus == 1"
+                                (onClick)="finalApproval(reqItem.id)"></p-button>
+                        </td>
+                        <td>
+                            <p-button icon="pi pi-times" class="p-button-danger"
+                                (onClick)="rejectItem(reqItem.id)"></p-button>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="4">There are no order for this product yet.</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        </td>
+        </tr>
+        </ng-template>
+        </p-table>
+    </div>
+
+    <p-dialog [(visible)]="approveDialog" [style]="{width: '450px'}" header="Approve Store Request" [modal]="true"
+        class="p-fluid">
+        <ng-template pTemplate="content">
+            <div class="field">
+                <label for="approvedQuantity">ApprovedQuantity</label>
+                <input type="number" min="1" pInputText id="approvedQuantity" name="approvedQuantity"
+                    [(ngModel)]="approveRequest.approvedQuantity" required autofocus
+                    [ngClass]="{'ng-invalid ng-dirty' : submitted && !approveRequest.approvedQuantity}" />
+                <small class="ng-dirty ng-invalid" *ngIf="submitted && !approveRequest.approvedQuantity">Approved
+                    Quantity is Required</small>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
+                (click)="hideDialog()"></button>
+            <button pButton pRipple label="Approve" icon="pi pi-check" class="p-button-text"
+                (click)="approveQuantity()"></button>
+        </ng-template>
+
+    </p-dialog>
+
+    <p-dialog [(visible)]="rejectDialog" [style]="{width: '450px'}" header="Reject Store Request" [modal]="true"
+        class="p-fluid">
+        <ng-template pTemplate="content">
+
+            <div class="field">
+                <label for="rejectRequest">Remark</label>
+                <textarea id="rejectRequest" name="rejectRequest" pInputTextarea [(ngModel)]="rejectRequest.remark"
+                    rows="3" required cols="20"></textarea>
+            </div>
+            <small class="ng-dirty ng-invalid" *ngIf="submitted && !approveRequest.approvedQuantity">Remark is
+                Required</small>
+
+        </ng-template>
+
+        <ng-template pTemplate="footer">
+            <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
+                (click)="hideDialog()"></button>
+            <button pButton pRipple label="reject" icon="pi pi-timex" class="p-button-text p-button-danger"
+                (click)="SaveReject()"></button>
+        </ng-template>
+    </p-dialog>
+    </div>
+</main>

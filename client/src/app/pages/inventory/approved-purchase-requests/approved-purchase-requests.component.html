@@ -1,0 +1,156 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Approve Store Request</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+                <li class="breadcrumb-item">Inventory</li>
+                <li class="breadcrumb-item active">Approved Purchase Request Lists</li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="card">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <p-table [value]="approvedList" dataKey="id" responsiveLayout="scroll">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th></th>
+                        <th>Request Number</th>
+                        <th>Item Name</th>
+                        <th>Quantity</th>
+                        <th>Approver Employee</th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-request let-expanded="expanded">
+                    <tr>
+                        <td>
+                            <button type="button" pButton pRipple [pRowToggler]="request"
+                                class="p-button-text p-button-rounded p-button-plain"
+                                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                        </td>
+                        <td style="min-width: 12rem;">{{request.requestNumber}}</td>
+                        <td style="min-width: 8rem;">{{request.itemName}}</td>
+                        <td style="min-width: 10rem;">{{request.quantitiy }}</td>
+                        <td style="min-width: 10rem;">{{request.aproverEmployee }}</td>
+                        <td>
+                            <button pButton type="button" lable="select winner" icon="pi pi-check"
+                                class="ui-button-danger" (click)="selectWinner(request.id)"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="rowexpansion" let-request>
+                    <tr>
+                        <td colspan="3">
+                            <div class="p-3">
+                                <p-table [value]="request.performaDetails" dataKey="id" responsiveLayout="scroll">
+                                    <ng-template pTemplate="header">
+                    <tr>
+                        <th>Vendor Name</th>
+                        <th>Description</th>
+                        <th>Single Price</th>
+                        <th>From Date</th>
+                        <th>To Date</th>
+                        <th> <button pButton type="button" icon="pi pi-plus" class="ui-button-danger"
+                                (click)="addPerforma(request.id)"></button></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-reqItem>
+                    <tr>
+                        <td>{{reqItem.vendorName}}</td>
+                        <td>{{reqItem.description}}</td>
+                        <td>{{reqItem.singlePrice | number : '1.2-2'}}</td>
+                        <td>{{reqItem.fromDate | date : 'dd, MMM, yyyy'}}</td>
+                        <td>{{reqItem.toDate | date : 'dd, MMM, yyyy'}}</td>
+                        <td></td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="4">There are no Vendors for this request yet.</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        </td>
+        </tr>
+        </ng-template>
+        </p-table>
+    </div>
+
+    <p-dialog [(visible)]="performaDialog" [style]="{width: '450px'}" header="Add Performa" [modal]="true"
+        class="p-fluid">
+        <ng-template pTemplate="content">
+            <div class="row">
+
+                <div class="col-md-6">
+                    <label class="col-md-12" htmlFor="vendorId">Vendor</label>
+                    <p-dropdown [options]="vendorDropDown" optionLabel="name" optionValue="id" name="vendorId"
+                        [(ngModel)]="addPerformas.vendorId" placeholder="Select Vendor" [filter]="true" filterBy="name"
+                        [showClear]="true"></p-dropdown>
+                </div>
+                <div class="col-md-6">
+                    <label class="col-md-12" htmlFor="singlePrice">Single Price</label>
+                    <input type="number" min="1" pInputText id="singlePrice" name="singlePrice"
+                        [(ngModel)]="addPerformas.singlePrice" required autofocus
+                        [ngClass]="{'ng-invalid ng-dirty' :  !addPerformas.singlePrice}" />
+                </div>
+                <div class="col-md-6">
+                    <label htmlFor="fromDate">From Date</label>
+                    <p-calendar [showIcon]="true" [(ngModel)]="addPerformas.fromDate" name="fromDate" appendTo="body"
+                        inputId="icon"></p-calendar>
+                </div>
+                <div class="col-md-6">
+                    <label htmlFor="toDate">To Date</label>
+                    <p-calendar [showIcon]="true" [(ngModel)]="addPerformas.toDate" name="toDate"  appendTo="body"
+                        inputId="icon"></p-calendar>
+                </div>
+                <div class="col-md-12">
+                    <label htmlFor="toDate">Description</label>
+                    <textarea class="form-control" [(ngModel)]="addPerformas.description" rows="5"
+                        #description></textarea>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
+                (click)="hideDialog()"></button>
+            <button pButton pRipple label="Add" icon="pi pi-plus" class="p-button-text"
+                (click)="addRequestPerforma()"></button>
+        </ng-template>
+    </p-dialog>
+
+    <p-dialog [(visible)]="winnerDialog" [style]="{width: '450px'}" header="Approve Request" [modal]="true"
+        class="p-fluid">
+        <ng-template pTemplate="content">
+            <div class="row">
+
+                <div class="col-md-6">
+                    <label class="col-md-12" htmlFor="vendorId">Vendor</label>
+                    <p-dropdown [options]="candidateVendors" optionLabel="name" optionValue="id" name="vendorId"
+                        [(ngModel)]="approvePerforma.vendorId" placeholder="Select Vendor" [filter]="true"
+                        filterBy="name" [showClear]="true"></p-dropdown>
+                </div>
+                <div class="col-md-6">
+                    <label class="col-md-12" htmlFor="approvedQuantity">Approved Quantity</label>
+                    <input type="number" min="1" pInputText id="approvedQuantity" name="approvedQuantity"
+                        [(ngModel)]="approvePerforma.approvedQuantity" required autofocus
+                        [ngClass]="{'ng-invalid ng-dirty' :  !approvePerforma.approvedQuantity}" />
+                </div>
+                <div class="col-md-12">
+                    <label htmlFor="toDate">Remark</label>
+                    <textarea class="form-control" [(ngModel)]="approvePerforma.remark" rows="5" #remark></textarea>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
+                (click)="hideDialog()"></button>
+            <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"
+                (click)="SaveWinner()"></button>
+        </ng-template>
+    </p-dialog>
+    </div>
+</main>

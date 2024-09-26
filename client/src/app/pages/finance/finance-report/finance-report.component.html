@@ -1,0 +1,45 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Report</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+                <li class="breadcrumb-item">Finance</li>
+                <li class="breadcrumb-item active">Report</li>
+
+            </ol>
+        </nav>
+    </div>
+    <section class="section">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Finance Report</h5>
+                <ul class="nav nav-tabs nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation"> <button class="nav-link active" id="payrollreport-tab" data-bs-toggle="tab"
+                            data-bs-target="#payrollreport" type="button" role="tab" aria-controls="payrollreport"
+                            aria-selected="false">Payroll Report</button></li>
+                    <li class="nav-item" role="presentation"> <button class="nav-link" id="pensionreport-tab" data-bs-toggle="tab"
+                            data-bs-target="#pensionreport" type="button" role="tab" aria-controls="pensionreport"
+                            aria-selected="false">Pension Report</button></li>
+                    <li class="nav-item" role="presentation"> <button class="nav-link" id="incometaxreport-tab" data-bs-toggle="tab"
+                        data-bs-target="#incometaxreport" type="button" role="tab" aria-controls="incometaxreport"
+                        aria-selected="false">Income Tax Report</button></li>
+                    
+                    
+                </ul>
+                <div class="tab-content pt-2" id="myTabContent">
+                    <div class="tab-pane fade show active p-2" id="payrollreport" role="tabpanel" aria-labelledby="payrollreport-tab">
+                        <app-payroll-report/>
+                    </div>
+                    <div class="tab-pane fade" id="pensionreport" role="tabpanel" aria-labelledby="pensionreport-tab">
+                        <app-pension-declaration/>
+                    </div>
+                    <div class="tab-pane fade " id="incometaxreport" role="tabpanel" aria-labelledby="incometaxreport-tab">
+                        <app-income-tax-declaration/>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

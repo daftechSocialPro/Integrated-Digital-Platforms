@@ -1,0 +1,83 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Store Request</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+                <li class="breadcrumb-item">Inventory</li>
+                <li class="breadcrumb-item active">Srore Request</li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="card">
+        <div class="col-md-12">
+            <p-toast></p-toast>
+            <form #itemsForm="ngForm">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="col-md-12" htmlFor="projectId">Project</label>
+                            <p-dropdown [options]="projectDropDown" optionLabel="name" optionValue="id"  name="projectId" 
+                                [(ngModel)]="addStoreRequest.projectId" placeholder="Select Project"  [filter]="true" filterBy="name" [showClear]="true"></p-dropdown>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <label htmlFor="lastname2">Item</label> <br />
+                        <p-dropdown [options]="itemsDropDown" optionLabel="name" name="itemId" 
+                            (onChange)="changeItem($event)"  [(ngModel)]="items"
+                            placeholder="Select Item"  [filter]="true" filterBy="name" [showClear]="true" [required]="true"></p-dropdown>
+                    </div>
+                    <div class="col-md-2">
+                        <label htmlFor="lastname2">Measurement Unit</label>
+                        <p-dropdown [options]="measurementUnitDropDown" optionLabel="name"  optionValue="id" name="measurementUnitId"
+                            [(ngModel)]="addStoreRequestList.measurementUnitId" [required]="true"
+                            placeholder="Select Measurement Unit" [showClear]="true"></p-dropdown>
+                    </div>
+                    <div class="col-md-2">
+                        <label htmlFor="lastname2">Quantity</label>
+                        <input pInputText type="number" min="0" name="quantity" required [(ngModel)]="addStoreRequestList.quantity">
+                    </div>
+                    <div class="col-md-2">
+                        <label></label> <br/>
+                        <button pButton type="button" icon="pi pi-plus" [disabled]="!itemsForm.valid" class="ui-button-info" (click)="newRow()"></button>
+                    </div>
+                </div>
+            </form>
+                <div class="p-fluid p-formgrid grid">
+                    <p-table #dt [value]="storeRequestList"   responsiveLayout="scroll" >
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>Item</th>
+                                <th>Measurement Unit</th>
+                                <th>Quantity</th>
+                                <th style="width:8em"></th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-storeRequest>
+                            <tr>
+                                <td>
+                                    {{storeRequest.itemName}}
+                                </td>
+                                <td>
+                                   {{storeRequest.measurementUnit}}
+                                </td>
+                                <td>
+                                    {{storeRequest.quantity}}
+                                </td>
+                                <td style="text-align:center">
+                                    <button  pButton type="button"  icon="pi pi-times" class="ui-button-danger" (click)="removeData(storeRequest.itemId)"></button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+                <hr/>
+                <div class="p-fluid p-formgrid grid col-4">
+                    <button pButton type="button" label="Add Request" icon="pi pi-plus" class="ui-button-success" (click)="saveStore()" ></button> 
+                </div>
+        </div>
+    </div>
+</main>

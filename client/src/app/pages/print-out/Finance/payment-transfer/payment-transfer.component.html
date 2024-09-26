@@ -1,0 +1,108 @@
+<div id="paymentLetter">
+    <div class="letter">
+        <div class="header">
+            <div class="fullwidth banner">
+                <img [src]="imagePath" alt="Description of Image" width="100">
+                <div>
+                    <h2 class="center"><b>የኢትዮጵያ ሚድዋይፎች ማህበር</b></h2>
+                    <h2 class="center"><b>ETHIOPIAN MIDWIVES ASSOCIATION</b></h2>
+                    <div class="flex-between">
+                        <div>
+                            <p class="small">Tel +251 XXXXXXX</p>
+                            <p class="small">Email examp@hmail.com</p>
+                        </div>
+                        <div>
+                            <p class="small">PO Box</p>
+                            <p class="small">Webpage www.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <p class="center italic small">
+            Promoting for the quality of midwifery care
+        </p>
+
+        <div class="date-letter">
+            <p><b>Ref. No: EMwA/_______________</b></p>
+            <p><b>Date: ________________________</b></p>
+        </div>
+
+        <div class="margin-top passage">
+            <p><b>{{paymentLetter.bankName}}</b></p>
+            <p><b>{{paymentLetter.branchName}}</b></p>
+            <p><b>{{paymentLetter.bankAddress}}</b></p>
+        </div>
+
+        <h2 class="center underline"><b>Subjet: Payment Transfer.</b></h2>
+
+        <div class="content">
+            <div class="passage">
+                <p>We kindly request your esteemed bank to debit our current
+                    bank account number {{paymentLetter.accountNumber}}, and transfer a total of
+                    <b>{{ paymentLetter.totalAmmount }} ({{ paymentLetter.ammountInWords }}) Birr</b>
+                    to
+                    <span *ngIf="payeeDetails.length==0">
+                        {{paymentLetter.receiver}} Account Number <b>{{ paymentLetter.reciverAccountNumber}}</b>.
+                    </span>
+
+
+
+                    <span *ngIf="payeeDetails.length>0">the following account numbers. </span>
+
+                </p>
+
+                <p>For Service rendered in connection with the transfer, you can
+                    debit our account {{paymentLetter.accountNumber}} with {{paymentLetter.branchName}}.
+                </p>
+                <p>
+                    <b>Sincerely,</b>
+                </p>
+                <p>
+                    We are please to confirm that we are signatories of account
+                    the on Behalf of Ethiopian Midwives Association.
+                </p>
+            </div>
+
+        </div>
+
+        <div class="passage footere">
+            <div>
+                <p><u>_______________</u></p>
+                <p><b>{{ paymentLetter.approver }}</b></p>
+                <p><b>{{ paymentLetter.approverPosition }}</b></p>
+            </div>
+            <div>
+                <img [src]="stampImg" width="300" />
+            </div>
+            <div>
+                <p><u>_______________</u></p>
+                <p><b>{{ paymentLetter.authorizer }}</b></p>
+                <p><b>{{ paymentLetter.authorizerPosition }}</b></p>
+            </div>
+        </div>
+        <br /><br /><br /><br />
+        <div class="details-page">
+            <h3>Payment Details</h3>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Full Name</th>
+                        <th>Account Number</th>
+                        <th>Amount</th>
+                        <th>Remark</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let payee of payeeDetails">
+                        <td>{{ payee.fullName }}</td>
+                        <td>{{ payee.accountNumber }}</td>
+                        <td>{{ payee.ammount }}</td>
+                        <td>{{ payee.remark }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

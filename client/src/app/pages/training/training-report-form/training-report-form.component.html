@@ -1,0 +1,172 @@
+<div class="p-4">
+  
+    <div class="card p-4 " *ngIf="!traininggId">
+        <div class="text-center">
+            <img src="../../../../assets/logo.png" height="80px" />
+            <h1>Ethiopian Midwives Association</h1>
+            <h2>Training Quality Evaluation tools</h2>
+            <p class="mt-2">Title: <span>{{training&&training.title}} </span></p>
+            <p>Allocated CEU :<span>{{training&&training.allocatedCEU}}</span></p>
+            <p>Duration: <span>{{training&&training.startDate|date:"dd MMM yyyy"}} -- {{training&&training.endDate|date:"dd MMM yyyy"}}</span></p>
+            <p>Venue of the training: <span> {{training&&training.courseVenue}} </span></p>
+            <p>Name of the trainers: <span *ngFor="let item of trainers; let last = last">{{item.fullName}}{{last ? '' :
+                    ', '}}</span></p>
+
+        </div>
+    </div>
+    <button *ngIf="traininggId" type="button" (click)="downloadAsWord()">Download as Word</button>
+        <div id="reportContent" class="container card">
+            <div class=" row justify-content-center">
+              <div class="col-md-12">
+                <form [formGroup]="trainingReportForm"  class="card-body">
+                  <h5 class="card-title">Training Report Detail</h5>
+                  <hr />
+          
+               
+          
+                  <div class="form-group">
+                    <label for="Objective">• Objective of the training</label>
+                    <textarea type="text" formControlName="Objective" [readOnly]="training&&training.reportStatus=='SUBMITTED'" style="height: 120px;" class="form-control"
+                      id="Objective" placeholder="Objective"></textarea>
+                  </div>
+          
+                  <div class="form-group mt-4">
+                    <label for="Contribution">•	Contribution of the training towards achieving the project’s objectives</label>
+                    <textarea type="text" formControlName="Contribution" [readOnly]="training&&training.reportStatus=='SUBMITTED'" style="height: 120px;" class="form-control"
+                      id="Contribution" placeholder="Contribution"></textarea>
+                  </div>
+          
+                  <div class="form-group mt-4">
+                    <label for="TraineesDescription">•	Short description of the trainees: Who are they? Where they come from? How many trainees dis-aggregated by gender, Profession, Level of education, types of organization</label>
+                    <textarea type="text" formControlName="TraineesDescription" [readOnly]="training&&training.reportStatus=='SUBMITTED'" style="height: 120px;" class="form-control"
+                      id="TraineesDescription" placeholder="Trainees Description"></textarea>
+                  </div>
+          
+                  <div class="form-group mt-4">
+                    <label for="TopicsCovered">•	What topics were covered during the training?</label>
+                    <textarea type="text" formControlName="TopicsCovered" [readOnly]="training&&training.reportStatus=='SUBMITTED'" style="height: 120px;" class="form-control"
+                      id="TopicsCovered" placeholder="Topics Covered"></textarea>
+                  </div>
+          
+                  <div class="form-group  mt-4">
+                    <label for="Challenges"> •	What were the challenges?</label>
+                    <textarea type="text" formControlName="Challenges" [readOnly]="training&&training.reportStatus=='SUBMITTED'" style="height: 120px;" class="form-control"
+                      id="Challenges" placeholder="Challenges"></textarea>
+                  </div>
+          
+                  <div class="form-group  mt-4">
+                    <label for="LessonsLearned">•	What were the lessons learned?</label>
+                    <textarea type="text" formControlName="LessonsLearned" [readOnly]="training&&training.reportStatus=='SUBMITTED'" style="height: 120px;" class="form-control"
+                      id="LessonsLearned" placeholder="Lessons Learned"></textarea>
+                  </div>
+          
+                  <div class="form-group  mt-4">
+                    <label for="Summary">•	Short summary of the training daily evaluation</label>
+                    <textarea type="text" formControlName="Summary" [readOnly]="training&&training.reportStatus=='SUBMITTED'" style="height: 120px;" class="form-control"
+                      id="Summary" placeholder="Summary"></textarea>
+                  </div>
+                  <div class="form-group  mt-4">
+                    <label for="Summary">•  Summary of the pre and post training evaluation result </label>
+                    <textarea type="text" formControlName="PrePostSummary" [readOnly]="training&&training.reportStatus=='SUBMITTED'" style="height: 120px;" class="form-control"
+                      id="PrePostSummary" placeholder="Pre and Post Summary"></textarea>
+                  </div>
+          
+                  <div class="form-group  mt-4">
+                    <label for="attachments">Attachments </label>
+                    <div *ngIf="trainingReport&&trainingReport.attachments.length>0">
+                      <div style="margin-left: 20px;" *ngFor="let item of trainingReport.attachments; let i = index">
+                        
+                        <p><span class="text-primary">File Attachment {{i+1}} </span>    <a  class="btn btn-outline-primary" target="_blank" [href]="getImage(item)">
+                        <i class="bi bi-download"></i>
+                        </a>
+                        </p>
+                     </div>
+                    </div>
+                    <div *ngIf="training&&training.reportStatus!='SUBMITTED'">
+
+               
+                    <input #file (change)="onUpload($event)" type="file" multiple style="display: none;" accept=".pdf, .doc, .docx"  />
+
+                    <div class="row">
+                      <div class="col-3">
+                        <div class="pt-2">
+                          <a (click)="file.click()" style="width: 100%;" class="btn btn-outline-primary btn-sm"
+                            title="Upload new profile image">
+                            <i class="bi bi-upload"></i> Upload Attachments
+                          </a>
+                        </div>
+                        
+                      </div>
+
+                      <div class="col-9">
+                        <div class="file-preview">
+                          <div *ngFor="let file of uploadedFiles" class="file-item">
+                            <span>{{ file.name }}</span>
+                            <button (click)="removeFile(file)" class="remove-button">Remove</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+                        </div>
+                  </div>
+                  <div class="form-group  mt-4">
+                    <label for="attachments">Training Images </label>
+                    <div *ngIf="trainingReport&&trainingReport.images.length>0">
+
+
+           
+                     <ng-image-slider *ngIf="imageObject.length>0" [images]="imageObject"
+                        [imageSize]="{width: 280, height: 300, space: 10}" #nav>
+
+
+                     </ng-image-slider>
+
+
+
+
+
+
+                    </div>
+                    <div *ngIf="training&&training.reportStatus!='SUBMITTED'">
+                      <input #file2 (change)="onUpload2($event)" type="file" multiple style="display: none;" accept="image/*" />
+
+
+                      <div class="row">
+                        <div class="col-3">
+                          <div class="pt-2">
+                            <a (click)="file2.click()" style="width: 100%;" class="btn btn-outline-primary btn-sm"
+                              title="Upload new profile image">
+                              <i class="bi bi-upload"></i> Upload Images
+                            </a>
+                          </div>
+                          
+                        </div>
+
+                        <div class="col-9">
+                          <div class="image-preview">
+                            <div *ngFor="let image of uploadedFiles2" class="image-item">
+
+                            <img  [src]="getImageUrl(image)" class="preview-image" [alt]="image.name">
+                              <!-- <img [src]="image.url" class="preview-image" [alt]="image.name"> -->
+                              <button (click)="removeFile2(image)" class="remove-button">Remove</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    
+                    
+                    </div>
+                  </div>
+                  <div class="modal-footer" *ngIf="!(training&&training.reportStatus=='SUBMITTED')">
+                    <button type="button" class="btn btn-outline-secondary" (click)="submit('DRAFTED')" >Draft</button>
+                    <button type="button" type="submit" (click)="submit('SUBMITTED')" class="btn btn-outline-primary">Create</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+
+</div>

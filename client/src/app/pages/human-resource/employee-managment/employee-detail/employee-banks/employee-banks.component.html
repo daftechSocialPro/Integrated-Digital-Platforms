@@ -1,0 +1,79 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Add Employee Bank </h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row p-2">
+                <div class="col-lg-12 text-end" *ngIf="employmentStatus == 'ACTIVE'">
+                    <form class="" [formGroup]="employeeBankForm" (ngSubmit)="addNew()">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="bankId">Bank</label>
+                                    <select class="form-select" pInputText id="bankId" formControlName="bankId"
+                                        (change)="changeBankDigit($event.target)" aria-label="State">
+                                        <option></option>
+                                        <option *ngFor="let bank of bankLists" [value]="bank.id">{{
+                                            bank.name }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="BankAccountNo"> Bank Account No</label>
+                                    <input pInputText type="text" class="form-control" id="BankAccountNo" placeholder="BankAccountNo"
+                                        required pattern="[0-9]+" [minlength]="bankDigit" [maxlength]="bankDigit"
+                                        formControlName="bankAccountNo">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-check" style="font-size: 25px;"> <input class="form-check-input"
+                                        formControlName="isSalaryBank" type="checkbox" id="gridCheck"> <label
+                                        class="form-check-label" style="font-size: 20px;font-weight: bold;"
+                                        for="gridCheck">Is Salary Bank </label></div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <label ></label><br/>
+                                <button type="button"  [disabled]="!employeeBankForm.valid"  class="btn btn-outline-primary" (click)="addNew()"><i class="bi bi-plus me-1"></i>
+                                    Bank</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title"></h5>
+                            <p-table [value]="bankList" [paginator]="true" [rows]="5" [showCurrentPageReport]="true"
+                                [tableStyle]="{ 'min-width': '50rem' }"
+                                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                                [rowsPerPageOptions]="[5, 25, 50]" styleClass="p-datatable-sm">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>Bank</th>
+                                        <th>Account Number</th>
+                                        <th>Is Salary Bank </th>
+                                        <th></th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-bank>
+                                    <tr>
+                                        <td>{{ bank.bankName }}</td>
+                                        <td>{{ bank.accountNumber }}</td>
+                                        <td>{{ bank.isSalaryBank}}</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

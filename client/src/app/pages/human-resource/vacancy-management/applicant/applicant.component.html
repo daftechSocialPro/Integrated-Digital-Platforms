@@ -1,0 +1,159 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Apply</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+                <li class="breadcrumb-item">HRM</li>
+                <li class="breadcrumb-item active">Applicant</li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="iconcontainer" (click)="goToVacancy()">
+        <i class="bi bi-arrow-left-short"></i>
+        <div>Vacancy Detail</div>
+    </div>
+    <section class="section">
+        <div class="card">
+            <section class="section">
+                <div class="card" *ngIf="employee&&!isApplicant">
+                    <div class="col-lg-12 text-end p-2">
+                        <button type="button" class="btn btn-outline-primary" (click)="addApplicantProfile()"><i
+                                class="pi pi-plus me-1"></i>
+                            Add Applicant Profile</button>
+                    </div>
+                    <div class="employee-details">
+                        <img [src]="getImagePath(employee.imagePath!)" height="150" alt="user png" style="border-radius: 10px;
+                        border: 10px solid #f4f4f4;">
+
+                        <div class="employee-info mt-2">
+
+                            <div class="employee-name">{{ employee.employeeName }}</div>
+                            <div class="employee-code"> Employee Code : <span>{{
+                                    employee.employeeCode.toUpperCase()}}</span>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="employee-details2">
+                        <div class="col-lg-10">
+                            <table class="table table-borderless">
+                                <thead>
+                                    <tr class="table-head">
+                                        <th>Gender</th>
+                                        <th>Birth Date</th>
+                                        <th>Phone Number</th>
+                                        <th>Email</th>
+                                        <th>Citizen Ship</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-body">
+                                        <td>{{employee.gender}}</td>
+                                        <td>{{employee.birthDate | date:"MMM dd, YYYY"}}</td>
+                                        <td>{{employee.phoneNumber}}</td>
+                                        <td>{{employee.email}}</td>
+                                        <td>{{employee.nationality }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="divider"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card" *ngIf="applicantDetail">
+                    <div class="col-lg-12 text-end p-2" *ngIf="!applicantDetail.appliedForVacancy">
+                        <button type="button" class="btn btn-outline-primary" (click)="startVacancy()">
+                            Start  Vacancy</button>
+                    </div>
+                    <div class="col-lg-12 text-end p-2" *ngIf="applicantDetail.applicantStatus =='PENDING'">
+                        <button type="button" class="btn btn-outline-primary" (click)="finalizeApplicant()">
+                            Finalize</button>
+                    </div>
+                    <div class="col-lg-12 text-end p-2" *ngIf="applicantDetail.applicantStatus && applicantDetail.applicantStatus != 'PENDING'">
+                        <p-splitButton label="Actions" [model]="items"  styleClass="p-button-raised p-button-warning mr-2 mb-2"></p-splitButton>
+                    </div>
+
+                    <div class="employee-details">
+                        <img [src]="getImagePath(applicantDetail.imagePath!)" height="150" alt="user png" style="border-radius: 10px;
+                        border: 10px solid #f4f4f4;">
+
+                        <div class="employee-info mt-2">
+
+                            <div class="employee-name">
+                                {{applicantDetail.fullName}}
+                            </div>
+
+                            <div class="row"></div>
+                            <div class="employee-code"> Phone Number : <span> {{applicantDetail.phoneNumber}}</span>
+                            </div>
+                            <div class="employee-code"> Email : <span> {{applicantDetail.email}}</span>
+                            </div>
+                            <div class="employee-code"> Birth Date : <span> {{applicantDetail.birthDate|date:"dd MMM yyyy"}}</span>
+                            </div>
+                            <div class="employee-code"> Gender : <span> {{applicantDetail.gender}}</span>
+                            </div>
+                            <div class="employee-code"> Applicant : <span>                                
+                                <p-badge [value]="applicantDetail.applicantStatus" [severity]="getBadge(applicantDetail.applicantStatus)"></p-badge>
+                              </span>
+                            </div>
+                            <div class="employee-code"> Vacancy Name : <span>                                
+                                {{applicantDetail.vacancyName}}
+                              </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+<div class="card">
+    <div class="accordion" id="accordionExample" *ngIf="applicantDetail">
+        <div class="accordion-item" >
+            <h2 class="accordion-header" id="headingOne"> <button class="accordion-button" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
+                    aria-controls="collapseOne"> Applicant Education</button></h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <!-- <app-employemnt-history [employeeId]="employeeId"/> -->
+                    <app-applicant-education [applicantId]="applicantDetail.id"  [notFinalize]="applicantDetail.applicantStatus=='PENDING'"   ></app-applicant-education>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo"> <button class="accordion-button collapsed"
+                    type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false"
+                    aria-controls="collapseTwo"> Applicant Experiance</button></h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <app-applicant-work-experiance [applicantId]="applicantDetail.id" [notFinalize]="applicantDetail.applicantStatus=='PENDING'" ></app-applicant-work-experiance>
+                </div>
+                
+            </div>
+        </div>
+
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingThree"> <button class="accordion-button collapsed"
+                    type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree"
+                    aria-expanded="false" aria-controls="collapseThree"> Applicant Files </button></h2>
+            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                data-bs-parent="#accordionExample">
+                <app-applicant-documents [applicantId]="applicantDetail.id" [applicantVacancyId]="vaccancyId" [notFinalize]="applicantDetail.applicantStatus=='PENDING'"></app-applicant-documents>
+                <!-- <app-employee-education [applicantId]="applicant.applicantId" /> -->
+            </div>
+        </div>
+        </div>
+</div>
+        
+    
+
+     
+
+    </section>
+</main>

@@ -1,0 +1,90 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Add Employee Surety</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" data-bs-dismiss="modal"
+            aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Employee Surety Detail</h5>
+            <form [formGroup]="SuretyForm" (submit)="submit()">
+
+                <div class="row mb-3">
+                    <div class="col-md-3 ">
+                        <img [src]="getImage2()" alt="Profile"
+                            style="width: 100%;">
+                        <input #file (change)="onUpload($event)" type="file" style="display: none;" accept="image/*" />
+                        <div class="pt-2">
+                            <a (click)="file.click()" style="width: 100%;" class="btn btn-outline-primary btn-sm"
+                                title="Upload new profile image">
+                                <i class="bi bi-upload"></i> Upload Image
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="row g-3">
+                            <!-- Existing code for personal information fields -->
+
+                            <div class="col-md-4">
+                                <div class="form-floating"> <input type="text" class="form-control" id="fullName"
+                                        placeholder="fullName" required formControlName="fullName">
+                                    <label for="fullName"> Full Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-floating"> <input type="text" class="form-control" id="phoneNumber"
+                                        placeholder="phoneNumber" required formControlName="phoneNumber">
+                                    <label for="phoneNumber"> phone Number</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-floating"> <input type="text" class="form-control" id="suretyAddress"
+                                        placeholder="suretyAddress" required formControlName="suretyAddress">
+                                    <label for="suretyAddress"> Surety Address</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-floating"> <input type="text" class="form-control" id="companyName"
+                                        placeholder="companyName" required formControlName="companyName">
+                                    <label for="companyName"> Company Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-floating"> <input type="text" class="form-control"
+                                        id="compnayPhoneNumber" placeholder="compnayPhoneNumber" required
+                                        formControlName="compnayPhoneNumber">
+                                    <label for="compnayPhoneNumber"> Company Phonenumber</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating"> <input type="file" (change)="onUploadLetter($event)"
+                                        class="form-control" id="letter" placeholder="letter" required>
+                                    <label for="letter"> Letter </label>
+
+                                    <a [href]="createImagePath(this.employeeSurety.letterPath)" target="_blank"
+                                    class="btn btn-outline-info btn-sm">View Old File</a>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating"> <input type="file" (change)="onUploadId($event)"
+                                        class="form-control" id="letter" placeholder="letter" required>
+                                        
+                                    <label for="letter"> ID Card </label>
+
+                                    <a [href]="createImagePath(this.employeeSurety.idCardPath)" target="_blank"
+                                    class="btn btn-outline-info btn-sm">View Old File</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
+                        (click)="closeModal()">Close</button> <button type="button" type="submit"
+                        [disabled]="!SuretyForm.valid" class="btn btn-outline-warning">Update
+                        </button></div>
+            </form>
+        </div>
+    </div>
+</div>

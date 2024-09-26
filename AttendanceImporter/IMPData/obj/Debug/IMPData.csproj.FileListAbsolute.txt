@@ -1,0 +1,103 @@
+c:\users\hilmikha pc3\documents\visual studio 2015\Projects\AttendanceImporter\IMPData\obj\Debug\IMPData.csprojResolveAssemblyReference.cache
+c:\users\hilmikha pc3\documents\visual studio 2015\Projects\AttendanceImporter\IMPData\bin\Debug\IMPData.dll
+c:\users\hilmikha pc3\documents\visual studio 2015\Projects\AttendanceImporter\IMPData\bin\Debug\IMPData.pdb
+c:\users\hilmikha pc3\documents\visual studio 2015\Projects\AttendanceImporter\IMPData\bin\Debug\Interop.zkemkeeper.dll
+c:\users\hilmikha pc3\documents\visual studio 2015\Projects\AttendanceImporter\IMPData\obj\Debug\IMPData.dll
+c:\users\hilmikha pc3\documents\visual studio 2015\Projects\AttendanceImporter\IMPData\obj\Debug\IMPData.pdb
+C:\Users\HILMIKHA PC3\documents\visual studio 2015\Projects\AttendanceImporter\IMPData\bin\Debug\IMPData.dll.config
+C:\Users\hermi\Desktop\AttendanceImporter\IMPData\bin\Debug\IMPData.dll.config
+C:\Users\hermi\Desktop\AttendanceImporter\IMPData\bin\Debug\IMPData.dll
+C:\Users\hermi\Desktop\AttendanceImporter\IMPData\bin\Debug\IMPData.pdb
+C:\Users\hermi\Desktop\AttendanceImporter\IMPData\bin\Debug\Interop.zkemkeeper.dll
+C:\Users\hermi\Desktop\AttendanceImporter\IMPData\obj\Debug\IMPData.csprojResolveAssemblyReference.cache
+C:\Users\hermi\Desktop\AttendanceImporter\IMPData\obj\Debug\IMPData.dll
+C:\Users\hermi\Desktop\AttendanceImporter\IMPData\obj\Debug\IMPData.pdb
+D:\hilmika\z farm\AttendanceImporter\IMPData\bin\Debug\IMPData.dll.config
+D:\hilmika\z farm\AttendanceImporter\IMPData\bin\Debug\IMPData.dll
+D:\hilmika\z farm\AttendanceImporter\IMPData\bin\Debug\IMPData.pdb
+D:\hilmika\z farm\AttendanceImporter\IMPData\bin\Debug\Interop.zkemkeeper.dll
+D:\hilmika\z farm\AttendanceImporter\IMPData\obj\Debug\IMPData.csprojResolveAssemblyReference.cache
+D:\hilmika\z farm\AttendanceImporter\IMPData\obj\Debug\IMPData.dll
+D:\hilmika\z farm\AttendanceImporter\IMPData\obj\Debug\IMPData.pdb
+E:\old\hermi\hilmika\z farm\AttendanceImporter\IMPData\bin\Debug\IMPData.dll.config
+E:\old\hermi\hilmika\z farm\AttendanceImporter\IMPData\bin\Debug\IMPData.dll
+E:\old\hermi\hilmika\z farm\AttendanceImporter\IMPData\bin\Debug\IMPData.pdb
+E:\old\hermi\hilmika\z farm\AttendanceImporter\IMPData\obj\Debug\IMPData.csprojResolveAssemblyReference.cache
+E:\old\hermi\hilmika\z farm\AttendanceImporter\IMPData\obj\Debug\IMPData.dll
+E:\old\hermi\hilmika\z farm\AttendanceImporter\IMPData\obj\Debug\IMPData.pdb
+E:\New Projects\old\hermi\hilmika\z farm\AttendanceImporter\IMPData\bin\Debug\IMPData.dll.config
+E:\New Projects\old\hermi\hilmika\z farm\AttendanceImporter\IMPData\bin\Debug\IMPData.dll
+E:\New Projects\old\hermi\hilmika\z farm\AttendanceImporter\IMPData\bin\Debug\IMPData.pdb
+E:\New Projects\old\hermi\hilmika\z farm\AttendanceImporter\IMPData\obj\Debug\IMPData.csprojResolveAssemblyReference.cache
+E:\New Projects\old\hermi\hilmika\z farm\AttendanceImporter\IMPData\obj\Debug\IMPData.dll
+E:\New Projects\old\hermi\hilmika\z farm\AttendanceImporter\IMPData\obj\Debug\IMPData.pdb
+D:\Projects\ERP\AttendanceImporter\IMPData\bin\Debug\IMPData.dll.config
+D:\Projects\ERP\AttendanceImporter\IMPData\bin\Debug\IMPData.dll
+D:\Projects\ERP\AttendanceImporter\IMPData\bin\Debug\IMPData.pdb
+D:\Projects\ERP\AttendanceImporter\IMPData\bin\Debug\Newtonsoft.Json.dll
+D:\Projects\ERP\AttendanceImporter\IMPData\bin\Debug\System.Core.dll
+D:\Projects\ERP\AttendanceImporter\IMPData\bin\Debug\System.Numerics.dll
+D:\Projects\ERP\AttendanceImporter\IMPData\bin\Debug\Newtonsoft.Json.xml
+D:\Projects\ERP\AttendanceImporter\IMPData\bin\Debug\System.Core.xml
+D:\Projects\ERP\AttendanceImporter\IMPData\bin\Debug\System.Numerics.xml
+D:\Projects\ERP\AttendanceImporter\IMPData\obj\Debug\IMPData.csproj.AssemblyReference.cache
+D:\Projects\ERP\AttendanceImporter\IMPData\obj\Debug\IMPData.csproj.CoreCompileInputs.cache
+D:\Projects\ERP\AttendanceImporter\IMPData\obj\Debug\IMPData.csproj.CopyComplete
+D:\Projects\ERP\AttendanceImporter\IMPData\obj\Debug\IMPData.dll
+D:\Projects\ERP\AttendanceImporter\IMPData\obj\Debug\IMPData.pdb
+D:\Projects\ERP\Main\AttendanceImporter\IMPData\bin\Debug\IMPData.dll.config
+D:\Projects\ERP\Main\AttendanceImporter\IMPData\bin\Debug\IMPData.dll
+D:\Projects\ERP\Main\AttendanceImporter\IMPData\bin\Debug\IMPData.pdb
+D:\Projects\ERP\Main\AttendanceImporter\IMPData\bin\Debug\Newtonsoft.Json.dll
+D:\Projects\ERP\Main\AttendanceImporter\IMPData\bin\Debug\System.Core.dll
+D:\Projects\ERP\Main\AttendanceImporter\IMPData\bin\Debug\System.Numerics.dll
+D:\Projects\ERP\Main\AttendanceImporter\IMPData\bin\Debug\Newtonsoft.Json.xml
+D:\Projects\ERP\Main\AttendanceImporter\IMPData\bin\Debug\System.Core.xml
+D:\Projects\ERP\Main\AttendanceImporter\IMPData\bin\Debug\System.Numerics.xml
+D:\Projects\ERP\Main\AttendanceImporter\IMPData\obj\Debug\IMPData.csproj.AssemblyReference.cache
+D:\Projects\ERP\Main\AttendanceImporter\IMPData\obj\Debug\IMPData.csproj.CoreCompileInputs.cache
+D:\Projects\ERP\Main\AttendanceImporter\IMPData\obj\Debug\IMPData.csproj.CopyComplete
+D:\Projects\ERP\Main\AttendanceImporter\IMPData\obj\Debug\IMPData.dll
+D:\Projects\ERP\Main\AttendanceImporter\IMPData\obj\Debug\IMPData.pdb
+D:\Projects\ERP\Main\OccasionERP\AttendanceImporter\IMPData\bin\Debug\IMPData.dll.config
+D:\Projects\ERP\Main\OccasionERP\AttendanceImporter\IMPData\bin\Debug\IMPData.dll
+D:\Projects\ERP\Main\OccasionERP\AttendanceImporter\IMPData\bin\Debug\IMPData.pdb
+D:\Projects\ERP\Main\OccasionERP\AttendanceImporter\IMPData\bin\Debug\Newtonsoft.Json.dll
+D:\Projects\ERP\Main\OccasionERP\AttendanceImporter\IMPData\bin\Debug\System.Core.dll
+D:\Projects\ERP\Main\OccasionERP\AttendanceImporter\IMPData\bin\Debug\System.Numerics.dll
+D:\Projects\ERP\Main\OccasionERP\AttendanceImporter\IMPData\bin\Debug\Newtonsoft.Json.xml
+D:\Projects\ERP\Main\OccasionERP\AttendanceImporter\IMPData\bin\Debug\System.Core.xml
+D:\Projects\ERP\Main\OccasionERP\AttendanceImporter\IMPData\bin\Debug\System.Numerics.xml
+D:\Projects\ERP\Main\OccasionERP\AttendanceImporter\IMPData\obj\Debug\IMPData.csproj.AssemblyReference.cache
+D:\Projects\ERP\Main\OccasionERP\AttendanceImporter\IMPData\obj\Debug\IMPData.csproj.CoreCompileInputs.cache
+D:\Projects\ERP\Main\OccasionERP\AttendanceImporter\IMPData\obj\Debug\IMPData.csproj.CopyComplete
+D:\Projects\ERP\Main\OccasionERP\AttendanceImporter\IMPData\obj\Debug\IMPData.dll
+D:\Projects\ERP\Main\OccasionERP\AttendanceImporter\IMPData\obj\Debug\IMPData.pdb
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\IMPData\bin\Debug\IMPData.dll.config
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\IMPData\bin\Debug\IMPData.dll
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\IMPData\bin\Debug\IMPData.pdb
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\IMPData\bin\Debug\Newtonsoft.Json.dll
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\IMPData\bin\Debug\System.Core.dll
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\IMPData\bin\Debug\System.Numerics.dll
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\IMPData\bin\Debug\Newtonsoft.Json.xml
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\IMPData\bin\Debug\System.Core.xml
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\IMPData\bin\Debug\System.Numerics.xml
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\IMPData\obj\Debug\IMPData.csproj.AssemblyReference.cache
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\IMPData\obj\Debug\IMPData.csproj.CoreCompileInputs.cache
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\IMPData\obj\Debug\IMPData.csproj.CopyComplete
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\IMPData\obj\Debug\IMPData.dll
+D:\Projects\Ethiopian Midwives\Application\Integrated-Digital-Platforms\AttendanceImporter\IMPData\obj\Debug\IMPData.pdb
+D:\Applications\DAF Computer\Midwives\Integrated-Digital-Platforms\AttendanceImporter\IMPData\bin\Debug\IMPData.dll.config
+D:\Applications\DAF Computer\Midwives\Integrated-Digital-Platforms\AttendanceImporter\IMPData\bin\Debug\IMPData.dll
+D:\Applications\DAF Computer\Midwives\Integrated-Digital-Platforms\AttendanceImporter\IMPData\bin\Debug\IMPData.pdb
+D:\Applications\DAF Computer\Midwives\Integrated-Digital-Platforms\AttendanceImporter\IMPData\bin\Debug\Newtonsoft.Json.dll
+D:\Applications\DAF Computer\Midwives\Integrated-Digital-Platforms\AttendanceImporter\IMPData\bin\Debug\System.Core.dll
+D:\Applications\DAF Computer\Midwives\Integrated-Digital-Platforms\AttendanceImporter\IMPData\bin\Debug\System.Numerics.dll
+D:\Applications\DAF Computer\Midwives\Integrated-Digital-Platforms\AttendanceImporter\IMPData\bin\Debug\Newtonsoft.Json.xml
+D:\Applications\DAF Computer\Midwives\Integrated-Digital-Platforms\AttendanceImporter\IMPData\bin\Debug\System.Core.xml
+D:\Applications\DAF Computer\Midwives\Integrated-Digital-Platforms\AttendanceImporter\IMPData\bin\Debug\System.Numerics.xml
+D:\Applications\DAF Computer\Midwives\Integrated-Digital-Platforms\AttendanceImporter\IMPData\obj\Debug\IMPData.csproj.AssemblyReference.cache
+D:\Applications\DAF Computer\Midwives\Integrated-Digital-Platforms\AttendanceImporter\IMPData\obj\Debug\IMPData.csproj.CoreCompileInputs.cache
+D:\Applications\DAF Computer\Midwives\Integrated-Digital-Platforms\AttendanceImporter\IMPData\obj\Debug\IMPData.csproj.Up2Date
+D:\Applications\DAF Computer\Midwives\Integrated-Digital-Platforms\AttendanceImporter\IMPData\obj\Debug\IMPData.dll
+D:\Applications\DAF Computer\Midwives\Integrated-Digital-Platforms\AttendanceImporter\IMPData\obj\Debug\IMPData.pdb

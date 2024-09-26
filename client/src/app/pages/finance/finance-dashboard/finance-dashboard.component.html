@@ -1,0 +1,171 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Dashboard</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+                <li class="breadcrumb-item active">Finance</li>
+                <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+        </nav>
+    </div>
+    <section class="section dashboard">
+        <div class="row">
+            <div class="col-lg-12">
+               <div class="row">
+                  <div class="col-xxl-4 col-xl-12">
+                      <div class="card info-card customers-card">
+                         
+                         <div class="card-body">
+                            <h5 class="card-title">Activity Progress <span>| Pending</span></h5>
+                            <div class="d-flex align-items-center">
+                               <div class="card-icon card-icon1 rounded-circle d-flex align-items-center justify-content-center"> <i class="bi bi-hourglass-split" style="color: #ffc107;"></i></div>
+                               <div class="ps-3">
+                                  <h6>{{financeDashboardData&&financeDashboardData.pendingProgress}}</h6>
+                                  
+                               </div>
+                            </div>
+                         </div>
+                      </div>
+                  </div>
+                  <div class="col-xxl-4 col-xl-12">
+                      <div class="card info-card customers-card">
+                         
+                         <div class="card-body">
+                            <h5 class="card-title">Activity Progress <span>| Approved</span></h5>
+                            <div class="d-flex align-items-center">
+                               <div class="card-icon card-icon2 rounded-circle d-flex align-items-center justify-content-center"> <i class="bi bi-check-circle" style="color: #28a745;"></i></div>
+                               <div class="ps-3">
+                                  <h6>{{financeDashboardData&&financeDashboardData.approvedProgress}}</h6>
+                                  
+                               </div>
+                            </div>
+                         </div>
+                      </div>
+                  </div>
+                  <div class="col-xxl-4 col-xl-12">
+                      <div class="card info-card customers-card">
+                         
+                         <div class="card-body">
+                            <h5 class="card-title">Activity Progress <span>| Rejected</span></h5>
+                            <div class="d-flex align-items-center">
+                               <div class="card-icon card-icon3 rounded-circle d-flex align-items-center justify-content-center"> <i class="bi bi-x-circle" style="color: #dc3545;"></i></div>
+                               <div class="ps-3">
+                                  <h6>{{financeDashboardData&&financeDashboardData.rejectedProgress}}</h6>
+                                  
+                               </div>
+                            </div>
+                         </div>
+                      </div>
+                  </div>
+                  
+                  
+                  
+               </div>
+            </div>
+  
+            <div class="col-lg-8">
+              
+                <div class="col-lg-12">
+                    <div class="form-floating col-4 ">
+                        <select class="form-control " [(ngModel)]="selectedProject" (change)="onProjectChange()">
+                           
+                            <option *ngFor="let item of plans" [value]="item.id">{{item.planName}}</option>
+    
+                        </select>
+    
+                        <label for="projects">Projects</label>
+                    </div>
+    
+                    <div class="row " *ngIf="(selectedProject) || overAllProgress">
+    
+                        <div class=" col-md-12 p-2" *ngIf="barChartData&&budgetChartOption">
+                            <div class="card ">
+                                <div class="chart-title">
+                                    <h2 class="chart-title-text m-3">{{ barChartData && barChartData.planName}} </h2>
+                                </div>
+                                <div echarts [options]="budgetChartOption"></div>
+                            </div>
+                        </div>
+    
+    
+                    </div>
+    
+    
+    
+    
+                    <div class="row" *ngIf="!overAllProgress &&(barChartData && barChartData.planName=='ALL')">
+    
+                        <div *ngFor="let item of plans" class="col-md-12"
+                            [ngStyle]="{'display': item.planName !== 'ALL' ? 'block' : 'none'}">
+    
+    
+                            <div class="card" *ngIf="barChartData && budgetChartOption ">
+                                <div class="chart-title">
+                                    <h2 class="chart-title-text">{{ item.planName }}</h2>
+                                </div>
+                                <div echarts [options]="getBudgetChartOption(item.id)"></div>
+                            </div>
+    
+    
+                        </div>
+                    </div>
+                </div>
+              
+            </div>
+            <div class="col-lg-4">
+              <div >
+                  <div class="col-xxl-12 col-md-6">
+                      <div class="card info-card sales-card">
+                         
+                         <div class="card-body">
+                            <h5 class="card-title">Employee Loan <span>| Approved</span></h5>
+                            <div class="d-flex align-items-center">
+                               <div class="card-icon rounded-circle d-flex align-items-center justify-content-center"><i class="bi bi-check-square" style="color: #28a745;"></i></div>
+                               <div class="ps-3">
+                                  <h6>{{financeDashboardData&&financeDashboardData.totalApprovedLoan}}</h6>
+                                  
+                               </div>
+                            </div>
+                         </div>
+                      </div>
+                   </div>
+                   <div class="col-xxl-12 col-md-6">
+                      <div class="card info-card revenue-card">
+                         
+                         <div class="card-body">
+                            <h5 class="card-title">Employee Loan <span>| Given</span></h5>
+                            <div class="d-flex align-items-center">
+                               <div class="card-icon rounded-circle d-flex align-items-center justify-content-center"><i class="bi bi-cash-stack" style="color: #17a2b8;"></i></div>
+                               <div class="ps-3">
+                                  <h6>{{financeDashboardData&&financeDashboardData.totalGivenLoan}}</h6>
+                                  
+                               </div>
+                            </div>
+                         </div>
+                      </div>
+                   </div>
+                   <div class="col-xxl-12 col-md-6">
+                    <div class="card info-card revenue-card">
+                       
+                       <div class="card-body">
+                          <h5 class="card-title">Employee Loan <span>| Paid</span></h5>
+                          <div class="d-flex align-items-center">
+                             <div class="card-icon rounded-circle d-flex align-items-center justify-content-center"><i class="bi bi-currency-dollar" style="color: #28a745;"></i></div>
+                             <div class="ps-3">
+                                <h6>{{financeDashboardData&&financeDashboardData.totalPaidLoan}}</h6>
+                                
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                 </div>
+              </div>
+            </div>
+  
+  
+            
+          
+          </div>
+    </section>
+</main>

@@ -1,0 +1,52 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">{{Zone?"Update":"Add"}} Zone</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" data-bs-dismiss="modal"
+            aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <form class="" [formGroup]="ZoneForm" (ngSubmit)="Zone?update():submit()">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                          
+                            <select class="form-control" formControlName="countryId" (change)="getRegions()">
+                                <option></option>
+                                <option *ngFor="let item of countries" [value]="item.id">{{item.name}}</option>
+                            </select>
+                            <label for="floatingInput">Country Name</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                          
+                            <select class="form-control" formControlName="regionId">
+                                <option></option>
+                                <option *ngFor="let item of regions" [value]="item.id">{{item.name}}</option>
+                            </select>
+                            <label for="floatingInput">Region Name</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" formControlName="zoneName" id="floatingInput" />
+                            <label for="floatingInput">Zone Name</label>
+                        </div>
+                    </div>
+                 
+
+                </div>
+
+            <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
+                (click)="closeModal()">Close</button> <button type="button" type="submit"
+                [disabled]="!ZoneForm.valid"   
+                class="btn btn-outline-success">{{Zone?"Update":"Create"}}</button></div>
+            </form>
+    </div>
+</div>
+
+</div>

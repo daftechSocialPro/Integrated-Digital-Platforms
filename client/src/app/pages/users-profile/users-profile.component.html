@@ -1,0 +1,202 @@
+<main id="main" class="main">
+   <div class="pagetitle">
+      <h1>Profile</h1>
+      <nav>
+         <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+            <li class="breadcrumb-item">Users</li>
+            <li class="breadcrumb-item active">Profile</li>
+         </ol>
+      </nav>
+   </div>
+   <section class="section profile">
+      <div class="row">
+         <div class="col-xl-2">
+            <div class="card">
+               <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+                  <img [src]="getImage(Employee.imagePath!)" alt="Profile" class="rounded-circle">
+                  <h2>{{Employee.firstName}}
+                     {{Employee.lastName}}</h2>
+                  <br />
+                  <p-overlayPanel #op>
+                     <ng-template pTemplate="content">
+                        <h3 class="text-center">
+                           <p-listbox [options]="roleLists" [filter]="true" [listStyle]="{'max-height':'250px'}"
+                              [style]="{'width':'25rem'}"></p-listbox>
+                        </h3>
+                     </ng-template>
+                  </p-overlayPanel>
+                  <button pButton pRipple type="button" (click)="op.toggle($event)" label="View User Roles"
+                     class="p-button-text"></button>
+
+               </div>
+            </div>
+
+         </div>
+         <div class="col-xl-10">
+            <div class="card">
+               <div class="card-body pt-3">
+                  <ul class="nav nav-tabs nav-tabs-bordered">
+                     <li class="nav-item"> <button class="nav-link active" data-bs-toggle="tab"
+                           data-bs-target="#profile-overview">Overview</button></li>
+                     <li class="nav-item"> <button class="nav-link" data-bs-toggle="tab"
+                           data-bs-target="#profile-edit">Edit Profile</button></li>
+                     <li class="nav-item"> <button class="nav-link" data-bs-toggle="tab"
+                           data-bs-target="#profile-change-password">Change Password</button></li>
+
+                     <li class="nav-item"> <button class="nav-link" data-bs-toggle="tab"
+                           data-bs-target="#profile-resign">Resignation Request</button></li>
+                     <li class="nav-item"> <button class="nav-link" data-bs-toggle="tab"
+                           data-bs-target="#profile-paymnet-requsitions">Payment Requsitions</button></li>
+                     <li class="nav-item"> <button class="nav-link" data-bs-toggle="tab"
+                           data-bs-target="#profile-vacancy">Applied Vacancies</button></li>
+
+
+                  </ul>
+                  <div class="tab-content pt-2">
+                     <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                        <h5 class="card-title">Profile Details</h5>
+
+                        <div class="row">
+                           <div class="col-6">
+                              <div class="row">
+                                 <div class="col-lg-4 col-md-4 label ">Full Name</div>
+                                 <div class="col-lg-8 col-md-8">{{user?.fullName}}</div>
+                              </div>
+
+
+                              <div class="row">
+                                 <div class="col-lg-4 col-md-4 label">Department</div>
+                                 <div class="col-lg-8 col-md-8">{{Employee?.departmentName}}</div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-lg-4 col-md-4 label">Position</div>
+                                 <div class="col-lg-8 col-md-8">{{Employee?.postionName}}</div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-lg-4 col-md-4 label">Gender</div>
+                                 <div class="col-lg-8 col-md-8">{{Employee?.gender}}</div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-lg-4 col-md-4 label">Address</div>
+                                 <div class="col-lg-8 col-md-8">{{Employee?.woreda}}, {{Employee.zoneName}},
+                                    {{Employee.regionName}}</div>
+                              </div>
+
+                           </div>
+
+                           <div class="col-6">
+                              <div class="row">
+                                 <div class="col-lg-4 col-md-4 label">Nationality</div>
+                                 <div class="col-lg-8 col-md-8">{{Employee?.nationality}}</div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-lg-4 col-md-4 label">Phone</div>
+                                 <div class="col-lg-8 col-md-8">{{Employee?.phoneNumber}}</div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-lg-3 col-md-4 label">Email</div>
+                                 <div class="col-lg-9 col-md-8">{{Employee?.email}}</div>
+                              </div>
+                           </div>
+                        </div>
+
+                     </div>
+                     <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+                        <form [formGroup]="EmployeeForm" (submit)="submit()">
+                           <div class="row">
+
+                              <div class="col-3">
+                                 <img [src]="imageURL?imageURL:'assets/img/profile.jpg'" alt="Profile">
+                                 <input #file (change)="showPreview($event)" type="file" style="display: none;"
+                                    accept="image/*" />
+                                 <div class="pt-2 full-width">
+                                    <a class="btn btn-outline-primary btn-sm" (click)="file.click()"
+                                       title="Upload new profile image">
+                                       <i class="bi bi-upload"></i> Upload Image</a>
+                                 </div>
+                              </div>
+
+                              <div class="col-8">
+                                 <div class="row mb-3">
+                                    <label for="Title" class="col-md-4 col-lg-3 col-form-label">First Name</label>
+                                    <div class="col-md-8 col-lg-9">
+                                       <input type="text" class="form-control" id="title" formControlName="firstName">
+                                    </div>
+                                 </div>
+                                 <div class="row mb-3">
+                                    <label for="middleName" class="col-md-4 col-lg-3 col-form-label">Middle Name</label>
+                                    <div class="col-md-8 col-lg-9">
+                                       <input type="text" class="form-control" id="middleName"
+                                          formControlName="middleName">
+                                    </div>
+                                 </div>
+                                 <div class="row mb-3">
+                                    <label for="lastName" class="col-md-4 col-lg-3 col-form-label">Last Name</label>
+                                    <div class="col-md-8 col-lg-9">
+                                       <input type="text" class="form-control" id="lastName" formControlName="lastName">
+                                    </div>
+                                 </div>
+                                 <div class="row mb-3">
+                                    <label for="email" class="col-md-4 col-lg-3 col-form-label">Email</label>
+                                    <div class="col-md-8 col-lg-9">
+                                       <input type="text" class="form-control" id="email" formControlName="email">
+                                    </div>
+                                 </div>
+
+
+                                 <div class="row mb-3">
+                                    <label for="PhoneNumber"
+                                       class="col-md-4 col-lg-3 col-form-label">PhoneNumber</label>
+                                    <div class="col-md-8 col-lg-9"> <input type="text" formControlName="phoneNumber"
+                                          class="form-control" id="PhoneNumber"></div>
+                                 </div>
+                              </div>
+                           </div>
+                           <hr />
+                           <div class="text-end"> <button type="submit" [disabled]="!EmployeeForm.valid"
+                                 class="btn btn-outline-secondary">Update Changes</button></div>
+                        </form>
+                     </div>
+
+                     <div class="tab-pane fade pt-3" id="profile-change-password">
+                        <form [formGroup]="passwordForm" (submit)="submit2()">
+                           <div class="row mb-3">
+                              <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current
+                                 Password</label>
+                              <div class="col-md-8 col-lg-9"> <input name="password" type="password"
+                                    formControlName="OldPassowrd" class="form-control" id="currentPassword"></div>
+                           </div>
+                           <div class="row mb-3">
+                              <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
+                              <div class="col-md-8 col-lg-9"> <input name="newpassword" type="password"
+                                    formControlName="NewPassword" class="form-control" id="newPassword"></div>
+                           </div>
+                           <div class="row mb-3">
+                              <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New
+                                 Password</label>
+                              <div class="col-md-8 col-lg-9"> <input name="renewpassword" type="password"
+                                    formControlName="ConfirmPassword" class="form-control" id="renewPassword"></div>
+                           </div>
+                           <div class="text-center"> <button type="submit" [disabled]="!passwordForm.valid"
+                                 class="btn btn-primary">Change Password</button></div>
+                        </form>
+                     </div>
+
+                     <div class="tab-pane fade pt-3" id="profile-resign">
+                        <app-resignation-letter></app-resignation-letter>
+                     </div>
+                     <div class="tab-pane fade pt-3" id="profile-paymnet-requsitions">
+                        <app-payment-setlments></app-payment-setlments>
+                     </div>
+                     <div class="tab-pane fade pt-3" id="profile-vacancy">
+                        <app-vaccancy-post></app-vaccancy-post>
+                     </div>
+
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+</main>

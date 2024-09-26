@@ -1,0 +1,62 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Plan Summary Sheet </h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+                <li class="breadcrumb-item active">Plan Summary Sheet </li>
+            </ol>
+        </nav>
+    </div>
+    <section class="section dashboard">
+
+
+        <div class="card">
+
+            <div class="col-12">
+                    <p-calendar [(ngModel)]="rangeDates"  selectionMode="range" [readonlyInput]="true"></p-calendar> &nbsp;
+                    <button type="button" pButton pRipple lable="Find" icon="pi pi-search" (click)="Search()" class="mr-2"></button> 
+            </div>
+        </div>
+        
+        <div class="card">
+            <p-table #dt [value]="staffWeeklyPlanDto"  [tableStyle]="{'min-width': '75rem'}">
+                <ng-template pTemplate="caption">
+                    <div class="flex">
+                        <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button> &nbsp;
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width:3rem">S.N</th>
+                        <th>Activity Number</th>
+                        <th>Activity</th>
+                        <th>Status</th>
+                        <th>Reason For Not Acomplished</th>
+                        <th>Remark</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-acts let-rowIndex="rowIndex" >
+                    <tr>
+                        <td>{{rowIndex + 1}}</td>
+                        <td>
+                            {{acts.activityNo}}
+                        </td>
+                        <td>
+                            {{acts.activity}}
+                        </td>
+                        <td>
+                            {{acts.status}}
+                        </td>
+                        <td>
+                            {{acts.reasonsForNotComplited}}
+                        </td>
+                        <td >
+                            {{acts.remark}}
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </section>
+</main>

@@ -1,0 +1,119 @@
+<div class="modal-content"></div>
+    <div class="modal-header">
+        <h5 class="modal-title">Add Payment Requisition</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Payment Requisition Detail</h5>
+            <form class="" [formGroup]="paymentRequisitionForm" (ngSubmit)="submit()">
+                <div class="modal-body">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <select class="form-control" id="paymentType" formControlName="paymentType">
+                                    <option *ngFor="let item of paymentTypeList" [value]="item.value">
+                                        {{item.name}}
+                                    </option>
+                                </select>
+                                <label for="paymentType">Payment Type</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <select class="form-control" id="requsitionType" formControlName="requsitionType">
+                                    <option *ngFor="let item of requsitionType" [value]="item.value">
+                                        {{item.name}}
+                                    </option>
+                                </select>
+                                <label for="requsitionType">Requsition Type</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <input type="number" class="form-control" id="ammount" placeholder="ammount"
+                                    formControlName="ammount">
+                                <label for="ammount">Amount</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mt-2">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <textarea class="form-control" id="purpose" formControlName="purpose">
+                                </textarea>
+                                <label for="purpose">Purpose of Request</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <textarea class="form-control" id="description" formControlName="description">
+                                </textarea>
+                                <label for="description">Description</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-3 mt-2">
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <select class="form-control" id="projectId" formControlName="projectId" (change)="getActivityByProject($event.target)">
+                                    <option *ngFor="let item of projectDropdowns" [value]="item.id">
+                                        {{item.name}}
+                                    </option>
+
+                                </select>
+                                <label for="projectId">Project</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <select class="form-control" id="activityId" formControlName="activityId" (change)="getBudgetByActivity($event.target)">
+                                    <option *ngFor="let item of activityDropDown" [value]="item.id">
+                                        {{item.name}}
+                                    </option>
+
+                                </select>
+                                <label for="activityId">Activity</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <select class="form-control" id="activity" formControlName="activity">
+                                    <option *ngFor="let item of purchaseRequests" [value]="item.id">
+                                        {{item.name}}
+                                    </option>
+
+                                </select>
+                                <label for="activity">Purchase Requests</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-3 mt-2">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="budgetLine"
+                                    placeholder="budgetLine" formControlName="budgetLine">
+                                <label for="date">Budget Reference</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-3 mt-2">
+                        <div class="col-md-6" *ngIf="budgetByActivity">
+                            <h4>Allocated Budget : {{budgetByActivity.allocatedBudget}}</h4> <br/>
+                           <h4> Used Budget : {{budgetByActivity.usedBudget}}</h4>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
+                        (click)="closeModal()">Close</button>
+                    <button type="button" type="submit" [disabled]="!paymentRequisitionForm.valid"
+                        class="btn btn-outline-primary">Save
+                        changes</button>
+                </div>
+            </form>
+
+        </div>
+    </div>

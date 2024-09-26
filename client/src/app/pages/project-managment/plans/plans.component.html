@@ -1,0 +1,172 @@
+<main id="main" class="main">
+   <div class="pagetitle">
+      <h1>Projects</h1>
+      <nav>
+         <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+            <li class="breadcrumb-item">Projects</li>
+            <li class="breadcrumb-item active">List</li>
+         </ol>
+      </nav>
+   </div>
+   
+   <div class="mb-5">
+
+      <p-toolbar >
+         <div class="p-toolbar-group-start">
+             <!-- <button pButton icon="pi pi-plus" class="mr-2"></button>
+             <button pButton icon="pi pi-print" class="mr-2"></button>
+             <button pButton icon="pi pi-upload"></button> -->
+         </div>
+         <div class="p-toolbar-group-center">
+             <span class="p-input-icon-left">
+                 <i class="pi pi-search"></i>
+                 <input pInputText placeholder="Search" #filterBy (change)="Filter(filterBy.value)"/>
+             </span>
+         </div>
+         <div class="p-toolbar-group-end">
+            <button class="btn btn-outline-primary text-end " (click)="addPlan()"><i class="bi bi-plus me-1"></i>Add Project
+            </button>
+         </div>
+     </p-toolbar>
+   </div>
+   
+   
+ <!-- <div class="card">
+   <table>
+      <thead>
+          <tr>
+            <th>Number</th>
+            <th>Name </th>
+            <th>Department</th>
+            <th>Date</th>
+            <th>Planned Budget</th>
+            <th>Remaining Budget</th>
+            <th>Project Manager</th>
+            <th>Goal</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let project of Plans">
+            <td>{{ project.projectNumber }}</td>
+            <td>{{ project.planName }}</td>
+            <td>{{ project.structureName }}</td>
+            <td>{{ project.startDate}} - {{project.endDate}}</td>
+            <td>{{ project.plandBudget}} ETB</td>
+            <td>{{ project.remainingBudget}} ETB</td>
+            <td> 
+                 {{project.projectManager}} - Project Manager <br />
+                 {{project.director}} - Director 
+            </td>
+            <td>{{project.goal}}</td>
+
+          </tr>
+         
+      </tbody>
+      <tfoot>
+        
+      </tfoot>
+  </table>
+ </div> -->
+ 
+   <section class="section profile">
+      <div class="row">
+
+         <div class="col-lg-6" *ngFor="let plan of FilterdPlans" style="cursor: pointer;" >
+
+            <div class="card">
+               <div class="card-header">
+
+                  <div>
+                     <div (click)="tasks(plan)">
+                        
+                        {{plan.planName}} ({{plan.projectNumber}}) 
+                     </div>
+                    
+                     <div style="text-align: right!important;">
+                       
+                        <span *ngIf="plan.hasTask" class="badge bg-success">Has Task</span> <span *ngIf="!plan.hasTask"
+                           class="badge bg-danger">Has No Task</span>
+                     </div>
+                  </div>
+               </div>
+               <div class="card-body" style="background-color: #f6f9ff !important;">
+                  <h5 class="card-title ">
+                     <div class="row">
+                        <div class="col-md-6">
+                           {{plan.structureName }}
+
+                        </div>
+                        <div class="col-md-6  text-end">
+
+                           {{plan.startDate |date:'dd MMM yyyy'}} - {{plan.endDate|date:'dd MMM yyyy' }}
+                        </div>
+                        <!-- <div class="col-md-2" style="text-align: right!important;">
+                           {{plan.ProjectType}}
+                        </div> -->
+                     </div>
+                  </h5>
+
+                  <div class="text-left" style="color: #798eb3;">
+                     <span class="card-title"> Planned Budegt :</span>
+                     {{plan.plandBudget |number:'1.0-2'}} ETB <br/>
+                     <!-- <span class="card-title"> Remaining Budegt : </span>
+                     {{plan.remainingBudget |number:'1.0-2'}} ETB <br /> -->
+                     <div class="mt-2">
+
+                     </div>
+                     <span class="card-title">Project Manager :</span>
+                     {{plan.projectManager}} <br />
+                     <span *ngIf="plan.director" class="card-title">Project Manager :</span>
+                     {{plan.director}}  <br />
+
+                     <!-- <span *ngFor="let item of plan.projectFunds">{{item}},</span> -->
+
+                  </div>
+                  <!-- <div class="mt-2">
+                     <span class="card-title"> Goal :</span>
+                     {{plan.goal}} <br />
+                     <span class="card-title"> Objective :</span>
+                     {{plan.objective}} &nbsp;
+
+                  </div> -->
+
+
+               </div>
+               <div class="card-footer">
+
+                  <div class="row">
+                     <div class="col-lg-6">
+                        Tasks: {{plan.numberOfTask}} &nbsp;&nbsp;
+                        Actvities : {{plan.numberOfActivities}}
+
+                     </div>
+                     <div class="col-lg-6 text-end">
+                        <!-- <button class="btn btn-sm btn-outline-info mt-1" (click)="viewDashboard(plan.id)"><i class="bi bi-bar-chart-line"></i> Dashboard</button> | -->
+                       
+                       
+                        <button class="btn btn-sm btn-outline-primary mt-1" (click)="viewDetail(plan.id)"> View Detail</button> |
+                        <button type="button" (click)="updatePlan(plan)"  class="btn btn-sm btn-outline-warning mt-1"><i class="bi bi-pencil"></i> Update</button> |
+                        <button type="button" (click)="deletePlan(plan.id)"  class="btn btn-sm btn-outline-danger mt-1"><i class="bi bi-trash"></i> Delete</button>
+                     </div>
+
+                  </div>
+
+                  <!-- <div style="text-align: right; ">
+                     {{plan.PlanWeight}} %
+                  </div> -->
+
+
+                  <div class="progress mt-3">
+                     <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar"
+                        [ngStyle]="applyStyles(plan.numberOfActivities,plan.numberOfTaskCompleted)" aria-valuenow="25"
+                        aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+               </div>
+            </div>
+
+         </div>
+
+      </div>
+   </section>
+</main>

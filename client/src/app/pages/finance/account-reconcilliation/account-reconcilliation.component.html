@@ -1,0 +1,176 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Beginning Balance </h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+                <li class="breadcrumb-item">Finance</li>
+                <li class="breadcrumb-item active">Account Reconsiliation</li>
+
+            </ol>
+        </nav>
+    </div>
+    <section class="section">
+        <div class="card">
+            <div class="row p-2">
+                <div class="col-lg-12 d-flex align-items-center">
+
+                    <div class=" m-3 ">
+                        <label for="bankId">Bank to Reconcile</label>
+                        <select class="form-control" [(ngModel)]="searchAccount.bankId">
+                            <option></option>
+                            <option *ngFor="let item of bankDropDowns" [value]="item.id">{{item.name}}</option>
+                        </select>
+                    </div>
+                    <div class=" m-3 ">
+                        <label for="accountingPeriod">Accounting Period</label>
+                        <select class="form-control" [(ngModel)]="searchAccount.accountingPeriodId">
+                            <option></option>
+                            <option *ngFor="let item of accountingPeriodDropDown" [value]="item.id">{{item.name}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="m-3">
+                        <button pButton icon="pi pi-search" type="button" type="submit"
+                            class="btn btn-sm btn-outline-primary" (click)="getAccountToBeReconsiled()"> </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <!-- <h5 class="card-title">Checks and Balance Debits</h5> -->
+                            <div class="card-body">
+                                <p-table #dt [value]="accountToBeReconsiled.checkAndBalance" [rows]="10"
+                                    [paginator]="true"
+                                    [globalFilterFields]="['referenceNo','ammount','date','payee','check']"
+                                    [(selection)]="selectedCheck" [rowHover]="true" dataKey="id"
+                                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                                    [showCurrentPageReport]="true">
+                                    <ng-template pTemplate="caption">
+                                        <div class="p-d-flex p-ai-center p-jc-between">
+                                            <h5 class="p-m-0">Checks and Balance Debits</h5>
+                                            <span class="p-input-icon-left">
+                                                <i class="pi pi-search"></i>
+                                                <!-- <input pInputText type="text"
+                                                    (input)="dt.filterGlobal($event.target, 'contains')"
+                                                    placeholder="Search..." /> -->
+                                            </span>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th style="width: 3rem">
+                                                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                                            </th>
+                                            <th>Reference </th>
+                                            <th>Ammount </th>
+                                            <th>Date </th>
+                                            <th>Payee </th>
+                                            <th>Check</th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-balance>
+                                        <tr>
+                                            <td>
+                                                <p-tableCheckbox [value]="balance"></p-tableCheckbox>
+                                            </td>
+                                            <td>{{balance.referenceNo}}</td>
+                                            <td>{{balance.ammount}}</td>
+                                            <td>{{balance.date | date: 'dd, MMMM, yyyy'}}</td>
+                                            <td>{{balance.payee}}</td>
+                                            <td>{{balance.check}}</td>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="summary">
+                                        <div class="p-d-flex p-ai-center p-jc-between">
+                                            In total there are {{accountToBeReconsiled.checkAndBalance ?
+                                            accountToBeReconsiled.checkAndBalance.length : 0 }} values.
+                                        </div>
+                                    </ng-template>
+                                </p-table>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <!-- <h5 class="card-title">Deposit and Bank Credit</h5> -->
+                            <div class="card-body">
+                                <p-table #dt [value]="accountToBeReconsiled.depositBank" [rows]="10"
+                                [paginator]="true"
+                                [globalFilterFields]="['reference','ammount','date','description']"
+                                [(selection)]="selectedDeposit" [rowHover]="true" dataKey="id"
+                                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                                [showCurrentPageReport]="true">
+                                <ng-template pTemplate="caption">
+                                    <div class="p-d-flex p-ai-center p-jc-between">
+                                        <h5 class="p-m-0">Deposit and Bank Credits</h5>
+                                        <span class="p-input-icon-left">
+                                            <i class="pi pi-search"></i>
+                                            <!-- <input pInputText type="text"
+                                                (input)="dt.filterGlobal($event.target, 'contains')"
+                                                placeholder="Search..." /> -->
+                                        </span>
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th style="width: 3rem">
+                                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                                        </th>
+                                        <th>Reference </th>
+                                        <th>Ammount </th>
+                                        <th>Date </th>
+                                        <th>Description </th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-balance>
+                                    <tr>
+                                        <td>
+                                            <p-tableCheckbox [value]="balance"></p-tableCheckbox>
+                                        </td>
+                                        <td>{{balance.referenceNo}}</td>
+                                        <td>{{balance.ammount}}</td>
+                                        <td>{{balance.date | date: 'dd, MMMM, yyyy'}}</td>
+                                        <td>{{balance.description}}</td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="summary">
+                                    <div class="p-d-flex p-ai-center p-jc-between">
+                                        In total there are {{accountToBeReconsiled.depositBank ?
+                                        accountToBeReconsiled.depositBank.length : 0 }} values.
+                                    </div>
+                                </ng-template>
+                            </p-table>
+
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="paymentNumber"
+                                            placeholder="paymentNumber" [(ngModel)]="addAccountReconsilation.ammount">
+                                        <label for="paymentNumber">Bank Balance</label>
+                                    </div>
+                                    <div class="form-group mt-2">
+                                        <button pButton label="save" type="button" (click)="saveCurrentBalance()" type="submit"
+                                            class="btn btn-sm btn-outline-primary"> </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</main>
