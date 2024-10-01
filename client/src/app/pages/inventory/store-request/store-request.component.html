@@ -10,7 +10,7 @@
         </nav>
     </div>
 
-    <div class="card">
+    <div class="card p-4">
         <div class="col-md-12">
             <p-toast></p-toast>
             <form #itemsForm="ngForm">
@@ -24,20 +24,20 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <label htmlFor="lastname2">Item</label> <br />
                         <p-dropdown [options]="itemsDropDown" optionLabel="name" name="itemId" 
                             (onChange)="changeItem($event)"  [(ngModel)]="items"
                             placeholder="Select Item"  [filter]="true" filterBy="name" [showClear]="true" [required]="true"></p-dropdown>
                     </div>
-                    <div class="col-md-2">
-                        <label htmlFor="lastname2">Measurement Unit</label>
+                    <div class="col-md-3">
+                        <label htmlFor="lastname2">Measurement Unit</label> <br/>
                         <p-dropdown [options]="measurementUnitDropDown" optionLabel="name"  optionValue="id" name="measurementUnitId"
                             [(ngModel)]="addStoreRequestList.measurementUnitId" [required]="true"
                             placeholder="Select Measurement Unit" [showClear]="true"></p-dropdown>
                     </div>
-                    <div class="col-md-2">
-                        <label htmlFor="lastname2">Quantity</label>
+                    <div class="col-md-3">
+                        <label htmlFor="lastname2">Quantity</label> <br/>
                         <input pInputText type="number" min="0" name="quantity" required [(ngModel)]="addStoreRequestList.quantity">
                     </div>
                     <div class="col-md-2">

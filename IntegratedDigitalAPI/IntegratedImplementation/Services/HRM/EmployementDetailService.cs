@@ -281,6 +281,7 @@ namespace IntegratedImplementation.Services.HRM
                                                TotalWarnings = e.EmployeeDisplinaryCases.Count(),
                                                DisciplinaryCaseLists = e.EmployeeDisplinaryCases.Select(x =>  new DisciplinaryCaseListDto
                                                {
+                                                   Id = x.Id,
                                                    ApprovedDate = x.ApprovedDate,
                                                    ApproverEmployee = $"{x.ApprovedBy.FirstName} {x.ApprovedBy.MiddleName} {x.ApprovedBy.LastName}",
                                                    Date = x.Date,

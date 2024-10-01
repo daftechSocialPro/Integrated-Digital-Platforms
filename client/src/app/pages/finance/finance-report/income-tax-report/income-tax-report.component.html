@@ -90,13 +90,13 @@
                                                     <td>{{reportdetail.employeeName}}</td>
                                                     <td>{{reportdetail.tinNumber}}</td>
                                                     <td>{{reportdetail.hireDate}}</td>
-                                                    <td>{{reportdetail.basicSalary}}</td>
-                                                    <td>{{reportdetail.transportAllowance}}</td>
-                                                    <td>{{reportdetail.allowance}}</td>
-                                                    <td>{{reportdetail.otherAllowance}}</td>
-                                                    <td>{{reportdetail.incomeTax}}</td>
-                                                    <td>{{reportdetail.costSharing}}</td>
-                                                    <td>{{reportdetail.netIncome}}</td>
+                                                    <td>{{reportdetail.basicSalary | number:'1.2-2'}}</td>
+                                                    <td>{{reportdetail.transportAllowance | number:'1.2-2'}}</td>
+                                                    <td>{{reportdetail.allowance | number:'1.2-2'}}</td>
+                                                    <td>{{reportdetail.otherAllowance | number:'1.2-2'}}</td>
+                                                    <td>{{reportdetail.incomeTax | number:'1.2-2'}}</td>
+                                                    <td>{{reportdetail.costSharing | number:'1.2-2'}}</td>
+                                                    <td>{{reportdetail.netIncome | number:'1.2-2'}}</td>
                                                     
                                                 </tr>
                                             </ng-template>

@@ -64,7 +64,7 @@ export class AddDisciplinaryCaseComponent implements OnInit {
 
       var disciplinaryCase: AddDisciplinaryCaseDto = {
 
-        employeeId: this.employee,
+        employeeId: this.disciplinaryCaseForm.value.employeeId,
         date: this.disciplinaryCaseForm.value.date,
         warningType: Number(this.disciplinaryCaseForm.value.warningType),
         fault: this.disciplinaryCaseForm.value.fault,

@@ -71,7 +71,7 @@
                             <td>
                                 <p-toast></p-toast>
                                 <p-confirmPopup></p-confirmPopup>
-                                <button *ngIf="caseList.approverEmployee" type="button" pButton pRipple
+                                <button *ngIf="!caseList.approverEmployee" type="button" pButton pRipple
                                     icon="pi pi-check" (click)="confirm($event,caseList.id)" class="mr-2" pTooltip="Approve"
                                     tooltipPosition="bottom"></button>
                             </td>

@@ -503,7 +503,7 @@ export class HrmService {
     }
 
     approveDisciplinaryCase(approveCase: ApproveDisciplinaryCase) {
-        return this.http.post<ResponseMessage>(this.baseUrl + "/EmployementDetail/ApproveCase", approveCase)
+        return this.http.put<ResponseMessage>(this.baseUrl + "/EmployementDetail/ApproveCase", approveCase)
     }
 
 

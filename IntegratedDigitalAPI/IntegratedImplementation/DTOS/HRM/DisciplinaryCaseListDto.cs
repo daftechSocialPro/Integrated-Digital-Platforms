@@ -19,6 +19,7 @@ namespace IntegratedImplementation.DTOS.HRM
     }
     public class DisciplinaryCaseListDto
     {
+        public Guid Id { get; set; }
         public DateTime Date { get; set; }
         public string WarningType { get; set; } = null!;
         public string Fault { get; set; } = null!;

@@ -89,27 +89,27 @@
                                     <td style=" border: 1px solid black;">{{item.position }}</td>
                                     <td style=" border: 1px solid black;">{{item.daysWorked}}</td>
                                     <td style=" border: 1px solid black;">{{item.sourceOfFund}}</td>
-                                    <td style=" border: 1px solid black;">{{item.salary | number: "0.01"}}</td>
-                                    <td style=" border: 1px solid black;">{{item.transportFuelAllowance | number: "0.01"}}</td>
-                                    <td style=" border: 1px solid black;">{{item.communicationAllowance | number: "0.01"}}</td>
-                                    <td style=" border: 1px solid black;">{{item.positionAllowanceOT | number: "0.01"}}</td>
-                                    <td style=" border: 1px solid black;">{{item.overTime | number: "0.01"}}</td>
-                                    <td style=" border: 1px solid black;">{{item.pFEmployerPension | number: "0.01"}}</td>
-                                    <td style=" border: 1px solid black;">{{item.employeePension | number: "0.01"}}</td>
-                                    <td style=" border: 1px solid black;">{{item.totalEarning | number: "0.01"}}</td>
-                                    <td style=" border: 1px solid black;">{{item.taxableIncome | number: "0.01"}}</td>
-                                    <td style=" border: 1px solid black;">{{item.incomeTax | number: "0.01"}}</td>
-                                    <td style=" border: 1px solid black;">{{item.pFEmployerPension | number: "0.01"}}</td>
-                                    <td style=" border: 1px solid black;">{{item.loan | number: "0.01"}}</td>
-                                    <td style=" border: 1px solid black;">{{item.totalDeduction | number: "0.01"}}</td>
-                                    <td style=" border: 1px solid black;">{{item.netPay | number: "0.01"}} </td>
+                                    <td style=" border: 1px solid black;">{{item.salary | number:'1.2-2'}}</td>
+                                    <td style=" border: 1px solid black;">{{item.transportFuelAllowance | number:'1.2-2'}}</td>
+                                    <td style=" border: 1px solid black;">{{item.communicationAllowance | number:'1.2-2'}}</td>
+                                    <td style=" border: 1px solid black;">{{item.positionAllowanceOT | number:'1.2-2'}}</td>
+                                    <td style=" border: 1px solid black;">{{item.overTime | number:'1.2-2'}}</td>
+                                    <td style=" border: 1px solid black;">{{item.pFEmployerPension | number:'1.2-2'}}</td>
+                                    <td style=" border: 1px solid black;">{{item.employeePension | number:'1.2-2'}}</td>
+                                    <td style=" border: 1px solid black;">{{item.totalEarning | number:'1.2-2'}}</td>
+                                    <td style=" border: 1px solid black;">{{item.taxableIncome | number:'1.2-2'}}</td>
+                                    <td style=" border: 1px solid black;">{{item.incomeTax |number:'1.2-2'}}</td>
+                                    <td style=" border: 1px solid black;">{{item.pFEmployerPension | number:'1.2-2'}}</td>
+                                    <td style=" border: 1px solid black;">{{item.loan | number:'1.2-2'}}</td>
+                                    <td style=" border: 1px solid black;">{{item.totalDeduction | number:'1.2-2'}}</td>
+                                    <td style=" border: 1px solid black;">{{item.netPay | number:'1.2-2'}} </td>
                                 </tr>
                                 <!-- Add more rows for other employees -->
                             </tbody>
                         </table>
                     </div>
                     <p style="text-align: center;font-weight: bolder;font-size: 26px;">Total Net Pay:
-                        {{payrollReportList&&getNetPaySummation()}}</p>
+                        {{payrollReportList&&getNetPaySummation() | number:'1.2-2'}}</p>
                 </div>
 
 

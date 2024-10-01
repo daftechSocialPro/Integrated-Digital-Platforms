@@ -11,21 +11,15 @@
         </nav>
     </div>
     <section class="section">
-        <div class="card">
-            <div class="row p-2">
-                <div class="col-lg-12 d-flex align-items-center">
-                    
-                    
-                    
-                </div>
-            </div>
+            
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
                             
-                            <p-table #dt [value]="approvedLoanList" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['branch']"
-                                [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true"
+                            <p-table #dt [value]="approvedLoanList" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['employeeName']"
+                            [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-sm"
+                            [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true"
                                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowHover]="true"
                                 dataKey="id">
                                 <ng-template pTemplate="caption">
@@ -47,8 +41,8 @@
                                         <th>Monthly Payment</th>
                                         <th>Return Period</th>
                                         <th>Total Payment</th>
-                                        <th>Initial Approver</th>
-                                        <th>Second Approver</th>
+                                        <th>Approver</th>
+                                        <th>Authorizer</th>
                                         <th>Loan Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -86,12 +80,8 @@
                                         <td style="width:50%; min-width:10rem;">
                                             {{loan.loanStatus}}
                                         </td>
-                                        <!-- <td style="width:50%; min-width:10rem;">
-                                            <i class="pi" [ngClass]="{ 'text-green-500 pi-check-circle': 
-                                            payroll.isActive, 'text-red-500 pi-times-circle': !payroll.isActive }"></i>
-                                        </td>  -->
                                         <td>
-                                            <button type="button"  class="btn btn-outline-primary"  (click)="giveLoan(loan.id)">Give Loan</button> | 
+                                            <button type="button" *ngIf="loan.loanStatus != 'GIVEN'"  class="btn btn-outline-primary"  (click)="giveLoan(loan.id)">Give Loan</button> &nbsp;
                                             <button type="button"  class="btn btn-outline-primary"  (click)="payLoan(loan.id)">Pay Loan</button>           
                                                                                                                    
                                         </td>
@@ -102,6 +92,5 @@
                     </div>
                 </div>
             </div>
-        </div>
     </section>
 </main>

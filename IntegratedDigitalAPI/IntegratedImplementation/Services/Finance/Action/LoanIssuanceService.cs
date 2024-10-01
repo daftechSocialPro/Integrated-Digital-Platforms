@@ -77,7 +77,7 @@ namespace IntegratedImplementation.Services.Finance.Action
             if (totalPaid + loanPayment.TotalPayment > currentLoan.ApprovedAmmount)
             {
                 double totalNedded = currentLoan.ApprovedAmmount - totalPaid;
-                return new ResponseMessage { Success = false, Message = $"The total needed ammount is {totalNedded}!!" };
+                return new ResponseMessage { Success = false, Message = $"The total needed amount is {totalNedded}!!" };
             }
 
             EmployeeSettlement settlment = new EmployeeSettlement()
@@ -91,11 +91,14 @@ namespace IntegratedImplementation.Services.Finance.Action
                 Rowstatus = RowStatus.ACTIVE,
             };
             
+            await _dbContext.EmployeeSettlements.AddAsync(settlment);
 
             if(totalPaid + loanPayment.TotalPayment == currentLoan.ApprovedAmmount)
             {
                 currentLoan.LoanStatus = LoanStatus.PAID;
             }
+
+            await _dbContext.SaveChangesAsync();
 
             return new ResponseMessage { Success = true, Message = "Paid Loan Succesfully!!" };
 

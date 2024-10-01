@@ -13,15 +13,13 @@
                         <div class="modal-body">
                             <div class="row g-3">
 
-                                <div class="col-md-4">
-                                    <div class="form-floating"> 
-                                        <app-autocomplete *ngIf="employeeDropDown.length>0" [data]="employeeDropDown"
-                                            (selectedItem)="selectEmployee($event)"></app-autocomplete>
-                                        <label for="institution"> Employee</label>
-                                    </div>
+                                <div class="col-md-6">
+                                        <p-dropdown [options]="employeeDropDown" formControlName="employeeId" 
+                                        optionValue="id" [required]="true" optionLabel="name" [filter]="true"
+                                        filterBy="name"  [showClear]="true" placeholder="Employee"></p-dropdown>
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-floating mb-3">
                                         <select class="form-select" id="warningType"
                                             formControlName="warningType" aria-label="State">

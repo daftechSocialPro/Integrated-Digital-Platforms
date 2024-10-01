@@ -55,7 +55,7 @@ export class LoanIssuanceComponent implements OnInit {
           next: (res) => {
             if (res.success) {
               this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });
-              
+              this.getApprovedLoans();
             }
             else {
               this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: res.message });

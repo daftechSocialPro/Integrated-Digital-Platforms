@@ -136,7 +136,7 @@ namespace IntegratedImplementation.Services.HRM
             {
                 return new ResponseMessage { Success = false, Message = "Set the salary of the employee" };
             }
-            var paymentAmmount = (currentEmpSalary.Salary / currentRequest.DeductionRequest) * 100;
+            var paymentAmmount = (currentEmpSalary.Salary * currentRequest.DeductionRequest) / 100;
             //int currentyear 
 
             EmployeeLoan loan = new EmployeeLoan()

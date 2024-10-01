@@ -109,11 +109,11 @@ namespace IntegratedImplementation.Services.Finance.Report
                 {
                     EmployeeName = $"{item.Employee.FirstName} {item.Employee.MiddleName} {item.Employee.LastName}",
                     TinNumber = item.Employee.TinNumber,
-                    EmployeePension = item.EmployeePension,
-                    EmployerPension = item.CompanyPension,
+                    EmployeePension = Math.Round(item.EmployeePension,2),
+                    EmployerPension = Math.Round(item.CompanyPension, 2),
                     EmploymentDate = item.Employee.EmploymentDate.ToString(),
-                    Salary = item.BasicSallary,
-                    Total = item.EmployeePension + item.CompanyPension               
+                    Salary = Math.Round(item.BasicSallary, 2),
+                    Total = Math.Round(item.EmployeePension + item.CompanyPension)      
                 });
             }
 
@@ -157,14 +157,14 @@ namespace IntegratedImplementation.Services.Finance.Report
                     TinNumber = item.Employee.TinNumber,
                     BasicSalary = item.BasicSallary,
                     HireDate = item.Employee.EmploymentDate.ToString(),
-                    IncomeTax = item.IncomeTax,
-                    NetIncome = item.NetPay,
-                    OverTime = item.OverTime,
-                    TotalIncome = item.TotalEarning,
-                    TransportAllowance = item.TransportFuelAllowance,
+                    IncomeTax = Math.Round(item.IncomeTax,2),
+                    NetIncome = Math.Round(item.NetPay,2),
+                    OverTime = Math.Round(item.OverTime, 2),
+                    TotalIncome = Math.Round(item.TotalEarning, 2),
+                    TransportAllowance = Math.Round(item.TransportFuelAllowance, 2),
                     CostSharing = 0,
-                    Allowance = item.CommunicationAllowance,
-                    OtherAllowance = item.PositionAllowance,
+                    Allowance = Math.Round(item.CommunicationAllowance, 2),
+                    OtherAllowance = Math.Round(item.PositionAllowance, 2),
                 });
             }
 

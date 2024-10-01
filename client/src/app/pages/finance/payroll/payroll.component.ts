@@ -62,7 +62,6 @@ export class PayrollComponent implements OnInit {
   }
 
   calculatePayroll(){
-    
     this.payrollParam.recalculate = this.reCalculate;
     this.payrollParam.userId = this.user.userId
     this.financeService.calculatePayroll(this.payrollParam).subscribe({
@@ -176,5 +175,12 @@ export class PayrollComponent implements OnInit {
       }
     })
   }
+
+  roleMatch(value: string[]) {
+    return this.userService.roleMatch(value)
+  }
+
+
+
 
 }
