@@ -24,7 +24,7 @@ import { CustomResceduleConfirtamionComponent } from './custom-rescedule-confirt
 })
 export class AssignedActivitiesComponent implements OnInit {
   ref: DynamicDialogRef | undefined;
-  Quarter: number = 1;
+  Quarter: number = 5;
   user!: UserView;
   Activties!: ActivityView[];
   filterdActivities: any;
@@ -59,7 +59,14 @@ export class AssignedActivitiesComponent implements OnInit {
     this.currentYear = new Date().getFullYear();
   }
 
-  onMonthSelected() {}
+  onMonthSelected() {
+    this.filterdActivities = this.Activties.filter((item) => {
+      return (
+        item.monthPerformance.length > 0 &&
+        item.monthPerformance.filter((x) => x.order == this.selectedMonth)
+      );
+    });
+  }
   ViewProgress(actView: ActivityView) {
     let modalRef = this.modalService.open(ViewProgressComponent, {
       size: 'xl',
@@ -71,15 +78,13 @@ export class AssignedActivitiesComponent implements OnInit {
   getAssignedActivites() {
     this.pmService.getAssignedActivities(this.user.employeeId).subscribe({
       next: (res) => {
-     
         this.Activties = res;
         this.filterdActivities = res;
+        console.log(this.filterdActivities);
         this.Projects = [...new Set(res.map((item) => item.projectName))];
         this.filterActivites('');
       },
-      error: (err) => {
-   
-      },
+      error: (err) => {},
     });
   }
 
@@ -168,16 +173,25 @@ export class AssignedActivitiesComponent implements OnInit {
       ];
 
       this.selectedMonth = 6;
-    } else {
+    } else if (this.Quarter == 4) {
       this.months = [
         { value: 9, label: 'October' },
         { value: 10, label: 'November' },
         { value: 11, label: 'December' },
       ];
       this.selectedMonth = 9;
+    } else {
+      this.filterdActivities = this.Activties;
     }
-
-    // this.filterProjects()
+    if (this.Quarter != 5) {
+      this.filterdActivities = this.Activties.filter((item) => {
+        return (
+          item.monthPerformance.length > 0 &&
+          item.monthPerformance.filter((x) => x.order == this.selectedMonth)
+        );
+      });
+    }
+    //this.filterProjects()
   }
 
   filterActivites(value: string) {
@@ -237,29 +251,28 @@ export class AssignedActivitiesComponent implements OnInit {
     });
   }
 
-  onProgressBudgetAdded(activityId: string, month: any, target: any,monthPerfr:any,selectedMonth:number) {
-
-
+  onProgressBudgetAdded(
+    activityId: string,
+    month: any,
+    target: any,
+    monthPerfr: any,
+    selectedMonth: number
+  ) {
     var tar = this.getMonthPeroformance3(monthPerfr, selectedMonth);
-   
-    
 
     if (target.value > tar) {
       var valll = this.getMonthPeroformance4(monthPerfr, selectedMonth);
       target.value = valll;
 
-     
-
       this.messageService.add({
         severity: 'error',
-            summary: 'Budget Error!',
-            detail: "used budget is greater than targeted budget",
-      })
+        summary: 'Budget Error!',
+        detail: 'used budget is greater than targeted budget',
+      });
 
-      return
+      return;
     }
 
-   
     var actprogress: UpdateActivityProgressDto = {
       activityId: activityId,
       usedBudget: target.value,
@@ -314,7 +327,7 @@ export class AssignedActivitiesComponent implements OnInit {
     isCancelled: any,
     isCompleted: any,
     isStarted: any,
-    resceduled :any
+    resceduled: any
   ) {
     if (isCancelled != null) {
       this.ref = this.dialogService.open(CustomConfirmationComponent, {
@@ -331,53 +344,50 @@ export class AssignedActivitiesComponent implements OnInit {
         if (result) {
           var date = this.getTodayDate();
           this.projectService
-          .changeActivityStatus(
-            activityId,
-            isCompleted?.checked,
-            isCancelled?.checked,
-            isStarted?.checked,
-            resceduled?.checked,
-            result,         
-            date,
-            date        
-          )
-          .subscribe({
-            next: (res) => {
-              if (res.success) {
-                this.messageService.add({
-                  severity: 'success',
-                  summary: 'Successfully updated',
-                  detail: res.message,
-                });
-                this.getAssignedActivites();
-              } else {
+            .changeActivityStatus(
+              activityId,
+              isCompleted?.checked,
+              isCancelled?.checked,
+              isStarted?.checked,
+              resceduled?.checked,
+              result,
+              date,
+              date
+            )
+            .subscribe({
+              next: (res) => {
+                if (res.success) {
+                  this.messageService.add({
+                    severity: 'success',
+                    summary: 'Successfully updated',
+                    detail: res.message,
+                  });
+                  this.getAssignedActivites();
+                } else {
+                  this.messageService.add({
+                    severity: 'error',
+                    summary: 'Something went wrong',
+                    detail: res.message,
+                  });
+                  if (isCancelled) {
+                    isCancelled.checked = false;
+                  }
+                }
+              },
+              error: (err) => {
                 this.messageService.add({
                   severity: 'error',
                   summary: 'Something went wrong',
-                  detail: res.message,
+                  detail: err.message,
                 });
                 if (isCancelled) {
                   isCancelled.checked = false;
                 }
-              }
-            },
-            error: (err) => {
-              this.messageService.add({
-                severity: 'error',
-                summary: 'Something went wrong',
-                detail: err.message,
-              });
-              if (isCancelled) {
-                isCancelled.checked = false;
-              }
-             
-            },
-          });
+              },
+            });
         }
       });
-    }
-
-    else if (resceduled!=null){
+    } else if (resceduled != null) {
       this.ref = this.dialogService.open(CustomResceduleConfirtamionComponent, {
         header: 'Rescedule Activity !!!',
 
@@ -390,54 +400,51 @@ export class AssignedActivitiesComponent implements OnInit {
 
       this.ref.onClose.subscribe((result) => {
         if (result) {
-          
           this.projectService
-          .changeActivityStatus(
-            activityId,
-            isCompleted?.checked,
-            isCancelled?.checked,
-            isStarted?.checked,
-            resceduled?.checked,
-            result.remark,         
-            result.startDate,
-            result.endDate        
-          )
-          .subscribe({
-            next: (res) => {
-              if (res.success) {
-                this.messageService.add({
-                  severity: 'success',
-                  summary: 'Successfully updated',
-                  detail: res.message,
-                });
-                this.getAssignedActivites();
-              } else {
+            .changeActivityStatus(
+              activityId,
+              isCompleted?.checked,
+              isCancelled?.checked,
+              isStarted?.checked,
+              resceduled?.checked,
+              result.remark,
+              result.startDate,
+              result.endDate
+            )
+            .subscribe({
+              next: (res) => {
+                if (res.success) {
+                  this.messageService.add({
+                    severity: 'success',
+                    summary: 'Successfully updated',
+                    detail: res.message,
+                  });
+                  this.getAssignedActivites();
+                } else {
+                  this.messageService.add({
+                    severity: 'error',
+                    summary: 'Something went wrong',
+                    detail: res.message,
+                  });
+                  if (resceduled) {
+                    resceduled.checked = false;
+                  }
+                }
+              },
+              error: (err) => {
                 this.messageService.add({
                   severity: 'error',
                   summary: 'Something went wrong',
-                  detail: res.message,
+                  detail: err.message,
                 });
-                if (resceduled) {
+                if (isCancelled) {
                   resceduled.checked = false;
                 }
-              }
-            },
-            error: (err) => {
-              this.messageService.add({
-                severity: 'error',
-                summary: 'Something went wrong',
-                detail: err.message,
-              });
-              if (isCancelled) {
-                resceduled.checked = false;
-              }
-            
-            },
-          });
+              },
+            });
         }
       });
-    }
-    else {
+    } else {
       var date = this.getTodayDate();
       this.projectService
         .changeActivityStatus(
@@ -446,9 +453,9 @@ export class AssignedActivitiesComponent implements OnInit {
           isCancelled?.checked,
           isStarted?.checked,
           resceduled?.checked,
-          "",         
+          '',
           date,
-          date        
+          date
         )
         .subscribe({
           next: (res) => {

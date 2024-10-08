@@ -332,7 +332,7 @@ namespace MembershipImplementation.Services.HRM
                 }
 
             }
-         
+
 
 
             else
@@ -1400,5 +1400,54 @@ namespace MembershipImplementation.Services.HRM
 
             throw new NotImplementedException();
         }
+
+
+
+        public async Task<ResponseMessage> GetExpiredDate(DateTime lastPaid, Guid membershipTypeId)
+        {
+
+
+            try
+            {
+
+                var membershipType = await _dbContext.MembershipTypes.FindAsync(membershipTypeId);
+
+                if (membershipType == null)
+                {
+                    return new ResponseMessage
+                    {
+                        Success = false,
+                        Message = "Membership type not found."
+                    };
+                }
+
+
+                var expiredDate = lastPaid.AddYears(membershipType.Years);
+
+
+
+                return new ResponseMessage
+                {
+                    Success = true,
+                    Data = expiredDate
+                };
+
+
+
+
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseMessage
+                {
+                    Success = false,
+                    Message = ex.Message
+                };
+            }
+
+        }
+
+
     }
 }

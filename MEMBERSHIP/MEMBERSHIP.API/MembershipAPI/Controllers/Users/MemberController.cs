@@ -96,7 +96,7 @@ namespace MembershipDigitalAPI.Controllers.HRM
 
         [HttpPut]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> UpdateMember([FromForm]MemberUpdateDto memberDto)
+        public async Task<IActionResult> UpdateMember([FromForm] MemberUpdateDto memberDto)
         {
             if (ModelState.IsValid)
             {
@@ -151,7 +151,7 @@ namespace MembershipDigitalAPI.Controllers.HRM
         }
 
 
-     
+
 
         [HttpPut]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
@@ -169,11 +169,11 @@ namespace MembershipDigitalAPI.Controllers.HRM
 
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> UpdateMoodleStatus(Guid memberId,string status)
+        public async Task<IActionResult> UpdateMoodleStatus(Guid memberId, string status)
         {
             if (ModelState.IsValid)
             {
-                return Ok(await _memberService.UpdateMoodleSatus(memberId,status));
+                return Ok(await _memberService.UpdateMoodleSatus(memberId, status));
             }
             else
             {
@@ -212,11 +212,11 @@ namespace MembershipDigitalAPI.Controllers.HRM
 
         [HttpPut]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> UpdateTextRef(string oldTextRn,string newTextRn)
+        public async Task<IActionResult> UpdateTextRef(string oldTextRn, string newTextRn)
         {
             if (ModelState.IsValid)
             {
-                return Ok(await _memberService.UpdateTextReference(oldTextRn,newTextRn));
+                return Ok(await _memberService.UpdateTextReference(oldTextRn, newTextRn));
             }
             else
             {
@@ -224,7 +224,19 @@ namespace MembershipDigitalAPI.Controllers.HRM
             }
         }
 
-
+        [HttpGet]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetExpiredDate(DateTime lastPaid, Guid membershipTypeId)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _memberService.GetExpiredDate(lastPaid, membershipTypeId));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
 
 
 

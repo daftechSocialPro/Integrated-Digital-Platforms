@@ -16,6 +16,7 @@ export class AllTrainingListComponent implements OnInit {
   filterdTraines: IAllTraineeReportDto[] = [];
 
   trainings: SelectList[];
+  selectedGender:string;
 
   @ViewChild('excelTable', { static: false }) excelTable!: ElementRef;
 
@@ -55,11 +56,22 @@ export class AllTrainingListComponent implements OnInit {
         item.fullName.toLowerCase().includes(searchTerm) ||
         item.phoneNumber.toLowerCase().includes(searchTerm) ||
         item.title.toLowerCase().includes(searchTerm) ||
-        item.project.toLowerCase().includes(searchTerm)
+        item.project.toLowerCase().includes(searchTerm) ||
+        item.region.toLowerCase().includes(searchTerm)
       );
     });
   }
 
+
+  filterChangeGender(value:string){
+    var searchTerm = value.toLowerCase();
+    this.filterdTraines = this.trainees.filter((item) => {
+      return (
+        item.gender.toLowerCase()==searchTerm 
+       
+     );
+    });
+  }
   goToTrainingDashboard() {
     this.route.navigate(['pm/training-dashboard']);
   }
