@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { PaymentLetterDto } from 'src/app/model/Finance/IPaymentDto';
+import { PayeeDetailListsDto, PaymentLetterDto } from 'src/app/model/Finance/IPaymentDto';
 import { FinanceService } from 'src/app/services/finance.service';
 // import { logo2 } from './logo2.png'
 
@@ -31,6 +31,7 @@ export class PaymentTransferComponent {
     reciverAccountNumber: " ",
     totalAmmount: 0
   }
+  payeeDetails:PayeeDetailListsDto[]=[]
 
 
   constructor(private financeService: FinanceService,
@@ -43,16 +44,26 @@ export class PaymentTransferComponent {
         this.financeService.getPaymentLetter(paymentId).subscribe({
           next: (res) => {
             this.paymentLetter = res;
-          
+            this.getPayeeDetails(paymentId)
           }
         });
-        setTimeout(() => {
-          this.print();
-        },
-          2000);
+      
       }
     }
-  
+
+
+    getPayeeDetails(paymentId:string) {
+      this.financeService.getPayeeDetails(paymentId).subscribe({
+        next: (res) => {
+          this.payeeDetails = res;
+          setTimeout(() => {
+            this.print();
+          },
+            2000);
+        },
+      });
+    }
+    
     print(){
       let printContents: any;
       printContents = document.getElementById('paymentLetter')?.innerHTML;

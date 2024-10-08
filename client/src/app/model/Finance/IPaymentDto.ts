@@ -83,9 +83,10 @@ export class AddPayeeDetailsDto {
 
 
 export class PayeeDetailListsDto {
-    id: string;
+    id?: string;
     fullName: string;
     accountNumber: string;
     ammount: number;
     remark: string;
+    isEditable:boolean=false
 }

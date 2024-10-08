@@ -163,7 +163,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-floating mb-3">
-                                    <input type="date" class="form-control" formControlName="lastPaid" id="lastPaid" />
+                                    <input type="date" class="form-control" formControlName="lastPaid" id="lastPaid" (change)="getExpiredDate()" />
                                     <label for="lastPaid">Last Paid</label>
                                 </div>
                             </div>
@@ -194,7 +194,7 @@
 
                                 <div class="form-floating mb-3">
 
-                                    <select class="form-control" formControlName="membershipType">
+                                    <select class="form-control" formControlName="membershipType" (change)="getExpiredDate()">
                                         <option></option>
                                         <option *ngFor="let item of memberships" [value]="item.id.toLowerCase()">
                                             {{item.name}}</option>
@@ -209,12 +209,12 @@
                             <div class="col-md-4">
                                 <div class="form-floating mb-3">
                                     <select class="form-control" formControlName="regionId">
-    
+
                                         <option></option>
                                         <option *ngFor="let item of chapters" [value]="item.id.toLowerCase()">
                                             {{item.name}}
                                         </option>
-    
+
                                     </select>
                                     <label for="regionId">Region </label>
                                 </div>
@@ -222,7 +222,7 @@
 
                         </div>
 
-                      
+
                         <div class="col-12 text-end mt-4">
                             <button type="submit" [disabled]="!updateProfileForm.valid"
                                 class="btn btn-outline-warning">Update</button>

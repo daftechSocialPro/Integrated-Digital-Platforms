@@ -45,15 +45,17 @@ namespace MembershipImplementation.Interfaces.HRM
         Task UPdateExpiredDateStatus();
         Task UpdateBirthDate();
 
-        Task <ResponseMessage> UpdateMoodleSatus(Guid memberId, string status);
+        Task<ResponseMessage> UpdateMoodleSatus(Guid memberId, string status);
 
-        Task <ResponseMessage> UpdateMemberMoodle(MoodleDto moodlePost);
+        Task<ResponseMessage> UpdateMemberMoodle(MoodleDto moodlePost);
 
-        Task<List<MemberRegionRevenueReportDto>> GetRegionRevenueReport ();
+        Task<List<MemberRegionRevenueReportDto>> GetRegionRevenueReport();
 
-        Task <ResponseMessage> ImportMemberFormExcel(IFormFile ExcelFile);
-        Task <ResponseMessage> DeleteMember(Guid MemberId);
+        Task<ResponseMessage> ImportMemberFormExcel(IFormFile ExcelFile);
+        Task<ResponseMessage> DeleteMember(Guid MemberId);
 
+
+        Task<ResponseMessage> GetExpiredDate(DateTime lastPaid, Guid membershipTypeId);
 
 
         //Task<List<EmployeeGetDto>> GetEmployees();

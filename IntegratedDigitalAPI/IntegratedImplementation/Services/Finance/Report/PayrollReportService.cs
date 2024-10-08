@@ -51,11 +51,18 @@ namespace IntegratedImplementation.Services.Finance.Report
 
                 var EmployeeBanks = _dbContext.EmployeeBanks.Where(x => x.EmployeeId == item.EmployeeId && x.IsSalaryBank );
 
+              var sourceOfFunds = _dbContext.EmployeeSalaries
+    .Include(x => x.EmploymentDetail)
+    .Include(e => e.Project)
+    .Where(x => x.EmploymentDetail.EmployeeId == item.EmployeeId)
+    .Select(x => new { x.Project.ProjectName, x.Percentile })
+    .AsNoTracking()
+    .ToList();
                 reports.Add(new PayrollReportDto
                 {
                     EmployeeName = $"{item.Employee.FirstName} {item.Employee.MiddleName} {item.Employee.LastName}",
                     DaysWorked = totalDays,
-                    SourceOfFund = "",
+                  
                     CommunicationAllowance = item.CommunicationAllowance,
                     EmployeePension = item.EmployeePension,
                     IncomeTax = item.IncomeTax,
@@ -67,6 +74,8 @@ namespace IntegratedImplementation.Services.Finance.Report
                     PositionAllowanceOT = item.PositionAllowance,
                     OverTime = item.OverTime,
                     Salary = basicSallary,
+                    
+                    SourceOfFund = string.Join(", ", sourceOfFunds.Select(x => $"{x.ProjectName}: {x.Percentile} %")),
                     TaxableIncome = item.TaxableIncome,
                     TotalDeduction = item.Loan + item.IncomeTax + item.Penalty,
                     TotalEarning = item.TotalEarning,
@@ -109,11 +118,11 @@ namespace IntegratedImplementation.Services.Finance.Report
                 {
                     EmployeeName = $"{item.Employee.FirstName} {item.Employee.MiddleName} {item.Employee.LastName}",
                     TinNumber = item.Employee.TinNumber,
-                    EmployeePension = Math.Round(item.EmployeePension,2),
-                    EmployerPension = Math.Round(item.CompanyPension, 2),
+                    EmployeePension = item.EmployeePension,
+                    EmployerPension = item.CompanyPension,
                     EmploymentDate = item.Employee.EmploymentDate.ToString(),
-                    Salary = Math.Round(item.BasicSallary, 2),
-                    Total = Math.Round(item.EmployeePension + item.CompanyPension)      
+                    Salary = item.BasicSallary,
+                    Total = item.EmployeePension + item.CompanyPension               
                 });
             }
 
@@ -157,14 +166,14 @@ namespace IntegratedImplementation.Services.Finance.Report
                     TinNumber = item.Employee.TinNumber,
                     BasicSalary = item.BasicSallary,
                     HireDate = item.Employee.EmploymentDate.ToString(),
-                    IncomeTax = Math.Round(item.IncomeTax,2),
-                    NetIncome = Math.Round(item.NetPay,2),
-                    OverTime = Math.Round(item.OverTime, 2),
-                    TotalIncome = Math.Round(item.TotalEarning, 2),
-                    TransportAllowance = Math.Round(item.TransportFuelAllowance, 2),
+                    IncomeTax = item.IncomeTax,
+                    NetIncome = item.NetPay,
+                    OverTime = item.OverTime,
+                    TotalIncome = item.TotalEarning,
+                    TransportAllowance = item.TransportFuelAllowance,
                     CostSharing = 0,
-                    Allowance = Math.Round(item.CommunicationAllowance, 2),
-                    OtherAllowance = Math.Round(item.PositionAllowance, 2),
+                    Allowance = item.CommunicationAllowance,
+                    OtherAllowance = item.PositionAllowance,
                 });
             }
 
