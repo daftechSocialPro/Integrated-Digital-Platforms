@@ -27,6 +27,7 @@ namespace IntegratedInfrustructure.Model.HRM
         public string AmharicLastName { get; set; } = null!;
         public string PhoneNumber { get; set; } = null!;
         public string Email { get; set; } = null!;
+        public string WorkEmail { get; set; } = null!;
         public Guid ZoneId { get; set; }
         public virtual Zone Zone { get; set; } = null!;
         public string Woreda { get; set; } = null!;

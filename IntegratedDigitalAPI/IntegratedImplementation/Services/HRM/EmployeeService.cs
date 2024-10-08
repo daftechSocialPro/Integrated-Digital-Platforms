@@ -99,24 +99,11 @@ namespace IntegratedImplementation.Services.HRM
                     ContractEndDate = addEmployee.ContractEndDate,
                     Rowstatus = RowStatus.ACTIVE,
                     ExistingEmployee = addEmployee.ExistingEmployee,
+                    WorkEmail = addEmployee.WorkEmail,  
                 };
                 await _dbContext.Employees.AddAsync(employee);
                 await _dbContext.SaveChangesAsync();
 
-                //EmploymentDetail employmentDetail = new EmploymentDetail()
-                //{
-                //    Id = Guid.NewGuid(),
-                //    CreatedById = addEmployee.CreatedById,
-                //    CreatedDate = DateTime.Now,
-                //    EmployeeId = employee.Id,
-                //    EmploymentStatus = EmploymentStatus.ACTIVE,
-                //    DepartmentId = addEmployee.DepartmentId,
-                //    PositionId = addEmployee.PositionId,
-                //    StartDate = addEmployee.EmploymentDate,
-                //    Salary = addEmployee.Salary
-                //};
-                //await _dbContext.EmploymentDetails.AddAsync(employmentDetail);
-                //await _dbContext.SaveChangesAsync();
 
                 var employeeApprovers = _dbContext.UserRoles.Where(x => x.RoleId == "6").Select(x => x.UserId).ToList();
 
@@ -265,6 +252,9 @@ namespace IntegratedImplementation.Services.HRM
                     employee.TinNumber = addEmployee.TinNumber;
                     employee.BirthDate = addEmployee.BirthDate;
                     employee.Woreda = addEmployee.Woreda;
+                    employee.ZoneId = addEmployee.ZoneId;
+                    employee.WorkEmail = addEmployee.WorkEmail;
+
 
                     await _dbContext.SaveChangesAsync();
 
@@ -401,6 +391,13 @@ namespace IntegratedImplementation.Services.HRM
             if (currentShift != null)
             {
                 employee.Shift = currentShift.ShiftList.ShiftName;
+            }
+
+            var currentDepartmen = await _dbContext.EmploymentDetails.Include(x => x.Department).Include(x => x.Position).Where(x => x.EmployeeId == employee.Id && x.Rowstatus == RowStatus.ACTIVE).FirstOrDefaultAsync();
+            if(currentDepartmen != null)
+            {
+                employee.DepartmentName = currentDepartmen.Department.DepartmentName;
+                employee.PostionName = currentDepartmen.Position.PositionName;
             }
 
             return employee;

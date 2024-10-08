@@ -42,6 +42,7 @@ namespace IntegratedImplementation.DTOS.HRM
         public string CreatedById { get; set; } = null!;
         public bool ExistingEmployee { get; set; }
         public Guid BankId { get; set; }
+        public string WorkEmail { get; set; } = null!;
     }
 
     public class EmployeeListDto
