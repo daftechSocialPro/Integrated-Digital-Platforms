@@ -64,7 +64,8 @@ export class AddEmployeeComponent implements OnInit {
       pensionCode: [''],
       tinNumber: [''],
       woreda: [null, Validators.required],
-      zoneId: [null, Validators.required]
+      zoneId: [null, Validators.required],
+      workEmail: [null, Validators.required]
     });
   }
 
@@ -157,6 +158,7 @@ export class AddEmployeeComponent implements OnInit {
         amharicLastName:this.EmployeeForm.value.amhariclastName,
         phoneNumber: this.EmployeeForm.value.phoneNumber,
         email: this.EmployeeForm.value.email,
+        workEmail: this.EmployeeForm.value.workEmail,
         gender: this.EmployeeForm.value.gender,
         birthDate: this.changeDateTime(this.EmployeeForm.value.birthDate),
         maritalStatus: this.EmployeeForm.value.maritalStatus,

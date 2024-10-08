@@ -35,6 +35,7 @@ export interface EmployeePostDto {
      ContractEndDate?: Date | null;
      createdById: string;
      email: string;
+     workEmail: string;
      zoneId: string;
      woreda: string;
 
@@ -67,6 +68,7 @@ export interface EmployeeGetDto {
      tinNumber?: string;
      bankAccountNo?: string;
      email: string;
+     workEmail: string;
      departmentId?: string;
      positionId?: string;
      departmentName: string;
