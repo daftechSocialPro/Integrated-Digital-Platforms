@@ -1,12 +1,6 @@
 ﻿using Implementation.Helper;
 using IntegratedImplementation.DTOS.Configuration;
 using IntegratedImplementation.DTOS.HRM;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IntegratedImplementation.Interfaces.HRM
 {
@@ -26,7 +20,7 @@ namespace IntegratedImplementation.Interfaces.HRM
 
         Task<List<EmployeeBankListDto>> EmployeeBanks(Guid employeeId);
         Task<ResponseMessage> AddEmployeeBank(AddEmployeeBankDto employeeBank);
-      
+
 
         //history
         Task<List<EmployeeHistoryDto>> GetEmployeeHistory(Guid employeeId);
@@ -36,10 +30,10 @@ namespace IntegratedImplementation.Interfaces.HRM
 
         //employee files 
 
-        Task<List<EmployeeFileGetDto>> GetEmployeeFiles(Guid employeeId);
-        Task<ResponseMessage> AddEmployeeFiles(EmployeeFilePostDto addEmployeeFile);
-        Task<ResponseMessage> UpdateEmployeeFiles(EmployeeFileGetDto updateEmployeeFile);
-        Task<ResponseMessage> DeleteEmployeeFiles(Guid employeeFileId);
+        //Task<List<EmployeeFileGetDto>> GetEmployeeFiles(Guid employeeId);
+        //Task<ResponseMessage> AddEmployeeFiles(EmployeeFilePostDto addEmployeeFile);
+        //Task<ResponseMessage> UpdateEmployeeFiles(EmployeeFileGetDto updateEmployeeFile);
+        //Task<ResponseMessage> DeleteEmployeeFiles(Guid employeeFileId);
 
         //employeesurety
         Task<List<EmployeeSuertyGetDto>> GetEmployeeSurety(Guid employeeId);

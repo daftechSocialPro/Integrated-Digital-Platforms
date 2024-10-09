@@ -1,4 +1,5 @@
 ﻿using IntegratedInfrustructure.Model.Authentication;
+using IntegratedInfrustructure.Model.Configuration;
 using System.ComponentModel.DataAnnotations.Schema;
 using static IntegratedInfrustructure.Data.EnumList;
 
@@ -27,6 +28,10 @@ namespace IntegratedInfrustructure.Model.HRM
         public bool HasSeverance { get; set; }
         public double TotalSeveranceAmount { get; set; }
         public string? Remark { get; set; }
+
+        public Guid ZoneId { get; set; }
+        public virtual Zone Zone { get; set; } = null!;
+        public string Woreda { get; set; } = null!;
 
 
         [InverseProperty(nameof(EmployeeSalary.EmploymentDetail))]

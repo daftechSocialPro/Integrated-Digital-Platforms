@@ -1,26 +1,18 @@
 ﻿using AutoMapper;
+using IntegratedImplementation.DTOS.Configuration;
+using IntegratedImplementation.DTOS.Finance.Configuration;
 using IntegratedImplementation.DTOS.HRM;
-using IntegratedInfrustructure.Model.HRM;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static IntegratedInfrustructure.Data.EnumList;
-
-using IntegratedInfrustructure.Data;
-using IntegratedInfrustructure.Model.Vacancy;
+using IntegratedImplementation.DTOS.Inventory;
+using IntegratedImplementation.DTOS.PM;
+using IntegratedImplementation.DTOS.Training;
 using IntegratedImplementation.DTOS.Vacancy;
 using IntegratedInfrustructure.Model.Configuration;
-using IntegratedImplementation.DTOS.Configuration;
-using IntegratedInfrustructure.Model.Training;
-using IntegratedImplementation.DTOS.Training;
-using IntegratedImplementation.DTOS.Inventory;
-using IntegratedInfrustructure.Models.Inventory;
-using IntegratedInfrustructure.Model.PM;
-using IntegratedImplementation.DTOS.PM;
 using IntegratedInfrustructure.Model.FInance.Configuration;
-using IntegratedImplementation.DTOS.Finance.Configuration;
+using IntegratedInfrustructure.Model.HRM;
+using IntegratedInfrustructure.Model.PM;
+using IntegratedInfrustructure.Model.Training;
+using IntegratedInfrustructure.Model.Vacancy;
+using IntegratedInfrustructure.Models.Inventory;
 
 namespace IntegratedImplementation.Datas
 {
@@ -39,7 +31,7 @@ namespace IntegratedImplementation.Datas
                .ForMember(a => a.NationalityId, e => e.MapFrom(mfg => mfg.Zone.Region.Country.Id))
                .ForMember(a => a.EmploymentStatus, e => e.MapFrom(mfg => mfg.EmploymentStatus.ToString()))
                .ForMember(a => a.CountryId, e => e.MapFrom(mfg => mfg.Zone.Region.CountryId))
-               .ForMember(a =>  a.IsApproved, e => e.MapFrom(mfg => mfg.IsApproved))
+               .ForMember(a => a.IsApproved, e => e.MapFrom(mfg => mfg.IsApproved))
                .ForMember(a => a.RegionId, e => e.MapFrom(mfg => mfg.Zone.RegionId));
 
 
@@ -50,7 +42,7 @@ namespace IntegratedImplementation.Datas
                .ForMember(a => a.RegionName, e => e.MapFrom(mfg => mfg.Zone.Region.RegionName))
                .ForMember(a => a.Nationality, e => e.MapFrom(mfg => mfg.Zone.Region.Country.Nationality))
                .ForMember(a => a.NationalityId, e => e.MapFrom(mfg => mfg.Zone.Region.Country.Id))
-       
+
                .ForMember(a => a.CountryId, e => e.MapFrom(mfg => mfg.Zone.Region.CountryId))
                .ForMember(a => a.RegionId, e => e.MapFrom(mfg => mfg.Zone.RegionId));
 
@@ -58,7 +50,12 @@ namespace IntegratedImplementation.Datas
             CreateMap<EmploymentDetail, EmployeeHistoryDto>()
                 .ForMember(a => a.DepartmentName, e => e.MapFrom(mfg => mfg.Department.DepartmentName))
                 .ForMember(a => a.RowStatus, e => e.MapFrom(mfg => mfg.Rowstatus.ToString()))
-                .ForMember(a => a.PositionName, e => e.MapFrom(mfg => mfg.Position.PositionName));
+                .ForMember(a => a.PositionName, e => e.MapFrom(mfg => mfg.Position.PositionName))
+                .ForMember(a => a.ZoneName, e => e.MapFrom(mfg => mfg.Zone.ZoneName))
+                .ForMember(a => a.RegionName, e => e.MapFrom(mfg => mfg.Zone.Region.RegionName))
+                .ForMember(a => a.CountryId, e => e.MapFrom(mfg => mfg.Zone.Region.CountryId))
+                .ForMember(a => a.RegionId, e => e.MapFrom(mfg => mfg.Zone.RegionId));
+
 
             CreateMap<EmployeeSalary, EmployeeSalaryGetDto>()
                 .ForMember(a => a.ProjectName, e => e.MapFrom(mfg => mfg.Project.ProjectName))
@@ -71,7 +68,7 @@ namespace IntegratedImplementation.Datas
                 .ForMember(a => a.Gender, e => e.MapFrom(mfg => mfg.Gender.ToString()))
                 .ForMember(a => a.FamilyRelation, e => e.MapFrom(mfg => mfg.FamilyRelation.ToString()));
 
-            CreateMap<EmployeeFile, EmployeeFileGetDto>();
+            CreateMap<EmployeeDocument, EmployeeFileGetDto>();
             CreateMap<EmployeeSurety, EmployeeSuertyGetDto>();
 
 
@@ -113,14 +110,14 @@ namespace IntegratedImplementation.Datas
             .ForMember(x => x.Name, e => e.MapFrom(mfg => mfg.GeneralSetting.ToString()));
 
             CreateMap<ProjectFundSource, ProjectFundSourceGetDto>();
-                
+
             CreateMap<TrainingReport, TrainingReportGetDto>();
 
             CreateMap<ActivityLocation, ActivityLocationDto>();
 
 
             #region Inventory
-       
+
             CreateMap<Vendor, SelectListDto>();
 
             CreateMap<Item, ItemListDto>()
@@ -165,7 +162,7 @@ namespace IntegratedImplementation.Datas
             CreateMap<FinanceLookup, FinanceLookupGetDto>();
             CreateMap<AccountType, AccountTypeGetDto>();
 
-          #endregion
+            #endregion
 
         }
     }

@@ -11,15 +11,8 @@ using IntegratedImplementation.Interfaces.HRM;
 using IntegratedInfrustructure.Data;
 using IntegratedInfrustructure.Model.Authentication;
 using IntegratedInfrustructure.Model.HRM;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static IntegratedInfrustructure.Data.EnumList;
 
 namespace IntegratedImplementation.Services.HRM
@@ -733,6 +726,8 @@ namespace IntegratedImplementation.Services.HRM
                 Salary = addEmployeeHistory.Salary,
                 SourceOfSalary = Enum.Parse<SALARYSOURCE>(addEmployeeHistory.SourceOfSalary),
                 Remark = addEmployeeHistory.Remark,
+                Woreda = addEmployeeHistory.Woreda,
+                ZoneId = addEmployeeHistory.ZoneId,
 
             };
             await _dbContext.EmploymentDetails.AddAsync(employmentDetail);
@@ -760,7 +755,8 @@ namespace IntegratedImplementation.Services.HRM
                 currentEmployeeHistory.EndDate = updateEmployeeHistory.EndDate;
                 currentEmployeeHistory.SourceOfSalary = Enum.Parse<SALARYSOURCE>(updateEmployeeHistory.SourceOfSalary);
                 currentEmployeeHistory.Remark = updateEmployeeHistory.Remark;
-
+                currentEmployeeHistory.Woreda = updateEmployeeHistory.Woreda;
+                currentEmployeeHistory.ZoneId = updateEmployeeHistory.ZoneId;
 
                 await _dbContext.SaveChangesAsync();
                 return new ResponseMessage { Message = "Successfully Updated", Success = true };
@@ -783,85 +779,85 @@ namespace IntegratedImplementation.Services.HRM
         }
 
 
-        //  employeeFiles
+        ////  employeeFiles
 
-        public async Task<List<EmployeeFileGetDto>> GetEmployeeFiles(Guid employeeId)
-        {
-            var employeeHistories = await _dbContext.EmployeeFiles.Where(x => x.EmployeeId == employeeId).AsNoTracking()
-                               .ProjectTo<EmployeeFileGetDto>(_mapper.ConfigurationProvider)
-                               .ToListAsync();
-            return employeeHistories;
-        }
-        public async Task<ResponseMessage> AddEmployeeFiles(EmployeeFilePostDto addEmployeeFile)
-        {
+        //public async Task<List<EmployeeFileGetDto>> GetEmployeeFiles(Guid employeeId)
+        //{
+        //    var employeeHistories = await _dbContext.EmployeeFiles.Where(x => x.EmployeeId == employeeId).AsNoTracking()
+        //                       .ProjectTo<EmployeeFileGetDto>(_mapper.ConfigurationProvider)
+        //                       .ToListAsync();
+        //    return employeeHistories;
+        //}
+        //public async Task<ResponseMessage> AddEmployeeFiles(EmployeeFilePostDto addEmployeeFile)
+        //{
 
-            var id = Guid.NewGuid();
-            var path = "";
-            if (addEmployeeFile.FilePath != null)
-                path = _generalConfig.UploadFiles(addEmployeeFile.FilePath, id.ToString(), "Employee").Result.ToString();
+        //    var id = Guid.NewGuid();
+        //    var path = "";
+        //    if (addEmployeeFile.FilePath != null)
+        //        path = _generalConfig.UploadFiles(addEmployeeFile.FilePath, id.ToString(), "Employee").Result.ToString();
 
-            EmployeeFile employeeFile = new EmployeeFile()
-            {
-                Id = Guid.NewGuid(),
-                CreatedById = addEmployeeFile.CreatedById,
-                CreatedDate = DateTime.Now,
-                EmployeeId = addEmployeeFile.EmployeeId,
-                FileName = addEmployeeFile.FileName,
-                FilePath = path,
-            };
+        //    EmployeeFile employeeFile = new EmployeeFile()
+        //    {
+        //        Id = Guid.NewGuid(),
+        //        CreatedById = addEmployeeFile.CreatedById,
+        //        CreatedDate = DateTime.Now,
+        //        EmployeeId = addEmployeeFile.EmployeeId,
+        //        FileName = addEmployeeFile.FileName,
+        //        FilePath = path,
+        //    };
 
-            await _dbContext.EmployeeFiles.AddAsync(employeeFile);
-            await _dbContext.SaveChangesAsync();
+        //    await _dbContext.EmployeeFiles.AddAsync(employeeFile);
+        //    await _dbContext.SaveChangesAsync();
 
-            return new ResponseMessage
-            {
+        //    return new ResponseMessage
+        //    {
 
-                Message = "Added Successfully",
-                Success = true
-            };
-        }
-        public async Task<ResponseMessage> UpdateEmployeeFiles(EmployeeFileGetDto updateEmployeeFile)
-        {
-
-
-            var path = "";
-
-            var employeeFile = _dbContext.EmployeeFiles.Find(updateEmployeeFile.Id);
+        //        Message = "Added Successfully",
+        //        Success = true
+        //    };
+        //}
+        //public async Task<ResponseMessage> UpdateEmployeeFiles(EmployeeFileGetDto updateEmployeeFile)
+        //{
 
 
-            if (updateEmployeeFile.File != null)
-                path = _generalConfig.UploadFiles(updateEmployeeFile.File, employeeFile.Id.ToString(), "Employee").Result.ToString();
+        //    var path = "";
 
-            if (employeeFile != null)
-            {
+        //    var employeeFile = _dbContext.EmployeeFiles.Find(updateEmployeeFile.Id);
 
 
-                employeeFile.FileName = updateEmployeeFile.FileName;
+        //    if (updateEmployeeFile.File != null)
+        //        path = _generalConfig.UploadFiles(updateEmployeeFile.File, employeeFile.Id.ToString(), "Employee").Result.ToString();
 
-                if (path != "")
-                {
-                    employeeFile.FilePath = path;
-                }
-                await _dbContext.SaveChangesAsync();
-                return new ResponseMessage { Message = "Successfully Updated", Success = true };
-            }
-            return new ResponseMessage { Success = false, Message = "Unable To Find Employee Files" };
+        //    if (employeeFile != null)
+        //    {
 
 
-        }
-        public async Task<ResponseMessage> DeleteEmployeeFiles(Guid employeeFileId)
-        {
-            var currentEmployeeFile = await _dbContext.EmployeeFiles.FindAsync(employeeFileId);
+        //        employeeFile.FileName = updateEmployeeFile.FileName;
 
-            if (currentEmployeeFile != null)
-            {
+        //        if (path != "")
+        //        {
+        //            employeeFile.FilePath = path;
+        //        }
+        //        await _dbContext.SaveChangesAsync();
+        //        return new ResponseMessage { Message = "Successfully Updated", Success = true };
+        //    }
+        //    return new ResponseMessage { Success = false, Message = "Unable To Find Employee Files" };
 
-                _dbContext.Remove(currentEmployeeFile);
-                await _dbContext.SaveChangesAsync();
-                return new ResponseMessage { Message = "Successfully Deleted", Success = true };
-            }
-            return new ResponseMessage { Success = false, Message = "Unable To Find Employee File" };
-        }
+
+        //}
+        //public async Task<ResponseMessage> DeleteEmployeeFiles(Guid employeeFileId)
+        //{
+        //    var currentEmployeeFile = await _dbContext.EmployeeFiles.FindAsync(employeeFileId);
+
+        //    if (currentEmployeeFile != null)
+        //    {
+
+        //        _dbContext.Remove(currentEmployeeFile);
+        //        await _dbContext.SaveChangesAsync();
+        //        return new ResponseMessage { Message = "Successfully Deleted", Success = true };
+        //    }
+        //    return new ResponseMessage { Success = false, Message = "Unable To Find Employee File" };
+        //}
 
         // employeesuerty
         public async Task<List<EmployeeSuertyGetDto>> GetEmployeeSurety(Guid employeeId)

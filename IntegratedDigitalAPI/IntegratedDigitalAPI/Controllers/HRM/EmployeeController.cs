@@ -2,7 +2,6 @@
 using IntegratedImplementation.DTOS.Configuration;
 using IntegratedImplementation.DTOS.HRM;
 using IntegratedImplementation.Interfaces.HRM;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -226,52 +225,52 @@ namespace IntegratedDigitalAPI.Controllers.HRM
         }
 
         //employee files
-        [HttpGet]
-        [ProducesResponseType(typeof(EmployeeFileGetDto), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetEmployeeFiles(Guid employeeId)
-        {
-            return Ok(await _employeeService.GetEmployeeFiles(employeeId));
-        }
+        //[HttpGet]
+        //[ProducesResponseType(typeof(EmployeeFileGetDto), (int)HttpStatusCode.OK)]
+        //public async Task<IActionResult> GetEmployeeFiles(Guid employeeId)
+        //{
+        //    return Ok(await _employeeService.GetEmployeeFiles(employeeId));
+        //}
 
-        [HttpPost]
-        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> AddEmployeeFiles([FromForm]EmployeeFilePostDto employeeFile)
-        {
-            if (ModelState.IsValid)
-            {
-                return Ok(await _employeeService.AddEmployeeFiles(employeeFile));
-            }
-            else
-            {
-                return BadRequest();
-            }
-        }
-        [HttpPost]
-        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> UpdateEmployeeFile([FromForm]EmployeeFileGetDto employeeFile)
-        {
-            if (ModelState.IsValid)
-            {
-                return Ok(await _employeeService.UpdateEmployeeFiles(employeeFile));
-            }
-            else
-            {
-                return BadRequest();
-            }
-        }
-        [HttpDelete]
-        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> DeleteEmployeeFiles(Guid employeeFileId)
-        {
-            if (ModelState.IsValid)
-            {
-                return Ok(await _employeeService.DeleteEmployeeFiles(employeeFileId));
-            }
-            else
-            {
-                return BadRequest();
-            }
-        }
+        //[HttpPost]
+        //[ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        //public async Task<IActionResult> AddEmployeeFiles([FromForm]EmployeeFilePostDto employeeFile)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        return Ok(await _employeeService.AddEmployeeFiles(employeeFile));
+        //    }
+        //    else
+        //    {
+        //        return BadRequest();
+        //    }
+        //}
+        //[HttpPost]
+        //[ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        //public async Task<IActionResult> UpdateEmployeeFile([FromForm]EmployeeFileGetDto employeeFile)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        return Ok(await _employeeService.UpdateEmployeeFiles(employeeFile));
+        //    }
+        //    else
+        //    {
+        //        return BadRequest();
+        //    }
+        //}
+        //[HttpDelete]
+        //[ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        //public async Task<IActionResult> DeleteEmployeeFiles(Guid employeeFileId)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        return Ok(await _employeeService.DeleteEmployeeFiles(employeeFileId));
+        //    }
+        //    else
+        //    {
+        //        return BadRequest();
+        //    }
+        //}
         // employee Surety 
         [HttpGet]
         [ProducesResponseType(typeof(EmployeeSuertyGetDto), (int)HttpStatusCode.OK)]
@@ -319,7 +318,7 @@ namespace IntegratedDigitalAPI.Controllers.HRM
                 return BadRequest();
             }
         }
-        
+
 
 
 
