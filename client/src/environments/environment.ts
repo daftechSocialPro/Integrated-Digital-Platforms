@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  baseUrl:'https://localhost:7190/api',
-  assetUrl :'https://localhost:7190',
+  baseUrl:'https://localhost:5267/api',
+  assetUrl :'https://localhost:5267',
   Client_URL: "http://localhost:4200"
 };

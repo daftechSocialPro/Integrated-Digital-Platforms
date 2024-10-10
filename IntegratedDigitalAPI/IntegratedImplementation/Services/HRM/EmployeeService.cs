@@ -92,7 +92,7 @@ namespace IntegratedImplementation.Services.HRM
                     ContractEndDate = addEmployee.ContractEndDate,
                     Rowstatus = RowStatus.ACTIVE,
                     ExistingEmployee = addEmployee.ExistingEmployee,
-                    WorkEmail = addEmployee.WorkEmail,  
+                    WorkEmail = addEmployee.WorkEmail,
                 };
                 await _dbContext.Employees.AddAsync(employee);
                 await _dbContext.SaveChangesAsync();
@@ -387,7 +387,7 @@ namespace IntegratedImplementation.Services.HRM
             }
 
             var currentDepartmen = await _dbContext.EmploymentDetails.Include(x => x.Department).Include(x => x.Position).Where(x => x.EmployeeId == employee.Id && x.Rowstatus == RowStatus.ACTIVE).FirstOrDefaultAsync();
-            if(currentDepartmen != null)
+            if (currentDepartmen != null)
             {
                 employee.DepartmentName = currentDepartmen.Department.DepartmentName;
                 employee.PostionName = currentDepartmen.Position.PositionName;
