@@ -47,7 +47,7 @@ namespace IntegratedImplementation.Services.HRM
                     };
                 }
 
-                var exists = await _dbContext.EmployeeDocuments.AnyAsync(x => x.EmployeeId == employeeDocumentsPost.EmployeeId && x.DocumentTypeId == employeeDocumentsPost.DocumentTypeId);
+                var exists = await _dbContext.EmployeeDocuments.AnyAsync(x => x.Rowstatus == RowStatus.ACTIVE && x.EmployeeId == employeeDocumentsPost.EmployeeId && x.DocumentTypeId == employeeDocumentsPost.DocumentTypeId);
                 if (exists)
                 {
                     return new ResponseMessage

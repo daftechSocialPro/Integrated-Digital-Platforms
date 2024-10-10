@@ -1,9 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Sanitizer } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { SafeUrl, SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
+import { SelectList } from 'src/app/model/common';
 import { EmployeeFilePostDto } from 'src/app/model/HRM/IEmployeeDto';
 import { UserView } from 'src/app/model/user';
+import { ConfigurationService } from 'src/app/services/configuration.service';
 import { HrmService } from 'src/app/services/hrm.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -15,31 +18,63 @@ import { UserService } from 'src/app/services/user.service';
 export class AddEmployeeFileComponent implements OnInit {
 
   @Input() employeeId!: string
-
+  documentTypesSelectList!: SelectList[]
   FileForm !: FormGroup;
   fileGH!: File;
-  ngOnInit(): void { }
+  documentTypeId: number
+  previewUrl: SafeUrl | null = null;
+  isImage = false;
+  isPdf = false;
+  previewResourceUrl: SafeResourceUrl | null = null;
+  
   constructor(
     private activeModal: NgbActiveModal,
     private hrmService: HrmService,
     private formBuilder: FormBuilder,
     private userService: UserService,
-    private messageService: MessageService
-  ) {
+    private messageService: MessageService,
+    private configService: ConfigurationService,
+    private sanitizer: DomSanitizer
+  ) {}
 
-    this.FileForm = this.formBuilder.group({
-
-      fileName: [null, Validators.required],
-
-    })
+  ngOnInit(): void { 
+    this.getDocumentType()
   }
 
-
+  getDocumentType() {
+    this.configService.getDocumentTypeSelectList(0).subscribe({
+      next: (res) => {
+        this.documentTypesSelectList = res
+      }, error: (err) => {
+        
+      }
+    })
+  }
   onUpload(event: any) {
 
-    var file: File = event.target.files[0];
-    this.fileGH = file
-
+    if (event.target.files.length > 0) {
+      
+      var file: File = event.target.files[0];
+      this.fileGH = file
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        //this.isImage = file.type.startsWith('image/');
+        const fileType = file.type;
+        this.isImage = fileType.startsWith('image/');
+        this.isPdf = fileType === 'application/pdf';
+        if (this.isImage) {
+          this.previewUrl = this.sanitizer.bypassSecurityTrustUrl(e.target.result);
+          this.previewResourceUrl = null;
+        } else if (this.isPdf) {
+          this.previewUrl = null;
+          this.previewResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl(e.target.result);
+        } else {
+          this.previewUrl = null;
+          this.previewResourceUrl = null;
+        }
+      };
+      reader.readAsDataURL(file);
+    }
   }
 
   closeModal() {
@@ -52,9 +87,11 @@ export class AddEmployeeFileComponent implements OnInit {
 
       var formData = new FormData();
 
-      formData.append('filePath', this.fileGH);
+      formData.append('document', this.fileGH);
       formData.append('fileName',this.FileForm.value.fileName)
       formData.append('employeeId',this.employeeId)
+      formData.append('documentTypeId',this.documentTypeId.toString())
+
       this.hrmService.addEmployeeFile(formData).subscribe(
         {
           next: (res) => {

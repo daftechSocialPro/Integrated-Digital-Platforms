@@ -97,6 +97,17 @@ namespace IntegratedImplementation.Services.Configuration
 
         }
 
+        public async Task<List<SelectListDto>> GetDocumentTypeSelectList(DocumentCategory documentCategory)
+        {
+            var documentTypeSelectList = await _dbContext.DocumentTypes.Where(x => x.Rowstatus == RowStatus.ACTIVE && x.DocumentCategory == documentCategory).Select(x => new SelectListDto
+            {
+                Id = x.Id,
+                Name = x.FileName
+
+            }).ToListAsync();
+
+            return documentTypeSelectList;
+        }
         public async Task<ResponseMessage> Update(DocumentTypeGetDTO driverDocumentTypeGet)
         {
             try

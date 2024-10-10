@@ -34,7 +34,7 @@ namespace IntegratedDigitalAPI.Controllers.HRM
         // Add a new employee document
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> AddDocument([FromBody] EmployeeDocumentsPostDTO employeeDocument)
+        public async Task<IActionResult> AddDocument([FromForm] EmployeeDocumentsPostDTO employeeDocument)
         {
 
             var response = await _employeeDocumentService.Add(employeeDocument);
@@ -49,7 +49,7 @@ namespace IntegratedDigitalAPI.Controllers.HRM
         // Update an existing employee document
         [HttpPut]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> UpdateDocument([FromBody] EmployeeDocumentsPostDTO updateEmployeeDocument)
+        public async Task<IActionResult> UpdateDocument([FromForm] EmployeeDocumentsPostDTO updateEmployeeDocument)
         {
 
             var response = await _employeeDocumentService.UpdateEmployeeFile(updateEmployeeDocument);

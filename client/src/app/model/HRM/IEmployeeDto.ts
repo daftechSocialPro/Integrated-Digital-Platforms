@@ -201,7 +201,20 @@ export interface EmployeeFileGetDto {
      fileName: string,
      filePath: string
 }
-
+export class EmployeeDocumentsPostDTO {
+     employeeId: string; // Equivalent of C# Guid
+     documentTypeId: string; // Equivalent of C# Guid
+     createdById: string;
+     rowstatus: number; // Assuming `RowStatus` is an enum in TypeScript, represented by number
+ }
+ 
+ export class EmployeeDocumentsGetDTO extends EmployeeDocumentsPostDTO {
+     id: string; // Guid equivalent
+     documentTypeName?: string; // Optional (null is equivalent to undefined in TypeScript)
+     documentTypeCategory?: string;
+     filePath?: string;
+     createdDate?: string;
+ }
 
 export interface EmployeeSuretyPostDto {
 

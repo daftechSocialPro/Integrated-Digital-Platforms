@@ -3,6 +3,7 @@ using IntegratedImplementation.DTOS.Configuration;
 using IntegratedImplementation.Interfaces.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using static IntegratedInfrustructure.Data.EnumList;
 
 namespace IntegratedDigitalAPI.Controllers.Configuration
 {
@@ -25,6 +26,12 @@ namespace IntegratedDigitalAPI.Controllers.Configuration
             return Ok(await _documentTypeService.GetAll());
         }
 
+        [HttpGet]
+        [ProducesResponseType(typeof(SelectListDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetDocumentTypeSelectList(DocumentCategory documentCategory)
+        {
+            return Ok(await _documentTypeService.GetDocumentTypeSelectList(documentCategory));
+        }
 
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
