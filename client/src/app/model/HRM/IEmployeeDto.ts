@@ -102,6 +102,12 @@ export interface EmployeeHistoryDto {
      remark?: string;
      sourceOfSalary: string
      rowStatus: string;
+     countryId: string
+     regionId: string
+     woreda: string
+     zoneId: string
+     regionName : string	
+     zoneName	: string
 }
 export interface EmployeeHistoryPostDto {
 
@@ -114,7 +120,9 @@ export interface EmployeeHistoryPostDto {
      createdById: string;
      employeeId: string;
      remark?: string;
-     sourceOfSalary: string
+     sourceOfSalary: string,
+     woreda: string;
+     zoneId: string;
 
 }
 

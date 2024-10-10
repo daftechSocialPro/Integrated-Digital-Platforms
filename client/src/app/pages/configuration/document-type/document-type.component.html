@@ -20,7 +20,7 @@
                                 <th>Document Type Name</th>
                                 <th>File Extension</th>
                                 <th>Document Category</th>
-                                <th>Row Status</th>
+                                <th>Status</th>
                                 <th>Actions</th>
                             </tr>
                         </ng-template>
@@ -30,7 +30,7 @@
                                 <td>{{ documentType.fileName }}</td>
                                 <td>{{ documentType.fileExtentionsName }}</td>
                                 <td>{{ documentType.documentCategoryName }}</td>
-                                <td>{{ documentType.rowstatus }}</td>
+                                <td>{{ documentType.rowstatus == 0 ? "Active":"InActive" }}</td>
                                 <td>
                                     <button type="button" (click)="update(documentType)"
                                         class="btn btn-outline-warning">

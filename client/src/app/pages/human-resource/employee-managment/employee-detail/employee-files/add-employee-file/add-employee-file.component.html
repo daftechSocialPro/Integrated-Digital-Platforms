@@ -9,14 +9,14 @@
             <h5 class="card-title">Employee File Detail </h5>
             <div class="row">
                 <div class="col-lg-12">
-                    <form class="" (ngSubmit)="submit()">
+                    <form class="" [formGroup]="FileForm" (ngSubmit)="submit()">
                         <div class="modal-body">
                             <div class="row g-3">
 
 
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3">
-                                        <select class="form-select" id="Departments" [(ngModel)]="documentTypeId"
+                                        <select class="form-select" id="Departments" formControlName="documentTypeId"
                                             aria-label="State">
     
                                             <option></option>

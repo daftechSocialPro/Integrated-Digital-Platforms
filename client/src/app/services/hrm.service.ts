@@ -246,7 +246,7 @@ export class HrmService {
         return this.http.post<ResponseMessage>(this.baseUrl + "/EmployeeDocument/AddDocument", employeeFile)
     }
     updateEmployeeFile(employeeFile: FormData) {
-        return this.http.post<ResponseMessage>(this.baseUrl + "/EmployeeDocument/UpdateDocument", employeeFile)
+        return this.http.put<ResponseMessage>(this.baseUrl + "/EmployeeDocument/UpdateDocument", employeeFile)
     }
     deleteEmployeeFile(employeeDocumentId: string) {
         return this.http.delete<ResponseMessage>(this.baseUrl + "/EmployeeDocument/DeleteDocument?employeeDocumentId=" + employeeDocumentId)

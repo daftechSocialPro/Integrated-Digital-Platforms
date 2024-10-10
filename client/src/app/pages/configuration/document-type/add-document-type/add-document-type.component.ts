@@ -31,7 +31,12 @@ export class AddDocumentTypeComponent implements OnInit {
     {code:0, name:"Active"},
     {code:1, name:"Inactive"},
   ]
-
+  constructor(
+    private activeModal: NgbActiveModal,
+    private formBuilder: FormBuilder,
+    private configService: ConfigurationService, // Service to handle API requests
+    private userService: UserService,
+    private messageService: MessageService) { }
   ngOnInit(): void {
 
     this.user = this.userService.getCurrentUser(); // Fetching current user
@@ -44,20 +49,15 @@ export class AddDocumentTypeComponent implements OnInit {
       });
     } else {
       this.documentTypeFormGroup = this.formBuilder.group({
-        fileName: ['', Validators.required],
-        fileExtentions: ['', Validators.required],
-        documentCategory: ['', Validators.required],
+        fileName: [null, Validators.required],
+        fileExtentions: [null, Validators.required],
+        documentCategory: [null, Validators.required],
         rowstatus: [0, Validators.required],
       });
     }
   }
 
-  constructor(
-    private activeModal: NgbActiveModal,
-    private formBuilder: FormBuilder,
-    private configService: ConfigurationService, // Service to handle API requests
-    private userService: UserService,
-    private messageService: MessageService) { }
+  
 
   closeModal() {
     this.activeModal.close();
@@ -69,10 +69,10 @@ export class AddDocumentTypeComponent implements OnInit {
       if (this.documentType != null) {
         const documentType: DocumentTypeGetDTO = {
           fileName: this.documentTypeFormGroup.value.fileName,
-          fileExtentions: this.documentTypeFormGroup.value.fileExtentions,
-          documentCategory: this.documentTypeFormGroup.value.documentCategory,
+          fileExtentions: Number(this.documentTypeFormGroup.value.fileExtentions),
+          documentCategory: Number(this.documentTypeFormGroup.value.documentCategory),
           createdById: this.user.userId, 
-          rowstatus: this.documentTypeFormGroup.value.rowstatus,
+          rowstatus: Number(this.documentTypeFormGroup.value.rowstatus),
           id : this.documentType.id
         };
         
@@ -93,10 +93,10 @@ export class AddDocumentTypeComponent implements OnInit {
 
         const documentType: DocumentTypePostDTO = {
           fileName: this.documentTypeFormGroup.value.fileName,
-          fileExtentions: this.documentTypeFormGroup.value.fileExtentions,
-          documentCategory: this.documentTypeFormGroup.value.documentCategory,
+          fileExtentions: Number(this.documentTypeFormGroup.value.fileExtentions),
+          documentCategory: Number(this.documentTypeFormGroup.value.documentCategory),
           createdById: this.user.userId, 
-          rowstatus: this.documentTypeFormGroup.value.rowstatus
+          rowstatus: Number(this.documentTypeFormGroup.value.rowstatus)
         };
         this.configService.addDocumentType(documentType).subscribe({
           next: (res) => {

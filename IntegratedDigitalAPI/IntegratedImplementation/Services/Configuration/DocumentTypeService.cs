@@ -32,7 +32,7 @@ namespace IntegratedImplementation.Services.Configuration
                     return new ResponseMessage
                     {
                         Success = false,
-                        Message = "A Driver Document Type with the same FileName and DocumentCategory already exists.",
+                        Message = "A Document Type with the same FileName and DocumentCategory already exists.",
                         Data = 0
                     };
                 }
@@ -55,7 +55,7 @@ namespace IntegratedImplementation.Services.Configuration
                 return new ResponseMessage
                 {
                     Success = true,
-                    Message = "Driver Document Type Added Successfully !!!",
+                    Message = "Document Type Added Successfully !!!",
                     Data = driverDocumentType.Id
                 };
 
@@ -65,7 +65,7 @@ namespace IntegratedImplementation.Services.Configuration
                 return new ResponseMessage
                 {
                     Success = false,
-                    Message = "Driver Document Type was not found."
+                    Message = "Error Occured While Trying To Add Document Type"
                 };
             }
         }
@@ -73,7 +73,7 @@ namespace IntegratedImplementation.Services.Configuration
         public async Task<List<DocumentTypeGetDTO>> GetAll()
         {
 
-            List<DocumentTypeGetDTO> selectedBanBodies = await _dbContext.DocumentTypes.Where(x => x.Rowstatus == RowStatus.ACTIVE).
+            List<DocumentTypeGetDTO> selectedBanBodies = await _dbContext.DocumentTypes.
 
                 Select(x => new DocumentTypeGetDTO
                 {
@@ -120,7 +120,7 @@ namespace IntegratedImplementation.Services.Configuration
                     return new ResponseMessage
                     {
                         Success = false,
-                        Message = "Driver Document Type was not found."
+                        Message = "Document Type was not found."
                     };
 
 
@@ -128,7 +128,7 @@ namespace IntegratedImplementation.Services.Configuration
 
                 bool exists = await _dbContext.DocumentTypes
                 .AsNoTracking()
-                .AnyAsync(d => d.FileName == driverDocumentTypeGet.FileName &&
+                .AnyAsync(d => d.Id != driverDocumentTypeGet.Id && d.FileName == driverDocumentTypeGet.FileName &&
                                d.DocumentCategory == driverDocumentTypeGet.DocumentCategory);
 
                 if (exists)
@@ -136,7 +136,7 @@ namespace IntegratedImplementation.Services.Configuration
                     return new ResponseMessage
                     {
                         Success = false,
-                        Message = "A Driver Document Type with the same FileName and DocumentCategory already exists.",
+                        Message = "A Document Type with the same FileName and DocumentCategory already exists.",
                     };
                 }
 
@@ -151,7 +151,7 @@ namespace IntegratedImplementation.Services.Configuration
                 return new ResponseMessage
                 {
                     Success = true,
-                    Message = "Driver Document Type has been updated successfully.",
+                    Message = "Document Type has been updated successfully.",
                     Data = driverDocumentType.Id
 
                 };
@@ -163,7 +163,7 @@ namespace IntegratedImplementation.Services.Configuration
                 return new ResponseMessage
                 {
                     Success = false,
-                    Message = "Driver Document Type was not found."
+                    Message = "Error Occured While Trying To Update Document Type."
                 };
             }
         }
