@@ -115,7 +115,10 @@ export class AddEmploymentHistoryComponent implements OnInit {
         createdById : this.user.userId,
         employeeId : this.employeeId,
         sourceOfSalary : this.HistoryForm.value.sourceOfSalary,
-        remark : this.HistoryForm.value.remark
+        remark : this.HistoryForm.value.remark,
+        woreda : this.HistoryForm.value.woreda,
+        zoneId : this.HistoryForm.value.zoneId,
+        
       }
 
       this.hrmService.addEmployeeHistory(employeeHistory).subscribe(

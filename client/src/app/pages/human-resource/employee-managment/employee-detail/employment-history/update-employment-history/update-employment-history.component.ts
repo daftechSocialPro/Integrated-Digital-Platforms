@@ -24,10 +24,16 @@ export class UpdateEmploymentHistoryComponent implements OnInit {
   departments!: SelectList[];
   positions!: SelectList[];
   user ! : UserView
+  countries !: SelectList[];
+  regions!: SelectList[];
+  zones ! : SelectList[];
   ngOnInit(): void {
     this.user = this.userService.getCurrentUser()
     this.getDepartments()
     this.getPositions()
+    this.getCountries();
+    this.getZones(this.employeeHistory.regionId)
+    this.getRegions(this.employeeHistory.countryId)
     this.HistoryForm.controls['departmentId'].setValue(this.employeeHistory.departmentId)
     this.HistoryForm.controls['positionId'].setValue(this.employeeHistory.positionId) 
     this.HistoryForm.controls['salary'].setValue(this.employeeHistory.salary)    
@@ -35,6 +41,10 @@ export class UpdateEmploymentHistoryComponent implements OnInit {
     this.HistoryForm.controls['endDate'].setValue(this.employeeHistory.endDate.toString().split('T')[0])
     this.HistoryForm.controls['sourceOfSalary'].setValue(this.employeeHistory.sourceOfSalary)
     this.HistoryForm.controls['remark'].setValue(this.employeeHistory.remark)
+    this.HistoryForm.controls['woreda'].setValue(this.employeeHistory.woreda)
+    this.HistoryForm.controls['zoneId'].setValue(this.employeeHistory.zoneId)
+    this.HistoryForm.controls['country'].setValue(this.employeeHistory.countryId)
+    this.HistoryForm.controls['region'].setValue(this.employeeHistory.regionId)
   }
   constructor(
     private activeModal: NgbActiveModal, 
@@ -52,10 +62,39 @@ export class UpdateEmploymentHistoryComponent implements OnInit {
         startDate: [null, Validators.required],
         endDate: [null, Validators.required],
         sourceOfSalary:[null,Validators.required],
-        remark : [null,Validators.required]
+        remark : [null,Validators.required],
+        woreda: [null, Validators.required],
+        zoneId: [null, Validators.required],
+        country: [null, Validators.required],
+        region: [null, Validators.required],
       })
      }
 
+     getCountries() {
+
+      this.dropService.getContriesDropdown().subscribe({
+        next: (res) => {
+          this.countries = res
+        }
+      });
+    }
+  
+    getRegions(countryId: string) {
+  
+      this.dropService.getRegionsDropdown(countryId).subscribe({
+        next: (res) => {
+          this.regions = res
+        }
+      })
+    }
+  
+    getZones (regionId:string){
+      this.dropService.getZonesDropdown(regionId).subscribe({
+        next: (res) => {
+          this.zones = res
+        }
+      })
+    }
   getDepartments() {
     this.dropService.getDepartmentsDropdown().subscribe({
       next: (res) => {
@@ -89,7 +128,9 @@ export class UpdateEmploymentHistoryComponent implements OnInit {
         createdById : this.user.userId,
         employeeId : this.employeeHistory.employeeId,
         sourceOfSalary : this.HistoryForm.value.sourceOfSalary,
-        remark : this.HistoryForm.value.remark
+        remark : this.HistoryForm.value.remark,
+        woreda : this.HistoryForm.value.woreda,
+        zoneId : this.HistoryForm.value.zoneId
       }
       this.hrmService.updateEmployeeHistory(employeeHistory).subscribe(
         {

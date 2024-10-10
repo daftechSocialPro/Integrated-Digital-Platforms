@@ -40,6 +40,9 @@ export class UpdateEmployeeFileComponent implements OnInit {
 
   ngOnInit(): void { 
     this.getDocumentType()
+    this.FileForm = this.formBuilder.group({
+      documentTypeId : [this.employeeFile.documentTypeId, Validators.required]
+    })
   }
 
   getDocumentType() {
@@ -90,7 +93,6 @@ export class UpdateEmployeeFileComponent implements OnInit {
       formData.append('document', this.fileGH);
       formData.append('fileName',this.FileForm.value.fileName)
       formData.append('id',this.employeeFile.id)
-      formData.append('documentCategoryId',this.documentTypeId.toString())
       formData.append('documentTypeId', this.employeeFile.documentTypeId)
       formData.append('employeeId', this.employeeFile.employeeId)
       formData.append('createdById', this.employeeFile.createdById)

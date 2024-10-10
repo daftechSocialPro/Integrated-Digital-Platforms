@@ -23,10 +23,6 @@ namespace IntegratedDigitalAPI.Controllers.HRM
         public async Task<IActionResult> GetDocumentsByEmployeeId(Guid employeeId)
         {
             var employeeDocuments = await _employeeDocumentService.GetEmployeeDocumentById(employeeId);
-            if (employeeDocuments == null || !employeeDocuments.Any())
-            {
-                return NotFound("No Employee Documents Found");
-            }
 
             return Ok(employeeDocuments);
         }
@@ -38,10 +34,6 @@ namespace IntegratedDigitalAPI.Controllers.HRM
         {
 
             var response = await _employeeDocumentService.Add(employeeDocument);
-            if (!response.Success)
-            {
-                return BadRequest(response);
-            }
 
             return Ok(response);
         }
@@ -49,14 +41,10 @@ namespace IntegratedDigitalAPI.Controllers.HRM
         // Update an existing employee document
         [HttpPut]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> UpdateDocument([FromForm] EmployeeDocumentsPostDTO updateEmployeeDocument)
+        public async Task<IActionResult> UpdateDocument([FromForm] EmployeeDocumentsGetDTO updateEmployeeDocument)
         {
 
             var response = await _employeeDocumentService.UpdateEmployeeFile(updateEmployeeDocument);
-            if (!response.Success)
-            {
-                return BadRequest(response);
-            }
 
             return Ok(response);
         }
@@ -67,10 +55,6 @@ namespace IntegratedDigitalAPI.Controllers.HRM
         public async Task<IActionResult> DeleteDocument(Guid employeeDocumentId)
         {
             var response = await _employeeDocumentService.DeleteEmployeeFile(employeeDocumentId);
-            if (!response.Success)
-            {
-                return BadRequest(response);
-            }
 
             return Ok(response);
         }

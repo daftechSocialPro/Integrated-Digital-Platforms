@@ -148,7 +148,7 @@ namespace IntegratedImplementation.Services.HRM
 
         }
 
-        public async Task<ResponseMessage> UpdateEmployeeFile(EmployeeDocumentsPostDTO employeeDocumentsPost)
+        public async Task<ResponseMessage> UpdateEmployeeFile(EmployeeDocumentsGetDTO employeeDocumentsPost)
         {
             try
             {
@@ -179,7 +179,7 @@ namespace IntegratedImplementation.Services.HRM
                 }
 
                 var employeeDocument = await _dbContext.EmployeeDocuments
-                    .FirstOrDefaultAsync(x => x.EmployeeId == employeeDocumentsPost.EmployeeId && x.DocumentTypeId == employeeDocumentsPost.DocumentTypeId);
+                    .FindAsync(employeeDocumentsPost.Id);
 
                 if (employeeDocument == null)
                 {

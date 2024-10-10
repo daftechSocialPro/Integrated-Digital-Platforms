@@ -59,47 +59,51 @@
                                 </div>
 
                                 
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="countryId">Country</label>
-                                            <select pInputText class="form-select" required="" #country
-                                                (change)="getRegions(country.value)" aria-label="State">
-                                                <option></option>
-                                                <option *ngFor="let country of countries" [value]="country.id">{{
-                                                    country.name }}</option>
-                                            </select>
-                                        </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating mb-3">
+                                        
+                                        <select pInputText class="form-select" required="" #country
+                                            (change)="getRegions(country.value)" aria-label="State">
+                                            <option></option>
+                                            <option *ngFor="let country of countries" [value]="country.id">{{
+                                                country.name }}</option>
+                                        </select>
+                                        <label for="countryId">Country</label>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="countryId">Region</label>
-                                            <select pInputText class="form-select" #regionId required=""
-                                                (change)="getZones(region.value)" #region id="regionId" aria-label="State">
-                                                <option></option>
-                                                <option *ngFor="let region of regions" [value]="region.id">{{
-                                                    region.name }}</option>
-                                            </select>
-                
-                                        </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating mb-3">
+                                        
+                                        <select pInputText class="form-select" #regionId required=""
+                                            (change)="getZones(region.value)" #region id="regionId" aria-label="State">
+                                            <option></option>
+                                            <option *ngFor="let region of regions" [value]="region.id">{{
+                                                region.name }}</option>
+                                        </select>
+                                        <label for="countryId">Region</label>
+            
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="zoneId"> Zone</label>
-                                            <select pInputText class="form-select" id="zoneId" #zoneId
-                                                [class]="zoneId ? 'ng-valid'  :'ng-invalid ng-dirty'" formControlName="zoneId"
-                                                aria-label="State">
-                                                <option></option>
-                                                <option *ngFor="let zone of zones" [value]="zone.id">{{
-                                                    zone.name }}</option>
-                                            </select>
-                                        </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating mb-3">
+                                        
+                                        <select pInputText class="form-select" id="zoneId" #zoneId
+                                            [class]="zoneId ? 'ng-valid'  :'ng-invalid ng-dirty'" formControlName="zoneId"
+                                            aria-label="State">
+                                            <option></option>
+                                            <option *ngFor="let zone of zones" [value]="zone.id">{{
+                                                zone.name }}</option>
+                                        </select>
+                                        <label for="zoneId"> Zone</label>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="woreda"> Woreda</label>
-                                            <input pInputText class="form-control" formControlName="woreda" id="woreda" required />
-                                        </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating mb-3">
+                                        
+                                        <input pInputText class="form-control" formControlName="woreda" id="woreda" required />
+                                        <label for="woreda"> Woreda</label>
                                     </div>
+                                </div>
                 
 
                                 <div class="col-md-4">

@@ -21,7 +21,7 @@ export class AddEmployeeFileComponent implements OnInit {
   documentTypesSelectList!: SelectList[]
   FileForm !: FormGroup;
   fileGH!: File;
-  documentTypeId: number
+
   previewUrl: SafeUrl | null = null;
   isImage = false;
   isPdf = false;
@@ -39,6 +39,9 @@ export class AddEmployeeFileComponent implements OnInit {
 
   ngOnInit(): void { 
     this.getDocumentType()
+    this.FileForm = this.formBuilder.group({
+      documentTypeId : [null, Validators.required]
+    })
   }
 
   getDocumentType() {
@@ -88,9 +91,8 @@ export class AddEmployeeFileComponent implements OnInit {
       var formData = new FormData();
 
       formData.append('document', this.fileGH);
-      formData.append('fileName',this.FileForm.value.fileName)
       formData.append('employeeId',this.employeeId)
-      formData.append('documentTypeId',this.documentTypeId.toString())
+      formData.append('documentTypeId',this.FileForm.value.documentTypeId.toString())
 
       this.hrmService.addEmployeeFile(formData).subscribe(
         {
