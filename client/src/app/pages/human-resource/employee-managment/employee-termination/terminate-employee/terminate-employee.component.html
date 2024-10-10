@@ -12,14 +12,21 @@
                     <form class="" [formGroup]="terminateForm" (ngSubmit)="submit()">
                         <div class="modal-body">
                             <div class="row g-3">
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <label for="Blacklisted">Blacklisted</label>
                                     <div class="form-floating">
                                         <p-inputSwitch formControlName="blacListed" ></p-inputSwitch>
                                         
                                     </div>
                                 </div>
-                                <div class="col-md-8">
+                                <div class="col-md-3">
+                                    <label for="hasSeverance">Gets Severance</label>
+                                    <div class="form-floating">
+                                        <p-inputSwitch formControlName="hasSeverance" ></p-inputSwitch>
+                                        
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
                                     <div class="form-floating">
                                         <textarea class="form-control" formControlName="remark"
                                             placeholder="Remark" id="Remark"

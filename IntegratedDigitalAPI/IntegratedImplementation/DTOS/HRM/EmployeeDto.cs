@@ -1,12 +1,4 @@
-﻿using IntegratedInfrustructure.Model.Configuration;
-using IntegratedInfrustructure.Model.HRM;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static IntegratedInfrustructure.Data.EnumList;
+﻿using Microsoft.AspNetCore.Http;
 
 namespace IntegratedImplementation.DTOS.HRM
 {
@@ -145,6 +137,12 @@ namespace IntegratedImplementation.DTOS.HRM
         public string RowStatus { get; set; } = null!;
         public List<EmployeeSalaryGetDto> EmployeeSalaries { get; set; } = null!;
 
+        public Guid? CountryId { get; set; }
+        public string? RegionName { get; set; } = null!;
+        public Guid? RegionId { get; set; }
+        public string? ZoneName { get; set; } = null!;
+        public Guid? ZoneId { get; set; }
+        public string? Woreda { get; set; } = null!;
     }
 
     public record EmployeeSalryPostDto
@@ -177,7 +175,8 @@ namespace IntegratedImplementation.DTOS.HRM
         public Guid EmployeeId { get; set; }
         public string CreatedById { get; set; } = null!;
         public string Remark { get; set; }
-
+        public Guid ZoneId { get; set; }
+        public string Woreda { get; set; } = null!;
     }
 
     public record EmployeeFamilyPostDto
@@ -208,7 +207,7 @@ namespace IntegratedImplementation.DTOS.HRM
     {
         public Guid EmployeeId { get; set; }
         public string FileName { get; set; } = null!;
-        public IFormFile FilePath { get; set; }=null!;
+        public IFormFile FilePath { get; set; } = null!;
         public string CreatedById { get; set; } = null!;
 
     }

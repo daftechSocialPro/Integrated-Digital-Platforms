@@ -42,6 +42,8 @@ namespace IntegratedInfrustructure.Data
 
 
         public DbSet<BankList> BankLists { get; set; }
+
+        public DbSet<DocumentType> DocumentTypes { get; set; }
         #endregion
 
         #region HRM
@@ -52,11 +54,10 @@ namespace IntegratedInfrustructure.Data
         public DbSet<EmployeeList> Employees { get; set; }
         public DbSet<EmployeeWorkExperiance> EmployeeWorkExperiances { get; set; }
         public DbSet<EmploymentDetail> EmploymentDetails { get; set; }
-        public DbSet<EmployeeFile> EmployeeFiles { get; set; }
         public DbSet<EmployeeSurety> EmployeeSureties { get; set; }
         public DbSet<LeavePlanSetting> LeavePlanSetting { get; set; }
         public DbSet<EmployeeSalary> EmployeeSalaries { get; set; }
-        public DbSet<EmployeeDocuments> EmployeeDocuments { get; set; }
+        public DbSet<EmployeeDocument> EmployeeDocuments { get; set; }
         public DbSet<LeaveBalance> LeaveBalances { get; set; }
         public DbSet<LeaveType> LeaveTypes { get; set; }
         public DbSet<Position> Positions { get; set; }

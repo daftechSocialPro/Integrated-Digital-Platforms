@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace IntegratedInfrustructure.Data
+﻿namespace IntegratedInfrustructure.Data
 {
     public class EnumList
     {
@@ -468,7 +462,19 @@ namespace IntegratedInfrustructure.Data
             Paid
         }
 
-      
+
+        public enum FileExtentions
+        {
+            JPG,
+            JPEG,
+            PNG,
+            PDF
+        }
+
+        public enum DocumentCategory
+        {
+            HRM
+        }
 
     }
 }
