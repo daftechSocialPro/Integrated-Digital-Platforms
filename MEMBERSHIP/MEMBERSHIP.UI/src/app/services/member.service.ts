@@ -10,7 +10,7 @@ import { IMakePayment, IPaymentData } from 'src/models/payment/IPaymentDto';
   providedIn: 'root'
 })
 export class MemberService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
   readonly BaseURI = environment.baseUrl;
 
   readonly moodleURI = environment.moodleUrl;
@@ -36,13 +36,15 @@ export class MemberService {
     return this.http.put<ResponseMessage>(this.BaseURI + `/Member/UpdateMember`, profile);
   }
 
-
-  updateProfileFromAdmin(Profile:FormData) {
-    return this.http.put<ResponseMessage> (this.BaseURI+ '/Member/UpdateProfileFromAdmin',Profile)
+  updateProfileFromAdmin(Profile: FormData) {
+    return this.http.put<ResponseMessage>(this.BaseURI + '/Member/UpdateProfileFromAdmin', Profile);
   }
 
-  changeIdCardStatus(memberId: string, status: string,remark:string) {
-    return this.http.put<ResponseMessage>(this.BaseURI + `/Member/ChangeIdCardStatus?memberId=${memberId}&status=${status}&remark=${remark}`, {});
+  changeIdCardStatus(memberId: string, status: string, remark: string) {
+    return this.http.put<ResponseMessage>(
+      this.BaseURI + `/Member/ChangeIdCardStatus?memberId=${memberId}&status=${status}&remark=${remark}`,
+      {}
+    );
   }
   getRequstedIdMembers() {
     return this.http.get<IMembersGetDto[]>(this.BaseURI + `/Member/GetRequstedIdMembers`);
@@ -50,46 +52,44 @@ export class MemberService {
 
   // report {
 
-
   // getMembershipReport() {
   //   return this.http.post(this.BaseURI + `/Member/MembershipReport`,{responseType:'Blob'});
   // }
 
-
-  callMoodle (formData:FormData){
-
-    return this.http.post<any>(this.moodleURI,formData)
+  callMoodle(formData: FormData) {
+    return this.http.post<any>(this.moodleURI, formData);
   }
-  updateMoodle (formData:FormData){
-
-    return this.http.post<any>(this.moodleURI,formData)
+  updateMoodle(formData: FormData) {
+    return this.http.post<any>(this.moodleURI, formData);
   }
 
-
-  updateMoodleApi (moodle:MoodleUpdateDto){
-    return this.http.put<ResponseMessage>(this.BaseURI+"/Member/UpdateMoodle",moodle)
+  updateMoodleApi(moodle: MoodleUpdateDto) {
+    return this.http.put<ResponseMessage>(this.BaseURI + '/Member/UpdateMoodle', moodle);
   }
 
-  updateMoodleStatus(memberId:string,status:string){
-
-    return this.http.post<ResponseMessage>(this.BaseURI+`/Member/UpdateMoodleStatus?memberId=${memberId}&status=${status}`,{})  
+  updateMoodleStatus(memberId: string, status: string) {
+    return this.http.post<ResponseMessage>(this.BaseURI + `/Member/UpdateMoodleStatus?memberId=${memberId}&status=${status}`, {});
   }
 
-  GetRegionReportRevenue(){
-    return this.http.get<IRegionRevenueDto[]>(this.BaseURI+`/Member/GetRegionReportRevenue`)  
+  GetRegionReportRevenue() {
+    return this.http.get<IRegionRevenueDto[]>(this.BaseURI + `/Member/GetRegionReportRevenue`);
   }
 
-  importFromExcel(formData:FormData){
-    return this.http.post<ResponseMessage>(this.BaseURI+"/Member/ImportMemberFormExcel",formData)
+  importFromExcel(formData: FormData) {
+    return this.http.post<ResponseMessage>(this.BaseURI + '/Member/ImportMemberFormExcel', formData);
   }
 
-  deleteMember(memberID:string){
-    return this.http.delete<ResponseMessage>(this.BaseURI+`/Member/DeleteMember?memberId=${memberID}`)
+  deleteMember(memberID: string) {
+    return this.http.delete<ResponseMessage>(this.BaseURI + `/Member/DeleteMember?memberId=${memberID}`);
   }
 
-  updateTextReference (oldTextRn:string,newTextRn:string,){
-
-    return this.http.put<ResponseMessage>(this.BaseURI+`/Member/UpdateTextRef?oldTextRn=${oldTextRn}&newTextRn=${newTextRn}`,{})
+  updateTextReference(oldTextRn: string, newTextRn: string) {
+    return this.http.put<ResponseMessage>(this.BaseURI + `/Member/UpdateTextRef?oldTextRn=${oldTextRn}&newTextRn=${newTextRn}`, {});
   }
 
+  getExpiredDate(lastPaid: Date, membershipTypeId: string) {
+    return this.http.get<ResponseMessage>(
+      this.BaseURI + `/Member/GetExpiredDate?lastPaid=${lastPaid}&membershipTypeId=${membershipTypeId}`
+    );
+  }
 }

@@ -80,6 +80,7 @@ export class UpdateEmployeeComponent implements OnInit {
       countryId : [this.selectedEmployee.countryId],     
       regionId : [this.selectedEmployee.regionId],
       zoneId: [this.selectedEmployee.zoneId, Validators.required],
+      workEmail: [this.selectedEmployee.workEmail, Validators.required]
     })
     this.getRegions(this.selectedEmployee.countryId)
     this.getZones(this.selectedEmployee.regionId)
@@ -175,6 +176,7 @@ export class UpdateEmployeeComponent implements OnInit {
         woreda: this.EmployeeForm.value.woreda,
         imagePath: this.fileGH,
         createdById: this.user.userId,
+        workEmail: this.EmployeeForm.value.workEmail
       }
       if(this.EmployeeForm.value.ContractEndDate){
         employeePost.ContractEndDate = this.changeDateTime(this.EmployeeForm.value.ContractEndDate);

@@ -102,7 +102,6 @@ export class BeginningBalanceComponent implements OnInit {
   // }
 
   addBeginningBalance() {
-    debugger;
     this.addBeginningBalanceDetailList.createdById = this.user.userId;
     this.addBeginningBalanceDetailList.begningBalanceDetails = [];
     this.beginningBalanceList.map(x => {

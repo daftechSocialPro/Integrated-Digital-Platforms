@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\MEMBERSHIP\\MEMBERSHIP.API\\MembershipInfrustructure\\MembershipInfrustructure.csproj": {}
+    "/Users/oza/Developer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipInfrustructure/MembershipInfrustructure.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\MEMBERSHIP\\MEMBERSHIP.API\\MembershipInfrustructure\\MembershipInfrustructure.csproj": {
+    "/Users/oza/Developer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipInfrustructure/MembershipInfrustructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\MEMBERSHIP\\MEMBERSHIP.API\\MembershipInfrustructure\\MembershipInfrustructure.csproj",
+        "projectUniqueName": "/Users/oza/Developer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipInfrustructure/MembershipInfrustructure.csproj",
         "projectName": "MembershipInfrustructure",
-        "projectPath": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\MEMBERSHIP\\MEMBERSHIP.API\\MembershipInfrustructure\\MembershipInfrustructure.csproj",
-        "packagesPath": "C:\\Users\\Hp\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Hp\\Desktop\\Kirubel Files\\DAFTech Computer\\Integrated-Digital-Platforms\\MEMBERSHIP\\MEMBERSHIP.API\\MembershipInfrustructure\\obj\\",
+        "projectPath": "/Users/oza/Developer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipInfrustructure/MembershipInfrustructure.csproj",
+        "packagesPath": "/Users/oza/.nuget/packages/",
+        "outputPath": "/Users/oza/Developer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipInfrustructure/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Hp\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/oza/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -81,7 +79,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.404\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.317/RuntimeIdentifierGraph.json"
         }
       }
     }

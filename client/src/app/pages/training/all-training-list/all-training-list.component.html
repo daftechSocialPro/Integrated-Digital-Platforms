@@ -10,33 +10,53 @@
         <div class="card-body">
             <div class="row">
 
-            <div class="col-3  my-3">
-                <div class="form-floating">
-                    <input type="text" class="form-control" id="PlannedBudget" #searchterm placeholder="filter"
-                        (change)="filterTrainees(searchterm.value)" placeholder="EndDate">
-                    <label for="PlannedBudget">Filter </label>
+                <div class="col-3  my-3">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="PlannedBudget" #searchterm placeholder="filter"
+                            (change)="filterTrainees(searchterm.value)" placeholder="EndDate">
+                        <label for="PlannedBudget">Filter </label>
+
+                    </div>
+
+                </div>
+                <div class="col-3  my-3">
+                    <div class="form-floating">
+
+
+                        <select class="form-control" #gender (change)="filterChangeGender(gender.value)">
+                            <option></option>
+                            <option value="male"> MALE
+
+                            </option>
+                            <option value="female">
+                                FEMALE
+                            </option>
+                        </select>
+                        <label for="PlannedBudget">Select Gender </label>
+
+
+                    </div>
+
+                </div>
+                <div class="col-3 my-3">
+                    <p-multiSelect #SelectedItem (onChange)="SelectItems($event)" [options]="trainings"
+                        placeholder="Select Trainings" optionLabel="name" class="multiselect-custom" display="chip">
+                        <ng-template let-training pTemplate="item">
+                            <div class="flex align-items-center">
+                                <span class="ml-2">{{training.name}}</span>
+                            </div>
+
+                        </ng-template>
+                    </p-multiSelect>
 
                 </div>
 
-            </div>
-            <div class="col-7 my-3">   
-                <p-multiSelect #SelectedItem  (onChange)="SelectItems($event)" [options]="trainings" placeholder="Select Trainings" optionLabel="name" class="multiselect-custom" display="chip">
-                    <ng-template let-training pTemplate="item">
-                        <div class="flex align-items-center">
-                            <span class="ml-2">{{training.name}}</span>
-                        </div>
-                        
-                    </ng-template>
-                </p-multiSelect>
-                
+                <div class="col-2 my-3">
+                    <button class="btn btn-outline-success text-end mb-3" (click)="exportAsExcel('Allreports')"><i
+                            class="bi bi-file-excel"></i> Export Excel </button>
+                </div>
             </div>
 
-            <div class="col-2 my-3">
-                <button class="btn btn-outline-success text-end mb-3" (click)="exportAsExcel('Allreports')"><i
-                    class="bi bi-file-excel"></i> Export Excel </button>
-            </div>
-        </div>
-         
             <div class="table-container ">
                 <div class="table-wrapper ">
                     <table class="table table-bordered table-responsive" #excelTable>

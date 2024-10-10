@@ -1,0 +1,88 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Add Payee Detail</h5>
+        <div >
+
+            <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+        </div>
+        <!-- <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button> -->
+    </div>
+
+    <div class="card">
+
+        <div class="card-body">
+           
+            <p-table #dt [value]="payeeDetails" responsiveLayout="scroll" [rows]="10"
+                [globalFilterFields]="['fullName', 'accountNumber']" [paginator]="true"
+                [rowsPerPageOptions]="[10, 20, 30]" [showCurrentPageReport]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowHover]="true"
+                dataKey="id">
+
+                <!-- Table Caption (Search Bar and Title) -->
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0">Payee List</h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..."
+                                class="w-full sm:w-auto" />
+                        </span>
+                    </div>
+                </ng-template>
+
+                <!-- Table Headers -->
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Full Name</th>
+                        <th>Account Number</th>
+                        <th>Amount</th>
+                        <th>Remark</th>
+                        <th>Action</th>
+                    </tr>
+                </ng-template>
+
+                <!-- Table Body Rows -->
+                <ng-template pTemplate="body" let-payee>
+                    <tr>
+                        <td>
+                            <input pInputText [(ngModel)]="payee.fullName" placeholder="Enter full name"
+                                [disabled]="!payee.isEditable" />
+                        </td>
+                        <td>
+                            <input pInputText [(ngModel)]="payee.accountNumber" placeholder="Enter account number"
+                                [disabled]="!payee.isEditable" />
+                        </td>
+                        <td>
+                            <input pInputText [(ngModel)]="payee.ammount" placeholder="Enter amount" type="number"
+                                [disabled]="!payee.isEditable" />
+                        </td>
+                        <td>
+                            <input pInputText [(ngModel)]="payee.remark" placeholder="Enter remark"
+                                [disabled]="!payee.isEditable" />
+                        </td>
+                        <td class="text-center">
+                            <button pButton icon="pi pi-check"
+                                class="p-button-outlined p-button-success p-button-icon-only p-mr-2"
+                                (click)="addPaymentDetail(payee)" [disabled]="!payee.isEditable" title="Save"></button>
+                            &nbsp;
+                            <button pButton icon="pi pi-trash"
+                                class="p-button-outlined p-button-danger p-button-icon-only"
+                                (click)="deleteConfirmation(payee.id)" [disabled]="payee.isEditable"
+                                title="Delete"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+
+                <!-- Footer (Add New Row) -->
+                <ng-template pTemplate="footer">
+                    <tr>
+                        <td colspan="5" class="text-center">
+                            <button pButton icon="pi pi-plus" class="p-button-rounded p-button-success"
+                                (click)="addNewRow()" title="Add New Payee"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>

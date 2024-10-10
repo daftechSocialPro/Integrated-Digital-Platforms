@@ -274,23 +274,26 @@ namespace IntegratedImplementation.Services.HRM
         public async Task<List<EmployeeDisciplinaryListDto>> GetEmployeeDisciplinaries()
         {
             var EmployeeSelectList = await (from e in _dbContext.Employees
-                                            where e.EmployeeDisplinaryCases.Any()
-                                            select new EmployeeDisciplinaryListDto
-                                            {
-                                                EmployeeId = e.Id,
-                                                EmployeeName = $"{e.FirstName} {e.MiddleName} {e.LastName}",
-                                                ImagePath = e.ImagePath,
-                                                TotalWarnings = e.EmployeeDisplinaryCases.Count(),
-                                                DisciplinaryCaseLists = e.EmployeeDisplinaryCases.Select(x => new DisciplinaryCaseListDto
-                                                {
-                                                    ApprovedDate = x.ApprovedDate,
-                                                    ApproverEmployee = $"{x.ApprovedBy.FirstName} {x.ApprovedBy.MiddleName} {x.ApprovedBy.LastName}",
-                                                    Date = x.Date,
-                                                    Fault = x.Fault,
-                                                    DetailDescription = x.DetailDescription,
-                                                    WarningType = x.WarningType.ToString(),
-                                                }).ToList()
-                                            }).ToListAsync();
+
+                                           where e.EmployeeDisplinaryCases.Any()
+                                           select new EmployeeDisciplinaryListDto
+                                           {
+                                               EmployeeId = e.Id,
+                                               EmployeeName = $"{e.FirstName} {e.MiddleName} {e.LastName}",
+                                               ImagePath = e.ImagePath,
+                                               TotalWarnings = e.EmployeeDisplinaryCases.Count(),
+                                               DisciplinaryCaseLists = e.EmployeeDisplinaryCases.Select(x =>  new DisciplinaryCaseListDto
+                                               {
+                                                   Id = x.Id,
+                                                   ApprovedDate = x.ApprovedDate,
+                                                   ApproverEmployee = $"{x.ApprovedBy.FirstName} {x.ApprovedBy.MiddleName} {x.ApprovedBy.LastName}",
+                                                   Date = x.Date,
+                                                   Fault = x.Fault,
+                                                   DetailDescription = x.DetailDescription,
+                                                   WarningType = x.WarningType.ToString(),
+                                               }).ToList()
+                                           }).ToListAsync();
+
 
             return EmployeeSelectList;
         }

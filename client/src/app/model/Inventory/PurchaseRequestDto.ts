@@ -38,7 +38,7 @@ export class ApprovedPurchaseRequestsDto {
     requestNumber: string;
     itemName: string;
     quantitiy: number;
-    aproverEmployee: string;
+    approverEmployee: string;
     performaDetails: ApprovedPerformaDetailDto[];
 }
 

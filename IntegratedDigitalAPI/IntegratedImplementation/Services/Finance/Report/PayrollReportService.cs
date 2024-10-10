@@ -51,11 +51,18 @@ namespace IntegratedImplementation.Services.Finance.Report
 
                 var EmployeeBanks = _dbContext.EmployeeBanks.Where(x => x.EmployeeId == item.EmployeeId && x.IsSalaryBank );
 
+              var sourceOfFunds = _dbContext.EmployeeSalaries
+    .Include(x => x.EmploymentDetail)
+    .Include(e => e.Project)
+    .Where(x => x.EmploymentDetail.EmployeeId == item.EmployeeId)
+    .Select(x => new { x.Project.ProjectName, x.Percentile })
+    .AsNoTracking()
+    .ToList();
                 reports.Add(new PayrollReportDto
                 {
                     EmployeeName = $"{item.Employee.FirstName} {item.Employee.MiddleName} {item.Employee.LastName}",
                     DaysWorked = totalDays,
-                    SourceOfFund = "",
+                  
                     CommunicationAllowance = item.CommunicationAllowance,
                     EmployeePension = item.EmployeePension,
                     IncomeTax = item.IncomeTax,
@@ -67,6 +74,8 @@ namespace IntegratedImplementation.Services.Finance.Report
                     PositionAllowanceOT = item.PositionAllowance,
                     OverTime = item.OverTime,
                     Salary = basicSallary,
+                    
+                    SourceOfFund = string.Join(", ", sourceOfFunds.Select(x => $"{x.ProjectName}: {x.Percentile} %")),
                     TaxableIncome = item.TaxableIncome,
                     TotalDeduction = item.Loan + item.IncomeTax + item.Penalty,
                     TotalEarning = item.TotalEarning,

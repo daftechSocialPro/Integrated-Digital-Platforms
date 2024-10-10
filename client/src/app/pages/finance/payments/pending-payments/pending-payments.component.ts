@@ -16,6 +16,7 @@ import { CommonService } from 'src/app/services/common.service';
 import { FinanceService } from 'src/app/services/finance.service';
 import { UserService } from 'src/app/services/user.service';
 import { AddJournalVoucherComponent } from '../../journal-voucher/add-journal-voucher/add-journal-voucher.component';
+import { AddPayeeDetailsComponent } from './add-payee-details/add-payee-details.component';
 
 @Component({
   selector: 'app-pending-payments',
@@ -136,7 +137,7 @@ export class PendingPaymentsComponent implements OnInit {
   }
 
   addPayeeDetail(paymentId: string){
-    let modalRef = this.modalService.open(AddJournalVoucherComponent,{size:'xl',backdrop:'static'})
+    let modalRef = this.modalService.open(AddPayeeDetailsComponent,{size:'xl',backdrop:'static'})
     modalRef.componentInstance.paymentId = paymentId
     modalRef.result.then(()=>{
       this.getPendingPayments()

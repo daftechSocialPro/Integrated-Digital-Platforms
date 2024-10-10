@@ -13,7 +13,7 @@
     <section class="section">
         <div class="card">
             <div class="row p-2">
-                <div class="col-lg-12 d-flex align-items-center">
+                <div class="col-lg-12 d-flex align-items-center" *ngIf="roleMatch(['calculatePayroll'])">
                     
                     <!-- <input type="text" pInputText  class="form-control stdate"  id="payrollMonth"  [(ngModel)]="payrollParam.payrollMonth"
                     placeholder="Select Date" > -->
@@ -82,17 +82,22 @@
                                             {{payroll.approvedBy}}
                                         </td>
                                         <td style="width:50%; min-width:10rem;">
-                                            {{payroll.totalAmount}}
+                                            {{payroll.totalAmount | number : '1.2-2'}}
                                         </td>
                                         <td style="width:50%; min-width:10rem;">
                                             <i class="pi" [ngClass]="{ 'text-green-500 pi-check-circle': 
                                             payroll.isActive, 'text-red-500 pi-times-circle': !payroll.isActive }"></i>
                                         </td> 
                                         <td>
-                                            <button pButton pRipple class="p-button-info" *ngIf="!payroll.approvedBy && !payroll.checkedBy && payroll.isActive" (click)="checkPayroll(payroll.id)" >Check</button>
-                                            <button button pButton pRipple class="p-button-info" *ngIf="!payroll.approvedBy && payroll.checkedBy && payroll.isActive" (click)="approvePayroll(payroll.id)"  >Approve</button>    
-                                            <button button pButton pRipple class="p-button-info" *ngIf="!payroll.authorizedBy && payroll.approvedBy && payroll.checkedBy && payroll.isActive" (click)="autorizePayroll(payroll.id)"  >Autorize</button>          
-                                                                                                                   
+                                            <span *ngIf="roleMatch(['checkPayrol'])">
+                                                <button pButton pRipple class="p-button-info" *ngIf="!payroll.approvedBy && !payroll.checkedBy && payroll.isActive" (click)="checkPayroll(payroll.id)" >Check</button>
+                                            </span>
+                                            <span *ngIf="roleMatch(['approvePayroll'])">
+                                                <button button pButton pRipple class="p-button-info" *ngIf="!payroll.approvedBy && payroll.checkedBy && payroll.isActive" (click)="approvePayroll(payroll.id)"  >Approve</button>    
+                                            </span>
+                                            <span *ngIf="roleMatch(['authorizepayroll'])">
+                                                <button button pButton pRipple class="p-button-info" *ngIf="!payroll.authorizedBy && payroll.approvedBy && payroll.checkedBy && payroll.isActive" (click)="autorizePayroll(payroll.id)"  >Autorize</button>          
+                                            </span>                                                            
                                         </td>
                                     </tr>
                                 </ng-template>

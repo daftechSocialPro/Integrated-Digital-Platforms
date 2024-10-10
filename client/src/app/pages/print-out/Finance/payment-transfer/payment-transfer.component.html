@@ -1,4 +1,3 @@
-
 <div id="paymentLetter">
     <div class="letter">
         <div class="header">
@@ -42,9 +41,16 @@
             <div class="passage">
                 <p>We kindly request your esteemed bank to debit our current
                     bank account number {{paymentLetter.accountNumber}}, and transfer a total of
-                    <b>{{ paymentLetter.totalAmmount }} ({{ paymentLetter.ammountInWords }}) Birr</b> to {{paymentLetter.receiver}} Account
-                    Number
-                    <b>{{ paymentLetter.reciverAccountNumber}}</b>.
+                    <b>{{ paymentLetter.totalAmmount }} ({{ paymentLetter.ammountInWords }}) Birr</b>
+                    to
+                    <span *ngIf="payeeDetails.length==0">
+                        {{paymentLetter.receiver}} Account Number <b>{{ paymentLetter.reciverAccountNumber}}</b>.
+                    </span>
+
+
+
+                    <span *ngIf="payeeDetails.length>0">the following account numbers. </span>
+
                 </p>
 
                 <p>For Service rendered in connection with the transfer, you can
@@ -68,13 +74,35 @@
                 <p><b>{{ paymentLetter.approverPosition }}</b></p>
             </div>
             <div>
-                <img [src]="stampImg"  width="300"/>
+                <img [src]="stampImg" width="300" />
             </div>
             <div>
                 <p><u>_______________</u></p>
                 <p><b>{{ paymentLetter.authorizer }}</b></p>
                 <p><b>{{ paymentLetter.authorizerPosition }}</b></p>
             </div>
+        </div>
+        <br /><br /><br /><br />
+        <div class="details-page">
+            <h3>Payment Details</h3>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Full Name</th>
+                        <th>Account Number</th>
+                        <th>Amount</th>
+                        <th>Remark</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let payee of payeeDetails">
+                        <td>{{ payee.fullName }}</td>
+                        <td>{{ payee.accountNumber }}</td>
+                        <td>{{ payee.ammount }}</td>
+                        <td>{{ payee.remark }}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

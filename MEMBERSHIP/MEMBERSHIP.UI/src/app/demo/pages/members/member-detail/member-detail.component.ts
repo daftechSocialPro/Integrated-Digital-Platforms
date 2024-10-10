@@ -182,4 +182,21 @@ export class MemberDetailComponent implements OnInit {
   closeModal() {
     this.activeModal.close();
   }
+
+  getExpiredDate() {
+    var lastPaid = this.updateProfileForm.value.lastPaid;
+    var isPaid = this.updateProfileForm.value.paymentStatus == 'PAID';
+    var memberTypeId = this.updateProfileForm.value.membershipType;
+
+    if (isPaid && lastPaid && memberTypeId) {
+      this.memberService.getExpiredDate(lastPaid, memberTypeId).subscribe({
+        next: (res) => {
+          this.updateProfileForm.patchValue({
+            expiredDate: res.data.split('T')[0]
+          });
+          console.log(res.data)
+        }
+      });
+    }
+  }
 }

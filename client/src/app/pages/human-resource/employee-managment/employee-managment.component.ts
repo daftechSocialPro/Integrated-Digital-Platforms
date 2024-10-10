@@ -47,7 +47,6 @@ export class EmployeeManagmentComponent implements OnInit {
   addEmployee() {
 
     let modalRef = this.modalService.open(AddEmployeeComponent, { size: 'xl', backdrop: 'static' })
-
     modalRef.result.then(() => {
       this.getEmployees()
     })

@@ -2500,6 +2500,10 @@ namespace IntegratedInfrustructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("WorkEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("ZoneId")
                         .HasColumnType("uniqueidentifier");
 

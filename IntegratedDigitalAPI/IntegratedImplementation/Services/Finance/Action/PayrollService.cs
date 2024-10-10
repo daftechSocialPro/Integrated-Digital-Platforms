@@ -108,7 +108,7 @@ namespace IntegratedImplementation.Services.Finance.Action
             if (currData.ApprovedById == Guid.Empty)
                 return new ResponseMessage { Success = false, Message = "Please Approve the payroll before approving!!" };
 
-            currData.ApprovedById = currEmp.Id;
+            currData.AutorizedById = currEmp.Id;
             await _dbContext.SaveChangesAsync();
 
             return new ResponseMessage { Success = true, Message = "Approved Successfully" };

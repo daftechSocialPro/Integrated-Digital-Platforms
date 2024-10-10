@@ -43,8 +43,9 @@
                         <div class="form-floating col-3 me-2">
                             <select class="form-control " [(ngModel)]="Quarter" (change)="onQuarterChange()">
 
+                                <option value=5>ALL</option>
                                 <option value=4>October - December {{currentYear}}</option>
-                                <option value=3>July - Augest {{currentYear}}</option>
+                                <option value=3>July - September {{currentYear}}</option>
                                 <option value=2>April - June {{currentYear}}</option>
                                 <option value=1>January - March {{currentYear}}</option>
                             </select>
