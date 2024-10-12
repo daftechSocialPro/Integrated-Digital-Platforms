@@ -284,6 +284,8 @@ import { PaymentSetlmentsComponent } from './pages/users-profile/payment-setlmen
 import { RequestPaymentComponent } from './pages/users-profile/payment-setlments/request-payment/request-payment.component';
 import {SidebarModule} from 'primeng/sidebar';
 import { DataViewModule } from 'primeng/dataview';
+import { DocumentTypeComponent } from './pages/configuration/document-type/document-type.component';
+import { AddDocumentTypeComponent } from './pages/configuration/document-type/add-document-type/add-document-type.component';
 
 @NgModule({
   declarations: [
@@ -613,7 +615,9 @@ import { DataViewModule } from 'primeng/dataview';
       CustomResceduleConfirtamionComponent,
       HrmDashboardComponent,
       PaymentSetlmentsComponent,
-      RequestPaymentComponent
+      RequestPaymentComponent,
+      DocumentTypeComponent,
+      AddDocumentTypeComponent
 
     //  AddMeasurementComponent,
     //  UpdateMeasurmentComponent

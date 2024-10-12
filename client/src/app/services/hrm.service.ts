@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 import { DepartmentGetDto, DepartmentPostDto } from '../model/HRM/IDepartmentDto';
 import { ResponseMessage } from '../model/ResponseMessage.Model';
 import { PositionGetDto, PositionPostDto } from '../model/HRM/IPositionDto';
-import { EmployeeEducationGetDto, EmployeeEducationPostDto, EmployeeFamilyGetDto, EmployeeFamilyPostDto, EmployeeFileGetDto, EmployeeFilePostDto, EmployeeGetDto, EmployeeHistoryDto, EmployeeHistoryPostDto, EmployeeListDto, EmployeePostDto, EmployeeSalaryGetDto, EmployeeSalryPostDto, EmployeeSuertyGetDto, VolunterGetDto, VolunterPostDto } from '../model/HRM/IEmployeeDto';
+import { EmployeeDocumentsGetDTO, EmployeeEducationGetDto, EmployeeEducationPostDto, EmployeeFamilyGetDto, EmployeeFamilyPostDto, EmployeeFileGetDto, EmployeeFilePostDto, EmployeeGetDto, EmployeeHistoryDto, EmployeeHistoryPostDto, EmployeeListDto, EmployeePostDto, EmployeeSalaryGetDto, EmployeeSalryPostDto, EmployeeSuertyGetDto, VolunterGetDto, VolunterPostDto } from '../model/HRM/IEmployeeDto';
 import { SelectList } from '../model/common';
 import { AddLeaveDetailDto, AppliedLeavesGetDto, LeaveBalanceGetDto, LeaveBalancePostDto, LeavePlanSettingGetDto, LeavePlanSettingPostDto, LeavePlanSettingUpdateDto, LeaveRequestPostDto, LeaveTypeGetDto, LeaveTypePostDto } from '../model/HRM/ILeaveDto';
 import { HrmSettingDto } from '../model/HRM/IHrmSettingDto';
@@ -239,17 +239,17 @@ export class HrmService {
     //employee files 
 
     getEmployeeFile(employeeId: string) {
-        return this.http.get<EmployeeFileGetDto[]>(this.baseUrl + "/Employee/GetEmployeeFiles?employeeId=" + employeeId)
+        return this.http.get<EmployeeDocumentsGetDTO[]>(this.baseUrl + "/EmployeeDocument/GetDocumentsByEmployeeId?employeeId=" + employeeId)
     }
     addEmployeeFile(employeeFile: FormData) {
         employeeFile.append('createdById', this.userService.getCurrentUser().userId)
-        return this.http.post<ResponseMessage>(this.baseUrl + "/Employee/AddEmployeeFiles", employeeFile)
+        return this.http.post<ResponseMessage>(this.baseUrl + "/EmployeeDocument/AddDocument", employeeFile)
     }
     updateEmployeeFile(employeeFile: FormData) {
-        return this.http.post<ResponseMessage>(this.baseUrl + "/Employee/UpdateEmployeeFile", employeeFile)
+        return this.http.put<ResponseMessage>(this.baseUrl + "/EmployeeDocument/UpdateDocument", employeeFile)
     }
-    deleteEmployeeFile(employeeId: string) {
-        return this.http.delete<ResponseMessage>(this.baseUrl + "/Employee/DeleteEmployeeFiles?employeeFileId=" + employeeId)
+    deleteEmployeeFile(employeeDocumentId: string) {
+        return this.http.delete<ResponseMessage>(this.baseUrl + "/EmployeeDocument/DeleteDocument?employeeDocumentId=" + employeeDocumentId)
     }
     //employee surety
 

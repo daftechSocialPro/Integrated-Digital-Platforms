@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace IntegratedImplementation.DTOS.HRM
+﻿namespace IntegratedImplementation.DTOS.HRM
 {
     public class TerminatedEmployeesDto
     {
@@ -17,6 +11,9 @@ namespace IntegratedImplementation.DTOS.HRM
         public string Remark { get; set; } = null!;
 
         public bool IsBlackListed { get; set; }
+
+        public bool HasSeverance { get; set; }
+        public double TotalSeveranceAmount { get; set; }
     }
 
 
@@ -24,7 +21,7 @@ namespace IntegratedImplementation.DTOS.HRM
     {
         public Guid Id { get; set; }
         public string Reason { get; set; } = null!;
-        public bool BlackListed { get; set; } 
+        public bool BlackListed { get; set; }
     }
 
 

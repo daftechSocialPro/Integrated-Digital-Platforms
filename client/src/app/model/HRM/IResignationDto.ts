@@ -12,6 +12,7 @@ export interface TerminationRequesterDto{
     blacListed:boolean,
     remark:string,
     employementDetailId:string
+    hasSeverance:boolean
 }
 
 export interface TerminationGetDto{
@@ -23,4 +24,6 @@ export interface TerminationGetDto{
     terminatedDate:Date,
     remark: string
     isBlackListed:boolean
+    hasSeverance: boolean
+    totalSeveranceAmount: number
 }

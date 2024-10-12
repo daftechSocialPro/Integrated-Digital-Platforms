@@ -1,10 +1,6 @@
 ﻿using IntegratedInfrustructure.Model.Authentication;
-using System;
-using System.Collections.Generic;
+using IntegratedInfrustructure.Model.Configuration;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static IntegratedInfrustructure.Data.EnumList;
 
 namespace IntegratedInfrustructure.Model.HRM
@@ -29,13 +25,19 @@ namespace IntegratedInfrustructure.Model.HRM
         public SALARYSOURCE SourceOfSalary { get; set; }
         public EmploymentStatus EmploymentStatus { get; set; }
         public bool IsBlackListed { get; set; }
+        public bool HasSeverance { get; set; }
+        public double TotalSeveranceAmount { get; set; }
         public string? Remark { get; set; }
 
+        public Guid ZoneId { get; set; }
+        public virtual Zone Zone { get; set; } = null!;
+        public string Woreda { get; set; } = null!;
 
-        [InverseProperty(nameof(EmployeeSalary.EmploymentDetail ))]
+
+        [InverseProperty(nameof(EmployeeSalary.EmploymentDetail))]
         public ICollection<EmployeeSalary> EmployeeSalaries { get; set; }
     }
 
 
-   
+
 }

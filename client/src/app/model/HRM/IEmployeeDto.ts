@@ -102,6 +102,12 @@ export interface EmployeeHistoryDto {
      remark?: string;
      sourceOfSalary: string
      rowStatus: string;
+     countryId: string
+     regionId: string
+     woreda: string
+     zoneId: string
+     regionName : string	
+     zoneName	: string
 }
 export interface EmployeeHistoryPostDto {
 
@@ -114,7 +120,9 @@ export interface EmployeeHistoryPostDto {
      createdById: string;
      employeeId: string;
      remark?: string;
-     sourceOfSalary: string
+     sourceOfSalary: string,
+     woreda: string;
+     zoneId: string;
 
 }
 
@@ -203,7 +211,20 @@ export interface EmployeeFileGetDto {
      fileName: string,
      filePath: string
 }
-
+export class EmployeeDocumentsPostDTO {
+     employeeId: string; // Equivalent of C# Guid
+     documentTypeId: string; // Equivalent of C# Guid
+     createdById: string;
+     rowstatus: number; // Assuming `RowStatus` is an enum in TypeScript, represented by number
+ }
+ 
+ export class EmployeeDocumentsGetDTO extends EmployeeDocumentsPostDTO {
+     id: string; // Guid equivalent
+     documentTypeName?: string; // Optional (null is equivalent to undefined in TypeScript)
+     documentTypeCategory?: string;
+     filePath?: string;
+     createdDate?: string;
+ }
 
 export interface EmployeeSuretyPostDto {
 

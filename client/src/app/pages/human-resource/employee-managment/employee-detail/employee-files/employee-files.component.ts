@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/api';
-import { EmployeeFilePostDto, EmployeeFileGetDto } from 'src/app/model/HRM/IEmployeeDto';
+import { EmployeeFilePostDto, EmployeeFileGetDto, EmployeeDocumentsGetDTO } from 'src/app/model/HRM/IEmployeeDto';
 import { HrmService } from 'src/app/services/hrm.service';
 
 import { AddEmployeeFileComponent } from './add-employee-file/add-employee-file.component';
@@ -18,7 +18,7 @@ export class EmployeeFilesComponent implements OnInit {
 
   @Input() employeeId!: string;
   @Input() employmentStatus!: string;
-  files!: EmployeeFileGetDto[]
+  files!: EmployeeDocumentsGetDTO[]
   position: string = 'center';
 
   ngOnInit(): void {

@@ -17,6 +17,7 @@
                         <tr>
                             <th>DEPARTMENT</th>
                             <th>POSITION</th>
+                            <th>ADDRESS</th>
                             <th>START DATE</th>
                             <th>END DATE</th>
                             <th>SALARY</th>
@@ -29,6 +30,7 @@
                         <tr>
                             <td>{{ history.departmentName }}</td>
                             <td>{{ history.positionName }}</td>
+                            <td>{{ history.woreda+ "-" +history.zoneName+ "-" +history.regionName}}</td>
                             <td>{{ history.startDate | date:"MMM dd, YYYY"}}</td>
                             <td>{{ history.endDate| date:"MMM dd, YYYY" }}</td>
                             <td>{{ history.salary }}</td>

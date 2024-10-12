@@ -13,6 +13,8 @@ import { IndicatorGetDto, IndicatorPostDto } from '../model/PM/IndicatorsDto';
 import { UserService } from './user.service';
 import { ProjectLocationGetDto, ProjectLocationPostDto } from '../model/PM/ProjectLocationDto';
 import { AddBankDto, BankListDto } from '../model/configuration/IBankListDto';
+import { Observable } from 'rxjs';
+import { DocumentTypeGetDTO, DocumentTypePostDTO } from '../model/configuration/IDocumentTypeDto';
 
 export interface toastPayload {
   message: string;
@@ -193,4 +195,21 @@ export class ConfigurationService {
     return this.http.put<ResponseMessage>(this.baseUrl + "/BankList/UpdateBank", updateBank)
   }
 
+  // Get all document types (GET request)
+  getDocumentTypeList(){
+    return this.http.get<DocumentTypeGetDTO[]>(`${this.baseUrl}/DocumentType/Get`);
+  }
+
+  getDocumentTypeSelectList(documentCategory: number){
+    return this.http.get<SelectList[]>(`${this.baseUrl}/DocumentType/GetDocumentTypeSelectList?documentCategory=${documentCategory}`);
+  }
+  // Add a new document type (POST request)
+  addDocumentType(addDocumentType: DocumentTypePostDTO){
+    return this.http.post<ResponseMessage>(`${this.baseUrl}/DocumentType/Add`, addDocumentType);
+  }
+
+  // Update an existing document type (PUT request)
+  updateDocumentType(updateDocumentType: DocumentTypeGetDTO) {
+    return this.http.put<ResponseMessage>(`${this.baseUrl}/DocumentType/Update`, updateDocumentType);
+  }
 }

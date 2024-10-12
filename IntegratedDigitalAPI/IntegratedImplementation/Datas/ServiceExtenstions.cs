@@ -76,6 +76,7 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IProjectFundSourceService, ProjectFundSourceService>();
             services.AddScoped<IBankListService, BankListService>();
+            services.AddScoped<IDocumentTypeService, DocumentTypeService>();
 
             #region PM
             services.AddScoped<IIndicatorService, IndicatorService>();
@@ -87,7 +88,7 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<ITaskService, TaskService>();
             services.AddScoped<IProgressReportService, ProgressReportService>();
             services.AddScoped<ITimePeriodService, TimePeriodService>();
-
+            services.AddScoped<IEmployeeDocumentService, EmployeeDocumentService>();
             services.AddScoped<IWeeklyPlanService, WeeklyPlanService>();
 
 

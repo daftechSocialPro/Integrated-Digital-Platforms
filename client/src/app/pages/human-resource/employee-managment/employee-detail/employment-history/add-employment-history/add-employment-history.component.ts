@@ -26,12 +26,10 @@ export class AddEmploymentHistoryComponent implements OnInit {
   user ! : UserView;
   today: Date = new Date();
   minDate: Date = new Date();
+  countries !: SelectList[];
+  regions!: SelectList[];
+  zones ! : SelectList[];
   
-  ngOnInit(): void {
-    this.user = this.userService.getCurrentUser()
-    this.getDepartments()
-    this.getPositions()
-  }
 
   constructor(
     private activeModal: NgbActiveModal, 
@@ -40,7 +38,13 @@ export class AddEmploymentHistoryComponent implements OnInit {
     private userService : UserService,
     private messageService: MessageService,
     private dropService: DropDownService
-    ) {
+    ) { }
+
+    ngOnInit(): void {
+      this.user = this.userService.getCurrentUser()
+      this.getDepartments()
+      this.getPositions()
+      this.getCountries();
 
       this.HistoryForm = this.formBuilder.group({  
         departmentId: [null, Validators.required],
@@ -49,11 +53,36 @@ export class AddEmploymentHistoryComponent implements OnInit {
         startDate: [null, Validators.required],
         endDate: [null],
         sourceOfSalary:[null,Validators.required],
-        remark : [null,Validators.required]
+        remark : [null,Validators.required],
+        woreda: [null, Validators.required],
+        zoneId: [null, Validators.required]
       })
+    }
+     getCountries() {
 
-     }
-
+      this.dropService.getContriesDropdown().subscribe({
+        next: (res) => {
+          this.countries = res
+        }
+      });
+    }
+  
+    getRegions(countryId: string) {
+  
+      this.dropService.getRegionsDropdown(countryId).subscribe({
+        next: (res) => {
+          this.regions = res
+        }
+      })
+    }
+  
+    getZones (regionId:string){
+      this.dropService.getZonesDropdown(regionId).subscribe({
+        next: (res) => {
+          this.zones = res
+        }
+      })
+    }
   getDepartments() {
     this.dropService.getDepartmentsDropdown().subscribe({
       next: (res) => {
@@ -86,7 +115,10 @@ export class AddEmploymentHistoryComponent implements OnInit {
         createdById : this.user.userId,
         employeeId : this.employeeId,
         sourceOfSalary : this.HistoryForm.value.sourceOfSalary,
-        remark : this.HistoryForm.value.remark
+        remark : this.HistoryForm.value.remark,
+        woreda : this.HistoryForm.value.woreda,
+        zoneId : this.HistoryForm.value.zoneId,
+        
       }
 
       this.hrmService.addEmployeeHistory(employeeHistory).subscribe(

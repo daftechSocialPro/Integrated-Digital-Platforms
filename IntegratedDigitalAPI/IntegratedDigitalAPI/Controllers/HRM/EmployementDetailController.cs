@@ -2,7 +2,6 @@
 using IntegratedImplementation.DTOS.Configuration;
 using IntegratedImplementation.DTOS.HRM;
 using IntegratedImplementation.Interfaces.HRM;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -50,7 +49,7 @@ namespace IntegratedDigitalAPI.Controllers.HRM
 
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> ApproveResignationRequest( Guid requestId, Guid employeeId)
+        public async Task<IActionResult> ApproveResignationRequest(Guid requestId, Guid employeeId)
         {
             if (ModelState.IsValid)
             {
@@ -71,7 +70,7 @@ namespace IntegratedDigitalAPI.Controllers.HRM
 
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> TerminateRequester( Guid requestId)
+        public async Task<IActionResult> TerminateRequester(Guid requestId)
         {
             if (ModelState.IsValid)
             {
@@ -85,11 +84,11 @@ namespace IntegratedDigitalAPI.Controllers.HRM
 
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> TerminateEmployee([FromBody]TerminateRequestDto terminateEmployee)
+        public async Task<IActionResult> TerminateEmployee([FromBody] TerminateRequestDto terminateEmployee)
         {
             if (ModelState.IsValid)
             {
-                return Ok(await _employementDetailService.TerminateEmployee(terminateEmployee.EmployementDetailId, terminateEmployee.Remark, terminateEmployee.BlacListed));
+                return Ok(await _employementDetailService.TerminateEmployee(terminateEmployee.EmployementDetailId, terminateEmployee.Remark, terminateEmployee.BlacListed, terminateEmployee.hasSeverance));
             }
             else
             {
