@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "9fY9rDYNXOfrdRjtQ+kWqbQAHwP1M9hMxfuRzyc+lxmd+36UcE4h45ZYIR1czxqTnwYBY0e3m7UOqGom46kfcA==",
+  "dgSpecHash": "t419QQxoNdqKNUcfCyUaap9Zy4aYt/IBk2Wbr8qmPiPMMTFJBx8oB0Rw1TA1vXDGboh15fh7tIS2uUYh4wojcw==",
   "success": true,
-  "projectFilePath": "/Users/oza/Developer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipInfrustructure/MembershipInfrustructure.csproj",
+  "projectFilePath": "/Users/oza/Developer/Personal/DAF Computer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipInfrustructure/MembershipInfrustructure.csproj",
   "expectedPackageFiles": [
     "/Users/oza/.nuget/packages/azure.core/1.24.0/azure.core.1.24.0.nupkg.sha512",
     "/Users/oza/.nuget/packages/azure.identity/1.6.0/azure.identity.1.6.0.nupkg.sha512",

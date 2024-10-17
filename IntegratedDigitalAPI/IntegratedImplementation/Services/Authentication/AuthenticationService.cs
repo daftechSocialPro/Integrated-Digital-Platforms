@@ -221,7 +221,7 @@ namespace Implementation.Services.Authentication
             var applicationUser = new ApplicationUser
             {
                 EmployeeId = addUSer.EmployeeId,
-                Email = employee.Email,
+                Email = employee.WorkEmail,
                 UserName = addUSer.UserName,
                 RowStatus = RowStatus.ACTIVE,
                 PasswordChanged = false

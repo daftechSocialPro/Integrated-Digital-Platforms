@@ -45,51 +45,41 @@ export class RenewMemberComponent implements OnInit {
 
   educationalFields: SelectList[];
   educationalLelvels: SelectList[];
-  membershipTypes : SelectList[]
+  membershipTypes: SelectList[];
 
-  selectedMembership:string
-  selectedAmount:number
-
+  selectedMembership: string;
+  selectedAmount: number;
 
   ngOnInit(): void {
     this.user = this.userService.getCurrentUser();
 
     this.completeProfileForm = this.formBuilder.group({
       selectedMembership: ['', Validators.required]
-     
-    
     });
 
     this.getMember();
-   
-
-
   }
 
-  getMembershipTypes(type:string){
+  getMembershipTypes(type: string) {
     this.dropdownService.getMembershipDropDown(type).subscribe({
-      next:(res)=>{
-        this.membershipTypes=res
+      next: (res) => {
+        this.membershipTypes = res;
       }
-    })
+    });
   }
   getMember() {
     this.memberService.getSingleMember(this.user.loginId).subscribe({
       next: (res) => {
-
         this.member = res;
       }
     });
   }
 
-  onMembershipSelcted(item:string){
-  
-    var k = item.split('/')
-    this.selectedAmount = Number.parseInt(k[1])
-    this.selectedMembership=k[0]
+  onMembershipSelcted(item: string) {
+    var k = item.split('/');
+    this.selectedAmount = Number.parseInt(k[1]);
+    this.selectedMembership = k[0];
   }
-
-
 
   register() {
     if (this.imagePath == null || this.imagePath == undefined || this.imagePath == '') {
@@ -142,17 +132,14 @@ export class RenewMemberComponent implements OnInit {
         },
         error: (err) => {
           this.messageService.add({ severity: 'error', summary: 'Something went wrong!!!', detail: err.message });
-
         }
       });
     }
   }
 
   checkIfPhoneNumberExist(phoneNumber: string) {
-   
     this.memberService.checkIfPhoneNumberExist(phoneNumber).subscribe({
       next: (res) => {
-      
         if (res) {
           this.confirmationService.confirm({
             message: 'You have already Registerd!! you want to proceed from where you stop ?',
@@ -182,10 +169,8 @@ export class RenewMemberComponent implements OnInit {
   verifyPayment() {
     this.memberService.getSingleMemberPayment(this.member.id).subscribe({
       next: (res) => {
-   
         this.paymentService.verifyPayment(res.text_Rn).subscribe({
           next: (re) => {
-           
             if (re.response) {
               if (re.response.status === 'success') {
                 this.MakePaymentConfirmation(res.text_Rn);
@@ -216,43 +201,36 @@ export class RenewMemberComponent implements OnInit {
     this.authGuard.logout();
   }
 
-renewMembership(){
-
-  var payment: IPaymentData = {
-    amount: this.selectedAmount,
-    currency: this.member.currency,
-    email: this.member.email,
-    first_name: this.member.fullName,
-    last_name: '',
-    phone_number: this.member.phoneNumber,
-    return_url: this.returnUrl,    
-    title: `Payment for Membership`,
-    description: this.member.memberId
-  };
-  this.goTOPayment(payment, this.member);
-}
-
+  renewMembership() {
+    var payment: IPaymentData = {
+      amount: this.selectedAmount,
+      currency: this.member.currency,
+      email: this.member.email,
+      first_name: this.member.fullName,
+      last_name: '',
+      phone_number: this.member.phoneNumber,
+      return_url: this.returnUrl,
+      title: `Payment for Membership`,
+      description: this.member.memberId
+    };
+    this.goTOPayment(payment, this.member);
+  }
 
   goTOPayment(payment: IPaymentData, member: any) {
-   
     this.paymentService.payment(payment).subscribe({
       next: (res) => {
         var mapayment: IMakePayment = {
           memberId: member.id,
           membershipTypeId: this.selectedMembership,
           payment: payment.amount,
-          
           text_Rn: res.response.tx_ref,
-          url:res.response.data.checkout_url
+          url: res.response.data.checkout_url
         };
 
         var url = res.response.data.checkout_url;
         this.makePayment(mapayment, url);
-
       },
-      error: (err) => {
-    
-      }
+      error: (err) => {}
     });
   }
   makePayment(makePay: IMakePayment, url: string) {
@@ -261,13 +239,12 @@ renewMembership(){
         if (res.success) {
           this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });
           window.location.href = url;
-          
         } else {
           this.messageService.add({ severity: 'error', summary: 'Authentication failed.', detail: res.message });
         }
       },
       error: (err) => {
-        this.messageService.add({ severity: 'error', summary: 'Something went wron!!!', detail: err.message });
+        this.messageService.add({ severity: 'error', summary: 'Something went wrong!!!', detail: err.message });
       }
     });
   }

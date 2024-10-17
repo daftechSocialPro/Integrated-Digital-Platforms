@@ -22,12 +22,10 @@ const routes: Routes = [
 
       {
         path: 'admin-dashboard',
-
         component: AdminDashbordComponent
       },
       {
         path: 'member-dashboard',
-
         component: MembersDashboardComponent
       },
 
@@ -43,13 +41,12 @@ const routes: Routes = [
         path: 'sample-page',
         loadComponent: () => import('./demo/sample-page/sample-page.component')
       },
-    
+
       {
         path: 'users',
         loadComponent: () => import('./demo/pages/users/users.component')
       },
 
-     
       {
         path: 'configuration',
         loadChildren: () => import('./demo/pages/configuration/configuration-service.module').then((m) => m.ConfigurationServiceModule)

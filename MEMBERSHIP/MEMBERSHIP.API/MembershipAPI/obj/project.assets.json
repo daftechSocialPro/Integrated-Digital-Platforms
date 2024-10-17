@@ -7443,11 +7443,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/oza/Developer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipAPI/MembershipAPI.csproj",
+      "projectUniqueName": "/Users/oza/Developer/Personal/DAF Computer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipAPI/MembershipAPI.csproj",
       "projectName": "MembershipAPI",
-      "projectPath": "/Users/oza/Developer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipAPI/MembershipAPI.csproj",
+      "projectPath": "/Users/oza/Developer/Personal/DAF Computer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipAPI/MembershipAPI.csproj",
       "packagesPath": "/Users/oza/.nuget/packages/",
-      "outputPath": "/Users/oza/Developer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipAPI/obj/",
+      "outputPath": "/Users/oza/Developer/Personal/DAF Computer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipAPI/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/oza/.nuget/NuGet/NuGet.Config"
@@ -7463,11 +7463,11 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "/Users/oza/Developer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipImplementation/MembershipImplementation.csproj": {
-              "projectPath": "/Users/oza/Developer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipImplementation/MembershipImplementation.csproj"
+            "/Users/oza/Developer/Personal/DAF Computer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipImplementation/MembershipImplementation.csproj": {
+              "projectPath": "/Users/oza/Developer/Personal/DAF Computer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipImplementation/MembershipImplementation.csproj"
             },
-            "/Users/oza/Developer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipInfrustructure/MembershipInfrustructure.csproj": {
-              "projectPath": "/Users/oza/Developer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipInfrustructure/MembershipInfrustructure.csproj"
+            "/Users/oza/Developer/Personal/DAF Computer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipInfrustructure/MembershipInfrustructure.csproj": {
+              "projectPath": "/Users/oza/Developer/Personal/DAF Computer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipInfrustructure/MembershipInfrustructure.csproj"
             }
           }
         }

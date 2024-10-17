@@ -54,3 +54,17 @@ C:/Users/Hp/Desktop/Kirubel Files/DAFTech Computer/Integrated-Digital-Platforms/
 /Users/oza/Developer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipInfrustructure/obj/Debug/net7.0/MembershipInfrustructure.pdb
 /Users/oza/Developer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipInfrustructure/obj/Debug/net7.0/MembershipInfrustructure.genruntimeconfig.cache
 /Users/oza/Developer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipInfrustructure/obj/Debug/net7.0/ref/MembershipInfrustructure.dll
+/Users/oza/Developer/Personal/DAF Computer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipInfrustructure/bin/Debug/net7.0/MembershipInfrustructure.deps.json
+/Users/oza/Developer/Personal/DAF Computer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipInfrustructure/bin/Debug/net7.0/MembershipInfrustructure.runtimeconfig.json
+/Users/oza/Developer/Personal/DAF Computer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipInfrustructure/bin/Debug/net7.0/MembershipInfrustructure.dll
+/Users/oza/Developer/Personal/DAF Computer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipInfrustructure/bin/Debug/net7.0/MembershipInfrustructure.pdb
+/Users/oza/Developer/Personal/DAF Computer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipInfrustructure/obj/Debug/net7.0/MembershipInfrustructure.csproj.AssemblyReference.cache
+/Users/oza/Developer/Personal/DAF Computer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipInfrustructure/obj/Debug/net7.0/MembershipInfrustructure.GeneratedMSBuildEditorConfig.editorconfig
+/Users/oza/Developer/Personal/DAF Computer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipInfrustructure/obj/Debug/net7.0/MembershipInfrustructure.AssemblyInfoInputs.cache
+/Users/oza/Developer/Personal/DAF Computer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipInfrustructure/obj/Debug/net7.0/MembershipInfrustructure.AssemblyInfo.cs
+/Users/oza/Developer/Personal/DAF Computer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipInfrustructure/obj/Debug/net7.0/MembershipInfrustructure.csproj.CoreCompileInputs.cache
+/Users/oza/Developer/Personal/DAF Computer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipInfrustructure/obj/Debug/net7.0/MembershipInfrustructure.dll
+/Users/oza/Developer/Personal/DAF Computer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipInfrustructure/obj/Debug/net7.0/refint/MembershipInfrustructure.dll
+/Users/oza/Developer/Personal/DAF Computer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipInfrustructure/obj/Debug/net7.0/MembershipInfrustructure.pdb
+/Users/oza/Developer/Personal/DAF Computer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipInfrustructure/obj/Debug/net7.0/MembershipInfrustructure.genruntimeconfig.cache
+/Users/oza/Developer/Personal/DAF Computer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipInfrustructure/obj/Debug/net7.0/ref/MembershipInfrustructure.dll

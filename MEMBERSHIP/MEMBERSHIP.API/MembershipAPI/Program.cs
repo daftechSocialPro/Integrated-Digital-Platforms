@@ -121,6 +121,12 @@ builder.Services.AddAuthentication(x =>
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSwaggerGen();
 
+builder.Services.Configure<FormOptions>(options =>
+    {
+        options.MultipartBodyLengthLimit = 104857600; // 100 MB, adjust as needed
+    });
+
+
 
 var app = builder.Build();
 
@@ -148,10 +154,10 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
     });
 
     app.UseSwagger();
-    app.UseSwaggerUI(c => 
+    app.UseSwaggerUI(c =>
     {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Membership Digital Platforms"); 
-        c.InjectStylesheet("/swagger-ui/SwaggerDark.css"); 
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Membership Digital Platforms");
+        c.InjectStylesheet("/swagger-ui/SwaggerDark.css");
     });
 
 }

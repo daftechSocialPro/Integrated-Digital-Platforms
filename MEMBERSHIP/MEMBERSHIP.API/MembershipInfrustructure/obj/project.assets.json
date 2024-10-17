@@ -3642,11 +3642,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/oza/Developer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipInfrustructure/MembershipInfrustructure.csproj",
+      "projectUniqueName": "/Users/oza/Developer/Personal/DAF Computer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipInfrustructure/MembershipInfrustructure.csproj",
       "projectName": "MembershipInfrustructure",
-      "projectPath": "/Users/oza/Developer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipInfrustructure/MembershipInfrustructure.csproj",
+      "projectPath": "/Users/oza/Developer/Personal/DAF Computer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipInfrustructure/MembershipInfrustructure.csproj",
       "packagesPath": "/Users/oza/.nuget/packages/",
-      "outputPath": "/Users/oza/Developer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipInfrustructure/obj/",
+      "outputPath": "/Users/oza/Developer/Personal/DAF Computer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipInfrustructure/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/oza/.nuget/NuGet/NuGet.Config"

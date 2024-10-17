@@ -515,6 +515,23 @@ namespace MembershipImplementation.Services.HRM
                 currentPayment.IsPaid = true;
 
                 await _dbContext.SaveChangesAsync();
+
+
+
+
+                if (member.MemberId != null && member.MemberId != "")
+                {
+                    var message = $"Congratulation, your EMwA Membership has been successfully renewed!\n" +
+              $"We have received your payment and would like to thank you for continuing to be a valued member of the Ethiopian Midwives Association.\n" +
+              $"Your renewed Membership ID is {member.MemberId}, valid until {currentPayment.ExpiredDate.ToString("MMMM dd, yyyy")}. You can log in through https://emwamms.org using your Membership ID.";
+
+                    var messageReques = new MessageRequest
+                    {
+                        PhoneNumber = member.PhoneNumber,
+                        Message = message
+                    };
+                    await _generalConfig.SendMessage(messageReques);
+                }
                 return new ResponseMessage { Success = true, Message = "Payment Completed Successfully", Data = member };
             }
             return new ResponseMessage { Success = false, Message = "Unable To Find Payment Refernece" };
@@ -648,6 +665,19 @@ namespace MembershipImplementation.Services.HRM
                                                 (currentMember.Email, "ID Card Status",
                                                     $"{message}" +
                                                     $"\nThank you.\n\nSincerely,\nFekadu Mazengia\nExecutive Director");
+
+
+                            var messageReques = new MessageRequest
+                            {
+                                PhoneNumber = currentMember.PhoneNumber,
+                                Message = message
+                            };
+                            await _generalConfig.SendMessage(messageReques);
+
+
+
+
+
                             await _emailService.Send(email);
 
                         }
@@ -966,7 +996,7 @@ namespace MembershipImplementation.Services.HRM
 
 
 
-            var memberPayments = await _dbContext.MemberPayments.Where(x => x.ExpiredDate < todayDate.Date && x.PaymentStatus != PaymentStatus.EXPIRED).ToListAsync();
+            var memberPayments = await _dbContext.MemberPayments.Include(x => x.Member).Where(x => x.ExpiredDate < todayDate.Date && x.PaymentStatus != PaymentStatus.EXPIRED).ToListAsync();
 
             var memberPayments10days = await _dbContext.MemberPayments.Include(x => x.Member)
     .Where(x => x.ExpiredDate <= tenDaysFromNow && x.PaymentStatus != PaymentStatus.EXPIRED)
@@ -977,6 +1007,22 @@ namespace MembershipImplementation.Services.HRM
                 payment.PaymentStatus = PaymentStatus.EXPIRED;
                 _dbContext.SaveChangesAsync();
                 var result = await UpdateMoodleSatus(payment.MemberId, "1");
+
+
+                var message = $"Dear EMwA Member,\n\n" +
+                  $"We would like to inform you that your membership with the Ethiopian Midwives Association will expire on {payment.ExpiredDate.ToString("MMMM dd, yyyy")}.\n\n" +
+                  $"Please renew your membership by visiting https://emwamms.org and using your Membership ID: {payment.Member.MemberId}.";
+
+
+
+                var messageReques = new MessageRequest
+                {
+                    PhoneNumber = payment.Member.PhoneNumber,
+                    Message = message
+                };
+                await _generalConfig.SendMessage(messageReques);
+
+
 
             }
 

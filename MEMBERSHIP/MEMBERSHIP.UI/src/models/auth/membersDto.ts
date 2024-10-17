@@ -27,7 +27,7 @@ export interface IMembersGetDto {
   educationalLevel: string;
   lastPaid: Date;
   educationalLevelId: string;
-  membershipType: string;
+  membershipType: any;
   memberId: string;
   gender: string;
   instituteRole: string;

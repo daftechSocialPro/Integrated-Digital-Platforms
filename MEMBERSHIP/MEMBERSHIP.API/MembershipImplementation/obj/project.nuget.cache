@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "MnPL5YKCMvesdege/33Ah6oZaxjmmiuLsnbQoYJDltTUsZGZbkuFu28JBEOnHlCytCPpEJkYB3lY2unsCNAQKA==",
+  "dgSpecHash": "Ci7K0/YaJMkEn8OsIOiULwqDw3bfU/0/6KKgFUV+y006On1kdk4uLsmlCdn6436EWsTMsumaAwgW+kujI4PtUA==",
   "success": true,
-  "projectFilePath": "/Users/oza/Developer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipImplementation/MembershipImplementation.csproj",
+  "projectFilePath": "/Users/oza/Developer/Personal/DAF Computer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipImplementation/MembershipImplementation.csproj",
   "expectedPackageFiles": [
     "/Users/oza/.nuget/packages/automapper/12.0.1/automapper.12.0.1.nupkg.sha512",
     "/Users/oza/.nuget/packages/azure.core/1.24.0/azure.core.1.24.0.nupkg.sha512",
