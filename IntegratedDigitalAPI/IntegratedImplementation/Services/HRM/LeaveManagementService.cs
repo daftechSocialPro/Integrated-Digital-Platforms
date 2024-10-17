@@ -6,11 +6,6 @@ using IntegratedImplementation.Interfaces.HRM;
 using IntegratedInfrustructure.Data;
 using IntegratedInfrustructure.Model.HRM;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static IntegratedInfrustructure.Data.EnumList;
 
 namespace IntegratedImplementation.Services.HRM
@@ -19,7 +14,7 @@ namespace IntegratedImplementation.Services.HRM
     {
         private readonly IEmailService _emialService;
         private readonly ApplicationDbContext _dbContext;
-        public LeaveManagementService(ApplicationDbContext dbContext ,IEmailService emailService)
+        public LeaveManagementService(ApplicationDbContext dbContext, IEmailService emailService)
         {
             _dbContext = dbContext;
             _emialService = emailService;
@@ -32,9 +27,18 @@ namespace IntegratedImplementation.Services.HRM
             if (!currEmployee)
                 return new ResponseMessage { Success = false, Message = "You can not add leave balance for the employee!!" };
 
-            var currentLeave = await _dbContext.LeaveBalances.AnyAsync(x => x.EmployeeId == addLeaveBalance.EmployeeId);
-            if(currentLeave)
-                return new ResponseMessage { Success = false, Message = "Leave Balance already Exists" };
+            var currentLeave = await _dbContext.LeaveBalances.FirstOrDefaultAsync(x => x.EmployeeId == addLeaveBalance.EmployeeId);
+            if (currentLeave != null)
+            {
+                currentLeave.PreviousExpDate = addLeaveBalance.PreviousExpDate;
+                currentLeave.LeavesTaken = addLeaveBalance.LeavesTaken;
+                currentLeave.PreviousBalance = addLeaveBalance.PreviousBalance;
+                currentLeave.CurrentBalance = addLeaveBalance.CurrentBalance;
+                currentLeave.TotalBalance = addLeaveBalance.CurrentBalance + addLeaveBalance.PreviousBalance;
+                await _dbContext.SaveChangesAsync();
+                return new ResponseMessage { Success = true, Message = "Balance Updated Succesfully" };
+            }
+
 
             LeaveBalance balance = new LeaveBalance()
             {
@@ -144,8 +148,9 @@ namespace IntegratedImplementation.Services.HRM
                                  $"Dear {user.UserName},\n\nEmployee {emp.FirstName} {emp.MiddleName} {emp.LastName} has been requsted a leave from :{empLeave.FromDate} - To :{empLeave.ToDate}." +
                                  $" Please review the employee details and provide your approval.\n\nThank you.\n\nSincerely,\nEMIA");
                     await _emialService.Send(email);
-                } }
-        
+                }
+            }
+
 
             return new ResponseMessage
             {
@@ -157,7 +162,7 @@ namespace IntegratedImplementation.Services.HRM
 
         public async Task<ResponseMessage> ApproveRequest(Guid leaveId, Guid employeeId)
         {
-            var currentRequest = await _dbContext.EmployeeLeaves.Include(x=>x.LeaveType).FirstOrDefaultAsync(x => x.Id == leaveId && x.LeaveStatus == LeaveRequestStatus.PENDING);
+            var currentRequest = await _dbContext.EmployeeLeaves.Include(x => x.LeaveType).FirstOrDefaultAsync(x => x.Id == leaveId && x.LeaveStatus == LeaveRequestStatus.PENDING);
             if (currentRequest == null)
                 return new ResponseMessage { Success = false, Message = "Request Could not be found" };
 
@@ -168,11 +173,11 @@ namespace IntegratedImplementation.Services.HRM
             }
             else if (leaveBalance != null && currentRequest.LeaveType.LeaveCategory == LeaveCategory.ANNUAL)
             {
-                if(leaveBalance.TotalBalance < currentRequest.TotalDate)
+                if (leaveBalance.TotalBalance < currentRequest.TotalDate)
                 {
                     return new ResponseMessage { Success = false, Message = "No leave balance found!!" };
                 }
-                else if(leaveBalance.PreviousBalance < currentRequest.TotalDate)
+                else if (leaveBalance.PreviousBalance < currentRequest.TotalDate)
                 {
                     var totDate = currentRequest.TotalDate - leaveBalance.PreviousBalance;
                     leaveBalance.PreviousBalance = 0;
@@ -183,7 +188,7 @@ namespace IntegratedImplementation.Services.HRM
                     leaveBalance.CurrentBalance -= currentRequest.TotalDate;
                 }
 
-                leaveBalance.TotalBalance -= currentRequest.TotalDate; 
+                leaveBalance.TotalBalance -= currentRequest.TotalDate;
                 leaveBalance.LeavesTaken += currentRequest.TotalDate;
                 await _dbContext.SaveChangesAsync();
             }
@@ -193,19 +198,19 @@ namespace IntegratedImplementation.Services.HRM
 
             await _dbContext.SaveChangesAsync();
 
-            
-                var emp = _dbContext.Employees.Find(currentRequest.EmployeeId);
-                if (emp != null) { }
-                var email = new EmailMetadata
-                         (emp.Email, "Leave Approved",
-                             $"Dear {emp.FirstName} {emp.MiddleName} {emp.LastName},\n\n the Leave approval request that you sent has been accepted.\n\nThank you.\n\nSincerely,\nEMIA");
-                await _emialService.Send(email);
-            
+
+            var emp = _dbContext.Employees.Find(currentRequest.EmployeeId);
+            if (emp != null) { }
+            var email = new EmailMetadata
+                     (emp.Email, "Leave Approved",
+                         $"Dear {emp.FirstName} {emp.MiddleName} {emp.LastName},\n\n the Leave approval request that you sent has been accepted.\n\nThank you.\n\nSincerely,\nEMIA");
+            await _emialService.Send(email);
+
 
             return new ResponseMessage { Success = true, Message = "Approved Request Successfully" };
         }
 
-       
+
 
         public async Task<List<LeavesTakenDto>> GetEmployeeLeaves(Guid employeeId)
         {
@@ -234,7 +239,7 @@ namespace IntegratedImplementation.Services.HRM
                               Id = x.Id,
                               FullName = $"{x.Employee.FirstName} {x.Employee.MiddleName} {x.Employee.LastName}",
                               BackToWorkOn = x.ToDate,
-                              EmployeeId= x.EmployeeId,
+                              EmployeeId = x.EmployeeId,
                               LeaveDate = x.FromDate,
                               TypeOfLeave = x.LeaveType.Name,
                               LeaveStatus = x.LeaveStatus.ToString(),
@@ -243,7 +248,7 @@ namespace IntegratedImplementation.Services.HRM
                           }).ToListAsync();
         }
 
-      public async  Task<LeavesTakenDto> GetSingleRequest(Guid Id)
+        public async Task<LeavesTakenDto> GetSingleRequest(Guid Id)
         {
             var request = await _dbContext.EmployeeLeaves.Include(x => x.Employee).Include(x => x.LeaveType).AsNoTracking()
                       .Where(x => x.Id == Id)
@@ -260,9 +265,9 @@ namespace IntegratedImplementation.Services.HRM
                           LeaveStatus = x.LeaveStatus.ToString()
                       }).ToListAsync();
 
-            if (request!=null)
+            if (request != null)
             {
-                return  request.FirstOrDefault();
+                return request.FirstOrDefault();
             }
             else
             {
