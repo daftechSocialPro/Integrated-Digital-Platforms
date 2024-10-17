@@ -74,13 +74,13 @@ export class LeaveBalanceComponent implements OnInit {
 
     if (this.LeaveBalanceForm.valid) {
 
-
+      
       var leaveBalancePost: LeaveBalancePostDto = {
 
         employeeId:this.selectEmployeee,
-        currentBalance: this.LeaveBalanceForm.value.leaveTypeId,
-        previousBalance: this.LeaveBalanceForm.value.fromDate,
-        leavesTaken: this.LeaveBalanceForm.value.totalDate,
+        currentBalance: this.LeaveBalanceForm.value.currentBalance,
+        previousBalance: this.LeaveBalanceForm.value.previousBalance,
+        leavesTaken: this.LeaveBalanceForm.value.leavesTaken,
         previousExpDate:this.LeaveBalanceForm.value.previousExpDate
 
       }
