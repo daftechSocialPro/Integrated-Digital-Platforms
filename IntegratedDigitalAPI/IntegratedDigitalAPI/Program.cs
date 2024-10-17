@@ -126,6 +126,13 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddSwaggerGen();
 
 
+builder.Services.Configure<FormOptions>(options =>
+{
+    options.MultipartBodyLengthLimit = 104857600;
+});
+
+
+
 var app = builder.Build();
 app.UseDeveloperExceptionPage();
 

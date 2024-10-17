@@ -32,6 +32,7 @@ namespace IntegratedImplementation.Datas
                .ForMember(a => a.EmploymentStatus, e => e.MapFrom(mfg => mfg.EmploymentStatus.ToString()))
                .ForMember(a => a.CountryId, e => e.MapFrom(mfg => mfg.Zone.Region.CountryId))
                .ForMember(a => a.IsApproved, e => e.MapFrom(mfg => mfg.IsApproved))
+               .ForMember(a => a.WorkEmail, e => e.MapFrom(mfg => mfg.WorkEmail))
                .ForMember(a => a.RegionId, e => e.MapFrom(mfg => mfg.Zone.RegionId));
 
 

@@ -35,7 +35,7 @@ namespace IntegratedInfrustructure.Migrations
                 table: "EmploymentDetails",
                 type: "uniqueidentifier",
                 nullable: false,
-                defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
+                defaultValue: new Guid("5E9E5B9C-BA4C-4947-BAEE-01B70C016A75"));
 
             migrationBuilder.AddColumn<Guid>(
                 name: "DocumentTypeId",
