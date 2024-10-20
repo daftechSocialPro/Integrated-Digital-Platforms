@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Implementation.DTOS.Authentication;
 using Implementation.Helper;
 using Implementation.Interfaces.Authentication;
@@ -971,6 +972,127 @@ namespace IntegratedImplementation.Services.HRM
             }
             return new ResponseMessage { Success = false, Message = "Unable To Find Employee Suerty" };
         }
+
+        // Employee Guarantee
+        public async Task<List<GetEmployeeGuaranteeDto>> GetEmployeeGuarantee(Guid employeeId)
+        {
+            var employeeGuarantee = await _dbContext.EmployeeGuarantiees.Where(x => x.EmployeeId == employeeId).AsNoTracking()
+                                           .Select(x => new GetEmployeeGuaranteeDto
+                                           {
+                                               Id = x.Id,
+                                               AmharicFullName = x.AmharicFullName,
+                                               AmharicOrganizationName = x.AmharicOrganizationName,
+                                               FullName = x.FullName,
+                                               IsReturned = x.IsReturned,
+                                               LetterDate = x.LetterDate,
+                                               LetterNumber = x.LetterNumber,
+                                               LetterPath = x.LetterPath,
+                                               OrganizationName = x.OrganizationName,
+                                           }).ToListAsync();
+
+            return employeeGuarantee;
+        }
+        public async Task<ResponseMessage> AddEmployeeGuarantee(AddEmployeeGuaranteeDto addEmployeeGuarantee)
+        {
+            var noOfGuarantiees = await _dbContext.HrmSettings.FirstOrDefaultAsync(x => x.GeneralSetting == GeneralHrmSetting.TOTALNOOFGUARANTIEE);
+            if (noOfGuarantiees == null)
+            {
+                return new ResponseMessage
+                {
+
+                    Message = "Please Set Your Guarantee setting",
+                    Success = false
+                };
+
+            }
+
+            var currentGuarantee = await _dbContext.EmployeeGuarantiees.CountAsync(x => x.EmployeeId ==  addEmployeeGuarantee.EmployeeId && !x.IsReturned);
+
+            if(Convert.ToInt32(currentGuarantee) < currentGuarantee)
+            {
+                return new ResponseMessage
+                {
+                    Message = "The Employee maxed out its guarantee letters",
+                    Success = false
+                };
+            }
+            
+
+            var id = Guid.NewGuid();
+            var letterPath = "";
+            if (addEmployeeGuarantee.Letter != null)
+                letterPath = _generalConfig.UploadFiles(addEmployeeGuarantee.Letter, $"{id.ToString()}-Guarantee", "Employee").Result.ToString();
+
+            EmployeeGuarantiee guarantiee = new EmployeeGuarantiee()
+            {
+                Id = id,
+                CreatedById = addEmployeeGuarantee.CreatedById,
+                CreatedDate = DateTime.Now,
+                FullName = addEmployeeGuarantee.FullName,
+                AmharicFullName = addEmployeeGuarantee.AmharicFullName,
+                EmployeeId = addEmployeeGuarantee.EmployeeId,
+                AmharicOrganizationName = addEmployeeGuarantee.AmharicOrganizationName,
+                LetterDate=addEmployeeGuarantee.LetterDate,
+                LetterNumber=addEmployeeGuarantee.LetterNumber,
+                OrganizationName=addEmployeeGuarantee.OrganizationName,
+                LetterPath = letterPath,
+                Rowstatus = RowStatus.ACTIVE,
+            };
+
+            await _dbContext.EmployeeGuarantiees.AddAsync(guarantiee);
+            await _dbContext.SaveChangesAsync();
+
+            return new ResponseMessage
+            {
+
+                Message = "Added Successfully",
+                Success = true
+            };
+        }
+        public async Task<ResponseMessage> UpdateEmployeeGuarantee(UpdateEmployeeGuaranteeDto updateEmployeeGuarantee)
+        {
+
+
+            var employeeFile = _dbContext.EmployeeGuarantiees.Find(updateEmployeeGuarantee.Id);
+
+            if (employeeFile != null)
+            {
+                var letterPath = "";
+                if (updateEmployeeGuarantee.Letter != null)
+                    letterPath = _generalConfig.UploadFiles(updateEmployeeGuarantee.Letter, $"{employeeFile.ToString()}-Guarantee", "Employee").Result.ToString();
+
+
+                employeeFile.FullName = updateEmployeeGuarantee.FullName;
+                employeeFile.AmharicFullName = updateEmployeeGuarantee.AmharicFullName;
+                employeeFile.EmployeeId = updateEmployeeGuarantee.EmployeeId;
+                employeeFile.AmharicOrganizationName = updateEmployeeGuarantee.AmharicOrganizationName;
+                employeeFile.LetterDate = updateEmployeeGuarantee.LetterDate;
+                employeeFile.LetterNumber = updateEmployeeGuarantee.LetterNumber;
+                employeeFile.OrganizationName = updateEmployeeGuarantee.OrganizationName;
+                employeeFile.LetterPath = letterPath;
+
+
+                await _dbContext.SaveChangesAsync();
+                return new ResponseMessage { Message = "Successfully Updated", Success = true };
+            }
+            return new ResponseMessage { Success = false, Message = "Unable To Find Employee Guarantee" };
+
+
+        }
+        public async Task<ResponseMessage> ReturnEmployeeGuarantee(Guid id)
+        {
+            var currentEmployeeFile = await _dbContext.EmployeeGuarantiees.FindAsync(id);
+
+            if (currentEmployeeFile != null)
+            {
+
+                currentEmployeeFile.IsReturned = true;
+                await _dbContext.SaveChangesAsync();
+                return new ResponseMessage { Message = "Successfully Returned", Success = true };
+            }
+            return new ResponseMessage { Success = false, Message = "Unable To Find Employee Guarantee" };
+        }
+
         //salary History 
 
         public async Task<List<EmployeeSalaryGetDto>> GetEmployeeSalaryHistory(Guid employeeDetailId)

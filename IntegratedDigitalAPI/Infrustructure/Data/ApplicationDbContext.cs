@@ -91,7 +91,7 @@ namespace IntegratedInfrustructure.Data
         public DbSet<EmployeePenalty> EmployeePenalty { get; set; }
         public DbSet<LeaveTypeDetails> LeaveTypeDetails { get; set; }
         public DbSet<EmployeeBank> EmployeeBanks { get; set; }
-
+        public DbSet<EmployeeGuarantiee> EmployeeGuarantiees { get; set; }
         public DbSet<EmployeeSeverance> EmployeeSeverances { get; set; }
 
         #endregion

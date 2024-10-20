@@ -22,10 +22,10 @@ namespace IntegratedImplementation.Services.HRM
 
         public async Task<ResponseMessage> AddLeaveBalance(AddLeaveBalanceDto addLeaveBalance)
         {
-            var currEmployee = await _dbContext.Employees.AnyAsync(x => x.Id == addLeaveBalance.EmployeeId && x.ExistingEmployee);
+            //var currEmployee = await _dbContext.Employees.AnyAsync(x => x.Id == addLeaveBalance.EmployeeId && x.ExistingEmployee);
 
-            if (!currEmployee)
-                return new ResponseMessage { Success = false, Message = "You can not add leave balance for the employee!!" };
+            //if (!currEmployee)
+            //    return new ResponseMessage { Success = false, Message = "You can not add leave balance for the employee!!" };
 
             var currentLeave = await _dbContext.LeaveBalances.FirstOrDefaultAsync(x => x.EmployeeId == addLeaveBalance.EmployeeId);
             if (currentLeave != null)
