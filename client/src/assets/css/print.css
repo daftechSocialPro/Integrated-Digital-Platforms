@@ -1,0 +1,94 @@
+  @media print {
+
+  body{
+    background-color: white;
+  }
+
+  header {
+    position: fixed;
+    top: 0;
+  }
+
+  footer {
+    position: fixed;
+    bottom: 0;
+  }
+
+  .page-break {
+    page-break-after: always;
+  }
+
+  .letter {
+    position: relative;
+    width: 8.5in;
+    height: 11in;
+    margin: 0 auto;
+    background-color: white;
+    /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); */
+    padding: 1in;
+  }
+
+  .tableContent{
+    background-color: white;
+    position: relative;
+    margin-top: 0.5;
+    margin-bottom: 1.5;
+    width: 8.5in;
+  }
+
+
+  .content {
+    margin-top: 2%;
+    /* Letter content styles go here */
+  }
+
+  .blue-line {
+    color: blue;
+  }
+
+  .orange-line {
+    color: orange;
+  }
+
+  .container {
+    display: flex;
+  }
+
+  /* p {
+    color: orange;
+    font-weight: bold;
+    font-style: italic;
+  } */
+
+  .header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 0.5in;
+    /* Header styles go here */
+  }
+
+  .watermark {
+    position: absolute;
+    top: 3in;
+    left: 0.1in;
+    right: 5in;
+    height: 2in;
+    opacity: 0.2;
+    /* Watermark styles go here */
+  }
+
+
+
+  .footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 0.2in;
+    /* Footer styles go here */
+  }
+
+  }
+  

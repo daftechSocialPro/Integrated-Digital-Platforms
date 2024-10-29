@@ -189,7 +189,7 @@ export class AddPaymentsComponent implements OnInit {
 
 
   newRow() {
-    if (this.addPaymentDetailList.itemId||this.callFrom) {
+    
 
       this.itemsDropDown.some(x => {
         if (x.id == this.addPaymentDetailList.itemId) {
@@ -203,7 +203,7 @@ export class AddPaymentsComponent implements OnInit {
       });
 
       this.paymentDetailList.unshift(this.addPaymentDetailList);
-    }
+    
     //this.items = "";
     this.addPaymentDetailList = new AddPaymentDetailDto();
   }

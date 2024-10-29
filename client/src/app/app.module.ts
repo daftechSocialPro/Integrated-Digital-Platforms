@@ -286,6 +286,9 @@ import {SidebarModule} from 'primeng/sidebar';
 import { DataViewModule } from 'primeng/dataview';
 import { DocumentTypeComponent } from './pages/configuration/document-type/document-type.component';
 import { AddDocumentTypeComponent } from './pages/configuration/document-type/add-document-type/add-document-type.component';
+import { EmployeeGuaranteeComponent } from './pages/human-resource/employee-managment/employee-detail/employee-guarantee/employee-guarantee.component';
+import { AddEmployeeGuaranteeComponent } from './pages/human-resource/employee-managment/employee-detail/employee-guarantee/add-employee-guarantee/add-employee-guarantee.component';
+import { ExtendContractComponent } from './pages/human-resource/contract-end-employees/extend-contract/extend-contract.component';
 
 @NgModule({
   declarations: [
@@ -617,7 +620,10 @@ import { AddDocumentTypeComponent } from './pages/configuration/document-type/ad
       PaymentSetlmentsComponent,
       RequestPaymentComponent,
       DocumentTypeComponent,
-      AddDocumentTypeComponent
+      AddDocumentTypeComponent,
+      EmployeeGuaranteeComponent,
+      AddEmployeeGuaranteeComponent,
+      ExtendContractComponent
 
     //  AddMeasurementComponent,
     //  UpdateMeasurmentComponent

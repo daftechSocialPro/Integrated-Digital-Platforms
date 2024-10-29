@@ -17,8 +17,11 @@ namespace IntegratedImplementation.DTOS.HRM
         public string AmharicOrganizationName { get; set; } = null!;
         public string LetterNumber { get; set; } = null!;
         public DateTime LetterDate { get; set; }
+        public string AmharicDate { get; set; } = null!;
         public string LetterPath { get; set; } = null!;
         public bool IsReturned { get; set; }
+        public string TodaysDate { get; set; } = null!;
+        public double? CurrentSalary { get; set; }
     }
 
     public class AddEmployeeGuaranteeDto

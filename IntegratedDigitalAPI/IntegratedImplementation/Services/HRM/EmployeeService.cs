@@ -976,7 +976,7 @@ namespace IntegratedImplementation.Services.HRM
         // Employee Guarantee
         public async Task<List<GetEmployeeGuaranteeDto>> GetEmployeeGuarantee(Guid employeeId)
         {
-            var employeeGuarantee = await _dbContext.EmployeeGuarantiees.Where(x => x.EmployeeId == employeeId).AsNoTracking()
+            var employeeGuarantee = await _dbContext.EmployeeGuarantiees.Where(x => x.EmployeeId == employeeId).AsNoTracking().OrderByDescending(x => x.CreatedDate)
                                            .Select(x => new GetEmployeeGuaranteeDto
                                            {
                                                Id = x.Id,
@@ -985,9 +985,12 @@ namespace IntegratedImplementation.Services.HRM
                                                FullName = x.FullName,
                                                IsReturned = x.IsReturned,
                                                LetterDate = x.LetterDate,
+                                               AmharicDate =  EthiopicDateTime.GetEthiopicDate(x.LetterDate.Day, x.LetterDate.Month , x.LetterDate.Year),
                                                LetterNumber = x.LetterNumber,
                                                LetterPath = x.LetterPath,
                                                OrganizationName = x.OrganizationName,
+                                               TodaysDate = EthiopicDateTime.GetEthiopicDate(DateTime.Now.Day, DateTime.Now.Month, DateTime.Now.Year),
+                                               CurrentSalary = _dbContext.EmploymentDetails.Where(x => x.Rowstatus == RowStatus.ACTIVE).FirstOrDefault().Salary
                                            }).ToListAsync();
 
             return employeeGuarantee;

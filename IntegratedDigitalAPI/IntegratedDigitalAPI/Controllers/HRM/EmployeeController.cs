@@ -318,7 +318,7 @@ namespace IntegratedDigitalAPI.Controllers.HRM
 
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> AddEmployeeGuarantee(AddEmployeeGuaranteeDto addEmployeeGuarantee)
+        public async Task<IActionResult> AddEmployeeGuarantee([FromForm] AddEmployeeGuaranteeDto addEmployeeGuarantee)
         {
             if (ModelState.IsValid)
             {
@@ -332,7 +332,7 @@ namespace IntegratedDigitalAPI.Controllers.HRM
 
         [HttpPut]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> UpdateEmployeeGuarantee(UpdateEmployeeGuaranteeDto updateEmployeeGuarantee)
+        public async Task<IActionResult> UpdateEmployeeGuarantee([FromForm] UpdateEmployeeGuaranteeDto updateEmployeeGuarantee)
         {
             if (ModelState.IsValid)
             {

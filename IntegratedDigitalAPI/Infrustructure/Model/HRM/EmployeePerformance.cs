@@ -12,14 +12,27 @@ namespace IntegratedInfrustructure.Model.HRM
     {
         public Guid EmployeeId { get; set; }
         public virtual EmployeeList Employee { get; set; } = null!;
-        public int Index { get; set; }
-        public PerformanceStatus PlanStatus { get; set; }
-        public PerformanceStatus IndividualDevt { get; set; }
-        public PerformanceStatus RequiredSupport { get; set; }
+        public Guid PerformanceSettingId { get; set; }
+        public virtual PerformanceSetting PerformanceSetting { get; set; } = null!;
         public int MonthIndex { get; set; }
-        public Guid? ApproverId { get; set; }
-        public virtual EmployeeList Approver { get; set; } = null!;
-        public bool ApprovedBySecondSupervisor { get; set; }
+        public double SelfRating { get; set; }
+        public double SupervisorRating { get; set; }
+        public TypeOfPerformance TypeOfPerformance { get; set; }    
+        public string? Justification { get; set; }
+        public string? SelfStrengthComment { get; set; }
+        public string? SelfNeedImporvementComment { get; set; }
+        public string? SelfSuddgestionImporvementComment { get; set; }
+        public string? SupervisorStrengthComment { get; set; }
+        public string? SupervisorNeedImporvementComment { get; set; }
+        public string? SupervisorSuddgestionImporvementComment { get; set; }
 
+        public string? SelfGeneralComments { get; set; }
+        public string? SupervisorGeneralComments { get; set; }
+        public DateTime? DiscussionDate { get; set; }
+        public string? SecondSupervisorComments { get; set; }
+        public Guid? SupervisorId { get; set; }
+        public virtual EmployeeList Supervisor { get; set; } = null!;
+        public Guid? SecondSuperviosrId { get; set; }
+        public virtual EmployeeList SecondSupervisor { get; set; } = null!;
     }
 }

@@ -236,5 +236,29 @@ namespace IntegratedDigitalAPI.Controllers.HRM
         {
             return Ok(await _employementDetailService.GetContractEndEmployees());
         }
+
+
+
+        [HttpPut]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> ExtendContract(ExtendContractDto ExtendContract)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _employementDetailService.ExtendContract(ExtendContract));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(ContractExtentionLetterDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetContractExtentionLetter(Guid employeeId)
+        {
+            return Ok(await _employementDetailService.GetContractExtentionLetter(employeeId));
+        }
+
     }
 }

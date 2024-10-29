@@ -33,7 +33,6 @@ namespace IntegratedInfrustructure.Model.HRM
         public virtual Zone Zone { get; set; } = null!;
         public string Woreda { get; set; } = null!;
 
-
         [InverseProperty(nameof(EmployeeSalary.EmploymentDetail))]
         public ICollection<EmployeeSalary> EmployeeSalaries { get; set; }
     }

@@ -63,6 +63,7 @@
                                                         <th>Description</th>
                                                         <th>Account Number</th>
                                                         <th>Sequence</th>
+                                                        <th>Type of account</th>
                                                         <th>Status</th>
                                                         <th></th>
                                                         
@@ -73,6 +74,7 @@
                                                         <td>{{subacc.description}}</td>
                                                         <td>{{subacc.accountNo}}</td>
                                                         <td>{{subacc.sequence}}</td>
+                                                        <td>{{subacc.typeOfAccount}}</td>
                                                         <td><p-inputSwitch (onChange)="changeSubsidiaryAccountStatus(subacc.id)" [(ngModel)] ="subacc.isActive"></p-inputSwitch></td>
                                                         <td><button type="button" (click)="updateSubsidiaryAccount(subacc,chartofacc.id)" class="btn btn-outline-warning"><i
                                                             class="bi bi-pencil "></i> 

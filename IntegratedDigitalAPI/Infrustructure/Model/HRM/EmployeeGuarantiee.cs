@@ -10,7 +10,7 @@ namespace IntegratedInfrustructure.Model.HRM
     public class EmployeeGuarantiee: WithIdModel
     {
         public Guid EmployeeId { get; set; }
-        public virtual EmployeeList EmployeeList { get; set; } = null!;
+        public virtual EmployeeList Employee { get; set; } = null!;
         public string FullName { get; set; } = null!;
         public string AmharicFullName { get; set; } = null!;
         public string OrganizationName { get; set; } = null!;

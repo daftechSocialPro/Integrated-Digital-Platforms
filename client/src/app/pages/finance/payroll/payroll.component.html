@@ -89,7 +89,7 @@
                                             payroll.isActive, 'text-red-500 pi-times-circle': !payroll.isActive }"></i>
                                         </td> 
                                         <td>
-                                            <span *ngIf="roleMatch(['checkPayrol'])">
+                                            <span *ngIf="roleMatch(['checkPayroll'])">
                                                 <button pButton pRipple class="p-button-info" *ngIf="!payroll.approvedBy && !payroll.checkedBy && payroll.isActive" (click)="checkPayroll(payroll.id)" >Check</button>
                                             </span>
                                             <span *ngIf="roleMatch(['approvePayroll'])">

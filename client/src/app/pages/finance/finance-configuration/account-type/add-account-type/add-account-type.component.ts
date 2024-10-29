@@ -22,7 +22,8 @@ export class AddAccountTypeComponent implements OnInit {
     { value: "OTHER", name: "OTHER" },
     { value: "ASSET", name: "ASSET" },
     { value: "CAPITAL", name: "CAPITAL" },
-    { value: "EQUITY", name: "EQUITY" },
+    { value: "EXPENSE", name: "EXPENSE" },
+    { value: "REVENUE", name: "REVENUE" },
     { value: "LIABILITY", name: "LIABILITY" },
   ]
 
@@ -33,7 +34,7 @@ export class AddAccountTypeComponent implements OnInit {
 
 
   accountTypeSubCategory = [
-    { value: "ASSET", name: "ASSET" },
+    { value: "CURRENT_ASSET", name: "CURRENT_ASSET" },
     { value: "CAPITAL", name: "CAPITAL" },
     { value: "COST_OF_SALES", name: "COST_OF_SALES" },
     { value: "CURRENT_LIABILITY", name: "CURRENT_LIABILITY" },

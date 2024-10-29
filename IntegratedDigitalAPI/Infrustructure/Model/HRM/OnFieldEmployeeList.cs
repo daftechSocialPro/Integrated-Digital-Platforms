@@ -12,6 +12,9 @@ namespace IntegratedInfrustructure.Model.HRM
         public Guid EmployeeId { get; set; }
         public virtual EmployeeList EmployeeList { get; set; } = null!;
         public DateTime FieldDate { get; set; }
+        public DateTime ReturnDate { get; set; }
+        public Guid ApprovedById { get; set; }
+        public virtual EmployeeList ApprovedBy { get; set; } = null!;
 
     }
 }

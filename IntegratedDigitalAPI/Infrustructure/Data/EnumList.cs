@@ -121,6 +121,7 @@
             ANNUALLEAVEREQESTMONTH,
             LEAVEREQUESTDAYSBEFORE,
             TOTALNOOFGUARANTIEE,
+            SelfRatingNeeded,
 
         }
 
@@ -345,16 +346,16 @@
             OTHER,
             ASSET,
             CAPITAL,
-            EQUITY,
+            EXPENSE,
+            REVENUE,
             LIABILITY
         }
 
         public enum ACCOUNTTYPESUBCATEGORY
         {
-            ASSET,
+            CURRENT_ASSET,
             CAPITAL,
             COST_OF_SALES,
-            CURRENT_ASSET,
             CURRENT_LIABILITY,
             EQUITY,
             EXPENSES,
@@ -477,5 +478,17 @@
             HRM
         }
 
+        public enum TypeOfAccount
+        {
+            Project,
+            NonProject,
+            Both
+        }
+
+        public enum TypeOfPerformance
+        {
+            Appraisal,
+            Evaluation
+        }
     }
 }
