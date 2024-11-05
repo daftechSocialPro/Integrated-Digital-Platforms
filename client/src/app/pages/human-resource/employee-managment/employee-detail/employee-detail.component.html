@@ -206,6 +206,15 @@
                         <app-employee-surety [employeeId]="employeeId" [employmentStatus] = "employee.employmentStatus"/>
                     </div>
                 </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingThree"> <button class="accordion-button collapsed"
+                            type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven"
+                            aria-expanded="false" aria-controls="collapseSeven"> Employee Guarantee</button></h2>
+                    <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                        data-bs-parent="#accordionExample">
+                        <app-employee-guarantee [employeeId]="employee.id" [employmentStatus] = "employee.employmentStatus" [fullName]="fullName"/>
+                    </div>
+                </div>
             </div>
         </div>
 

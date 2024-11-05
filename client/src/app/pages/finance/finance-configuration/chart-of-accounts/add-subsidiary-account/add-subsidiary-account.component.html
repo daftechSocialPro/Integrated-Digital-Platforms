@@ -27,8 +27,15 @@
                                         <label for="sequence">Sequence</label>
                                     </div>
                                 </div>
-                                
-                                <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <select class="form-control" formControlName="typeOfAccount">
+                                            <option *ngFor="let item of typeOfAccount" [value]="item.value">{{item.name}}</option>
+                                        </select>
+                                        <label for="typeOfAccount">Type of Account</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
                                     <div class="form-floating">
                                         <textarea class="form-control"  formControlName="description" id="description" rows="5">
                                         </textarea>

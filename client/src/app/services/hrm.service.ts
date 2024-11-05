@@ -29,6 +29,8 @@ import { AddPenaltyDto, PenaltyListDto } from '../model/HRM/IPenaltyListDto';
 import { AddEmployeeBankDto, EmployeeBankListDto } from '../model/HRM/IEmployeeBankDto';
 import { ContractEndEmployeesDto } from '../model/HRM/IContractEndEmployeesDto';
 import { HrmDashboardGetDto } from '../model/HRM/IHrmDashboard';
+import { GetEmployeeGuaranteeDto } from '../pages/human-resource/employee-managment/employee-detail/employee-guarantee/employee-guarantee.model';
+import { ContractExtentionLetterDto, ExtendContractDto } from '../pages/human-resource/contract-end-employees/extend-contract/extendcontract.model';
 
 export interface toastPayload {
     message: string;
@@ -143,13 +145,19 @@ export class HrmService {
 
     //GetEmployeeswithContractend
     getEmployeeswithContractend(){
-     
-            return this.http.get<SelectList[]>(this.baseUrl + "/Employee/GetEmployeeswithContractend")
-        
+      return this.http.get<SelectList[]>(this.baseUrl + "/Employee/GetEmployeeswithContractend")
     }
 
     getContractEndEmployees() {
         return this.http.get<ContractEndEmployeesDto[]>(this.baseUrl + "/EmployementDetail/GetContractEndEmployees")
+    }
+
+    extendContract(extendContract: ExtendContractDto) {
+        return this.http.put<ResponseMessage>(this.baseUrl + "/EmployementDetail/ExtendContract",extendContract)
+    }
+
+    getContractExtentionLetter(employeeId: string) {
+        return this.http.get<ContractExtentionLetterDto>(this.baseUrl + `/EmployementDetail/GetContractExtentionLetter?employeeId=${employeeId}`);
     }
 
 
@@ -266,7 +274,21 @@ export class HrmService {
     deleteEmployeeSurety(employeeSuretyId: string) {
         return this.http.delete<ResponseMessage>(this.baseUrl + "/Employee/DeleteEmployeeSurety?employeeSuretyId=" + employeeSuretyId)
     }
+    //employee Guarantee
+    getEmployeeGuarantee(employeeId: string) {
+        return this.http.get<GetEmployeeGuaranteeDto[]>(this.baseUrl + "/Employee/GetEmployeeGuarantee?employeeId=" + employeeId)
+    }
+    addEmployeeGuarantee(employeeGuarantee: FormData) {
+        employeeGuarantee.append('createdById', this.userService.getCurrentUser().userId)
+        return this.http.post<ResponseMessage>(this.baseUrl + "/Employee/AddEmployeeGuarantee", employeeGuarantee)
+    }
+    updateEmployeeGuarantee(employeeGuarantee: FormData) {
+        return this.http.put<ResponseMessage>(this.baseUrl + "/Employee/UpdateEmployeeGuarantee", employeeGuarantee)
+    }
 
+    returnEmployeeGuarantee(id: string) {
+        return this.http.put<ResponseMessage>(this.baseUrl + "/Employee/ReturnEmployeeGuarantee?id=" + id, id)
+    }
 
     //employee Family
     getEmployeeFamily(employeeId: string) {

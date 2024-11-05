@@ -25,6 +25,7 @@ export class EmployeeDetailComponent implements OnInit {
   employeeId!: string;
   employee!: EmployeeGetDto
   supervisor!: EmployeeSupervisorsDto;
+  fullName: string;
 
   ngOnInit(): void {
     this.employeeId = this.router.snapshot.paramMap.get('employeeId')!
@@ -45,7 +46,8 @@ export class EmployeeDetailComponent implements OnInit {
   getEmployee() {
     this.hrmService.getEmployee(this.employeeId).subscribe({
       next: (res) => {
-        this.employee = res
+        this.employee = res;
+        this.fullName = res.amharicFirstName + " " + res.amharicMiddleName + " " + res.amharicLastName
       }
     });
   }
@@ -53,7 +55,8 @@ export class EmployeeDetailComponent implements OnInit {
 getSupervisorsByEmployee(){
   this.hrmService.getSupervisorsByEmployee(this.employeeId).subscribe({
     next: (res) => {
-      this.supervisor = res
+      this.supervisor = res;
+   
     }
   });
 }

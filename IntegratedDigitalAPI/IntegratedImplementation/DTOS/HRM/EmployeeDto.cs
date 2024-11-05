@@ -96,6 +96,7 @@ namespace IntegratedImplementation.DTOS.HRM
         public bool IsApproved { get; set; }
         public Guid BankId { get; set; }
         public string Shift { get; set; } = null!;
+        public string WorkEmail { get; set; } = null!;
     }
 
     public record EmployeeUpdateDto
