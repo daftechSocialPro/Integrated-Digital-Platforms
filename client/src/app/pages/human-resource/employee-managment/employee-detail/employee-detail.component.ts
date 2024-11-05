@@ -13,6 +13,7 @@ import { EmployeeSupervisorsDto } from 'src/app/model/HRM/IEmployeeSupervisorDto
 import { BindShiftComponent } from './bind-shift/bind-shift.component';
 import { AssignSupervisorComponent } from '../../employee-supervisors/assign-supervisor/assign-supervisor.component';
 import { EmployeeBanksComponent } from './employee-banks/employee-banks.component';
+import { GenerateIdCardComponent } from '../generate-id-card/generate-id-card.component';
 
 @Component({
   selector: 'app-employee-detail',
@@ -179,5 +180,11 @@ getSupervisorsByEmployee(){
     });
   }
 
+
+  viewID(){
+
+    let modalRef = this.modalService.open(GenerateIdCardComponent,{size:'lg',backdrop:'static'})
+    modalRef.componentInstance.member= this.employee
+  }
 
 }

@@ -286,6 +286,7 @@ import {SidebarModule} from 'primeng/sidebar';
 import { DataViewModule } from 'primeng/dataview';
 import { DocumentTypeComponent } from './pages/configuration/document-type/document-type.component';
 import { AddDocumentTypeComponent } from './pages/configuration/document-type/add-document-type/add-document-type.component';
+import { GenerateIdCardComponent } from './pages/human-resource/employee-managment/generate-id-card/generate-id-card.component';
 
 @NgModule({
   declarations: [
@@ -617,7 +618,8 @@ import { AddDocumentTypeComponent } from './pages/configuration/document-type/ad
       PaymentSetlmentsComponent,
       RequestPaymentComponent,
       DocumentTypeComponent,
-      AddDocumentTypeComponent
+      AddDocumentTypeComponent,
+      GenerateIdCardComponent
 
     //  AddMeasurementComponent,
     //  UpdateMeasurmentComponent
