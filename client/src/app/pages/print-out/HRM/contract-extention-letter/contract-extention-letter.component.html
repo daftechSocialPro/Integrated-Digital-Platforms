@@ -1,0 +1,69 @@
+<div id="contractLetter">
+    <div class="letter">
+      <div class="header">
+        <div style="text-align: left;">
+          <img [src]="sanitizer.bypassSecurityTrustUrl('../../../../../assets/img/PrintOut/em_logo.png')" alt="Image" width="50"/>
+        </div>
+      </div>
+      <div class="watermark">
+        <div class="container">
+          <img [src]="sanitizer.bypassSecurityTrustUrl('../../../../../assets/img/PrintOut/em_logo.png')" 
+          style="margin-left: 64%;margin-top: 31%;"
+           alt="Image" width="250" height="250" />
+        </div>
+  
+      </div>
+      <div class="content">
+        <h4 style="text-align: right;">Ref. No: _______________</h4>
+        <h4 style="text-align: right;">Date: <u>{{contractExtention.todaysDate| date : 'dd, MMMM , yyyy'}}</u> </h4>
+  
+        <h6 style="text-align: left;">Dear {{contractExtention.employeeName}}</h6>
+        <h6 style="text-align: left;">Position {{contractExtention.position}}</h6>
+        <h6 style="text-align: left;">Addis Ababa </h6>
+
+        <br/><br/>
+        <h3 style="text-align: center;"><u>Sub: Contract Extension - Definite </u></h3>
+        <br/><br/>
+        <p style="font-family: 'Times New Roman', Times, serif; text-align: justify;font-size: 20px;">
+          <strong> Dear {{contractExtention.employeeName}} , </strong> 
+        </p>
+        <p style="font-family: 'Times New Roman', Times, serif; text-align: justify;font-size: 20px;">
+            This refers to the letter of definite contract extension issued to you on {{contractExtention.pstartDate | date : 'dd, MMMM , yyyy'}}. 
+            As you may recall, your contract has been extended until {{contractExtention.endDate | date : 'dd, MMMM , yyyy'}}. 
+        </p>
+        <br/><br/>
+        <p style="font-family: 'Times New Roman', Times, serif; text-align: justify;font-size: 20px;">
+            However, We are pleased to inform you that your definite employment contract with 
+             Ethiopian Midwives Association (EMwA) is renewed  effective {{contractExtention.pstartDate | date : 'dd, MMMM , yyyy'}} until {{contractExtention.endDate | date : 'dd, MMMM , yyyy'}} 
+             maintaining other terms and conditions of the original employment contract.        
+        </p>
+        <br/><br/>
+        <p style="font-family: 'Times New Roman', Times, serif; text-align: justify;font-size: 20px;">
+            I would like to thank you very much for your contribution to Ethiopian Midwives Association 
+            and wish you success in your future endeavors. 
+        </p>
+        <p style="text-align: left;font-size: 20px;">
+            <strong>
+                Sincerely yours,
+            </strong>
+        </p>
+        <br/><br/> <br/><br/>
+      </div>
+      <div class="footer">
+        <div style="text-align: left;">
+            CC:  
+             <ul>
+                <li>
+                    HR Department
+                </li>
+                <li>
+                    Finance Department 
+                </li>
+             </ul>
+        </div>
+      </div>
+    </div>
+   
+  
+  
+  </div>

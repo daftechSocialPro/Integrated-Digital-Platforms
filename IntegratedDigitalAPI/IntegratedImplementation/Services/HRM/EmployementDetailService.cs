@@ -468,5 +468,89 @@ namespace IntegratedImplementation.Services.HRM
 
             return currentEmps;
         }
+
+        public async Task<ResponseMessage> ExtendContract(ExtendContractDto extendContract)
+        {
+            var currentEmployee = await _dbContext.Employees.AnyAsync(x => x.Id == extendContract.EmployeeId);
+            if(!currentEmployee)
+            {
+                return new ResponseMessage { Success = false, Message = "Could not find Employee" };
+            }
+
+            var employementDetail = await _dbContext.EmploymentDetails.FirstOrDefaultAsync(x => x.EmployeeId == extendContract.EmployeeId && x.Rowstatus == RowStatus.ACTIVE);
+
+            if(employementDetail == null)
+            {
+                return new ResponseMessage { Success = false, Message = "Employement Detail is not correct" };
+            }
+
+            var employees = await _dbContext.ContractExtentionEmployees
+                     .Where(x => x.EmploymentDetailId == employementDetail.Id && x.Rowstatus == RowStatus.ACTIVE)
+                     .ToListAsync();
+
+            foreach (var employee in employees)
+            {
+                employee.Rowstatus = RowStatus.INACTIVE;
+            }
+
+            await _dbContext.SaveChangesAsync();
+
+            ContractExtentionEmployee contractExtention = new ContractExtentionEmployee()
+            {
+                Id = Guid.NewGuid(),
+                CreatedById = extendContract.CreatedById,
+                CreatedDate = DateTime.Now,
+                EmploymentDetailId = employementDetail.Id,
+                PreviousStartDate = employementDetail.StartDate,
+                PreviousEndDate = employementDetail.EndDate,
+                Rowstatus = RowStatus.ACTIVE,
+                Remark = extendContract.Remark
+            };
+
+            await _dbContext.ContractExtentionEmployees.AddAsync(contractExtention);
+            employementDetail.StartDate = extendContract.StartDate;
+            employementDetail.EndDate = extendContract.EndDate;
+
+            await _dbContext.SaveChangesAsync();
+
+            return new ResponseMessage { Success = true, Message = "Contract Extended Succesfully!!" };
+        } 
+        
+        
+        public async Task<ContractExtentionLetterDto> GetContractExtentionLetter(Guid employeeId)
+        {
+            var currentEmployee = await _dbContext.Employees.FirstOrDefaultAsync(x => x.Id == employeeId);
+            if(currentEmployee == null)
+            {
+                return new ContractExtentionLetterDto();
+            }
+
+            var employementDetail = await _dbContext.EmploymentDetails.Include(x => x.Position).FirstOrDefaultAsync(x => x.EmployeeId == employeeId && x.Rowstatus == RowStatus.ACTIVE);
+
+            if(employementDetail == null)
+            {
+                return new ContractExtentionLetterDto();
+            }
+
+            var history = await _dbContext.ContractExtentionEmployees.Where(x => x.EmploymentDetailId == employementDetail.Id && x.Rowstatus == RowStatus.ACTIVE).FirstOrDefaultAsync();
+            if(history == null)
+            {
+                return new ContractExtentionLetterDto();
+            }
+
+            ContractExtentionLetterDto contractExtentionLetter = new ContractExtentionLetterDto()
+            {
+                EmployeeName = $"{currentEmployee.FirstName} {currentEmployee.MiddleName} {currentEmployee.LastName}",
+                Position = employementDetail.Position.PositionName,
+                PreviousStartDate = history.PreviousStartDate,
+                PreviousEndDate = history.PreviousEndDate,
+                StartDate = employementDetail.StartDate,
+                EndDate = employementDetail.EndDate,
+                TodaysDate = DateTime.Now,
+
+            };
+
+            return contractExtentionLetter;
+        }
     }
 }

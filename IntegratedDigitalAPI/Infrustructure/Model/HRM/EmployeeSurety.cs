@@ -20,7 +20,7 @@ namespace IntegratedInfrustructure.Model.HRM
         public string IdCardPath { get; set; } = null!;
         public string CompanyName { get; set; } = null!;
         public string CompnayPhoneNumber { get; set; } = null!;
-       
+        
 
     }
 }

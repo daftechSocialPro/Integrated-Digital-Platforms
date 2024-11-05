@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntegratedInfrustructure.Model.HRM
+namespace IntegratedImplementation.DTOS.HRM
 {
-    internal class LeaveTypeSettings
+    internal class EmployeeGuarantieeDto
     {
     }
 }

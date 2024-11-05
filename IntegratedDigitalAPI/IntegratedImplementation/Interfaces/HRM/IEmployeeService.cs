@@ -42,6 +42,13 @@ namespace IntegratedImplementation.Interfaces.HRM
         Task<ResponseMessage> DeleteEmployeeSurety(Guid employeeSuretyId);
 
 
+        //Employee Guarantiee
+
+        Task<List<GetEmployeeGuaranteeDto>> GetEmployeeGuarantee(Guid employeeId);
+        Task<ResponseMessage> AddEmployeeGuarantee(AddEmployeeGuaranteeDto addEmployeeGuarantee);
+        Task<ResponseMessage> UpdateEmployeeGuarantee(UpdateEmployeeGuaranteeDto updateEmployeeGuarantee);
+        Task<ResponseMessage> ReturnEmployeeGuarantee(Guid id);
+
         //salary History
         Task<List<EmployeeSalaryGetDto>> GetEmployeeSalaryHistory(Guid employeeDetailId);
         Task<ResponseMessage> AddEmployeeSalaryHistory(EmployeeSalryPostDto addEmployeeHistory);

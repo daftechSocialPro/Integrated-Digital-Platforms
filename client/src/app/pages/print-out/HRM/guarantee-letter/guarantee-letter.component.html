@@ -1,0 +1,50 @@
+<div id="contractLetter">
+    <div class="letter">
+      <div class="header">
+        <div style="text-align: left;">
+          <img [src]="sanitizer.bypassSecurityTrustUrl('../../../../../assets/img/PrintOut/em_logo.png')" alt="Image" width="50"/>
+        </div>
+      </div>
+      <div class="watermark">
+        <div class="container">
+          <img [src]="sanitizer.bypassSecurityTrustUrl('../../../../../assets/img/PrintOut/em_logo.png')" 
+          style="margin-left: 64%;margin-top: 31%;"
+           alt="Image" width="250" height="250" />
+        </div>
+  
+      </div>
+      <div class="content">
+        <h4 style="text-align: right;">Ref. No: _______________</h4>
+        <h4 style="text-align: right;">Date: <u>{{guarantee.todaysDate}}</u> </h4>
+  
+        <h6 style="text-align: left;">ለ {{guarantee.amharicOrganizationName}}</h6>
+        <h6 style="text-align: left;">አዲስ አበባ </h6>
+
+        <br/><br/>
+        <h3 style="text-align: center;"><u>ጉዳዩ፡- የዋስትና ደብዳቤ ስለመስጠት ይመለከታል</u></h3>
+        <br/><br/>
+        <p style="font-family: 'Times New Roman', Times, serif; text-align: justify;font-size: 20px;">
+            የድርጅታችን የኢትዮጵያ ሚድዋይፎች ማኅበር የሥራ ባልደረባ የሆኑት አቶ <u>{{guarantee.employeeName}}</u> {{guarantee.amharicDate}}. በጻፉት ደብዳቤ 
+            ለአቶ <u>{{guarantee.amharicFullName}}</u> ዋስ ለመሆን ስለፈለጉ የድርጅታችን ሠራተኛ መሆናቸውን እና ወርሃዊ ደመወዛቸው ተጠቅሶ እንዲጻፍላቸው ጠይቀዋል፡፡ 
+        </p>
+        <br/><br/>
+        <p style="font-family: 'Times New Roman', Times, serif; text-align: justify;font-size: 20px;">
+            በዚሁ መሠረት አቶ <u>{{guarantee.employeeName}}</u> የድርጅታችን ሠራተኛ ሲሆኑ ወርሃዊ ደመወዛቸው ብር <u>{{guarantee.currentSalary}}</u> መሆኑን እየገለጽን ሠራተኛው ከሥራ 
+            ሲሰናበቱ ወይም ሲለቁ የምናሳውቅ መሆኑን እንገልጻለን፡፡    
+                      
+        </p>
+        <p style="text-align: right;font-size: 20px;">
+            ከሰላምታ ጋር
+        </p>
+    
+      </div>
+      <div class="footer">
+        <div style="text-align: left;">
+        
+        </div>
+      </div>
+    </div>
+   
+  
+  
+  </div>

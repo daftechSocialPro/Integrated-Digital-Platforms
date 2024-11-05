@@ -7,14 +7,13 @@ using System.Threading.Tasks;
 
 namespace IntegratedInfrustructure.Model.HRM
 {
-    public class EmployeePerformancePlan: WithIdModel
+    public class EmployeePerformanceDetail: WithIdModel
     {
         public Guid EmployeePerformanceId { get; set; }
         public virtual EmployeePerformance EmployeePerformance { get; set; } = null!;
-        public Guid PerformancePlanDetailId { get; set; }
-        public virtual PerformancePlanDetail PerformancePlanDetail { get; set; } = null!;
-        public double GivenValue { get; set; }
+
+        public int EmployeeRating { get; set; }
+        public int SupervisorRating { get; set; }
         public string? Remark { get; set; }
-        public string? Timing { get; set; }
     }
 }

@@ -5,6 +5,7 @@ import { MessageService } from 'primeng/api';
 import { EmployeeEducationGetDto, EmployeeEducationPostDto } from 'src/app/model/HRM/IEmployeeDto';
 import { SelectList } from 'src/app/model/common';
 import { UserView } from 'src/app/model/user';
+import { DropDownService } from 'src/app/services/dropDown.service';
 import { HrmService } from 'src/app/services/hrm.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -21,24 +22,17 @@ export class UpdateEmployeeEducationComponent  implements OnInit {
   EducationForm !: FormGroup;
   departments!: SelectList[];
   positions!: SelectList[];
-  user ! : UserView
-  ngOnInit(): void {
+  user ! : UserView;
+  educationLevel !: SelectList[];
+  educationField !: SelectList[];
 
-    this.user = this.userService.getCurrentUser()
-   
-    this.EducationForm.controls['educationalLevelId'].setValue(this.employeeEducation.educationalLevelId)
-    this.EducationForm.controls['educationalFieldId'].setValue(this.employeeEducation.educationalFieldId) 
-    this.EducationForm.controls['institution'].setValue(this.employeeEducation.institution)    
-    this.EducationForm.controls['fromDate'].setValue(this.employeeEducation.fromDate)
-    this.EducationForm.controls['toDate'].setValue(this.employeeEducation.toDate)
-    this.EducationForm.controls['remark'].setValue(this.employeeEducation.remark)
-  }
   constructor(
     private activeModal: NgbActiveModal, 
     private hrmService: HrmService,
     private formBuilder: FormBuilder,
     private userService : UserService,
-    private messageService : MessageService
+    private messageService : MessageService,
+    private dropDownService: DropDownService,
     ) {
 
       this.EducationForm = this.formBuilder.group({        
@@ -51,6 +45,33 @@ export class UpdateEmployeeEducationComponent  implements OnInit {
         remark: [null]
       })
      }
+
+  ngOnInit(): void {
+    this.geteducationDropDown();
+    this.user = this.userService.getCurrentUser()
+   
+    this.EducationForm.controls['educationalLevelId'].setValue(this.employeeEducation.educationalLevelId)
+    this.EducationForm.controls['educationalFieldId'].setValue(this.employeeEducation.educationalFieldId) 
+    this.EducationForm.controls['institution'].setValue(this.employeeEducation.institution)    
+    this.EducationForm.controls['fromDate'].setValue(this.employeeEducation.fromDate)
+    this.EducationForm.controls['toDate'].setValue(this.employeeEducation.toDate)
+    this.EducationForm.controls['remark'].setValue(this.employeeEducation.remark)
+  }
+  
+
+
+     geteducationDropDown(){
+      this.dropDownService.getEducationLevelDropdown().subscribe({
+        next : (res) => {
+          this.educationLevel = res;
+        }
+      });
+      this.dropDownService.getEducationFieldDropdown().subscribe({
+        next : (res) => {
+          this.educationField = res;
+        }
+      })
+    }
 
 
   closeModal() {

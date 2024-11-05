@@ -1,0 +1,77 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Add Employee Surety</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" data-bs-dismiss="modal"
+            aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Employee Surety Detail</h5>
+            <form [formGroup]="guaranteeForm" (submit)="submit()">
+
+                <div class="row mb-3">
+                    <div class="col-md-3 ">
+                        <img [src]="letterPath ? letterPath : 'assets/img/profile.jpg'" alt="Profile"
+                            style="width: 100%;">
+                        <input #file (change)="onUpload($event)" type="file" style="display: none;" accept="image/*" />
+                        <div class="pt-2">
+                            <a (click)="file.click()" style="width: 100%;" class="btn btn-outline-primary btn-sm"
+                                title="Upload new profile image">
+                                <i class="bi bi-upload"></i> Add Letter
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="form-floating"> <input type="text" class="form-control" id="fullName"
+                                        placeholder="fullName" required formControlName="fullName">
+                                    <label for="fullName"> Full Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating"> <input type="text" class="form-control" id="amharicFullName"
+                                        placeholder="amharicFullName" required formControlName="amharicFullName">
+                                    <label for="amharicFullName">Amharic Full Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating"> <input type="text" class="form-control" id="organizationName"
+                                        placeholder="organizationName" required formControlName="organizationName">
+                                    <label for="organizationName"> Organization Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating"> <input type="text" class="form-control" id="amharicOrganizationName"
+                                        placeholder="amharicOrganizationName" required formControlName="amharicOrganizationName">
+                                    <label for="amharicOrganizationName"> Amharic Organization Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating"> <input type="text" class="form-control"
+                                        id="letterNumber" placeholder="letterNumber" required
+                                        formControlName="letterNumber">
+                                    <label for="letterNumber"> Letter Number</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating"> <input type="date" class="form-control"
+                                        id="letterDate" placeholder="letterDate" required
+                                        formControlName="letterDate">
+                                    <label for="letterDate"> Letter Date</label>
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
+                        (click)="closeModal()">Close</button> <button type="button" type="submit"
+                        [disabled]="!guaranteeForm.valid" class="btn btn-outline-primary">Save
+                        changes</button></div>
+            </form>
+        </div>
+    </div>
+</div>

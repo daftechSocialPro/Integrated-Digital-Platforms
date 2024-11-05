@@ -64,7 +64,8 @@ namespace IntegratedImplementation.Services.Finance.Configuration
                 CreatedDate = DateTime.Now,
                 Description = addSubsidiaryAccount.Description,
                 Rowstatus= RowStatus.ACTIVE,
-                Sequence = addSubsidiaryAccount.Sequence
+                Sequence = addSubsidiaryAccount.Sequence,
+                TypeOfAccount = addSubsidiaryAccount.TypeOfAccount
                 
             };
 
@@ -130,7 +131,8 @@ namespace IntegratedImplementation.Services.Finance.Configuration
                     Id = x.Id,
                     Description = x.Description,
                     IsActive = x.Rowstatus == RowStatus.ACTIVE ? true : false,
-                    Sequence = x.Sequence
+                    Sequence = x.Sequence,
+                    TypeOfAccount = x.TypeOfAccount.ToString()
                 }).OrderBy(x => x.Sequence).ToList()
             }).ToListAsync();
 
@@ -166,7 +168,7 @@ namespace IntegratedImplementation.Services.Finance.Configuration
                 return new ResponseMessage { Success = false, Message = "Could not find account" };
             }
 
-            var sequenceExists = await _dbContext.SubsidiaryAccounts.AnyAsync(x => x.Sequence == updateSubsidiaryAccount.Sequence && x.ChartOfAccountId ==  updateSubsidiaryAccount.ChartOfAccountId);  
+            var sequenceExists = await _dbContext.SubsidiaryAccounts.AnyAsync(x => x.Sequence == updateSubsidiaryAccount.Sequence && x.ChartOfAccountId ==  updateSubsidiaryAccount.ChartOfAccountId && x.Id != updateSubsidiaryAccount.Id);  
             if(sequenceExists)
             {
                 return new ResponseMessage { Success = false, Message = "Sequence already exists" };
@@ -175,7 +177,7 @@ namespace IntegratedImplementation.Services.Finance.Configuration
             currentAccount.AccountNo = updateSubsidiaryAccount.AccountNo;
             currentAccount.Description = updateSubsidiaryAccount.Description;
             currentAccount.Sequence = updateSubsidiaryAccount.Sequence;
-
+            currentAccount.TypeOfAccount = updateSubsidiaryAccount.TypeOfAccount;
             await _dbContext.SaveChangesAsync();
 
             return new ResponseMessage { Success = true, Message = "Updated Succesfully" };

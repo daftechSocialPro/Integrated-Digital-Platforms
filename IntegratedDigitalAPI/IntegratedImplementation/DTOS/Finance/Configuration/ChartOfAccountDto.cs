@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static IntegratedInfrustructure.Data.EnumList;
 
 namespace IntegratedImplementation.DTOS.Finance.Configuration
 {
@@ -25,6 +26,7 @@ namespace IntegratedImplementation.DTOS.Finance.Configuration
         public string Description { get; set; } = null!;
         public int Sequence { get; set; }
         public bool IsActive { get; set; }
+        public string TypeOfAccount { get; set; } = null!;
     }
 
     public class AddChartOfAccountDto
@@ -50,6 +52,7 @@ namespace IntegratedImplementation.DTOS.Finance.Configuration
         public string Description { get; set; } = null!;
         public int Sequence { get; set; }
         public string CreatedById { get; set; } = null!;
+        public TypeOfAccount TypeOfAccount { get; set; }
     }
 
     public class UpdateSubsidiaryAccount: AddSubsidiaryAccount

@@ -31,8 +31,11 @@ namespace IntegratedImplementation.Interfaces.HRM
 
         public Task<List<EmployeeBenefitListDto>> GetEmployeeBenefits(Guid employeeId);
         public Task<ResponseMessage> AddEmployeeBenefit(AddEmployeeBenefitDto addEmployeeBenefit);
-        Task<ResponseMessage> DeleteEmployeeBenefit(Guid benefitId);
+        public Task<ResponseMessage> DeleteEmployeeBenefit(Guid benefitId);
         public Task<List<ContractEndEmployeesDto>> GetContractEndEmployees();
+
+        public Task<ResponseMessage> ExtendContract(ExtendContractDto extendContract);
+        public Task<ContractExtentionLetterDto> GetContractExtentionLetter(Guid employeeId);
 
     }
 }

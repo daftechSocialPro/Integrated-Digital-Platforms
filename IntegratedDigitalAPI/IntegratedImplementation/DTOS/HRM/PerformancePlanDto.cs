@@ -4,25 +4,20 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static IntegratedInfrustructure.Data.EnumList;
 
 namespace IntegratedImplementation.DTOS.HRM
 {
     public class PerformancePlanDto
     {
         public Guid Id { get; set; }
-        public string Name { get; set; } = null!;
+        public int Index { get; set; }
         public string Description { get; set; } = null!;
-        public double TotalTarget { get; set; }
-        public List<PerformancePlanDetaiDto> PerformancePlanDetais { get; set; } = null!;
+        public string TypeOfPerformance { get; set; } = null!;
+        public List<string> Positions { get; set; } = null!;
     }
 
-    public class PerformancePlanDetaiDto
-    {
-        public Guid Id { get; set; }
-        public string Name { get; set; } = null!;
-        public string Description { get; set; } = null!;
-        public double Target { get; set; }
-    }
+  
 
     public class AddPerformancePlanDto
     {
@@ -30,7 +25,8 @@ namespace IntegratedImplementation.DTOS.HRM
         public string CreatedById { get; set; } = null!;
         public string Name { get; set; } = null!;
         public string Description { get; set; } = null!;
-        public double TotalTarget { get; set; }
+        public List<Guid> PositionsId { get; set; } = null!;
+        public TypeOfPerformance TypeOfPerformance { get; set; }
     }
 
     public class UpdateperformancePlanDto : AddPerformancePlanDto

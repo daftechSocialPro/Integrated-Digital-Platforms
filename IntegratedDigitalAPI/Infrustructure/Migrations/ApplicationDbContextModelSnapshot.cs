@@ -1779,6 +1779,9 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<int>("Sequence")
                         .HasColumnType("int");
 
+                    b.Property<int>("TypeOfAccount")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ChartOfAccountId");
@@ -1906,6 +1909,42 @@ namespace IntegratedInfrustructure.Migrations
                         .IsUnique();
 
                     b.ToTable("BenefitLists");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.ContractExtentionEmployee", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("EmploymentDetailId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("PreviousEndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("PreviousStartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Remark")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("EmploymentDetailId");
+
+                    b.ToTable("ContractExtentionEmployees");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.Department", b =>
@@ -2335,6 +2374,63 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasIndex("EmployeeId");
 
                     b.ToTable("EmployeeFingerPrints");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeGuarantiee", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AmharicFullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AmharicOrganizationName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsReturned")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LetterDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LetterNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LetterPath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OrganizationName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("EmployeeGuarantiees");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeLeave", b =>
@@ -7108,6 +7204,23 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("CreatedBy");
                 });
 
+            modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.ContractExtentionEmployee", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmploymentDetail", "EmploymentDetail")
+                        .WithMany()
+                        .HasForeignKey("EmploymentDetailId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("EmploymentDetail");
+                });
+
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.Department", b =>
                 {
                     b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
@@ -7300,6 +7413,23 @@ namespace IntegratedInfrustructure.Migrations
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeFingerPrint", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("Employee");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeGuarantiee", b =>
                 {
                     b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()

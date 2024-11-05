@@ -305,6 +305,60 @@ namespace IntegratedDigitalAPI.Controllers.HRM
                 return BadRequest();
             }
         }
+
+
+        // Employee Guarantee
+        // employee Surety 
+        [HttpGet]
+        [ProducesResponseType(typeof(GetEmployeeGuaranteeDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetEmployeeGuarantee(Guid employeeId)
+        {
+            return Ok(await _employeeService.GetEmployeeGuarantee(employeeId));
+        }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> AddEmployeeGuarantee([FromForm] AddEmployeeGuaranteeDto addEmployeeGuarantee)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _employeeService.AddEmployeeGuarantee(addEmployeeGuarantee));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPut]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> UpdateEmployeeGuarantee([FromForm] UpdateEmployeeGuaranteeDto updateEmployeeGuarantee)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _employeeService.UpdateEmployeeGuarantee(updateEmployeeGuarantee));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+
+        [HttpPut]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> ReturnEmployeeGuarantee(Guid id)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _employeeService.ReturnEmployeeGuarantee(id));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> ApproveEmployee(Guid employeeId)
