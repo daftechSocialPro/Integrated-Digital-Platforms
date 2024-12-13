@@ -4,6 +4,7 @@ using IntegratedInfrustructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IntegratedInfrustructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241028090836_recieptGet")]
+    partial class recieptGet
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1784,9 +1787,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<int>("Sequence")
                         .HasColumnType("int");
 
-                    b.Property<int>("TypeOfAccount")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ChartOfAccountId");
@@ -1914,42 +1914,6 @@ namespace IntegratedInfrustructure.Migrations
                         .IsUnique();
 
                     b.ToTable("BenefitLists");
-                });
-
-            modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.ContractExtentionEmployee", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CreatedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("EmploymentDetailId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("PreviousEndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("PreviousStartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Remark")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Rowstatus")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("EmploymentDetailId");
-
-                    b.ToTable("ContractExtentionEmployees");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.Department", b =>
@@ -2381,63 +2345,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.ToTable("EmployeeFingerPrints");
                 });
 
-            modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeGuarantiee", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("AmharicFullName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("AmharicOrganizationName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CreatedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("EmployeeId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsReturned")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("LetterDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LetterNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LetterPath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OrganizationName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Rowstatus")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.ToTable("EmployeeGuarantiees");
-                });
-
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeLeave", b =>
                 {
                     b.Property<Guid>("Id")
@@ -2728,91 +2635,51 @@ namespace IntegratedInfrustructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("ApprovedBySecondSupervisor")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("ApproverId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("CreatedById")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DiscussionDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<Guid>("EmployeeId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Justification")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Index")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IndividualDevt")
+                        .HasColumnType("int");
 
                     b.Property<int>("MonthIndex")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("PerformanceSettingId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("PlanStatus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RequiredSupport")
+                        .HasColumnType("int");
 
                     b.Property<int>("Rowstatus")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("SecondSuperviosrId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("SecondSupervisorComments")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("SecondSupervisorId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("SelfGeneralComments")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SelfNeedImporvementComment")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("SelfRating")
-                        .HasColumnType("float");
-
-                    b.Property<string>("SelfStrengthComment")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SelfSuddgestionImporvementComment")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SupervisorGeneralComments")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("SupervisorId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("SupervisorNeedImporvementComment")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("SupervisorRating")
-                        .HasColumnType("float");
-
-                    b.Property<string>("SupervisorStrengthComment")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SupervisorSuddgestionImporvementComment")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TypeOfPerformance")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("ApproverId");
 
                     b.HasIndex("CreatedById");
 
                     b.HasIndex("EmployeeId");
 
-                    b.HasIndex("PerformanceSettingId");
-
-                    b.HasIndex("SecondSupervisorId");
-
-                    b.HasIndex("SupervisorId");
-
                     b.ToTable("EmployeePerformances");
                 });
 
-            modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeePerformanceDetail", b =>
+            modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeePerformancePlan", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -2827,8 +2694,11 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<Guid>("EmployeePerformanceId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("EmployeeRating")
-                        .HasColumnType("int");
+                    b.Property<double>("GivenValue")
+                        .HasColumnType("float");
+
+                    b.Property<Guid>("PerformancePlanDetailId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Remark")
                         .HasColumnType("nvarchar(max)");
@@ -2836,8 +2706,8 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<int>("Rowstatus")
                         .HasColumnType("int");
 
-                    b.Property<int>("SupervisorRating")
-                        .HasColumnType("int");
+                    b.Property<string>("Timing")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -2845,7 +2715,9 @@ namespace IntegratedInfrustructure.Migrations
 
                     b.HasIndex("EmployeePerformanceId");
 
-                    b.ToTable("EmployeePerformanceDetails");
+                    b.HasIndex("PerformancePlanDetailId");
+
+                    b.ToTable("EmployeePerformancePlans");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeSalary", b =>
@@ -3013,6 +2885,37 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasIndex("SupervisorId");
 
                     b.ToTable("EmployeeSupervisors");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeSupport", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("EmployeePerformanceId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("RequiredSupport")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("EmployeePerformanceId");
+
+                    b.ToTable("EmploeeSupports");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeSurety", b =>
@@ -3472,47 +3375,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.ToTable("LoanSettings");
                 });
 
-            modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.OnFieldEmployeeList", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ApprovedById")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CreatedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("EmployeeId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("EmployeeListId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("FieldDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("ReturnDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Rowstatus")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApprovedById");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("EmployeeListId");
-
-                    b.ToTable("onFieldEmployeeLists");
-                });
-
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.OverTime", b =>
                 {
                     b.Property<Guid>("Id")
@@ -3577,14 +3439,15 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<int>("Index")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsManagerial")
-                        .HasColumnType("bit");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Rowstatus")
                         .HasColumnType("int");
 
-                    b.Property<int>("TypeOfPerformance")
-                        .HasColumnType("int");
+                    b.Property<double>("TotalTarget")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -3593,7 +3456,7 @@ namespace IntegratedInfrustructure.Migrations
                     b.ToTable("PerformancePlans");
                 });
 
-            modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.PerformanceScale", b =>
+            modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.PerformancePlanDetail", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -3605,25 +3468,30 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Definition")
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Examples")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Rate")
-                        .HasColumnType("int");
+                    b.Property<Guid>("PerformancePlanId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Rowstatus")
                         .HasColumnType("int");
+
+                    b.Property<double>("Target")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("PerformanceScales");
+                    b.HasIndex("PerformancePlanId");
+
+                    b.ToTable("PerformancePlanDetails");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.PerformanceSetting", b =>
@@ -3678,9 +3546,6 @@ namespace IntegratedInfrustructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("HasSeverance")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsManagerial")
                         .HasColumnType("bit");
 
                     b.Property<string>("PositionName")
@@ -4203,12 +4068,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<Guid>("DepartmentId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("FinanceManagerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("FinanceMangerId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Goal")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -4248,8 +4107,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasIndex("CreatedById");
 
                     b.HasIndex("DepartmentId");
-
-                    b.HasIndex("FinanceManagerId");
 
                     b.HasIndex("ProjectManagerId");
 
@@ -7267,23 +7124,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("CreatedBy");
                 });
 
-            modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.ContractExtentionEmployee", b =>
-                {
-                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
-
-                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmploymentDetail", "EmploymentDetail")
-                        .WithMany()
-                        .HasForeignKey("EmploymentDetailId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("CreatedBy");
-
-                    b.Navigation("EmploymentDetail");
-                });
-
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.Department", b =>
                 {
                     b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
@@ -7492,23 +7332,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("Employee");
                 });
 
-            modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeGuarantiee", b =>
-                {
-                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
-
-                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("CreatedBy");
-
-                    b.Navigation("Employee");
-                });
-
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeLeave", b =>
                 {
                     b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "ApproverEmployee")
@@ -7607,6 +7430,10 @@ namespace IntegratedInfrustructure.Migrations
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeePerformance", b =>
                 {
+                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "Approver")
+                        .WithMany()
+                        .HasForeignKey("ApproverId");
+
                     b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedById");
@@ -7617,34 +7444,14 @@ namespace IntegratedInfrustructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("IntegratedInfrustructure.Model.HRM.PerformanceSetting", "PerformanceSetting")
-                        .WithMany()
-                        .HasForeignKey("PerformanceSettingId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "SecondSupervisor")
-                        .WithMany()
-                        .HasForeignKey("SecondSupervisorId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "Supervisor")
-                        .WithMany()
-                        .HasForeignKey("SupervisorId");
+                    b.Navigation("Approver");
 
                     b.Navigation("CreatedBy");
 
                     b.Navigation("Employee");
-
-                    b.Navigation("PerformanceSetting");
-
-                    b.Navigation("SecondSupervisor");
-
-                    b.Navigation("Supervisor");
                 });
 
-            modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeePerformanceDetail", b =>
+            modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeePerformancePlan", b =>
                 {
                     b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
@@ -7656,9 +7463,17 @@ namespace IntegratedInfrustructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("IntegratedInfrustructure.Model.HRM.PerformancePlanDetail", "PerformancePlanDetail")
+                        .WithMany()
+                        .HasForeignKey("PerformancePlanDetailId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.Navigation("CreatedBy");
 
                     b.Navigation("EmployeePerformance");
+
+                    b.Navigation("PerformancePlanDetail");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeSalary", b =>
@@ -7776,6 +7591,23 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("SecondSupervisor");
 
                     b.Navigation("Supervisor");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeSupport", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeePerformance", "EmployeePerformance")
+                        .WithMany()
+                        .HasForeignKey("EmployeePerformanceId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("EmployeePerformance");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.EmployeeSurety", b =>
@@ -7964,31 +7796,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("CreatedBy");
                 });
 
-            modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.OnFieldEmployeeList", b =>
-                {
-                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "ApprovedBy")
-                        .WithMany()
-                        .HasForeignKey("ApprovedById")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
-
-                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "EmployeeList")
-                        .WithMany()
-                        .HasForeignKey("EmployeeListId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("ApprovedBy");
-
-                    b.Navigation("CreatedBy");
-
-                    b.Navigation("EmployeeList");
-                });
-
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.OverTime", b =>
                 {
                     b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
@@ -8015,13 +7822,21 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("CreatedBy");
                 });
 
-            modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.PerformanceScale", b =>
+            modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.PerformancePlanDetail", b =>
                 {
                     b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedById");
 
+                    b.HasOne("IntegratedInfrustructure.Model.HRM.PerformancePlan", "PerformancePlan")
+                        .WithMany()
+                        .HasForeignKey("PerformancePlanId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.Navigation("CreatedBy");
+
+                    b.Navigation("PerformancePlan");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.PerformanceSetting", b =>
@@ -8247,12 +8062,6 @@ namespace IntegratedInfrustructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "FinanceManager")
-                        .WithMany()
-                        .HasForeignKey("FinanceManagerId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "ProjectManager")
                         .WithMany()
                         .HasForeignKey("ProjectManagerId")
@@ -8262,8 +8071,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("CreatedBy");
 
                     b.Navigation("Department");
-
-                    b.Navigation("FinanceManager");
 
                     b.Navigation("ProjectManager");
                 });

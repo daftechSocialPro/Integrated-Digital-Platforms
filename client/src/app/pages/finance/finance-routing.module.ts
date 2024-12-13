@@ -20,6 +20,7 @@ import { JournalVoucherComponent } from './journal-voucher/journal-voucher.compo
 import { AddJournalVoucherComponent } from './journal-voucher/add-journal-voucher/add-journal-voucher.component';
 import { PaymentRequisitionComponent } from './payment-requisition/payment-requisition.component';
 import { EmployeeSettlementsComponent } from './employee-settlements/employee-settlements.component';
+import { AddReceiptComponent } from './receipt/add-receipt/add-receipt.component';
 
 const routes: Routes = [
   
@@ -40,6 +41,7 @@ const routes: Routes = [
   { path: 'pensiondeclaration', canActivate: [AuthGuard], component: PensionDeclarationComponent },
   { path: 'activity-progress-approver', canActivate: [AuthGuard], component: ActivityProgressApproverComponent },
   { path: 'receipt', canActivate: [AuthGuard], component: ReceiptComponent },
+  { path: 'receipt/addreceipt', canActivate: [AuthGuard], component: AddReceiptComponent },
   { path: 'dashboard', canActivate: [AuthGuard], component: FinanceDashboardComponent },
   { path: 'payment-requisition', canActivate: [AuthGuard], component: PaymentRequisitionComponent },
   { path: 'payment-settlement', canActivate: [AuthGuard], component: EmployeeSettlementsComponent },

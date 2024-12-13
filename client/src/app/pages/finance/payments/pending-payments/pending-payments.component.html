@@ -4,7 +4,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Pendind Payments List</h5>
+                    <h5 class="card-title">Pending Payments List</h5>
 
                     <p-table [value]="pendingPaymentsList" [paginator]="true" [rows]="5" [showCurrentPageReport]="true"
                         [tableStyle]="{ 'min-width': '50rem' }"
@@ -57,7 +57,7 @@
                                                 <button type="button" class="btn btn-outline-primary btn-sm"
                                                     (click)="addJV(payment.paymentDetailLists)"><i
                                                         class="bi bi-book me-1"></i>
-                                                    Add Journal Vocher</button> &nbsp;
+                                                    Add Ledger</button> &nbsp;
                                                     <button *ngIf="roleMatch(['PAYMENT-APPROVER'])" type="button" class="btn btn-outline-success btn-sm"
                                                     (click)="approvePayment(payment.id, payment.paymentNumber, payment.paymentType, payment.paymentDate,payment.bank,payment.supplier,payment.remark)"><i
                                                         class="bi bi-check me-1"></i>

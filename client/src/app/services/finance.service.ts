@@ -16,7 +16,7 @@ import { PurchaseInvoiceGetDto, PurchaseInvoicePostDto } from '../model/Finance/
 import { ApprovedLoansDto, LoanPaymentDto } from '../model/Finance/ILoanIssuanceDto';
 import { IncomeTaxReportGetDto, PayrollReportGetDto, PensionReportGetDto } from '../model/Finance/IFinanceReportDto';
 import { ViewProgressDto } from '../pages/project-managment/view-activties/activityview';
-import { AddReceiptDto } from '../model/Finance/IReceiptModel';
+import { AddReceiptDto, GetReceipts } from '../model/Finance/IReceiptModel';
 import { AccountReconsilationFindDto, AccountToBeReconsiledDto, AddAccountReconsilationDto } from '../model/Finance/IAccountReconsilationDto';
 import { AddClientDto, ClientsListDto } from '../model/Finance/IFinanceSettingDto';
 import { AddLedgerPostingAccountDto, AddTaxRateDto, LedgerPostingAccountDto, TaxRateDto } from '../model/Finance/ITaxRateDto';
@@ -237,6 +237,9 @@ export class FinanceService {
 //recipet 
 addRecipet(paymentData: AddReceiptDto, ){
   return this.http.post<ResponseMessage>(this.BaseURI + "/Receipt/AddReceipt",paymentData)
+}
+getReceipts(){
+  return this.http.get<GetReceipts[]>(this.BaseURI + "/Receipt/GetReceipts")
 }
 
 //ClientLists
