@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
 import { AddLoanSettingDto, LoanSettingDto } from 'src/app/model/HRM/ILoanSettingDto';
-import { AddPerformancePlanDetailDto } from 'src/app/model/HRM/IPerformancePlanDto';
 import { UserView } from 'src/app/model/user';
 import { HrmService } from 'src/app/services/hrm.service';
 import { UserService } from 'src/app/services/user.service';

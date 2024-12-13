@@ -81,10 +81,10 @@ export class PlanDashboardComponent implements OnInit {
     this.user = this.userService.getCurrentUser();
     const currentDate = new Date();
     this.currentYear = currentDate.getFullYear();
-    // this.generateYearOptions();
+    //this.generateYearOptions();
     this.selectedYear = this.currentYear;
-    // this.listPlans();
-    // this.getStrategicPlans();
+    //this.listPlans();
+    //this.getStrategicPlans();
   }
 
   getPieChartData(planId: string) {

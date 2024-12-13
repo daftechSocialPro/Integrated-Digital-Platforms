@@ -30,7 +30,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-floating mb-3">
                                         <select class="form-select" id="StructureId" formControlName="StructureId"
                                             aria-label="State">
@@ -48,7 +48,7 @@
 
 
                                 <!--  -->
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-floating">
                                         <input type="number" class="form-control" [min]="0" id="PlandBudget"
                                             placeholder="PlannedBudget" formControlName="PlandBudget">
@@ -59,15 +59,32 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-floating">
-                                        <app-autocomplete2  *ngIf="employeeList.length>0&&planView"
-                                            [data]="employeeList" [selectedId]="planView.projectManagerId.toLowerCase()"
+                                        <app-autocomplete2 *ngIf="employeeList.length>0&&planView" [data]="employeeList"
+                                            [selectedId]="planView.projectManagerId.toLowerCase()"
                                             placeHolder="Project Manager" (selectedItem)="selectEmployeePM2($event)">
                                         </app-autocomplete2>
 
-                                        <app-autocomplete2 *ngIf="employeeList.length>0&&!planView" [data]="employeeList"
-                                            placeHolder="Project Manager" (selectedItem)="selectEmployeePM($event)">
+                                        <app-autocomplete2 *ngIf="employeeList.length>0&&!planView"
+                                            [data]="employeeList" placeHolder="Project Manager"
+                                            (selectedItem)="selectEmployeePM($event)">
+                                        </app-autocomplete2>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <app-autocomplete2 *ngIf="employeeList.length>0&&planView" [data]="employeeList"
+                                            [selectedId]="planView.financeManagerId.toLowerCase()"
+                                            placeHolder="Finance Manager" (selectedItem)="selectEmployeeF($event)">
+                                        </app-autocomplete2>
+
+                                        <app-autocomplete2 *ngIf="employeeList.length>0&&!planView"
+                                            [data]="employeeList" placeHolder="FInance Manager"
+                                            (selectedItem)="selectEmployeeF($event)">
                                         </app-autocomplete2>
                                     </div>
                                 </div>
@@ -162,6 +179,7 @@
 
                             <!-- <div>{{program.ProgramBudgetYear!}}</div>  -->
                             <span> Project Manager : {{ProjectManagerId && ProjectManagerId.name}}</span> <br />
+                            <span> Finance Manager : {{financeManagerId && financeManagerId.name}}</span> <br />
                             <span> Planned Budget : {{fundBudget|number:"1.0-2"}} ETB</span> <br />
 
 

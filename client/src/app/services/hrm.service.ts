@@ -13,7 +13,7 @@ import { HrmSettingDto } from '../model/HRM/IHrmSettingDto';
 import { UserService } from './user.service';
 import { ResignationRequestDto, TerminationGetDto, TerminationRequesterDto } from '../model/HRM/IResignationDto';
 import { PerformanceSettingDto } from '../model/HRM/IPerformanceSettingDto';
-import { AddPerformancePlanDetailDto, AddPerformancePlanDto, PerformancePlanDto } from '../model/HRM/IPerformancePlanDto';
+import { AddPerformancePlanDto, PerformancePlanDto } from '../model/HRM/IPerformancePlanDto';
 import { AssignSupervisorDto, EmployeeSupervisorsDto } from '../model/HRM/IEmployeeSupervisorDto';
 import { AddLoanSettingDto, LoanSettingDto } from '../model/HRM/ILoanSettingDto';
 import { ApproveInitialRequestDto, EmployeeLoanDto, LoanInfoDto, LoanRequestDto, RequestedLoanListDto } from '../model/HRM/ILoanManagmentDto';
@@ -399,10 +399,10 @@ export class HrmService {
     updatePerformancePlan(performancePlan: AddPerformancePlanDto) {
         return this.http.post<ResponseMessage>(this.baseUrl + `/PerformancePlan/UpdatePerformancePlan`, performancePlan)
     }
-    addPerformancePlanDetail(performancePlan: AddPerformancePlanDetailDto) {
+    addPerformancePlanDetail(performancePlan: AddPerformancePlanDto) {
         return this.http.post<ResponseMessage>(this.baseUrl + `/PerformancePlan/addPerformancePlanDetail`, performancePlan)
     }
-    updatePerformancePlanDetail(performancePlan: AddPerformancePlanDetailDto) {
+    updatePerformancePlanDetail(performancePlan: AddPerformancePlanDto) {
         return this.http.post<ResponseMessage>(this.baseUrl + `/PerformancePlan/UpdatePerformancePlanDetail`, performancePlan)
     }
 

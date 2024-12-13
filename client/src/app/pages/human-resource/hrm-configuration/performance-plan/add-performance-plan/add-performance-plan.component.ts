@@ -48,7 +48,8 @@ export class AddPerformancePlanComponent implements OnInit {
         index : this.performanceFormG.value.index,
         name : this.performanceFormG.value.name,
         description: this.performanceFormG.value.description,
-        totalTarget: this.performanceFormG.value.totalTarget,
+        isManagerial: true,
+        typeOfPerformance: 1,
         createdById : this.user.userId
       }
       this.hrmService.addPerformancePlan(performance).subscribe({
