@@ -14,7 +14,7 @@ namespace IntegratedImplementation.DTOS.HRM
         public int Index { get; set; }
         public string Description { get; set; } = null!;
         public string TypeOfPerformance { get; set; } = null!;
-        public List<string> Positions { get; set; } = null!;
+       public bool IsManagerial { get; set; }
     }
 
   
@@ -25,7 +25,7 @@ namespace IntegratedImplementation.DTOS.HRM
         public string CreatedById { get; set; } = null!;
         public string Name { get; set; } = null!;
         public string Description { get; set; } = null!;
-        public List<Guid> PositionsId { get; set; } = null!;
+        public bool IsManagerial { get; set; }
         public TypeOfPerformance TypeOfPerformance { get; set; }
     }
 
@@ -35,17 +35,6 @@ namespace IntegratedImplementation.DTOS.HRM
         public Guid Id { get; set; }
     }
 
-    public class AddPerformancePlanDetailDto
-    {
-        public string CreatedById { get; set; } = null!;
-        public Guid PerformancePlanId { get; set; }
-        public string Name { get; set; } = null!;
-        public string Description { get; set; } = null!;
-        public double Target { get; set; }
-    }
-
-    public class UpdatePerfromancePlanDetailDto: AddPerformancePlanDetailDto
-    {
-        public Guid Id { get; set; }
-    }
+ 
+  
 }

@@ -117,6 +117,12 @@
                      </div>
                      <span class="card-title">Project Manager :</span>
                      {{plan.projectManager}} <br />
+                     <span *ngIf="plan.financeManager" class="card-title">Finance Manager :</span>
+                     {{plan.financeManager}} <br />
+
+
+                     
+
                      <span *ngIf="plan.director" class="card-title">Project Manager :</span>
                      {{plan.director}}  <br />
 

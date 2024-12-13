@@ -20,7 +20,7 @@ import { ConfigurationService } from 'src/app/services/configuration.service';
 })
 export class AddPlansComponent implements OnInit {
 
-  @Input() planView:PlanView
+  @Input() planView: PlanView
   toast !: toastPayload;
   planForm!: FormGroup;
   employee!: SelectList;
@@ -34,6 +34,7 @@ export class AddPlansComponent implements OnInit {
   employeeList: SelectList[] = [];
 
   ProjectManagerId!: SelectList;
+  financeManagerId!: SelectList
   FinanceId!: string;
 
   fundBudget: number
@@ -57,28 +58,28 @@ export class AddPlansComponent implements OnInit {
 
 
 
-    if(this.planView){
+    if (this.planView) {
 
-    
-      
-    this.planForm = this.formBuilder.group({
 
-      PlanName: [this.planView.planName, Validators.required],
-      StructureId: [this.planView.structureId, Validators.required],
-      PlanWeight: [this.planView.planWeight, [Validators.required]],
-      HasTask: [this.planView.hasTask, Validators.required],
-      PlandBudget: [this.planView.plandBudget, [Validators.required]],
-      ProjectNumber: [this.planView.projectNumber, Validators.required],
-      StartDate: [this.planView.startDate.split('T')[0], Validators.required],
-      EndDate: [this.planView.endDate.split('T')[0], Validators.required],
-      SelectedProjectFunds: [this.planView.projectFundIds, Validators.required],
-      Remark: [''],
-      Goal: [this.planView.goal],
-      Objective: [this.planView.objective]
 
-    })
+      this.planForm = this.formBuilder.group({
 
-    }else {
+        PlanName: [this.planView.planName, Validators.required],
+        StructureId: [this.planView.structureId, Validators.required],
+        PlanWeight: [this.planView.planWeight, [Validators.required]],
+        HasTask: [this.planView.hasTask, Validators.required],
+        PlandBudget: [this.planView.plandBudget, [Validators.required]],
+        ProjectNumber: [this.planView.projectNumber, Validators.required],
+        StartDate: [this.planView.startDate.split('T')[0], Validators.required],
+        EndDate: [this.planView.endDate.split('T')[0], Validators.required],
+        SelectedProjectFunds: [this.planView.projectFundIds, Validators.required],
+        Remark: [''],
+        Goal: [this.planView.goal],
+        Objective: [this.planView.objective]
+
+      })
+
+    } else {
 
       this.planForm = this.formBuilder.group({
 
@@ -94,7 +95,7 @@ export class AddPlansComponent implements OnInit {
         Remark: [''],
         Goal: [''],
         Objective: ['']
-  
+
       })
     }
 
@@ -117,7 +118,7 @@ export class AddPlansComponent implements OnInit {
       })
 
     })
-   
+
 
   }
 
@@ -149,7 +150,7 @@ export class AddPlansComponent implements OnInit {
       next: (res) => {
         this.employeeList = res
       }, error: (err) => {
-      
+
       }
     })
   }
@@ -161,18 +162,17 @@ export class AddPlansComponent implements OnInit {
 
 
   selectEmployeePM(event: SelectList) {
-   
-   
+
+
     // this.employee = event;
     this.ProjectManagerId = event
 
   }
 
-  
+
 
   selectEmployeePM2(event: SelectList) {
-   
-   
+
 
     // this.employee = event;
     this.ProjectManagerId = event
@@ -180,10 +180,10 @@ export class AddPlansComponent implements OnInit {
   }
 
 
-  selectEmployeeF(event: string) {
+  selectEmployeeF(event: SelectList) {
 
     // this.employee = event;
-    this.FinanceId = event
+    this.financeManagerId = event
 
   }
 
@@ -192,15 +192,17 @@ export class AddPlansComponent implements OnInit {
 
 
 
-    if (!this.ProjectManagerId.id) {
+    if (!this.ProjectManagerId.id || !this.financeManagerId.id) {
 
 
-      this.messageService.add({ severity: 'error', summary: 'Netowrk Error', detail: "Project manager Not selected" });
+      this.messageService.add({ severity: 'error', summary: 'Netowrk Error', detail: "Project manager or Finance manager Not selected" });
 
 
 
       return
     }
+
+
 
 
     if (this.planForm.valid) {
@@ -213,6 +215,7 @@ export class AddPlansComponent implements OnInit {
         remark: this.planForm.value.Remark,
         structureId: this.planForm.value.StructureId,
         projectManagerId: this.ProjectManagerId.id,
+        financeManagerId: this.financeManagerId.id,
         goal: this.planForm.value.Goal,
         objective: this.planForm.value.Objective,
         startDate: this.planForm.value.StartDate,
@@ -260,7 +263,7 @@ export class AddPlansComponent implements OnInit {
     if (this.planForm.valid) {
 
       let planValue: Plan = {
-        id:this.planView.id,
+        id: this.planView.id,
         hasTask: this.planForm.value.HasTask,
         planName: this.planForm.value.PlanName,
         planWeight: this.planForm.value.PlanWeight,
@@ -268,6 +271,7 @@ export class AddPlansComponent implements OnInit {
         remark: this.planForm.value.Remark,
         structureId: this.planForm.value.StructureId,
         projectManagerId: this.ProjectManagerId.id,
+        financeManagerId: this.financeManagerId.id,
         goal: this.planForm.value.Goal,
         objective: this.planForm.value.Objective,
         startDate: this.planForm.value.StartDate,
@@ -278,14 +282,14 @@ export class AddPlansComponent implements OnInit {
 
 
       this.planService.updatePlan(planValue).subscribe({
-        
+
         next: (res) => {
           this.messageService.add({ severity: 'success', summary: 'Successfully Created.', detail: "Plan Successfully Updated" });
           this.closeModal()
 
         }, error: (err) => {
           this.messageService.add({ severity: 'error', summary: 'Netowrk Error', detail: "Something went wrong!!" });
-      
+
         }
       })
     }

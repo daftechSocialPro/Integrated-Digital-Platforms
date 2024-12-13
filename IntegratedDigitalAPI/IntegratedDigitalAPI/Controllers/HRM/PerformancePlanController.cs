@@ -56,13 +56,22 @@ namespace IntegratedDigitalAPI.Controllers.HRM
             }
         }
 
+
+        [HttpGet]
+        [ProducesResponseType(typeof(PerformanceScalesDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetPerformanceScales()
+        {
+            return Ok(await _performancePlan.GetPerformanceScales());
+        }
+
+
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> AddPerformancePlanDetail([FromBody] AddPerformancePlanDetailDto addPerformancePlan)
+        public async Task<IActionResult> AddPerfomanceScale([FromBody] AddPerformanceScaleDto addPerformanceScaleDto)
         {
             if (ModelState.IsValid)
             {
-                return Ok(await _performancePlan.AddPerformancePlanDetail(addPerformancePlan));
+                return Ok(await _performancePlan.AddPerfomanceScale(addPerformanceScaleDto));
             }
             else
             {
@@ -73,11 +82,11 @@ namespace IntegratedDigitalAPI.Controllers.HRM
 
         [HttpPut]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> UpdatePerformancePlanDetail(UpdatePerfromancePlanDetailDto updatePerformancePlan)
+        public async Task<IActionResult> UpdatePerformanceScale([FromBody] PerformanceScalesDto updatePerformanceScale)
         {
             if (ModelState.IsValid)
             {
-                return Ok(await _performancePlan.UpdatePerformancePlanDetail(updatePerformancePlan));
+                return Ok(await _performancePlan.UpdatePerformanceScale(updatePerformanceScale));
             }
             else
             {

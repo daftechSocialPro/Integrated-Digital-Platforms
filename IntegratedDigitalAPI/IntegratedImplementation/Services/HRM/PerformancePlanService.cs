@@ -1,4 +1,6 @@
-﻿using Implementation.Helper;
+﻿using DocumentFormat.OpenXml.InkML;
+using DocumentFormat.OpenXml.Office2010.Excel;
+using Implementation.Helper;
 using IntegratedImplementation.DTOS.HRM;
 using IntegratedImplementation.Interfaces.HRM;
 using IntegratedInfrustructure.Data;
@@ -10,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static IntegratedInfrustructure.Data.EnumList;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace IntegratedImplementation.Services.HRM
 {
@@ -32,14 +35,14 @@ namespace IntegratedImplementation.Services.HRM
                               Description = x.Description,
                               Index = x.Index,
                               TypeOfPerformance = x.TypeOfPerformance.ToString(),
+                              IsManagerial = x.IsManagerial,
                               
                           }).ToListAsync();
         }
 
         public async Task<ResponseMessage> AddPerformancePlan(AddPerformancePlanDto addPerformancePlan)
         {
-            foreach (var  item in addPerformancePlan.PositionsId)
-            {
+           
                 PerformancePlan performance = new PerformancePlan()
                 {
                     Id = Guid.NewGuid(),
@@ -48,15 +51,13 @@ namespace IntegratedImplementation.Services.HRM
                     CreatedDate = DateTime.Now,
                     Description = addPerformancePlan.Description,
                     Rowstatus = RowStatus.ACTIVE,
-                    PositionId = item,
+                    IsManagerial = addPerformancePlan.IsManagerial, 
                     TypeOfPerformance = addPerformancePlan.TypeOfPerformance,
 
                 };
 
                 await _dbContext.PerformancePlans.AddAsync(performance);
-              
-            }
-            await _dbContext.SaveChangesAsync();
+               await _dbContext.SaveChangesAsync();
 
             return new ResponseMessage { Success = true, Message = "Added Succesfully" };
         }
@@ -79,14 +80,58 @@ namespace IntegratedImplementation.Services.HRM
             return new ResponseMessage { Success = true, Message = "Updated Succesfully" };
         }
 
-        public Task<ResponseMessage> AddPerformancePlanDetail(AddPerformancePlanDetailDto addPerformancePlan)
+        public async Task<List<PerformanceScalesDto>> GetPerformanceScales()
         {
-            throw new NotImplementedException();
+            return await _dbContext.PerformanceScales.AsNoTracking().
+                         OrderBy(x => x.Rate).
+                         Select(x => new PerformanceScalesDto
+                         {
+                             Id = x.Id,
+                             Rate = x.Rate,
+                             Definition = x.Definition,
+                             Examples = x.Examples
+
+                         }).ToListAsync();
         }
 
-        public Task<ResponseMessage> UpdatePerformancePlanDetail(UpdatePerfromancePlanDetailDto updatePerformancePlan)
+        public async Task<ResponseMessage> AddPerfomanceScale(AddPerformanceScaleDto addPerformanceScaleDto)
         {
-            throw new NotImplementedException();
+            PerformanceScale performance = new PerformanceScale()
+            {
+                Id = Guid.NewGuid(),
+                Rate = addPerformanceScaleDto.Rate,
+                CreatedById = addPerformanceScaleDto.CreatedById,
+                CreatedDate = DateTime.Now,
+                Rowstatus = RowStatus.ACTIVE,
+                Definition = addPerformanceScaleDto.Definition,
+                Examples = addPerformanceScaleDto.Examples,
+
+            };
+
+            await _dbContext.PerformanceScales.AddAsync(performance);
+
+
+            await _dbContext.SaveChangesAsync();
+
+            return new ResponseMessage { Success = true, Message = "Added Succesfully" };
+        }
+
+        public async Task<ResponseMessage> UpdatePerformanceScale(PerformanceScalesDto updatePerformanceScale)
+        {
+            var currentPerformance = await _dbContext.PerformanceScales.FirstOrDefaultAsync(x => x.Id == updatePerformanceScale.Id);
+
+            if (currentPerformance == null)
+                return new ResponseMessage { Success = false, Message = "Could not find Performance" };
+
+
+
+            currentPerformance.Rate = updatePerformanceScale.Rate;
+            currentPerformance.Definition = updatePerformanceScale.Definition;
+            currentPerformance.Examples = updatePerformanceScale.Examples;
+
+            await _dbContext.SaveChangesAsync();
+
+            return new ResponseMessage { Success = true, Message = "Updated Succesfully" };
         }
     }
 }

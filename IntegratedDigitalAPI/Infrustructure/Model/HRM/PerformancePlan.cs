@@ -13,7 +13,6 @@ namespace IntegratedInfrustructure.Model.HRM
         public int Index { get; set; }
         public string Description { get; set; } = null!;
         public TypeOfPerformance TypeOfPerformance { get; set; }
-        public Guid PositionId { get; set; }
-        public virtual Position Position { get; set; } = null!;
+        public bool IsManagerial { get; set; }
     }
 }

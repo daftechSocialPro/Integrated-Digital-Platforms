@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
-import { AddPerformancePlanDetailDto } from 'src/app/model/HRM/IPerformancePlanDto';
+import { AddPerformancePlanDto } from 'src/app/model/HRM/IPerformancePlanDto';
 import { UserView } from 'src/app/model/user';
 import { CommonService } from 'src/app/services/common.service';
 import { HrmService } from 'src/app/services/hrm.service';
@@ -42,12 +42,13 @@ export class AddPerformanceDetailPlanComponent implements OnInit {
   submit (){
 
     if (this.performanceFormG.valid){
-      var performance : AddPerformancePlanDetailDto ={
+      var performance : AddPerformancePlanDto ={
         name : this.performanceFormG.value.name,
         description: this.performanceFormG.value.description,
-        target: this.performanceFormG.value.target,
-        performancePlanId: this.planId,
-        createdById : this.user.userId
+        createdById : this.user.userId,
+        index: 1,
+        isManagerial : true,
+        typeOfPerformance: 0,
       }
       this.hrmService.addPerformancePlanDetail(performance).subscribe({
         next:(res)=>{

@@ -4,6 +4,7 @@ using IntegratedInfrustructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IntegratedInfrustructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241128114648_finance-manager-on0project")]
+    partial class financemanageron0project
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1360,9 +1363,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<int>("Rowstatus")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("SubsidiaryAccountId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<double>("UnitPrice")
                         .HasColumnType("float");
 
@@ -1377,8 +1377,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasIndex("ProjectId");
 
                     b.HasIndex("ReceiptId");
-
-                    b.HasIndex("SubsidiaryAccountId");
 
                     b.ToTable("ReceiptDetails");
                 });
@@ -7072,12 +7070,6 @@ namespace IntegratedInfrustructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("IntegratedInfrustructure.Model.FInance.Configuration.SubsidiaryAccount", "SubsidiaryAccount")
-                        .WithMany()
-                        .HasForeignKey("SubsidiaryAccountId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.Navigation("ChartOfAccount");
 
                     b.Navigation("CreatedBy");
@@ -7087,8 +7079,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("Project");
 
                     b.Navigation("Receipt");
-
-                    b.Navigation("SubsidiaryAccount");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Configuration.AccountType", b =>

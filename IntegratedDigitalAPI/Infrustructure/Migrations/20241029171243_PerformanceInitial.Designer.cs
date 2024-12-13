@@ -4,6 +4,7 @@ using IntegratedInfrustructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IntegratedInfrustructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241029171243_PerformanceInitial")]
+    partial class PerformanceInitial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1360,9 +1363,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<int>("Rowstatus")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("SubsidiaryAccountId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<double>("UnitPrice")
                         .HasColumnType("float");
 
@@ -1377,8 +1377,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasIndex("ProjectId");
 
                     b.HasIndex("ReceiptId");
-
-                    b.HasIndex("SubsidiaryAccountId");
 
                     b.ToTable("ReceiptDetails");
                 });
@@ -3577,8 +3575,8 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<int>("Index")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsManagerial")
-                        .HasColumnType("bit");
+                    b.Property<Guid>("PositionId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Rowstatus")
                         .HasColumnType("int");
@@ -3589,6 +3587,8 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CreatedById");
+
+                    b.HasIndex("PositionId");
 
                     b.ToTable("PerformancePlans");
                 });
@@ -4203,12 +4203,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<Guid>("DepartmentId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("FinanceManagerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("FinanceMangerId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Goal")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -4248,8 +4242,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.HasIndex("CreatedById");
 
                     b.HasIndex("DepartmentId");
-
-                    b.HasIndex("FinanceManagerId");
 
                     b.HasIndex("ProjectManagerId");
 
@@ -7072,12 +7064,6 @@ namespace IntegratedInfrustructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("IntegratedInfrustructure.Model.FInance.Configuration.SubsidiaryAccount", "SubsidiaryAccount")
-                        .WithMany()
-                        .HasForeignKey("SubsidiaryAccountId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.Navigation("ChartOfAccount");
 
                     b.Navigation("CreatedBy");
@@ -7087,8 +7073,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("Project");
 
                     b.Navigation("Receipt");
-
-                    b.Navigation("SubsidiaryAccount");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.FInance.Configuration.AccountType", b =>
@@ -8012,7 +7996,15 @@ namespace IntegratedInfrustructure.Migrations
                         .WithMany()
                         .HasForeignKey("CreatedById");
 
+                    b.HasOne("IntegratedInfrustructure.Model.HRM.Position", "Position")
+                        .WithMany()
+                        .HasForeignKey("PositionId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.Navigation("CreatedBy");
+
+                    b.Navigation("Position");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.HRM.PerformanceScale", b =>
@@ -8247,12 +8239,6 @@ namespace IntegratedInfrustructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "FinanceManager")
-                        .WithMany()
-                        .HasForeignKey("FinanceManagerId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("IntegratedInfrustructure.Model.HRM.EmployeeList", "ProjectManager")
                         .WithMany()
                         .HasForeignKey("ProjectManagerId")
@@ -8262,8 +8248,6 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("CreatedBy");
 
                     b.Navigation("Department");
-
-                    b.Navigation("FinanceManager");
 
                     b.Navigation("ProjectManager");
                 });

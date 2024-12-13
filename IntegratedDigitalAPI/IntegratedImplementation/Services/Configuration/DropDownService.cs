@@ -221,11 +221,12 @@ namespace IntegratedImplementation.Services.Configuration
 
         public async Task<List<SelectListDto>> GetActivityByProjectid(Guid projectId)
         {
-            var activities = await _dbContext.Activities.Include(x => x.ActivityParent.Task.Project).AsNoTracking().Select(x => new SelectListDto
-            {
-                Id = x.Id,
-                Name = $"{x.ActivityNumber}/{x.ActivityDescription}"
-            }).ToListAsync();
+            var activities = await _dbContext.Activities.Include(x => x.ActivityParent.Task.Project).Where(x => x.ActivityParent.Task.ProjectId == projectId)
+                .AsNoTracking().Select(x => new SelectListDto
+                {
+                    Id = x.Id,
+                    Name = $"{x.ActivityNumber}/{x.ActivityDescription}"
+                }).ToListAsync();
 
             return activities;
         }

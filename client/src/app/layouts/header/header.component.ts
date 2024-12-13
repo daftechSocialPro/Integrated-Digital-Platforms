@@ -120,6 +120,7 @@ export class HeaderComponent implements OnInit {
       target: event.target,
       message: `Are you sure that you want to Approve Payment ?`,
       icon: 'pi pi-exclamation-triangle',
+      
       accept: () => {
         let item: ApprovePaymentRequsition = {
           id: id,
@@ -130,6 +131,7 @@ export class HeaderComponent implements OnInit {
           next: (res) => {
             if (res.success) {
               this.messageService.add({ severity: 'success', summary: 'Success', detail: res.message });
+              this.pendingPayments =  this.pendingPayments.filter(x => x.id != id);
             }
             else {
               this.messageService.add({ severity: 'error', summary: 'Error', detail: res.message });
