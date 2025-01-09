@@ -1,6 +1,6 @@
-<main [attr.id]="!paymentDetailList ? 'main' : null" class="main">
+<main [attr.id]="paymentDetailList !== undefined || receiptDetailGet !== undefined ? 'main' : null" class="main">
 
-    <div class="iconcontainer" *ngIf="!paymentDetailList" (click)="goToJV()">
+    <div class="iconcontainer" *ngIf="paymentDetailList !== undefined || receiptDetailGet !== undefined" (click)="goToJV()">
         <i class="bi bi-arrow-left-short"></i>
         <div>Back To Journal Voucher</div>
     </div>
@@ -11,7 +11,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Add Journal</h5>
-                <div *ngIf="paymentDetailList" >
+                <div *ngIf="paymentDetailList === undefined || receiptDetailGet === undefined" >
                     
                     <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
                 </div>

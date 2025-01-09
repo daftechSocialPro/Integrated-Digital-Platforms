@@ -1,12 +1,4 @@
-﻿using IntegratedInfrustructure.Model.Configuration;
-using IntegratedInfrustructure.Model.PM;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace IntegratedImplementation.DTOS.Finance.Action
+﻿namespace IntegratedImplementation.DTOS.Finance.Action
 {
     public class AddReceiptDto
     {
@@ -23,10 +15,38 @@ namespace IntegratedImplementation.DTOS.Finance.Action
     {
         public Guid? ItemId { get; set; }
         public Guid ChartOfAccountId { get; set; }
+        public Guid SubsidiaryAccountId { get; set; }
         public string Description { get; set; } = null!;
         public double UnitPrice { get; set; }
         public double Quantity { get; set; }
         public bool IsTaxable { get; set; }
         public Guid? ProjectId { get; set; }
+    }
+
+    public class ReceiptGetDto
+    {
+        public Guid Id { get; set; }
+        public Guid BankId { get; set; }
+        public string ReferenceNumber { get; set; } = null!;
+        public string ReceiptNumber { get; set; } = null!;
+        public DateTime Date { get; set; }
+        public string BankName { get; set; }
+        public List<ReceiptDetailGetDto> ReceiptDetails { get; set; }
+
+    }
+    public class ReceiptDetailGetDto
+    {
+        public Guid? ItemId { get; set; }
+        public string? ItemName { get; set; }
+        public Guid ChartOfAccountId { get; set; }
+        public string ChartOfAccountName { get; set; }
+        public Guid SubsidiaryAccountId { get; set; }
+        public string SubsidiaryAccountName { get; set; }
+        public string Description { get; set; } = null!;
+        public double UnitPrice { get; set; }
+        public double Quantity { get; set; }
+        public bool IsTaxable { get; set; }
+        public Guid? ProjectId { get; set; }
+        public string? ProjectName { get; set; }
     }
 }

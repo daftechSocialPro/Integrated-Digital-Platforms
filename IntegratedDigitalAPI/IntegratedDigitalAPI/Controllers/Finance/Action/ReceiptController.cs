@@ -1,7 +1,6 @@
 ﻿using Implementation.Helper;
 using IntegratedImplementation.DTOS.Finance.Action;
 using IntegratedImplementation.Interfaces.Finance.Action;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -47,6 +46,14 @@ namespace IntegratedDigitalAPI.Controllers.Finance.Action
             {
                 return BadRequest();
             }
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(List<ReceiptGetDto>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetReceipts()
+        {
+            return Ok(await _receiptService.GetReceipts());
+
         }
     }
 }

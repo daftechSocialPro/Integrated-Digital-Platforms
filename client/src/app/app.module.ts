@@ -289,6 +289,7 @@ import { AddDocumentTypeComponent } from './pages/configuration/document-type/ad
 import { EmployeeGuaranteeComponent } from './pages/human-resource/employee-managment/employee-detail/employee-guarantee/employee-guarantee.component';
 import { AddEmployeeGuaranteeComponent } from './pages/human-resource/employee-managment/employee-detail/employee-guarantee/add-employee-guarantee/add-employee-guarantee.component';
 import { ExtendContractComponent } from './pages/human-resource/contract-end-employees/extend-contract/extend-contract.component';
+import { GenerateIdCardComponent } from './pages/human-resource/employee-managment/generate-id-card/generate-id-card.component';
 
 @NgModule({
   declarations: [
@@ -620,6 +621,7 @@ import { ExtendContractComponent } from './pages/human-resource/contract-end-emp
       PaymentSetlmentsComponent,
       RequestPaymentComponent,
       DocumentTypeComponent,
+      GenerateIdCardComponent
       AddDocumentTypeComponent,
       EmployeeGuaranteeComponent,
       AddEmployeeGuaranteeComponent,
