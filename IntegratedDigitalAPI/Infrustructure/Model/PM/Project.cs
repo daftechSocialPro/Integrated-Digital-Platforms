@@ -35,7 +35,7 @@ namespace IntegratedInfrustructure.Model.PM
         public Guid ProjectManagerId { get; set; }
         public virtual EmployeeList ProjectManager { get; set; } = null!;
 
-        public Guid FinanceMangerId { get; set; }
+        public Guid FinanceManagerId { get; set; }
 
         public virtual EmployeeList FinanceManager { get; set; } = null!;
 

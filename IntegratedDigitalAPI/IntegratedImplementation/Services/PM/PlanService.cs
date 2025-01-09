@@ -38,7 +38,7 @@ namespace IntegratedDigitalAPI.Services.PM
                     PlannedBudget = plan.PlandBudget,
                     DepartmentId = plan.StructureId,
                     ProjectManagerId = plan.ProjectManagerId,
-                    FinanceMangerId = plan.FinanceManagerId,
+                    FinanceManagerId = plan.FinanceManagerId,
                     CreatedDate = DateTime.Now,
                     CreatedById = plan.CreatedById
 
@@ -173,7 +173,7 @@ namespace IntegratedDigitalAPI.Services.PM
 
             var plans = programId != null ? _dBContext.Projects.Where(x => x.ProjectManagerId == programId).Include(x => x.Department).Include(x => x.ProjectManager).Include(x => x.ProjectFunds).AsNoTracking() :
                 _dBContext.Projects.Include(x => x.Department).Include(x => x.ProjectManager)
-                .Include(x=>x.FinanceManager)
+                .Include(x=>x.FinanceManagerId)
                 .Include(x => x.ProjectFunds).AsNoTracking();
 
 
@@ -196,7 +196,7 @@ namespace IntegratedDigitalAPI.Services.PM
                               StructureName = p.Department.DepartmentName,
                               RemainingBudget = (float)(p.PlannedBudget - p.Tasks.Sum(x => (float)x.ActualBudget)),
                               ProjectManager = $"{p.ProjectManager.FirstName} {p.ProjectManager.MiddleName} {p.ProjectManager.LastName}",
-                              FinanceManager = p.FinanceMangerId!=null? $"{p.FinanceManager.FirstName} {p.FinanceManager.MiddleName} {p.FinanceManager.LastName}":"",
+                              FinanceManager = p.FinanceManagerId!=null? $"{p.FinanceManager.FirstName} {p.FinanceManager.MiddleName} {p.FinanceManager.LastName}":"",
 
                               //Director = _dBContext.Employees.Where(x => x.Position == Models.Common.Position.Director&&x.OrganizationalStructureId== p.StructureId).FirstOrDefault().FullName,                              
                               NumberOfTask = _dBContext.Tasks.Count(x => x.ProjectId == p.Id),
@@ -211,7 +211,7 @@ namespace IntegratedDigitalAPI.Services.PM
 
                               StructureId = p.DepartmentId.ToString(),
                               ProjectManagerId = p.ProjectManagerId.ToString(),
-                              FinanceManagerId = p.FinanceMangerId.ToString(),
+                              FinanceManagerId = p.FinanceManagerId.ToString(),
                               
                               CreatedDate = p.CreatedDate
 
