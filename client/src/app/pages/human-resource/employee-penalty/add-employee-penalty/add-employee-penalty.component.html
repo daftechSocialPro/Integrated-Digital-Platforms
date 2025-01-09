@@ -35,11 +35,12 @@
                                 <div class="col-md-6">
                                     <div class="form-group mb-3">
                                         <label htmlFor="penaltyDate" class="col-12">Penalty Date</label>
-                                      
-                                        <p-calendar [showIcon]="true" formControlName="penaltyDate"  
-                                            name="penaltyDate" [appendTo]="attachHere" [required]="true"
-                                            inputId="icon"></p-calendar>
-                                            <div #attachHere></div>
+                                        <input type="date" class="form-control" id="penaltyDate"  formControlName="penaltyDate"  
+                                        [max] = "maxDate"> 
+
+                                        <!-- <p-calendar [showIcon]="true" formControlName="penaltyDate"    style="z-index: 1055 !important;"
+                                            name="penaltyDate" appendTo="body" [required]="true"
+                                            inputId="icon"></p-calendar> -->
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -72,9 +73,11 @@
                                 <div class="col-md-4" *ngIf="recursive">
                                     <div class="form-group">
                                         <label htmlFor="penalityendDate" class="col-12">Penalty End Date</label>
-                                        <p-calendar [showIcon]="true" formControlName="penalityendDate"  
-                                            name="penalityendDate" [appendTo]="attachHere2" inputId="icon"></p-calendar>
-                                            <div #attachHere2></div>
+                                        <input type="date" class="form-control" id="penalityendDate"  formControlName="penalityendDate"  
+                                        [max] = "maxDate"> 
+                                        <!-- <p-calendar [showIcon]="true" formControlName="penalityendDate"  style="z-index: 1055 !important;"
+                                            name="penalityendDate" appendTo="body" inputId="icon"></p-calendar> -->
+                                           
                                     </div>
                                 </div>
                                 <div class="col-md-6">

@@ -27,6 +27,16 @@ namespace IntegratedImplementation.Services.Configuration
 
             try
             {
+                var nameExists = await _dbContext.EducationalLevels.AnyAsync(x => x.EducationalLevelName == EducationalLevelPost.EducationalLevelName);
+                if(nameExists)
+                {
+                    return new ResponseMessage
+                    {
+                        Message = "Name already Exists",
+                        Success = false
+                    };
+                }
+
                 EducationalLevel EducationalLevel = new EducationalLevel
                 {
                     Id = Guid.NewGuid(),

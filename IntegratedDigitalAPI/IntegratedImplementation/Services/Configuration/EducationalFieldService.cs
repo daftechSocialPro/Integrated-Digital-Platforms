@@ -28,6 +28,15 @@ namespace IntegratedImplementation.Services.Configuration
 
             try
             {
+                var nameExists = await _dbContext.EducationalFields.AnyAsync(x => x.EducationalFieldName == EducationalFieldPost.EducationalFieldName);
+                if (nameExists)
+                {
+                    return new ResponseMessage
+                    {
+                        Message = "Name already Exists",
+                        Success = false
+                    };
+                }
                 EducationalField educationalField = new EducationalField
                 {
                     Id = Guid.NewGuid(),

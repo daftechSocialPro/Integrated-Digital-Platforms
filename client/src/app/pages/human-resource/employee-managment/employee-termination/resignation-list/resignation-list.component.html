@@ -37,12 +37,12 @@
                         <td>{{ resign.employeeName }}</td>
                         <td>{{ selected.id=='1'?(resign.approvedDate|date:"dd MMM yyyy"):(resign.resignationDate|date:"dd MMM yyyy") }}</td>
                         <td> {{ selected.id=='1'?(resign.approverEmployee):(resign.reasonForResignation ) }}</td>
-                        <td *ngIf="selected.id=='2'" >
-                            
-                      
-                            <div style="text-align: center;">
-                          <a (click)="viewPdf(resign.resignationLetterPath)" class="btn btn-outline-primary">View Letter</a>
-                       </div>
+                        <td *ngIf="selected.id=='2'">
+                        
+                        
+                            <div style="text-align: center;" *ngIf="resign.resignationLetterPath != ''">
+                                <a (click)="viewPdf(resign.resignationLetterPath)" class="btn btn-outline-primary">View Letter</a>
+                            </div>
                         </td>
                         <td *ngIf="selected.id=='2'">
                             <div class="filter">

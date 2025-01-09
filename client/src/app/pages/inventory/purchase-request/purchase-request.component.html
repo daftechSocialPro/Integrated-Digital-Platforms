@@ -18,7 +18,7 @@
                     <div  class="col-md-4">
                         <label htmlFor="lastname2">Project</label><br />
                         <p-dropdown [options]="projectDropDown" optionLabel="name" optionValue="id"  name="projectId" 
-                        [(ngModel)]="addPurchaseRequest.projectId" placeholder="Select Project"  [filter]="true" filterBy="name" [showClear]="true"></p-dropdown>
+                        [(ngModel)]="addPurchaseRequest.projectId" placeholder="Select Project"  [filter]="true" filterBy="name" [showClear]="true" [style]="{ width: '300px' }"></p-dropdown>
                     </div>
                     <div class="col-md-2 ">
                         <label htmlFor="lastname2">Is Store Requested</label> <br />

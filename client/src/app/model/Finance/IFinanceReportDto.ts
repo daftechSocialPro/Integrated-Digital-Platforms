@@ -7,7 +7,7 @@ export interface PayrollReportGetDto{
     transportFuelAllowance: number
     communicationAllowance: number
     positionAllowanceOT: number
-    pFEmployerPension: number
+    employerPension: number
     employeePension: number
     totalEarning: number
     taxableIncome: number

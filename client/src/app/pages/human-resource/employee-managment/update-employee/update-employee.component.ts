@@ -54,7 +54,7 @@ export class UpdateEmployeeComponent implements OnInit {
   ngOnInit(): void {
     this.maxBirthDate.setFullYear(this.maxBirthDate.getFullYear() - 18);
     this.user = this.userService.getCurrentUser();
-   
+   console.log(this.selectedEmployee);
     this.getCountries();
     this.getBankList();
     this.EmployeeForm = this.formBuilder.group({
@@ -73,7 +73,7 @@ export class UpdateEmployeeComponent implements OnInit {
       employmentType: [this.selectedEmployee.employmentType, Validators.required],
       paymentType: [this.selectedEmployee.paymentType, Validators.required],
       employmentDate: [new Date(this.selectedEmployee.employmentDate), Validators.required],
-      ContractEndDate: [this.selectedEmployee.contractEndDate],
+      ContractEndDate: [this.selectedEmployee.contractEndDate != null  ? new Date(this.selectedEmployee.contractEndDate): null],
       pensionCode: [this.selectedEmployee.pensionCode],
       tinNumber: [this.selectedEmployee.tinNumber],
       woreda: [this.selectedEmployee.woreda, Validators.required],

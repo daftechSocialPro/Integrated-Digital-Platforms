@@ -663,6 +663,7 @@ import { ExtendContractComponent } from './pages/human-resource/contract-end-emp
     ResizableModule,
     MultiSelectModule,
     DataViewModule ,
+  
     ToastrModule.forRoot({
       preventDuplicates: true,
     }),

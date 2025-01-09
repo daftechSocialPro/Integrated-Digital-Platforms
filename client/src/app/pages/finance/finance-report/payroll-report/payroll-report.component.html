@@ -76,8 +76,7 @@
                                     <th style=" border: 1px solid black;">Taxable Income</th>
                                     <th style=" border: 1px solid black;">Payroll Tax</th>
                                     <th style=" border: 1px solid black;">PF/Pension</th>
-                                    <th style=" border: 1px solid black;">Loan</th>
-                                    <!--  <th style=" border: 1px solid black;">Salary Loan</th>                              -->
+                                    <th style=" border: 1px solid black;">Loan</th>                         
                                     <th style=" border: 1px solid black;">Total Deduction</th>
                                     <th style=" border: 1px solid black;">Net Pay</th>
                                 </tr>
@@ -94,12 +93,12 @@
                                     <td style=" border: 1px solid black;">{{item.communicationAllowance | number:'1.2-2'}}</td>
                                     <td style=" border: 1px solid black;">{{item.positionAllowanceOT | number:'1.2-2'}}</td>
                                     <td style=" border: 1px solid black;">{{item.overTime | number:'1.2-2'}}</td>
-                                    <td style=" border: 1px solid black;">{{item.pFEmployerPension | number:'1.2-2'}}</td>
+                                    <td style=" border: 1px solid black;">{{item.employerPension | number:'1.2-2'}}</td>
                                     <td style=" border: 1px solid black;">{{item.employeePension | number:'1.2-2'}}</td>
                                     <td style=" border: 1px solid black;">{{item.totalEarning | number:'1.2-2'}}</td>
                                     <td style=" border: 1px solid black;">{{item.taxableIncome | number:'1.2-2'}}</td>
                                     <td style=" border: 1px solid black;">{{item.incomeTax |number:'1.2-2'}}</td>
-                                    <td style=" border: 1px solid black;">{{item.pFEmployerPension | number:'1.2-2'}}</td>
+                                    <td style=" border: 1px solid black;">{{item.pension | number:'1.2-2'}}</td>
                                     <td style=" border: 1px solid black;">{{item.loan | number:'1.2-2'}}</td>
                                     <td style=" border: 1px solid black;">{{item.totalDeduction | number:'1.2-2'}}</td>
                                     <td style=" border: 1px solid black;">{{item.netPay | number:'1.2-2'}} </td>

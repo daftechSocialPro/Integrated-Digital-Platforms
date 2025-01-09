@@ -16,7 +16,7 @@ namespace IntegratedImplementation.DTOS.Finance.Report
         public double TransportFuelAllowance { get; set; }
         public double CommunicationAllowance { get; set; }
         public double PositionAllowanceOT { get; set; }
-        public double PFEmployerPension { get; set; }
+        public double EmployerPension { get; set; }
         public double EmployeePension { get; set; }
         public double TotalEarning { get; set; }
         public double OverTime { get; set; }

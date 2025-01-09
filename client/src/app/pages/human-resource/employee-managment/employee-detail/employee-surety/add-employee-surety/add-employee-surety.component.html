@@ -14,7 +14,7 @@
                     <div class="col-md-3 ">
                         <img [src]="photoPath ? photoPath : 'assets/img/profile.jpg'" alt="Profile"
                             style="width: 100%;">
-                        <input #file (change)="onUpload($event)" type="file" style="display: none;" accept="image/*" />
+                        <input  #file (change)="onUpload($event)" type="file" style="display: none;" accept="image/*" />
                         <div class="pt-2">
                             <a (click)="file.click()" style="width: 100%;" class="btn btn-outline-primary btn-sm"
                                 title="Upload new profile image">
@@ -59,13 +59,13 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating"> <input type="file" (change)="onUploadLetter($event)"
-                                        class="form-control" id="letter" placeholder="letter" required>
+                                        class="form-control" id="letter" placeholder="letter" required accept="image/*">
                                     <label for="letter"> Letter </label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating"> <input type="file" (change)="onUploadId($event)"
-                                        class="form-control" id="letter" placeholder="letter" required>
+                                        class="form-control" id="letter" placeholder="letter" required accept="image/*">
                                     <label for="letter"> ID Card </label>
                                 </div>
                             </div>

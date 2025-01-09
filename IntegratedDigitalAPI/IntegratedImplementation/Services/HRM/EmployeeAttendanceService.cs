@@ -224,7 +224,7 @@ namespace IntegratedImplementation.Services.HRM
             var currSalary = await _dbContext.EmployeeSalaries.Include(x => x.EmploymentDetail).FirstOrDefaultAsync(x => x.EmploymentDetail.EmployeeId.Equals(Guid.Parse(addPenalty.EmployeeId)) && x.Rowstatus == RowStatus.ACTIVE);
 
             if (currSalary == null)
-                return new ResponseMessage { Success = false, Message = "Please set salary first!!" };
+                return new ResponseMessage { Success = false, Message = "Please set the salary of the employee first!!" };
 
             EmployeePenalty penalty = new EmployeePenalty()
             {

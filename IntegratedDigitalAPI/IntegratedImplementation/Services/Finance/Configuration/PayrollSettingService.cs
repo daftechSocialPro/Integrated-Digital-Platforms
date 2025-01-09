@@ -216,9 +216,9 @@ namespace IntegratedImplementation.Services.Finance.Configuration
 
             foreach (var item in addBenefitPayroll.BenefitId)
             {
-                var addNew = await _dbContext.BenefitPayrolls.AnyAsync(x => x.BenefitListId == Guid.Parse(item));
+                var addNew = await _dbContext.BenefitPayrolls.FirstOrDefaultAsync(x => x.BenefitListId == Guid.Parse(item));
 
-                if (!addNew)
+                if (addNew == null)
                 {
                     BenefitPayroll benefitP = new BenefitPayroll()
                     {
@@ -233,6 +233,12 @@ namespace IntegratedImplementation.Services.Finance.Configuration
 
                    await _dbContext.BenefitPayrolls.AddAsync(benefitP);
                    await _dbContext.SaveChangesAsync();
+                }
+                else
+                {
+                    addNew.Taxable = addBenefitPayroll.Taxable;
+                    addNew.PayrollReportType = Enum.Parse<PayrollReportType>(addBenefitPayroll.PayrollReportType);
+                    await _dbContext.SaveChangesAsync();
                 }
 
             }

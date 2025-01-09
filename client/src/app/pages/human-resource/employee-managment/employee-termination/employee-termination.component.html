@@ -73,9 +73,9 @@
                         <td>{{ termination.department }}</td>
                         <td>{{ termination.position }}</td>
                         <td>{{ termination.terminationReason }}</td>
-                        <td>{{ termination.isBlackListed }}</td>
+                        <td>{{ termination.isBlackListed ? "Yes" : "No" }}</td>
                         <td>{{ termination.terminatedDate|date:"dd MMM yyyy" }}</td>
-                        <td>{{ termination.hasSeverance }}</td>
+                        <td>{{ termination.hasSeverance ? "Yes" : "No" }}</td>
                         <td>{{ termination.hasSeverance ? termination.totalSeveranceAmount : "-" }}</td>
                         <td>{{ termination.remark }}</td>
   

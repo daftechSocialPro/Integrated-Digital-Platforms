@@ -42,35 +42,35 @@
                                 </div>
                                 <div class="col-md-6" *ngIf="isAdvance">
                                     <div class="form-floating">
-                                        <input type="number" class="form-control" id="numberOfMonths"
+                                        <input type="number" class="form-control" id="numberOfMonths" min="0"
                                             placeholder="numberOfMonths" formControlName="numberOfMonths">
                                         <label for="numberOfMonths">Number of months</label>
                                     </div>
                                 </div>
                                 <div class="col-md-4" *ngIf="!isAdvance">
                                     <div class="form-floating">
-                                        <input type="number" class="form-control" id="maxLoanAmmount"
+                                        <input type="number" class="form-control" id="maxLoanAmmount" min="0"
                                             placeholder="maxLoanAmmount" formControlName="maxLoanAmmount">
                                         <label for="maxLoanAmmount">max Loan Ammount</label>
                                     </div>
                                 </div>
                                 <div class="col-md-4" *ngIf="!isAdvance">
                                     <div class="form-floating">
-                                        <input type="number" class="form-control" id="minDeductedPercent"
+                                        <input type="number" class="form-control" id="minDeductedPercent" min="0"
                                             placeholder="minDeductedPercent" formControlName="minDeductedPercent">
                                         <label for="minDeductedPercent">Min Deducted %</label>
                                     </div>
                                 </div>
                                 <div class="col-md-4" *ngIf="!isAdvance">
                                     <div class="form-floating">
-                                        <input type="number" class="form-control" id="maxDeductedPercent"
+                                        <input type="number" class="form-control" id="maxDeductedPercent" min="0"
                                             placeholder="maxDeductedPercent" formControlName="maxDeductedPercent">
                                         <label for="maxDeductedPercent">Max Deducted %</label>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-floating">
-                                        <input type="number" class="form-control" id="paymentYear"
+                                        <input type="number" class="form-control" id="paymentYear" min="0"
                                             placeholder="paymentYear" formControlName="paymentYear">
                                         <label for="paymentYear">Return Year</label>
                                     </div>
