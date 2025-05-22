@@ -9,6 +9,8 @@ export interface Task {
     HasActvity: Boolean,
     PlannedBudget: Number,
     PlanId: String,
+    startDate: Date,
+    endDate: Date
 }
 
 export interface TaskView {

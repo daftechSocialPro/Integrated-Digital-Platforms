@@ -23,7 +23,7 @@
                 <div class="col-3 text-start" *ngIf="!exportingToExcel">
                     <label class="form-label">Project Years</label>
                     <select class="form-control " [(ngModel)]="selectedYear" (change)="onProjectYearChange()">
-                        <option></option>
+                        <option value=""></option>
                         <option *ngFor="let year of projectYears" [value]="year.id">{{year.name}}</option>
                     </select>
                 </div>
@@ -53,7 +53,7 @@
 
             <div class="text-end col-lg-12">
                 <button class="btn btn-outline-primary text-end mb-3" (click)="addTask()"><i
-                        class="bi bi-plus me-1"></i> Task </button> |
+                        class="bi bi-plus me-1"></i> Objective </button> |
                 <button class="btn btn-outline-success text-end mb-3" (click)="exportAsExcel(Plans.planName)"><i
                         class="bi bi-file-excel"></i> Export Excel </button>
             </div>

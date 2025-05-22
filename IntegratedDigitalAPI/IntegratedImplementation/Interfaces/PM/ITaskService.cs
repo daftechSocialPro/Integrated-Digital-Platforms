@@ -10,7 +10,7 @@ namespace IntegratedDigitalAPI.Services.PM
 
         public Task<int> CreateTask(TaskDto task);
 
-        public Task<TaskVIewDto> GetSingleTask(Guid taskId);
+        public Task<TaskVIewDto> GetSingleTask(Guid taskId,int? year);
 
 
         public Task<int> AddTaskMemebers(TaskMembersDto taskMembers);

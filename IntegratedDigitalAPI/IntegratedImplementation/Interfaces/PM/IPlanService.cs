@@ -18,7 +18,7 @@ namespace IntegratedDigitalAPI.Services.PM.Plan
 
         public Task<List<SelectListDto>> GetPlansSelectList();
 
-        public Task<PlanSingleViewDto> GetSinglePlan(Guid planId);
+        public Task<PlanSingleViewDto> GetSinglePlan(Guid planId,int? year);
 
         public Task<GetStartEndDate> GetDateTime(Guid planId);
 

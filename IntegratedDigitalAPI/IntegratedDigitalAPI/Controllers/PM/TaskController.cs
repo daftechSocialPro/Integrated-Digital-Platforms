@@ -35,10 +35,10 @@ namespace IntegratedDigitalAPI.Controllers.PM
             }
         }
         [HttpGet("ById")]
-        public async Task<TaskVIewDto> GetSingleTask(Guid taskId)
+        public async Task<TaskVIewDto> GetSingleTask(Guid taskId,int? year)
         {
 
-            return await _taskService.GetSingleTask(taskId);
+            return await _taskService.GetSingleTask(taskId,year);
 
 
         }

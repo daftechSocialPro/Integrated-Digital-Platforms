@@ -21,9 +21,9 @@ export class TaskService {
     return this.http.post(this.BaseURI, task)
   }
 
-  getSingleTask(taskId: String) {
+  getSingleTask(taskId: String,year?: number) {
 
-    return this.http.get<TaskView>(this.BaseURI + "/ById?taskId=" + taskId)
+    return this.http.get<TaskView>(this.BaseURI + "/ById?taskId=" + taskId + "&year=" + year)
   }
 
   addTaskMembers(taskMemebers: TaskMembers) {

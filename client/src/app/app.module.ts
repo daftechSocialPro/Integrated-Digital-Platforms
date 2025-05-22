@@ -621,7 +621,7 @@ import { GenerateIdCardComponent } from './pages/human-resource/employee-managme
       PaymentSetlmentsComponent,
       RequestPaymentComponent,
       DocumentTypeComponent,
-      GenerateIdCardComponent
+      GenerateIdCardComponent,
       AddDocumentTypeComponent,
       EmployeeGuaranteeComponent,
       AddEmployeeGuaranteeComponent,

@@ -81,7 +81,7 @@ export class PlanDetailComponent implements OnInit {
 
 
   getPlans() {
-    this.planService.getSinglePlans(this.planId).subscribe({
+    this.planService.getSinglePlans(this.planId,0).subscribe({
       next: (res) => {
        
 
@@ -113,8 +113,7 @@ export class PlanDetailComponent implements OnInit {
   }
 
   getSingleTaskActivities(taskId: String) {
-  
-    this.taskService.getSingleTask(taskId).subscribe({
+    this.taskService.getSingleTask(taskId,this.selectedYear).subscribe({
       next: (res) => {
         if (res.activityViewDtos !== undefined) {
           const result = res.activityViewDtos;
@@ -136,7 +135,7 @@ export class PlanDetailComponent implements OnInit {
 
   ListTask(planId: string): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      this.planService.getSinglePlans(planId).subscribe({
+      this.planService.getSinglePlans(planId,this.selectedYear).subscribe({
         next: (res) => {
           this.plan = res;
           const result = res.tasks;
