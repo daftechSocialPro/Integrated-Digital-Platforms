@@ -17,6 +17,7 @@ import { UpdateTasksComponent } from '../../tasks/update-tasks/update-tasks.comp
 import { ConfirmEventType, ConfirmationService, MessageService } from 'primeng/api';
 import { UpdateActivitiesComponent } from '../../activity-parents/update-activities/update-activities.component';
 import { PMService } from 'src/app/services/pm.services';
+import { NewTaskActivityComponent } from '../new-task-activity/new-task-activity.component';
 
 @Component({
   selector: 'app-plan-detail',
@@ -117,21 +118,17 @@ export class PlanDetailComponent implements OnInit {
       next: (res) => {
         if (res.activityViewDtos !== undefined) {
           const result = res.activityViewDtos;
-
-         
+          console.log(result);
           this.assignedBudget += res.activityViewDtos.reduce((accumulator, item) => accumulator + item.plannedBudget, 0);
           this.taskActivities.set(taskId, result);
         }
-
-
       }, error: (err) => {
         console.error(err)
       }
     })
-
   }
 
-
+ 
 
   ListTask(planId: string): Promise<void> {
     return new Promise<void>((resolve, reject) => {
@@ -230,7 +227,6 @@ export class PlanDetailComponent implements OnInit {
 
     }
 
-
     modalRef.componentInstance.task = task
     modalRef.componentInstance.requestFrom = "ACTIVITY";
     modalRef.componentInstance.requestFromId = task.id;
@@ -238,6 +234,17 @@ export class PlanDetailComponent implements OnInit {
 
     }
 
+  addTaskunderActivity(activity: any) {
+    let modalRef = this.modalService.open(NewTaskActivityComponent, { size: "xxl", backdrop: 'static' })
+    modalRef.componentInstance.planId = this.planId
+    var dateTime: GetStartEndDate = {
+      fromDate: this.Plans.startDate.toString(),
+      endDate: this.Plans.endDate.toString()
+    }
+    modalRef.componentInstance.activity = activity
+    modalRef.componentInstance.dateAndTime = dateTime
+
+  }
 
     updateActivity(task:TaskView, activity:any) {
       let modalRef = this.modalService.open(UpdateActivitiesComponent, { size: "xxl", backdrop: 'static' })

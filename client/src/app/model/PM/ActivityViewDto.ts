@@ -2,7 +2,6 @@ import { SelectList } from "../common";
 
 
 export interface ActivityView {
-
     id: string
     name: string;
     plannedBudget: number;
@@ -25,24 +24,29 @@ export interface ActivityView {
     isDirector: boolean
     overAllProgress:number,
     isTraining :boolean
-
     projectSource?:string
     projectName?:string
-
     activityLocations?:any
     isCancelled: boolean
-
-   isReSceduled : boolean
-   cancelledJustfication?: string
-   resceduledJustification ?: string 
-
-
-   employeeId:string
-   employeeName:string
-    
-
-
+    isReSceduled : boolean
+    cancelledJustfication?: string
+    resceduledJustification ?: string 
+    employeeId:string
+    employeeName:string
+    taskUnderActivity: TaskUnderActivity[]
 }
+
+export interface TaskUnderActivity {
+    description: string;
+    taskNumber: string;
+    startDate: Date;
+    endDate: Date;
+    plannedBudget: number;
+    baseLine: number;
+    target: number;
+}
+
+
 export interface MonthPerformanceView {
 
     id: string;

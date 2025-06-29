@@ -62,7 +62,7 @@
                     <thead>
                         <tr>
                             <th scope="col" [attr.rowspan]="filterBy==0?3:2" style="border: 1px solid black;">
-                                Task/Activity</th>
+                                Objective/Activity/Task</th>
                             <th scope="col" [attr.rowspan]="filterBy==0?3:2" style="border: 1px solid black">Description
                             </th>
                             <th scope="col" [attr.rowspan]="filterBy==0?3:2" style="border: 1px solid black;">Indicator
@@ -167,10 +167,6 @@
                                     <button class="btn btn-outline-danger btn-sm mt-2" (click)="DeleteTask(task.id)"> <i
                                             class="bi bi-trash me-1"></i> {{exportingToExcel?"":"Delete"}} </button>
                                 </td>
-                                <!-- <ng-container *ngFor="let item of items; index as i">
-                                    <td style="border: 1px solid black; background-color: #eee"></td>
-                                </ng-container> -->
-
                             </tr>
                         </tbody>
                         <ng-container *ngIf="dataLoaded">
@@ -178,27 +174,20 @@
                                 <tbody>
                                     <tr [ngStyle]="act.isCancelled ? {'background-color': '#dc354573'} : null">
                                         <td style="border: 1px solid black;">
-                                            {{index1 + 1}}.{{index2 + 1}}
+                                            {{index1 + 1}}.{{index2 + 1}} <br/>
                                             <button class="btn btn-outline-primary btn-sm"
                                                 *ngIf="(act.monthPerformance!.length===0)" (click)="AssignTarget(act)">
-                                                <i class="bi bi-plus me-1"></i> Target </button>
+                                                <i class="bi bi-plus me-1"></i> Target </button> <br/>
+                                            <button class="btn btn-outline-primary btn-sm" (click)="addTaskunderActivity(act)">
+                                                <i class="bi bi-plus me-1"></i> Task </button>
                                         </td>
                                         <td style="border: 1px solid black;cursor:pointer " (click)="viewDetail(act)">
-
-
-
-
                                             {{act.name}}
                                             <span class="badge" *ngIf="act.isTraining">Training</span>
-
-
-
                                         </td>
-
                                         <td style="border: 1px solid black;">{{act.unitOfMeasurment}}</td>
                                         <td style="border: 1px solid black;">{{act.begining}}</td>
                                         <td style="border: 1px solid black;">{{act.target}}</td>
-
                                         <ng-container
                                             *ngFor=" let item of getPerformancesByCurrentYear(act?.monthPerformance); let i= index ">
                                             <td *ngIf="i==0" style="border: 1px solid black;background-color: #e8ffde;">
@@ -238,8 +227,6 @@
 
                                         <ng-container
                                             *ngFor=" let item of getPerformancesByCurrentYear(act?.monthPerformance); let i= index ">
-
-
                                             <td *ngIf="i==0" style="border: 1px solid black;background-color: #e8ffde;">
                                                 {{
                                                 (getPerformancesByCurrentYear(act?.monthPerformance)[0]?.plannedBudget
@@ -318,6 +305,26 @@
 
 
                                     </tr>
+                                    <ng-template ngFor let-ta [ngForOf]="act.taskUnderActivity" let-index3="index">
+                                        <tr>
+                                            <td>
+                                                {{index1 + 1}}.{{index2 + 1}}.{{index3 + 1}}
+                                            </td>
+                                            <td>
+                                                {{ta.description}}
+                                            </td>
+                                            <td>
+                                    
+                                            </td>
+                                            <td>
+                                                {{ta.baseLine}}
+                                            </td>
+                                            <td>
+                                                {{ta.target}}
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                    
                                 </tbody>
                             </ng-template>
 
