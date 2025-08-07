@@ -51,3 +51,11 @@ client/yarn-error.log
 /IntegratedDigitalAPI/IntegratedDigitalAPI/obj
 /IntegratedDigitalAPI/IntegratedImplementation/bin
 /IntegratedDigitalAPI/IntegratedImplementation/obj
+*.json
+*.json
+*.dll
+*.nupkg
+*.p7s
+*.csproj
+*.sln
+*.csproj
