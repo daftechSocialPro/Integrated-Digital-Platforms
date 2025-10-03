@@ -45,6 +45,7 @@ import {
 } from '../model/PM/ITimePeriodDto';
 import { UserService } from './user.service';
 import { IWeeklyPlanDto } from '../model/PM/WeeklyPlanDto';
+import { TaskNewDto } from '../model/PM/TaskNewDto';
 
 @Injectable({
   providedIn: 'root',
@@ -95,6 +96,10 @@ export class PMService {
 
   addActivityParent(activity: ActivityDetailDto) {
     return this.http.post(this.BaseURI + '/Activity', activity);
+  }
+
+    addnewTask(task: TaskNewDto) {
+    return this.http.post(this.BaseURI + '/Activity/AddnewTask', task);
   }
 
   addSubActivity(activity: SubActivityDetailDto) {

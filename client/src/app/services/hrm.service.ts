@@ -6,14 +6,14 @@ import { environment } from 'src/environments/environment';
 import { DepartmentGetDto, DepartmentPostDto } from '../model/HRM/IDepartmentDto';
 import { ResponseMessage } from '../model/ResponseMessage.Model';
 import { PositionGetDto, PositionPostDto } from '../model/HRM/IPositionDto';
-import { EmployeeEducationGetDto, EmployeeEducationPostDto, EmployeeFamilyGetDto, EmployeeFamilyPostDto, EmployeeFileGetDto, EmployeeFilePostDto, EmployeeGetDto, EmployeeHistoryDto, EmployeeHistoryPostDto, EmployeeListDto, EmployeePostDto, EmployeeSalaryGetDto, EmployeeSalryPostDto, EmployeeSuertyGetDto, VolunterGetDto, VolunterPostDto } from '../model/HRM/IEmployeeDto';
+import { EmployeeDocumentsGetDTO, EmployeeEducationGetDto, EmployeeEducationPostDto, EmployeeFamilyGetDto, EmployeeFamilyPostDto, EmployeeFileGetDto, EmployeeFilePostDto, EmployeeGetDto, EmployeeHistoryDto, EmployeeHistoryPostDto, EmployeeListDto, EmployeePostDto, EmployeeSalaryGetDto, EmployeeSalryPostDto, EmployeeSuertyGetDto, VolunterGetDto, VolunterPostDto } from '../model/HRM/IEmployeeDto';
 import { SelectList } from '../model/common';
 import { AddLeaveDetailDto, AppliedLeavesGetDto, LeaveBalanceGetDto, LeaveBalancePostDto, LeavePlanSettingGetDto, LeavePlanSettingPostDto, LeavePlanSettingUpdateDto, LeaveRequestPostDto, LeaveTypeGetDto, LeaveTypePostDto } from '../model/HRM/ILeaveDto';
 import { HrmSettingDto } from '../model/HRM/IHrmSettingDto';
 import { UserService } from './user.service';
 import { ResignationRequestDto, TerminationGetDto, TerminationRequesterDto } from '../model/HRM/IResignationDto';
 import { PerformanceSettingDto } from '../model/HRM/IPerformanceSettingDto';
-import { AddPerformancePlanDetailDto, AddPerformancePlanDto, PerformancePlanDto } from '../model/HRM/IPerformancePlanDto';
+import { AddPerformancePlanDto, PerformancePlanDto } from '../model/HRM/IPerformancePlanDto';
 import { AssignSupervisorDto, EmployeeSupervisorsDto } from '../model/HRM/IEmployeeSupervisorDto';
 import { AddLoanSettingDto, LoanSettingDto } from '../model/HRM/ILoanSettingDto';
 import { ApproveInitialRequestDto, EmployeeLoanDto, LoanInfoDto, LoanRequestDto, RequestedLoanListDto } from '../model/HRM/ILoanManagmentDto';
@@ -29,6 +29,8 @@ import { AddPenaltyDto, PenaltyListDto } from '../model/HRM/IPenaltyListDto';
 import { AddEmployeeBankDto, EmployeeBankListDto } from '../model/HRM/IEmployeeBankDto';
 import { ContractEndEmployeesDto } from '../model/HRM/IContractEndEmployeesDto';
 import { HrmDashboardGetDto } from '../model/HRM/IHrmDashboard';
+import { GetEmployeeGuaranteeDto } from '../pages/human-resource/employee-managment/employee-detail/employee-guarantee/employee-guarantee.model';
+import { ContractExtentionLetterDto, ExtendContractDto } from '../pages/human-resource/contract-end-employees/extend-contract/extendcontract.model';
 
 export interface toastPayload {
     message: string;
@@ -143,13 +145,19 @@ export class HrmService {
 
     //GetEmployeeswithContractend
     getEmployeeswithContractend(){
-     
-            return this.http.get<SelectList[]>(this.baseUrl + "/Employee/GetEmployeeswithContractend")
-        
+      return this.http.get<SelectList[]>(this.baseUrl + "/Employee/GetEmployeeswithContractend")
     }
 
     getContractEndEmployees() {
         return this.http.get<ContractEndEmployeesDto[]>(this.baseUrl + "/EmployementDetail/GetContractEndEmployees")
+    }
+
+    extendContract(extendContract: ExtendContractDto) {
+        return this.http.put<ResponseMessage>(this.baseUrl + "/EmployementDetail/ExtendContract",extendContract)
+    }
+
+    getContractExtentionLetter(employeeId: string) {
+        return this.http.get<ContractExtentionLetterDto>(this.baseUrl + `/EmployementDetail/GetContractExtentionLetter?employeeId=${employeeId}`);
     }
 
 
@@ -239,17 +247,17 @@ export class HrmService {
     //employee files 
 
     getEmployeeFile(employeeId: string) {
-        return this.http.get<EmployeeFileGetDto[]>(this.baseUrl + "/Employee/GetEmployeeFiles?employeeId=" + employeeId)
+        return this.http.get<EmployeeDocumentsGetDTO[]>(this.baseUrl + "/EmployeeDocument/GetDocumentsByEmployeeId?employeeId=" + employeeId)
     }
     addEmployeeFile(employeeFile: FormData) {
         employeeFile.append('createdById', this.userService.getCurrentUser().userId)
-        return this.http.post<ResponseMessage>(this.baseUrl + "/Employee/AddEmployeeFiles", employeeFile)
+        return this.http.post<ResponseMessage>(this.baseUrl + "/EmployeeDocument/AddDocument", employeeFile)
     }
     updateEmployeeFile(employeeFile: FormData) {
-        return this.http.post<ResponseMessage>(this.baseUrl + "/Employee/UpdateEmployeeFile", employeeFile)
+        return this.http.put<ResponseMessage>(this.baseUrl + "/EmployeeDocument/UpdateDocument", employeeFile)
     }
-    deleteEmployeeFile(employeeId: string) {
-        return this.http.delete<ResponseMessage>(this.baseUrl + "/Employee/DeleteEmployeeFiles?employeeFileId=" + employeeId)
+    deleteEmployeeFile(employeeDocumentId: string) {
+        return this.http.delete<ResponseMessage>(this.baseUrl + "/EmployeeDocument/DeleteDocument?employeeDocumentId=" + employeeDocumentId)
     }
     //employee surety
 
@@ -266,7 +274,21 @@ export class HrmService {
     deleteEmployeeSurety(employeeSuretyId: string) {
         return this.http.delete<ResponseMessage>(this.baseUrl + "/Employee/DeleteEmployeeSurety?employeeSuretyId=" + employeeSuretyId)
     }
+    //employee Guarantee
+    getEmployeeGuarantee(employeeId: string) {
+        return this.http.get<GetEmployeeGuaranteeDto[]>(this.baseUrl + "/Employee/GetEmployeeGuarantee?employeeId=" + employeeId)
+    }
+    addEmployeeGuarantee(employeeGuarantee: FormData) {
+        employeeGuarantee.append('createdById', this.userService.getCurrentUser().userId)
+        return this.http.post<ResponseMessage>(this.baseUrl + "/Employee/AddEmployeeGuarantee", employeeGuarantee)
+    }
+    updateEmployeeGuarantee(employeeGuarantee: FormData) {
+        return this.http.put<ResponseMessage>(this.baseUrl + "/Employee/UpdateEmployeeGuarantee", employeeGuarantee)
+    }
 
+    returnEmployeeGuarantee(id: string) {
+        return this.http.put<ResponseMessage>(this.baseUrl + "/Employee/ReturnEmployeeGuarantee?id=" + id, id)
+    }
 
     //employee Family
     getEmployeeFamily(employeeId: string) {
@@ -377,10 +399,10 @@ export class HrmService {
     updatePerformancePlan(performancePlan: AddPerformancePlanDto) {
         return this.http.post<ResponseMessage>(this.baseUrl + `/PerformancePlan/UpdatePerformancePlan`, performancePlan)
     }
-    addPerformancePlanDetail(performancePlan: AddPerformancePlanDetailDto) {
+    addPerformancePlanDetail(performancePlan: AddPerformancePlanDto) {
         return this.http.post<ResponseMessage>(this.baseUrl + `/PerformancePlan/addPerformancePlanDetail`, performancePlan)
     }
-    updatePerformancePlanDetail(performancePlan: AddPerformancePlanDetailDto) {
+    updatePerformancePlanDetail(performancePlan: AddPerformancePlanDto) {
         return this.http.post<ResponseMessage>(this.baseUrl + `/PerformancePlan/UpdatePerformancePlanDetail`, performancePlan)
     }
 
@@ -589,5 +611,25 @@ export class HrmService {
         return this.http.get<HrmDashboardGetDto>(this.baseUrl + "/HrmDashboard")
     }
     
+   //HRM reports
+    getDailyReport(date: Date,fileType: String) {
+    return this.http.get(`${this.baseUrl}/AttendanceReport/GetDailyAttendanceReport?date=${date}&fileType=${fileType}`, {
+      responseType: 'arraybuffer', // ← Crucial for binary data
+      headers: { Accept: 'multipart/form-data' }
+    });
+  }
 
+  getDailyOvertimeReport(date: Date,fileType: String) {
+    return this.http.get(`${this.baseUrl}/AttendanceReport/GetDailyOvertimeReport?date=${date}&fileType=${fileType}`, {
+      responseType: 'arraybuffer', // ← Crucial for binary data
+      headers: { Accept: 'multipart/form-data' }
+    });
+  }
+
+   getMonthlyReport(date: Date,fileType: String) {
+    return this.http.get(`${this.baseUrl}/AttendanceReport/GetMonthlyReport?date=${date}&fileType=${fileType}`, {
+      responseType: 'arraybuffer', // ← Crucial for binary data
+      headers: { Accept: 'multipart/form-data' }
+    });
+  }
 }

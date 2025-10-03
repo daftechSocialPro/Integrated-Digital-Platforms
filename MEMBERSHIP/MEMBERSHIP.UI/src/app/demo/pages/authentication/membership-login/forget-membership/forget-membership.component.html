@@ -1,0 +1,59 @@
+<div class="row">
+    <div class="col-lg-8 col-sm-12" style="background-color: white;padding: 40px;">
+        <div class="card" style="max-width: 800px!important">
+            <div class="card-body">
+                <h4 class="text-center mb-4">Request Membership ID</h4>
+                <p class="text-center text-muted">Enter your email or phone number to retrieve your Membership ID.</p>
+
+
+                <form #forgetForm="ngForm">
+                    <!-- Input Field for Email or Phone -->
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingInput" [(ngModel)]="contactInput"
+                            name="contactInput" required #contactInputRef="ngModel" (blur)="validateContact()" />
+                        <label for="floatingInput">Email or Phone Number</label>
+                        <div *ngIf="contactInputRef.invalid && contactInputRef.touched" class="text-danger">
+                            <small *ngIf="errorMessage">{{ errorMessage }}</small>
+                        </div>
+                    </div>
+
+                    <div class="container">
+                        <div class="d-grid text-center mt-4">
+                            <button type="submit" (click)="submitForgetPassword()" class="btn btn-secondary"
+                                [disabled]="!isValid">
+                                Request
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-sm-12 p-2  flex justify-content-center">
+        <div class="member-info text-center">
+
+            <img src="../../../../../assets/logo2.png" alt="Member Image" style="max-height: 150px;"
+                class="img-fluid bounce-image">
+            <h2 class="text-secondary mt-2"><b>Ethipian Midwifes Association </b></h2>
+            <p class="text-center animated-paragraph p-2">
+
+                Joining our Midwifes Membership is an
+                excellent opportunity for Midwifes to connect,
+                collaborate, and access valuable resources within our
+                community.By becoming a member, you will gain exclusive
+                benefits and support tailored specifically to Midwifery professionals.
+            </p>
+
+
+            <div class="d-grid mt-4 p-4">
+
+
+                <button type="button" (click)="closeModal()" class="btn btn-outline-danger">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>

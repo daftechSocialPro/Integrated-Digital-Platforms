@@ -42,6 +42,8 @@ namespace IntegratedInfrustructure.Data
 
 
         public DbSet<BankList> BankLists { get; set; }
+
+        public DbSet<DocumentType> DocumentTypes { get; set; }
         #endregion
 
         #region HRM
@@ -52,11 +54,11 @@ namespace IntegratedInfrustructure.Data
         public DbSet<EmployeeList> Employees { get; set; }
         public DbSet<EmployeeWorkExperiance> EmployeeWorkExperiances { get; set; }
         public DbSet<EmploymentDetail> EmploymentDetails { get; set; }
-        public DbSet<EmployeeFile> EmployeeFiles { get; set; }
+        public DbSet<ContractExtentionEmployee> ContractExtentionEmployees { get; set; }
         public DbSet<EmployeeSurety> EmployeeSureties { get; set; }
         public DbSet<LeavePlanSetting> LeavePlanSetting { get; set; }
         public DbSet<EmployeeSalary> EmployeeSalaries { get; set; }
-        public DbSet<EmployeeDocuments> EmployeeDocuments { get; set; }
+        public DbSet<EmployeeDocument> EmployeeDocuments { get; set; }
         public DbSet<LeaveBalance> LeaveBalances { get; set; }
         public DbSet<LeaveType> LeaveTypes { get; set; }
         public DbSet<Position> Positions { get; set; }
@@ -64,12 +66,13 @@ namespace IntegratedInfrustructure.Data
         public DbSet<ResignationRequest> ResignationRequests { get; set; }
         public DbSet<EmployeeSupervisors> EmployeeSupervisors { get; set; }
         public DbSet<PerformanceSetting> PerformanceSettings { get; set; }
+        public DbSet<PerformanceScale> PerformanceScales { get; set; }
         public DbSet<PerformancePlan> PerformancePlans { get; set; }
-        public DbSet<PerformancePlanDetail> PerformancePlanDetails { get; set; }
+ 
         public DbSet<EmployeePerformance> EmployeePerformances { get; set; }
-        public DbSet<EmployeePerformancePlan> EmployeePerformancePlans { get; set; }
+        public DbSet<EmployeePerformanceDetail> EmployeePerformanceDetails { get; set; }
         public DbSet<EmployeeDevelopmentPlan> EmployeeDevelopmentPlans { get; set; }
-        public DbSet<EmployeeSupport> EmploeeSupports { get; set; }
+        public DbSet<OnFieldEmployeeList> onFieldEmployeeLists { get; set; }
         public DbSet<LoanSetting> LoanSettings { get; set; }
         public DbSet<LoanRequest> LoanRequests { get; set; }
         public DbSet<EmployeeLoan> EmployeeLoans { get; set; }
@@ -85,12 +88,11 @@ namespace IntegratedInfrustructure.Data
         public DbSet<OverTime> OverTimes { get; set; }
         public DbSet<ShiftList> ShiftLists { get; set; }
         public DbSet<ShiftDetail> ShiftDetails { get; set; }
-
         public DbSet<EmployeeShift> EmployeeShifts { get; set; }
         public DbSet<EmployeePenalty> EmployeePenalty { get; set; }
         public DbSet<LeaveTypeDetails> LeaveTypeDetails { get; set; }
         public DbSet<EmployeeBank> EmployeeBanks { get; set; }
-
+        public DbSet<EmployeeGuarantiee> EmployeeGuarantiees { get; set; }
         public DbSet<EmployeeSeverance> EmployeeSeverances { get; set; }
 
         #endregion

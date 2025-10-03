@@ -42,10 +42,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Infrustructure\IntegratedInfrustructure.csproj" />
     <ProjectReference Include="..\IntegratedImplementation\IntegratedImplementation.csproj" />
+    <ProjectReference Include="..\IntegratedReport\IntegratedReport.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\CompanyProfile\" />
     <Folder Include="wwwroot\NewFolder\" />
     <Folder Include="wwwroot\Products\" />
   </ItemGroup>

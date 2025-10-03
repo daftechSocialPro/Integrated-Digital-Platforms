@@ -119,6 +119,7 @@ export class BeginningBalanceComponent implements OnInit {
         }
       }
       else if (x.subsidaryAccountBegningDtos.length > 0) {
+        debugger;
         x.subsidaryAccountBegningDtos.map(y => {
           this.addBeginningBalanceDetailList.begningBalanceDetails.push({
             ammount: x.ammount,

@@ -13,7 +13,7 @@
 
 
                         <div class="col-md-12">
-
+                            
 
                             <app-autocomplete *ngIf="employeeList.length>0" [data]="employeeList"
                                 (selectedItem)="selectEmployee($event)"></app-autocomplete>
@@ -26,7 +26,12 @@
 
 
                         </div>
+<!-- 
+                        <div class="col-md-6"> <label for="inputName5" class="form-label">User Name</label>
 
+                            <input type="text" class="form-control" id="UserName" placeholder="User Name"
+                                formControlName="UserName">
+                        </div> -->
 
                         <div class="col-md-6"> <label for="inputName5" class="form-label">Password</label>
 

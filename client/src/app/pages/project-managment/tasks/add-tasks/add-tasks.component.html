@@ -1,13 +1,13 @@
 <div class="modal-content">
     <div class="modal-header">
-        <h5 class="modal-title">Add Task</h5>
+        <h5 class="modal-title">Add Objective</h5>
         <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
     </div>
 
     <div class="card">
 
         <div class="card-body">
-            <h5 class="card-title">Task Detail</h5>
+            <h5 class="card-title">Objective Detail</h5>
 
             <div class="row">
                 <div class="col-lg-7">
@@ -20,7 +20,21 @@
                                     <div class="form-floating"><textarea class="form-control"
                                             formControlName="TaskDescription" placeholder="TaskDescription"
                                             id="TaskDescription" style="height: 120px;"></textarea><label
-                                            for="TaskDescription">Task Description</label>
+                                            for="TaskDescription">Description</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="flex flex-column gap-2">
+                                        <label htmlFor="startDate">Start Date</label>
+                                            <input type="date" class="form-control" id="yearpicker"  formControlName="StartDate" 
+                                            [min] = "plan.startDate" [max] = "plan.endDate"> 
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="flex flex-column gap-2">
+                                        <label htmlFor="startDate">End Date</label>
+                                            <input type="date" class="form-control" id="yearpicker"  formControlName="EndDate" 
+                                            [min] = "plan.startDate" [max] = "plan.endDate"> 
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -62,7 +76,7 @@
                         <div class="modal-body" *ngIf="plan" style="background-color: #f6f9ff;">
                             <div class="card-title text-center">{{plan.planName!}}</div>
                             <div class="text-center" *ngIf="plan.tasks.length>0">
-                                <span>{{plan.startDate|date:"MMMM d, YYYY"}}</span> - <span>{{plan.startDate|date:"MMMM dd, YYYY"}}</span>
+                                <span>{{plan.startDate|date:"MMMM d, YYYY"}}</span> - <span>{{plan.endDate|date:"MMMM dd, YYYY"}}</span>
                             </div>
                             <div class="text-center">
                                 <span class="card-title"> Planned Budget : {{plan.plannedBudget! | number:'1.0-2'}}
@@ -76,7 +90,7 @@
 
                     <div class="modal-content mt-2 ">
                         <div class="modal-header bg-secondary text-white">
-                            <h5 class="modal-title">Added Tasks</h5>
+                            <h5 class="modal-title">Added Objectives</h5>
 
                         </div>
 

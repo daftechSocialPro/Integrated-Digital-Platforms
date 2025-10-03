@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Implementation.DTOS.Authentication;
 using Implementation.Helper;
 using Implementation.Interfaces.Authentication;
@@ -11,15 +12,8 @@ using IntegratedImplementation.Interfaces.HRM;
 using IntegratedInfrustructure.Data;
 using IntegratedInfrustructure.Model.Authentication;
 using IntegratedInfrustructure.Model.HRM;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static IntegratedInfrustructure.Data.EnumList;
 
 namespace IntegratedImplementation.Services.HRM
@@ -99,7 +93,7 @@ namespace IntegratedImplementation.Services.HRM
                     ContractEndDate = addEmployee.ContractEndDate,
                     Rowstatus = RowStatus.ACTIVE,
                     ExistingEmployee = addEmployee.ExistingEmployee,
-                    WorkEmail = addEmployee.WorkEmail,  
+                    WorkEmail = addEmployee.WorkEmail,
                 };
                 await _dbContext.Employees.AddAsync(employee);
                 await _dbContext.SaveChangesAsync();
@@ -394,7 +388,7 @@ namespace IntegratedImplementation.Services.HRM
             }
 
             var currentDepartmen = await _dbContext.EmploymentDetails.Include(x => x.Department).Include(x => x.Position).Where(x => x.EmployeeId == employee.Id && x.Rowstatus == RowStatus.ACTIVE).FirstOrDefaultAsync();
-            if(currentDepartmen != null)
+            if (currentDepartmen != null)
             {
                 employee.DepartmentName = currentDepartmen.Department.DepartmentName;
                 employee.PostionName = currentDepartmen.Position.PositionName;
@@ -730,6 +724,8 @@ namespace IntegratedImplementation.Services.HRM
                 Salary = addEmployeeHistory.Salary,
                 SourceOfSalary = Enum.Parse<SALARYSOURCE>(addEmployeeHistory.SourceOfSalary),
                 Remark = addEmployeeHistory.Remark,
+                Woreda = addEmployeeHistory.Woreda,
+                ZoneId = addEmployeeHistory.ZoneId,
 
             };
             await _dbContext.EmploymentDetails.AddAsync(employmentDetail);
@@ -757,7 +753,8 @@ namespace IntegratedImplementation.Services.HRM
                 currentEmployeeHistory.EndDate = updateEmployeeHistory.EndDate;
                 currentEmployeeHistory.SourceOfSalary = Enum.Parse<SALARYSOURCE>(updateEmployeeHistory.SourceOfSalary);
                 currentEmployeeHistory.Remark = updateEmployeeHistory.Remark;
-
+                currentEmployeeHistory.Woreda = updateEmployeeHistory.Woreda;
+                currentEmployeeHistory.ZoneId = updateEmployeeHistory.ZoneId;
 
                 await _dbContext.SaveChangesAsync();
                 return new ResponseMessage { Message = "Successfully Updated", Success = true };
@@ -780,85 +777,85 @@ namespace IntegratedImplementation.Services.HRM
         }
 
 
-        //  employeeFiles
+        ////  employeeFiles
 
-        public async Task<List<EmployeeFileGetDto>> GetEmployeeFiles(Guid employeeId)
-        {
-            var employeeHistories = await _dbContext.EmployeeFiles.Where(x => x.EmployeeId == employeeId).AsNoTracking()
-                               .ProjectTo<EmployeeFileGetDto>(_mapper.ConfigurationProvider)
-                               .ToListAsync();
-            return employeeHistories;
-        }
-        public async Task<ResponseMessage> AddEmployeeFiles(EmployeeFilePostDto addEmployeeFile)
-        {
+        //public async Task<List<EmployeeFileGetDto>> GetEmployeeFiles(Guid employeeId)
+        //{
+        //    var employeeHistories = await _dbContext.EmployeeFiles.Where(x => x.EmployeeId == employeeId).AsNoTracking()
+        //                       .ProjectTo<EmployeeFileGetDto>(_mapper.ConfigurationProvider)
+        //                       .ToListAsync();
+        //    return employeeHistories;
+        //}
+        //public async Task<ResponseMessage> AddEmployeeFiles(EmployeeFilePostDto addEmployeeFile)
+        //{
 
-            var id = Guid.NewGuid();
-            var path = "";
-            if (addEmployeeFile.FilePath != null)
-                path = _generalConfig.UploadFiles(addEmployeeFile.FilePath, id.ToString(), "Employee").Result.ToString();
+        //    var id = Guid.NewGuid();
+        //    var path = "";
+        //    if (addEmployeeFile.FilePath != null)
+        //        path = _generalConfig.UploadFiles(addEmployeeFile.FilePath, id.ToString(), "Employee").Result.ToString();
 
-            EmployeeFile employeeFile = new EmployeeFile()
-            {
-                Id = Guid.NewGuid(),
-                CreatedById = addEmployeeFile.CreatedById,
-                CreatedDate = DateTime.Now,
-                EmployeeId = addEmployeeFile.EmployeeId,
-                FileName = addEmployeeFile.FileName,
-                FilePath = path,
-            };
+        //    EmployeeFile employeeFile = new EmployeeFile()
+        //    {
+        //        Id = Guid.NewGuid(),
+        //        CreatedById = addEmployeeFile.CreatedById,
+        //        CreatedDate = DateTime.Now,
+        //        EmployeeId = addEmployeeFile.EmployeeId,
+        //        FileName = addEmployeeFile.FileName,
+        //        FilePath = path,
+        //    };
 
-            await _dbContext.EmployeeFiles.AddAsync(employeeFile);
-            await _dbContext.SaveChangesAsync();
+        //    await _dbContext.EmployeeFiles.AddAsync(employeeFile);
+        //    await _dbContext.SaveChangesAsync();
 
-            return new ResponseMessage
-            {
+        //    return new ResponseMessage
+        //    {
 
-                Message = "Added Successfully",
-                Success = true
-            };
-        }
-        public async Task<ResponseMessage> UpdateEmployeeFiles(EmployeeFileGetDto updateEmployeeFile)
-        {
-
-
-            var path = "";
-
-            var employeeFile = _dbContext.EmployeeFiles.Find(updateEmployeeFile.Id);
+        //        Message = "Added Successfully",
+        //        Success = true
+        //    };
+        //}
+        //public async Task<ResponseMessage> UpdateEmployeeFiles(EmployeeFileGetDto updateEmployeeFile)
+        //{
 
 
-            if (updateEmployeeFile.File != null)
-                path = _generalConfig.UploadFiles(updateEmployeeFile.File, employeeFile.Id.ToString(), "Employee").Result.ToString();
+        //    var path = "";
 
-            if (employeeFile != null)
-            {
+        //    var employeeFile = _dbContext.EmployeeFiles.Find(updateEmployeeFile.Id);
 
 
-                employeeFile.FileName = updateEmployeeFile.FileName;
+        //    if (updateEmployeeFile.File != null)
+        //        path = _generalConfig.UploadFiles(updateEmployeeFile.File, employeeFile.Id.ToString(), "Employee").Result.ToString();
 
-                if (path != "")
-                {
-                    employeeFile.FilePath = path;
-                }
-                await _dbContext.SaveChangesAsync();
-                return new ResponseMessage { Message = "Successfully Updated", Success = true };
-            }
-            return new ResponseMessage { Success = false, Message = "Unable To Find Employee Files" };
+        //    if (employeeFile != null)
+        //    {
 
 
-        }
-        public async Task<ResponseMessage> DeleteEmployeeFiles(Guid employeeFileId)
-        {
-            var currentEmployeeFile = await _dbContext.EmployeeFiles.FindAsync(employeeFileId);
+        //        employeeFile.FileName = updateEmployeeFile.FileName;
 
-            if (currentEmployeeFile != null)
-            {
+        //        if (path != "")
+        //        {
+        //            employeeFile.FilePath = path;
+        //        }
+        //        await _dbContext.SaveChangesAsync();
+        //        return new ResponseMessage { Message = "Successfully Updated", Success = true };
+        //    }
+        //    return new ResponseMessage { Success = false, Message = "Unable To Find Employee Files" };
 
-                _dbContext.Remove(currentEmployeeFile);
-                await _dbContext.SaveChangesAsync();
-                return new ResponseMessage { Message = "Successfully Deleted", Success = true };
-            }
-            return new ResponseMessage { Success = false, Message = "Unable To Find Employee File" };
-        }
+
+        //}
+        //public async Task<ResponseMessage> DeleteEmployeeFiles(Guid employeeFileId)
+        //{
+        //    var currentEmployeeFile = await _dbContext.EmployeeFiles.FindAsync(employeeFileId);
+
+        //    if (currentEmployeeFile != null)
+        //    {
+
+        //        _dbContext.Remove(currentEmployeeFile);
+        //        await _dbContext.SaveChangesAsync();
+        //        return new ResponseMessage { Message = "Successfully Deleted", Success = true };
+        //    }
+        //    return new ResponseMessage { Success = false, Message = "Unable To Find Employee File" };
+        //}
 
         // employeesuerty
         public async Task<List<EmployeeSuertyGetDto>> GetEmployeeSurety(Guid employeeId)
@@ -975,6 +972,130 @@ namespace IntegratedImplementation.Services.HRM
             }
             return new ResponseMessage { Success = false, Message = "Unable To Find Employee Suerty" };
         }
+
+        // Employee Guarantee
+        public async Task<List<GetEmployeeGuaranteeDto>> GetEmployeeGuarantee(Guid employeeId)
+        {
+            var employeeGuarantee = await _dbContext.EmployeeGuarantiees.Where(x => x.EmployeeId == employeeId).AsNoTracking().OrderByDescending(x => x.CreatedDate)
+                                           .Select(x => new GetEmployeeGuaranteeDto
+                                           {
+                                               Id = x.Id,
+                                               AmharicFullName = x.AmharicFullName,
+                                               AmharicOrganizationName = x.AmharicOrganizationName,
+                                               FullName = x.FullName,
+                                               IsReturned = x.IsReturned,
+                                               LetterDate = x.LetterDate,
+                                               AmharicDate =  EthiopicDateTime.GetEthiopicDate(x.LetterDate.Day, x.LetterDate.Month , x.LetterDate.Year),
+                                               LetterNumber = x.LetterNumber,
+                                               LetterPath = x.LetterPath,
+                                               OrganizationName = x.OrganizationName,
+                                               TodaysDate = EthiopicDateTime.GetEthiopicDate(DateTime.Now.Day, DateTime.Now.Month, DateTime.Now.Year),
+                                               CurrentSalary = _dbContext.EmploymentDetails.Where(x => x.Rowstatus == RowStatus.ACTIVE).FirstOrDefault().Salary
+                                           }).ToListAsync();
+
+            return employeeGuarantee;
+        }
+        public async Task<ResponseMessage> AddEmployeeGuarantee(AddEmployeeGuaranteeDto addEmployeeGuarantee)
+        {
+            var noOfGuarantiees = await _dbContext.HrmSettings.FirstOrDefaultAsync(x => x.GeneralSetting == GeneralHrmSetting.TOTALNOOFGUARANTIEE);
+            if (noOfGuarantiees == null)
+            {
+                return new ResponseMessage
+                {
+
+                    Message = "Please Set Your Guarantee setting",
+                    Success = false
+                };
+
+            }
+
+            var currentGuarantee = await _dbContext.EmployeeGuarantiees.CountAsync(x => x.EmployeeId ==  addEmployeeGuarantee.EmployeeId && !x.IsReturned);
+
+            if(Convert.ToInt32(currentGuarantee) < currentGuarantee)
+            {
+                return new ResponseMessage
+                {
+                    Message = "The Employee maxed out its guarantee letters",
+                    Success = false
+                };
+            }
+            
+
+            var id = Guid.NewGuid();
+            var letterPath = "";
+            if (addEmployeeGuarantee.Letter != null)
+                letterPath = _generalConfig.UploadFiles(addEmployeeGuarantee.Letter, $"{id.ToString()}-Guarantee", "Employee").Result.ToString();
+
+            EmployeeGuarantiee guarantiee = new EmployeeGuarantiee()
+            {
+                Id = id,
+                CreatedById = addEmployeeGuarantee.CreatedById,
+                CreatedDate = DateTime.Now,
+                FullName = addEmployeeGuarantee.FullName,
+                AmharicFullName = addEmployeeGuarantee.AmharicFullName,
+                EmployeeId = addEmployeeGuarantee.EmployeeId,
+                AmharicOrganizationName = addEmployeeGuarantee.AmharicOrganizationName,
+                LetterDate=addEmployeeGuarantee.LetterDate,
+                LetterNumber=addEmployeeGuarantee.LetterNumber,
+                OrganizationName=addEmployeeGuarantee.OrganizationName,
+                LetterPath = letterPath,
+                Rowstatus = RowStatus.ACTIVE,
+            };
+
+            await _dbContext.EmployeeGuarantiees.AddAsync(guarantiee);
+            await _dbContext.SaveChangesAsync();
+
+            return new ResponseMessage
+            {
+
+                Message = "Added Successfully",
+                Success = true
+            };
+        }
+        public async Task<ResponseMessage> UpdateEmployeeGuarantee(UpdateEmployeeGuaranteeDto updateEmployeeGuarantee)
+        {
+
+
+            var employeeFile = _dbContext.EmployeeGuarantiees.Find(updateEmployeeGuarantee.Id);
+
+            if (employeeFile != null)
+            {
+                var letterPath = "";
+                if (updateEmployeeGuarantee.Letter != null)
+                    letterPath = _generalConfig.UploadFiles(updateEmployeeGuarantee.Letter, $"{employeeFile.ToString()}-Guarantee", "Employee").Result.ToString();
+
+
+                employeeFile.FullName = updateEmployeeGuarantee.FullName;
+                employeeFile.AmharicFullName = updateEmployeeGuarantee.AmharicFullName;
+                employeeFile.EmployeeId = updateEmployeeGuarantee.EmployeeId;
+                employeeFile.AmharicOrganizationName = updateEmployeeGuarantee.AmharicOrganizationName;
+                employeeFile.LetterDate = updateEmployeeGuarantee.LetterDate;
+                employeeFile.LetterNumber = updateEmployeeGuarantee.LetterNumber;
+                employeeFile.OrganizationName = updateEmployeeGuarantee.OrganizationName;
+                employeeFile.LetterPath = letterPath;
+
+
+                await _dbContext.SaveChangesAsync();
+                return new ResponseMessage { Message = "Successfully Updated", Success = true };
+            }
+            return new ResponseMessage { Success = false, Message = "Unable To Find Employee Guarantee" };
+
+
+        }
+        public async Task<ResponseMessage> ReturnEmployeeGuarantee(Guid id)
+        {
+            var currentEmployeeFile = await _dbContext.EmployeeGuarantiees.FindAsync(id);
+
+            if (currentEmployeeFile != null)
+            {
+
+                currentEmployeeFile.IsReturned = true;
+                await _dbContext.SaveChangesAsync();
+                return new ResponseMessage { Message = "Successfully Returned", Success = true };
+            }
+            return new ResponseMessage { Success = false, Message = "Unable To Find Employee Guarantee" };
+        }
+
         //salary History 
 
         public async Task<List<EmployeeSalaryGetDto>> GetEmployeeSalaryHistory(Guid employeeDetailId)

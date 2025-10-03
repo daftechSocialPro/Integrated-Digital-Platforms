@@ -18,6 +18,11 @@ export class AddSubsidiaryAccountComponent implements OnInit {
   @Input() subsidiaryAccount!: SubsidiaryAccountsGetDto
   user!: UserView
   subsidiaryAccountForm: FormGroup
+  typeOfAccount = [
+    { value: 0, name: "Project" },
+    { value: 1, name: "NonProject" },
+    { value: 2, name: "Both" },
+  ]
 
   constructor(
     private financeService : FinanceService, 
@@ -34,6 +39,7 @@ export class AddSubsidiaryAccountComponent implements OnInit {
         accountNo:[this.subsidiaryAccount.accountNo,Validators.required],
         description:[this.subsidiaryAccount.description,Validators.required],
         sequence:[this.subsidiaryAccount.sequence,Validators.required],
+        typeOfAccount:[this.subsidiaryAccount.typeOfAccount,Validators.required]
       })
     }
     else{
@@ -42,6 +48,7 @@ export class AddSubsidiaryAccountComponent implements OnInit {
         accountNo:["",Validators.required],
         description:["",Validators.required],
         sequence:["",Validators.required],
+        typeOfAccount:["",Validators.required],
       })
     }
   }
@@ -56,7 +63,9 @@ export class AddSubsidiaryAccountComponent implements OnInit {
           description: this.subsidiaryAccountForm.value.description,
           accountNo: this.subsidiaryAccountForm.value.accountNo,
           sequence: this.subsidiaryAccountForm.value.sequence,
+          typeOfAccount: parseInt(this.subsidiaryAccountForm.value.typeOfAccount),
           chartOfAccountId: this.chartOfAccountId,
+
           createdById: this.user.userId 
         }
 
@@ -82,6 +91,7 @@ export class AddSubsidiaryAccountComponent implements OnInit {
           accountNo: this.subsidiaryAccountForm.value.accountNo,
           sequence: this.subsidiaryAccountForm.value.sequence,
           chartOfAccountId: this.chartOfAccountId,
+          typeOfAccount: parseInt(this.subsidiaryAccountForm.value.typeOfAccount),
           createdById: this.user.userId 
         }
 

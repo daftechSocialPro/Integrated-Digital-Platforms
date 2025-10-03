@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace IntegratedInfrustructure.Data
+﻿namespace IntegratedInfrustructure.Data
 {
     public class EnumList
     {
@@ -126,6 +120,8 @@ namespace IntegratedInfrustructure.Data
             RESIGNATIONREQUESTDAYS,
             ANNUALLEAVEREQESTMONTH,
             LEAVEREQUESTDAYSBEFORE,
+            TOTALNOOFGUARANTIEE,
+            SelfRatingNeeded,
 
         }
 
@@ -350,16 +346,16 @@ namespace IntegratedInfrustructure.Data
             OTHER,
             ASSET,
             CAPITAL,
-            EQUITY,
+            EXPENSE,
+            REVENUE,
             LIABILITY
         }
 
         public enum ACCOUNTTYPESUBCATEGORY
         {
-            ASSET,
+            CURRENT_ASSET,
             CAPITAL,
             COST_OF_SALES,
-            CURRENT_ASSET,
             CURRENT_LIABILITY,
             EQUITY,
             EXPENSES,
@@ -468,7 +464,31 @@ namespace IntegratedInfrustructure.Data
             Paid
         }
 
-      
 
+        public enum FileExtentions
+        {
+            JPG,
+            JPEG,
+            PNG,
+            PDF
+        }
+
+        public enum DocumentCategory
+        {
+            HRM
+        }
+
+        public enum TypeOfAccount
+        {
+            Project,
+            NonProject,
+            Both
+        }
+
+        public enum TypeOfPerformance
+        {
+            Appraisal,
+            Evaluation
+        }
     }
 }

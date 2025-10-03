@@ -1,7 +1,6 @@
 
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 import { AuthGuard } from './auth/auth.guard';
 
@@ -59,6 +58,7 @@ import { PlanVsAchivmentProjectComponent } from './pages/project-managment/progr
 import { PlanDashboardComponent } from './pages/project-managment/plans/plan-dashboard/plan-dashboard.component';
 import { AllTrainingListComponent } from './pages/training/all-training-list/all-training-list.component';
 import { HrmDashboardComponent } from './pages/human-resource/hrm-dashboard/hrm-dashboard.component';
+import { AttendanceReportComponent } from './pages/human-resource/attendance-report/attendance-report.component';
 
 
 
@@ -132,6 +132,7 @@ const routes: Routes = [
   { path: 'HRM/employee-penalty', canActivate: [AuthGuard], component: EmployeePenaltyComponent, data: { permittedRoles: ['EMPLOYEE-MANAGEMENT'] } },
   { path: 'HRM/contractEndEmployees', canActivate: [AuthGuard], component: ContractEndEmployeesComponent, data: { permittedRoles: ['EMPLOYEE-MANAGEMENT'] } },
   { path: 'HRM/dashboard', canActivate: [AuthGuard], component: HrmDashboardComponent },
+  { path: 'HRM/attendance-report', canActivate: [AuthGuard], component: AttendanceReportComponent },
   //trainee
 
   { path: 'trainee-form/:trainingId', component: TraineesFormComponent },

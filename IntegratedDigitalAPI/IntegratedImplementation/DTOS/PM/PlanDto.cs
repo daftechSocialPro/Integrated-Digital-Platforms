@@ -18,6 +18,8 @@ namespace IntegratedDigitalAPI.DTOS.PM
         public Guid StructureId { get; set; }
         public Guid ProjectManagerId { get; set; }
 
+        public Guid FinanceManagerId { get; set; }
+
         public string Goal { get; set; }
 
         public string Objective { get; set; }
@@ -40,7 +42,11 @@ namespace IntegratedDigitalAPI.DTOS.PM
         public float RemainingBudget { get; set; }
         public string ProjectManager { get; set; }
 
+        public string FinanceManager { get; set; }
+
         public string? ProjectManagerId { get; set; }
+
+        public string? FinanceManagerId { get; set; }
         public string? StructureId { get; set; }
         public string? Remark { get; set; }
 
@@ -196,6 +202,8 @@ namespace IntegratedDigitalAPI.DTOS.PM
         public float PlannedBudget { get; set; }
 
         public Guid PlanId { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
 
     }
 

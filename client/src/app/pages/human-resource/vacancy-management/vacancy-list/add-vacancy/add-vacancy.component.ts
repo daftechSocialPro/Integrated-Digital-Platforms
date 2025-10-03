@@ -78,7 +78,7 @@ export class AddVacancyComponent implements OnInit{
       employmentType: ['', Validators.required],
       vaccancyStartDate: ['', Validators.required],
       vaccancyEndDate: ['', Validators.required],
-      gpa: [''],
+      gpa: [null],
       vacancyType: ['', Validators.required]
     });
   }

@@ -21,6 +21,8 @@ export class AddEmployeePenaltyComponent implements OnInit {
   employeeList: SelectList[] = [];
   recursive: boolean = false;
   fromSalary: boolean = false;
+  
+  maxDate: Date  = new Date();
   penaltyType: any[] = [
     { value: 0, name: "ABSENT" },
     { value: 1, name: "LATE" },

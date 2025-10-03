@@ -1,4 +1,5 @@
-﻿using Implementation.Interfaces.Authentication;
+﻿
+using Implementation.Interfaces.Authentication;
 using Implementation.Interfaces.Inventory;
 using Implementation.Services.Authentication;
 using Implementation.Services.Inventory;
@@ -37,9 +38,9 @@ namespace IntegratedImplementation.Datas
         {
 
             #region Hrm Service
+         
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IHolidayService, HolidayService>();
-
             services.AddScoped<IHrmNotificationService, HrmNotificationService>();
 
             services.AddScoped<IDepartmentService, DepartmentService>();
@@ -76,6 +77,7 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IProjectFundSourceService, ProjectFundSourceService>();
             services.AddScoped<IBankListService, BankListService>();
+            services.AddScoped<IDocumentTypeService, DocumentTypeService>();
 
             #region PM
             services.AddScoped<IIndicatorService, IndicatorService>();
@@ -87,7 +89,7 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<ITaskService, TaskService>();
             services.AddScoped<IProgressReportService, ProgressReportService>();
             services.AddScoped<ITimePeriodService, TimePeriodService>();
-
+            services.AddScoped<IEmployeeDocumentService, EmployeeDocumentService>();
             services.AddScoped<IWeeklyPlanService, WeeklyPlanService>();
 
 

@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './layouts/header/header.component';
 import { FooterComponent } from './layouts/footer/footer.component';
 import { SidebarComponent } from './layouts/sidebar/sidebar.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { AlertsComponent } from './components/alerts/alerts.component';
 import { AccordionComponent } from './components/accordion/accordion.component';
 import { BadgesComponent } from './components/badges/badges.component';
@@ -284,6 +283,17 @@ import { PaymentSetlmentsComponent } from './pages/users-profile/payment-setlmen
 import { RequestPaymentComponent } from './pages/users-profile/payment-setlments/request-payment/request-payment.component';
 import {SidebarModule} from 'primeng/sidebar';
 import { DataViewModule } from 'primeng/dataview';
+import { DocumentTypeComponent } from './pages/configuration/document-type/document-type.component';
+import { AddDocumentTypeComponent } from './pages/configuration/document-type/add-document-type/add-document-type.component';
+import { EmployeeGuaranteeComponent } from './pages/human-resource/employee-managment/employee-detail/employee-guarantee/employee-guarantee.component';
+import { AddEmployeeGuaranteeComponent } from './pages/human-resource/employee-managment/employee-detail/employee-guarantee/add-employee-guarantee/add-employee-guarantee.component';
+import { ExtendContractComponent } from './pages/human-resource/contract-end-employees/extend-contract/extend-contract.component';
+import { GenerateIdCardComponent } from './pages/human-resource/employee-managment/generate-id-card/generate-id-card.component';
+import { NewTaskActivityComponent } from './pages/project-managment/plans/new-task-activity/new-task-activity.component';
+import { AttendanceReportComponent } from './pages/human-resource/attendance-report/attendance-report.component';
+import { DailyAttendanceReportComponent } from './pages/human-resource/attendance-report/daily-attendance-report/daily-attendance-report.component';
+import { OvertimeAttendanceReportComponent } from './pages/human-resource/attendance-report/overtime-attendance-report/overtime-attendance-report.component';
+import { MonthlyAttendanceReportComponent } from './pages/human-resource/attendance-report/monthly-attendance-report/monthly-attendance-report.component';
 
 @NgModule({
   declarations: [
@@ -291,7 +301,6 @@ import { DataViewModule } from 'primeng/dataview';
     HeaderComponent,
     FooterComponent,
     SidebarComponent,
-    DashboardComponent,
     AlertsComponent,
     AccordionComponent,
     BadgesComponent,
@@ -613,7 +622,18 @@ import { DataViewModule } from 'primeng/dataview';
       CustomResceduleConfirtamionComponent,
       HrmDashboardComponent,
       PaymentSetlmentsComponent,
-      RequestPaymentComponent
+      RequestPaymentComponent,
+      DocumentTypeComponent,
+      GenerateIdCardComponent,
+      AddDocumentTypeComponent,
+      EmployeeGuaranteeComponent,
+      AddEmployeeGuaranteeComponent,
+      ExtendContractComponent,
+      NewTaskActivityComponent,
+      AttendanceReportComponent,
+      DailyAttendanceReportComponent,
+      OvertimeAttendanceReportComponent,
+      MonthlyAttendanceReportComponent
 
     //  AddMeasurementComponent,
     //  UpdateMeasurmentComponent
@@ -653,6 +673,7 @@ import { DataViewModule } from 'primeng/dataview';
     ResizableModule,
     MultiSelectModule,
     DataViewModule ,
+  
     ToastrModule.forRoot({
       preventDuplicates: true,
     }),

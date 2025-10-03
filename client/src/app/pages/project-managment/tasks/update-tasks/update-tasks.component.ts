@@ -33,8 +33,9 @@ export class UpdateTasksComponent implements OnInit {
     this.taskForm = this.formBuilder.group({
       TaskDescription:[this.task.taskName,Validators.required],
       HasActvity: [this.task.hasActivity, Validators.required],
-      PlannedBudget:[this.task.plannedBudget,[Validators.required,Validators.max(this.plan.remainingBudget+this.task.plannedBudget)]]
-
+      PlannedBudget:[this.task.plannedBudget,[Validators.required,Validators.max(this.plan.remainingBudget+this.task.plannedBudget)]],
+      StartDate: [this.task.startDate,Validators.required],
+      EndDate: [this.task.endDate,Validators.required]
     })
   
 
@@ -49,7 +50,9 @@ export class UpdateTasksComponent implements OnInit {
         TaskDescription: this.taskForm.value.TaskDescription,
         HasActvity : this.taskForm.value.HasActvity,
         PlannedBudget:this.taskForm.value.PlannedBudget,
-        PlanId : this.plan.id
+        PlanId : this.plan.id,
+        startDate: this.taskForm.value.StartDate,
+        endDate: this.taskForm.value.EndDate,
       } 
 
 

@@ -39,8 +39,8 @@ export class TerminateEmployeeComponent implements OnInit {
 
       this.terminateForm = this.formBuilder.group({
         remark: ['', Validators.required],
-        blacListed: ['']
-        
+        blacListed: [''],
+        hasSeverance: [false]
     })
   
   }
@@ -72,7 +72,8 @@ export class TerminateEmployeeComponent implements OnInit {
         
         employementDetailId : this.empId,
         remark : this.terminateForm.value.remark,
-        blacListed: Boolean(this.terminateForm.value.blacListed)
+        blacListed: Boolean(this.terminateForm.value.blacListed),
+        hasSeverance: Boolean(this.terminateForm.value.hasSeverance)
       }
 
 

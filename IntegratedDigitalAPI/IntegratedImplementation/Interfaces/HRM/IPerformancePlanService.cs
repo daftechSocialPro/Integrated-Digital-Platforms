@@ -13,7 +13,9 @@ namespace IntegratedImplementation.Interfaces.HRM
         Task<List<PerformancePlanDto>> GetPerformancePlans();
         Task<ResponseMessage> AddPerformancePlan(AddPerformancePlanDto addPerformancePlan);
         Task<ResponseMessage> UpdatePerformancePlan(UpdateperformancePlanDto updatePerformancePlan);
-        Task<ResponseMessage> AddPerformancePlanDetail(AddPerformancePlanDetailDto addPerformancePlan);
-        Task<ResponseMessage> UpdatePerformancePlanDetail(UpdatePerfromancePlanDetailDto updatePerformancePlan);
+
+        Task<List<PerformanceScalesDto>> GetPerformanceScales();
+        Task<ResponseMessage> AddPerfomanceScale(AddPerformanceScaleDto addPerformanceScaleDto);
+        Task<ResponseMessage> UpdatePerformanceScale(PerformanceScalesDto updatePerformanceScale);
     }
 }

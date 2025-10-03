@@ -12,6 +12,7 @@ export interface Plan {
     remark: String
     structureId: String;
     projectManagerId: String;
+    financeManagerId:string;
     projectNumber:string
     goal:string;
     objective :string 
@@ -50,6 +51,7 @@ export interface PlanView {
 
     projectFundIds:string[]
     projectManagerId:string
+    financeManagerId?:string
     structureId:string
 
 

@@ -1,5 +1,4 @@
-﻿using Azure.Core;
-using Implementation.Helper;
+﻿using Implementation.Helper;
 using IntegratedImplementation.DTOS.Configuration;
 using IntegratedImplementation.DTOS.HRM;
 using IntegratedImplementation.Helper;
@@ -7,29 +6,24 @@ using IntegratedImplementation.Interfaces.Configuration;
 using IntegratedImplementation.Interfaces.HRM;
 using IntegratedInfrustructure.Data;
 using IntegratedInfrustructure.Model.HRM;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Security.Cryptography.Xml;
-using System.Text;
-using System.Threading.Tasks;
 using static IntegratedInfrustructure.Data.EnumList;
 
 namespace IntegratedImplementation.Services.HRM
 {
-    public class EmployementDetailService: IEmployementDetailService
+    public class EmployementDetailService : IEmployementDetailService
     {
         private readonly ApplicationDbContext _dbContext;
         private IGeneralConfigService _generalConfig;
         private IEmailService _emailService;
-        public EmployementDetailService(ApplicationDbContext dbContext,IGeneralConfigService generalConfig, IEmailService emailService) 
-        { 
+        private readonly IEmployeeSeveranceService _employeeSeveranceService;
+
+        public EmployementDetailService(ApplicationDbContext dbContext, IGeneralConfigService generalConfig, IEmailService emailService, IEmployeeSeveranceService employeeSeveranceService)
+        {
             _dbContext = dbContext;
             _generalConfig = generalConfig;
             _emailService = emailService;
+            _employeeSeveranceService = employeeSeveranceService;
         }
 
         public async Task<List<ResignationRequestListDto>> GetResingationLists()
@@ -90,7 +84,7 @@ namespace IntegratedImplementation.Services.HRM
             await _dbContext.SaveChangesAsync();
 
             return new ResponseMessage { Success = true, Message = "Approved Successfully" };
-  
+
         }
 
         public async Task<List<ApprovedResignationListDto>> ApprovedResignationListDto()
@@ -117,7 +111,7 @@ namespace IntegratedImplementation.Services.HRM
                 return new ResponseMessage { Success = false, Message = "Could not find Current Position and Department" };
 
             var currentEmp = await _dbContext.Employees.FirstOrDefaultAsync(x => x.Id == empReqst.EmployeeId);
-            if(currentEmp == null)
+            if (currentEmp == null)
                 return new ResponseMessage { Success = false, Message = "Could not find employee" };
 
 
@@ -129,8 +123,8 @@ namespace IntegratedImplementation.Services.HRM
 
             currentEmp.EmploymentStatus = EmploymentStatus.RESIGNED;
             currentEmp.TerminatedDate = DateTime.Now;
-            
-          
+
+
             await _dbContext.SaveChangesAsync();
 
             return new ResponseMessage { Success = true, Message = "Approved Successfully" };
@@ -149,13 +143,15 @@ namespace IntegratedImplementation.Services.HRM
                                   Position = x.Position.PositionName,
                                   FullName = $"{x.Employee.FirstName} {x.Employee.MiddleName} {x.Employee.LastName}",
                                   TerminatedDate = x.EndDate,
-                                  IsBlackListed=x.IsBlackListed,
+                                  IsBlackListed = x.IsBlackListed,
+                                  HasSeverance = x.HasSeverance,
+                                  TotalSeveranceAmount = x.TotalSeveranceAmount,
                                   TerminationReason = x.EmploymentStatus.ToString(),
                                   Remark = x.Remark
                               }).ToListAsync();
         }
 
-        public async Task<ResponseMessage> TerminateEmployee(Guid employementDetailId, string remark, bool blacListed)
+        public async Task<ResponseMessage> TerminateEmployee(Guid employementDetailId, string remark, bool blacListed, bool hasSeverance)
         {
             var empReqst = await _dbContext.EmploymentDetails.FirstOrDefaultAsync(x => x.EmployeeId == employementDetailId && x.Rowstatus == RowStatus.ACTIVE);
 
@@ -170,6 +166,12 @@ namespace IntegratedImplementation.Services.HRM
             empReqst.EndDate = DateTime.Now;
             empReqst.EmploymentStatus = EmploymentStatus.TERMINATED;
             empReqst.IsBlackListed = blacListed;
+            empReqst.HasSeverance = hasSeverance;
+
+            if (hasSeverance)
+            {
+                empReqst.TotalSeveranceAmount = await _employeeSeveranceService.GetEmployeeSeverance(empReqst.EmployeeId);
+            }
             empReqst.Remark = remark;
 
             currentEmp.EmploymentStatus = EmploymentStatus.TERMINATED;
@@ -203,21 +205,21 @@ namespace IntegratedImplementation.Services.HRM
 
         public async Task<List<SelectListDto>> GetToBeSupervisedEmployees()
         {
-            var EmployeeSelectList = await(from e in _dbContext.Employees
-                                           where !(_dbContext.EmployeeSupervisors.Select(x => x.EmployeeId).Contains(e.Id))
-                                           select new SelectListDto
-                                           {
-                                               Id = e.Id,
-                                               Name = $"{e.FirstName} {e.MiddleName} {e.LastName}"
+            var EmployeeSelectList = await (from e in _dbContext.Employees
+                                            where !(_dbContext.EmployeeSupervisors.Select(x => x.EmployeeId).Contains(e.Id))
+                                            select new SelectListDto
+                                            {
+                                                Id = e.Id,
+                                                Name = $"{e.FirstName} {e.MiddleName} {e.LastName}"
 
-                                           }).ToListAsync();
+                                            }).ToListAsync();
 
             return EmployeeSelectList;
         }
 
         public async Task<EmployeeSupervisorsDto> GetSupervisorsByEmployee(Guid employeeId)
         {
-            var supervisor =  await _dbContext.EmployeeSupervisors.Include(x => x.Employee)
+            var supervisor = await _dbContext.EmployeeSupervisors.Include(x => x.Employee)
                                     .Include(x => x.Supervisor).Include(x => x.SecondSupervisor)
                                    .AsNoTracking().Where(x => x.EmployeeId == employeeId).Select(x =>
                             new EmployeeSupervisorsDto
@@ -269,9 +271,10 @@ namespace IntegratedImplementation.Services.HRM
             return new ResponseMessage { Success = true, Message = "Deleted Successfully!!" };
         }
 
-        public  async Task<List<EmployeeDisciplinaryListDto>> GetEmployeeDisciplinaries()
+        public async Task<List<EmployeeDisciplinaryListDto>> GetEmployeeDisciplinaries()
         {
             var EmployeeSelectList = await (from e in _dbContext.Employees
+
                                            where e.EmployeeDisplinaryCases.Any()
                                            select new EmployeeDisciplinaryListDto
                                            {
@@ -290,6 +293,7 @@ namespace IntegratedImplementation.Services.HRM
                                                    WarningType = x.WarningType.ToString(),
                                                }).ToList()
                                            }).ToListAsync();
+
 
             return EmployeeSelectList;
         }
@@ -332,14 +336,14 @@ namespace IntegratedImplementation.Services.HRM
         {
             return await _dbContext.EmployeeBenefits.AsNoTracking().Include(x => x.Benefit)
                            .Where(x => x.EmployeeId == employeeId).Select(x => new EmployeeBenefitListDto
-                            {
-                                Id = x.Id,
-                                TypeofBenefit = x.TypeOfBenefit.ToString(),
-                                BenefitName = x.Benefit.Name,
-                                Amount = x.Amount,
-                                Recursive = x.Recursive,
-                                AllowanceEndDate = x.AllowanceEndDate
-                            }).ToListAsync();
+                           {
+                               Id = x.Id,
+                               TypeofBenefit = x.TypeOfBenefit.ToString(),
+                               BenefitName = x.Benefit.Name,
+                               Amount = x.Amount,
+                               Recursive = x.Recursive,
+                               AllowanceEndDate = x.AllowanceEndDate
+                           }).ToListAsync();
         }
 
         public async Task<ResponseMessage> AddEmployeeBenefit(AddEmployeeBenefitDto addBenefit)
@@ -366,11 +370,11 @@ namespace IntegratedImplementation.Services.HRM
                 Recursive = addBenefit.Recursive,
                 AllowanceEndDate = addBenefit.AllowanceEndDate,
                 Rowstatus = RowStatus.ACTIVE,
-               
+
             };
 
             var benefitTaxableAmount = await _dbContext.BenefitLists.Where(x => x.Id == emp.BenefitId).Select(x => x.TaxableAmount).FirstOrDefaultAsync();
-            if(emp.Amount >  benefitTaxableAmount)
+            if (emp.Amount > benefitTaxableAmount)
             {
                 emp.Taxable = true;
             }
@@ -385,7 +389,7 @@ namespace IntegratedImplementation.Services.HRM
         {
             var empBenefit = await _dbContext.EmployeeBenefits.FindAsync(benefitId);
 
-            if(empBenefit == null)
+            if (empBenefit == null)
             {
                 return new ResponseMessage
                 {
@@ -463,6 +467,90 @@ namespace IntegratedImplementation.Services.HRM
                                     }).ToListAsync();
 
             return currentEmps;
+        }
+
+        public async Task<ResponseMessage> ExtendContract(ExtendContractDto extendContract)
+        {
+            var currentEmployee = await _dbContext.Employees.AnyAsync(x => x.Id == extendContract.EmployeeId);
+            if(!currentEmployee)
+            {
+                return new ResponseMessage { Success = false, Message = "Could not find Employee" };
+            }
+
+            var employementDetail = await _dbContext.EmploymentDetails.FirstOrDefaultAsync(x => x.EmployeeId == extendContract.EmployeeId && x.Rowstatus == RowStatus.ACTIVE);
+
+            if(employementDetail == null)
+            {
+                return new ResponseMessage { Success = false, Message = "Employement Detail is not correct" };
+            }
+
+            var employees = await _dbContext.ContractExtentionEmployees
+                     .Where(x => x.EmploymentDetailId == employementDetail.Id && x.Rowstatus == RowStatus.ACTIVE)
+                     .ToListAsync();
+
+            foreach (var employee in employees)
+            {
+                employee.Rowstatus = RowStatus.INACTIVE;
+            }
+
+            await _dbContext.SaveChangesAsync();
+
+            ContractExtentionEmployee contractExtention = new ContractExtentionEmployee()
+            {
+                Id = Guid.NewGuid(),
+                CreatedById = extendContract.CreatedById,
+                CreatedDate = DateTime.Now,
+                EmploymentDetailId = employementDetail.Id,
+                PreviousStartDate = employementDetail.StartDate,
+                PreviousEndDate = employementDetail.EndDate,
+                Rowstatus = RowStatus.ACTIVE,
+                Remark = extendContract.Remark
+            };
+
+            await _dbContext.ContractExtentionEmployees.AddAsync(contractExtention);
+            employementDetail.StartDate = extendContract.StartDate;
+            employementDetail.EndDate = extendContract.EndDate;
+
+            await _dbContext.SaveChangesAsync();
+
+            return new ResponseMessage { Success = true, Message = "Contract Extended Succesfully!!" };
+        } 
+        
+        
+        public async Task<ContractExtentionLetterDto> GetContractExtentionLetter(Guid employeeId)
+        {
+            var currentEmployee = await _dbContext.Employees.FirstOrDefaultAsync(x => x.Id == employeeId);
+            if(currentEmployee == null)
+            {
+                return new ContractExtentionLetterDto();
+            }
+
+            var employementDetail = await _dbContext.EmploymentDetails.Include(x => x.Position).FirstOrDefaultAsync(x => x.EmployeeId == employeeId && x.Rowstatus == RowStatus.ACTIVE);
+
+            if(employementDetail == null)
+            {
+                return new ContractExtentionLetterDto();
+            }
+
+            var history = await _dbContext.ContractExtentionEmployees.Where(x => x.EmploymentDetailId == employementDetail.Id && x.Rowstatus == RowStatus.ACTIVE).FirstOrDefaultAsync();
+            if(history == null)
+            {
+                return new ContractExtentionLetterDto();
+            }
+
+            ContractExtentionLetterDto contractExtentionLetter = new ContractExtentionLetterDto()
+            {
+                EmployeeName = $"{currentEmployee.FirstName} {currentEmployee.MiddleName} {currentEmployee.LastName}",
+                Position = employementDetail.Position.PositionName,
+                PreviousStartDate = history.PreviousStartDate,
+                PreviousEndDate = history.PreviousEndDate,
+                StartDate = employementDetail.StartDate,
+                EndDate = employementDetail.EndDate,
+                TodaysDate = DateTime.Now,
+
+            };
+
+            return contractExtentionLetter;
         }
     }
 }

@@ -13,6 +13,7 @@ import { EmployeeSupervisorsDto } from 'src/app/model/HRM/IEmployeeSupervisorDto
 import { BindShiftComponent } from './bind-shift/bind-shift.component';
 import { AssignSupervisorComponent } from '../../employee-supervisors/assign-supervisor/assign-supervisor.component';
 import { EmployeeBanksComponent } from './employee-banks/employee-banks.component';
+import { GenerateIdCardComponent } from '../generate-id-card/generate-id-card.component';
 
 @Component({
   selector: 'app-employee-detail',
@@ -24,6 +25,7 @@ export class EmployeeDetailComponent implements OnInit {
   employeeId!: string;
   employee!: EmployeeGetDto
   supervisor!: EmployeeSupervisorsDto;
+  fullName: string;
 
   ngOnInit(): void {
     this.employeeId = this.router.snapshot.paramMap.get('employeeId')!
@@ -44,7 +46,8 @@ export class EmployeeDetailComponent implements OnInit {
   getEmployee() {
     this.hrmService.getEmployee(this.employeeId).subscribe({
       next: (res) => {
-        this.employee = res
+        this.employee = res;
+        this.fullName = res.amharicFirstName + " " + res.amharicMiddleName + " " + res.amharicLastName
       }
     });
   }
@@ -52,7 +55,8 @@ export class EmployeeDetailComponent implements OnInit {
 getSupervisorsByEmployee(){
   this.hrmService.getSupervisorsByEmployee(this.employeeId).subscribe({
     next: (res) => {
-      this.supervisor = res
+      this.supervisor = res;
+   
     }
   });
 }
@@ -179,5 +183,11 @@ getSupervisorsByEmployee(){
     });
   }
 
+
+  viewID(){
+
+    let modalRef = this.modalService.open(GenerateIdCardComponent,{size:'lg',backdrop:'static'})
+    modalRef.componentInstance.member= this.employee
+  }
 
 }

@@ -21,9 +21,9 @@ export class TaskService {
     return this.http.post(this.BaseURI, task)
   }
 
-  getSingleTask(taskId: String) {
+  getSingleTask(taskId: String,year?: number) {
 
-    return this.http.get<TaskView>(this.BaseURI + "/ById?taskId=" + taskId)
+    return this.http.get<TaskView>(this.BaseURI + "/ById?taskId=" + taskId + "&year=" + year)
   }
 
   addTaskMembers(taskMemebers: TaskMembers) {
@@ -34,6 +34,11 @@ export class TaskService {
   getEmployeeNoTaskMembers(taskId: String) {
 
     return this.http.get<SelectList[]>(this.BaseURI + "/selectlsitNoTask?taskId=" + taskId)
+  }
+
+   getEmployeeNoActivityMembers(taskId: String) {
+
+    return this.http.get<SelectList[]>(this.BaseURI + "/selectlsitNoActivity?taskId=" + taskId)
   }
 
   addTaskMemos(taskMemo: any) {

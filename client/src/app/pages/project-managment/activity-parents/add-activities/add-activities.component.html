@@ -174,7 +174,7 @@
                                             <select class="form-select" id="countryId" #country
                                                 (change)="getRegions(country.value)" aria-label="State">
                                                 <option></option>
-                                                <option *ngFor="let country of countries" [value]="country.id">{{
+                                                <option *ngFor="let country of countries" [value]="country.id"  [selected]="country.name === 'Ethiopia'">{{
                                                     country.name }}</option>
                                             </select>
                                             <label for="countryId">Country</label>

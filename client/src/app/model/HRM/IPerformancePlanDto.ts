@@ -1,34 +1,22 @@
 export interface PerformancePlanDto {
     id: string;
-    name: string;
+    index: number;
     description: string;
-    totalTarget: number;
-    performancePlanDetais: PerformancePlanDetaiDto[];
+    typeOfPerformance: string;
+    isManagerial: boolean;
 }
 
-export interface PerformancePlanDetaiDto {
-    id: string;
-    name: string;
-    description: string;
-    target: number;
-}
 
 export interface AddPerformancePlanDto
 {
     id?: string;
     index: number;
-    createdById?: string;
-    name: string;
-    description: string;
-    totalTarget: number;
-}
-
-
-export interface AddPerformancePlanDetailDto
-{
     createdById: string;
-    performancePlanId: string;
     name: string;
     description: string;
-    target: number;
+    isManagerial: boolean;
+    typeOfPerformance: number;
 }
+
+
+

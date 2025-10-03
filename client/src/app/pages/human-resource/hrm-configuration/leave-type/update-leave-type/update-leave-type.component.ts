@@ -18,14 +18,14 @@ export class UpdateLeaveTypeComponent implements OnInit {
   leaveCategory: string = "";
 
   ngOnInit(): void {
-
+    this.leaveCategory = this.LeaveType.leaveCategory;
     this.LeaveTypeForm = this.formBuilder.group({
       name: [this.LeaveType.name, Validators.required],
       amharicName: [this.LeaveType.amharicName, Validators.required],
-      leaveCategory: [this.LeaveType.leaveCategory,Validators.required],
-      minDate: [this.LeaveType.minDate,Validators.required],
-      maxDate: [this.LeaveType.maxDate,Validators.required],
-      incrementValue: [this.LeaveType.incrementValue,Validators.required],
+      leaveCategory: [this.LeaveType.leaveCategory, Validators.required],
+      minDate: [this.LeaveType.minDate, Validators.required],
+      maxDate: [this.LeaveType.maxDate, Validators.required],
+      incrementValue: [this.LeaveType.incrementValue, Validators.required],
     })
   }
 

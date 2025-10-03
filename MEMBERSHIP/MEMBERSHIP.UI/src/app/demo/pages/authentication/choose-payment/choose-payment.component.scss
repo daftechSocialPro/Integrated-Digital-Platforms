@@ -1,0 +1,45 @@
+.payment-card {
+    max-width: 500px;
+    padding: 20px;
+    border-radius: 12px;
+  }
+  
+  .payment-label {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+  }
+  
+  .payment-label input {
+    display: none;
+  }
+  
+  .custom-radio {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #673ab7;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    margin-right: 10px;
+  }
+  
+  .payment-label input:checked + .custom-radio::after {
+    content: "";
+    width: 10px;
+    height: 10px;
+    background-color: #673ab7;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+  }
+  
+  .img-thumbnail {
+    border-radius: 10px;
+  }
+  

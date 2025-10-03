@@ -33,6 +33,8 @@ namespace IntegratedDigitalAPI.Services.PM
                 HasActivityParent = task.HasActvity,
                 CreatedDate = DateTime.Now,
                 ProjectId = task.PlanId,
+                ShouldStartPeriod = task.StartDate,
+                ShouldEnd = task.EndDate
 
             };
             await _dBContext.AddAsync(task1);
@@ -63,7 +65,7 @@ namespace IntegratedDigitalAPI.Services.PM
             return 1;
         }
 
-        public async Task<TaskVIewDto> GetSingleTask(Guid taskId)
+        public async Task<TaskVIewDto> GetSingleTask(Guid taskId, int? year)
         {
 
             var task = await _dBContext.Tasks.FirstOrDefaultAsync(x => x.Id == taskId);
@@ -108,6 +110,7 @@ namespace IntegratedDigitalAPI.Services.PM
                                         Include(x=>x.ActivityLocations).ThenInclude(x=>x.Region).                                        
                                         Include(x=>x.ProjectSourceFund)                                      
                                         on a.Id equals e.ActivityParentId
+                                        where year > 0 ? a.ShouldStartPeriod.Value.Year == year || a.ShouldEnd.Value.Year == year : true
                                         // join ae in _dBContext.EmployeesAssignedForActivities.Include(x=>x.Employee) on e.Id equals ae.ActivityId
                                         select new ActivityViewDto
                                         {
@@ -174,7 +177,7 @@ namespace IntegratedDigitalAPI.Services.PM
                 {
                     activityViewDtos = (from e in _dBContext.Activities.OrderBy(x=>x.CreatedDate).
                                           Include(x => x.ActivityLocations).ThenInclude(x => x.Region)
-                                        where e.TaskId == task.Id
+                                        where e.TaskId == task.Id && (year > 0 ? (e.ShouldStat.Year == year || e.ShouldEnd.Year == year): true )                                        
                                         // join ae in _dBContext.EmployeesAssignedForActivities.Include(x=>x.Employee) on e.Id equals ae.ActivityId
                                         select new ActivityViewDto
                                         {
@@ -282,7 +285,7 @@ namespace IntegratedDigitalAPI.Services.PM
 
                     var activityViewDtos = (from e in _dBContext.Activities.OrderBy(x=>x.CreatedDate).
                                             Include(x => x.ActivityLocations).ThenInclude(x => x.Region)
-                                            where e.PlanId == plan.Id
+                                            where e.PlanId == plan.Id && (year > 0 ? (e.ShouldStat.Year == year || e.ShouldEnd.Year == year) : true)
                                             // join ae in _dBContext.EmployeesAssignedForActivities.Include(x=>x.Employee) on e.Id equals ae.ActivityId
                                             select new ActivityViewDto
                                             {
@@ -465,6 +468,8 @@ namespace IntegratedDigitalAPI.Services.PM
                     task.TaskDescription = updateTask.TaskDescription;
                     task.PlanedBudget = updateTask.PlannedBudget;
                     task.HasActivityParent = updateTask.HasActvity;
+                    task.ShouldStartPeriod = updateTask.StartDate;
+                    task.ShouldEnd = updateTask.EndDate;
 
                     await _dBContext.SaveChangesAsync();
 

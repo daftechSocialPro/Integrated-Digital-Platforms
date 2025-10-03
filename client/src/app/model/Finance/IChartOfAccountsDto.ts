@@ -13,6 +13,7 @@ export interface SubsidiaryAccountsGetDto{
     description: string
     sequence: number
     isActive: boolean
+    typeOfAccount: string;
 }
 
 export interface ChartOfAccountsPostDto{
@@ -31,5 +32,6 @@ export interface SubsidiaryAccountsPostDto{
     description: string
     sequence: number
     createdById: string
+    typeOfAccount: number;
 }
 

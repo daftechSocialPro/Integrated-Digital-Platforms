@@ -119,7 +119,7 @@ export class PlansComponent implements OnInit {
   deletePlan(planId:string){
 
     this.confirmationService.confirm({
-      message: 'Are You sure you want to delete this Project?',
+      message: 'Are You sure you want to delete this Project?\n this project might be related to store\n, purchase , payments , salaries and training\n and there is no getting back all the data',
       header: 'Delete Confirmation',
       icon: 'pi pi-info-circle',
       accept: () => {

@@ -54,9 +54,12 @@ export class UserManagementComponent implements OnInit {
   }
 
   searchUsers(value:string) {
+    debugger;
     this.filteredUserList = this.users.filter(user =>
-      user.name.toLowerCase().includes(value.toLowerCase()) ||
-      user.phoneNumber.includes(value)
+      user.name.includes(value) ||
+      user.phoneNumber.includes(value) || 
+      user.userName.includes(value)
+      
     );
   }
 

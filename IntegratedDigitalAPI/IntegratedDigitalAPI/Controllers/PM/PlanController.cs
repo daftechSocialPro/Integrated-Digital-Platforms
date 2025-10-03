@@ -70,9 +70,9 @@ namespace IntegratedDigitalAPI.Controllers.PM
 
         [HttpGet("getbyplanid")]
 
-        public async Task<PlanSingleViewDto> GetPlan(Guid planId)
+        public async Task<PlanSingleViewDto> GetPlan(Guid planId,int? year)
         {
-            var response = await _planService.GetSinglePlan(planId);
+            var response = await _planService.GetSinglePlan(planId,year);
 
             return response;
         }

@@ -78,7 +78,7 @@ export class AddActivitiesComponent implements OnInit {
   ngOnInit(): void {
 
 
-
+   this.getCountries()
     
     this.remainingBudget=this.task?.remainingBudget!
     // this.activityForm = this.formBuilder.group({
@@ -138,7 +138,7 @@ this.resetForm()
 
     this.user = this.userService.getCurrentUser()
 
-    this.getCountries()
+    
 
     this.ListofEmployees()
     this.GetStrategicPlans()
@@ -221,6 +221,8 @@ this.resetForm()
     this.dropService.getContriesDropdown().subscribe({
       next: (res) => {
         this.countries = res
+        var id = res.find(x => x.name == 'Ethiopia').id
+        this.getRegions(id);
       }
     })
   }

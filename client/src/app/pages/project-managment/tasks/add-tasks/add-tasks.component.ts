@@ -33,13 +33,14 @@ export class AddTasksComponent {
     ) { }
 
   ngOnInit(): void {
-
     this.remainingBudget  = this.plan.remainingBudget
 
     this.taskForm = this.formBuilder.group({
       TaskDescription:['',Validators.required],
       HasActvity: [false, Validators.required],
-      PlannedBudget:['',[Validators.required,Validators.max(this.remainingBudget)]]
+      PlannedBudget:['',[Validators.required,Validators.max(this.remainingBudget)]],
+      StartDate:['',[Validators.required]],
+      EndDate:['',[Validators.required]]
 
     })
   
@@ -55,7 +56,10 @@ export class AddTasksComponent {
         TaskDescription: this.taskForm.value.TaskDescription,
         HasActvity : this.taskForm.value.HasActvity,
         PlannedBudget:this.taskForm.value.PlannedBudget,
-        PlanId : this.plan.id
+        PlanId : this.plan.id,
+        startDate: this.taskForm.value.StartDate,
+        endDate: this.taskForm.value.EndDate
+        
       } 
 
 
@@ -67,7 +71,8 @@ export class AddTasksComponent {
           this.taskForm.controls['TaskDescription'].setValue('')
           this.taskForm.controls['HasActvity'].setValue(false)
           this.taskForm.controls['PlannedBudget'].setValue('')
-
+          this.taskForm.controls['StartDate'].setValue('')
+          this.taskForm.controls['EndDate'].setValue('')
           
           this.addedTasks.push(taskValue.TaskDescription)
           this.remainingBudget= this.remainingBudget- Number(taskValue.PlannedBudget)

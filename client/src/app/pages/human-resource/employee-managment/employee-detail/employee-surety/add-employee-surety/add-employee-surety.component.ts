@@ -46,24 +46,38 @@ export class AddEmployeeSuretyComponent implements OnInit {
 
   }
   onUpload(event: any) {
-
     var file: File = event.target.files[0];
-    this.filePhoto = file
-    var myReader: FileReader = new FileReader();
-    myReader.onloadend = (e) => {
-      this.photoPath = myReader.result;
+    if (file && file.type.startsWith('image/')) {
+      this.filePhoto = file
+      var myReader: FileReader = new FileReader();
+      myReader.onloadend = (e) => {
+        this.photoPath = myReader.result;
+      }
+      myReader.readAsDataURL(file);
+      // Proceed with uploading the image
+    } else {
+      this.messageService.add({ severity: 'error', summary: 'Upload Error .', detail:'Not Supported File' });   
     }
-    myReader.readAsDataURL(file);
   }
+
   onUploadLetter(event: any) {
-
     var file: File = event.target.files[0];
-    this.fileLetter = file
-
+    if (file && file.type.startsWith('image/')) {
+      this.fileLetter = file
+    }
+    else {
+      this.messageService.add({ severity: 'error', summary: 'Upload Error .', detail: 'Not Supported File' });
+    }
   }
+
   onUploadId(event: any) {
     var file: File = event.target.files[0];
-    this.fileIdCard = file
+    if (file && file.type.startsWith('image/')) {
+      this.fileIdCard = file
+    }
+    else {
+      this.messageService.add({ severity: 'error', summary: 'Upload Error .', detail: 'Not Supported File' });
+    }
   }
 
   submit(){

@@ -79,6 +79,7 @@ import { ApprovedPaymentRequisitionComponent } from './payment-requisition/appro
 import { PaymentRequisitionViewComponent } from './payment-requisition/payment-requisition-view/payment-requisition-view.component';
 import { EmployeeSettlementsComponent } from './employee-settlements/employee-settlements.component';
 import { AddPayeeDetailsComponent } from './payments/pending-payments/add-payee-details/add-payee-details.component';
+import { AddReceiptComponent } from './receipt/add-receipt/add-receipt.component';
 
 
 
@@ -139,6 +140,7 @@ import { AddPayeeDetailsComponent } from './payments/pending-payments/add-payee-
     PaymentRequisitionViewComponent,
     EmployeeSettlementsComponent,
     AddPayeeDetailsComponent,
+    AddReceiptComponent,
 
   ],
   imports: [

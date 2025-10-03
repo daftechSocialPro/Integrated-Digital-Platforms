@@ -7,6 +7,7 @@ import { MessageService } from 'primeng/api';
 import { SelectList } from 'src/app/model/common';
 import { AddJournalVochureDto, AddJournalVoucherDetailDto } from 'src/app/model/Finance/IJournalVoucherDto';
 import { PaymentDetailListDto } from 'src/app/model/Finance/IPaymentDto';
+import { ReceiptDetailGetDto } from 'src/app/model/Finance/IReceiptModel';
 import { UserView } from 'src/app/model/user';
 import { DropDownService } from 'src/app/services/dropDown.service';
 import { FinanceService } from 'src/app/services/finance.service';
@@ -19,6 +20,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class AddJournalVoucherComponent implements OnInit {
   @Input() paymentDetailList!: PaymentDetailListDto[]
+  @Input() receiptDetailGet!: ReceiptDetailGetDto[]
   user!: UserView
   accountingPeriodDropDown!: SelectList[]
   chartOfAccountDropDown!: SelectList[]
@@ -46,8 +48,8 @@ export class AddJournalVoucherComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log("sdfdfgdfgfgdfg",this.paymentDetailList)
-    if(!this.paymentDetailList){
+    console.log(this.paymentDetailList, this.receiptDetailGet)
+    if(!this.paymentDetailList || !this.receiptDetailGet){
       this.document.body.classList.toggle('toggle-sidebar');
     }
     this.user = this.userService.getCurrentUser();
@@ -77,6 +79,18 @@ export class AddJournalVoucherComponent implements OnInit {
             credit: x.totalPrice,
             chartOfAccountId: this.chartOfAccountDropDown.find(z => z.name == x.chartOfAccount).id,
             subsidiaryAccountId: "",
+            remark:x.description
+          }))
+          this.journalDetailList = itemList
+          this.addJournal.typeofJV = 0
+        }
+        if(this.receiptDetailGet){
+          let itemList: AddJournalVoucherDetailDto[] = this.receiptDetailGet.map(x => ({
+            chartOfAccount: x.chartOfAccountName,
+            debit: x.quantity * x.unitPrice,
+            credit: x.quantity * x.unitPrice,
+            chartOfAccountId: x.chartOfAccountId,
+            subsidiaryAccountId: x.subsidiaryAccountId,
             remark:x.description
           }))
           this.journalDetailList = itemList

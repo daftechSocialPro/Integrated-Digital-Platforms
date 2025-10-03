@@ -36,9 +36,9 @@ export class PlanService {
         return this.http.get<PlanView[]>(this.BaseURI+"/plan?year="+year)
     }
 
-    getSinglePlans(planId:String){
+    getSinglePlans(planId:String,year?: number){
 
-        return this.http.get<PlanSingleview>(this.BaseURI+"/plan/getbyplanid?planId="+planId)
+        return this.http.get<PlanSingleview>(this.BaseURI+"/plan/getbyplanid?planId="+planId+"&year="+year)
     }
 
     getSingleActivity(actId : string){

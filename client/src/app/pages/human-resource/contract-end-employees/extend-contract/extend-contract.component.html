@@ -1,0 +1,49 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Extend Contract </h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-12">
+                    <form class="" [formGroup]="HistoryForm" (ngSubmit)="submit()">
+                        <div class="modal-body">
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <p-calendar formControlName="startDate"  [required]= "true"
+                                        [readonlyInput]="true"  placeholder="Start Date"></p-calendar>
+                                      
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating"> 
+                                        <p-calendar formControlName="endDate" 
+                                        [readonlyInput]="true"  placeholder="End date"></p-calendar>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating"><textarea  class="form-control"
+                                            formControlName="remark" placeholder="remark" id="remark"
+                                            style="height: 100px;"></textarea><label for="remark">Remark</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div  class="modal-footer"> 
+                            <button type="button" class="btn btn-outline-secondary"
+                            (click)="closeModal()">Close</button> 
+                            <button *ngIf="!added" type="button" type="submit"
+                            [disabled]="!HistoryForm.valid" class="btn btn-outline-primary">Save
+                            changes</button>
+                            <button *ngIf="added" type="button" class="btn btn-outline-secondary"
+                            (click)="printLetter()">Print</button> 
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>

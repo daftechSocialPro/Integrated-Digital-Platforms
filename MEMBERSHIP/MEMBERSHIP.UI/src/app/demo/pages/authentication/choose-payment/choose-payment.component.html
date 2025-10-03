@@ -1,0 +1,43 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <!-- <h3 class="modal-title">Choose Payment Method</h3> -->
+    <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" data-bs-dismiss="modal"
+      aria-label="Close"></button>
+  </div>
+
+
+  <div class="container d-flex justify-content-center align-items-center">
+
+    <div class="card payment-card my-5 shadow">
+      <div class="card-body">
+        <h2 class="text-center text-secondary">Choose Payment Method</h2>
+        <hr />
+
+        <div class="d-flex justify-content-center mt-3">
+          <label class="payment-label me-4">
+            <input type="radio" name="paymentMethod" value="Chapa" (change)="onPaymentMethodChange('Chapa')" checked />
+            <span class="custom-radio"></span> Chapa
+          </label>
+
+          <label class="payment-label">
+            <input type="radio" name="paymentMethod" value="Receipt" (change)="onPaymentMethodChange('Receipt')" />
+            <span class="custom-radio"></span> Receipt
+          </label>
+        </div>
+
+        <div *ngIf="selectedMethod === 'Receipt'" class="mt-4">
+          <label class="form-label">Upload Receipt Image:</label>
+          <input type="file" class="form-control" (change)="onFileSelected($event)" accept="image/*" />
+
+          <div *ngIf="receiptImagePreview" class="text-center mt-3">
+            <img [src]="receiptImagePreview" alt="Receipt Preview" class="img-thumbnail" width="150" />
+          </div>
+        </div>
+
+        <div class="d-grid mt-4">
+          <button (click)="submitPayment()" class="btn btn-secondary btn-lg">Proceed</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

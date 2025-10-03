@@ -63,7 +63,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="text"  class="form-control" id="accountNumber" placeholder="account Number"
+                                        <input type="text"  class="form-control" id="accountNumber" placeholder="account Number" [minlength]="totDigit" [maxlength]="totDigit"  pattern="\d*"
                                             formControlName="accountNumber">
                                         <label for="accountNumber">Account Number</label>
                                     </div>

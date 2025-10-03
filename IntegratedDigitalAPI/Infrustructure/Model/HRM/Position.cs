@@ -13,5 +13,7 @@ namespace IntegratedInfrustructure.Model.HRM
 
         public bool HasSeverance { get; set; }
         public double? SeverancePercentage { get; set; }
+
+        public bool IsManagerial { get; set; }
     }
 }

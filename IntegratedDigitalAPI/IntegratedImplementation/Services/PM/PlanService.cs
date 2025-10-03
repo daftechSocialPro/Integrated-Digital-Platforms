@@ -38,6 +38,7 @@ namespace IntegratedDigitalAPI.Services.PM
                     PlannedBudget = plan.PlandBudget,
                     DepartmentId = plan.StructureId,
                     ProjectManagerId = plan.ProjectManagerId,
+                    FinanceManagerId = plan.FinanceManagerId,
                     CreatedDate = DateTime.Now,
                     CreatedById = plan.CreatedById
 
@@ -171,7 +172,9 @@ namespace IntegratedDigitalAPI.Services.PM
         {
 
             var plans = programId != null ? _dBContext.Projects.Where(x => x.ProjectManagerId == programId).Include(x => x.Department).Include(x => x.ProjectManager).Include(x => x.ProjectFunds).AsNoTracking() :
-                _dBContext.Projects.Include(x => x.Department).Include(x => x.ProjectManager).Include(x => x.ProjectFunds).AsNoTracking();
+                _dBContext.Projects.Include(x => x.Department).Include(x => x.ProjectManager)
+                .Include(x=>x.FinanceManager)
+                .Include(x => x.ProjectFunds).AsNoTracking();
 
 
             if (year.HasValue&&year!=null&&year!=0)
@@ -193,6 +196,8 @@ namespace IntegratedDigitalAPI.Services.PM
                               StructureName = p.Department.DepartmentName,
                               RemainingBudget = (float)(p.PlannedBudget - p.Tasks.Sum(x => (float)x.ActualBudget)),
                               ProjectManager = $"{p.ProjectManager.FirstName} {p.ProjectManager.MiddleName} {p.ProjectManager.LastName}",
+                              FinanceManager = p.FinanceManagerId!=null? $"{p.FinanceManager.FirstName} {p.FinanceManager.MiddleName} {p.FinanceManager.LastName}":"",
+
                               //Director = _dBContext.Employees.Where(x => x.Position == Models.Common.Position.Director&&x.OrganizationalStructureId== p.StructureId).FirstOrDefault().FullName,                              
                               NumberOfTask = _dBContext.Tasks.Count(x => x.ProjectId == p.Id),
                               NumberOfActivities = _dBContext.Activities.Include(x => x.ActivityParent.Task.Project).Where(x => x.PlanId == p.Id || x.Task.ProjectId == p.Id || x.ActivityParent.Task.ProjectId == p.Id).Count(),
@@ -206,6 +211,8 @@ namespace IntegratedDigitalAPI.Services.PM
 
                               StructureId = p.DepartmentId.ToString(),
                               ProjectManagerId = p.ProjectManagerId.ToString(),
+                              FinanceManagerId = p.FinanceManagerId.ToString(),
+                              
                               CreatedDate = p.CreatedDate
 
 
@@ -216,12 +223,10 @@ namespace IntegratedDigitalAPI.Services.PM
 
 
         }
-        public async Task<PlanSingleViewDto> GetSinglePlan(Guid planId)
+        public async Task<PlanSingleViewDto> GetSinglePlan(Guid planId,int? year)
         {
-
-
-
             var tasks = (from t in _dBContext.Tasks.Include(x => x.Activities).Where(x => x.ProjectId == planId).OrderBy(x => x.CreatedDate)
+                         where (year.HasValue && year > 0 ? ((t.ShouldStartPeriod.HasValue && t.ShouldStartPeriod.Value.Year == year) || (t.ShouldEnd.HasValue && t.ShouldEnd.Value.Year == year)) : true)
                          select new TaskVIewDto
                          {
                              Id = t.Id,
@@ -308,6 +313,17 @@ namespace IntegratedDigitalAPI.Services.PM
 
             try
             {
+                var ProjectSalary = await _dBContext.EmployeeSalaries.AnyAsync(x => x.ProjectId == planId);
+                if (ProjectSalary)
+                {
+                    return new ResponseMessage
+                    {
+
+                        Message = "First Correct all employee salaries related to the project!!!",
+                        Success = false
+                    };
+                }
+
                 var projectFunds = await _dBContext.Project_Funds.Where(x => x.ProjectId == planId).ToListAsync();
 
                 if (projectFunds.Any())
@@ -315,6 +331,12 @@ namespace IntegratedDigitalAPI.Services.PM
                     _dBContext.Project_Funds.RemoveRange(projectFunds);
                     await _dBContext.SaveChangesAsync();
                 }
+
+                var storerequest = await _dBContext.StoreRequests.Where(x => x.ProjectId.Equals(planId)).ExecuteUpdateAsync(pro => pro.SetProperty(y => y.ProjectId,(Guid?)null));
+                var purchaseRequest = await _dBContext.PurchaseRequests.Where(x => x.ProjectId.Equals(planId)).ExecuteUpdateAsync(pro => pro.SetProperty(y => y.ProjectId,(Guid?)null));
+                var paymentRequsition = await _dBContext.PaymetRequisitions.Where(x => x.ProjectId.Equals(planId)).ExecuteUpdateAsync(pro => pro.SetProperty(y => y.ProjectId,(Guid?)null));
+                var products = await _dBContext.Products.Where(x => x.ProjectId.Equals(planId)).ExecuteUpdateAsync(pro => pro.SetProperty(y => y.ProjectId,(Guid?)null));
+                var training = await _dBContext.Trainings.Where(x => x.ProjectId.Equals(planId)).ExecuteUpdateAsync(pro => pro.SetProperty(y => y.ProjectId,(Guid?)null));
 
                 var tasks = await _dBContext.Tasks.Where(x => x.ProjectId == planId).ToListAsync();
 
