@@ -611,5 +611,25 @@ export class HrmService {
         return this.http.get<HrmDashboardGetDto>(this.baseUrl + "/HrmDashboard")
     }
     
+   //HRM reports
+    getDailyReport(date: Date,fileType: String) {
+    return this.http.get(`${this.baseUrl}/AttendanceReport/GetDailyAttendanceReport?date=${date}&fileType=${fileType}`, {
+      responseType: 'arraybuffer', // ← Crucial for binary data
+      headers: { Accept: 'multipart/form-data' }
+    });
+  }
 
+  getDailyOvertimeReport(date: Date,fileType: String) {
+    return this.http.get(`${this.baseUrl}/AttendanceReport/GetDailyOvertimeReport?date=${date}&fileType=${fileType}`, {
+      responseType: 'arraybuffer', // ← Crucial for binary data
+      headers: { Accept: 'multipart/form-data' }
+    });
+  }
+
+   getMonthlyReport(date: Date,fileType: String) {
+    return this.http.get(`${this.baseUrl}/AttendanceReport/GetMonthlyReport?date=${date}&fileType=${fileType}`, {
+      responseType: 'arraybuffer', // ← Crucial for binary data
+      headers: { Accept: 'multipart/form-data' }
+    });
+  }
 }

@@ -1,0 +1,16 @@
+D:\Projects\Ethiopian Midwives\Application\New\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedReport\bin\Release\net7.0\IntegratedReport.deps.json
+D:\Projects\Ethiopian Midwives\Application\New\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedReport\bin\Release\net7.0\IntegratedReport.dll
+D:\Projects\Ethiopian Midwives\Application\New\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedReport\bin\Release\net7.0\IntegratedReport.pdb
+D:\Projects\Ethiopian Midwives\Application\New\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedReport\bin\Release\net7.0\IntegratedInfrustructure.dll
+D:\Projects\Ethiopian Midwives\Application\New\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedReport\bin\Release\net7.0\IntegratedInfrustructure.pdb
+D:\Projects\Ethiopian Midwives\Application\New\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedReport\obj\Release\net7.0\IntegratedReport.csproj.AssemblyReference.cache
+D:\Projects\Ethiopian Midwives\Application\New\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedReport\obj\Release\net7.0\IntegratedReport.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\Ethiopian Midwives\Application\New\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedReport\obj\Release\net7.0\IntegratedReport.AssemblyInfoInputs.cache
+D:\Projects\Ethiopian Midwives\Application\New\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedReport\obj\Release\net7.0\IntegratedReport.AssemblyInfo.cs
+D:\Projects\Ethiopian Midwives\Application\New\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedReport\obj\Release\net7.0\IntegratedReport.csproj.CoreCompileInputs.cache
+D:\Projects\Ethiopian Midwives\Application\New\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedReport\obj\Release\net7.0\IntegratedReport.sourcelink.json
+D:\Projects\Ethiopian Midwives\Application\New\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedReport\obj\Release\net7.0\Integrat.3B203416.Up2Date
+D:\Projects\Ethiopian Midwives\Application\New\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedReport\obj\Release\net7.0\IntegratedReport.dll
+D:\Projects\Ethiopian Midwives\Application\New\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedReport\obj\Release\net7.0\refint\IntegratedReport.dll
+D:\Projects\Ethiopian Midwives\Application\New\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedReport\obj\Release\net7.0\IntegratedReport.pdb
+D:\Projects\Ethiopian Midwives\Application\New\Integrated-Digital-Platforms\IntegratedDigitalAPI\IntegratedReport\obj\Release\net7.0\ref\IntegratedReport.dll

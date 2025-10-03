@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './layouts/header/header.component';
 import { FooterComponent } from './layouts/footer/footer.component';
 import { SidebarComponent } from './layouts/sidebar/sidebar.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { AlertsComponent } from './components/alerts/alerts.component';
 import { AccordionComponent } from './components/accordion/accordion.component';
 import { BadgesComponent } from './components/badges/badges.component';
@@ -291,6 +290,10 @@ import { AddEmployeeGuaranteeComponent } from './pages/human-resource/employee-m
 import { ExtendContractComponent } from './pages/human-resource/contract-end-employees/extend-contract/extend-contract.component';
 import { GenerateIdCardComponent } from './pages/human-resource/employee-managment/generate-id-card/generate-id-card.component';
 import { NewTaskActivityComponent } from './pages/project-managment/plans/new-task-activity/new-task-activity.component';
+import { AttendanceReportComponent } from './pages/human-resource/attendance-report/attendance-report.component';
+import { DailyAttendanceReportComponent } from './pages/human-resource/attendance-report/daily-attendance-report/daily-attendance-report.component';
+import { OvertimeAttendanceReportComponent } from './pages/human-resource/attendance-report/overtime-attendance-report/overtime-attendance-report.component';
+import { MonthlyAttendanceReportComponent } from './pages/human-resource/attendance-report/monthly-attendance-report/monthly-attendance-report.component';
 
 @NgModule({
   declarations: [
@@ -298,7 +301,6 @@ import { NewTaskActivityComponent } from './pages/project-managment/plans/new-ta
     HeaderComponent,
     FooterComponent,
     SidebarComponent,
-    DashboardComponent,
     AlertsComponent,
     AccordionComponent,
     BadgesComponent,
@@ -627,7 +629,11 @@ import { NewTaskActivityComponent } from './pages/project-managment/plans/new-ta
       EmployeeGuaranteeComponent,
       AddEmployeeGuaranteeComponent,
       ExtendContractComponent,
-      NewTaskActivityComponent
+      NewTaskActivityComponent,
+      AttendanceReportComponent,
+      DailyAttendanceReportComponent,
+      OvertimeAttendanceReportComponent,
+      MonthlyAttendanceReportComponent
 
     //  AddMeasurementComponent,
     //  UpdateMeasurmentComponent

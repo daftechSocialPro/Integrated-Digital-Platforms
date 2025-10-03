@@ -1,4 +1,5 @@
-﻿using Implementation.Interfaces.Authentication;
+﻿
+using Implementation.Interfaces.Authentication;
 using Implementation.Interfaces.Inventory;
 using Implementation.Services.Authentication;
 using Implementation.Services.Inventory;
@@ -37,9 +38,9 @@ namespace IntegratedImplementation.Datas
         {
 
             #region Hrm Service
+         
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IHolidayService, HolidayService>();
-
             services.AddScoped<IHrmNotificationService, HrmNotificationService>();
 
             services.AddScoped<IDepartmentService, DepartmentService>();

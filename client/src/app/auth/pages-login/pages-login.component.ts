@@ -34,7 +34,7 @@ export class PagesLoginComponent implements OnInit {
     if (this.loginForm.valid) {
       this.userService.login(this.loginForm.value).subscribe({
         next: (res) => {
-
+              debugger;
           if (res.success) {
             this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });        
             sessionStorage.setItem('token', res.data);

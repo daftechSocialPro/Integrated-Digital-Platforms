@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
    <UserSecretsId>AA81F605-E4D5-4F39-8D48-007D54AB3316</UserSecretsId>
@@ -42,10 +42,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Infrustructure\IntegratedInfrustructure.csproj" />
     <ProjectReference Include="..\IntegratedImplementation\IntegratedImplementation.csproj" />
+    <ProjectReference Include="..\IntegratedReport\IntegratedReport.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\CompanyProfile\" />
     <Folder Include="wwwroot\NewFolder\" />
     <Folder Include="wwwroot\Products\" />
   </ItemGroup>

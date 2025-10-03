@@ -18,6 +18,10 @@ using System.Configuration;
 using System.Net.Mail;
 using System.Net;
 using OfficeOpenXml;
+using IntegratedReport.DataSet;
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
+using Microsoft.AspNetCore.Http.Json;
+using Newtonsoft.Json;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,11 +34,12 @@ builder.Services.AddCors(policyBuilder =>
 );
 
 //builder.Services.AddCors();
-builder.Services.AddControllers().AddJsonOptions(
-    options =>
-    {
-        options.JsonSerializerOptions.PropertyNamingPolicy = null;
-    });
+//builder.Services.AddControllers()
+//    .AddJsonOptions(options =>
+//    {
+//        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+//        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+//    });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.Configure<ApplicationSetting>(builder.Configuration.GetSection("ApplicationSetting"));
@@ -93,6 +98,7 @@ builder.Services.AddFluentEmail(defaultFromEmail)
 
 
 builder.Services.AddCoreBusiness();
+builder.Services.AddCoreBusinessIntegrated();
 
 
 builder.Services.AddAutoMapper(typeof(AutoMapperConfigurations));
@@ -124,7 +130,7 @@ builder.Services.AddAuthentication(x =>
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSwaggerGen();
-
+//builder.Services.AddControllersWithViews().AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
 
 builder.Services.Configure<FormOptions>(options =>
 {

@@ -4,7 +4,6 @@ using IntegratedImplementation.DTOS.Finance.Action;
 using IntegratedImplementation.Interfaces.Finance.Action;
 using IntegratedInfrustructure.Data;
 using IntegratedInfrustructure.Model.FInance.Actions;
-using Irony;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
