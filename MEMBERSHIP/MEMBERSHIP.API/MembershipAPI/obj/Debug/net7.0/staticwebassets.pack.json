@@ -233,6 +233,26 @@
       "PackagePath": "staticwebassets/Employee/fd9956e7-41ad-4e25-ba22-3708398ce895.jpg"
     },
     {
+      "Id": "/Users/oza/Developer/Personal/DAF Computer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipAPI/wwwroot/Member Receipt/Aregawit Teka Kassa_8c35b7d6-e0e9-4f18-83b2-dab567778147.jpg",
+      "PackagePath": "staticwebassets/Member Receipt/Aregawit Teka Kassa_8c35b7d6-e0e9-4f18-83b2-dab567778147.jpg"
+    },
+    {
+      "Id": "/Users/oza/Developer/Personal/DAF Computer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipAPI/wwwroot/Member Receipt/Aregawit Teka Kassa_ce2fcc2c-9d9b-4caa-85fc-37c9eabcebcb.jpg",
+      "PackagePath": "staticwebassets/Member Receipt/Aregawit Teka Kassa_ce2fcc2c-9d9b-4caa-85fc-37c9eabcebcb.jpg"
+    },
+    {
+      "Id": "/Users/oza/Developer/Personal/DAF Computer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipAPI/wwwroot/Member Receipt/Duncan Velasquez_5ed4a59e-9d35-403c-ae41-78641ba852e1.png",
+      "PackagePath": "staticwebassets/Member Receipt/Duncan Velasquez_5ed4a59e-9d35-403c-ae41-78641ba852e1.png"
+    },
+    {
+      "Id": "/Users/oza/Developer/Personal/DAF Computer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipAPI/wwwroot/Member Receipt/Emmanuel Haynes_b8b4f4ec-3b93-4c61-9dfb-07adae68198b.png",
+      "PackagePath": "staticwebassets/Member Receipt/Emmanuel Haynes_b8b4f4ec-3b93-4c61-9dfb-07adae68198b.png"
+    },
+    {
+      "Id": "/Users/oza/Developer/Personal/DAF Computer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipAPI/wwwroot/Member Receipt/Kirubel Gizaw Abebe_e5988bd6-412b-4fb9-97dd-f08cb4f2212c.jpg",
+      "PackagePath": "staticwebassets/Member Receipt/Kirubel Gizaw Abebe_e5988bd6-412b-4fb9-97dd-f08cb4f2212c.jpg"
+    },
+    {
       "Id": "/Users/oza/Developer/Personal/DAF Computer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipAPI/wwwroot/Member/Abbot Sutton.jpg",
       "PackagePath": "staticwebassets/Member/Abbot Sutton.jpg"
     },
@@ -261,12 +281,20 @@
       "PackagePath": "staticwebassets/Member/Dieter Salas.png"
     },
     {
+      "Id": "/Users/oza/Developer/Personal/DAF Computer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipAPI/wwwroot/Member/Duncan Velasquez.jpg",
+      "PackagePath": "staticwebassets/Member/Duncan Velasquez.jpg"
+    },
+    {
       "Id": "/Users/oza/Developer/Personal/DAF Computer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipAPI/wwwroot/Member/Jerry Mccullough.png",
       "PackagePath": "staticwebassets/Member/Jerry Mccullough.png"
     },
     {
       "Id": "/Users/oza/Developer/Personal/DAF Computer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipAPI/wwwroot/Member/Kay Clements.jpg",
       "PackagePath": "staticwebassets/Member/Kay Clements.jpg"
+    },
+    {
+      "Id": "/Users/oza/Developer/Personal/DAF Computer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipAPI/wwwroot/Member/Kirubel Gizaw Abebe.webp",
+      "PackagePath": "staticwebassets/Member/Kirubel Gizaw Abebe.webp"
     },
     {
       "Id": "/Users/oza/Developer/Personal/DAF Computer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipAPI/wwwroot/Member/Kirubel Gizaw.jpg",

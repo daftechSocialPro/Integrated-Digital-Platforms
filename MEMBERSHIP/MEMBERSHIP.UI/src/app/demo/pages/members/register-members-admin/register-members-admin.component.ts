@@ -19,10 +19,9 @@ import { PendingMembersComponent } from '../pending-members/pending-members.comp
   styleUrls: ['./register-members-admin.component.scss']
 })
 export class RegisterMembersAdminComponent implements OnInit {
-
   registerForm!: FormGroup;
   user!: UserView;
-  selectedCountry:string
+  selectedCountry: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -40,21 +39,33 @@ export class RegisterMembersAdminComponent implements OnInit {
   regions: SelectList[];
   zones: SelectList[];
   memberships: SelectList[];
-
+  educationalLelvels: SelectList[];
+  
   ngOnInit(): void {
+    this.user = this.userService.getCurrentUser();
     this.registerForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      phoneNumber: ['', [Validators.required, Validators.pattern('[0-9]{10}'),Validators.min(10)]],
-      email: ['',Validators.required],
+      phoneNumber: ['', [Validators.required, Validators.pattern('[0-9]{10}'), Validators.min(10)]],
+      email: ['', Validators.required],
       membershipType: ['', Validators.required],
-      RegionId:['',Validators.required],
-      Zone: [null,Validators.required],
-      woreda: [null,Validators.required],
-      inistitute: ['', Validators.required]
+      RegionId: ['', Validators.required],
+      Zone: [null, Validators.required],
+      woreda: [null, Validators.required],
+      inistitute: ['', Validators.required],
+      inistituteRole: [null],
+      educationalLevelId: [null],
+      educationalField: [null]
     });
 
     this.getCountries();
+
+    if (this.user.role.includes('RegionAdmin')) {
+      this.getRegions('ETHIOPIAN');
+      this.registerForm.patchValue({});
+    }
+
+    this.getEducationalLevels();
   }
 
   getMemberships(category: string) {
@@ -65,6 +76,15 @@ export class RegisterMembersAdminComponent implements OnInit {
     });
   }
 
+  getEducationalLevels() {
+    this.dropdownService.getEducationLevelDropdown().subscribe({
+      next: (res) => {
+        this.educationalLelvels = res;
+      }
+    });
+  }
+
+
   getCountries() {
     this.dropdownService.getContriesDropdown().subscribe({
       next: (res) => {
@@ -74,7 +94,6 @@ export class RegisterMembersAdminComponent implements OnInit {
   }
 
   getRegions(countryType: string) {
-    
     if (countryType === 'ETHIOPIAN') {
       this.registerForm.get('woreda').setValidators(Validators.required);
       this.registerForm.get('Zone').setValidators(Validators.required);
@@ -86,12 +105,16 @@ export class RegisterMembersAdminComponent implements OnInit {
     this.registerForm.get('woreda').updateValueAndValidity();
     this.registerForm.get('Zone').updateValueAndValidity();
 
-
-
-
     this.dropdownService.getRegionsDropdown(countryType).subscribe({
       next: (res) => {
-        this.regions = res;
+        if (this.user.role.includes('RegionAdmin')) {
+          this.regions = res.filter((item) => item.id == this.user.region);
+          this.registerForm.patchValue({
+            RegionId: this.user.region
+          });
+        } else {
+          this.regions = res;
+        }
       }
     });
   }
@@ -105,25 +128,26 @@ export class RegisterMembersAdminComponent implements OnInit {
   }
 
   register() {
-
-
-
     var registerFor: IMembersPostDto = {
       firstName: this.registerForm.value.firstName,
       lastName: this.registerForm.value.lastName,
       phoneNumber: this.registerForm.value.phoneNumber.toString(),
       email: this.registerForm.value.email,
       Zone: this.registerForm.value.Zone,
-      RegionId:this.registerForm.value.RegionId,
+      RegionId: this.registerForm.value.RegionId,
       woreda: this.registerForm.value.woreda,
       inistitute: this.registerForm.value.inistitute,
-      membershipTypeId: this.registerForm.value.membershipType
+      membershipTypeId: this.registerForm.value.membershipType,
+
+      instituteRole: this.registerForm.value.inistituteRole,
+      educationalField: this.registerForm.value.educationalField,
+      educationalLevelId:this.registerForm.value.educationalLevelId
+
     };
 
     this.userService.register(registerFor).subscribe({
       next: (res) => {
         if (res.success) {
-   
           this.messageService.add({ severity: 'success', summary: 'Successfully Registed!!!.', detail: res.message });
           this.closeModal();
         } else {
@@ -132,32 +156,22 @@ export class RegisterMembersAdminComponent implements OnInit {
       },
       error: (err) => {
         this.messageService.add({ severity: 'error', summary: 'Something went wrong!!!', detail: err.message });
-
-
       }
     });
   }
 
   checkIfPhoneNumberExist(phoneNumber: string) {
-
-
     this.memberService.checkIfPhoneNumberExist(phoneNumber).subscribe({
       next: (res) => {
-  
         if (res.exist) {
-
-     
-          this.registerForm.controls['phoneNumber'].setValue('')
-        
+          this.registerForm.controls['phoneNumber'].setValue('');
         } else {
         }
       }
     });
   }
 
-  closeModal(){
-    this.activeModal.close()
+  closeModal() {
+    this.activeModal.close();
   }
-
-
 }

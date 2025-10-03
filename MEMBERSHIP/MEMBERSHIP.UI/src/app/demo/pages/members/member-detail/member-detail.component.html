@@ -12,13 +12,8 @@
         <div class="card p-4">
 
             <form [formGroup]="updateProfileForm" (submit)="submit()">
-
                 <div class="row">
-
                     <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
-
-
-
                         <img [src]="getImage2()" alt="Profile" style="width:100%;">
                         <input #file (change)="onUpload($event)" type="file" style="display: none;" accept="image/*" />
                         <div class="pt-2">
@@ -31,10 +26,7 @@
 
                     </div>
                     <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
-
-
                         <hr />
-
                         <div class="row mt-2">
                             <div class="col-md-4 ">
                                 <div class="form-floating mb-3">
@@ -56,12 +48,7 @@
                                     <label for="memberId">MemberId </label>
                                 </div>
                             </div>
-
                         </div>
-
-
-
-
 
                         <div class="row">
                             <div class="col-md-4">
@@ -91,7 +78,6 @@
                                     <label for="educationalFieldId">Educational Field</label>
                                 </div>
                             </div>
-
                         </div>
 
 
@@ -99,28 +85,24 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-floating mb-3">
-
                                     <select class="form-control" formControlName="gender">
-
                                         <option></option>
                                         <option value="MALE">MALE
                                         </option>
                                         <option value="FEMALE">FEMALE
                                         </option>
-
                                     </select>
                                     <label for="educationalLeevels">Gender</label>
-
-
                                 </div>
-
                             </div>
+
                             <div class="col-md-4">
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" formControlName="woreda" id="woreda" />
                                     <label for="woreda">Woreda </label>
                                 </div>
                             </div>
+
                             <div class="col-md-4">
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" formControlName="institute"
@@ -149,7 +131,7 @@
 
                             <div class="col-md-4">
                                 <div class="form-floating mb-3">
-                                    <select class="form-control" formControlName="paymentStatus">
+                                    <select class="form-control" #payment formControlName="paymentStatus">
                                         <option>PENDING</option>
                                         <option>PAID</option>
                                         <option>EXPIRED</option>
@@ -159,89 +141,114 @@
                             </div>
                         </div>
 
+                        <div>
 
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-floating mb-3">
-                                    <input type="date" class="form-control" formControlName="lastPaid" id="lastPaid" (change)="getExpiredDate()" />
-                                    <label for="lastPaid">Last Paid</label>
+                            <div class="row">
+
+                                <div [class]="payment.value=='PAID'?'col-8':'col-12'">
+
+                                    <div class="row" *ngIf="payment.value=='PAID'">
+                                        <div class="form-floating mb-3">
+                                            <input (change)="onUpload2($event)" type="file" class="form-control"
+                                                accept="image/*" />
+                                            <label for="reciept">Receipt Image</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-floating mb-3">
+                                                <input type="date" class="form-control" formControlName="lastPaid"
+                                                    id="lastPaid" (change)="getExpiredDate()" />
+                                                <label for="lastPaid">Last Paid</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-floating mb-3">
+                                                <input type="date" class="form-control" formControlName="expiredDate"
+                                                    id="expiredDate" />
+                                                <label for="expiredDate">Expiry Date</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-floating mb-3">
+                                                <input type="date" class="form-control" formControlName="createdDate"
+                                                    id="createdDate" />
+                                                <label for="createdDate">Frist Date of Being a Member</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-floating mb-3">
+
+                                                <select class="form-control" #category
+                                                    (change)="getMemberships(category.value)">
+                                                    <option></option>
+                                                    <option value="Midwife">Midwife</option>
+                                                    <option value="NonMidwife">NON-Midwife</option>
+                                                    <option value="Institute">INSTITUTE</option>
+                                                </select>
+                                                <label for="email">Membership Category</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+
+                                            <div class="form-floating mb-3">
+
+                                                <select class="form-control" formControlName="membershipType"
+                                                    (change)="getExpiredDate()">
+                                                    <option></option>
+                                                    <option *ngFor="let item of memberships"
+                                                        [value]="item.id.toLowerCase()">
+                                                        {{item.name}}</option>
+
+                                                </select>
+
+                                                <label for="membershipType">Membership Types</label>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-floating mb-3">
+                                                <select class="form-control" formControlName="regionId">
+
+                                                    <option></option>
+                                                    <option *ngFor="let item of chapters"
+                                                        [value]="item.id.toLowerCase()">
+                                                        {{item.name}}
+                                                    </option>
+
+                                                </select>
+                                                <label for="regionId">Region </label>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-floating mb-3">
-                                    <input type="date" class="form-control" formControlName="expiredDate"
-                                        id="expiredDate" />
-                                    <label for="expiredDate">Expired Date</label>
-                                </div>
-                            </div>
 
-                            <div class="col-md-4">
-                                <div class="form-floating mb-3">
-
-                                    <select class="form-control" #category (change)="getMemberships(category.value)">
-                                        <option></option>
-                                        <option value="MIDWIVES">MIDWIVES</option>
-                                        <option value="NONMIDWIVES">NONMIDWIVES</option>
-
-                                    </select>
-                                    <label for="email">Membership Category</label>
-                                </div>
-                            </div>
+                                <div class="col-4">
+                                    <img *ngIf="getImage3()!=''" [src]="getImage3()" alt="Profile" style="width:100%;">
 
 
-
-                            <div class="col-md-4">
-
-                                <div class="form-floating mb-3">
-
-                                    <select class="form-control" formControlName="membershipType" (change)="getExpiredDate()">
-                                        <option></option>
-                                        <option *ngFor="let item of memberships" [value]="item.id.toLowerCase()">
-                                            {{item.name}}</option>
-
-                                    </select>
-
-                                    <label for="membershipType">Membership Types</label>
                                 </div>
 
-
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-floating mb-3">
-                                    <select class="form-control" formControlName="regionId">
 
-                                        <option></option>
-                                        <option *ngFor="let item of chapters" [value]="item.id.toLowerCase()">
-                                            {{item.name}}
-                                        </option>
 
-                                    </select>
-                                    <label for="regionId">Region </label>
-                                </div>
-                            </div>
 
                         </div>
+
+
+
 
 
                         <div class="col-12 text-end mt-4">
                             <button type="submit" [disabled]="!updateProfileForm.valid"
                                 class="btn btn-outline-warning">Update</button>
-
-
-
                         </div>
-
                     </div>
-
-
-
-
-
-
                 </div>
-
-
-
                 <hr />
             </form>
 

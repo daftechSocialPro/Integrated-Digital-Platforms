@@ -33,9 +33,10 @@ namespace MembershipInfrustructure.Model.Configuration
 
     public enum MembershipCategory
     {
-        MIDWIVES,
-        NONMIDWIVES
-    } 
+        Midwife,
+        NonMidwife,
+        Institute
+    }
 
     public enum Currency
     {

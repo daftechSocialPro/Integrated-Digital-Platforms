@@ -14,6 +14,7 @@ import { ResponseMessage2, SelectList } from 'src/models/ResponseMessage.Model';
 import { IMembersGetDto, ICompletePorfileDto, IMemberTelegramDto } from 'src/models/auth/membersDto';
 import { UserView } from 'src/models/auth/userDto';
 import { IPaymentData, IMakePayment } from 'src/models/payment/IPaymentDto';
+import { Clipboard } from '@angular/cdk/clipboard';
 
 @Component({
   selector: 'app-pending-members',
@@ -21,8 +22,7 @@ import { IPaymentData, IMakePayment } from 'src/models/payment/IPaymentDto';
   styleUrls: ['./pending-members.component.scss']
 })
 export class PendingMembersComponent implements OnInit {
-
-  @Input() memberTelegram: ResponseMessage2
+  @Input() memberTelegram: ResponseMessage2;
   paymentStatus: string;
   txt_rn: string;
   completeProfileForm!: FormGroup;
@@ -42,57 +42,56 @@ export class PendingMembersComponent implements OnInit {
     private activeModal: NgbActiveModal,
     private messageService: MessageService,
     private authGuard: AuthGuard,
-    private paymentService: PaymentService
-  ) { }
+    private paymentService: PaymentService,
+    private clipboard: Clipboard
+  ) {}
 
   educationalFields: SelectList[];
   educationalLelvels: SelectList[];
-  membershipTypes: SelectList[]
+  membershipTypes: SelectList[];
 
-  selectedMembership: string
-  selectedAmount: number
+  selectedMembership: string;
+  selectedAmount: number;
 
+  copied = false;
 
   ngOnInit(): void {
     // this.user = this.userService.getCurrentUser();
 
     this.completeProfileForm = this.formBuilder.group({
       selectedMembership: ['', Validators.required]
-
-
     });
 
     this.getMember();
-
-
-
+  }
+  copyMembershipId() {
+    this.clipboard.copy(this.memberTelegram && this.memberTelegram.member.memberId);
+    this.copied = true;
+    setTimeout(() => {
+      this.copied = false;
+    }, 2000);
   }
 
   getMembershipTypes(type: string) {
     this.dropdownService.getMembershipDropDown(type).subscribe({
       next: (res) => {
-        this.membershipTypes = res
+        this.membershipTypes = res;
       }
-    })
+    });
   }
   getMember() {
-   
     this.memberService.getSingleMember(this.memberTelegram.member.id).subscribe({
       next: (res) => {
-       
         this.member = res;
       }
     });
   }
 
   onMembershipSelcted(item: string) {
-
-    var k = item.split('/')
-    this.selectedAmount = Number.parseInt(k[1])
-    this.selectedMembership = k[0]
+    var k = item.split('/');
+    this.selectedAmount = Number.parseInt(k[1]);
+    this.selectedMembership = k[0];
   }
-
-
 
   register() {
     if (this.imagePath == null || this.imagePath == undefined || this.imagePath == '') {
@@ -145,24 +144,20 @@ export class PendingMembersComponent implements OnInit {
         },
         error: (err) => {
           this.messageService.add({ severity: 'error', summary: 'Something went wrong!!!', detail: err.message });
-
-     
         }
       });
     }
   }
 
   checkIfPhoneNumberExist(phoneNumber: string) {
-   
     this.memberService.checkIfPhoneNumberExist(phoneNumber).subscribe({
       next: (res) => {
-     
         if (res) {
           this.confirmationService.confirm({
             message: 'You have already Registerd!! you want to proceed from where you stop ?',
             header: 'Phone number already registerd ',
             icon: 'pi pi-info-circle',
-            accept: () => { },
+            accept: () => {},
             reject: (type: ConfirmEventType) => {
               switch (type) {
                 case ConfirmEventType.REJECT:
@@ -186,10 +181,8 @@ export class PendingMembersComponent implements OnInit {
   verifyPayment() {
     this.memberService.getSingleMemberPayment(this.member.id).subscribe({
       next: (res) => {
-
         this.paymentService.verifyPayment(res.text_Rn).subscribe({
           next: (re) => {
-          
             if (re.response) {
               if (re.response.data.status === 'success') {
                 this.MakePaymentConfirmation(res.text_Rn);
@@ -209,8 +202,8 @@ export class PendingMembersComponent implements OnInit {
   MakePaymentConfirmation(text_rn: string) {
     this.paymentService.MakePaymentConfirmation(text_rn).subscribe({
       next: (res) => {
-        window.location.reload()
-       }
+        window.location.reload();
+      }
     });
   }
 
@@ -223,7 +216,6 @@ export class PendingMembersComponent implements OnInit {
   }
 
   renewMembership() {
-    
     var payment: IPaymentData = {
       amount: this.selectedAmount,
       currency: this.memberTelegram.member.currency,
@@ -233,24 +225,19 @@ export class PendingMembersComponent implements OnInit {
       phone_number: this.memberTelegram.member.phoneNumber,
       return_url: this.returnUrl,
       title: `Payment for Membership`,
-      
+
       description: this.memberTelegram.member.memberId
     };
     this.goTOPayment(payment, this.member);
   }
 
-
   renewMembership2() {
-
     this.paymentService.verifyPayment(this.memberTelegram.member.text_Rn).subscribe({
       next: (res) => {
-     
         if (res.response) {
           if (res.response.data.status == 'success') {
             this.MakePaymentConfirmation(this.memberTelegram.member.text_Rn);
-          }
-          else{
-
+          } else {
             var payment: IPaymentData = {
               amount: this.memberTelegram.member.amount,
               currency: this.memberTelegram.member.currency,
@@ -259,33 +246,24 @@ export class PendingMembersComponent implements OnInit {
               last_name: '',
               phone_number: this.memberTelegram.member.phoneNumber,
               return_url: this.returnUrl,
-              title: `Payment for Membership`,          
+              title: `Payment for Membership`,
               description: this.memberTelegram.member.memberId
-            };       
+            };
 
-            
             this.paymentService.payment(payment).subscribe({
               next: (result) => {
-
-
-                this.memberService.updateTextReference(this.memberTelegram.member.text_Rn,result.response.tx_ref).subscribe({
-                  next:(res)=>{
-                    if (res.success){
+                this.memberService.updateTextReference(this.memberTelegram.member.text_Rn, result.response.tx_ref).subscribe({
+                  next: (res) => {
+                    if (res.success) {
                       window.location.href = result.response.data.checkout_url;
                       this.verifyPayment();
-
                     }
                   }
-                })
-
-      
+                });
               }
-            })
-        
-        
+            });
           }
-        } else{
-
+        } else {
           var payment: IPaymentData = {
             amount: this.memberTelegram.member.amount,
             currency: this.memberTelegram.member.currency,
@@ -295,41 +273,27 @@ export class PendingMembersComponent implements OnInit {
             phone_number: this.memberTelegram.member.phoneNumber,
             return_url: this.returnUrl,
             title: `Payment for Membership`,
-       
+
             description: this.memberTelegram.member.memberId
           };
-      
-
-
 
           this.paymentService.payment(payment).subscribe({
             next: (result) => {
-            this.memberService.updateTextReference(this.memberTelegram.member.text_Rn,result.response.tx_ref).subscribe({
-                  next:(res)=>{
-                    if (res.success){
-                      window.location.href = result.response.data.checkout_url;
-                      this.verifyPayment();
-
-                    }
+              this.memberService.updateTextReference(this.memberTelegram.member.text_Rn, result.response.tx_ref).subscribe({
+                next: (res) => {
+                  if (res.success) {
+                    window.location.href = result.response.data.checkout_url;
+                    this.verifyPayment();
                   }
-                })
-
+                }
+              });
             }
-          })
-      
-      
+          });
         }
-       }})
-
- 
-
-
-
+      }
+    });
   }
   renewMembership3() {
-
-
-
     var payment: IPaymentData = {
       amount: this.memberTelegram.member.amount,
       currency: this.memberTelegram.member.currency,
@@ -339,75 +303,47 @@ export class PendingMembersComponent implements OnInit {
       phone_number: this.memberTelegram.member.phoneNumber,
       return_url: this.returnUrl,
       title: `Payment for Membership`,
-    
+
       description: this.memberTelegram.member.memberId
     };
 
-
     this.paymentService.payment(payment).subscribe({
       next: (res) => {
-
         var mapayment: IMakePayment = {
           memberId: this.memberTelegram.member.id,
-          membershipTypeId:this.memberTelegram.member.membershipTypeId,
+          membershipTypeId: this.memberTelegram.member.membershipTypeId,
           payment: payment.amount,
-          
-          text_Rn: res.response.tx_ref,
-          url:res.response.data.checkout_url
-        };
 
-        var url = res.response.data.checkout_url;
-        this.makePayment(mapayment, url);
-
-
-
-      }
-    })
-
-
-
-
-
-  }
-
-
-
-
-
-
-
-
-
-
-  goTOPayment(payment: IPaymentData, member: any) {
-
-
-    this.paymentService.payment(payment).subscribe({
-      next: (res) => {
-
-   
-        if (res.response){
-       
-        var mapayment: IMakePayment = {
-          memberId: this.memberTelegram.member.id,
-          membershipTypeId: this.selectedMembership,
-          payment: payment.amount,
-         
           text_Rn: res.response.tx_ref,
           url: res.response.data.checkout_url
         };
 
         var url = res.response.data.checkout_url;
         this.makePayment(mapayment, url);
+      }
+    });
+  }
 
-      }
-      else {
-        this.messageService.add({severity:'error',summary:'Invalid Information Please contact your admin ',detail:res.message})
-      }
+  goTOPayment(payment: IPaymentData, member: any) {
+    this.paymentService.payment(payment).subscribe({
+      next: (res) => {
+        if (res.response) {
+          var mapayment: IMakePayment = {
+            memberId: this.memberTelegram.member.id,
+            membershipTypeId: this.selectedMembership,
+            payment: payment.amount,
+
+            text_Rn: res.response.tx_ref,
+            url: res.response.data.checkout_url
+          };
+
+          var url = res.response.data.checkout_url;
+          this.makePayment(mapayment, url);
+        } else {
+          this.messageService.add({ severity: 'error', summary: 'Invalid Information Please contact your admin ', detail: res.message });
+        }
       },
-      error: (err) => {
-      
-      }
+      error: (err) => {}
     });
   }
   makePayment(makePay: IMakePayment, url: string) {

@@ -3,18 +3,13 @@ import { CommonModule } from '@angular/common';
 import { InputMaskModule } from 'primeng/inputmask';
 import { AuthenticationRoutingModule } from './authentication-routing.module';
 import { CompleteProfileComponent } from './complete-profile/complete-profile.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PyamentDetilModalComponent } from './payment-verfication/pyament-detil-modal/pyament-detil-modal.component';
-
+import { ChoosePaymentComponent } from './choose-payment/choose-payment.component';
+import { ForgetMembershipComponent } from './membership-login/forget-membership/forget-membership.component';
 
 @NgModule({
-  declarations: [
-    
-  
-    CompleteProfileComponent,
-            PyamentDetilModalComponent,
-            
-  ],
-  imports: [CommonModule, AuthenticationRoutingModule,InputMaskModule,ReactiveFormsModule],
+  declarations: [CompleteProfileComponent, PyamentDetilModalComponent, ChoosePaymentComponent, ForgetMembershipComponent],
+  imports: [CommonModule, AuthenticationRoutingModule, InputMaskModule, ReactiveFormsModule, FormsModule]
 })
 export class AuthenticationModule {}

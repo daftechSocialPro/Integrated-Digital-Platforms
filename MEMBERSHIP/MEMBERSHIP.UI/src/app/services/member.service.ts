@@ -92,4 +92,12 @@ export class MemberService {
       this.BaseURI + `/Member/GetExpiredDate?lastPaid=${lastPaid}&membershipTypeId=${membershipTypeId}`
     );
   }
+
+  forgetMembershipId(contact: string) {
+    return this.http.post<ResponseMessage>(
+      `${this.BaseURI}/Member/ForgetMembership`,
+      { contact }
+    );
+  }
+  
 }

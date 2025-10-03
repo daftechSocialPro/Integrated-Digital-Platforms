@@ -8,6 +8,10 @@ export interface IMembersPostDto {
   woreda: string;
   inistitute: string;
   membershipTypeId: string;
+
+  instituteRole?: string;
+  educationalLevelId: string;
+  educationalField: string;
 }
 
 export interface IMembersGetDto {
@@ -47,6 +51,8 @@ export interface IMembersGetDto {
   regionId?: string;
   memberStatus?:string;
   membershipCategory?: string;
+
+  receiptImage?:string
 }
 export interface ICompletePorfileDto {
   id: string;
@@ -56,7 +62,7 @@ export interface ICompletePorfileDto {
   instituteRole: string;
   birthDate: Date;
 }
-
+65651056
 export interface IMemberUpdateDto {
   id: string;
   fullName: string;
@@ -70,7 +76,7 @@ export interface IMemberUpdateDto {
   woreda: string;
   instituteRole: string;
   regionId? : string
-
+  createdDate?: Date
   lastPaid?: Date;
   expiredDate?: Date;
   paymentStatus?: string;

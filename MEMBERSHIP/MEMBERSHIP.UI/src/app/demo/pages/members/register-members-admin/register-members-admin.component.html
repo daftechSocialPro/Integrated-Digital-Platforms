@@ -1,151 +1,191 @@
 <div class="modal-content">
-    <div class="modal-header">
-        <h5 class="modal-title"><span class="text-success"
-                style="font-size: 18px;font-weight: bolder;"> Register Member  </span>
-        </h5>
-        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" data-bs-dismiss="modal"
-            aria-label="Close"></button>
-    </div>
+  <div class="modal-header">
+    <h5 class="modal-title"><span class="text-success" style="font-size: 18px;font-weight: bolder;"> Register Member
+      </span>
+    </h5>
+    <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" data-bs-dismiss="modal"
+      aria-label="Close"></button>
+  </div>
 
-    <div class="card">
+  <div class="card">
 
-        <div class="card p-4">
+    <div class="card p-4">
 
-            <form [formGroup]="registerForm">
-                <div class="row">
-                  <div class="col-md-4">
-                    <div class="form-floating mb-3">
-                      <input type="text" class="form-control" id="firstName" formControlName="firstName" />
-                      <label for="firstName">First Name</label>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="form-floating mb-3">
-                      <input type="text" class="form-control" id="lastName" formControlName="lastName" />
-                      <label for="lastName">Last Name</label>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="form-floating mb-3">
-    
-                      <input type="text" class="form-control" #phoneNumbe
-                        (change)="checkIfPhoneNumberExist(phoneNumbe.value)" id="phoneNumber"
-                        formControlName="phoneNumber" />
-    
-                      <label for="phoneNumber">Phone Number (09-9999-9999)</label>
-                    </div>
-    
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-4">
-                    <div class="form-floating mb-3">
-                      <input type="email" class="form-control" id="email" formControlName="email" />
-                      <label for="email">Email address </label>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="form-floating mb-3">
-    
-                      <select class="form-control" #category (change)="getMemberships(category.value)">
-                        <option></option>
-                        <option value="MIDWIVES">MIDWIVES</option>
-                        <option value="NONMIDWIVES">NONMIDWIVES</option>
-    
-                      </select>
-                      <label for="email">Membership Category</label>
-                    </div>
-                  </div>
-    
-    
-    
-                  <div class="col-md-4">
-    
-                    <div class="form-floating mb-3">
-    
-                      <select class="form-control" formControlName="membershipType">
-                        <option></option>
-                        <option *ngFor="let item of memberships" [value]="item.id">{{item.name}}</option>
-    
-                      </select>
-    
-                      <label for="membershipType">Membership Types</label>
-                    </div>
-    
-    
-                  </div>
-                </div>
-    
-                <div class="row">
-                  <div class="col-md-4">
-                    <div class="form-floating mb-3">
-    
-                      <select class="form-control" #country (change)="getRegions(country.value)" required>
-    
-                        <option></option>
-                        <option value="ETHIOPIAN">ETHIOPIAN</option>
-                        <option value="FOREIGN">FOREIGN</option>
-    
-                      </select>
-                      <label for="floatingInput">Country Type</label>
-                    </div>
-    
-                  </div>
-                  <div class="col-md-4">
-    
-                    <div class="form-floating mb-3">
-    
-                      <select class="form-control" id="region" formControlName="RegionId" >
-                      
-                        <option *ngFor="let item of regions" [value]="item.id">{{item.name}}</option>
-    
-    
-                      </select>
-    
-                      <label for="region">Region</label>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-    
-                    <div class="form-floating mb-3">
-    
-                      <input type="text" class="form-control" id="Zone" formControlName="Zone" />
-    
-                      <label for="country">Zone</label>
-                    </div>
-    
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-floating mb-3">
-    
-                      <input type="text" class="form-control" id="Woreda" formControlName="woreda" />
-    
-                      <label for="Woreda">Woreda</label>
-                    </div>
-    
-                  </div>
-                  <div class="col-md-6">
-    
-                    <div class="form-floating mb-3">
-    
-                      <input type="text" class="form-control" id="inistitute" formControlName="inistitute" />
-    
-                      <label for="inistitute">Inistitute Name</label>
-                    </div>
-                  </div>
-    
-                </div>
-    
-    
-                <div class="d-grid mt-4">
-    
-                  <button type="submit" [disabled]="!registerForm.valid" (click)="register()"
-                    class="btn btn-secondary">Register</button>
-                </div>
-             
-              </form>
+      <form [formGroup]="registerForm">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="firstName" formControlName="firstName" />
+              <label for="firstName">First Name</label>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="lastName" formControlName="lastName" />
+              <label for="lastName">Last Name</label>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-floating mb-3">
+
+              <input type="text" class="form-control" #phoneNumbe (change)="checkIfPhoneNumberExist(phoneNumbe.value)"
+                id="phoneNumber" formControlName="phoneNumber" />
+
+              <label for="phoneNumber">Phone Number (09-9999-9999)</label>
+            </div>
+
+          </div>
         </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-floating mb-3">
+              <input type="email" class="form-control" id="email" formControlName="email" />
+              <label for="email">Email address </label>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-floating mb-3">
+
+              <select class="form-control" #category (change)="getMemberships(category.value)">
+                <option></option>
+                <option value="Midwife">Midwife</option>
+                <option value="NonMidwife">NON-Midwife</option>
+                <option value="Institute">Institute</option>
+
+              </select>
+              <label for="email">Membership Category</label>
+            </div>
+          </div>
+
+
+
+          <div class="col-md-4">
+
+            <div class="form-floating mb-3">
+
+              <select class="form-control" formControlName="membershipType">
+                <option></option>
+                <option *ngFor="let item of memberships" [value]="item.id">{{item.name}}</option>
+
+              </select>
+
+              <label for="membershipType">Membership Types</label>
+            </div>
+
+
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-floating mb-3">
+
+              <select class="form-control" #country [disabled]="user.regionId!=''"
+                [value]="user.regionId!=''?'ETHIOPIAN':''" (change)="getRegions(country.value)" required>
+
+                <option></option>
+                <option value="ETHIOPIAN">ETHIOPIAN</option>
+                <option value="FOREIGN">FOREIGN</option>
+
+              </select>
+              <label for="floatingInput">Country Type</label>
+            </div>
+
+          </div>
+          <div class="col-md-4">
+
+            <div class="form-floating mb-3">
+
+              <select class="form-control" id="region" formControlName="RegionId" >
+
+                <option *ngFor="let item of regions" [value]="item.id">{{item.name}}</option>
+
+
+              </select>
+
+              <label for="region">Region</label>
+            </div>
+          </div>
+          <div class="col-md-4">
+
+            <div class="form-floating mb-3">
+
+              <input type="text" class="form-control" id="Zone" formControlName="Zone" />
+
+              <label for="country">Zone</label>
+            </div>
+
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-floating mb-3">
+
+              <input type="text" class="form-control" id="Woreda" formControlName="woreda" />
+
+              <label for="Woreda">Woreda</label>
+            </div>
+
+            <div class="col-md-4">
+
+              <div class="form-floating mb-3">
+
+                <input type="text" class="form-control" id="inistitute" formControlName="inistitute" />
+
+                <label for="inistitute">Inistitute Name</label>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-floating mb-3">
+                  <input type="text" class="form-control" formControlName="inistituteRole" id="instituteRole">
+                  <label for="instituteRole">Institution Position</label>
+              </div>
+          </div>
+
+
+          </div>
+
+
+          <div class="row">
+            <div class="col-md-6">
+                <div class="form-floating mb-3">
+                    <select class="form-control" formControlName="educationalLevelId">
+                        <option></option>
+                        <option *ngFor="let item of educationalLelvels" [value]="item.id.toLowerCase()">
+                            {{item.name}}
+                        </option>
+                    </select>
+                    <label for="educationalLeevels">Educational Levels</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" formControlName="educationalField" id="educationalField">
+                    <label for="educationalField">Educational Field</label>
+                </div>
+            </div>
+        </div>
+          <div class="col-md-6">
+
+            <div class="form-floating mb-3">
+
+              <input type="text" class="form-control" id="inistitute" formControlName="inistitute" />
+
+              <label for="inistitute">Inistitute Name</label>
+            </div>
+          </div>
+
+        </div>
+
+
+        <div class="d-grid mt-4">
+
+          <button type="submit" [disabled]="!registerForm.valid" (click)="register()"
+            class="btn btn-secondary">Register</button>
+        </div>
+
+      </form>
     </div>
+  </div>
 </div>

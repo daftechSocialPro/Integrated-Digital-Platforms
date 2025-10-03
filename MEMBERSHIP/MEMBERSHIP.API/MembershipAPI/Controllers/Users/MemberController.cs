@@ -237,6 +237,37 @@ namespace MembershipDigitalAPI.Controllers.HRM
                 return BadRequest();
             }
         }
+        
+        
+        
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> UpdateMemberPayment([FromForm] MemberPaymentRecieptDto memberPayment)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _memberService.UpdateMemberPayment(memberPayment));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        
+        [HttpPost]
+        public async Task<IActionResult> ForgetMembership([FromBody] ForgetMembershipRequestDto request)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _memberService.ForgetMembership(request));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
 
 
 

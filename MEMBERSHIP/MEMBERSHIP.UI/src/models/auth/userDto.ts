@@ -15,6 +15,7 @@ export interface UserView {
   regionId? : string
   region?:string
 }
+
 export interface ChangePasswordModel {
   UserId: string;
   CurrentPassword: string;

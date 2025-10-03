@@ -19,7 +19,9 @@ export class MemberDetailComponent implements OnInit {
   @Input() member: IMembersGetDto;
   user: UserView;
   imagePath: any;
+  imagePath2: any;
   fileGH: File;
+  fileReciept: File;
   educationalLelvels: SelectList[];
   educationalFields: SelectList[];
   updateProfileForm: FormGroup;
@@ -61,7 +63,8 @@ export class MemberDetailComponent implements OnInit {
       lastPaid: [this.member.lastPaid != null ? this.member.lastPaid.toString().split('T')[0] : null],
       paymentStatus: [this.member.paymentStatus],
       regionId: [this.member.regionId, Validators.required],
-      membershipType: [this.member.membershipTypeId]
+      membershipType: [this.member.membershipTypeId],
+      createdDate: [this.member.createdByDate ? this.member.createdByDate.toString().split('T')[0] : null]
     });
   }
 
@@ -102,12 +105,34 @@ export class MemberDetailComponent implements OnInit {
       return '../../../../../assets/images/profile.jpg';
     }
   }
+
+  getImage3() {
+    if (this.imagePath2 != null && this.imagePath2 != '') {
+      return this.imagePath2;
+    }
+    if (this.member && this.member.receiptImage != '' && this.member.receiptImage != null) {
+      return this.getImage(this.member.receiptImage!);
+    } else {
+      return '';
+    }
+  }
+
   onUpload(event: any) {
     var file: File = event.target.files[0];
     this.fileGH = file;
     var myReader: FileReader = new FileReader();
     myReader.onloadend = (e) => {
       this.imagePath = myReader.result;
+    };
+    myReader.readAsDataURL(file);
+  }
+
+  onUpload2(event: any) {
+    var file: File = event.target.files[0];
+    this.fileReciept = file;
+    var myReader: FileReader = new FileReader();
+    myReader.onloadend = (e) => {
+      this.imagePath2 = myReader.result;
     };
     myReader.readAsDataURL(file);
   }
@@ -134,7 +159,7 @@ export class MemberDetailComponent implements OnInit {
         instituteRole: this.updateProfileForm.value.instituteRole,
         institute: this.updateProfileForm.value.institute,
         regionId: this.updateProfileForm.value.regionId,
-
+        createdDate: this.updateProfileForm.value.createdDate,
         lastPaid: this.updateProfileForm.value.lastPaid,
         expiredDate: this.updateProfileForm.value.expiredDate,
         paymentStatus: this.updateProfileForm.value.paymentStatus,
@@ -160,8 +185,10 @@ export class MemberDetailComponent implements OnInit {
       formData.set('paymentStatus', updateProfile.paymentStatus);
       formData.set('membershipTypeId', updateProfile.membershipTypeId);
       formData.set('regionId', updateProfile.regionId);
+      formData.set('CreatedDate', updateProfile.createdDate.toString());
 
       formData.append('image', this.fileGH);
+      formData.append('ReceiptImage', this.fileReciept);
 
       this.memberService.updateProfileFromAdmin(formData).subscribe({
         next: (res) => {
@@ -194,7 +221,7 @@ export class MemberDetailComponent implements OnInit {
           this.updateProfileForm.patchValue({
             expiredDate: res.data.split('T')[0]
           });
-          console.log(res.data)
+          console.log(res.data);
         }
       });
     }

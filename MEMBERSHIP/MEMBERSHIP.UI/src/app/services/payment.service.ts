@@ -25,4 +25,10 @@ export class PaymentService {
   verifyPayment(txr_rn: string) {
     return this.http.get<PaymentResponse>(this.PaymentUrl + `chapa/verify-payment/${txr_rn}`);
   }
+
+  
+
+  updateMemberPayment(paymentData: FormData) {
+    return this.http.post<ResponseMessage>(this.BaseURI + `/Member/UpdateMemberPayment`, paymentData);
+  }
 }

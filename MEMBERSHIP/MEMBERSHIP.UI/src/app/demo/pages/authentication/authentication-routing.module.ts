@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CompleteProfileComponent } from './complete-profile/complete-profile.component';
+import MembershipLoginComponent from './membership-login/membership-login.component';
 
 const routes: Routes = [
   {
@@ -12,12 +13,10 @@ const routes: Routes = [
       },
       {
         path: 'complete-profile',
-       component:CompleteProfileComponent
+        component: CompleteProfileComponent
       },
-      {
-        path: 'membership-login',
-        loadComponent: () => import('./membership-login/membership-login.component')
-      },
+      { path: 'membership-login', component: MembershipLoginComponent },
+      { path: 'membership-login/:membershipId', component: MembershipLoginComponent },
       {
         path: 'register',
         loadComponent: () => import('./register/register.component')

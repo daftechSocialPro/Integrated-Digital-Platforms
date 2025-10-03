@@ -36,6 +36,7 @@ using System.Net.Http;
 using System.Numerics;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static MembershipInfrustructure.Data.EnumList;
 using Member = MembershipInfrustructure.Model.Users.Member;
@@ -83,9 +84,17 @@ namespace MembershipImplementation.Services.HRM
                     MembershipTypeId = memberPost.MembershipTypeId,
                     Woreda = memberPost.Woreda,
                     Inistitute = memberPost.Inistitute,
+                    InstituteRole = memberPost.InistituteRole,
+                    EducationalField = memberPost.EducationalField,
+                    
                     Rowstatus = RowStatus.ACTIVE,
                     CreatedDate = DateTime.Now,
                 };
+
+                if (memberPost.EducationalLevelId != null)
+                {
+                    members.EducationalLevelId = memberPost.EducationalLevelId;
+                }
 
                 var memberType = await _dbContext.MembershipTypes.FindAsync(memberPost.MembershipTypeId);
 
@@ -252,7 +261,9 @@ namespace MembershipImplementation.Services.HRM
                             p.Text_Rn,
                             p.ExpiredDate,
                             p.PaymentStatus,
-                            p.LastPaid
+                            p.LastPaid,
+                            p.ReceiptImagePath
+                            
                         })
                         .ToList()
                 })
@@ -287,6 +298,7 @@ namespace MembershipImplementation.Services.HRM
                     Gender = m.Gender.ToString(),
                     Amount = latestPayment?.Payment ?? 0.0,
                     Text_Rn = latestPayment?.Text_Rn ?? "",
+                    ReceiptImage = latestPayment?.ReceiptImagePath??"",
                     ExpiredDate = latestPayment?.ExpiredDate ?? DateTime.Now,
                     EducationalField = m.EducationalField,
                     BirthDate = m.BirthDate,
@@ -383,7 +395,8 @@ namespace MembershipImplementation.Services.HRM
                                      MoodleName = member.MoodleUserName,
                                      MoodleStatus = member.MoodleStatus.ToString(),
                                      createdByDate = member.CreatedDate,
-                                     Currency = member.MembershipType.Currency.ToString()
+                                     Currency = member.MembershipType.Currency.ToString(),
+                                     ReceiptImage = latestPayment.ReceiptImagePath
 
 
 
@@ -495,7 +508,7 @@ namespace MembershipImplementation.Services.HRM
 
                 var message = $"Congratulation, being EMwA Member!!!\n" +
                     $"We have received your payment and would like to thank you for \n being a member of Ethiopian Midwives Association. \n" +
-                    $"Your Membership ID is {member.MemberId} you can login through https://emwamms.org using the provided membership Id.";
+                    $"Your Membership ID is {member.MemberId} you can login through [https://emwamms.org/auth/membership-login/{member.MemberId}] using the provided membership Id.";
                 var email = new EmailMetadata
                                     (member.Email, "ID Card Status",
                                         $"{message}" +
@@ -523,7 +536,7 @@ namespace MembershipImplementation.Services.HRM
                 {
                     var message = $"Congratulation, your EMwA Membership has been successfully renewed!\n" +
               $"We have received your payment and would like to thank you for continuing to be a valued member of the Ethiopian Midwives Association.\n" +
-              $"Your renewed Membership ID is {member.MemberId}, valid until {currentPayment.ExpiredDate.ToString("MMMM dd, yyyy")}. You can log in through https://emwamms.org using your Membership ID.";
+              $"Your renewed Membership ID is {member.MemberId}, valid until {currentPayment.ExpiredDate.ToString("MMMM dd, yyyy")}. You can log in through [https://emwamms.org/auth/membership-login/{member.MemberId}] using your Membership ID.";
 
                     var messageReques = new MessageRequest
                     {
@@ -586,6 +599,7 @@ namespace MembershipImplementation.Services.HRM
                         currentMember.RegionId = Guid.Parse(memberUpdate.RegionId);
                     }
 
+                    currentMember.CreatedDate = memberUpdate.CreatedDate;
                     currentMember.Email = memberUpdate.Email;
                     currentMember.EducationalField = memberUpdate.EducationalField;
                     currentMember.EducationalLevelId = memberUpdate.EducationalLevelId;
@@ -610,7 +624,7 @@ namespace MembershipImplementation.Services.HRM
                     }
 
 
-                    var currentPayments = await _dbContext.MemberPayments.Where(x => x.MemberId == currentMember.Id).OrderBy(x => x.LastPaid).ToListAsync();
+                    var currentPayments = await _dbContext.MemberPayments.Where(x => x.MemberId == currentMember.Id).OrderByDescending(x => x.LastPaid).ToListAsync();
 
                     if (currentPayments.Any())
                     {
@@ -644,6 +658,14 @@ namespace MembershipImplementation.Services.HRM
                                 currentMember.MemberId = memberID;
                             }
 
+                            
+                            if (memberUpdate.ReceiptImage != null)
+                            {
+                                var imageRRPath = await _generalConfig.UploadFiles(memberUpdate.ReceiptImage, $"{currentMember.FullName}_{currentPayment.Id}", "Member Receipt");
+                                currentPayment.ReceiptImagePath = imageRRPath;
+                            } 
+                            
+                            
 
                             AddUSerDto addUser = new AddUSerDto
                             {
@@ -660,7 +682,7 @@ namespace MembershipImplementation.Services.HRM
 
                             var message = $"Congratulation, being EMwA Member!!!\n" +
                                 $"We have received your payment and would like to thank you for \n being a member of Ethiopian Midwives Association. \n" +
-                                $"Your Membership ID is {currentMember.MemberId} you can login through https://emwamms.org using the provided membership Id.";
+                                $"Your Membership ID is {currentMember.MemberId} you can login through [https://emwamms.org/auth/membership-login/{currentMember.MemberId}] using the provided membership Id.";
                             var email = new EmailMetadata
                                                 (currentMember.Email, "ID Card Status",
                                                     $"{message}" +
@@ -712,6 +734,11 @@ namespace MembershipImplementation.Services.HRM
                             {
                                 currentMember.MemberId = memberID;
                             }
+                            if (memberUpdate.ReceiptImage != null)
+                            {
+                                var imageRRPath = await _generalConfig.UploadFiles(memberUpdate.ReceiptImage, $"{currentMember.FullName}_{currentpay.Id}", "Member Receipt");
+                                currentpay.ReceiptImagePath = imageRRPath;
+                            } 
 
                             if ((currentMember.MembershipTypeId != null && isChanged) || currentMember.MemberId == null)
                             {
@@ -737,7 +764,17 @@ namespace MembershipImplementation.Services.HRM
 
                             var message = $"Congratulation, being EMwA Member!!!\n" +
                                 $"We have received your payment and would like to thank you for \n being a member of Ethiopian Midwives Association. \n" +
-                                $"Your Membership ID is {currentMember.MemberId} you can login through https://emwamms.org using the provided membership Id.";
+                                $"Your Membership ID is {currentMember.MemberId} you can login through [https://emwamms.org/auth/membership-login/{currentMember.MemberId}] using the provided membership Id.";
+
+
+                            var messageReques = new MessageRequest
+                            {
+                                PhoneNumber = currentMember.PhoneNumber,
+                                Message = message
+                            };
+                            await _generalConfig.SendMessage(messageReques);
+
+
                             var email = new EmailMetadata
                                                 (currentMember.Email, "ID Card Status",
                                                     $"{message}" +
@@ -765,9 +802,23 @@ namespace MembershipImplementation.Services.HRM
                         var result = await _authenticationService.AddUser(addUser);
 
 
-                        var message = $"Congratulation, being EMwA Member!!!\n" +
-                            $"We have received your payment and would like to thank you for \n being a member of Ethiopian Midwives Association. \n" +
-                            $"Your Membership ID is {currentMember.MemberId} you can login through https://emwamms.org using the provided membership Id.";
+                        var message = $"Congratulation, your EMwA Membership has been successfully renewed!\n" +
+              $"We have received your payment and would like to thank you for continuing to be a valued member of the Ethiopian Midwives Association.\n" +
+              $"Your renewed Membership ID is {currentMember.MemberId}, valid until {memberUpdate.ExpiredDate.ToString("MMMM dd, yyyy")}. You can log in through https://emwamms.org/auth/membership-login/{currentMember.MemberId} using your Membership ID.";
+
+                        var messageReques = new MessageRequest
+                        {
+                            PhoneNumber = currentMember.PhoneNumber,
+                            Message = message
+                        };
+                        await _generalConfig.SendMessage(messageReques);
+
+
+                        // var message = $"Congratulation, being EMwA Member!!!\n" +
+                        //     $"We have received your payment and would like to thank you for \n being a member of Ethiopian Midwives Association. \n" +
+                        //     $"Your Membership ID is {currentMember.MemberId} you can login through https://emwamms.org using the provided membership Id.";
+
+
                         var email = new EmailMetadata
                                             (currentMember.Email, "ID Card Status",
                                                 $"{message}" +
@@ -777,6 +828,9 @@ namespace MembershipImplementation.Services.HRM
 
 
                     await _dbContext.SaveChangesAsync();
+
+
+
                     return new ResponseMessage { Data = currentMember, Success = true, Message = "Updated Successfully" };
                 }
                 return new ResponseMessage { Success = false, Message = "Unable To Find Member" };
@@ -1494,6 +1548,202 @@ namespace MembershipImplementation.Services.HRM
 
         }
 
+        public async  Task<ResponseMessage> UpdateMemberPayment(MemberPaymentRecieptDto memberUpdate)
+        {
+            try
+            {
+                
+                var member = await _dbContext.Members.Where(x=> x.Id == memberUpdate.MemberId).FirstOrDefaultAsync();
+
+
+                if (member == null)
+                {
+                    return new ResponseMessage()
+                    {
+                        Success = false,
+                        Message = "Member Not Found!!!",
+
+                    };
+                }
+                
+                
+               var memberPaymentExist = await _dbContext.MemberPayments.Where(x => x.MemberId == memberUpdate.MemberId).FirstOrDefaultAsync();
+
+               if (memberPaymentExist == null)
+               {
+
+                   var membershipType = await _dbContext.MembershipTypes.FindAsync(member.MembershipTypeId);
+
+
+                   MemberPayment memberPayment = new MemberPayment
+                   {
+                       Id = Guid.NewGuid(),
+                       MemberId = memberUpdate.MemberId,
+                       Url = "",
+                       MembershipTypeId = member.MembershipTypeId,
+                       ExpiredDate = DateTime.Now.AddYears(membershipType.Years),
+                       LastPaid = DateTime.Now,
+                       Text_Rn = "",
+                       Payment = membershipType.Money,
+                       PaymentStatus = PaymentStatus.PENDING,
+
+
+
+                   };
+                   var imageRRPath = await _generalConfig.UploadFiles(memberUpdate.RecieptImage,
+                       $"{member.FullName}_{memberPayment.Id}", "Member Receipt");
+
+                   memberPayment.ReceiptImagePath = imageRRPath;
+
+
+                   await _dbContext.MemberPayments.AddAsync(memberPayment);
+                   await _dbContext.SaveChangesAsync();
+                   
+                   
+                   var message = $"Dear {member.FullName},\n\n" +
+                                 $"Your payment has been uploaded successfully.\n" +
+                                 $"Please wait until the admin approves your payment.\n\n" +
+                                 $"Thank you for your patience.\n\nBest regards,\nFekadu Mazengia\nExecutive Director";
+
+                   var smsRequest = new MessageRequest
+                   {
+                       PhoneNumber = member.PhoneNumber,
+                       Message = message
+                   };
+                   await _generalConfig.SendMessage(smsRequest);
+
+                   
+                   return new ResponseMessage
+                   {
+                       Data = memberPayment,
+                       Message = "Receipt uploaded successfully! Please wait for admin approval.",
+                       Success = true
+                   };
+               }
+               else
+               {
+                   var imageRRPath = await _generalConfig.UploadFiles(memberUpdate.RecieptImage,
+                       $"{member.FullName}_{memberPaymentExist.Id}", "Member Receipt");
+
+                   memberPaymentExist.ReceiptImagePath = imageRRPath;
+
+
+
+                   await _dbContext.SaveChangesAsync();
+                   
+                   var message = $"Dear {member.FullName},\n\n" +
+                                 $"Your payment has been uploaded successfully.\n" +
+                                 $"Please wait until the admin approves your payment.\n\n" +
+                                 $"Thank you for your patience.\n\nBest regards,\nFekadu Mazengia\nExecutive Director";
+
+
+                   var smsRequest = new MessageRequest
+                   {
+                       PhoneNumber = member.PhoneNumber,
+                       Message = message
+                   };
+                   await _generalConfig.SendMessage(smsRequest);
+
+                   
+                   
+                   return new ResponseMessage
+                   {
+                       Data = memberPaymentExist,
+                       Message = "Receipt uploaded successfully! Please wait for admin approval.",
+                       Success = true
+                   };
+               }
+            }
+            catch (Exception ex)
+            {
+                return new ResponseMessage
+                {
+                    Success = false,
+                    Message = ex.Message
+                };
+            }
+        }
+
+       public async Task<ResponseMessage> ForgetMembership(ForgetMembershipRequestDto request)
+{
+    try
+    {
+        if (string.IsNullOrEmpty(request.Contact))
+        {
+            return new ResponseMessage { Success = false, Message = "Please provide an email address or phone number." };
+        }
+
+        string contact = request.Contact.Trim();
+        Member? member = null;
+
+        // Check if input is email
+        if (IsValidEmail(contact))
+        {
+            member = await _dbContext.Members.FirstOrDefaultAsync(x => x.Email == contact);
+        }
+        // Check if input is a valid Ethiopian phone number
+        else if (IsValidEthiopianPhone(contact))
+        {
+            member = await _dbContext.Members.FirstOrDefaultAsync(x => x.PhoneNumber == contact);
+        }
+        else
+        {
+            return new ResponseMessage { Success = false, Message = "Invalid email or phone number format." };
+        }
+
+        // If no member found, return an appropriate response
+        if (member == null)
+        {
+            return new ResponseMessage { Success = false, Message = "No membership record found for the provided contact information." };
+        }
+
+        // Prepare the membership ID message
+        var message = $"Dear {member.FullName},\n\n" +
+                      $"Your Membership ID is **{member.MemberId}**.\n" +
+                      $"You can log in at [https://emwamms.org/auth/membership-login/{member.MemberId}] using this ID.\n\n" +
+                      $"Thank you for being a valued member.\n\nBest regards,\nFekadu Mazengia\nExecutive Director";
+
+        // Send Email if an email was provided
+        if (IsValidEmail(contact))
+        {
+            var email = new EmailMetadata(member.Email, "Your Membership ID", message);
+            await _emailService.Send(email);
+
+            return new ResponseMessage { Success = true, Message = "Your Membership ID has been sent to your email. Please check your inbox." };
+        }
+
+        // Send SMS if a phone number was provided
+        if (IsValidEthiopianPhone(contact))
+        {
+            var smsRequest = new MessageRequest
+            {
+                PhoneNumber = member.PhoneNumber,
+                Message = message
+            };
+            await _generalConfig.SendMessage(smsRequest);
+
+            return new ResponseMessage { Success = true, Message = "Your Membership ID has been sent to your phone via SMS." };
+        }
+
+        return new ResponseMessage { Success = false, Message = "Unexpected error occurred. Please try again later." };
+    }
+    catch (Exception ex)
+    {
+        return new ResponseMessage { Success = false, Message = "An error occurred while processing your request. Please try again later." };
+    }
+}
+
+        private bool IsValidEmail(string email)
+        {
+            var emailPattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
+            return Regex.IsMatch(email, emailPattern);
+        }
+
+        private bool IsValidEthiopianPhone(string phone)
+        {
+            var ethiopianPhonePattern = @"^(\+251|251|0)?(9\d{8})$";
+            return Regex.IsMatch(phone, ethiopianPhonePattern);
+        }
 
     }
 }

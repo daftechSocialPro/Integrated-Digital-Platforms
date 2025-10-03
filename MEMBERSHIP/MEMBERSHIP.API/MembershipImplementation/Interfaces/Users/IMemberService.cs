@@ -56,6 +56,11 @@ namespace MembershipImplementation.Interfaces.HRM
 
 
         Task<ResponseMessage> GetExpiredDate(DateTime lastPaid, Guid membershipTypeId);
+        
+        
+        Task<ResponseMessage> UpdateMemberPayment (MemberPaymentRecieptDto memberUpdate);
+        
+        Task<ResponseMessage> ForgetMembership(ForgetMembershipRequestDto request);
 
 
         //Task<List<EmployeeGetDto>> GetEmployees();

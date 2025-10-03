@@ -23,106 +23,210 @@
 
 
     <div class="col-md-12 p-4 ">
-        <div class="col">
-
-        </div>
-        <div class="col-md-12 text-end">
-
-
-            <span style="font-size: 18px;color:#8c69c8"> Total Members: {{Members.length}}
-            </span>
-        </div>
-
-        <div class="row">
-            <div class="col-xl-3 ">
-                <input type="text" placeholder="search ..." class="form-control" style="font-size: 18px;"
-                    [(ngModel)]="searchTerm" (input)="applyFilter()" placeholder="Search">
+        <div class="container mt-4">
+            <div class="row mb-3">
+                <div class="col-xl-3">
+                    <input type="text" class="form-control shadow-sm" placeholder="🔍 Search..."
+                        style="font-size: 18px;" [(ngModel)]="searchTerm" (input)="applyFilter()">
+                </div>
+                <div class="col-md-12 text-end">
+                    <button class="btn btn-sm btn-warning me-2" (click)="reset()"><i class="ti ti-refresh"></i>
+                        Reset</button>
+                    <span class="fw-bold" style="font-size: 18px; color:#8c69c8;">
+                        {{ (Members && filterdMembers) && Members.length==filterdMembers.length ? 'Total' : 'Filtered'
+                        }}
+                        Members: {{ filterdMembers?.length }}
+                    </span>
+                </div>
             </div>
-           
-    
-        </div>
-        <div class="row mt-2">
-            <div class="col-12 text-end" *ngIf="user.role.includes('SuperAdmin')">
-                <button class="btn btn-sm btn-outline-success text-end" (click)="file.click()"><i
-                    class="bi bi-file-excel"></i> Import from Excel </button>
 
-                    &nbsp;   <button class="btn btn-sm btn-outline-primary text-end" (click)="RegisterMember()"  ><i
-                        class="bi bi-plust"></i> Register </button>
+            <div class="card shadow-sm p-3">
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-floating">
+                            <select class="form-control" #country (change)="getRegions(country.value)"
+                                [disabled]="user.regionId !== ''">
+                                <option>Select Country Type</option>
+                                <option value="ETHIOPIAN">ETHIOPIAN</option>
+                                <option value="FOREIGN">FOREIGN</option>
+                            </select>
+                            <label>Country Type</label>
+                        </div>
+                    </div>
+
+                    <div class="col-3">
+                        <div class="form-floating">
+                            <select class="form-control" [(ngModel)]="selectedChapter"
+                                [disabled]="user.regionId !== ''">
+                                <option value="">Select Chapter</option>
+                                <option *ngFor="let item of chapters" [value]="item.name">{{item.name}}</option>
+                            </select>
+                            <label>Chapter</label>
+                        </div>
+                    </div>
+
+                    <div class="col-3">
+                        <div class="form-floating">
+                            <select class="form-control" [(ngModel)]="selectedGender">
+                                <option value="">Select Gender</option>
+                                <option value="MALE">MALE</option>
+                                <option value="FEMALE">FEMALE</option>
+                            </select>
+                            <label>Gender</label>
+                        </div>
+                    </div>
+
+                    <div class="col-3">
+                        <div class="form-floating">
+                            <select class="form-control" [(ngModel)]="selectedStatus">
+                                <option value="">Select Payment Status</option>
+                                <option value="PENDING">PENDING</option>
+                                <option value="PAID">PAID</option>
+                                <option value="EXPIRED">EXPIRED</option>
+                            </select>
+                            <label>Payment Status</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-3">
+                        <div class="form-floating">
+                            <select class="form-control" #category (change)="getMemberships(category.value)">
+                                <option>Select Membership Category</option>
+                                <option value="Midwife">Midwife</option>
+                                <option value="NonMidwife">Non-Midwife</option>
+                                <option value="Institute">Institute</option>
+                            </select>
+                            <label>Membership Category</label>
+                        </div>
+                    </div>
+
+                    <div class="col-3">
+                        <div class="form-floating">
+                            <select class="form-control" [(ngModel)]="selectedMembership">
+                                <option *ngFor="let item of memberships" [value]="item.id">{{item.name}}</option>
+                            </select>
+                            <label>Membership Types</label>
+                        </div>
+                    </div>
+
+                    <div class="col-3">
+                        <div class="form-floating">
+                            <input type="date" class="form-control" [(ngModel)]="fromDate">
+                            <label>From Date</label>
+                        </div>
+                    </div>
+
+                    <div class="col-3">
+                        <div class="form-floating">
+                            <input type="date" class="form-control" [(ngModel)]="toDate" (input)="applyFilter2()">
+                            <label>To Date</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-3">
+                        <div class="form-floating">
+                            <select class="form-control" [(ngModel)]="memberType">
+                                <option value="">Select Member Status</option>
+                                <option value="New Member">New Member</option>
+                                <option value="Renewed Member">Renewed Member</option>
+                                <option value="Waiting for Renewal">Waiting for Renewal</option>
+                            </select>
+                            <label>Member Status</label>
+                        </div>
+                    </div>
+
+                    <div class="col text-end d-flex justify-content-between align-items-center">
+                        <button class="btn btn-primary" (click)="applyFilter2()"><i class="ti ti-search"></i>
+                            Search</button>
+                        <button class="btn btn-outline-success" (click)="exportAsExcel('membershipReport')">
+                            <i class="bi bi-file-excel"></i> Export Excel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row mt-2">
+            <div class="col-12 text-end">
+                <button class="btn btn-sm btn-outline-success text-end" *ngIf="user.role.includes('SuperAdmin')"
+                    (click)="file.click()"><i class="bi bi-file-excel"></i> Import from Excel </button>
+
+                &nbsp; <button class="btn btn-sm btn-outline-primary text-end"
+                    *ngIf="user.role.includes('RegionAdmin')||user.role.includes('SuperAdmin')"
+                    (click)="RegisterMember()"><i class="bi bi-plust"></i> Register </button>
                 <input type="file" accept=".xlsx, .xls" #file hidden (change)="onFileSelected($event)" />
             </div>
         </div>
 
 
-   
-       <div class="table-responsive">
-        <table class="custom-table mt-4">
-            <thead>
-                <tr>
 
-                    <th>FUll name</th>
-                    <th>Member Id</th>
-                    <th>Phone Number</th>
-                    <th>Membership Type</th>
-                    <th>Chapter</th>
-                    <th>Inistitute</th>
-                    <th>Gender</th>
-                    <th>Payment Status</th>
-                    <th>Last Paid </th>
-                    <th>Expired Date</th>
-                    
-                    <th *ngIf="user.role.includes('SuperAdmin')" >Action</th>
+        <div class="table-responsive">
+            <table #excelTable class="custom-table mt-4">
+                <thead>
+                    <tr>
 
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of paginatedMembers ;let i = index">
+                        <th>FUll name</th>
+                        <th>Member Id</th>
+                        <th>Phone Number</th>
+                        <th>Membership Type</th>
+                        <th>Chapter</th>
+                        <th>Organization Name</th>
+                        <th>Gender</th>
+                        <th>Payment Status</th>
+                        <th>Last Paid </th>
+                        <th>Expiry Date</th>
+                        <th>Registration Date</th>
 
-                    <td> <img style="height: 40px;width: 40px;border-radius: 50%;margin-right: 10px;"
-                            [src]="getImagePath(item.imagePath)" />{{item.fullName}}</td>
-                            <td>{{item.memberId}}</td>
-                    <td>{{item.phoneNumber}}</td>
-                    <td>{{item.membershipType}}</td>
-                    <td>{{item.region}}</td>
-                    <td>{{item.inistitute}} {{item.instituteRole}}</td>
-                    <td>{{item.gender}}</td>
-                    <td>
+                        <th *ngIf="user.role.includes('SuperAdmin')">Action</th>
 
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of paginatedMembers ;let i = index">
 
-                        <span *ngIf="item.paymentStatus=='PAID'" class="badge rounded-pill bg-success">
-                            {{item.paymentStatus}}</span>
-                        <span *ngIf="item.paymentStatus=='PENDING'" class="badge rounded-pill bg-warning">
-                            {{item.paymentStatus}}</span>
-                        <span *ngIf="item.paymentStatus=='EXPIRED'" class="badge rounded-pill bg-danger">
-                            {{item.paymentStatus}}</span>
+                        <td> <img style="height: 40px;width: 40px;border-radius: 50%;margin-right: 10px;"
+                                [src]="getImagePath(item.imagePath)" />{{item.fullName}}</td>
+                        <td>{{item.memberId}}</td>
+                        <td>{{item.phoneNumber}}</td>
+                        <td>{{item.membershipType}}</td>
+                        <td>{{item.region}}</td>
+                        <td>{{item.inistitute}} {{item.instituteRole}}</td>
+                        <td>{{item.gender}}</td>
+                        <td>
+                            <span *ngIf="item.paymentStatus=='PAID'" class="badge rounded-pill bg-success">
+                                {{item.paymentStatus}}</span>
+                            <span *ngIf="item.paymentStatus=='PENDING'" class="badge rounded-pill bg-warning">
+                                {{item.paymentStatus}}</span>
+                            <span *ngIf="item.paymentStatus=='EXPIRED'" class="badge rounded-pill bg-danger">
+                                {{item.paymentStatus}}</span>
+                        </td>
+                        <td>{{item.lastPaid | date:"dd MMM yyyy"}}</td>
+                        <td>{{item.expiredDate|date:"dd MMM yyyy"}}</td>
+                        <td>{{item.createdByDate|date:"dd MMM yyyy"}}</td>
+                        <td *ngIf="user.role.includes('SuperAdmin')">
+                            <button class="btn btn-sm btn-outline-primary" (click)="goToDetail(item)">
+                                Detail
+                            </button>
+                            &nbsp;
+                            <button class="btn btn-sm btn-outline-danger" (click)="DeleteMember(item.id)">
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="card flex justify-content-center">
+                <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows"
+                    [totalRecords]="Members&&Members.length" [rowsPerPageOptions]="[5, 10, 15]"></p-paginator>
+            </div>
 
-                    </td>
-                    <td>{{item.lastPaid | date:"dd MMM yyyy"}}</td>
-                    <td>{{item.expiredDate|date:"dd MMM yyyy"}}</td>
-                    <td *ngIf="user.role.includes('SuperAdmin')">
-
-                        <button class="btn btn-sm btn-outline-primary" (click)="goToDetail(item)">
-                            Detail
-                        </button>
-                       &nbsp;
-                        <button class="btn btn-sm btn-outline-danger" (click)="DeleteMember(item.id)">
-                            Delete
-                        </button>
-                        
-
-                    </td>
-
-                </tr>
-
-            </tbody>
-
-        </table>
-        <div class="card flex justify-content-center">
-            <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows"
-                [totalRecords]="Members&&Members.length" [rowsPerPageOptions]="[5, 10, 15]"></p-paginator>
         </div>
 
-       </div>
-       
 
 
 

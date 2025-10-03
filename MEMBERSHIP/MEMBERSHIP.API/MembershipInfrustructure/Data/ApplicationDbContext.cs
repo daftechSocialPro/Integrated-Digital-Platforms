@@ -52,6 +52,9 @@ namespace MembershipInfrustructure.Data
         public DbSet<Course> Courses { get; set; }
 
         public DbSet<Announcment> Announcments { get; set; }
+        
+        
+        
 
 
         #endregion

@@ -41,14 +41,13 @@
 
 
     <div class="col-md-12 p-4 ">
-        <div class="col">
 
-        </div>
         <div class="col-md-12 text-end">
 
 
             <button class="btn btn-sm btn-warning" (click)="reset()"><i class="ti ti-refresh"></i></button>
-            <span style="font-size: 18px;color:#8c69c8"> {{ (Members && filterdMembers)  &&  Members.length==filterdMembers.length?'Total':'Filterd'}}
+            <span style="font-size: 18px;color:#8c69c8"> {{ (Members && filterdMembers) &&
+                Members.length==filterdMembers.length?'Total':'Filterd'}}
                 Members: {{ filterdMembers&& filterdMembers.length}}
             </span>
         </div>
@@ -122,8 +121,9 @@
 
                     <select class="form-control" #category (change)="getMemberships(category.value)">
                         <option>Select Membership Category</option>
-                        <option value="MIDWIVES">MIDWIVES</option>
-                        <option value="NONMIDWIVES">NONMIDWIVES</option>
+                        <option value="Midwife">Midwife</option>
+                        <option value="NonMidwife">NON-Midwife</option>
+                        <option value="Institute">INSTITUTE</option>
 
                     </select>
                     <label for="email">Membership Category</label>
@@ -178,7 +178,7 @@
                         <option value="New Member">New Member</option>
                         <option value="Renewed Member">Renewed Member</option>
                         <option value="Waiting for Renewal">Waiting for Renewal</option>
-                      
+
 
                     </select>
                     <label for="email">Member Status</label>
@@ -200,10 +200,7 @@
 
             </div>
         </div>
-        <!-- <div class="card">
-                <iframe #stockReportIframe width="100%" height="700px"></iframe>
-                    
-              </div> -->
+
 
         <table #excelTable class="custom-table mt-4">
             <thead>
@@ -218,7 +215,8 @@
                     <th style="border: 1px solid black;">Gender</th>
                     <th style="border: 1px solid black;">Payment Status</th>
                     <th style="border: 1px solid black;">Member Status</th>
-                    <th style="border: 1px solid black;">Expired Date</th>
+                    <th style="border: 1px solid black;">Expiry Date</th>
+                    <th>Registration Date</th>
 
                 </tr>
             </thead>
@@ -250,7 +248,7 @@
 
                     </td>
                     <td style="border: 1px solid black;">{{item.memberStatus}}</td>
-                 
+
                     <td style="border: 1px solid black;">{{item.expiredDate|date:"dd MMM yyyy"}}</td>
 
                 </tr>
@@ -258,12 +256,7 @@
             </tbody>
 
         </table>
-        <!-- <div class="card flex justify-content-center">
-                <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows"
-                    [totalRecords]="Members&&Members.length" [rowsPerPageOptions]="[ 10, 20,30]"></p-paginator>
-            </div>  -->
-
-
+  
 
     </div>
 

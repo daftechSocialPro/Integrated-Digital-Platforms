@@ -32,7 +32,7 @@
                             <h5 class="card-title">{{item.title}}</h5>
                             <hr>
                             <img *ngIf="item.imagePath" [src]="getImage(item.imagePath)" width="100%" style="border-radius: 10px;margin-bottom: 20px;"/>
-                            <p class="card-text"><strong>Expired Date:</strong> {{item.epiredDate|date:"dd MMM yyy"}}</p>    
+                            <p class="card-text"><strong>Expiry Date:</strong> {{item.epiredDate|date:"dd MMM yyy"}}</p>    
                             <p class="card-text">{{item.description}}</p>                          
                           
 

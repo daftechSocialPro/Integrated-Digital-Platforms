@@ -532,6 +532,9 @@ namespace MembershipInfrustructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("ExpiredDate")
                         .HasColumnType("datetime2");
 
@@ -555,6 +558,9 @@ namespace MembershipInfrustructure.Migrations
 
                     b.Property<int>("PaymentStatus")
                         .HasColumnType("int");
+
+                    b.Property<string>("ReceiptImagePath")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Text_Rn")
                         .IsRequired()

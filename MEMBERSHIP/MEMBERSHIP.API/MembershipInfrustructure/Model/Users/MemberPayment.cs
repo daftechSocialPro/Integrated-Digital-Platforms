@@ -32,6 +32,10 @@ namespace MembershipInfrustructure.Model.Users
 
         [DefaultValue(false)]
         public bool IsPaid { get; set; }
+        
+        public string? ReceiptImagePath { get; set; }
+        
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
 
 
     }

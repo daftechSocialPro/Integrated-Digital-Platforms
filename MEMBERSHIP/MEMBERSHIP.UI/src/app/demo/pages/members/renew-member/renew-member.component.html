@@ -35,8 +35,9 @@
                                 <div class="form-floating mb-3">
                                     <select class="form-control" #type (change)="getMembershipTypes(type.value)">
                                         <option></option>
-                                        <option value="MIDWIVES">MIDWIVES</option>
-                                        <option value="NONMIDWIVES">NON MIDWIVES</option>
+                                        <option value="Midwife">Midwife</option>
+                                        <option value="NonMidwife">NON-Midwife</option>
+                                        <option value="Institute">INSTITUTE</option>
                                     </select>
                                     <label for="fullName">Membership Category</label>
                                 </div>
@@ -68,13 +69,13 @@
         <div class="col-md-4 col-12 p-2">
             <div class="member-info text-center">
                 <img src="../../../../../assets/logo2.png" alt="Member Image" style="max-height: 150px;" class="img-fluid bounce-image">
-                <h2 class="text-secondary mt-2"><b>Ethipian Midwives Association </b></h2>
+                <h2 class="text-secondary mt-2"><b>Ethipian Midwifes Association </b></h2>
                 <p class="text-center animated-paragraph">
-                    Joining our Midwives Membership is an <br />
-                    excellent opportunity for midwives to connect, <br />
+                    Joining our Midwifes Membership is an <br />
+                    excellent opportunity for Midwifes to connect, <br />
                     collaborate, and access valuable resources within our <br />
                     community. By becoming a member, you will gain exclusive  <br />
-                    benefits and support tailored specifically to midwifery professionals.
+                    benefits and support tailored specifically to Midwifery professionals.
                 </p>
                 <div class="d-grid mt-4 p-4">
                     <button type="button" (click)="logout()" class="btn btn-outline-danger">Logout</button>

@@ -297,3 +297,36 @@ textarea.ng-invalid{
   .larger-text {
     font-size: 16px; /* Adjust the font size as needed */
   }
+
+
+  /* Default styles for desktop */
+.custom-modal-width .modal-dialog {
+    max-width: 1400px;
+    width: 90%;
+}
+
+/* Medium screens (e.g., tablets) */
+@media (max-width: 1200px) {
+    .custom-modal-width .modal-dialog {
+        max-width: 1000px;
+        width: 90%;
+    }
+}
+
+/* Small screens (e.g., mobile devices) */
+@media (max-width: 768px) {
+    .custom-modal-width .modal-dialog {
+        max-width: 90%;
+        width: 90%;
+        margin: 10px; /* Adds space around the modal */
+    }
+}
+
+/* Extra small screens (e.g., very small devices) */
+@media (max-width: 480px) {
+    .custom-modal-width .modal-dialog {
+        max-width: 100%;
+        width: 100%;
+        margin: 5px; /* Adjusts the margin for smaller screens */
+    }
+}

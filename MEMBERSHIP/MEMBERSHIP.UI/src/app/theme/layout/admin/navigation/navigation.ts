@@ -84,7 +84,7 @@ const NavigationItems = [
         id: 'data',
         title: 'Members',
         type: 'item',
-        role: ['Admin','SuperAdmin'],
+        role: ['Admin','SuperAdmin','RegionAdmin'],
         icon: 'ti ti-users',
         url: '/members/List',
         breadcrumbs: false

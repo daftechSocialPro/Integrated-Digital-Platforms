@@ -9,7 +9,7 @@
           <div class="row">
             <div class="d-flex justify-content-center">
               <div class="auth-header">
-                <h2 class="text-secondary mt-2"><b>Ethipian Midwives Association </b></h2>
+                <h2 class="text-secondary mt-2"><b>Ethipian Midwifes Association </b></h2>
                 <p class="fs-4 mt-2">Enter your information to be a Member</p>
                 <hr />
               </div>
@@ -56,8 +56,9 @@
 
                   <select class="form-control" #category (change)="getMemberships(category.value)">
                     <option></option>
-                    <option value="MIDWIVES">MIDWIVES</option>
-                    <option value="NONMIDWIVES">NONMIDWIVES</option>
+                    <option value="Midwife">Midwife</option>
+                    <option value="NonMidwife">NON-Midwife</option>
+                    <option value="Institute">INSTITUTE</option>
 
                   </select>
                   <label for="email">Membership Category</label>
@@ -102,8 +103,8 @@
 
                 <div class="form-floating mb-3">
 
-                  <select class="form-control" id="region" formControlName="RegionId" >
-                  
+                  <select class="form-control" id="region" formControlName="RegionId">
+
                     <option *ngFor="let item of regions" [value]="item.id">{{item.name}}</option>
 
 
@@ -124,7 +125,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <div class="form-floating mb-3">
 
                   <input type="text" class="form-control" id="Woreda" formControlName="woreda" />
@@ -133,17 +134,44 @@
                 </div>
 
               </div>
-              <div class="col-md-6">
+              <div class="col-md-4">
 
                 <div class="form-floating mb-3">
 
                   <input type="text" class="form-control" id="inistitute" formControlName="inistitute" />
 
-                  <label for="inistitute">Inistitute Name</label>
+                  <label for="inistitute">Your Organization Name</label>
                 </div>
               </div>
 
+              <div class="col-md-4">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" formControlName="inistituteRole" id="instituteRole">
+                    <label for="instituteRole">Your Organization Role</label>
+                </div>
             </div>
+
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                  <div class="form-floating mb-3">
+                      <select class="form-control" formControlName="educationalLevelId">
+                          <option></option>
+                          <option *ngFor="let item of educationalLelvels" [value]="item.id.toLowerCase()">
+                              {{item.name}}
+                          </option>
+                      </select>
+                      <label for="educationalLeevels">Educational Levels</label>
+                  </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="form-floating mb-3">
+                      <input type="text" class="form-control" formControlName="educationalField" id="educationalField">
+                      <label for="educationalField">Educational Field</label>
+                  </div>
+              </div>
+          </div>
 
 
             <div class="d-grid mt-4">
@@ -152,8 +180,8 @@
                 class="btn btn-secondary">Register</button>
             </div>
             <hr />
-            <h5 >
-              Already have an account?  <a class="text-secondary" style="cursor: pointer; cursor: pointer;
+            <h5>
+              Already have an account? <a class="text-secondary" style="cursor: pointer; cursor: pointer;
               font-size: 15px;
               font-weight: bolder;
               border: 1px solid #673ab7;
@@ -169,17 +197,17 @@
       <div class="member-info text-center">
         <img src="../../../../../assets/image_1212.png" alt="Member Image" style="max-height: 260px;"
           class="img-fluid bounce-image">
-        <h4 class="text-center mt-4 animated-heading">Welcome to our Midwives Membership!</h4>
+        <h4 class="text-center mt-4 animated-heading">Welcome to our Midwifes Membership!</h4>
         <p class="text-center animated-paragraph">
-          
-          Joining our Midwives Membership is an 
-          excellent opportunity for midwives to connect, 
-          collaborate, and access valuable resources within our 
-          community.By becoming a member, you will gain exclusive  
-          benefits and support tailored specifically to midwifery professionals.
+
+          Joining our Midwifes Membership is an
+          excellent opportunity for Midwifes to connect,
+          collaborate, and access valuable resources within our
+          community.By becoming a member, you will gain exclusive
+          benefits and support tailored specifically to Midwifery professionals.
         </p>
 
-      
+
       </div>
     </div>
   </div>

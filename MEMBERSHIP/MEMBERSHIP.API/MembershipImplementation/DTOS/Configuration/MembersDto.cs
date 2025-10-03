@@ -24,6 +24,12 @@ namespace MembershipImplementation.DTOS.Configuration
 
         public string Inistitute { get; set; }
 
+
+        public string? InistituteRole { get; set; }
+        
+        public Guid? EducationalLevelId { get; set; }
+
+        public string? EducationalField {get; set;}
         public Guid MembershipTypeId { get; set; }
 
 
@@ -39,26 +45,18 @@ namespace MembershipImplementation.DTOS.Configuration
         public string EducationalField { get; set; }
         public Guid EducationalLevelId { get; set; }
         public string Gender { get; set; }
-
         public IFormFile? Image { get; set; }
+        public IFormFile? ReceiptImage { get; set; }
         public string Institute { get; set; }
-
         public string? Email { get; set; }
-
         public string? Woreda { get; set; }
-
         public string InstituteRole { get; set; }
-
-
-
         public DateTime LastPaid { get; set; }
-
         public DateTime ExpiredDate { get; set; }
-
+        
+        public DateTime CreatedDate { get; set; }
         public string? PaymentStatus { get; set; }
-
         public string? RegionId { get; set; }
-
         public Guid ? MembershipTypeId { get; set; }
     }
 
@@ -114,6 +112,7 @@ namespace MembershipImplementation.DTOS.Configuration
         public bool IsProfileCompleted { get; set; }
 
 
+        public string ReceiptImage { get; set; }
 
         public string? MoodleName { get; set; }
 
@@ -171,4 +170,17 @@ namespace MembershipImplementation.DTOS.Configuration
 
         public int Members { get; set; }
     }
+
+    public record MemberPaymentRecieptDto
+    {
+        public Guid MemberId { get; set; }
+        
+        public IFormFile RecieptImage { get; set; }
+    }
+    
+    public record ForgetMembershipRequestDto
+    {
+        public string Contact { get; set; }
+    }
+
 }

@@ -105,7 +105,9 @@ export class MembersDashboardComponent implements OnInit {
 
     const formData = new FormData();
     const password = this.commonService.generatePassword(10);
-    const userName = this.member.fullName.split(' ')[0].toLowerCase()+'_' + this.commonService.generatePassword(5).toLowerCase()
+    const fullName = (this.member?.fullName || '').trim();
+const firstName = fullName.split(/\s+/)[0]; // handles multiple spaces
+const userName = firstName.toLowerCase() + '_' + this.commonService.generatePassword(5).toLowerCase();
 
     formData.append('moodlewsrestformat', 'json');
     formData.append('wsfunction', 'core_user_create_users');
