@@ -16,7 +16,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class BeginningBalanceComponent implements OnInit {
 
-  beginningBalanceList!: BeginningBalanceGetDto[]
+  beginningBalanceList: BeginningBalanceGetDto[] = [];
   accountingPeriodDropDown!: SelectList[]
   addBeginningBalanceDetailList: AddBegnningBalanceDto = new AddBegnningBalanceDto();
   user:UserView;
@@ -104,6 +104,13 @@ export class BeginningBalanceComponent implements OnInit {
   addBeginningBalance() {
     this.addBeginningBalanceDetailList.createdById = this.user.userId;
     this.addBeginningBalanceDetailList.begningBalanceDetails = [];
+    
+    // Add null check to prevent error
+    if (!this.beginningBalanceList || this.beginningBalanceList.length === 0) {
+      console.warn('beginningBalanceList is empty or undefined');
+      return;
+    }
+    
     this.beginningBalanceList.map(x => {
       if (x.subsidaryAccountBegningDtos.length == 0) {
         this.addBeginningBalanceDetailList.begningBalanceDetails.push({

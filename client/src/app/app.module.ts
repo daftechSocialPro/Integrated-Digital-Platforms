@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -37,14 +40,12 @@ import { PagesRegisterComponent } from './pages/pages-register/pages-register.co
 
 import { PagesError404Component } from './pages/pages-error404/pages-error404.component';
 import { PagesBlankComponent } from './pages/pages-blank/pages-blank.component';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthHeaderIneterceptor } from './http-interceptors/auth-header-interceptor';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 
 import { ToastrModule } from 'ngx-toastr';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PagesLoginComponent } from './auth/pages-login/pages-login.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HrmConfigurationComponent } from './pages/human-resource/hrm-configuration/hrm-configuration/hrm-configuration.component';
 import { DepartmentComponent } from './pages/human-resource/hrm-configuration/department/department.component';
 
@@ -166,8 +167,8 @@ import { UpdateEmployeeFileComponent } from './pages/human-resource/employee-man
 import { EmployeeSuretyComponent } from './pages/human-resource/employee-managment/employee-detail/employee-surety/employee-surety.component';
 import { AddEmployeeSuretyComponent } from './pages/human-resource/employee-managment/employee-detail/employee-surety/add-employee-surety/add-employee-surety.component';
 import { UpdateEmployeeSuretyComponent } from './pages/human-resource/employee-managment/employee-detail/employee-surety/update-employee-surety/update-employee-surety.component';
-import { LeaveSettingComponent } from './pages/human-resource/hrm-configuration/leave-setting/leave-setting.component';
-import { AddLeaveSettingComponent } from './pages/human-resource/hrm-configuration/leave-setting/add-leave-setting/add-leave-setting.component';
+import { ExternalVacancyApplicationComponent } from './pages/human-resource/vacancy-management/external-vacancy-application/external-vacancy-application.component';
+import { ExternalApplicantFormComponent } from './pages/human-resource/vacancy-management/external-applicant-form/external-applicant-form.component';
 import { VolunterComponent } from './pages/human-resource/volunter/volunter.component';
 import { AddVolunterComponent } from './pages/human-resource/volunter/add-volunter/add-volunter.component';
 import { UpdateVolunterComponent } from './pages/human-resource/volunter/update-volunter/update-volunter.component';
@@ -294,9 +295,11 @@ import { AddEmployeeGuaranteeComponent } from './pages/human-resource/employee-m
 import { DocumentTypeComponent } from './pages/configuration/document-type/document-type.component';
 import { DailyAttendanceReportComponent } from './pages/human-resource/attendance-report/daily-attendance-report/daily-attendance-report.component';
 import { OvertimeAttendanceReportComponent } from './pages/human-resource/attendance-report/overtime-attendance-report/overtime-attendance-report.component';
-import { MonthlyAttendanceReportComponent } from './pages/human-resource/attendance-report/monthly-attendance-report/monthly-attendance-report.component';
+// import { MonthlyAttendanceReportComponent } from './pages/human-resource/attendance-report/monthly-attendance-report/monthly-attendance-report.component';
 import { AddDocumentTypeComponent } from './pages/configuration/document-type/add-document-type/add-document-type.component';
 import { ExtendContractComponent } from './pages/human-resource/contract-end-employees/extend-contract/extend-contract.component';
+import { LeaveSettingComponent } from './pages/human-resource/hrm-configuration/leave-setting/leave-setting.component';
+import { AddLeaveSettingComponent } from './pages/human-resource/hrm-configuration/leave-setting/add-leave-setting/add-leave-setting.component';
 
 @NgModule({
   declarations: [
@@ -545,11 +548,13 @@ import { ExtendContractComponent } from './pages/human-resource/contract-end-emp
     DocumentTypeComponent,
     DailyAttendanceReportComponent,
     OvertimeAttendanceReportComponent,
-    MonthlyAttendanceReportComponent,
-    AddDocumentTypeComponent,
-    ExtendContractComponent
-    //  AddMeasurementComponent,
-    //  UpdateMeasurmentComponent
+    // MonthlyAttendanceReportComponent,
+        AddDocumentTypeComponent,
+        ExtendContractComponent,
+        ExternalVacancyApplicationComponent,
+        ExternalApplicantFormComponent,
+        //  AddMeasurementComponent,
+        //  UpdateMeasurmentComponent
   ],
   imports: [
     SidebarModule,
@@ -557,9 +562,9 @@ import { ExtendContractComponent } from './pages/human-resource/contract-end-emp
     CommonModule,
     RouterModule,
     FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule,
     BrowserAnimationsModule,
     TableModule,
     ButtonModule,
@@ -608,7 +613,6 @@ import { ExtendContractComponent } from './pages/human-resource/contract-end-emp
     MessageService,
     DialogService,
     DatePipe
-
   ],
   bootstrap: [AppComponent]
 })

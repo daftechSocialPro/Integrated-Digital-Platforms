@@ -10,6 +10,24 @@ using static IntegratedInfrustructure.Data.EnumList;
 
 namespace IntegratedImplementation.DTOS.Vacancy
 {
+    public class ExternalApplicantDto
+    {
+        public Guid VacancyId { get; set; }
+        public string FirstName { get; set; } = null!;
+        public string MiddleName { get; set; } = null!;
+        public string LastName { get; set; } = null!;
+        public string Email { get; set; } = null!;
+        public string PhoneNumber { get; set; } = null!;
+        public string Gender { get; set; } = null!;
+        public DateTime DateOfBirth { get; set; }
+        public string EducationalLevel { get; set; } = null!;
+        public string FieldOfStudy { get; set; } = null!;
+        public string WorkExperience { get; set; } = null!;
+        public string CoverLetter { get; set; } = null!;
+        public IFormFile? Resume { get; set; }
+        public IFormFile? AdditionalDocuments { get; set; }
+    }
+
     public class InternalApplicantDto
     {
         public string CreatedById { get; set; } = null!;

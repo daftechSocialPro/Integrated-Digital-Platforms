@@ -130,6 +130,123 @@ namespace IntegratedImplementation.Services.Vacancy
             return new ResponseMessage { Success = true, Message = "You have Applied Successfully", Data = applicant };
         }
 
+        public async Task<ResponseMessage> AddExternalApplicant(ExternalApplicantDto externalApplicantDto)
+        {
+            try
+            {
+                // Check if vacancy exists
+                var vacancy = await _dbContext.VacancyLists.FirstOrDefaultAsync(x => x.Id == externalApplicantDto.VacancyId);
+                if (vacancy == null)
+                    return new ResponseMessage { Success = false, Message = "Vacancy not found" };
+
+                // Check if applicant already applied for this vacancy
+                var existingApplication = await _dbContext.ApplicantVacancies
+                    .AnyAsync(x => x.VacancyId == externalApplicantDto.VacancyId && 
+                                   x.Applicant.Email == externalApplicantDto.Email);
+                if (existingApplication)
+                    return new ResponseMessage { Success = false, Message = "You have already applied for this vacancy" };
+
+                var applicantId = Guid.NewGuid();
+                var applicantVacancyId = Guid.NewGuid();
+
+                // Handle file uploads
+                string resumePath = "";
+                string additionalDocsPath = "";
+
+                if (externalApplicantDto.Resume != null)
+                    resumePath = _generalConfig.UploadFiles(externalApplicantDto.Resume, applicantId.ToString(), "ApplicantResume").Result.ToString();
+
+                if (externalApplicantDto.AdditionalDocuments != null)
+                    additionalDocsPath = _generalConfig.UploadFiles(externalApplicantDto.AdditionalDocuments, applicantId.ToString(), "ApplicantDocuments").Result.ToString();
+
+                // Get default country and zone for external applicants
+                var defaultCountry = await _dbContext.Countries.FirstOrDefaultAsync();
+                var defaultZone = await _dbContext.Zones.FirstOrDefaultAsync();
+                
+                if (defaultCountry == null || defaultZone == null)
+                {
+                    return new ResponseMessage { Success = false, Message = "System configuration error. Please contact administrator." };
+                }
+
+                // Create external applicant
+                Applicant applicant = new Applicant()
+                {
+                    Id = applicantId,
+                    CreatedDate = DateTime.Now,
+                    CreatedById = "SYSTEM", // External applicants don't have a user ID
+                    ApplicantType = ApplicantType.EXTERNAL,
+                    BirthDate = externalApplicantDto.DateOfBirth,
+                    FirstName = externalApplicantDto.FirstName,
+                    MiddleName = externalApplicantDto.MiddleName,
+                    LastName = externalApplicantDto.LastName,
+                    Gender = Enum.Parse<Gender>(externalApplicantDto.Gender.ToUpper()),
+                    Email = externalApplicantDto.Email,
+                    PhoneNumber = externalApplicantDto.PhoneNumber,
+                    Photo = resumePath, // Store resume path in photo field for external applicants
+                    Woreda = "External", // Default for external applicants
+                    NationalityId = defaultCountry.Id, // Use default country
+                    ZoneId = defaultZone.Id // Use default zone
+                };
+
+                await _dbContext.Applicants.AddAsync(applicant);
+
+                // Create applicant vacancy relationship
+                ApplicantVacancy applicantVacancy = new ApplicantVacancy()
+                {
+                    Id = applicantVacancyId,
+                    ApplicantId = applicantId,
+                    VacancyId = externalApplicantDto.VacancyId,
+                    CreatedDate = DateTime.Now,
+                    ApplicantStatus = ApplicantStatus.PENDING,
+                    CreatedById = "SYSTEM",
+                    Description = externalApplicantDto.CoverLetter
+                };
+
+                await _dbContext.ApplicantVacancies.AddAsync(applicantVacancy);
+
+                // Create initial vacancy status record
+                VacancyStatus vacancyStatus = new VacancyStatus()
+                {
+                    Id = Guid.NewGuid(),
+                    ApplicantVacancyId = applicantVacancyId,
+                    ApplicantStatus = ApplicantStatus.PENDING,
+                    CreatedDate = DateTime.Now,
+                    Status = true,
+                    IsNotificationSent = false,
+                    Description = "Application submitted",
+                    Subject = "New Application"
+                };
+
+                await _dbContext.VacancyStatuses.AddAsync(vacancyStatus);
+
+                // Add additional documents if provided
+                if (!string.IsNullOrEmpty(additionalDocsPath))
+                {
+                    var documentId = Guid.NewGuid();
+                    ApplcantDocuments document = new ApplcantDocuments()
+                    {
+                        Id = documentId,
+                        ApplicantVacnncyId = applicantVacancyId,
+                        DocumentPath = additionalDocsPath,
+                        Description = "Additional Documents"
+                    };
+
+                    await _dbContext.ApplcantDocuments.AddAsync(document);
+                }
+
+                await _dbContext.SaveChangesAsync();
+
+                return new ResponseMessage { Success = true, Message = "Application submitted successfully! We will review your application and contact you soon.", Data = applicant };
+            }
+            catch (Exception ex)
+            {
+                // Log the actual error for debugging
+                Console.WriteLine($"Error in AddExternalApplicant: {ex.Message}");
+                Console.WriteLine($"Stack trace: {ex.StackTrace}");
+                return new ResponseMessage { Success = false, Message = $"An error occurred while submitting your application. Error: {ex.Message}" };
+            }
+        }
+
         public async Task<ResponseMessage> AddEducationLevel(ApplicantEducationDto applicantEducation)
         {
             var educationExists = await _dbContext.ApplicantEducations.AnyAsync(x => x.ApplicantId == applicantEducation.ApplicantId && x.EducationalFieldId == x.EducationalFieldId && x.EducationalFieldId == x.EducationalLevelId);

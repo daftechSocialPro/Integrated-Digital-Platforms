@@ -52,6 +52,20 @@ namespace IntegratedDigitalAPI.Controllers.Vacancy
 
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> AddExternalApplicant([FromForm] ExternalApplicantDto externalApplicant)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _applicantService.AddExternalApplicant(externalApplicant));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> AddEducationLevel([FromBody] ApplicantEducationDto applicantEducation)
         {
             if (ModelState.IsValid)

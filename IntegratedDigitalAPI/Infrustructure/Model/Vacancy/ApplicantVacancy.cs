@@ -15,6 +15,8 @@ namespace IntegratedInfrustructure.Model.Vacancy
         public Guid ApplicantId { get; set; }
         public virtual VacancyList Vacancy { get; set; } = null!;
         public Guid VacancyId { get; set; }
-      
+        public ApplicantStatus ApplicantStatus { get; set; }
+        public string? CreatedById { get; set; }
+        public string? Description { get; set; }
     }
 }

@@ -1,0 +1,165 @@
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">
+            <i class="bi bi-briefcase me-2"></i>
+            Job Application Form
+          </h4>
+        </div>
+        
+        <div class="card-body" *ngIf="vacancyDetail">
+          <!-- Vacancy Information -->
+          <div class="alert alert-info">
+            <h5>{{ vacancyDetail.vacancyName }}</h5>
+            <p class="mb-1"><strong>Department:</strong> {{ vacancyDetail.department }}</p>
+            <p class="mb-1"><strong>Position:</strong> {{ vacancyDetail.position }}</p>
+            <p class="mb-1"><strong>Employment Type:</strong> {{ vacancyDetail.employmentType }}</p>
+            <p class="mb-0"><strong>Application Deadline:</strong> {{ vacancyDetail.vaccancyEndDate | date:'medium' }}</p>
+          </div>
+
+          <!-- Application Form -->
+          <form [formGroup]="applicationForm" (ngSubmit)="submitApplication()">
+            <div class="row">
+              <!-- Personal Information -->
+              <div class="col-12">
+                <h5 class="text-primary mb-3">Personal Information</h5>
+              </div>
+              
+              <div class="col-md-4 mb-3">
+                <label for="firstName" class="form-label">First Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="firstName" formControlName="firstName" 
+                       [class.is-invalid]="applicationForm.get('firstName')?.invalid && applicationForm.get('firstName')?.touched">
+                <div class="invalid-feedback" *ngIf="applicationForm.get('firstName')?.invalid && applicationForm.get('firstName')?.touched">
+                  First name is required
+                </div>
+              </div>
+              
+              <div class="col-md-4 mb-3">
+                <label for="middleName" class="form-label">Middle Name</label>
+                <input type="text" class="form-control" id="middleName" formControlName="middleName">
+              </div>
+              
+              <div class="col-md-4 mb-3">
+                <label for="lastName" class="form-label">Last Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="lastName" formControlName="lastName"
+                       [class.is-invalid]="applicationForm.get('lastName')?.invalid && applicationForm.get('lastName')?.touched">
+                <div class="invalid-feedback" *ngIf="applicationForm.get('lastName')?.invalid && applicationForm.get('lastName')?.touched">
+                  Last name is required
+                </div>
+              </div>
+              
+              <div class="col-md-6 mb-3">
+                <label for="email" class="form-label">Email Address <span class="text-danger">*</span></label>
+                <input type="email" class="form-control" id="email" formControlName="email"
+                       [class.is-invalid]="applicationForm.get('email')?.invalid && applicationForm.get('email')?.touched">
+                <div class="invalid-feedback" *ngIf="applicationForm.get('email')?.invalid && applicationForm.get('email')?.touched">
+                  Valid email address is required
+                </div>
+              </div>
+              
+              <div class="col-md-6 mb-3">
+                <label for="phoneNumber" class="form-label">Phone Number <span class="text-danger">*</span></label>
+                <input type="tel" class="form-control" id="phoneNumber" formControlName="phoneNumber"
+                       [class.is-invalid]="applicationForm.get('phoneNumber')?.invalid && applicationForm.get('phoneNumber')?.touched">
+                <div class="invalid-feedback" *ngIf="applicationForm.get('phoneNumber')?.invalid && applicationForm.get('phoneNumber')?.touched">
+                  Phone number is required
+                </div>
+              </div>
+              
+              <div class="col-md-6 mb-3">
+                <label for="gender" class="form-label">Gender <span class="text-danger">*</span></label>
+                <select class="form-select" id="gender" formControlName="gender"
+                        [class.is-invalid]="applicationForm.get('gender')?.invalid && applicationForm.get('gender')?.touched">
+                  <option value="">Select Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+                <div class="invalid-feedback" *ngIf="applicationForm.get('gender')?.invalid && applicationForm.get('gender')?.touched">
+                  Gender is required
+                </div>
+              </div>
+              
+              <div class="col-md-6 mb-3">
+                <label for="birthDate" class="form-label">Date of Birth <span class="text-danger">*</span></label>
+                <input type="date" class="form-control" id="birthDate" formControlName="birthDate"
+                       [class.is-invalid]="applicationForm.get('birthDate')?.invalid && applicationForm.get('birthDate')?.touched">
+                <div class="invalid-feedback" *ngIf="applicationForm.get('birthDate')?.invalid && applicationForm.get('birthDate')?.touched">
+                  Date of birth is required
+                </div>
+              </div>
+              
+              <!-- Address Information -->
+              <div class="col-12 mt-4">
+                <h5 class="text-primary mb-3">Address Information</h5>
+              </div>
+              
+              <div class="col-md-4 mb-3">
+                <label for="nationalityId" class="form-label">Nationality <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="nationalityId" formControlName="nationalityId"
+                       [class.is-invalid]="applicationForm.get('nationalityId')?.invalid && applicationForm.get('nationalityId')?.touched">
+                <div class="invalid-feedback" *ngIf="applicationForm.get('nationalityId')?.invalid && applicationForm.get('nationalityId')?.touched">
+                  Nationality is required
+                </div>
+              </div>
+              
+              <div class="col-md-4 mb-3">
+                <label for="zoneId" class="form-label">Zone <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="zoneId" formControlName="zoneId"
+                       [class.is-invalid]="applicationForm.get('zoneId')?.invalid && applicationForm.get('zoneId')?.touched">
+                <div class="invalid-feedback" *ngIf="applicationForm.get('zoneId')?.invalid && applicationForm.get('zoneId')?.touched">
+                  Zone is required
+                </div>
+              </div>
+              
+              <div class="col-md-4 mb-3">
+                <label for="woreda" class="form-label">Woreda <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="woreda" formControlName="woreda"
+                       [class.is-invalid]="applicationForm.get('woreda')?.invalid && applicationForm.get('woreda')?.touched">
+                <div class="invalid-feedback" *ngIf="applicationForm.get('woreda')?.invalid && applicationForm.get('woreda')?.touched">
+                  Woreda is required
+                </div>
+              </div>
+              
+              <!-- Additional Information -->
+              <div class="col-12 mt-4">
+                <h5 class="text-primary mb-3">Additional Information</h5>
+              </div>
+              
+              <div class="col-12 mb-3">
+                <label for="coverLetter" class="form-label">Cover Letter</label>
+                <textarea class="form-control" id="coverLetter" formControlName="coverLetter" rows="4" 
+                          placeholder="Tell us why you're interested in this position..."></textarea>
+              </div>
+              
+              <div class="col-12 mb-3">
+                <label for="resume" class="form-label">Resume/CV</label>
+                <input type="file" class="form-control" id="resume" accept=".pdf,.doc,.docx" 
+                       (change)="onFileSelected($event)">
+                <div class="form-text">Upload your resume in PDF, DOC, or DOCX format</div>
+              </div>
+            </div>
+            
+            <!-- Submit Buttons -->
+            <div class="row mt-4">
+              <div class="col-12 text-end">
+                <button type="button" class="btn btn-secondary me-2" (click)="goBack()">
+                  <i class="bi bi-arrow-left me-1"></i>Cancel
+                </button>
+                <button type="submit" class="btn btn-primary" [disabled]="loading || applicationForm.invalid">
+                  <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+                  <i *ngIf="!loading" class="bi bi-send me-1"></i>
+                  {{ loading ? 'Submitting...' : 'Submit Application' }}
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Messages -->
+<p-toast></p-toast>

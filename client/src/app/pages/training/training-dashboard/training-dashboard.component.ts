@@ -14,7 +14,7 @@ import { AllTrainingListComponent } from '../all-training-list/all-training-list
 })
 export class TrainingDashboardComponent implements OnInit {
 
-  Trainings: ITrainingGetDto[] = []
+  Trainings: ITrainingGetDto[] = [];
   sum = 0
 maleSum = 0 
 femaleSum = 0 
@@ -36,22 +36,31 @@ femaleSum = 0
   }
 
   getTrainingList() {
+    // Reset counters
+    this.sum = 0;
+    this.maleSum = 0;
+    this.femaleSum = 0;
 
     this.trainingService.getTrainingLists().subscribe({
       next: (res) => {
-        this.Trainings = res
-
-        this.Trainings.forEach((item=>{
-          this.getTotalTrainees(item.id)
-        }))
-
-   
+        this.Trainings = res || [];
+        
+        if (this.Trainings.length > 0) {
+          this.Trainings.forEach((item => {
+            this.getTotalTrainees(item.id);
+          }));
+        }
+      },
+      error: (err) => {
+        console.error('Error fetching training list:', err);
+        this.Trainings = [];
       }
-    })
+    });
   }
 
   viewdetail(){
-this.router.navigate(['/trainee/allreport'])
+    console.log('Navigating to trainee/allreport');
+    this.router.navigateByUrl('/trainee/allreport');
   }
 
   getTotalTrainers(trainingId: string) {
@@ -67,18 +76,23 @@ this.router.navigate(['/trainee/allreport'])
   }
 
   getTotalTrainees(trainingId: string) {
-    var length = 0
+    var length = 0;
     this.trainingService.getTraineeList(trainingId).subscribe({
       next: (res) => {
-        this.sum += res.length
-        length = res.length
-      
-        this.maleSum += res.filter(item=>item.gender.toLowerCase()=="male").length
-        this.femaleSum += res.filter(item=>item.gender.toLowerCase()=="female").length
+        if (res && Array.isArray(res)) {
+          this.sum += res.length;
+          length = res.length;
+          
+          this.maleSum += res.filter(item => item.gender && item.gender.toLowerCase() === "male").length;
+          this.femaleSum += res.filter(item => item.gender && item.gender.toLowerCase() === "female").length;
+        }
+      },
+      error: (err) => {
+        console.error('Error fetching trainee list for training:', trainingId, err);
       }
-    })
+    });
 
-    return length
+    return length;
   }
 
   viewTrainees(trainingId:string,trainingTitle:string){

@@ -21,11 +21,12 @@ export class VacancyService {
     getVacancyList(vacancyFilter: VacancyFilter) {
         return this.http.post<VacancyListDto[]>(this.baseUrl + `/Vacancy/GetVacancyList`,vacancyFilter);
     }
-    getVacanyDetail(vacancyId: string) {
-
+    getVacancyDetail(vacancyId: string) {
         return this.http.get<VacancyListDto>(this.baseUrl + `/Vacancy/GetVacancyDetail?vacancyId=${vacancyId}`)
+    }
 
-
+    getVacanyDetail(vacancyId: string) {
+        return this.http.get<VacancyListDto>(this.baseUrl + `/Vacancy/GetVacancyDetail?vacancyId=${vacancyId}`)
     }
 
     getVacancyEdit(vacancyId: string) {
@@ -96,6 +97,10 @@ export class VacancyService {
     addApplicantDocuemtns(appliicantDoc: FormData) {
 
         return this.http.post<ResponseMessage>(this.baseUrl + "/Applicant/AddApplicantDocument", appliicantDoc)
+    }
+
+    addExternalApplicant(externalApplicant: FormData) {
+        return this.http.post<ResponseMessage>(this.baseUrl + "/Applicant/AddExternalApplicant", externalApplicant)
     }
 
     startVacancy(applicantId: string, vacancyId: string) {

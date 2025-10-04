@@ -13,6 +13,7 @@ namespace IntegratedImplementation.Interfaces.Vacancy
         Task<List<ApplicantListDto>> GetApplicantList(ApplicantFilterDto filterDto);
         Task<string> CheckApplicantProfile(Guid employeeId);
         Task<ResponseMessage> AddInternalApplicant(InternalApplicantDto internalApplicantDto);
+        Task<ResponseMessage> AddExternalApplicant(ExternalApplicantDto externalApplicantDto);
         Task<ResponseMessage> AddEducationLevel(ApplicantEducationDto applicantEducation);
         Task<ResponseMessage> AddWorkExperience(ApplicantWorkExperienceDto applicantWorkExperience);
         Task<ResponseMessage> AddApplicantDocument(ApplicantVacancyDocumentDto applicantVacancy);

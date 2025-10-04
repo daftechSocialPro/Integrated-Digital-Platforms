@@ -1,0 +1,320 @@
+<div class="min-vh-100 bg-gradient-primary">
+  <div class="container-fluid py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-10 col-xl-8">
+        <!-- Header Section -->
+        <div class="text-center mb-5">
+          <div class="logo-section mb-4">
+            <img src="assets/logo2.png" alt="Ethiopian Midwives Association" class="logo-img mb-3">
+            <h1 class="display-5 fw-bold text-white mb-2">Job Application Portal</h1>
+            <p class="lead text-white-50">Join our team and make a difference</p>
+          </div>
+        </div>
+
+        <!-- Main Card -->
+        <div class="card shadow-lg border-0">
+          <div class="card-header bg-gradient-success text-white py-4">
+            <div class="d-flex align-items-center">
+              <div class="icon-wrapper me-3">
+                <i class="bi bi-person-plus-fill fs-2"></i>
+              </div>
+              <div>
+                <h3 class="mb-1 fw-bold">External Applicant Registration</h3>
+                <p class="mb-0 opacity-75">Complete the form below to apply for this position</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card-body p-0">
+            <!-- Loading State -->
+            <div *ngIf="loading" class="text-center py-5">
+              <div class="spinner-border text-primary mb-3" style="width: 3rem; height: 3rem;" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <h5 class="text-muted">Loading vacancy details...</h5>
+            </div>
+
+            <!-- Error State -->
+            <div *ngIf="!vacancyDetail && !loading" class="alert alert-warning m-4">
+              <div class="d-flex align-items-center">
+                <i class="bi bi-exclamation-triangle-fill me-3 fs-4"></i>
+                <div>
+                  <h5 class="mb-2">Vacancy Not Found</h5>
+                  <p class="mb-1">The requested vacancy could not be found. Please check the vacancy ID and try again.</p>
+                  <small class="text-muted"><strong>Vacancy ID:</strong> {{ vacancyId }}</small>
+                </div>
+              </div>
+            </div>
+
+            <!-- Vacancy Information and Form -->
+            <div *ngIf="vacancyDetail && !loading" class="p-4">
+              <!-- Vacancy Information Card -->
+              <div class="vacancy-info-card mb-4">
+                <div class="card border-0 shadow-sm">
+                  <div class="card-body">
+                    <div class="row align-items-center">
+                      <div class="col-md-8">
+                        <h4 class="text-primary mb-2 fw-bold">
+                          <i class="bi bi-briefcase me-2"></i>{{ vacancyDetail.vacancyName }}
+                        </h4>
+                        <div class="row g-3">
+                          <div class="col-sm-6">
+                            <div class="d-flex align-items-center">
+                              <i class="bi bi-building text-muted me-2"></i>
+                              <span class="fw-medium">{{ vacancyDetail.department }}</span>
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <div class="d-flex align-items-center">
+                              <i class="bi bi-person-badge text-muted me-2"></i>
+                              <span class="fw-medium">{{ vacancyDetail.position }}</span>
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <div class="d-flex align-items-center">
+                              <i class="bi bi-briefcase text-muted me-2"></i>
+                              <span class="fw-medium">{{ vacancyDetail.employmentType }}</span>
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <div class="d-flex align-items-center">
+                              <i class="bi bi-calendar-event text-muted me-2"></i>
+                              <span class="fw-medium">Deadline: {{ vacancyDetail.vaccancyEndDate | date:'MMM dd, yyyy' }}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4 text-end">
+                        <div class="badge bg-success fs-6 px-3 py-2">
+                          <i class="bi bi-check-circle me-1"></i>Open Position
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+          <!-- Application Form -->
+          <form [formGroup]="applicantForm" (ngSubmit)="submitApplication()">
+            <div class="row">
+              <!-- Personal Information -->
+              <div class="col-12">
+                <h5 class="text-success mb-3">Personal Information</h5>
+              </div>
+              
+              <div class="col-md-4 mb-3">
+                <label for="firstName" class="form-label">First Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="firstName" formControlName="firstName" 
+                       [class.is-invalid]="applicantForm.get('firstName')?.invalid && applicantForm.get('firstName')?.touched">
+                <div class="invalid-feedback" *ngIf="applicantForm.get('firstName')?.invalid && applicantForm.get('firstName')?.touched">
+                  First name is required
+                </div>
+              </div>
+              
+              <div class="col-md-4 mb-3">
+                <label for="middleName" class="form-label">Middle Name</label>
+                <input type="text" class="form-control" id="middleName" formControlName="middleName">
+              </div>
+              
+              <div class="col-md-4 mb-3">
+                <label for="lastName" class="form-label">Last Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="lastName" formControlName="lastName"
+                       [class.is-invalid]="applicantForm.get('lastName')?.invalid && applicantForm.get('lastName')?.touched">
+                <div class="invalid-feedback" *ngIf="applicantForm.get('lastName')?.invalid && applicantForm.get('lastName')?.touched">
+                  Last name is required
+                </div>
+              </div>
+              
+              <div class="col-md-6 mb-3">
+                <label for="email" class="form-label">Email Address <span class="text-danger">*</span></label>
+                <input type="email" class="form-control" id="email" formControlName="email"
+                       [class.is-invalid]="applicantForm.get('email')?.invalid && applicantForm.get('email')?.touched">
+                <div class="invalid-feedback" *ngIf="applicantForm.get('email')?.invalid && applicantForm.get('email')?.touched">
+                  Valid email address is required
+                </div>
+              </div>
+              
+              <div class="col-md-6 mb-3">
+                <label for="phoneNumber" class="form-label">Phone Number <span class="text-danger">*</span></label>
+                <input type="tel" class="form-control" id="phoneNumber" formControlName="phoneNumber"
+                       [class.is-invalid]="applicantForm.get('phoneNumber')?.invalid && applicantForm.get('phoneNumber')?.touched">
+                <div class="invalid-feedback" *ngIf="applicantForm.get('phoneNumber')?.invalid && applicantForm.get('phoneNumber')?.touched">
+                  Phone number is required
+                </div>
+              </div>
+              
+              <div class="col-md-6 mb-3">
+                <label for="gender" class="form-label">Gender <span class="text-danger">*</span></label>
+                <select class="form-select" id="gender" formControlName="gender"
+                        [class.is-invalid]="applicantForm.get('gender')?.invalid && applicantForm.get('gender')?.touched">
+                  <option value="">Select Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+                <div class="invalid-feedback" *ngIf="applicantForm.get('gender')?.invalid && applicantForm.get('gender')?.touched">
+                  Gender is required
+                </div>
+              </div>
+              
+              <div class="col-md-6 mb-3">
+                <label for="birthDate" class="form-label">Date of Birth <span class="text-danger">*</span></label>
+                <input type="date" class="form-control" id="birthDate" formControlName="birthDate"
+                       [class.is-invalid]="applicantForm.get('birthDate')?.invalid && applicantForm.get('birthDate')?.touched">
+                <div class="invalid-feedback" *ngIf="applicantForm.get('birthDate')?.invalid && applicantForm.get('birthDate')?.touched">
+                  Date of birth is required
+                </div>
+              </div>
+              
+              <!-- Address Information -->
+              <div class="col-12 mt-4">
+                <h5 class="text-success mb-3">Address Information</h5>
+              </div>
+              
+              <div class="col-md-4 mb-3">
+                <label for="nationalityId" class="form-label">Nationality <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="nationalityId" formControlName="nationalityId"
+                       [class.is-invalid]="applicantForm.get('nationalityId')?.invalid && applicantForm.get('nationalityId')?.touched">
+                <div class="invalid-feedback" *ngIf="applicantForm.get('nationalityId')?.invalid && applicantForm.get('nationalityId')?.touched">
+                  Nationality is required
+                </div>
+              </div>
+              
+              <div class="col-md-4 mb-3">
+                <label for="zoneId" class="form-label">Zone <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="zoneId" formControlName="zoneId"
+                       [class.is-invalid]="applicantForm.get('zoneId')?.invalid && applicantForm.get('zoneId')?.touched">
+                <div class="invalid-feedback" *ngIf="applicantForm.get('zoneId')?.invalid && applicantForm.get('zoneId')?.touched">
+                  Zone is required
+                </div>
+              </div>
+              
+              <div class="col-md-4 mb-3">
+                <label for="woreda" class="form-label">Woreda <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="woreda" formControlName="woreda"
+                       [class.is-invalid]="applicantForm.get('woreda')?.invalid && applicantForm.get('woreda')?.touched">
+                <div class="invalid-feedback" *ngIf="applicantForm.get('woreda')?.invalid && applicantForm.get('woreda')?.touched">
+                  Woreda is required
+                </div>
+              </div>
+              
+              <!-- Educational Background -->
+              <div class="col-12 mt-4">
+                <h5 class="text-success mb-3">Educational Background</h5>
+              </div>
+              
+              <div class="col-md-6 mb-3">
+                <label for="educationalLevel" class="form-label">Educational Level</label>
+                <select class="form-select" id="educationalLevel" formControlName="educationalLevel">
+                  <option value="">Select Educational Level</option>
+                  <option value="High School">High School</option>
+                  <option value="Diploma">Diploma</option>
+                  <option value="Bachelor">Bachelor's Degree</option>
+                  <option value="Master">Master's Degree</option>
+                  <option value="PhD">PhD</option>
+                </select>
+              </div>
+              
+              <div class="col-md-6 mb-3">
+                <label for="fieldOfStudy" class="form-label">Field of Study</label>
+                <input type="text" class="form-control" id="fieldOfStudy" formControlName="fieldOfStudy" 
+                       placeholder="e.g., Computer Science, Business Administration">
+              </div>
+              
+              <!-- Professional Information -->
+              <div class="col-12 mt-4">
+                <h5 class="text-success mb-3">Professional Information</h5>
+              </div>
+              
+              <div class="col-md-6 mb-3">
+                <label for="workExperience" class="form-label">Work Experience (Years)</label>
+                <input type="number" class="form-control" id="workExperience" formControlName="workExperience" 
+                       min="0" placeholder="0">
+              </div>
+              
+              <div class="col-md-6 mb-3">
+                <label for="skills" class="form-label">Key Skills</label>
+                <input type="text" class="form-control" id="skills" formControlName="skills" 
+                       placeholder="e.g., JavaScript, Project Management, Communication">
+              </div>
+              
+              <!-- Additional Information -->
+              <div class="col-12 mt-4">
+                <h5 class="text-success mb-3">Additional Information</h5>
+              </div>
+              
+              <div class="col-12 mb-3">
+                <label for="coverLetter" class="form-label">Cover Letter</label>
+                <textarea class="form-control" id="coverLetter" formControlName="coverLetter" rows="4" 
+                          placeholder="Tell us why you're interested in this position and what makes you a good fit..."></textarea>
+              </div>
+              
+              <div class="col-md-6 mb-3">
+                <label for="resume" class="form-label">Resume/CV</label>
+                <input type="file" class="form-control" id="resume" accept=".pdf,.doc,.docx" 
+                       (change)="onFileSelected($event, 'resume')">
+                <div class="form-text">Upload your resume in PDF, DOC, or DOCX format</div>
+              </div>
+              
+              <div class="col-md-6 mb-3">
+                <label for="additionalDocuments" class="form-label">Additional Documents</label>
+                <input type="file" class="form-control" id="additionalDocuments" accept=".pdf,.doc,.docx,.jpg,.png" 
+                       (change)="onFileSelected($event, 'additionalDocuments')">
+                <div class="form-text">Upload certificates, portfolios, or other relevant documents</div>
+              </div>
+            </div>
+            
+            <!-- Submit Buttons -->
+            <div class="row mt-5">
+              <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center">
+                  <button type="button" class="btn btn-outline-secondary btn-lg px-4" (click)="goBack()">
+                    <i class="bi bi-arrow-left me-2"></i>Cancel Application
+                  </button>
+                  <button type="submit" class="btn btn-success btn-lg px-5" [disabled]="loading || applicantForm.invalid">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+                    <i *ngIf="!loading" class="bi bi-send me-2"></i>
+                    {{ loading ? 'Submitting Application...' : 'Submit Application' }}
+                  </button>
+                </div>
+                <div class="text-center mt-3">
+                  <small class="text-muted">
+                    <i class="bi bi-shield-check me-1"></i>
+                    Your information is secure and will only be used for this application
+                  </small>
+                </div>
+              </div>
+            </div>
+          </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Footer -->
+  <footer class="text-center py-4 mt-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <p class="text-white mb-0">
+            <i class="bi bi-telephone me-2"></i>
+            <strong>Contact:</strong> +251-116-189275
+          </p>
+        </div>
+        <div class="col-md-6">
+          <p class="text-white mb-0">
+            <i class="bi bi-envelope me-2"></i>
+            <strong>Email:</strong> www.emwa.org.et
+          </p>
+        </div>
+      </div>
+      <hr class="my-3" style="border-color: rgba(255,255,255,0.3);">
+      <p class="text-white-50 mb-0">
+        © {{ currentYear }} Ethiopian Midwives Association. All Rights Reserved.
+      </p>
+    </div>
+  </footer>
+</div>
+
+<!-- Toast Messages -->
+<p-toast></p-toast>

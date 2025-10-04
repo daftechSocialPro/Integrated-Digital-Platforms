@@ -4,6 +4,6 @@ import {ResizableDirective} from './resizable.directive';
 
 @NgModule({
     declarations: [ResizableComponent, ResizableDirective],
-    exports: [ResizableComponent],
+    exports: [ResizableComponent, ResizableDirective],
 })
 export class ResizableModule {}

@@ -59,6 +59,8 @@ import { PlanDashboardComponent } from './pages/project-managment/plans/plan-das
 import { AllTrainingListComponent } from './pages/training/all-training-list/all-training-list.component';
 import { HrmDashboardComponent } from './pages/human-resource/hrm-dashboard/hrm-dashboard.component';
 import { AttendanceReportComponent } from './pages/human-resource/attendance-report/attendance-report.component';
+import { ExternalVacancyApplicationComponent } from './pages/human-resource/vacancy-management/external-vacancy-application/external-vacancy-application.component';
+import { ExternalApplicantFormComponent } from './pages/human-resource/vacancy-management/external-applicant-form/external-applicant-form.component';
 
 
 
@@ -138,6 +140,12 @@ const routes: Routes = [
   { path: 'trainee-form/:trainingId', component: TraineesFormComponent },
   { path: 'trainee/allreport', component: AllTrainingListComponent },
   { path: 'trainee-form/training-report-form/:trainingId', component: TrainingReportFormComponenT },
+  
+  // Public vacancy application routes (no auth required)
+  { path: 'vaccancy/vacancy-form/:vacancyId', component: ExternalVacancyApplicationComponent },
+  { path: 'vaccancy/applicant-form/:vacancyId', component: ExternalApplicantFormComponent },
+  { path: 'vacancy-form/:vacancyId', component: ExternalVacancyApplicationComponent },
+  { path: 'applicant-form/:vacancyId', component: ExternalApplicantFormComponent },
   { path: 'forgetPassword', component: ForgetPasswordComponent },
 
   { path: 'printout', loadChildren: () => import('./pages/print-out/print-out.module').then(m => m.PrintOutModule) },

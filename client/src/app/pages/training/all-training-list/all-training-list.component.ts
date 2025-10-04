@@ -15,12 +15,13 @@ export class AllTrainingListComponent implements OnInit {
   trainees: IAllTraineeReportDto[] = [];
   filterdTraines: IAllTraineeReportDto[] = [];
 
-  trainings: SelectList[];
+  trainings: SelectList[] = [];
   selectedGender:string;
 
   @ViewChild('excelTable', { static: false }) excelTable!: ElementRef;
 
   ngOnInit(): void {
+    console.log('AllTrainingListComponent initialized');
     this.getTrainees();
     this.getTraining();
   }
@@ -34,7 +35,12 @@ export class AllTrainingListComponent implements OnInit {
   getTraining() {
     this.dropDownService.getTrainingDropdown().subscribe({
       next: (res) => {
-        this.trainings = res;
+        this.trainings = res || [];
+        console.log('Trainings loaded:', this.trainings.length);
+      },
+      error: (err) => {
+        console.error('Error loading trainings:', err);
+        this.trainings = [];
       },
     });
   }
@@ -42,10 +48,15 @@ export class AllTrainingListComponent implements OnInit {
   getTrainees() {
     this.trainingService.getAllReportTrainees().subscribe({
       next: (res) => {
-        this.trainees = res;
-        this.filterdTraines = res;
+        this.trainees = res || [];
+        this.filterdTraines = res || [];
+        console.log('Trainees loaded:', this.trainees.length);
       },
-      error: (err) => {},
+      error: (err) => {
+        console.error('Error loading trainees:', err);
+        this.trainees = [];
+        this.filterdTraines = [];
+      },
     });
   }
 
@@ -73,7 +84,7 @@ export class AllTrainingListComponent implements OnInit {
     });
   }
   goToTrainingDashboard() {
-    this.route.navigate(['pm/training-dashboard']);
+    this.route.navigate(['/pm/training-dashboard']);
   }
   exportAsExcel(name: string) {
     const uri = 'data:application/vnd.ms-excel;base64,';
