@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './layouts/header/header.component';
 import { FooterComponent } from './layouts/footer/footer.component';
 import { SidebarComponent } from './layouts/sidebar/sidebar.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { AlertsComponent } from './components/alerts/alerts.component';
 import { AccordionComponent } from './components/accordion/accordion.component';
 import { BadgesComponent } from './components/badges/badges.component';
@@ -285,6 +284,19 @@ import { RequestPaymentComponent } from './pages/users-profile/payment-setlments
 import {SidebarModule} from 'primeng/sidebar';
 import { DataViewModule } from 'primeng/dataview';
 import { GenerateIdCardComponent } from './pages/human-resource/generate-id-card/generate-id-card.component';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { PaginatorModule } from 'primeng/paginator';
+import { RippleModule } from 'primeng/ripple';
+import { NewTaskActivityComponent } from './pages/project-managment/plans/new-task-activity/new-task-activity.component';
+import { EmployeeGuaranteeComponent } from './pages/human-resource/employee-managment/employee-detail/employee-guarantee/employee-guarantee.component';
+import { AddEmployeeGuaranteeComponent } from './pages/human-resource/employee-managment/employee-detail/employee-guarantee/add-employee-guarantee/add-employee-guarantee.component';
+import { DocumentTypeComponent } from './pages/configuration/document-type/document-type.component';
+import { DailyAttendanceReportComponent } from './pages/human-resource/attendance-report/daily-attendance-report/daily-attendance-report.component';
+import { OvertimeAttendanceReportComponent } from './pages/human-resource/attendance-report/overtime-attendance-report/overtime-attendance-report.component';
+import { MonthlyAttendanceReportComponent } from './pages/human-resource/attendance-report/monthly-attendance-report/monthly-attendance-report.component';
+import { AddDocumentTypeComponent } from './pages/configuration/document-type/add-document-type/add-document-type.component';
+import { ExtendContractComponent } from './pages/human-resource/contract-end-employees/extend-contract/extend-contract.component';
 
 @NgModule({
   declarations: [
@@ -292,7 +304,6 @@ import { GenerateIdCardComponent } from './pages/human-resource/generate-id-card
     HeaderComponent,
     FooterComponent,
     SidebarComponent,
-    DashboardComponent,
     AlertsComponent,
     AccordionComponent,
     BadgesComponent,
@@ -371,92 +382,8 @@ import { GenerateIdCardComponent } from './pages/human-resource/generate-id-card
     UpdateEmployeeComponent,
     AddLeaveTypeComponent,
     UpdateLeaveTypeComponent,
-    AddVaccancyDocumentComponent,
-    UserManagementComponent,
-    HrmSettingComponent,
-    AddHrmSettingComponent,
-    UpdateHrmSettingComponent,
-    AddUserComponent,
-    AutocompleteComponent,
-    UpdateRolesComponent,
-    LeaveComponent,
-    RequestLeaveComponent,
-    LeaveRequestsComponent,
-    AddLeaveRequestComponent,
-    LeaveBalanceComponent,
-
-    HolidaySettingComponent,
-    AddHolidayComponent,
-    RequestDetailComponent,
-    CustomConfirmationComponent,
-    ResignationLetterComponent,
-    ResignationRequestComponent,
-    EmployeeTerminationComponent,
-    ViewPdfComponent,
-    ResignationListComponent,
-    TerminateEmployeeComponent,
-    VaccancyPostComponent,
-    VacancyDetailComponent,
-    ApplicantComponent,
-    ApplicantEducationComponent,
-    AddApplicantEducationComponent,
-    ApplicantWorkExperianceComponent,
-    AddApplicantWorkComponent,
-    ApplicantDocumentsComponent,
-    AddApplicantDocumentsComponent,
-
-
-    PerformanceSettingComponent,
-    AddPerformanceSettingComponent,
-    PerformancePlanComponent,
-    AddPerformancePlanComponent,
-    AddPerformanceDetailPlanComponent,
-    EmployeeSupervisorsComponent,
-    AssignSupervisorComponent,
-    PerformanceManagementComponent,
-    HistorySalaryComponent,
-    EmployeeFilesComponent,
-    AddEmployeeFileComponent,
-    UpdateEmployeeFileComponent,
-    EmployeeSuretyComponent,
-    AddEmployeeSuretyComponent,
-    UpdateEmployeeSuretyComponent,
     LeaveSettingComponent,
     AddLeaveSettingComponent,
-    AddEmploymentHistoryComponent,
-    UpdateEmploymentHistoryComponent,
-    EmployeeFamilyComponent,
-    AddEmployeeFamilyComponent,
-    UpdateEmployeeFamilyComponent,
-    VacancyListComponent,
-    AddVacancyComponent,
-    EmployeeEducationComponent,
-    AddEmployeeEducationComponent,
-    UpdateEmployeeEducationComponent,
-    CompanyProfileComponent,
-    ConfigurationComponent,
-    CommonComponent,
-    AddressComponent,
-    CountryComponent,
-    RegionComponent,
-    ZoneComponent,
-    AddCountryComponent,
-    UpdateCountryComponent,
-    AddRegionComponent,
-    UpdateRegionComponent,
-    AddZoneComponent,
-    UpdateZoneComponent,
-    EducationalFieldComponent,
-    EducationalLevelComponent,
-    AddEdcuationalFieldComponent,
-    UpdateEductionalFieldComponent,
-    AddEdcuationalLevelComponent,
-    UpdateEdcuationalLevelComponent,
-    GeneralCodesComponent,
-    LeaveTypeComponent,
-    UpdateEmployeeComponent,
-    AddLeaveTypeComponent,
-    UpdateLeaveTypeComponent,
     AddVaccancyDocumentComponent,
     UserManagementComponent,
     HrmSettingComponent,
@@ -490,7 +417,6 @@ import { GenerateIdCardComponent } from './pages/human-resource/generate-id-card
     AddApplicantWorkComponent,
     ApplicantDocumentsComponent,
     AddApplicantDocumentsComponent,
-
     PerformanceSettingComponent,
     AddPerformanceSettingComponent,
     PerformancePlanComponent,
@@ -523,7 +449,6 @@ import { GenerateIdCardComponent } from './pages/human-resource/generate-id-card
     StrategicPlanComponent,
     AddStrategicPlanComponent,
     UpdateStrategicPlanComponent,
-
     PlansComponent,
     AddPlansComponent,
     CommitteeEmployeeComponent,
@@ -568,7 +493,7 @@ import { GenerateIdCardComponent } from './pages/human-resource/generate-id-card
     AddTrainerComponent,
     TrainerListComponent,
     TraineesFormComponent,
-    TrainingReportFormComponenT ,
+    TrainingReportFormComponenT,
     BenefitListsComponent,
     AddBenefitListComponent,
     EmployeeBenefitsComponent,
@@ -605,24 +530,32 @@ import { GenerateIdCardComponent } from './pages/human-resource/generate-id-card
     UpdateTasksComponent,
     UpdateActivitiesComponent,
     AssignReplacementComponent,
-
     PlanVsAchivmentProjectComponent,
-
     PlanDashboardComponent,
-      AllTrainingListComponent,
-      ChangePasswordComponent,
-      CustomResceduleConfirtamionComponent,
-      HrmDashboardComponent,
-      PaymentSetlmentsComponent,
-      RequestPaymentComponent,
-
-      GenerateIdCardComponent
+    AllTrainingListComponent,
+    ChangePasswordComponent,
+    CustomResceduleConfirtamionComponent,
+    HrmDashboardComponent,
+    PaymentSetlmentsComponent,
+    RequestPaymentComponent,
+    GenerateIdCardComponent,
+    NewTaskActivityComponent,
+    EmployeeGuaranteeComponent,
+    AddEmployeeGuaranteeComponent,
+    DocumentTypeComponent,
+    DailyAttendanceReportComponent,
+    OvertimeAttendanceReportComponent,
+    MonthlyAttendanceReportComponent,
+    AddDocumentTypeComponent,
+    ExtendContractComponent
     //  AddMeasurementComponent,
     //  UpdateMeasurmentComponent
   ],
   imports: [
     SidebarModule,
     BrowserModule,
+    CommonModule,
+    RouterModule,
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
@@ -654,7 +587,9 @@ import { GenerateIdCardComponent } from './pages/human-resource/generate-id-card
     ToolbarModule,
     ResizableModule,
     MultiSelectModule,
-    DataViewModule ,
+    DataViewModule,
+    PaginatorModule,
+    RippleModule,
     ToastrModule.forRoot({
       preventDuplicates: true,
     }),

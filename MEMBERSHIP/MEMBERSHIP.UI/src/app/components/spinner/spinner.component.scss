@@ -20,11 +20,13 @@
 
 .page-overlay-wrapper {
   position: fixed;
-  width: 100%;
+  width: calc(100% - 260px); /* Exclude sidebar width (expanded) */
   height: 100%;
   top: 0;
+  left: 260px; /* Start after sidebar (expanded) */
   z-index: 99999 !important;
   background: rgba(20, 72, 93, 0.35);
+  transition: all 0.3s ease-in-out; /* Match sidebar transition */
 
   .bee-spinner {
     width: 20%;
@@ -48,8 +50,9 @@
     
     position: fixed;
     top: 40%;
-    left: calc(50% );
+    left: calc(50% + 130px); /* Center in main content area (sidebar width / 2) */
     z-index: 99998 !important;
+    transition: all 0.3s ease-in-out; /* Match sidebar transition */
  
     
 }
@@ -87,4 +90,14 @@
     top: 24px;
     height: 32px;
   }
+}
+
+/* Handle collapsed sidebar state */
+:host-context(.navbar-collapsed) .page-overlay-wrapper {
+  width: calc(100% - 80px); /* Exclude collapsed sidebar width */
+  left: 80px; /* Start after collapsed sidebar */
+}
+
+:host-context(.navbar-collapsed) .lds-facebook {
+  left: calc(50% + 40px); /* Center in main content area (collapsed sidebar width / 2) */
 }

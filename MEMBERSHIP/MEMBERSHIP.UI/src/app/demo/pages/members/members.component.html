@@ -33,9 +33,7 @@
                     <button class="btn btn-sm btn-warning me-2" (click)="reset()"><i class="ti ti-refresh"></i>
                         Reset</button>
                     <span class="fw-bold" style="font-size: 18px; color:#8c69c8;">
-                        {{ (Members && filterdMembers) && Members.length==filterdMembers.length ? 'Total' : 'Filtered'
-                        }}
-                        Members: {{ filterdMembers?.length }}
+                        Total Members: {{ totalRecords }}
                     </span>
                 </div>
             </div>
@@ -120,7 +118,7 @@
 
                     <div class="col-3">
                         <div class="form-floating">
-                            <input type="date" class="form-control" [(ngModel)]="toDate" (input)="applyFilter2()">
+                            <input type="date" class="form-control" [(ngModel)]="toDate" (input)="applyFilter()">
                             <label>To Date</label>
                         </div>
                     </div>
@@ -140,7 +138,7 @@
                     </div>
 
                     <div class="col text-end d-flex justify-content-between align-items-center">
-                        <button class="btn btn-primary" (click)="applyFilter2()"><i class="ti ti-search"></i>
+                        <button class="btn btn-primary" (click)="applyFilter()"><i class="ti ti-search"></i>
                             Search</button>
                         <button class="btn btn-outline-success" (click)="exportAsExcel('membershipReport')">
                             <i class="bi bi-file-excel"></i> Export Excel
@@ -165,8 +163,8 @@
 
 
 
-        <div class="table-responsive">
-            <table #excelTable class="custom-table mt-4">
+        <div class="table-responsive mt-4">
+            <table #excelTable class="custom-table table table-striped table-bordered">
                 <thead>
                     <tr>
 
@@ -187,7 +185,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let item of paginatedMembers ;let i = index">
+                    <tr *ngFor="let item of Members ;let i = index">
 
                         <td> <img style="height: 40px;width: 40px;border-radius: 50%;margin-right: 10px;"
                                 [src]="getImagePath(item.imagePath)" />{{item.fullName}}</td>
@@ -220,15 +218,11 @@
                     </tr>
                 </tbody>
             </table>
-            <div class="card flex justify-content-center">
-                <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows"
-                    [totalRecords]="Members&&Members.length" [rowsPerPageOptions]="[5, 10, 15]"></p-paginator>
-            </div>
-
         </div>
-
-
-
+        <div class="card flex justify-content-center">
+            <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows"
+                [totalRecords]="totalRecords" [rowsPerPageOptions]="[5, 10, 15]"></p-paginator>
+        </div>
 
     </div>
 

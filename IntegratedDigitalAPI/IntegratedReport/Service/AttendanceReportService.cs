@@ -2,16 +2,14 @@
 using IntegratedInfrustructure.Data;
 using IntegratedReport.DataSet;
 using IntegratedReport.Interface;
-using Microsoft.CodeAnalysis.Operations;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Reporting.NETCore;
+using Microsoft.Reporting.WebForms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static IntegratedInfrustructure.Data.EnumList;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace IntegratedReport.Service
 {
@@ -77,7 +75,7 @@ namespace IntegratedReport.Service
             var reportPath = currentDirectory + "\\Reports\\HRM\\DailyOvertimeReport.rdlc";
             ReportParameter parameter = new ReportParameter("AttendanceDate", attendanceDate.ToString("dd/MM/yyyy"));
 
-            var localReport = new Microsoft.Reporting.NETCore.LocalReport();
+                var localReport = new LocalReport();
             localReport.ReportPath = reportPath;
             ReportDataSource daata = new ReportDataSource();
             daata.Name = "Overtime";
@@ -135,7 +133,7 @@ namespace IntegratedReport.Service
             var reportPath = currentDirectory + "\\Reports\\HRM\\MonthlyAttendance.rdlc";
             ReportParameter parameter = new ReportParameter("AttendanceDate", attendanceDate.ToString("MMMM, yyyy"));
 
-            var localReport = new Microsoft.Reporting.NETCore.LocalReport();
+                var localReport = new LocalReport();
             localReport.ReportPath = reportPath;
             ReportDataSource daata = new ReportDataSource();
             daata.Name = "Monthly";

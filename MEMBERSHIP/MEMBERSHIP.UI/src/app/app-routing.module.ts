@@ -4,7 +4,6 @@ import { AdminComponent } from './theme/layout/admin/admin.component';
 import { GuestComponent } from './theme/layout/guest/guest.component';
 import { AuthGuard } from './auth/auth.guard';
 import { MembersDashboardComponent } from './demo/pages/members/members-dashboard/members-dashboard.component';
-import AdminDashbordComponent from './demo/admin-dashbord/admin-dashbord.component';
 import { OnConstructionComponent } from './demo/on-construction/on-construction.component';
 import { BoardMemberDashbaordComponent } from './demo/board-member-dashbaord/board-member-dashbaord.component';
 
@@ -22,7 +21,7 @@ const routes: Routes = [
 
       {
         path: 'admin-dashboard',
-        component: AdminDashbordComponent
+        loadComponent: () => import('./demo/admin-dashbord/dashboard-content.component').then(m => m.DashboardContentComponent)
       },
       {
         path: 'member-dashboard',

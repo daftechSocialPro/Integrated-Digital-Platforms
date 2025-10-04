@@ -212,7 +212,7 @@
                             aria-expanded="false" aria-controls="collapseSeven"> Employee Guarantee</button></h2>
                     <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingThree"
                         data-bs-parent="#accordionExample">
-                        <app-employee-guarantee [employeeId]="employee.id" [employmentStatus] = "employee.employmentStatus" [fullName]="fullName"/>
+                        <app-employee-guarantee [employeeId]="employee.id" [employmentStatus] = "employee.employmentStatus" [fullName]="employee.employeeName"/>
                     </div>
                 </div>
             </div>

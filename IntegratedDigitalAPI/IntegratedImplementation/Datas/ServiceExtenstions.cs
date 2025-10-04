@@ -29,6 +29,8 @@ using IntegratedImplementation.Services.PM;
 using IntegratedImplementation.Services.Training;
 using IntegratedImplementation.Services.Vacancy;
 using Microsoft.Extensions.DependencyInjection;
+using IntegratedReport.Interface;
+using IntegratedReport.Service;
 
 namespace IntegratedImplementation.Datas
 {
@@ -59,6 +61,7 @@ namespace IntegratedImplementation.Datas
             services.AddScoped<IEmployeeAttendanceService, EmployeeAttendanceService>();
             services.AddScoped<IHrmDashboardService, HrmDashboardService>();
             services.AddScoped<IEmployeeSeveranceService, EmployeeSeveranceService>();
+            services.AddScoped<IAttendanceReportService, AttendanceReportService>();
             #endregion
 
             #region Vacancy

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "WpbxpOxv1pshhtkwlpxkxALOi/q3Bcxjr+aSM7p+6cI=",
+  "Hash": "phXwfXK/udJmL5uwWelakN82f2xxgi+bBRCESEvo9tk=",
   "Source": "MembershipAPI",
   "BasePath": "_content/MembershipAPI",
   "Mode": "Default",
@@ -2140,6 +2140,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/Member/Abiy  Tesfu  Gebre.jpg"
+    },
+    {
+      "Identity": "/Users/oza/Developer/Personal/DAF Computer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipAPI/wwwroot/Member/Abraham  Degu Mulu.jpg",
+      "SourceId": "MembershipAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/oza/Developer/Personal/DAF Computer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipAPI/wwwroot/",
+      "BasePath": "_content/MembershipAPI",
+      "RelativePath": "Member/Abraham  Degu Mulu.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/Member/Abraham  Degu Mulu.jpg"
     },
     {
       "Identity": "/Users/oza/Developer/Personal/DAF Computer/Integrated-Digital-Platforms/MEMBERSHIP/MEMBERSHIP.API/MembershipAPI/wwwroot/Member/Bevis Ochoa.png",

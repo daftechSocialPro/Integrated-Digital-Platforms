@@ -5,6 +5,7 @@ import { ResponseMessage, ResponseMessage2 } from 'src/models/ResponseMessage.Mo
 import { IMemberUpdateDto, IMembersGetDto, IMembersPostDto, MoodleUpdateDto } from 'src/models/auth/membersDto';
 import { IRegionRevenueDto } from 'src/models/configuration/IMembershipDto';
 import { IMakePayment, IPaymentData } from 'src/models/payment/IPaymentDto';
+import { PaginationRequest, PaginatedResponse } from 'src/models/pagination.model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,10 @@ export class MemberService {
 
   getMembers() {
     return this.http.get<IMembersGetDto[]>(this.BaseURI + `/Member/GetMmebers`);
+  }
+
+  getMembersPaginated(request: PaginationRequest) {
+    return this.http.post<PaginatedResponse<IMembersGetDto>>(this.BaseURI + `/Member/GetMembersPaginated`, request);
   }
   getSingleMember(memberId: string) {
     return this.http.get<IMembersGetDto>(this.BaseURI + `/Member/GetSingleMember?memberId=${memberId}`);

@@ -319,6 +319,221 @@ namespace MembershipImplementation.Services.HRM
             }).ToList();
         }
 
+        public async Task<PaginatedResponseDto<MembersGetDto>> GetMembersPaginated(PaginationRequestDto request)
+        {
+            var encryption = "2B7E151628AED2A6ABF7158809CF4F3C";
+
+            // Build the base query with filters
+            var baseQuery = _dbContext.Members
+                .AsNoTracking()
+                .Select(m => new
+                {
+                    m.Id,
+                    m.FullName,
+                    m.PhoneNumber,
+                    m.RegionId,
+                    m.ImagePath,
+                    m.Email,
+                    m.Zone,
+                    RegionName = m.Region.RegionName,
+                    m.Woreda,
+                    m.Inistitute,
+                    m.InstituteRole,
+                    m.MembershipTypeId,
+                    MembershipTypeName = m.MembershipType.Name,
+                    m.MemberId,
+                    m.Gender,
+                    m.EducationalField,
+                    m.BirthDate,
+                    EducationalLevelName = m.EducationalLevel.EducationalLevelName,
+                    m.EducationalLevelId,
+                    m.IdCardStatus,
+                    m.RejectedRemark,
+                    MembershipCategory = m.MembershipType.MembershipCategory,
+                    m.MoodleId,
+                    m.MoodlePassword,
+                    m.MoodleUserName,
+                    m.MoodleStatus,
+                    m.CreatedDate
+                });
+
+            // Apply filters
+            if (!string.IsNullOrEmpty(request.SearchTerm))
+            {
+                var searchTerm = request.SearchTerm.ToLower();
+                baseQuery = baseQuery.Where(m => 
+                    m.FullName.ToLower().Contains(searchTerm) ||
+                    m.PhoneNumber.Contains(searchTerm) ||
+                    m.MemberId.ToLower().Contains(searchTerm) ||
+                    m.Email.ToLower().Contains(searchTerm));
+            }
+
+            if (!string.IsNullOrEmpty(request.RegionId))
+            {
+                baseQuery = baseQuery.Where(m => m.RegionId.ToString() == request.RegionId);
+            }
+
+            if (!string.IsNullOrEmpty(request.Gender))
+            {
+                baseQuery = baseQuery.Where(m => m.Gender.ToString() == request.Gender);
+            }
+
+            if (!string.IsNullOrEmpty(request.MembershipTypeId))
+            {
+                baseQuery = baseQuery.Where(m => m.MembershipTypeId.ToString() == request.MembershipTypeId);
+            }
+
+            if (request.FromDate.HasValue)
+            {
+                baseQuery = baseQuery.Where(m => m.CreatedDate >= request.FromDate.Value);
+            }
+
+            if (request.ToDate.HasValue)
+            {
+                baseQuery = baseQuery.Where(m => m.CreatedDate <= request.ToDate.Value);
+            }
+
+            // Apply sorting
+            if (!string.IsNullOrEmpty(request.SortBy))
+            {
+                switch (request.SortBy.ToLower())
+                {
+                    case "fullname":
+                        baseQuery = request.SortDirection?.ToLower() == "desc" 
+                            ? baseQuery.OrderByDescending(m => m.FullName)
+                            : baseQuery.OrderBy(m => m.FullName);
+                        break;
+                    case "createddate":
+                        baseQuery = request.SortDirection?.ToLower() == "desc" 
+                            ? baseQuery.OrderByDescending(m => m.CreatedDate)
+                            : baseQuery.OrderBy(m => m.CreatedDate);
+                        break;
+                    case "memberid":
+                        baseQuery = request.SortDirection?.ToLower() == "desc" 
+                            ? baseQuery.OrderByDescending(m => m.MemberId)
+                            : baseQuery.OrderBy(m => m.MemberId);
+                        break;
+                    default:
+                        baseQuery = baseQuery.OrderBy(m => m.FullName);
+                        break;
+                }
+            }
+            else
+            {
+                baseQuery = baseQuery.OrderBy(m => m.FullName);
+            }
+
+            // Get total count for pagination
+            var totalCount = await baseQuery.CountAsync();
+
+            // Apply pagination
+            var members = await baseQuery
+                .Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize)
+                .ToListAsync();
+
+            // Get member IDs for payment lookup
+            var memberIds = members.Select(m => m.Id).ToList();
+
+            // Fetch payments for the paginated members only
+            var memberPayments = await _dbContext.MemberPayments
+                .AsNoTracking()
+                .Where(p => memberIds.Contains(p.MemberId))
+                .GroupBy(p => p.MemberId)
+                .Select(g => new
+                {
+                    MemberId = g.Key,
+                    Payments = g.OrderByDescending(p => p.LastPaid)
+                        .Select(p => new
+                        {
+                            p.Payment,
+                            p.Text_Rn,
+                            p.ExpiredDate,
+                            p.PaymentStatus,
+                            p.LastPaid,
+                            p.ReceiptImagePath
+                        })
+                        .ToList()
+                })
+                .ToDictionaryAsync(x => x.MemberId);
+
+            // Apply payment status filter if specified
+            var filteredMembers = members.Where(m =>
+            {
+                if (string.IsNullOrEmpty(request.PaymentStatus))
+                    return true;
+
+                memberPayments.TryGetValue(m.Id, out var memberPayment);
+                var latestPayment = memberPayment?.Payments?.FirstOrDefault();
+                var paymentStatus = latestPayment?.PaymentStatus.ToString() ?? PaymentStatus.PENDING.ToString();
+                
+                return paymentStatus == request.PaymentStatus;
+            }).ToList();
+
+            // Update total count if payment status filter was applied
+            if (!string.IsNullOrEmpty(request.PaymentStatus))
+            {
+                totalCount = filteredMembers.Count;
+            }
+
+            // Combine the data
+            var result = filteredMembers.Select(m =>
+            {
+                memberPayments.TryGetValue(m.Id, out var memberPayment);
+                var payments = memberPayment?.Payments;
+                var latestPayment = payments?.FirstOrDefault();
+                var secondLatestPayment = payments?.Skip(1).FirstOrDefault();
+                var paymentCount = payments?.Count ?? 0;
+                var memberStatus = DetermineMemberStatus(paymentCount, latestPayment?.PaymentStatus, secondLatestPayment?.PaymentStatus);
+
+                return new MembersGetDto
+                {
+                    Id = m.Id.ToString(),
+                    FullName = m.FullName,
+                    PhoneNumber = m.PhoneNumber,
+                    RegionId = m.RegionId.ToString(),
+                    ImagePath = m.ImagePath,
+                    Email = m.Email,
+                    Zone = m.Zone,
+                    Region = m.RegionName,
+                    Woreda = m.Woreda,
+                    Inistitute = m.Inistitute,
+                    InstituteRole = m.InstituteRole,
+                    MembershipTypeId = m.MembershipTypeId.ToString(),
+                    MembershipType = m.MembershipTypeName,
+                    MemberId = m.MemberId,
+                    Gender = m.Gender.ToString(),
+                    Amount = latestPayment?.Payment ?? 0.0,
+                    Text_Rn = latestPayment?.Text_Rn ?? "",
+                    ReceiptImage = latestPayment?.ReceiptImagePath ?? "",
+                    ExpiredDate = latestPayment?.ExpiredDate ?? DateTime.Now,
+                    EducationalField = m.EducationalField,
+                    BirthDate = m.BirthDate,
+                    EducationalLevel = m.EducationalLevelName,
+                    EducationalLevelId = m.EducationalLevelId.ToString(),
+                    IdCardStatus = m.IdCardStatus.ToString(),
+                    PaymentStatus = latestPayment?.PaymentStatus.ToString() ?? PaymentStatus.PENDING.ToString(),
+                    RejectedRemark = m.RejectedRemark,
+                    LastPaid = latestPayment?.LastPaid ?? DateTime.Now,
+                    MembershipCategory = m.MembershipCategory.ToString(),
+                    MoodleId = m.MoodleId,
+                    MoodlePassword = m.MoodlePassword != null ? _generalConfig.Decrypt(m.MoodlePassword, encryption) : "",
+                    MoodleName = m.MoodleUserName,
+                    MoodleStatus = m.MoodleStatus.ToString(),
+                    createdByDate = m.CreatedDate,
+                    MemberStatus = memberStatus
+                };
+            }).ToList();
+
+            return new PaginatedResponseDto<MembersGetDto>
+            {
+                Data = result,
+                TotalCount = totalCount,
+                PageNumber = request.PageNumber,
+                PageSize = request.PageSize
+            };
+        }
+
         // Helper method to determine member status
         private string DetermineMemberStatus(int paymentCount, PaymentStatus? latestPaymentStatus, PaymentStatus? secondLatestPaymentStatus)
         {
@@ -1252,40 +1467,66 @@ namespace MembershipImplementation.Services.HRM
 
         public async Task<List<MemberRegionRevenueReportDto>> GetRegionRevenueReport()
         {
-            var chapters = await _dbContext.Regions.Where(x => x.CountryType == CountryType.ETHIOPIAN).ToListAsync();
-
-            var memberPayments = await _dbContext.MemberPayments.Include(x => x.Member).Include(x => x.MembershipType).Include(x => x.Member).ThenInclude(x => x.Region).Where(x => x.Member.RegionId != null && x.PaymentStatus == PaymentStatus.PAID).ToListAsync();
-            var memberPaymentsForeigns = await _dbContext.MemberPayments.Include(x => x.Member).Include(x => x.MembershipType).Where(x => x.Member.RegionId == null && x.PaymentStatus == PaymentStatus.PAID).ToListAsync();
+            // Optimized query using database aggregation instead of loading all data into memory
+            var chapters = await _dbContext.Regions
+                .Where(x => x.CountryType == CountryType.ETHIOPIAN)
+                .AsNoTracking()
+                .ToListAsync();
 
             var membersReports = new List<MemberRegionRevenueReportDto>();
 
+            // Process each region with optimized queries
             foreach (var chapter in chapters)
             {
+                // Get revenue for this region using database aggregation
+                var regionRevenue = await _dbContext.MemberPayments
+                    .AsNoTracking()
+                    .Where(x => x.Member.RegionId == chapter.Id && x.PaymentStatus == PaymentStatus.PAID)
+                    .Join(_dbContext.MembershipTypes,
+                        mp => mp.MembershipTypeId,
+                        mt => mt.Id,
+                        (mp, mt) => new { mp, mt })
+                    .Select(x => x.mt.Money * (x.mt.Currency == Currency.ETB ? 1 : 54))
+                    .SumAsync();
 
+                // Get member count for this region
+                var memberCount = await _dbContext.Members
+                    .AsNoTracking()
+                    .CountAsync(x => x.RegionId == chapter.Id);
 
                 var memberReport = new MemberRegionRevenueReportDto
                 {
                     RegionName = chapter.RegionName,
-                    RegionRevenue = memberPayments
-    .Where(x => x.Member?.RegionId == chapter.Id)
-    .Sum(x => x.MembershipType.Money * (x.MembershipType.Currency == Currency.ETB ? 1 : 54)),
-                    Members = _dbContext.Members.Count(x => x.RegionId == chapter.Id),
-
+                    RegionRevenue = regionRevenue,
+                    Members = memberCount
                 };
 
                 membersReports.Add(memberReport);
-
             }
-            var memberReport2 = new MemberRegionRevenueReportDto
+
+            // Handle foreign members separately with optimized query
+            var foreignRevenue = await _dbContext.MemberPayments
+                .AsNoTracking()
+                .Where(x => (x.Member.RegionId == null || x.Member.RegionId == Guid.Empty) && x.PaymentStatus == PaymentStatus.PAID)
+                .Join(_dbContext.MembershipTypes,
+                    mp => mp.MembershipTypeId,
+                    mt => mt.Id,
+                    (mp, mt) => new { mp, mt })
+                .Select(x => x.mt.Money * (x.mt.Currency == Currency.ETB ? 1 : 54))
+                .SumAsync();
+
+            var foreignMemberCount = await _dbContext.Members
+                .AsNoTracking()
+                .CountAsync(x => x.RegionId == Guid.Empty || x.RegionId == null);
+
+            var foreignReport = new MemberRegionRevenueReportDto
             {
                 RegionName = CountryType.FOREIGN.ToString(),
-                RegionRevenue = memberPaymentsForeigns
-    .Where(x => x.MembershipTypeId != null)
-    .Sum(x => x.MembershipType.Money * (x.MembershipType.Currency == Currency.ETB ? 1 : 54))
-,
-                Members = _dbContext.Members.Count(x => x.RegionId == Guid.Empty || x.RegionId == null),
+                RegionRevenue = foreignRevenue,
+                Members = foreignMemberCount
             };
-            membersReports.Add(memberReport2);
+
+            membersReports.Add(foreignReport);
             return membersReports;
         }
 

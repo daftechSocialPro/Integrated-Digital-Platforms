@@ -2,6 +2,7 @@
 using MembershipImplementation.DTOS.Configuration;
 using MembershipImplementation.DTOS.HRM;
 using MembershipImplementation.DTOS.Payment;
+using MembershipImplementation.DTOS.Users;
 using MembershipInfrustructure.Model.Users;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +22,7 @@ namespace MembershipImplementation.Interfaces.HRM
         Task<ResponseMessage> UpdateTextReference(string oldTextRn, string newTextRn);
 
         Task<List<MembersGetDto>> GetMembers();
+        Task<PaginatedResponseDto<MembersGetDto>> GetMembersPaginated(PaginationRequestDto request);
         Task<MembersGetDto> GetSingleMember(Guid MemberId);
         Task<MemberPayment> GetSingleMemberPayment(Guid MemberId);
         Task<ResponseMessage> CompleteProfile(CompleteProfileDto Profile);

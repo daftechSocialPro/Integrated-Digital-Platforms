@@ -11,6 +11,7 @@ import { UserService } from 'src/app/services/user.service';
 import { UserView } from 'src/models/auth/userDto';
 import { DropDownService } from 'src/app/services/dropDown.service';
 import { SelectList } from 'src/models/ResponseMessage.Model';
+import { PaginationRequest, PaginatedResponse } from 'src/models/pagination.model';
 
 @Component({
   selector: 'app-members',
@@ -20,27 +21,27 @@ import { SelectList } from 'src/models/ResponseMessage.Model';
 export class MembersComponent implements OnInit {
   first: number = 0;
   rows: number = 10;
+  totalRecords: number = 0;
   chapters: SelectList[];
   Members: IMembersGetDto[] = [];
   memberships: SelectList[];
-  filterdMembers: IMembersGetDto[];
-  paginatedMembers: IMembersGetDto[] = [];
   searchTerm: string = '';
   selectedFile: File | null = null;
   user: UserView;
+  loading: boolean = false;
 
   selectedChapter: string = '';
   selectedGender: string = '';
   selectedStatus: string = '';
   fromDate: string;
   toDate: string;
-  selectedMembership: String = '';
+  selectedMembership: string = '';
   memberType: string = '';
 
   @ViewChild('excelTable', { static: false }) excelTable!: ElementRef;
 
   ngOnInit(): void {
-    this.getMemberss();
+    this.loadMembers();
     this.user = this.userService.getCurrentUser();
   }
 
@@ -54,52 +55,62 @@ export class MembersComponent implements OnInit {
     private dropDownService: DropDownService
   ) {}
 
-  getMemberss() {
-    this.controlService.getMembers().subscribe({
-      next: (res) => {
-        if (this.user.role.includes('SuperAdmin')) {
-          this.Members = res;
-        } else if (this.user.role.includes('RegionAdmin')) {
-          this.Members = res.filter((item) => item.regionId == this.user.region);
-        }
+  loadMembers() {
+    this.loading = true;
+    const request: PaginationRequest = {
+      pageNumber: Math.floor(this.first / this.rows) + 1,
+      pageSize: this.rows,
+      searchTerm: this.searchTerm || undefined,
+      regionId: this.selectedChapter || undefined,
+      gender: this.selectedGender || undefined,
+      paymentStatus: this.selectedStatus || undefined,
+      membershipTypeId: this.selectedMembership || undefined,
+      fromDate: this.fromDate ? new Date(this.fromDate) : undefined,
+      toDate: this.toDate ? new Date(this.toDate) : undefined,
+      sortBy: 'fullname',
+      sortDirection: 'asc'
+    };
 
-        this.filterdMembers = this.Members;
-        this.paginateMembers();
+    // Apply user role filtering
+    if (this.user && this.user.role.includes('RegionAdmin')) {
+      request.regionId = this.user.region;
+    }
+
+    this.controlService.getMembersPaginated(request).subscribe({
+      next: (response: PaginatedResponse<IMembersGetDto>) => {
+        this.Members = response.data;
+        this.totalRecords = response.totalCount;
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('Error loading members:', error);
+        this.loading = false;
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Failed to load members'
+        });
       }
     });
+  }
+
+  getMemberss() {
+    this.loadMembers();
   }
 
   onPageChange(event: any) {
     this.first = event.first;
     this.rows = event.rows;
-    this.paginateMembers();
+    this.loadMembers();
   }
 
   getImagePath(url: string) {
     return this.commonService.createImgPath(url);
   }
 
-  paginateMembers() {
-    this.paginatedMembers = this.filterdMembers.slice(this.first, this.first + this.rows);
-  }
-
   applyFilter() {
-    const searchTerm = this.searchTerm.toLowerCase();
-
-    this.paginatedMembers = this.filterdMembers.filter((item) => {
-      return (
-        item.fullName.toLowerCase().includes(searchTerm) ||
-        item.phoneNumber.toLowerCase().includes(searchTerm) ||
-        (item.memberId && item.memberId.toLocaleLowerCase().includes(searchTerm)) ||
-        item.membershipType.toLowerCase().includes(searchTerm) ||
-        (item.region && item.region.toLowerCase().includes(searchTerm)) ||
-        item.inistitute.toLowerCase().includes(searchTerm) ||
-        (item.instituteRole && item.instituteRole.toLowerCase().includes(searchTerm)) ||
-        (item.gender && item.gender.toLowerCase().includes(searchTerm)) ||
-        item.paymentStatus.toLowerCase().includes(searchTerm) ||
-        item.expiredDate.toString().includes(searchTerm)
-      );
-    });
+    this.first = 0; // Reset to first page when filtering
+    this.loadMembers();
   }
 
   goToDetail(member: IMembersGetDto) {
@@ -178,7 +189,15 @@ export class MembersComponent implements OnInit {
   }
 
   reset() {
-    this.filterdMembers = this.Members;
+    this.searchTerm = '';
+    this.selectedChapter = '';
+    this.selectedGender = '';
+    this.selectedStatus = '';
+    this.selectedMembership = '';
+    this.fromDate = '';
+    this.toDate = '';
+    this.first = 0;
+    this.loadMembers();
   }
   getRegions(countryType: string) {
     this.getChapter(countryType);
@@ -202,53 +221,6 @@ export class MembersComponent implements OnInit {
         this.memberships = res;
       }
     });
-  }
-
-  applyFilter2() {
-    this.filterdMembers = this.Members;
-    if (this.selectedChapter !== '') {
-      const chapterSearchTerm = this.selectedChapter.toLowerCase();
-      this.filterdMembers = this.Members.filter((item) => {
-        return item.region && item.region.toLowerCase().includes(chapterSearchTerm);
-      });
-    }
-
-    if (this.selectedGender !== '') {
-      const genderSearchTerm = this.selectedGender.toLowerCase();
-      this.filterdMembers = this.filterdMembers.filter((item) => {
-        return item.gender && item.gender.toLowerCase() == genderSearchTerm;
-      });
-    }
-
-    if (this.selectedStatus !== '') {
-      const statusSearchTerm = this.selectedStatus.toLowerCase();
-      this.filterdMembers = this.filterdMembers.filter((item) => {
-        return item.paymentStatus.toLowerCase().includes(statusSearchTerm);
-      });
-    }
-
-    if (this.selectedMembership !== '') {
-      const statusSearchTerm = this.selectedMembership.toLowerCase();
-      this.filterdMembers = this.filterdMembers.filter((item) => {
-        return item.membershipTypeId.toLowerCase() === statusSearchTerm;
-      });
-    }
-
-    if (this.fromDate !== '' && this.toDate != '') {
-      const statusSearchTerm = this.selectedStatus.toLowerCase();
-      this.filterdMembers = this.filterdMembers.filter((item) => {
-        return item.paymentStatus.toLowerCase().includes(statusSearchTerm);
-      });
-    }
-
-    if (this.memberType != '') {
-      const memberTypeSearchTerm = this.memberType.toLowerCase();
-      this.filterdMembers = this.filterdMembers.filter((item) => {
-        return item.memberStatus.toLowerCase().includes(memberTypeSearchTerm);
-      });
-    }
-
-    this.paginateMembers();
   }
 
   exportAsExcel(name: string) {

@@ -22,28 +22,30 @@ export class TotalRevenueComponent implements OnInit {
   userView : UserView
 
   ngOnInit(): void {
-    this.getRevenueReport()
-
-    this.userView = this.userService.getCurrentUser()
-
+    this.userView = this.userService.getCurrentUser();
+    this.getRevenueReport();
   }
-  constructor(private memberService: MemberService,private userService : UserService) { }
+  
+  constructor(private memberService: MemberService, private userService: UserService) { }
 
 
   getRevenueReport() {
-
     this.memberService.GetRegionReportRevenue().subscribe({
       next: (res) => {
-        this.reportRevenues = res
+        this.reportRevenues = res;
+        this.regionRevenueSum = 0; // Reset sum
 
-        if (this.userView.regionId!=''){
-          this.reportRevenues = this.reportRevenues.filter((item)=> {return (item.regionName == this.userView.regionId)})
+        // Apply region filtering if user is RegionAdmin
+        if (this.userView && this.userView.regionId && this.userView.regionId !== '') {
+          this.reportRevenues = this.reportRevenues.filter((item) => {
+            return item.regionName === this.userView.regionId;
+          });
         }
-        this.reportRevenues.map((item) => {
-        
-          this.regionRevenueSum += item.regionRevenue
-        }
-        )
+
+        // Calculate total revenue
+        this.reportRevenues.forEach((item) => {
+          this.regionRevenueSum += item.regionRevenue;
+        });
         this.chartOption = {
           color: ['#3398DB'], // Set a custom color for the bars
           grid: {
@@ -99,11 +101,12 @@ export class TotalRevenueComponent implements OnInit {
           ]
         };
 
-        
-        
-    
+      },
+      error: (error) => {
+        console.error('Error loading revenue report:', error);
+        // Handle error appropriately
       }
-    })
+    });
   }
 
 

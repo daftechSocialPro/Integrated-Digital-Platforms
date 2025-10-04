@@ -593,7 +593,6 @@ $RECYCLE.BIN/
 /IntegratedDigitalAPI/IntegratedDigitalAPI/obj
 /IntegratedDigitalAPI/IntegratedImplementation/bin
 /IntegratedDigitalAPI/IntegratedImplementation/obj
-<<<<<<< HEAD
 
 # Membership API specific
 /MEMBERSHIP/MEMBERSHIP.API/.vs/
@@ -775,13 +774,3 @@ packages/
 # System files
 /client/.DS_Store
 /client/Thumbs.db
-=======
-*.json
-*.json
-*.dll
-*.nupkg
-*.p7s
-*.csproj
-*.sln
-*.csproj
->>>>>>> cc5d2cb7873edf4316fc9b9917866ee9af97cc12

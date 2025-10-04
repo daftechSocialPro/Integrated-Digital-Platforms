@@ -29,7 +29,8 @@
             <button class="btn btn-outline-success text-end" (click)="exportAsExcel('membershipReport')"><i
                 class="bi bi-file-excel"></i> Export Excel </button>
                 </div>
-        <table #excelTable class="custom-table mt-4">
+        <div class="table-responsive mt-4">
+            <table #excelTable class="custom-table table table-striped table-bordered">
             <thead>
                 <tr>
                     <th style="border: 1px solid black;">Chapter</th>
@@ -50,6 +51,7 @@
                     <td style="border: 1px solid black;"><b>{{regionRevenueSum}}</b></td>
                 </tr>
             </tbody>
-        </table>
+            </table>
+        </div>
     </div>
 </div>
