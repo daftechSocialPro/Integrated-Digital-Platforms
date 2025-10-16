@@ -27,6 +27,7 @@
                             <th >Ending Amount</th>
                             <th >Percent</th>
                             <th >Deductable</th>
+                            <th >Withholding (%)</th>
                             <th >End Date</th>
                             <th >Is Active</th>
                             <th >Action</th>                          
@@ -39,6 +40,7 @@
                             <td>{{ incomeTax.endingAmount}}</td>
                             <td>{{ incomeTax.percent}}</td>
                             <td>{{ incomeTax.deductable}}</td>
+                            <td>{{ incomeTax.withholding}}%</td>
                             <td>{{ incomeTax.endDate | date:'yyyy-MM-dd'}}</td>
                             <td><i class="pi" [ngClass]="{ 'text-green-500 pi-check-circle': 
                                 incomeTax.isActive, 'text-red-500 pi-times-circle': !incomeTax.isActive }"></i></td>

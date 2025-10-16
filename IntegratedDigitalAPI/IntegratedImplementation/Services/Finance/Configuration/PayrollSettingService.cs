@@ -90,6 +90,7 @@ namespace IntegratedImplementation.Services.Finance.Configuration
                                           Id = y.Id.ToString(),
                                           EndDate = y.EndDate.Date,
                                           Deductable = y.Deductable,
+                                          Withholding = y.Withholding,
                                           StartingAmount = y.StartingAmount,
                                           EndingAmount = y.EndingAmount,
                                           Percent = y.Percent,
@@ -118,6 +119,7 @@ namespace IntegratedImplementation.Services.Finance.Configuration
                 EndDate = addIncomeTax.EndDate,
                 CreatedById = addIncomeTax.CreatedById,
                 Deductable = addIncomeTax.Deductable,
+                Withholding = addIncomeTax.Withholding,
                 EndingAmount = addIncomeTax.EndingAmount,
                 CreatedDate = DateTime.Now,
                 Percent = addIncomeTax.Percent,
@@ -161,6 +163,7 @@ namespace IntegratedImplementation.Services.Finance.Configuration
             currentTax.EndDate = updateIncomeTax.EndDate;
             //currentTax.CreatedById = updateIncomeTax.CreatedById;
             currentTax.Deductable = updateIncomeTax.Deductable;
+            currentTax.Withholding = updateIncomeTax.Withholding;
             currentTax.EndingAmount = updateIncomeTax.EndingAmount;
             currentTax.Percent = updateIncomeTax.Percent;
             currentTax.StartingAmount = updateIncomeTax.StartingAmount;

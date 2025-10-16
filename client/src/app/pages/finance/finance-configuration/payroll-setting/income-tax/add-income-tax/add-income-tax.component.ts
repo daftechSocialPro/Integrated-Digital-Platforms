@@ -34,6 +34,7 @@ export class AddIncomeTaxComponent implements OnInit {
         endingAmount:[this.incomeTax.endingAmount,Validators.required],
         percent:[this.incomeTax.percent,Validators.required],
         deductable:[this.incomeTax.deductable,Validators.required],
+        withholding:[this.incomeTax.withholding,Validators.required],
         endDate:[this.incomeTax.endDate.toString().split('T')[0],Validators.required],
         isActive:[this.incomeTax.isActive],
       })
@@ -44,6 +45,7 @@ export class AddIncomeTaxComponent implements OnInit {
         endingAmount:["",Validators.required],
         percent:["",Validators.required],
         deductable:["",Validators.required],
+        withholding:["",Validators.required],
         endDate:[null,Validators.required],
         isActive:[true],
       })
@@ -64,6 +66,7 @@ export class AddIncomeTaxComponent implements OnInit {
           endingAmount: this.incomeTaxForm.value.endingAmount,
           percent: this.incomeTaxForm.value.percent,
           deductable: this.incomeTaxForm.value.deductable,
+          withholding: this.incomeTaxForm.value.withholding,
           endDate: this.incomeTaxForm.value.endDate,
           isActive: this.incomeTaxForm.value.isActive,
           
@@ -91,6 +94,7 @@ export class AddIncomeTaxComponent implements OnInit {
           endingAmount: this.incomeTaxForm.value.endingAmount,
           percent: this.incomeTaxForm.value.percent,
           deductable: this.incomeTaxForm.value.deductable,
+          withholding: this.incomeTaxForm.value.withholding,
           endDate: this.incomeTaxForm.value.endDate,
           isActive: this.incomeTaxForm.value.isActive,
         }

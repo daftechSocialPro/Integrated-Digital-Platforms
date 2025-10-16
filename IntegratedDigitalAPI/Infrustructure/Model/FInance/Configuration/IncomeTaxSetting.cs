@@ -13,6 +13,7 @@ namespace IntegratedInfrustructure.Model.FInance.Configuration
         public float EndingAmount { get; set; }
         public float Percent { get; set; }
         public float Deductable { get; set; }
+        public float Withholding { get; set; }
         public DateTime EndDate { get; set; }
     }
 }

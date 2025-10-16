@@ -104,6 +104,8 @@ export class BeginningBalanceComponent implements OnInit {
   addBeginningBalance() {
     this.addBeginningBalanceDetailList.createdById = this.user.userId;
     this.addBeginningBalanceDetailList.begningBalanceDetails = [];
+    this.addBeginningBalanceDetailList.totalCredit = 0;
+    this.addBeginningBalanceDetailList.totalDebit = 0;
     
     // Add null check to prevent error
     if (!this.beginningBalanceList || this.beginningBalanceList.length === 0) {
@@ -113,36 +115,48 @@ export class BeginningBalanceComponent implements OnInit {
     
     this.beginningBalanceList.map(x => {
       if (x.subsidaryAccountBegningDtos.length == 0) {
-        this.addBeginningBalanceDetailList.begningBalanceDetails.push({
-          ammount: x.ammount,
-          chartOfAccountId: x.id,
-          remark: x.remark,
-        });
-        if(x.type == "CREDIT"){
-          this.addBeginningBalanceDetailList.totalCredit =   x.ammount
-        }
-        else{
-          this.addBeginningBalanceDetailList.totalDebit =   x.ammount
-        }
-      }
-      else if (x.subsidaryAccountBegningDtos.length > 0) {
-        debugger;
-        x.subsidaryAccountBegningDtos.map(y => {
+        // Only add if amount is not 0
+        if (x.ammount && x.ammount !== 0) {
           this.addBeginningBalanceDetailList.begningBalanceDetails.push({
             ammount: x.ammount,
             chartOfAccountId: x.id,
-            subsidaryAccountId: y.id,
-            remark: y.remark,
+            remark: x.remark,
           });
           if(x.type == "CREDIT"){
-            this.addBeginningBalanceDetailList.totalCredit =   y.ammount
+            this.addBeginningBalanceDetailList.totalCredit += x.ammount;
           }
           else{
-            this.addBeginningBalanceDetailList.totalDebit =   y.ammount
+            this.addBeginningBalanceDetailList.totalDebit += x.ammount;
+          }
+        }
+      }
+      else if (x.subsidaryAccountBegningDtos.length > 0) {
+        x.subsidaryAccountBegningDtos.map(y => {
+          // Only add if amount is not 0
+          if (y.ammount && y.ammount !== 0) {
+            this.addBeginningBalanceDetailList.begningBalanceDetails.push({
+              ammount: y.ammount,
+              chartOfAccountId: x.id,
+              subsidaryAccountId: y.id,
+              remark: y.remark,
+            });
+            if(x.type == "CREDIT"){
+              this.addBeginningBalanceDetailList.totalCredit += y.ammount;
+            }
+            else{
+              this.addBeginningBalanceDetailList.totalDebit += y.ammount;
+            }
           }
         });
       }
     })
+    
+    // Check if any amounts were entered
+    if (this.addBeginningBalanceDetailList.begningBalanceDetails.length === 0) {
+      this.messageService.add({ severity: 'warn', summary: 'Warning', detail: 'Please enter at least one amount before submitting', life: 3000 });
+      return;
+    }
+    
     if(this.addBeginningBalanceDetailList.totalDebit != this.addBeginningBalanceDetailList.totalCredit){
       this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Credit and/or Debit are not correct', life: 3000 });
     }

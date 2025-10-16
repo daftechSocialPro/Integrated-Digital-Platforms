@@ -17,6 +17,7 @@ export interface IncomeTaxDto{
     endingAmount: number
     percent: number
     deductable: number
+    withholding: number
     endDate: Date
     isActive: boolean
 
