@@ -67,3 +67,23 @@ export interface ApplicantWorkDto {
     responsibility: string,
     createdById? : string,
 }
+
+export interface ApplicantVacancy {
+    id: string;
+    createdDate: Date;
+    applicantId: string;
+    vacancyId: string;
+    applicantStatus: ApplicantStatus;
+    createdById?: string;
+    description?: string;
+}
+
+export enum ApplicantStatus {
+    PENDING = 0,
+    APPLIED = 1,
+    EXAM = 2,
+    INTERVIEW = 3,
+    REJECTED = 4,
+    HIRED = 5,
+    BLACKLISTED = 6
+}

@@ -13,6 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Collections.Generic;
 using System.Data;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using static IntegratedInfrustructure.Data.EnumList;
@@ -218,16 +219,35 @@ namespace Implementation.Services.Authentication
                 return new ResponseMessage { Success = false, Message = "Employee Already Exists" };
 
             var employee = _dbContext.Employees.Find(addUSer.EmployeeId);
+            if (employee == null)
+                return new ResponseMessage { Success = false, Message = "Employee not found" };
+
+            // Auto-generate username from WorkEmail if not provided or empty
+            string userName = string.IsNullOrWhiteSpace(addUSer.UserName) 
+                ? employee.WorkEmail 
+                : addUSer.UserName;
+
+            // Check if username already exists
+            var existingUser = await _userManager.FindByNameAsync(userName);
+            if (existingUser != null)
+                return new ResponseMessage { Success = false, Message = "Username already exists" };
+
             var applicationUser = new ApplicationUser
             {
                 EmployeeId = addUSer.EmployeeId,
                 Email = employee.WorkEmail,
-                UserName = addUSer.UserName,
+                UserName = userName,
                 RowStatus = RowStatus.ACTIVE,
                 PasswordChanged = false
             };
 
-            await _userManager.CreateAsync(applicationUser, addUSer.Password);
+            var result = await _userManager.CreateAsync(applicationUser, addUSer.Password);
+
+            if (!result.Succeeded)
+            {
+                var errors = string.Join(", ", result.Errors.Select(e => e.Description));
+                return new ResponseMessage { Success = false, Message = $"Failed to create user: {errors}" };
+            }
 
             return new ResponseMessage { Success = true, Message = "Succesfully Added User", Data = applicationUser.UserName };
         }

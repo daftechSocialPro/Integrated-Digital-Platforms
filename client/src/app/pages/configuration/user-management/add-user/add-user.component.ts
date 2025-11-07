@@ -32,7 +32,6 @@ export class AddUserComponent implements OnInit {
   ngOnInit(): void {
 
     this.userForm = this.formBuilder.group({
-      UserName: ['test', Validators.required],
       Password: ['', Validators.required],
       ConfirmPassword: ['', Validators.required],
     });
@@ -65,7 +64,7 @@ export class AddUserComponent implements OnInit {
         let user: UserPost = {
           employeeId: this.employee,
           password: this.userForm.value.Password,
-          userName: this.userForm.value.UserName
+          userName: '' // Will be auto-generated from WorkEmail on backend
         }
 
         

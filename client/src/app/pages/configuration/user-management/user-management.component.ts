@@ -43,7 +43,9 @@ export class UserManagementComponent implements OnInit {
     this.userService.getUserList().subscribe({
       next: (res) => {
         this.users = res
-        this.filteredUserList = res 
+        this.filteredUserList = res
+        // Reset pagination when users are loaded
+        this.p = 1
       }
     })
 
@@ -54,17 +56,37 @@ export class UserManagementComponent implements OnInit {
   }
 
   searchUsers(value:string) {
-    debugger;
+    // Reset pagination to page 1 when searching
+    this.p = 1;
+    
+    if (!value || value.trim() === '') {
+      this.filteredUserList = this.users;
+      return;
+    }
+    
+    const searchTerm = value.toLowerCase().trim();
     this.filteredUserList = this.users.filter(user =>
-      user.name.includes(value) ||
-      user.phoneNumber.includes(value) || 
-      user.userName.includes(value)
-      
+      (user.name && user.name.toLowerCase().includes(searchTerm)) ||
+      (user.phoneNumber && user.phoneNumber.includes(searchTerm)) || 
+      (user.userName && user.userName.toLowerCase().includes(searchTerm)) ||
+      (user.email && user.email.toLowerCase().includes(searchTerm))
     );
+    
+    // Ensure pagination doesn't exceed available pages
+    const itemsPerPage = 9;
+    const maxPage = Math.ceil(this.filteredUserList.length / itemsPerPage);
+    if (this.p > maxPage && maxPage > 0) {
+      this.p = 1;
+    }
   }
 
   addUser (){
     let modalRef = this.modalService.open(AddUserComponent,{size:'lg',backdrop:'static'})
+    modalRef.result.then(() => {
+      this.getUsers()
+    }).catch(() => {
+      // Modal dismissed, do nothing
+    })
   }
 
   deleteUser(userId:string){
