@@ -4,6 +4,7 @@ using Implementation.Helper;
 using IntegratedImplementation.DTOS.Configuration;
 using IntegratedInfrustructure.Data;
 using IntegratedInfrustructure.Model.Configuration;
+using IntegratedInfrustructure.Model.PM;
 using IntegratedInfrustructure.Models.Common;
 using Microsoft.EntityFrameworkCore;
 using static IntegratedInfrustructure.Data.EnumList;
@@ -91,6 +92,33 @@ namespace IntegratedImplementation.Interfaces.Configuration
                 StratgicPlanId = x.StrategicPlanId,
                 Type = x.Type.ToString()
             }).ToListAsync();
+        }
+
+        public async Task<ResponseMessage> DeleteIndicator(Guid id)
+        {
+            try
+            {
+                var indicator = await _dBContext.Indicators.FirstOrDefaultAsync(x => x.Id == id);
+                if(indicator == null)
+                {
+                    return new ResponseMessage { Success = false, Message = "Could not find indicator" };
+                }
+
+                var activity = await _dBContext.Activities.Where(x => x.StrategicPlanIndicatorId == indicator.Id).Select(x => x.ActivityDescription).ToListAsync();
+                if (activity.Any())
+                {
+                    return new ResponseMessage { Success = false, Message = $" the following activites:- \n {string.Join("\n", activity)} use the Indicator please check them and try again!!" };
+                }
+
+                _dBContext.Indicators.Remove(indicator);
+                await _dBContext.SaveChangesAsync();
+                return new ResponseMessage { Success = true, Message = "Deleted Successfully!!" };
+
+            }
+            catch (Exception ex)
+            {
+                return new ResponseMessage { Success = false, Message = ex.Message };
+            }
         }
     }
 }

@@ -10,6 +10,7 @@ namespace IntegratedImplementation.Interfaces.Configuration
         public Task<ResponseMessage> CreateIndicator(IndicatorPostDto indicator);
 
         public Task<ResponseMessage> UpdateIndicator(IndicatorGetDto indicator);
+        public Task<ResponseMessage> DeleteIndicator(Guid id);
 
        public Task<List<IndicatorGetDto>> GetIndicator();
 

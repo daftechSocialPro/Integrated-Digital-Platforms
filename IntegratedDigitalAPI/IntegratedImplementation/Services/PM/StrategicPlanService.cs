@@ -282,5 +282,34 @@ namespace IntegratedImplementation.Services.PM
             return activityViewDtos;
 
         }
+
+        public async Task<ResponseMessage> DeleteStrategicPlan(Guid Id)
+        {
+            try
+            {
+                var strategicDirection = await _dbContext.StrategicPlans.FirstOrDefaultAsync(x => x.Id == Id);
+                if(strategicDirection == null)
+                {
+                    return new ResponseMessage { Success = false, Message = "Strategic plan could not be found" };
+                }
+
+                
+                var projects = await _dbContext.Activities.Where(x => x.StrategicPlanId == Id).Select(x => x.ActivityDescription).ToListAsync();
+
+                if (projects.Any())
+                {
+                    return new ResponseMessage { Success = false, Message = $" the following activites:- \n {string.Join("\n", projects)} use the strategic plan please check them and try again!!"  };
+                }
+                var strategicIndicator = await _dbContext.Indicators.Where(x => x.StrategicPlanId == Id).ExecuteDeleteAsync();
+
+                _dbContext.StrategicPlans.Remove(strategicDirection);
+                await _dbContext.SaveChangesAsync();
+                return new ResponseMessage { Success = true, Message = "Deleted Successfully!!" };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseMessage { Success = false, Message = ex.Message };
+            }
+        }
     }
 }

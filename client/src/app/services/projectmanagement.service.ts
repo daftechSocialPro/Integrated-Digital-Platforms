@@ -41,6 +41,12 @@ export class ProjectmanagementService {
     );
   }
 
+    deleteStrategicPlan(id: string) {
+    return this.http.delete<ResponseMessage>(
+      this.baseUrl + `/StrategicPlan?id=${id}`,
+    );
+  }
+
   getStrategicPlanForReport(strategicPlanId: string) {
     return this.http.get<any>(
       this.baseUrl +

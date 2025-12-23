@@ -70,7 +70,7 @@ export class UpdateMeasurmentComponent {
       }
 
 
-      this.configurationService.updateUnitOfMeasurment(unitmeasure).subscribe({
+      this.configurationService.updateindicator(unitmeasure).subscribe({
 
         next: (res) => {
 

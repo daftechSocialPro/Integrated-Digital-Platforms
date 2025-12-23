@@ -421,6 +421,12 @@ export class PMService {
       periodUpdate
     );
   }
+  deleteReportingPeriod(id: string) {
+    return this.http.delete<ResponseMessage>(
+      this.BaseURI + `/TimePeriod/DeleteReportingPeriod?id=${id}`,
+      
+    );
+  }
 
   // budget year
 

@@ -59,6 +59,20 @@ namespace IntegratedDigitalAPI.Controllers.PM
             }
         }
 
+        [HttpDelete]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> DeleteReportingPeriod(Guid id)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _timePeriodService.DeleteReportingPeriod(id));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
         [HttpGet]
         [ProducesResponseType(typeof(ReportingPeriodGetDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetBudgetYearList()

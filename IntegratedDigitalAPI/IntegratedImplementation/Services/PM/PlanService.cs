@@ -105,6 +105,11 @@ namespace IntegratedDigitalAPI.Services.PM
                         singlePlan.ProjectManagerId = plan.ProjectManagerId;
 
                     }
+                    if (plan.FinanceManagerId != Guid.Empty)
+                    {
+                        singlePlan.FinanceManagerId = plan.FinanceManagerId;
+
+                    }
                     await _dBContext.SaveChangesAsync();
 
                 }
@@ -217,7 +222,7 @@ namespace IntegratedDigitalAPI.Services.PM
 
 
 
-                          }).OrderBy(x => x.CreatedDate).ToListAsync();
+                          }).OrderByDescending(x => x.CreatedDate).ToListAsync();
 
 
 

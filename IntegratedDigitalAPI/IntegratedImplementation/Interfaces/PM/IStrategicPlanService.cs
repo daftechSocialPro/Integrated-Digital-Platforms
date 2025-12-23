@@ -20,6 +20,7 @@ namespace IntegratedImplementation.Interfaces.PM
 
 
         Task<List<ActivityViewDto>> GetActivitiesFromProject(Guid projectId);
+        Task<ResponseMessage> DeleteStrategicPlan(Guid Id);
         
 
     }

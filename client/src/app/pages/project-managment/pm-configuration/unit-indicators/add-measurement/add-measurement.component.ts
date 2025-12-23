@@ -64,7 +64,7 @@ export class AddMeasurementComponent {
     }
 
 
-      this.configurationService.addUnitOfMeasurment(measurementpost).subscribe({
+      this.configurationService.addindicator(measurementpost).subscribe({
 
         next: (res) => {
  

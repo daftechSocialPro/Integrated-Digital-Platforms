@@ -49,11 +49,13 @@
                             <td>{{ plan.name }}</td>
                             <td>{{ plan.description }}</td>
                             <td>
-                             
                                 <button type="button" (click)="updateStrategicPlan(plan)" class="btn btn-outline-warning"><i
-                                    class="bi bi-pencil "></i> </button>
-                                 </td>
-                         
+                                        class="bi bi-pencil "></i> </button>
+                                &nbsp;
+                                <button type="button" (click)="deleteStrategicPlan(plan.id)" class="btn btn-outline-danger"><i
+                                        class="bi bi-trash "></i> </button>
+                            </td>
+                        
                         </tr>
                     </ng-template>
                    

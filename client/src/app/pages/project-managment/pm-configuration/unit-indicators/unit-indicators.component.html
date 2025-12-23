@@ -38,8 +38,11 @@
                             <td>{{ measurment.type }}</td>
                             <td>
                              
-                                <button type="button" (click)="updateUnitOfMeasurment(measurment)" class="btn btn-outline-warning"><i
+                                <button type="button" (click)="updateindicator(measurment)" class="btn btn-outline-warning"><i
                                     class="bi bi-pencil "></i> </button>
+                                 &nbsp;
+                                <button type="button" (click)="deleteindicator(measurment.id)" class="btn btn-outline-danger"><i
+                                        class="bi bi-trash "></i> </button>
                                  </td>
                          
                         </tr>

@@ -64,6 +64,20 @@ namespace IntegratedDigitalAPI.Controllers.Configuration
             }
         }
 
+        [HttpDelete]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> DeleteIndicator(Guid id)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _indicatorService.DeleteIndicator(id));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
 
     }
 }

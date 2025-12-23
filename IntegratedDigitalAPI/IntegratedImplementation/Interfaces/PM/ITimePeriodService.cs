@@ -16,6 +16,7 @@ namespace IntegratedImplementation.Interfaces.PM
         Task<List<ReportingPeriodGetDto>> GetReportingPeriodList();
         Task<ResponseMessage> AddReportingPeriod(ReportingPeriodPostDto periodPost);
         Task<ResponseMessage> UpdateReportingPeriod(ReportingPeriodGetDto periodGet);
+        Task<ResponseMessage> DeleteReportingPeriod(Guid id);
 
 
         Task<List<BudgetYearDto>> GetBudgetYears();

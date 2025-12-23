@@ -85,5 +85,19 @@ namespace IntegratedDigitalAPI.Controllers.PM
             }
 
         }
+
+        [HttpDelete]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> DeleteStrategicPlan(Guid id)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _strategicPlanService.DeleteStrategicPlan(id));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
     }
 }

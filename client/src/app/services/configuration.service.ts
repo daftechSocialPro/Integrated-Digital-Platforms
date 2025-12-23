@@ -145,18 +145,22 @@ export class ConfigurationService {
 
   // indicator
 
-  getUnitOfMeasurment() {
+  getindicator() {
     return this.http.get<IndicatorGetDto[]>(this.baseUrl + "/Indicator")
   }
 
-  addUnitOfMeasurment(unitOfmeasurmentPost: IndicatorPostDto) {
+  addindicator(unitOfmeasurmentPost: IndicatorPostDto) {
 
     unitOfmeasurmentPost.createdById = this.userService.getCurrentUser().userId
     return this.http.post<ResponseMessage>(this.baseUrl + "/Indicator", unitOfmeasurmentPost)
   }
 
-  updateUnitOfMeasurment(unitOfmeasurmentGet: IndicatorGetDto) {
+  updateindicator(unitOfmeasurmentGet: IndicatorGetDto) {
     return this.http.put<ResponseMessage>(this.baseUrl + "/Indicator", unitOfmeasurmentGet)
+  }
+
+  deleteindicator(id: string) {
+    return this.http.delete<ResponseMessage>(this.baseUrl + `/Indicator?id=${id}`)
   }
 
   getRemainingBudget(projectFundSourceId:string){

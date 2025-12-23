@@ -88,6 +88,26 @@ namespace IntegratedImplementation.Services.PM
         }
 
 
+        public async Task<ResponseMessage> DeleteReportingPeriod(Guid id)
+        {
+            try
+            {
+                var reportingPeriod = await _dbContext.ReportingPeriods.FirstOrDefaultAsync(x => x.Id == id);
+                if (reportingPeriod == null)
+                {
+                    return new ResponseMessage { Success = false, Message = "Could not find Reporting Period" };
+                }
+                _dbContext.ReportingPeriods.Remove(reportingPeriod);
+                await _dbContext.SaveChangesAsync();
+                return new ResponseMessage { Success = true, Message = "Deleted Successfully!!" };
+
+            }
+            catch (Exception ex)
+            {
+                return new ResponseMessage { Success = false, Message = ex.Message };
+            }
+        }
+
         public async Task<List<BudgetYearDto>> GetBudgetYears()
         {
 
@@ -154,8 +174,6 @@ namespace IntegratedImplementation.Services.PM
             return new ResponseMessage { Success = false, Message = "Unable To Find Budget Year" };
         }
 
-
        
-
     }
 }
