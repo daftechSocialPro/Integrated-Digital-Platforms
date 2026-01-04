@@ -57,7 +57,26 @@ export class ActivityProgressApproverComponent implements OnInit {
     });
   }
 
-  Approve(pro: ViewProgressDto) {
+  Approve(worked: any) {
+    // Convert FinanceWorkedBudgetDto to ViewProgressDto
+    const pro: ViewProgressDto = {
+      id: worked.id,
+      actalWorked: worked.actualWorked || 0,
+      usedBudget: worked.usedBudget || 0,
+      documents: worked.documents || [],
+      financeDocument: worked.financeDocument,
+      remark: worked.remark || '',
+      isApprovedByManager: worked.isApprovedByManager || '',
+      isApprovedByFinance: worked.isApprovedByFinance || '',
+      isApprovedByDirector: worked.isApprovedByDirector || '',
+      financeApprovalRemark: worked.financeApprovalRemark || '',
+      managerApprovalRemark: worked.managerApprovalRemark || '',
+      directorApprovalRemark: worked.directorApprovalRemark || '',
+      createdAt: worked.createdAt || new Date().toISOString(),
+      activity: worked.activity,
+      activityNumber: worked.activityNumber
+    };
+
     let modalRef = this.modalService.open(AddPaymentsComponent, {
       size: 'xl',
       backdrop: 'static',
