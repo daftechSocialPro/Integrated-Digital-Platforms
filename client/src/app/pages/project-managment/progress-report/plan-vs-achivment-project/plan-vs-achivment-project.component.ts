@@ -6,11 +6,13 @@ import { ActivityView, MonthPerformanceView } from '../../view-activties/activit
 import { DOCUMENT } from '@angular/common';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
-import { UpdateActivityProgressDto } from 'src/app/model/PM/StrategicPlanDto';
+import { UpdateActivityProgressDto, StrategicPeriodGetDto } from 'src/app/model/PM/StrategicPlanDto';
 import { UserView } from 'src/app/model/user';
 import { PMService } from 'src/app/services/pm.services';
 import { UserService } from 'src/app/services/user.service';
 import { ViewProgressComponent } from '../../view-activties/view-progress/view-progress.component';
+import { SelectList } from 'src/app/model/common';
+import { DropDownService } from 'src/app/services/dropDown.service';
 
 @Component({
   selector: 'app-plan-vs-achivment-project',
@@ -25,11 +27,17 @@ export class PlanVsAchivmentProjectComponent implements OnInit {
   user !: UserView
   Activties!: ActivityView[]
   filterdActivities: any
-  selectedProject: string
+  selectedProject: string = ''
+  selectedProjectId: string = ''
+  selectedStrategicPlan: string = ''
   currentYear: number
   selectedMonth:number=13
 
   Projects :string[]=[]
+  ProjectsWithIds: {name: string, id: string}[] = []
+  strategicPlans: SelectList[] = []
+  strategicPeriods: StrategicPeriodGetDto[] = []
+  selectedStrategicPeriod: string = 'ALL'
 
  
   
@@ -45,7 +53,8 @@ export class PlanVsAchivmentProjectComponent implements OnInit {
     private userService: UserService,
     private planService : PlanService,
     private modalService : NgbModal,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private dropDownService: DropDownService
 
   ) {
 
@@ -58,7 +67,75 @@ export class PlanVsAchivmentProjectComponent implements OnInit {
     this.user = this.userService.getCurrentUser();
     this.getAssignedActivites()
     this.currentYear = new Date().getFullYear();
+    this.getStrategicPeriods();
+    this.loadStrategicPlans();
 
+  }
+
+  getStrategicPeriods() {
+    this.projectService.getStrategicPeriods().subscribe({
+      next: (res) => {
+        this.strategicPeriods = res;
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+  }
+
+  loadStrategicPlans() {
+    // Get full strategic plans list with period information
+    this.projectService.getStragegicPlan().subscribe({
+      next: (res) => {
+        this.applyStrategicPeriodFilter(res);
+      },
+      error: (err) => {
+        // Fallback to dropdown service if pmService fails
+        this.dropDownService.getStrategicPlans().subscribe({
+          next: (res) => {
+            this.strategicPlans = res;
+          },
+          error: (err) => {
+            console.error(err);
+          }
+        });
+      }
+    });
+  }
+
+  onStrategicPeriodChange() {
+    // Reload strategic plans and apply filter
+    this.projectService.getStragegicPlan().subscribe({
+      next: (res) => {
+        this.applyStrategicPeriodFilter(res);
+        // Reset strategic plan selection when period changes
+        this.selectedStrategicPlan = 'ALL';
+        this.applyFilters();
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+  }
+
+  applyStrategicPeriodFilter(allPlans: any[]) {
+    if (this.selectedStrategicPeriod === 'ALL' || !this.selectedStrategicPeriod) {
+      // Show all strategic plans
+      this.strategicPlans = allPlans.map(plan => ({
+        id: plan.id,
+        name: plan.name
+      }));
+    } else {
+      // Filter strategic plans by period
+      const filteredPlans = allPlans.filter(
+        plan => plan.strategicPeriodId === this.selectedStrategicPeriod
+      );
+      // Update strategicPlans dropdown with filtered list
+      this.strategicPlans = filteredPlans.map(plan => ({
+        id: plan.id,
+        name: plan.name
+      }));
+    }
   }
 
 
@@ -78,8 +155,19 @@ export class PlanVsAchivmentProjectComponent implements OnInit {
       next: (res) => {
 
        
+        this.Activties = res
         this.filterdActivities = res
         this.Projects = [...new Set(res.map((item)=>item.projectName))]
+
+        // Get projects list with IDs to match project names to IDs
+        this.planService.getPlans().subscribe({
+          next: (projects) => {
+            this.ProjectsWithIds = projects.map(p => ({
+              name: p.planName,
+              id: p.id
+            }))
+          }
+        })
 
         this.filterActivites("")
       }, error: (err) => {
@@ -149,9 +237,63 @@ export class PlanVsAchivmentProjectComponent implements OnInit {
   }
 
   onProjectChange(){
-    this.filterdActivities = this.Activties.filter((item)=>{
-      return (item.projectName&& item.projectName.includes(this.selectedProject))
-    })
+    this.applyFilters();
+  }
+
+  onStrategicPlanChange() {
+    this.applyFilters();
+  }
+
+  applyFilters() {
+    let filtered = [...this.Activties];
+
+    // Filter by project
+    if (this.selectedProject && this.selectedProject !== '' && this.selectedProject !== 'ALL') {
+      const selectedProjectData = this.ProjectsWithIds.find(p => p.name === this.selectedProject);
+      if (selectedProjectData && selectedProjectData.id) {
+        // Fetch activities from the selected project using API
+        this.projectService.getActivitiesFromProject(selectedProjectData.id).subscribe({
+          next: (res) => {
+            filtered = res;
+            // Apply strategic plan filter if selected
+            if (this.selectedStrategicPlan && this.selectedStrategicPlan !== '' && this.selectedStrategicPlan !== 'ALL') {
+              filtered = filtered.filter((item) => 
+                item.strategicPlan && item.strategicPlan === this.selectedStrategicPlan
+              );
+            }
+            this.filterdActivities = filtered;
+          },
+          error: (err) => {
+            // Fallback to filtering by name if API fails
+            filtered = filtered.filter((item) => 
+              item.projectName && item.projectName.includes(this.selectedProject)
+            );
+            // Apply strategic plan filter if selected
+            if (this.selectedStrategicPlan && this.selectedStrategicPlan !== '' && this.selectedStrategicPlan !== 'ALL') {
+              filtered = filtered.filter((item) => 
+                item.strategicPlan && item.strategicPlan === this.selectedStrategicPlan
+              );
+            }
+            this.filterdActivities = filtered;
+          }
+        });
+        return;
+      } else {
+        // Fallback to filtering by name if project ID not found
+        filtered = filtered.filter((item) => 
+          item.projectName && item.projectName.includes(this.selectedProject)
+        );
+      }
+    }
+
+    // Filter by strategic plan
+    if (this.selectedStrategicPlan && this.selectedStrategicPlan !== '' && this.selectedStrategicPlan !== 'ALL') {
+      filtered = filtered.filter((item) => 
+        item.strategicPlan && item.strategicPlan === this.selectedStrategicPlan
+      );
+    }
+
+    this.filterdActivities = filtered;
   }
 
   onQuarterChange() {
@@ -194,24 +336,19 @@ export class PlanVsAchivmentProjectComponent implements OnInit {
 
     
 
-    if (this.selectedProject){
-    this.filterdActivities = this.Activties.filter((item)=>{
-      return (item.projectName&& item.projectName.includes(this.selectedProject))
-    })
-  }
-  else{
-    this.filterdActivities = this.Activties
-  }
+    // First apply project and strategic plan filters
+    this.applyFilters();
 
-
-
-    var searchTerm = value.toString();
-    this.filterdActivities = this.filterdActivities.filter((item) => {
-      return (
-        item.name.toLowerCase().includes(searchTerm) ||
-        item.activityNumber.toLowerCase().includes(searchTerm)
-      )
-    })
+    // Then apply text search filter
+    if (value && value.trim() !== '') {
+      var searchTerm = value.toLowerCase().trim();
+      this.filterdActivities = this.filterdActivities.filter((item) => {
+        return (
+          item.name.toLowerCase().includes(searchTerm) ||
+          item.activityNumber.toLowerCase().includes(searchTerm)
+        );
+      });
+    }
 
     
 
@@ -236,6 +373,8 @@ export class PlanVsAchivmentProjectComponent implements OnInit {
       next: (res) => {
         if (res.success) {
           this.messageService.add({ severity: 'success', summary: 'Successfully Updated', detail: res.message })
+          // Refresh the activities data to show updated values
+          this.refreshActivitiesData()
         }
         else {
           this.messageService.add({ severity: 'error', summary: 'Something Went Wrong', detail: res.message })
@@ -263,6 +402,8 @@ export class PlanVsAchivmentProjectComponent implements OnInit {
       next: (res) => {
         if (res.success) {
           this.messageService.add({ severity: 'success', summary: 'Successfully Updated', detail: res.message })
+          // Refresh the activities data to show updated values
+          this.refreshActivitiesData()
         }
         else {
           this.messageService.add({ severity: 'error', summary: 'Something Went Wrong', detail: res.message })
@@ -272,6 +413,11 @@ export class PlanVsAchivmentProjectComponent implements OnInit {
       }
     })
 
+  }
+
+  refreshActivitiesData() {
+    // Refresh activities data to get updated monthPerformance after task time changes
+    this.getAssignedActivites()
   }
 
   getMonthName (){

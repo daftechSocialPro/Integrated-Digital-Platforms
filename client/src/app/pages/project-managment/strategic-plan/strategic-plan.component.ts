@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { StrategicPlanGetDto } from 'src/app/model/PM/StrategicPlanDto';
+import { StrategicPlanGetDto, StrategicPeriodGetDto } from 'src/app/model/PM/StrategicPlanDto';
 import { ProjectmanagementService } from 'src/app/services/projectmanagement.service';
 import { AddStrategicPlanComponent } from './add-strategic-plan/add-strategic-plan.component';
 import { UpdateStrategicPlanComponent } from './update-strategic-plan/update-strategic-plan.component';
@@ -14,11 +14,13 @@ import { ConfirmationService, ConfirmEventType, MessageService } from 'primeng/a
 export class StrategicPlanComponent implements OnInit {
   
   strategicPlans! : StrategicPlanGetDto[]
+  filteredStrategicPlans! : StrategicPlanGetDto[]
+  strategicPeriods: StrategicPeriodGetDto[] = []
+  selectedPeriodId: string = 'ALL'
 
   ngOnInit(): void {
-
     this.getStragegicPlan()
-    
+    this.getStrategicPeriods()
   }
 
   constructor (private pmService : ProjectmanagementService,
@@ -30,12 +32,38 @@ export class StrategicPlanComponent implements OnInit {
   getStragegicPlan (){
     this.pmService.getStragegicPlan() .subscribe({
       next:(res)=>{     
-          this.strategicPlans = res       
+          this.strategicPlans = res
+          this.applyFilter()       
       
       },error:(err)=>{
   
       }
     })
+  }
+
+  getStrategicPeriods() {
+    this.pmService.getStrategicPeriods().subscribe({
+      next: (res) => {
+        this.strategicPeriods = res;
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+  }
+
+  onPeriodFilterChange() {
+    this.applyFilter();
+  }
+
+  applyFilter() {
+    if (this.selectedPeriodId === 'ALL' || !this.selectedPeriodId) {
+      this.filteredStrategicPlans = this.strategicPlans;
+    } else {
+      this.filteredStrategicPlans = this.strategicPlans.filter(
+        plan => plan.strategicPeriodId === this.selectedPeriodId
+      );
+    }
   }
   addStrategicPlan(){
 

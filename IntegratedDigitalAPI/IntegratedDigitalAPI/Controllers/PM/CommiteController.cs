@@ -115,5 +115,19 @@ namespace IntegratedDigitalAPI.Controllers.PM
                 return StatusCode(500, $"Internal Server Error : {ex}");
             }
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteCommittee(Guid id)
+        {
+            try
+            {
+                var response = await _commiteService.DeleteCommitee(id);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error : {ex}");
+            }
+        }
     }
 }

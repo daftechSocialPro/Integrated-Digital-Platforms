@@ -84,6 +84,7 @@ namespace IntegratedImplementation.Datas
 
             #region PM
             services.AddScoped<IIndicatorService, IndicatorService>();
+            services.AddScoped<IStrategicPeriodService, StrategicPeriodService>();
             services.AddScoped<IStrategicPlanService, StrategicPlanService>();
             services.AddScoped<IActivityService, ActivityService>();
             services.AddScoped<ICommiteService, CommiteService>();

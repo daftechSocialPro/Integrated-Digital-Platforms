@@ -103,12 +103,17 @@ namespace IntegratedDigitalAPI.Services.PM
                     if (plan.ProjectManagerId != Guid.Empty)
                     {
                         singlePlan.ProjectManagerId = plan.ProjectManagerId;
-
                     }
+
+                    // Update FinanceManagerId - allow setting to null/empty if needed
                     if (plan.FinanceManagerId != Guid.Empty)
                     {
                         singlePlan.FinanceManagerId = plan.FinanceManagerId;
-
+                    }
+                    else
+                    {
+                        // If empty Guid is sent, set to null (allows clearing the finance manager)
+                        singlePlan.FinanceManagerId = Guid.Empty;
                     }
                     await _dBContext.SaveChangesAsync();
 

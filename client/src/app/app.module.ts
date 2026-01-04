@@ -183,6 +183,9 @@ import { UpdateMeasurmentComponent } from './pages/project-managment/pm-configur
 import { StrategicPlanComponent } from './pages/project-managment/strategic-plan/strategic-plan.component';
 import { AddStrategicPlanComponent } from './pages/project-managment/strategic-plan/add-strategic-plan/add-strategic-plan.component';
 import { UpdateStrategicPlanComponent } from './pages/project-managment/strategic-plan/update-strategic-plan/update-strategic-plan.component';
+import { StrategicPeriodComponent } from './pages/project-managment/strategic-period/strategic-period.component';
+import { AddStrategicPeriodComponent } from './pages/project-managment/strategic-period/add-strategic-period/add-strategic-period.component';
+import { UpdateStrategicPeriodComponent } from './pages/project-managment/strategic-period/update-strategic-period/update-strategic-period.component';
 import { PlansComponent } from './pages/project-managment/plans/plans.component';
 import { AddPlansComponent } from './pages/project-managment/plans/add-plans/add-plans.component';
 import { CommitteeEmployeeComponent } from './pages/project-managment/comittes/committee-employee/committee-employee.component';
@@ -452,6 +455,9 @@ import { AddLeaveSettingComponent } from './pages/human-resource/hrm-configurati
     StrategicPlanComponent,
     AddStrategicPlanComponent,
     UpdateStrategicPlanComponent,
+    StrategicPeriodComponent,
+    AddStrategicPeriodComponent,
+    UpdateStrategicPeriodComponent,
     PlansComponent,
     AddPlansComponent,
     CommitteeEmployeeComponent,

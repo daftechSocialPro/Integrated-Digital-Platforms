@@ -22,6 +22,8 @@
   </div>
 
 
+  <button  *ngIf="training.traineeListStatus!='SUBMITTED'" class="btn btn-outline-primary text-end mb-3" (click)="downloadTemplate()"><i
+    class="bi bi-download"></i> Download Template </button> &nbsp;
   <button  *ngIf="training.traineeListStatus!='SUBMITTED'" class="btn btn-outline-success text-end mb-3" (click)="file.click()"><i
     class="bi bi-file-excel"></i> Import from Excel </button> &nbsp;
     <input type="file" accept=".xlsx, .xls" #file hidden (change)="onFileSelected($event)" />

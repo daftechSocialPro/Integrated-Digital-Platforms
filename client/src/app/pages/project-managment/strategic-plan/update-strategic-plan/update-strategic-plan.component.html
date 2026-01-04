@@ -19,8 +19,19 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="description" placeholder="Local Name"
-                                    formControlName="description"> <label for="description">Local Name</label>
+                                <select class="form-select" id="strategicPeriodId" formControlName="strategicPeriodId">
+                                    <option value="">Select Strategic Period</option>
+                                    <option *ngFor="let period of strategicPeriods" [value]="period.id">
+                                        {{period.name}} ({{period.startDate | date:'yyyy'}} - {{period.endDate | date:'yyyy'}})
+                                    </option>
+                                </select>
+                                <label for="strategicPeriodId">Strategic Period</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="description" placeholder="Description"
+                                    formControlName="description"> <label for="description">Description</label>
                             </div>
                         </div>
 

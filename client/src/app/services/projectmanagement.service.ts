@@ -7,6 +7,8 @@ import { UserService } from './user.service';
 import {
   StrategicPlanGetDto,
   StrategicPlanPostDto,
+  StrategicPeriodGetDto,
+  StrategicPeriodPostDto,
   UpdateActivityProgressDto,
 } from '../model/PM/StrategicPlanDto';
 import { ResponseMessage } from '../model/ResponseMessage.Model';
@@ -44,6 +46,33 @@ export class ProjectmanagementService {
     deleteStrategicPlan(id: string) {
     return this.http.delete<ResponseMessage>(
       this.baseUrl + `/StrategicPlan?id=${id}`,
+    );
+  }
+
+  // Strategic Period
+  getStrategicPeriods() {
+    return this.http.get<StrategicPeriodGetDto[]>(
+      this.baseUrl + '/StrategicPeriod'
+    );
+  }
+
+  addStrategicPeriod(periodPost: StrategicPeriodPostDto) {
+    return this.http.post<ResponseMessage>(
+      this.baseUrl + '/StrategicPeriod',
+      periodPost
+    );
+  }
+
+  updateStrategicPeriod(periodGet: StrategicPeriodGetDto) {
+    return this.http.put<ResponseMessage>(
+      this.baseUrl + '/StrategicPeriod',
+      periodGet
+    );
+  }
+
+  deleteStrategicPeriod(id: string) {
+    return this.http.delete<ResponseMessage>(
+      this.baseUrl + `/StrategicPeriod?id=${id}`
     );
   }
 

@@ -18,96 +18,91 @@
 
             <div class="card">
                 <div class="card-body">
-                    <p-accordion [activeIndex]="0">
-                        <p-accordionTab [header]="tab.projectName" *ngFor="let tab of progress">
-                            <p class="m-0">
-                                {{ tab.allocatedBudget }}
-                            </p>
-                        
-                            <p-table [value]="tab.financeActivities" dataKey="activityNumber" [tableStyle]="{ 'min-width': '60rem' }" >
-                                <ng-template pTemplate="header">
-                                    <tr>
-                                        <th style="width: 5rem"></th>
-                                        <th>Activity</th>
-                                        <th>Allocated Budget</th>
-                                        <th>Planned Work</th>
-                                        <th>Indicator</th>
-                                    </tr>
-                                </ng-template>
-                                <ng-template pTemplate="body" let-activity let-expanded="expanded">
-                                    <tr>
-                                        <td>
-                                            <p-button type="button" pRipple [pRowToggler]="activity"  [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" />
-                                        </td>
-                                        <td>{{ activity.activityNumber }} - {{activity.activityDescription}}</td>
-                                        <td>{{ activity.allocatedBudget | currency : 'ETB' }}</td>
-                                        <td>{{ activity.plannedWork }}</td>
-                                        <td>{{activity.indicator}}</td>
-                                    </tr>
-                                </ng-template>
-                                <ng-template pTemplate="rowexpansion" let-activity>
-                                    <tr>
-                                        <td colspan="7">
-                                            <div class="p-3">
-                                                <p-table [value]="activity.financeWorkedBudgets" dataKey="id">
-                                                    <ng-template pTemplate="header">
-                                    <tr>
-                                        <th>Activity Name</th>
-                                        <th >Actual Worked </th>
-                                        <th >Used Budget </th>
-                                        <th >Document</th>
-                                        <th >Remark </th>
-                                        <th >Date</th>
-                                        <th style="width: 4rem"></th>
-                                    </tr>
-                                </ng-template>
-                                <ng-template pTemplate="body" let-worked>
-                                    <tr>
-                                        <td>{{worked.activity}}</td>
-                                        <td>{{ worked.actualWorked }}</td>
-                                        <td>{{ worked.usedBudget |  currency : 'ETB' }}</td>
-                                        <td> <a *ngIf="worked.financeDocument" target="_blank" class="btn btn-sm btn-secondary"
-                                            href={{getFilePath(worked.financeDocument!)}}>View File</a></td>
-                                        <td>{{ worked.remark }}</td>
-                                        <td>{{ worked.date | date: 'dd/ MMMM / yyyy' }}</td>
-                                        <td>
-                                            <li style="list-style: none; text-align: right;">
-                                                <a class="nav-link nav-profile  pe-0" href="#" data-bs-toggle="dropdown">
-                                                    <span class="d-none d-md-block dropdown-toggle ps-2">Action </span> </a>
-                                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-                                                    <li> <a class="dropdown-item d-flex align-items-center"
-                                                            style="cursor: pointer;"
-                                                            (click)="Approve(worked)"> <i
-                                                                class="bi bi-bookmark-check-fill text-success"></i>
-                                                            <span>Approve</span> </a></li>
-                                                    <li>
-                                                        <hr class="dropdown-divider">
-                                                    </li>
-                                                    <li> <a class="dropdown-item d-flex align-items-center"
-                                                            style="cursor: pointer;"
-                                                            (click)="ApporveReject(worked.id,userType[2],actionType[1])"> <i
-                                                                class="bi bi-bookmark-x-fill text-danger"></i>
-                                                            <span>Reject</span>
-                                                        </a></li>
-                                                    <hr class="dropdown-divider">
-                                                </ul>
-                                            </li>
-                                        </td>
-                                    </tr>
-                                </ng-template>
-                                <ng-template pTemplate="emptymessage">
-                                    <tr>
-                                        <td colspan="6">There are no Actual worked data</td>
-                                    </tr>
-                                </ng-template>
-                            </p-table>
-                            </div>
-                            </td>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Project</th>
+                                <th scope="col">Activity</th>
+                                <th scope="col">Actual Worked</th>
+                                <th scope="col">Used Budget</th>
+                                <th scope="col">Documents</th>
+                                <th scope="col">Finance Doc</th>
+                                <th scope="col">Progress Status</th>
+                                <th scope="col">Remark</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Action</th>
                             </tr>
-                            </ng-template>
-                            </p-table>
-                        </p-accordionTab>
-                    </p-accordion>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngFor="let tab of progress">
+                                <ng-container *ngFor="let activity of tab.financeActivities">
+                                    <tr *ngFor="let worked of activity.financeWorkedBudgets; let i = index">
+                                        <th scope="row">{{i+1}}</th>
+                                        <td>{{tab.projectName}}</td>
+                                        <td>{{activity.activityNumber}} - {{activity.activityDescription}}</td>
+                                        <td>{{ worked.actualWorked }}</td>
+                                        <td>{{ worked.usedBudget | currency : 'ETB' }}</td>
+                                        <td>
+                                            <ng-container *ngIf="worked.documents && worked.documents.length > 0">
+                                                <ng-container *ngFor="let file of worked.documents;let j = index">
+                                                    <a target="_blank" class="btn btn-sm btn-secondary m-1" href={{getFilePath(file)}}>View File {{j+1}}</a>
+                                                </ng-container>
+                                            </ng-container>
+                                            <span *ngIf="!worked.documents || worked.documents.length === 0">-</span>
+                                        </td>
+                                        <td>
+                                            <a *ngIf="worked.financeDocument" target="_blank" class="btn btn-sm btn-secondary"
+                                                href={{getFilePath(worked.financeDocument!)}}>View File</a>
+                                            <a *ngIf="worked.documentPath && !worked.financeDocument" target="_blank" class="btn btn-sm btn-secondary"
+                                                href={{getFilePath(worked.documentPath!)}}>View File</a>
+                                            <span *ngIf="!worked.financeDocument && !worked.documentPath">-</span>
+                                        </td>
+                                        <td>
+                                            <span *ngIf="worked.isApprovedByDirector">
+                                                Director: <span [class]="worked.isApprovedByDirector==='APPROVED'?'badge bg-primary':'badge bg-warning'">{{worked.isApprovedByDirector}}</span>
+                                                {{worked.directorApprovalRemark}}
+                                            </span><br *ngIf="worked.isApprovedByDirector" />
+                                            <span *ngIf="worked.isApprovedByFinance">
+                                                Finance: <span [class]="worked.isApprovedByFinance==='APPROVED'?'badge bg-primary':'badge bg-warning'">{{worked.isApprovedByFinance}}</span>
+                                                {{worked.financeApprovalRemark}}
+                                            </span><br *ngIf="worked.isApprovedByFinance" />
+                                            <span *ngIf="worked.isApprovedByManager">
+                                                Pro.Man: <span [class]="worked.isApprovedByManager==='APPROVED'?'badge bg-primary':'badge bg-warning'">{{worked.isApprovedByManager}}</span>
+                                                {{worked.managerApprovalRemark}}
+                                            </span>
+                                            <span *ngIf="!worked.isApprovedByDirector && !worked.isApprovedByFinance && !worked.isApprovedByManager">Pending</span>
+                                        </td>
+                                        <td>{{ worked.remark }}</td>
+                                        <td>{{ worked.date | date: 'dd/MMM/yyyy' }}</td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" 
+                                                    [id]="'actionMenu' + worked.id" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="bi bi-three-dots-vertical"></i>
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-end" [attr.aria-labelledby]="'actionMenu' + worked.id">
+                                                    <li>
+                                                        <a class="dropdown-item" href="javascript:void(0)" style="cursor: pointer;"
+                                                            (click)="Approve(worked)">
+                                                            <i class="bi bi-check-circle text-success me-2"></i>Approve
+                                                        </a>
+                                                    </li>
+                                                    <li><hr class="dropdown-divider"></li>
+                                                    <li>
+                                                        <a class="dropdown-item text-danger" href="javascript:void(0)" style="cursor: pointer;"
+                                                            (click)="ApporveReject(worked.id,userType[2],actionType[1])">
+                                                            <i class="bi bi-x-circle text-danger me-2"></i>Reject
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                            </ng-container>
+                        </tbody>
+                    </table>
 
                     <!-- <table class="table table-bordered ">
                         <thead>

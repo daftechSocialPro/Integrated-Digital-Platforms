@@ -301,26 +301,36 @@ namespace IntegratedImplementation.Services.Finance.Action
                                         Id = grouped.Key.Id,
                                         ProjectName = grouped.Key.ProjectName,
                                         AllocatedBudget = grouped.Key.PlannedBudget,
-                                        FinanceActivities = grouped.Select(g => new FinanceActivitiesDto
-                                        {
-                                            ActivityNumber = g.a.ActivityNumber,
-                                            ActivityDescription = g.a.ActivityDescription,
-                                            AllocatedBudget = g.a.PlanedBudget,
-                                            Indicator = g.a.Indicator,
-                                            PlannedWork = g.a.Goal,
-                                            FinanceWorkedBudgets = grouped.Select(x => new FinanceWorkedBudgetDto
+                                        FinanceActivities = grouped.GroupBy(g => new { g.a.Id, g.a.ActivityNumber, g.a.ActivityDescription, g.a.PlanedBudget, g.a.Indicator, g.a.Goal })
+                                            .Select(actGroup => new FinanceActivitiesDto
                                             {
-                                                Id = x.b.Id,
-                                                Date = x.b.CreatedDate,
-                                                ActualWorked = x.b.ActualWorked,
-                                                DocumentPath = x.b.FinanceDocumentPath,
-                                                EmployeeId = x.b.EmployeeValueId.ToString(),
-                                                EmployeeName = $"{x.b.EmployeeValue.FirstName} {x.b.EmployeeValue.MiddleName} {x.b.EmployeeValue.LastName}",
-                                                Activity = x.b.Activity.ActivityDescription,
-                                                Remark = x.b.Remark,
-                                                UsedBudget = x.b.ActualBudget
+                                                ActivityNumber = actGroup.Key.ActivityNumber,
+                                                ActivityDescription = actGroup.Key.ActivityDescription,
+                                                AllocatedBudget = actGroup.Key.PlanedBudget,
+                                                Indicator = actGroup.Key.Indicator,
+                                                PlannedWork = actGroup.Key.Goal,
+                                                FinanceWorkedBudgets = actGroup.Select(x => new FinanceWorkedBudgetDto
+                                                {
+                                                    Id = x.b.Id,
+                                                    Date = x.b.CreatedDate,
+                                                    ActualWorked = x.b.ActualWorked,
+                                                    DocumentPath = x.b.FinanceDocumentPath,
+                                                    FinanceDocument = x.b.FinanceDocumentPath,
+                                                    Documents = _dbContext.ProgressAttachments.Where(pa => pa.ActivityProgressId == x.b.Id).Select(pa => pa.FilePath).ToList(),
+                                                    EmployeeId = x.b.EmployeeValueId.ToString(),
+                                                    EmployeeName = $"{x.b.EmployeeValue.FirstName} {x.b.EmployeeValue.MiddleName} {x.b.EmployeeValue.LastName}",
+                                                    Activity = x.b.Activity.ActivityDescription,
+                                                    ActivityNumber = x.b.Activity.ActivityNumber,
+                                                    Remark = x.b.Remark,
+                                                    UsedBudget = x.b.ActualBudget,
+                                                    IsApprovedByManager = x.b.IsApprovedByManager.ToString(),
+                                                    IsApprovedByFinance = x.b.IsApprovedByFinance.ToString(),
+                                                    IsApprovedByDirector = x.b.IsApprovedByDirector.ToString(),
+                                                    ManagerApprovalRemark = x.b.CoordinatorApprovalRemark,
+                                                    FinanceApprovalRemark = x.b.FinanceApprovalRemark,
+                                                    DirectorApprovalRemark = x.b.DirectorApprovalRemark
+                                                }).ToList()
                                             }).ToList()
-                                        }).ToList()
                                     }).ToListAsync();
 
 

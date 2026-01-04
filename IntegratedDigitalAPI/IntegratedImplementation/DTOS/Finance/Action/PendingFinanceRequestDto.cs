@@ -33,6 +33,8 @@ namespace IntegratedImplementation.DTOS.Finance.Action
         public double ActualWorked { get; set; } 
         public double UsedBudget { get; set; }
         public string? DocumentPath { get; set; }
+        public string? FinanceDocument { get; set; }
+        public List<string>? Documents { get; set; }
         public DateTime Date { get; set; }
 
         public string? Activity { get; set; }
@@ -40,6 +42,14 @@ namespace IntegratedImplementation.DTOS.Finance.Action
         public string? EmployeeName { get; set; }
 
         public string? EmployeeId { get; set; }
+
+        public string? IsApprovedByManager { get; set; }
+        public string? IsApprovedByFinance { get; set; }
+        public string? IsApprovedByDirector { get; set; }
+        public string? ManagerApprovalRemark { get; set; }
+        public string? FinanceApprovalRemark { get; set; }
+        public string? DirectorApprovalRemark { get; set; }
+        public string? ActivityNumber { get; set; }
 
     }
 }

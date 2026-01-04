@@ -14,7 +14,18 @@
     <section class="section">
 <div class="card">
     <div class="row p-2">
-        <div class="col-lg-12 text-end ">
+        <div class="col-lg-6">
+            <div class="form-floating">
+                <select class="form-select" [(ngModel)]="selectedPeriodId" (change)="onPeriodFilterChange()" id="periodFilter">
+                    <option value="ALL">All Strategic Periods</option>
+                    <option *ngFor="let period of strategicPeriods" [value]="period.id">
+                        {{period.name}} ({{period.startDate | date:'yyyy'}} - {{period.endDate | date:'yyyy'}})
+                    </option>
+                </select>
+                <label for="periodFilter">Filter by Strategic Period</label>
+            </div>
+        </div>
+        <div class="col-lg-6 text-end">
             <button type="button" class="btn btn-outline-primary" (click)="addStrategicPlan()"><i class="bi bi-plus me-1"></i>
                 Strategic Direction</button>
         </div>
@@ -26,7 +37,7 @@
                     <h5 class="card-title">Strategic Directions</h5>
 
                     <p-table
-                    [value]="strategicPlans"
+                    [value]="filteredStrategicPlans"
                     [paginator]="true"
                     [rows]="5"
                     [showCurrentPageReport]="true"
@@ -39,6 +50,7 @@
                         <tr>
                             <th >Name</th>
                             <th >Description</th>
+                            <th >Strategic Period</th>
                             <th>Action</th>
                             
                           
@@ -48,6 +60,7 @@
                         <tr>
                             <td>{{ plan.name }}</td>
                             <td>{{ plan.description }}</td>
+                            <td>{{ plan.strategicPeriodName || 'N/A' }}</td>
                             <td>
                                 <button type="button" (click)="updateStrategicPlan(plan)" class="btn btn-outline-warning"><i
                                         class="bi bi-pencil "></i> </button>

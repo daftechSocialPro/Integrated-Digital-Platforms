@@ -271,7 +271,7 @@ export class AddPlansComponent implements OnInit {
         remark: this.planForm.value.Remark,
         structureId: this.planForm.value.StructureId,
         projectManagerId: this.ProjectManagerId.id,
-        financeManagerId: this.financeManagerId.id,
+        financeManagerId: this.financeManagerId?.id || '00000000-0000-0000-0000-000000000000',
         goal: this.planForm.value.Goal,
         objective: this.planForm.value.Objective,
         startDate: this.planForm.value.StartDate,

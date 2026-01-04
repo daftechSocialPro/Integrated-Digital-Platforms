@@ -20,6 +20,9 @@
                         <li *ngIf="roleMatch(['PM-CONFIGURATION','PM-ADMIN'])"> <a routerLink="/pm/configuration"
                                     routerLinkActive="active">
                                     <i class="bi bi-circle"></i><span>Configuration</span> </a></li>
+                        <li *ngIf="roleMatch(['PLANNER','PM-ADMIN'])"> <a routerLink="/pm/strategicPeriods"
+                                    routerLinkActive="active">
+                                    <i class="bi bi-circle"></i><span>Strategic Periods</span> </a></li>
                         <li *ngIf="roleMatch(['PLANNER','PM-ADMIN'])"> <a routerLink="/pm/strategicPlans"
                                     routerLinkActive="active">
                                     <i class="bi bi-circle"></i><span>Strategic Directions</span> </a></li>
@@ -32,7 +35,7 @@
                         <li *ngIf="roleMatch(['PROGRESS-REPORT','PM-ADMIN'])"> <a routerLink="/pm/assignedactivities"
                                     routerLinkActive="active">
                                     <i class="bi bi-circle"></i><span>
-                                          Planned Vs Achivements
+                                          Activity Status
                                           <p-badge *ngIf="Activties&&Activties.length>0" severity="success"
                                                 [value]="Activties&&Activties.length.toString()"></p-badge>
                                     </span>
@@ -59,12 +62,12 @@
                                     </span> </a>
                         </li>
                         <li *ngIf="roleMatch(['PM-VIEW-REPORT','PM-ADMIN'])"> <a routerLink="/strategicplanreport"
-                                    routerLinkActive="active"> <i class="bi bi-circle"></i><span>Planned vs Achivment
+                                    routerLinkActive="active"> <i class="bi bi-circle"></i><span>Report(plan vs Achievement)
                                           (Strategic Plan)
                                     </span> </a>
                         </li>
                         <li *ngIf="roleMatch(['PM-VIEW-REPORT','PM-ADMIN'])"> <a routerLink="/projectAchivment"
-                                    routerLinkActive="active"> <i class="bi bi-circle"></i><span>Planned vs Achivment
+                                    routerLinkActive="active"> <i class="bi bi-circle"></i><span>Report(plan vs Achievement)
                                           (Project)
                                     </span> </a>
                         </li>

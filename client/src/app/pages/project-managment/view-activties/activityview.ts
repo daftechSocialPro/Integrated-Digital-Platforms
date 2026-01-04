@@ -29,6 +29,8 @@ export interface ActivityView {
 
 
     projectName?:string
+    strategicPlan?: string
+    strategicPlanIndicator?: string
 
     activityLocations?: any
 

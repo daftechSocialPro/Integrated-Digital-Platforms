@@ -21,6 +21,16 @@
                     <div class="d-flex justify-content-start ">
 
                         <div class="form-floating col-3 me-2">
+                            <select class="form-control" [(ngModel)]="selectedStrategicPeriod" (change)="onStrategicPeriodChange()" id="StrategicPeriodId">
+                                <option value="ALL">All Strategic Periods</option>
+                                <option *ngFor="let period of strategicPeriods" [value]="period.id">
+                                    {{period.name}} ({{period.startDate | date:'yyyy'}} - {{period.endDate | date:'yyyy'}})
+                                </option>
+                            </select>
+                            <label for="StrategicPeriodId">Strategic Period</label>
+                        </div>
+
+                        <div class="form-floating col-3 me-2">
                             <select class="form-control" [(ngModel)]="selectedStrategicPlan"
                                 (change)="filterStrategicPlans()" id="StrategicPlanId" placeholder="StrategicPlanId">
                                 <option></option>

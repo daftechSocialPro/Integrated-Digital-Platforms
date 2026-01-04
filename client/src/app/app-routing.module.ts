@@ -24,6 +24,7 @@ import { VolunterDetailComponent } from './pages/human-resource/volunter/volunte
 import { LoanManagementComponent } from './pages/human-resource/loan-management/loan-management.component';
 import { PMConfigurationComponent } from './pages/project-managment/pm-configuration/pm-configuration.component';
 import { StrategicPlanComponent } from './pages/project-managment/strategic-plan/strategic-plan.component';
+import { StrategicPeriodComponent } from './pages/project-managment/strategic-period/strategic-period.component';
 import { PlansComponent } from './pages/project-managment/plans/plans.component';
 import { ComittesComponent } from './pages/project-managment/comittes/comittes.component';
 import { TasksComponent } from './pages/project-managment/tasks/tasks.component';
@@ -71,6 +72,7 @@ const routes: Routes = [
   { path: 'configuration', canActivate: [AuthGuard], component: ConfigurationComponent, data: { permittedRoles: ['GENERAL-CONFIGURATION'] } },
   { path: 'pm/configuration', canActivate: [AuthGuard], component: PMConfigurationComponent },
   { path: 'pm/strategicPlans', canActivate: [AuthGuard], component: StrategicPlanComponent },
+  { path: 'pm/strategicPeriods', canActivate: [AuthGuard], component: StrategicPeriodComponent },
 
   { path: 'pm/projects', canActivate: [AuthGuard], component: PlansComponent },
   { path: 'pm/task', canActivate: [AuthGuard], component: TasksComponent },

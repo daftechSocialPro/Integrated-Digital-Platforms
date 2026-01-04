@@ -10,6 +10,7 @@ namespace IntegratedImplementation.DTOS.PM
     {
         public string Name { get; set; }
         public string Description { get; set; }
+        public Guid StrategicPeriodId { get; set; }
         public string? CreatedById { get; set; } = null!;
     }
 
@@ -18,9 +19,28 @@ namespace IntegratedImplementation.DTOS.PM
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-
+        public Guid StrategicPeriodId { get; set; }
+        public string? StrategicPeriodName { get; set; }
         public bool RowStatus { get; set; }
 
+    }
+
+    public record StrategicPeriodPostDto
+    {
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public DateTime StartDate { get; set; }
+        public string? CreatedById { get; set; } = null!;
+    }
+
+    public record StrategicPeriodGetDto
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public bool RowStatus { get; set; }
     }
 
 

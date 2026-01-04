@@ -979,7 +979,8 @@ namespace IntegratedDigitalAPI.Services.PM.Activity
                            IsTraining = e.IsTraining,
                            ActivityNumber = e.ActivityNumber,
                            ProjectName = e.PlanId != null ? e.Plan.ProjectName : (e.TaskId != null ? e.Task.Project.ProjectName : e.ActivityParent.Task.Project.ProjectName),
-
+                           StrategicPlan = e.StrategicPlanId,
+                           StrategicPlanIndicator = e.StrategicPlanIndicatorId,
                            Begining = e.Begining,
                            Target = e.Goal,
                            UnitOfMeasurment = e.Indicator,

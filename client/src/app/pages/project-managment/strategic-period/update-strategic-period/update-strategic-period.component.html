@@ -1,0 +1,51 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Update Strategic Period</h5>
+        <button type="button" class="btn-close" id="ModalClose" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Strategic Period Detail</h5>
+            <p class="text-muted">Note: The period will automatically span 5 years from the start date.</p>
+            <form class="" [formGroup]="strategicPeriodForm" (ngSubmit)="submit()">
+                <div class="modal-body">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="Name" placeholder="Name"
+                                    formControlName="name">
+                                <label for="Name">Name</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="date" class="form-control" id="startDate" placeholder="Start Date"
+                                    formControlName="startDate" [min]="minDate | date:'yyyy-MM-dd'">
+                                <label for="startDate">Start Date</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-floating">
+                                <textarea class="form-control" id="description" placeholder="Description"
+                                    formControlName="description" style="height: 100px"></textarea>
+                                <label for="description">Description</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="isActive" class="col-12">Is Active</label>
+                                <p-inputSwitch formControlName="isActive"></p-inputSwitch>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" (click)="closeModal()">Close</button>
+                    <button type="submit" [disabled]="!strategicPeriodForm.valid" class="btn btn-outline-warning">Update Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

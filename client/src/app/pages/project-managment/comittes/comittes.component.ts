@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
+import { ConfirmationService, ConfirmEventType, MessageService } from 'primeng/api';
 import { AddComiteeComponent } from './add-comitee/add-comitee.component';
 import { CommitteeView } from '../../../model/PM/committeeDto';
 import { CommitteeEmployeeComponent } from './committee-employee/committee-employee.component';
@@ -17,7 +17,9 @@ export class ComittesComponent implements OnInit {
   committees : CommitteeView[]=[]
   constructor (
     private modalService : NgbModal,
-    private pmService  : PMService
+    private pmService  : PMService,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService
     
   ){}
   ngOnInit(): void {
@@ -65,6 +67,38 @@ export class ComittesComponent implements OnInit {
     })
   }
 
-
+  deleteCommittee(id: string) {
+    this.confirmationService.confirm({
+      message: 'Do you want to delete this project team?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.pmService.deleteCommittee(id).subscribe({
+          next: (res) => {
+            if (res.success) {
+              this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: res.message });
+              this.listCommittee();
+            }
+            else {
+              this.messageService.add({ severity: 'error', summary: 'Rejected', detail: res.message });
+            }
+          }, error: (err) => {
+            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: err });
+          }
+        })
+      },
+      reject: (type: ConfirmEventType) => {
+        switch (type) {
+          case ConfirmEventType.REJECT:
+            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
+            break;
+          case ConfirmEventType.CANCEL:
+            this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
+            break;
+        }
+      },
+      key: 'positionDialog'
+    });
+  }
 
 }

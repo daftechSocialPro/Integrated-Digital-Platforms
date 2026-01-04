@@ -8,6 +8,7 @@ import * as XLSX from 'xlsx';
 import { ProjectmanagementService } from 'src/app/services/projectmanagement.service';
 import { Router } from '@angular/router';
 import { ActivityView } from '../../view-activties/activityview';
+import { StrategicPeriodGetDto } from 'src/app/model/PM/StrategicPlanDto';
 @Component({
   selector: 'app-strategic-plan-report',
   templateUrl: './strategic-plan-report.component.html',
@@ -22,6 +23,8 @@ export class StrategicPlanReportComponent implements OnInit {
   
   serachForm!: FormGroup
   strategicPlans!:SelectList[]
+  strategicPeriods: StrategicPeriodGetDto[] = []
+  selectedStrategicPeriod: string = 'ALL'
 
   filterdStrategicPlans:SelectList[]=[] 
   plannedreport  !: IPlannedReport
@@ -51,6 +54,7 @@ taskItems2 :number[] =Array(20).fill(0)
 
   ngOnInit(): void {
 
+    this.getStrategicPeriods()
     this.getStrategicPlans()
     this.serachForm = this.formBuilder.group({
       BudgetYear: [''],
@@ -60,21 +64,81 @@ taskItems2 :number[] =Array(20).fill(0)
     
   }
 
+  getStrategicPeriods() {
+    this.projectService.getStrategicPeriods().subscribe({
+      next: (res) => {
+        this.strategicPeriods = res;
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+  }
+
   getStrategicPlans(){
 
-    this.dropDownService.getStrategicPlans().subscribe({
+    // Get full strategic plans list with period information
+    this.projectService.getStragegicPlan().subscribe({
       next:(res)=>{
-      
-        this.strategicPlans = res 
-        this.filterdStrategicPlans = res 
+        this.applyStrategicPeriodFilter(res);
         res.forEach((str) => {
           if (str.id !== undefined) {
             this.getStrategicPlanForReport(str.id)
           }
-
+        });
+      },
+      error: (err) => {
+        // Fallback to dropdown service if pmService fails
+        this.dropDownService.getStrategicPlans().subscribe({
+          next:(res)=>{
+            this.strategicPlans = res 
+            this.filterdStrategicPlans = res 
+            res.forEach((str) => {
+              if (str.id !== undefined) {
+                this.getStrategicPlanForReport(str.id)
+              }
+            });
+          }
         });
       }
     })
+  }
+
+  onStrategicPeriodChange() {
+    // Reload strategic plans and apply filter
+    this.projectService.getStragegicPlan().subscribe({
+      next: (res) => {
+        this.applyStrategicPeriodFilter(res);
+        // Reset strategic plan selection when period changes
+        this.selectedStrategicPlan = '';
+        this.filterStrategicPlans();
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+  }
+
+  applyStrategicPeriodFilter(allPlans: any[]) {
+    if (this.selectedStrategicPeriod === 'ALL' || !this.selectedStrategicPeriod) {
+      // Show all strategic plans
+      this.strategicPlans = allPlans.map(plan => ({
+        id: plan.id,
+        name: plan.name
+      }));
+      this.filterdStrategicPlans = this.strategicPlans;
+    } else {
+      // Filter strategic plans by period
+      const filteredPlans = allPlans.filter(
+        plan => plan.strategicPeriodId === this.selectedStrategicPeriod
+      );
+      // Update strategicPlans dropdown with filtered list
+      this.strategicPlans = filteredPlans.map(plan => ({
+        id: plan.id,
+        name: plan.name
+      }));
+      this.filterdStrategicPlans = this.strategicPlans;
+    }
   }
 
   

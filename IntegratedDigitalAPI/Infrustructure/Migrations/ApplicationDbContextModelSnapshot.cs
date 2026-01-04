@@ -4319,6 +4319,42 @@ namespace IntegratedInfrustructure.Migrations
                     b.ToTable("ReportingPeriods");
                 });
 
+            modelBuilder.Entity("IntegratedInfrustructure.Model.PM.StrategicPeriod", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Rowstatus")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.ToTable("StrategicPeriods");
+                });
+
             modelBuilder.Entity("IntegratedInfrustructure.Model.PM.StrategicPlan", b =>
                 {
                     b.Property<Guid>("Id")
@@ -4342,9 +4378,14 @@ namespace IntegratedInfrustructure.Migrations
                     b.Property<int>("Rowstatus")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("StrategicPeriodId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CreatedById");
+
+                    b.HasIndex("StrategicPeriodId");
 
                     b.ToTable("StrategicPlans");
                 });
@@ -8311,13 +8352,30 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("CreatedBy");
                 });
 
-            modelBuilder.Entity("IntegratedInfrustructure.Model.PM.StrategicPlan", b =>
+            modelBuilder.Entity("IntegratedInfrustructure.Model.PM.StrategicPeriod", b =>
                 {
                     b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedById");
 
                     b.Navigation("CreatedBy");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Model.PM.StrategicPlan", b =>
+                {
+                    b.HasOne("IntegratedInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("IntegratedInfrustructure.Model.PM.StrategicPeriod", "StrategicPeriod")
+                        .WithMany("StrategicPlans")
+                        .HasForeignKey("StrategicPeriodId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("StrategicPeriod");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.PM.Tasks", b =>
@@ -9378,6 +9436,11 @@ namespace IntegratedInfrustructure.Migrations
                     b.Navigation("TaskMemos");
 
                     b.Navigation("Tasks");
+                });
+
+            modelBuilder.Entity("IntegratedInfrustructure.Model.PM.StrategicPeriod", b =>
+                {
+                    b.Navigation("StrategicPlans");
                 });
 
             modelBuilder.Entity("IntegratedInfrustructure.Model.PM.Tasks", b =>

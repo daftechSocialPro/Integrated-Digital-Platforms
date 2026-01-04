@@ -126,6 +126,7 @@ namespace IntegratedInfrustructure.Data
         public DbSet<ProjectTeamEmployees> ProjectTeamEmployees { get; set; }
         public DbSet<ProjectTeam> ProjectTeams { get; set; }
         public DbSet<QuarterSetting> QuarterSettings { get; set; }
+        public DbSet<StrategicPeriod> StrategicPeriods { get; set; }
         public DbSet<StrategicPlan> StrategicPlans { get; set; }
         public DbSet<TaskMembers> TaskMembers { get; set; }
         public DbSet<TaskMemo> TaskMemos { get; set; }

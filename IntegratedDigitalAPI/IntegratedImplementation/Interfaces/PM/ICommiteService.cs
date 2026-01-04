@@ -2,6 +2,7 @@
 
 using IntegratedDigitalAPI.DTOS.PM;
 using IntegratedImplementation.DTOS.Configuration;
+using Implementation.Helper;
 
 namespace IntegratedDigitalAPI.Services.PM.Commite
 {
@@ -17,6 +18,7 @@ namespace IntegratedDigitalAPI.Services.PM.Commite
         public Task<int> RemoveEmployeestoCommitte(CommiteEmployeesdto commiteEmployeesdto);
         public Task<List<SelectListDto>> GetSelectListCommittee();
         public Task<List<SelectListDto>> GetCommiteeEmployees(Guid comitteId);
+        public Task<ResponseMessage> DeleteCommitee(Guid id);
         //object AddCommite(AddCommiteDto addCommiteDto);
     }
 }

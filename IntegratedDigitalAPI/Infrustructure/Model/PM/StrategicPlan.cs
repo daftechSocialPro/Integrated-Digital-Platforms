@@ -11,6 +11,9 @@ namespace IntegratedInfrustructure.Model.PM
     {
         public string Name { get;set; }
 
-        public string Description { get;set; }  
+        public string Description { get;set; }
+
+        public Guid StrategicPeriodId { get; set; }
+        public virtual StrategicPeriod StrategicPeriod { get; set; }
     }
 }

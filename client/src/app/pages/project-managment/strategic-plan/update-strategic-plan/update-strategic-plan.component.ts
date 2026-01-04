@@ -3,7 +3,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
 import { DepartmentGetDto } from 'src/app/model/HRM/IDepartmentDto';
-import { StrategicPlanGetDto } from 'src/app/model/PM/StrategicPlanDto';
+import { StrategicPlanGetDto, StrategicPeriodGetDto } from 'src/app/model/PM/StrategicPlanDto';
 import { HrmService } from 'src/app/services/hrm.service';
 import { ProjectmanagementService } from 'src/app/services/projectmanagement.service';
 
@@ -17,14 +17,29 @@ export class UpdateStrategicPlanComponent implements OnInit {
   @Input() strategicPlan !: StrategicPlanGetDto
 
   strategicPlanForm!: FormGroup;
+  strategicPeriods: StrategicPeriodGetDto[] = []
 
   ngOnInit(): void {
 
     this.strategicPlanForm = this.formBuilder.group({
       name: [this.strategicPlan.name, Validators.required],
       description: [this.strategicPlan.description],
+      strategicPeriodId: [this.strategicPlan.strategicPeriodId || '', Validators.required],
       isActive:[this.strategicPlan.rowStatus]
     })
+
+    this.loadStrategicPeriods();
+  }
+
+  loadStrategicPeriods() {
+    this.pmService.getStrategicPeriods().subscribe({
+      next: (res) => {
+        this.strategicPeriods = res;
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
   }
 
   constructor(
@@ -46,6 +61,7 @@ export class UpdateStrategicPlanComponent implements OnInit {
         name: this.strategicPlanForm.value.name,
         description: this.strategicPlanForm.value.description,
         id: this.strategicPlan.id,
+        strategicPeriodId: this.strategicPlanForm.value.strategicPeriodId,
         rowStatus :this.strategicPlanForm.value.isActive
       }
 

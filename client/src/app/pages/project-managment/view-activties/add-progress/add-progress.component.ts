@@ -58,8 +58,8 @@ export class AddProgressComponent implements OnInit {
       
       this.progressForm = this.formBuilder.group({    
         QuarterId:['',Validators.required],      
-        ActualBudget:[0,Validators.required],
-        ActualWorked:[0,Validators.required],
+        ActualBudget:[null, [Validators.required, Validators.min(0.01)]],
+        ActualWorked:[null, [Validators.required, Validators.min(0.01)]],
         Remark : ['']           
 
       })
@@ -80,15 +80,26 @@ export class AddProgressComponent implements OnInit {
 
     this.pmService.viewDraftProgress(this.activity.id).subscribe({
       next:(res)=>{
-        this.draftedProgress =res
-        
-
-        if(this.draftedProgress){
-          this.progressForm.controls['ActualBudget'].setValue(this.draftedProgress.usedBudget)
-          this.progressForm.controls['QuarterId'].setValue(this.draftedProgress.quarterId)
-          this.progressForm.controls['ActualWorked'].setValue(this.draftedProgress.actalWorked)
-          this.progressForm.controls['Remark'].setValue(this.draftedProgress.remark)
+        if(res && res.id){
+          this.draftedProgress = res
+          
+          // Set form values from saved draft
+          if(this.draftedProgress.usedBudget != null && this.draftedProgress.usedBudget !== undefined){
+            this.progressForm.controls['ActualBudget'].setValue(this.draftedProgress.usedBudget)
+          }
+          if(this.draftedProgress.quarterId){
+            this.progressForm.controls['QuarterId'].setValue(this.draftedProgress.quarterId)
+          }
+          if(this.draftedProgress.actalWorked != null && this.draftedProgress.actalWorked !== undefined){
+            this.progressForm.controls['ActualWorked'].setValue(this.draftedProgress.actalWorked)
+          }
+          if(this.draftedProgress.remark){
+            this.progressForm.controls['Remark'].setValue(this.draftedProgress.remark)
+          }
         }
+      },
+      error: (err) => {
+        console.error('Error loading draft progress:', err)
       }
     })
 
@@ -102,6 +113,18 @@ export class AddProgressComponent implements OnInit {
 
   submit(bool:boolean){
 
+    // Validate that at least one of ActualWorked or ActualBudget has a value greater than 0
+    const actualWorked = this.progressForm.value.ActualWorked;
+    const actualBudget = this.progressForm.value.ActualBudget;
+    
+    if ((!actualWorked || actualWorked <= 0) && (!actualBudget || actualBudget <= 0)) {
+      this.messageService.add({ 
+        severity: 'error', 
+        summary: 'Validation Error', 
+        detail: 'Please enter at least one value for Actual Progress or Used Budget' 
+      });
+      return;
+    }
 
     if (this.progressForm.valid ){
       var progressValue = this.progressForm.value;

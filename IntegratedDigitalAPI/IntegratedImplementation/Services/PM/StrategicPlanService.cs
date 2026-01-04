@@ -29,13 +29,23 @@ namespace IntegratedImplementation.Services.PM
 
         public async Task<ResponseMessage> AddStrategicPlan(StrategicPlanPostDto strategicPlansPost)
         {
-
+            // Validate that StrategicPeriod exists
+            var strategicPeriod = await _dbContext.StrategicPeriods.FirstOrDefaultAsync(x => x.Id == strategicPlansPost.StrategicPeriodId);
+            if (strategicPeriod == null)
+            {
+                return new ResponseMessage
+                {
+                    Message = "Strategic Period not found",
+                    Success = false
+                };
+            }
 
             StrategicPlan strategicPlan = new StrategicPlan
             {
                 Id = Guid.NewGuid(),
                 Name = strategicPlansPost.Name,
                 Description = strategicPlansPost.Description,
+                StrategicPeriodId = strategicPlansPost.StrategicPeriodId,
                 CreatedById = strategicPlansPost.CreatedById,
                 Rowstatus = RowStatus.ACTIVE
             };
@@ -54,13 +64,19 @@ namespace IntegratedImplementation.Services.PM
 
         public async Task<List<StrategicPlanGetDto>> GetStrategicPlanList()
         {
-            var departmentList = await _dbContext.StrategicPlans.AsNoTracking().OrderBy(x=>x.Name).Select(x => new StrategicPlanGetDto
-            {
-                Id = x.Id,
-                Name = x.Name,
-                Description = x.Description,
-                RowStatus = x.Rowstatus== RowStatus.ACTIVE?true:false,
-            }).ToListAsync();
+            var departmentList = await _dbContext.StrategicPlans
+                .Include(x => x.StrategicPeriod)
+                .AsNoTracking()
+                .OrderBy(x=>x.Name)
+                .Select(x => new StrategicPlanGetDto
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Description = x.Description,
+                    StrategicPeriodId = x.StrategicPeriodId,
+                    StrategicPeriodName = x.StrategicPeriod.Name,
+                    RowStatus = x.Rowstatus== RowStatus.ACTIVE?true:false,
+                }).ToListAsync();
 
             return departmentList;
         }
@@ -71,13 +87,21 @@ namespace IntegratedImplementation.Services.PM
 
             if (currentStrategicPlan != null)
             {
+                // Validate that StrategicPeriod exists
+                var strategicPeriod = await _dbContext.StrategicPeriods.FirstOrDefaultAsync(x => x.Id == strategicPlansGet.StrategicPeriodId);
+                if (strategicPeriod == null)
+                {
+                    return new ResponseMessage { Success = false, Message = "Strategic Period not found" };
+                }
+
                 currentStrategicPlan.Name = strategicPlansGet.Name;
                 currentStrategicPlan.Description = strategicPlansGet.Description;
+                currentStrategicPlan.StrategicPeriodId = strategicPlansGet.StrategicPeriodId;
                 currentStrategicPlan.Rowstatus = strategicPlansGet.RowStatus? RowStatus.ACTIVE :RowStatus.INACTIVE;
                 await _dbContext.SaveChangesAsync();
                 return new ResponseMessage { Data = currentStrategicPlan, Success = true, Message = "Updated Successfully" };
             }
-            return new ResponseMessage { Success = false, Message = "Unable To Find Department" };
+            return new ResponseMessage { Success = false, Message = "Unable To Find Strategic Plan" };
         }
 
         public async Task<List<ActivityGroup>> GetStrategicPlanReport(Guid strategicPlanId)

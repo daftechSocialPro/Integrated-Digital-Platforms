@@ -13,6 +13,7 @@ import { CommonService } from 'src/app/services/common.service';
 import { DropDownService } from 'src/app/services/dropDown.service';
 import { TrainingService } from 'src/app/services/training.service';
 import { UpdateTraineeComponent } from './update-trainee/update-trainee.component';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-trainees-form',
@@ -349,6 +350,67 @@ importFromExcel() {
     }
 
   })
+}
+
+downloadTemplate() {
+  // Define the template headers based on the import structure
+  const headers = [
+    'Full Name',
+    'Gender',
+    'Age',
+    'Profession',
+    'Level of Education',
+    'Phone Number',
+    'Email',
+    'Region',
+    'Zone',
+    'Woreda',
+    'Organization',
+    'Type of Organization',
+    'Pre Training Summary',
+    'Post Training Summary',
+    'TrainingId'
+  ];
+
+  // Get the training ID
+  const trainingId = this.trainingId || this.traininggId || '';
+
+  // Create worksheet data with headers and one example row
+  const worksheetData = [
+    headers,
+    [
+      'Example Name',
+      'MALE',
+      '30',
+      'Nurse',
+      'Bachelor',
+      '0912345678',
+      'example@email.com',
+      'Addis Ababa',
+      'Zone 1',
+      'Woreda 1',
+      'Organization Name',
+      'Government',
+      '0',
+      '0',
+      trainingId
+    ]
+  ];
+
+  // Create workbook and worksheet
+  const worksheet = XLSX.utils.aoa_to_sheet(worksheetData);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, 'Trainee Template');
+
+  // Generate Excel file and download
+  const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+  const data: Blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
+  const url: string = window.URL.createObjectURL(data);
+  const link: HTMLAnchorElement = document.createElement('a');
+  link.href = url;
+  link.download = 'Trainee_Template.xlsx';
+  link.click();
+  window.URL.revokeObjectURL(url);
 }
 
   

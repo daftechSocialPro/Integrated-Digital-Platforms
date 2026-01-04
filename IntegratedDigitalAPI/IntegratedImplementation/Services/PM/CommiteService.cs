@@ -4,6 +4,7 @@ using System.Collections.Immutable;
 using IntegratedInfrustructure.Data;
 using IntegratedInfrustructure.Models.PM;
 using IntegratedImplementation.DTOS.Configuration;
+using Implementation.Helper;
 
 namespace IntegratedDigitalAPI.Services.PM.Commite
 {
@@ -142,6 +143,36 @@ namespace IntegratedDigitalAPI.Services.PM.Commite
                 //CommiteeStatus = x.CommiteeEmployeeStatus.ToString(),
                 
             }).ToListAsync();
+        }
+
+        public async Task<ResponseMessage> DeleteCommitee(Guid id)
+        {
+            try
+            {
+                var committee = await _dBContext.ProjectTeams.Include(x => x.Employees).FirstOrDefaultAsync(x => x.Id == id);
+                if (committee == null)
+                {
+                    return new ResponseMessage { Success = false, Message = "Project team could not be found" };
+                }
+
+                // Check if committee has employees
+                if (committee.Employees.Any())
+                {
+                    // Remove all employees from the committee first
+                    _dBContext.ProjectTeamEmployees.RemoveRange(committee.Employees);
+                    await _dBContext.SaveChangesAsync();
+                }
+
+                // Remove the committee
+                _dBContext.ProjectTeams.Remove(committee);
+                await _dBContext.SaveChangesAsync();
+
+                return new ResponseMessage { Success = true, Message = "Project team deleted successfully!!" };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseMessage { Success = false, Message = ex.Message };
+            }
         }
 
        

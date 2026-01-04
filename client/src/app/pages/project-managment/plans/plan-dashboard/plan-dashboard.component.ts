@@ -6,11 +6,13 @@ import {
   PlanView,
   StrategicPlanReportDto,
 } from 'src/app/model/PM/PlansDto';
+import { StrategicPeriodGetDto } from 'src/app/model/PM/StrategicPlanDto';
 import { UserView } from 'src/app/model/user';
 import { PlanService } from 'src/app/services/plan.service';
 import { UserService } from 'src/app/services/user.service';
 import { EChartsOption } from 'echarts';
 import { DropDownService } from 'src/app/services/dropDown.service';
+import { ProjectmanagementService } from 'src/app/services/projectmanagement.service';
 import { SelectList } from 'src/app/model/common';
 import { DOCUMENT } from '@angular/common';
 
@@ -33,7 +35,7 @@ export class PlanDashboardComponent implements OnInit {
 
   pieChartOptions: any[] = [];
 
-  pieChartOptions2: EChartsOption[] = [];
+  pieChartOptions2: { quarter: number; option: EChartsOption }[] = [];
 
   barChartOptions: any[] = [];
   bar2ChartOptions: any[] = [];
@@ -60,6 +62,8 @@ export class PlanDashboardComponent implements OnInit {
 
   strategicPlans: SelectList[];
   selectedStrategicPlan: string = '';
+  strategicPeriods: StrategicPeriodGetDto[] = [];
+  selectedStrategicPeriod: string = 'ALL';
   currentYear: number;
   yearOptions: any[] = [];
 
@@ -73,7 +77,8 @@ export class PlanDashboardComponent implements OnInit {
     private planService: PlanService,
     private dropDownService: DropDownService,
     private userService: UserService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private pmService: ProjectmanagementService
   ) {}
 
   ngOnInit(): void {
@@ -83,6 +88,7 @@ export class PlanDashboardComponent implements OnInit {
     this.currentYear = currentDate.getFullYear();
     this.generateYearOptions();
     this.selectedYear = this.currentYear;
+    this.getStrategicPeriods();
     this.listPlans();
     this.getStrategicPlans();
   }
@@ -194,8 +200,11 @@ export class PlanDashboardComponent implements OnInit {
               },
             };
 
-            // Add the pie chart option to the array
-            this.pieChartOptions2.push(pieChartOption);
+            // Add the pie chart option with quarter number to maintain order
+            this.pieChartOptions2.push({ quarter: quarter, option: pieChartOption });
+            
+            // Sort by quarter number to ensure correct order
+            this.pieChartOptions2.sort((a, b) => a.quarter - b.quarter);
           },
         });
     });
@@ -210,12 +219,68 @@ export class PlanDashboardComponent implements OnInit {
     ];
   }
 
-  getStrategicPlans() {
-    this.dropDownService.getStrategicPlans().subscribe({
+  getStrategicPeriods() {
+    this.pmService.getStrategicPeriods().subscribe({
       next: (res) => {
-        this.strategicPlans = res;
+        this.strategicPeriods = res;
       },
+      error: (err) => {
+        console.error(err);
+      }
     });
+  }
+
+  getStrategicPlans() {
+    // Get full strategic plans list with period information
+    this.pmService.getStragegicPlan().subscribe({
+      next: (res) => {
+        this.applyStrategicPeriodFilter(res);
+      },
+      error: (err) => {
+        console.error(err);
+        // Fallback to dropdown service if pmService fails
+        this.dropDownService.getStrategicPlans().subscribe({
+          next: (res) => {
+            this.strategicPlans = res;
+          },
+        });
+      }
+    });
+  }
+
+  onStrategicPeriodChange() {
+    // Reload strategic plans and apply filter
+    this.pmService.getStragegicPlan().subscribe({
+      next: (res) => {
+        this.applyStrategicPeriodFilter(res);
+        // Reset strategic plan selection when period changes
+        this.selectedStrategicPlan = 'ALL';
+        this.filterStrategicPlans();
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+  }
+
+  applyStrategicPeriodFilter(allPlans: any[]) {
+    if (this.selectedStrategicPeriod === 'ALL' || !this.selectedStrategicPeriod) {
+      // Show all strategic plans
+      this.strategicPlans = allPlans.map(plan => ({
+        id: plan.id,
+        name: plan.name
+      }));
+    } else {
+      // Filter strategic plans by period
+      const filteredPlans = allPlans.filter(
+        plan => plan.strategicPeriodId === this.selectedStrategicPeriod
+      );
+      // Update strategicPlans dropdown with filtered list
+      this.strategicPlans = filteredPlans.map(plan => ({
+        id: plan.id,
+        name: plan.name
+      }));
+    }
   }
 
   getStrategicPlanReports() {

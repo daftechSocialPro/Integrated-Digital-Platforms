@@ -64,7 +64,12 @@ export class PMService {
   }
 
   getComittee() {
-    return this.http.get<CommitteeView[]>(this.BaseURI + '/Commite');
+    return this.http.get<CommitteeView[]>(this.BaseURI + '/PM/Commite/GetCommiteLists');
+  }
+  deleteCommittee(id: string) {
+    return this.http.delete<ResponseMessage>(
+      this.BaseURI + `/PM/Commite?id=${id}`
+    );
   }
 
   getComitteeSelectList() {

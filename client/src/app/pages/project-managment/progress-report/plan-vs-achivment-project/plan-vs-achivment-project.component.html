@@ -1,10 +1,10 @@
 <main id="main" class="main">
     <div class="pagetitle">
-        <h1>Plan vs Achivment </h1>
+        <h1>Report(plan vs Achievement)</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
-                <li class="breadcrumb-item active">Plan vs Achivement </li>
+                <li class="breadcrumb-item active">Report(plan vs Achievement)</li>
             </ol>
         </nav>
     </div>
@@ -19,15 +19,32 @@
                 <div class="card p-2">
                     <div class="d-flex justify-content-start ">
 
+                        <div class="form-floating col-3 me-2">
+                            <select class="form-control" [(ngModel)]="selectedStrategicPeriod" (change)="onStrategicPeriodChange()" id="StrategicPeriodId">
+                                <option value="ALL">All Strategic Periods</option>
+                                <option *ngFor="let period of strategicPeriods" [value]="period.id">
+                                    {{period.name}} ({{period.startDate | date:'yyyy'}} - {{period.endDate | date:'yyyy'}})
+                                </option>
+                            </select>
+                            <label for="StrategicPeriodId">Strategic Period</label>
+                        </div>
 
                         <div class="form-floating col-3 me-2">
                             <select class="form-control " [(ngModel)]="selectedProject" (change)="onProjectChange()">
-                                <option></option>
+                                <option value="ALL">All Projects</option>
                                 <option *ngFor="let item of Projects" [value]="item">{{item}}</option>
 
                             </select>
 
                             <label for="projects">Projects</label>
+                        </div>
+
+                        <div class="form-floating col-3 me-2">
+                            <select class="form-control" [(ngModel)]="selectedStrategicPlan" (change)="onStrategicPlanChange()" id="StrategicPlanId">
+                                <option value="ALL">All Strategic Directions</option>
+                                <option *ngFor="let item of strategicPlans" [value]="item.id">{{item.name}}</option>
+                            </select>
+                            <label for="StrategicPlanId">Strategic Direction</label>
                         </div>
 
 
@@ -72,8 +89,9 @@
             </div>
         </div>
         <div class="text-end col-lg-12 mt-2">
-
-            <button class="btn btn-outline-success text-end mb-3" (click)="exportAsExcel('Plan vs Achivment')"><i
+            <button class="btn btn-outline-primary text-end mb-3 me-2" (click)="refreshActivitiesData()"><i
+                    class="bi bi-arrow-clockwise"></i> Refresh </button>
+            <button class="btn btn-outline-success text-end mb-3" (click)="exportAsExcel('Report(plan vs Achievement)')"><i
                     class="bi bi-file-excel"></i> Export Excel </button>
         </div>
         <div #excelTable class="table-responsive card">
@@ -267,7 +285,7 @@
         </div>
         <div class="text-end col-lg-12 mt-2">
 
-            <button class="btn btn-outline-success text-end mb-3" (click)="exportAsExcel('Plan vs Achivment')"><i
+            <button class="btn btn-outline-success text-end mb-3" (click)="exportAsExcel('Report(plan vs Achievement)')"><i
                     class="bi bi-file-excel"></i> Export Excel </button>
         </div>
         <div #excelTable class="table-responsive card">

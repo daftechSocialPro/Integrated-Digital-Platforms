@@ -20,6 +20,16 @@
                 </select>
                 <label for="projects">Year</label>
               </div>
+
+              <div class="form-floating col-3">
+                <select class="form-control" [(ngModel)]="selectedStrategicPeriod" (change)="onStrategicPeriodChange()" id="StrategicPeriodId">
+                  <option value="ALL">All Strategic Periods</option>
+                  <option *ngFor="let period of strategicPeriods" [value]="period.id">
+                    {{period.name}} ({{period.startDate | date:'yyyy'}} - {{period.endDate | date:'yyyy'}})
+                  </option>
+                </select>
+                <label for="StrategicPeriodId">Strategic Period</label>
+              </div>
   
               <div class="form-floating col-3">
                 <select class="form-control" [(ngModel)]="selectedProject" (change)="onProjectChange()">
@@ -61,12 +71,12 @@
   
       <div *ngIf="selectedStrategicPlan !== 'ALL'">
         <div class="row flex-wrap" *ngIf="(selectedProject || selectedStrategicPlan) && activityStatusCheckBox">
-          <div *ngFor="let option of pieChartOptions2; let i = index" [ngClass]="{'col-md-3': budgetCheckeBox || accomplitiomentCheckBox, 'col-md-12': !budgetCheckeBox && !accomplitiomentCheckBox}">
+          <div *ngFor="let chartItem of pieChartOptions2; let i = index" [ngClass]="{'col-md-3': budgetCheckeBox || accomplitiomentCheckBox, 'col-md-12': !budgetCheckeBox && !accomplitiomentCheckBox}">
             <div class="card">
               <div class="chart-title d-flex justify-content-between align-items-center">
-                <h2 class="chart-title-text">{{ barChartData?.planName }} ( Quarter {{i + 1}} )</h2>
+                <h2 class="chart-title-text">{{ barChartData?.planName }} ( Quarter {{chartItem.quarter}} )</h2>
               </div>
-              <div echarts [options]="option" [style]="{ height: '300px', width: '100%' }"></div>
+              <div echarts [options]="chartItem.option" [style]="{ height: '300px', width: '100%' }"></div>
             </div>
           </div>
   
