@@ -222,7 +222,7 @@ namespace IntegratedDigitalAPI.Services.PM
                               StructureId = p.DepartmentId.ToString(),
                               ProjectManagerId = p.ProjectManagerId.ToString(),
                               FinanceManagerId = p.FinanceManagerId.ToString(),
-                              
+                              Remark = null, // Project model doesn't have Remark field
                               CreatedDate = p.CreatedDate
 
 

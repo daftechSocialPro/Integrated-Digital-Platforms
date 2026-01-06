@@ -53,6 +53,7 @@ export interface PlanView {
     projectManagerId:string
     financeManagerId?:string
     structureId:string
+    remark?:string
 
 
 }

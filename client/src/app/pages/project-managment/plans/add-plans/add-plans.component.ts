@@ -70,12 +70,12 @@ export class AddPlansComponent implements OnInit {
         HasTask: [this.planView.hasTask, Validators.required],
         PlandBudget: [this.planView.plandBudget, [Validators.required]],
         ProjectNumber: [this.planView.projectNumber, Validators.required],
-        StartDate: [this.planView.startDate.split('T')[0], Validators.required],
-        EndDate: [this.planView.endDate.split('T')[0], Validators.required],
-        SelectedProjectFunds: [this.planView.projectFundIds, Validators.required],
-        Remark: [''],
-        Goal: [this.planView.goal],
-        Objective: [this.planView.objective]
+        StartDate: [this.planView.startDate ? this.planView.startDate.split('T')[0] : '', Validators.required],
+        EndDate: [this.planView.endDate ? this.planView.endDate.split('T')[0] : '', Validators.required],
+        SelectedProjectFunds: [this.planView.projectFundIds || [], Validators.required],
+        Remark: [this.planView.remark || ''],
+        Goal: [this.planView.goal || ''],
+        Objective: [this.planView.objective || '']
 
       })
 
@@ -128,7 +128,11 @@ export class AddPlansComponent implements OnInit {
       next: (res) => {
         this.Structures = res
 
-        this.planForm.controls['StructureId'].setValue(this.planView.structureId)
+        if (this.planView && this.planView.structureId && this.planForm) {
+          // Ensure the structureId is set correctly, matching the format from dropdown
+          const structureId = this.planView.structureId.toUpperCase();
+          this.planForm.controls['StructureId'].setValue(structureId);
+        }
       }
     })
 
@@ -139,6 +143,13 @@ export class AddPlansComponent implements OnInit {
     this.dorpDownService.getProjectFundSourcess().subscribe({
       next: (res) => {
         this.projectSourceFunds = res
+        
+        // Ensure project funds are set correctly in update mode
+        if (this.planView && this.planView.projectFundIds && this.planForm) {
+          // Convert to uppercase to match dropdown format
+          const fundIds = this.planView.projectFundIds.map(id => id.toUpperCase());
+          this.planForm.controls['SelectedProjectFunds'].setValue(fundIds);
+        }
       }
     })
   }
@@ -149,6 +160,21 @@ export class AddPlansComponent implements OnInit {
     this.dorpDownService.GetEmployeeDropDown().subscribe({
       next: (res) => {
         this.employeeList = res
+        
+        // Initialize Project Manager and Finance Manager from planView if in update mode
+        if (this.planView && this.planView.projectManagerId) {
+          const pm = res.find(emp => emp.id.toLowerCase() === this.planView.projectManagerId.toLowerCase());
+          if (pm) {
+            this.ProjectManagerId = pm;
+          }
+        }
+        
+        if (this.planView && this.planView.financeManagerId) {
+          const fm = res.find(emp => emp.id.toLowerCase() === this.planView.financeManagerId.toLowerCase());
+          if (fm) {
+            this.financeManagerId = fm;
+          }
+        }
       }, error: (err) => {
 
       }
@@ -249,13 +275,18 @@ export class AddPlansComponent implements OnInit {
 
 
 
-    if (!this.ProjectManagerId) {
+    if (!this.ProjectManagerId || !this.ProjectManagerId.id) {
 
 
-      this.messageService.add({ severity: 'error', summary: 'Netowrk Error', detail: "Project manager Not selected" });
+      this.messageService.add({ severity: 'error', summary: 'Network Error', detail: "Project manager Not selected" });
 
 
 
+      return
+    }
+
+    if (!this.financeManagerId || !this.financeManagerId.id) {
+      this.messageService.add({ severity: 'error', summary: 'Network Error', detail: "Finance manager Not selected" });
       return
     }
 
@@ -268,12 +299,12 @@ export class AddPlansComponent implements OnInit {
         planName: this.planForm.value.PlanName,
         planWeight: this.planForm.value.PlanWeight,
         plandBudget: this.planForm.value.PlandBudget,
-        remark: this.planForm.value.Remark,
+        remark: this.planForm.value.Remark || '',
         structureId: this.planForm.value.StructureId,
         projectManagerId: this.ProjectManagerId.id,
-        financeManagerId: this.financeManagerId?.id || '00000000-0000-0000-0000-000000000000',
-        goal: this.planForm.value.Goal,
-        objective: this.planForm.value.Objective,
+        financeManagerId: this.financeManagerId.id,
+        goal: this.planForm.value.Goal || '',
+        objective: this.planForm.value.Objective || '',
         startDate: this.planForm.value.StartDate,
         endDate: this.planForm.value.EndDate,
         projectNumber: this.planForm.value.ProjectNumber,
@@ -284,11 +315,11 @@ export class AddPlansComponent implements OnInit {
       this.planService.updatePlan(planValue).subscribe({
 
         next: (res) => {
-          this.messageService.add({ severity: 'success', summary: 'Successfully Created.', detail: "Plan Successfully Updated" });
+          this.messageService.add({ severity: 'success', summary: 'Successfully Updated.', detail: "Plan Successfully Updated" });
           this.closeModal()
 
         }, error: (err) => {
-          this.messageService.add({ severity: 'error', summary: 'Netowrk Error', detail: "Something went wrong!!" });
+          this.messageService.add({ severity: 'error', summary: 'Network Error', detail: "Something went wrong!!" });
 
         }
       })
