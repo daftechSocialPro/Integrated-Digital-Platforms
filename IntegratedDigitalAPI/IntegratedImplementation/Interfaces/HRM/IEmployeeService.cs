@@ -11,6 +11,7 @@ namespace IntegratedImplementation.Interfaces.HRM
         Task<ResponseMessage> AddEmployee(EmployeePostDto addEmployee);
 
         Task<ResponseMessage> DeleteEmployee(Guid employeeId);
+        Task<IntegratedImplementation.DTOS.Common.DependencyCheckDto> CheckDependency(Guid employeeId);
         Task<ResponseMessage> UpdateEmployee(EmployeePostDto addEmployee);
         Task<ResponseMessage> UpdateEmployeeData(EmployeeUpdateDto updateEmployee);
         Task<EmployeeGetDto> GetEmployee(Guid employeeId);

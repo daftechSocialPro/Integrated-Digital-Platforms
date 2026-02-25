@@ -51,6 +51,9 @@ export class HrmService {
     checkDepartmentDependency(id: string) {
         return this.http.get<{hasDependencies: boolean, message: string}>(this.baseUrl + `/Department/CheckDependency?id=${id}`);
     }
+    checkEmployeeDependency(id: string) {
+        return this.http.get<{hasDependencies: boolean, message: string}>(this.baseUrl + `/Employee/CheckDependency?id=${id}`);
+    }
 
     getDepartments() {
         return this.http.get<DepartmentGetDto[]>(this.baseUrl + "/Department")

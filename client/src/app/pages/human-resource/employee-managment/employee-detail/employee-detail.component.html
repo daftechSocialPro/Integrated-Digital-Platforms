@@ -109,7 +109,7 @@
                         </thead>
                         <tbody>
                             <tr class="table-body">
-                                <td class="text-center">{{employee.gender}}</td>
+                                <td class="text-center">{{employee.gender | titlecase }}</td>
                                 <td class="text-center">{{employee.birthDate | date:"MMM dd, YYYY"}}</td>
                                 <td class="text-center">{{callcuclateAge(employee.birthDate)}}</td>
                                 <td class="text-center">{{employee.phoneNumber}}</td>

@@ -63,33 +63,32 @@ export class EmployeeManagmentComponent implements OnInit {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
 
-  DeleteEmployee(employeeId:string){
-
+  DeleteEmployee(employeeId: string) {
     this.confirmationService.confirm({
       message: 'Do you want to Delete this Employee Information ?',
       header: 'Employee Delete Confirmation !',
       icon: 'pi pi-info-circle',
       accept: () => {
-        this.hrmService.deleteEmployee(employeeId).subscribe({
-
-          next: (res) => {
-            if (res.success) {
-  
-              this.messageService.add({ severity: 'success', summary: `Successfully Delted`, detail: res.message })
-              window.location.reload()
+        this.hrmService.checkEmployeeDependency(employeeId).subscribe({
+          next: (depRes) => {
+            if (depRes.hasDependencies) {
+              this.confirmationService.confirm({
+                message: `${depRes.message} It will delete those datas also. Are you absolutely sure you want to remove the data?`,
+                header: 'Warning: Linked Data Found',
+                icon: 'pi pi-exclamation-triangle',
+                accept: () => {
+                  this.forceDeleteEmployee(employeeId);
+                },
+                key: 'positionDialog'
+              });
+            } else {
+              this.forceDeleteEmployee(employeeId);
             }
-            else {
-              this.messageService.add({ severity: 'error', summary: 'Something went wrong!!! ', detail: res.message })
-  
-            }
-  
-          }, error: (err) => {
-            this.messageService.add({ severity: 'error', summary: 'Error ', detail: err })
-  
+          },
+          error: (err) => {
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: "Unable to check employee dependencies" });
           }
-  
-        })
-
+        });
       },
       reject: (type: ConfirmEventType) => {
         switch (type) {
@@ -103,9 +102,22 @@ export class EmployeeManagmentComponent implements OnInit {
       },
       key: 'positionDialog'
     });
-   
+  }
 
-
+  forceDeleteEmployee(employeeId: string) {
+    this.hrmService.deleteEmployee(employeeId).subscribe({
+      next: (res) => {
+        if (res.success) {
+          this.messageService.add({ severity: 'success', summary: `Successfully Deleted`, detail: res.message })
+          window.location.reload()
+        }
+        else {
+          this.messageService.add({ severity: 'error', summary: 'Something went wrong!!! ', detail: res.message })
+        }
+      }, error: (err) => {
+        this.messageService.add({ severity: 'error', summary: 'Error ', detail: err })
+      }
+    });
   }
 
 

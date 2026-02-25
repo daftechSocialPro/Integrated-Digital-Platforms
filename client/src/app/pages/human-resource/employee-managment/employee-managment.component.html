@@ -61,12 +61,12 @@
                                         <div class="employee-code">{{ employee.employeeCode.toUpperCase() }}</div>
                                     </div>
                                 </td>
-                                <td>{{ employee.gender }}</td>
+                                <td>{{ employee.gender | titlecase }}</td>
                                 <td>{{ employee.birthDate | date:"MMM dd, YYY"}} </td>
-                                <td>{{ employee.martialStatus }}</td>
-                                <td>{{ employee.employmentType }}</td>
+                                <td>{{ employee.martialStatus | titlecase }}</td>
+                                <td>{{ employee.employmentType | titlecase }}</td>
                                 <td>{{ employee.employmentDate | date:"MMM dd, YYY" }}</td>
-                                <td>{{ employee.employmentStatus }}</td>
+                                <td>{{ employee.employmentStatus | titlecase }}</td>
                                 <td> <button class="btn btn-sm btn-outline-primary"
                                         (click)="employeeDetail(employee.id)">
                                         <i class="bi bi-eye"></i> Detail
@@ -84,3 +84,5 @@
         </div>
     </section>
 </main>
+<p-confirmDialog></p-confirmDialog>
+<p-confirmDialog key="positionDialog" position="top"></p-confirmDialog>

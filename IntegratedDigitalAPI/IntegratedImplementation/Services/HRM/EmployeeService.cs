@@ -135,6 +135,37 @@ namespace IntegratedImplementation.Services.HRM
 
 
 
+        public async Task<IntegratedImplementation.DTOS.Common.DependencyCheckDto> CheckDependency(Guid employeeId)
+        {
+            var empDetailsCount = await _dbContext.EmploymentDetails.CountAsync(x => x.EmployeeId == employeeId);
+            var educationsCount = await _dbContext.EmployeeEducations.CountAsync(x => x.EmployeeId == employeeId);
+            var familyCount = await _dbContext.EmployeeFamilies.CountAsync(x => x.EmployeeId == employeeId);
+            var bankCount = await _dbContext.EmployeeBanks.CountAsync(x => x.EmployeeId == employeeId);
+            var leavesCount = await _dbContext.EmployeeLeaves.CountAsync(x => x.EmployeeId == employeeId);
+            var docsCount = await _dbContext.EmployeeDocuments.CountAsync(x => x.EmployeeId == employeeId);
+            var suretyCount = await _dbContext.EmployeeSureties.CountAsync(x => x.EmployeeId == employeeId);
+            var guaranteesCount = await _dbContext.EmployeeGuarantiees.CountAsync(x => x.EmployeeId == employeeId);
+
+            int total = empDetailsCount + educationsCount + familyCount + bankCount + leavesCount + docsCount + suretyCount + guaranteesCount;
+
+            if (total > 0)
+            {
+                var msg = "This employee is linked to ";
+                var lst = new List<string>();
+                if (empDetailsCount > 0) lst.Add($"{empDetailsCount} Employment Details (History)");
+                if (educationsCount > 0) lst.Add($"{educationsCount} Educational Records");
+                if (familyCount > 0) lst.Add($"{familyCount} Family Records");
+                if (bankCount > 0) lst.Add($"{bankCount} Bank Accounts");
+                if (leavesCount > 0) lst.Add($"{leavesCount} Leave Requests");
+                if (docsCount > 0) lst.Add($"{docsCount} Documents");
+                if (suretyCount > 0) lst.Add($"{suretyCount} Sureties");
+                if (guaranteesCount > 0) lst.Add($"{guaranteesCount} Guarantees");
+
+                return new IntegratedImplementation.DTOS.Common.DependencyCheckDto { HasDependencies = true, Message = msg + string.Join(", ", lst) + "." };
+            }
+            return new IntegratedImplementation.DTOS.Common.DependencyCheckDto { HasDependencies = false, Message = "" };
+        }
+
         public async Task<ResponseMessage> DeleteEmployee(Guid employeeId)
         {
             var employee = await _dbContext.Employees.FindAsync(employeeId);
@@ -142,13 +173,43 @@ namespace IntegratedImplementation.Services.HRM
             {
                 try
                 {
+                    var empDetails = await _dbContext.EmploymentDetails.Where(x => x.EmployeeId == employeeId).ToListAsync();
+                    if (empDetails.Any()) _dbContext.EmploymentDetails.RemoveRange(empDetails);
+
+                    var educations = await _dbContext.EmployeeEducations.Where(x => x.EmployeeId == employeeId).ToListAsync();
+                    if (educations.Any()) _dbContext.EmployeeEducations.RemoveRange(educations);
+
+                    var family = await _dbContext.EmployeeFamilies.Where(x => x.EmployeeId == employeeId).ToListAsync();
+                    if (family.Any()) _dbContext.EmployeeFamilies.RemoveRange(family);
+
+                    var banks = await _dbContext.EmployeeBanks.Where(x => x.EmployeeId == employeeId).ToListAsync();
+                    if (banks.Any()) _dbContext.EmployeeBanks.RemoveRange(banks);
+
+                    var leaves = await _dbContext.EmployeeLeaves.Where(x => x.EmployeeId == employeeId).ToListAsync();
+                    if (leaves.Any()) _dbContext.EmployeeLeaves.RemoveRange(leaves);
+
+                    var docs = await _dbContext.EmployeeDocuments.Where(x => x.EmployeeId == employeeId).ToListAsync();
+                    if (docs.Any()) _dbContext.EmployeeDocuments.RemoveRange(docs);
+
+                    var surety = await _dbContext.EmployeeSureties.Where(x => x.EmployeeId == employeeId).ToListAsync();
+                    if (surety.Any()) _dbContext.EmployeeSureties.RemoveRange(surety);
+
+                    var guarantees = await _dbContext.EmployeeGuarantiees.Where(x => x.EmployeeId == employeeId).ToListAsync();
+                    if (guarantees.Any()) _dbContext.EmployeeGuarantiees.RemoveRange(guarantees);
+
+                    var supervisors = await _dbContext.EmployeeSupervisors.Where(x => x.EmployeeId == employeeId).ToListAsync();
+                    if (supervisors.Any()) _dbContext.EmployeeSupervisors.RemoveRange(supervisors);
+
+                    var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.EmployeeId == employeeId);
+                    if (user != null) _dbContext.Users.Remove(user);
+
                     _dbContext.Employees.Remove(employee);
                     await _dbContext.SaveChangesAsync();
 
                     return new ResponseMessage
                     {
                         Success = true,
-                        Message = "Employee Deleted Successfully!!"
+                        Message = "Employee and related data deleted successfully!"
                     };
                 }
                 catch (Exception ex)
@@ -156,19 +217,11 @@ namespace IntegratedImplementation.Services.HRM
                     return new ResponseMessage
                     {
                         Success = false,
-                        Message = ex.Message
+                        Message = ex.InnerException != null ? ex.InnerException.Message : ex.Message
                     };
                 }
             }
-            else
-            {
-                return new ResponseMessage
-                {
-
-                    Success = false,
-                    Message = "Employee not Found !!!"
-                };
-            }
+            return new ResponseMessage { Success = false, Message = "Employee not Found !!!" };
         }
 
         public async Task<List<SelectListDto>> GetEmployeesNoUserSelectList()
