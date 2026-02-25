@@ -21,8 +21,13 @@ export class GenerateIdCardComponent implements OnInit {
   constructor(
     private commonService: CommonService,
     private http: HttpClient,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    private activeModal: NgbActiveModal
   ) {}
+
+  closeModal() {
+    this.activeModal.close();
+  }
 
   ngOnInit(): void {
     this.getImage2();

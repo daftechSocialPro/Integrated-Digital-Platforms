@@ -22,7 +22,8 @@
             <!-- Profile Photo -->
             <div class="profile-section">
               <div class="profile-photo">
-                <img [src]="imagePath" alt="Profile" class="member-image">
+                <img [src]="imagePath" (error)="$any($event.target).src='assets/logo2.png'" alt="Profile"
+                  class="member-image">
               </div>
             </div>
 
@@ -93,9 +94,12 @@
 
   <!-- Download Button -->
   <div class="row mt-4">
-    <div class="col-md-4">
+    <div class="col-md-12 d-flex gap-2">
       <button class="btn btn-primary" (click)="generatePdf()">
         <i class="fas fa-download me-2"></i>Download ID Card
+      </button>
+      <button class="btn btn-secondary" (click)="closeModal()">
+        <i class="fas fa-times me-2"></i>Close
       </button>
     </div>
   </div>
