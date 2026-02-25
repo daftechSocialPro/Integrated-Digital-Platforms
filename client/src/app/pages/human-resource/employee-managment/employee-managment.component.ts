@@ -64,43 +64,41 @@ export class EmployeeManagmentComponent implements OnInit {
   }
 
   DeleteEmployee(employeeId: string) {
-    this.confirmationService.confirm({
-      message: 'Do you want to Delete this Employee Information ?',
-      header: 'Employee Delete Confirmation !',
-      icon: 'pi pi-info-circle',
-      accept: () => {
-        this.hrmService.checkEmployeeDependency(employeeId).subscribe({
-          next: (depRes) => {
-            if (depRes.hasDependencies) {
-              this.confirmationService.confirm({
-                message: `${depRes.message} It will delete those datas also. Are you absolutely sure you want to remove the data?`,
-                header: 'Warning: Linked Data Found',
-                icon: 'pi pi-exclamation-triangle',
-                accept: () => {
-                  this.forceDeleteEmployee(employeeId);
-                },
-                key: 'positionDialog'
-              });
-            } else {
-              this.forceDeleteEmployee(employeeId);
+    this.hrmService.checkEmployeeDependency(employeeId).subscribe({
+      next: (depRes) => {
+        let confirmMessage = 'Do you want to Delete this Employee Information ?';
+        let confirmHeader = 'Employee Delete Confirmation !';
+        let confirmIcon = 'pi pi-info-circle';
+
+        if (depRes.hasDependencies) {
+           confirmMessage = `${depRes.message} It will delete those datas also. Are you absolutely sure you want to remove the data?`;
+           confirmHeader = 'Warning: Linked Data Found';
+           confirmIcon = 'pi pi-exclamation-triangle';
+        }
+
+        this.confirmationService.confirm({
+          message: confirmMessage,
+          header: confirmHeader,
+          icon: confirmIcon,
+          accept: () => {
+             this.forceDeleteEmployee(employeeId);
+          },
+          reject: (type: ConfirmEventType) => {
+            switch (type) {
+              case ConfirmEventType.REJECT:
+                this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
+                break;
+              case ConfirmEventType.CANCEL:
+                this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
+                break;
             }
           },
-          error: (err) => {
-            this.messageService.add({ severity: 'error', summary: 'Error', detail: "Unable to check employee dependencies" });
-          }
+          key: 'positionDialog'
         });
       },
-      reject: (type: ConfirmEventType) => {
-        switch (type) {
-          case ConfirmEventType.REJECT:
-            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
-            break;
-          case ConfirmEventType.CANCEL:
-            this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
-            break;
-        }
-      },
-      key: 'positionDialog'
+      error: (err) => {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: "Unable to check employee dependencies" });
+      }
     });
   }
 

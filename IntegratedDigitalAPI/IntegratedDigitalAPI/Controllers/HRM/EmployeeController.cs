@@ -136,7 +136,7 @@ namespace IntegratedDigitalAPI.Controllers.HRM
             }
         }
 
-        [HttpGet("CheckDependency")]
+        [HttpGet]
         [ProducesResponseType(typeof(IntegratedImplementation.DTOS.Common.DependencyCheckDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> CheckDependency([FromQuery] Guid id)
         {
