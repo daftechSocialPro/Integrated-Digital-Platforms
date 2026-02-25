@@ -16,7 +16,7 @@
                                     <div class="form-floating mb-3">
                                         <select class="form-select" id="Departments" formControlName="departmentId"
                                             aria-label="State">
-    
+
                                             <option></option>
                                             <option *ngFor="let department of departments" [value]="department.id">{{
                                                 department.name }}</option>
@@ -28,7 +28,7 @@
                                     <div class="form-floating mb-3">
                                         <select class="form-select" id="positionId" formControlName="positionId"
                                             aria-label="State">
-    
+
                                             <option></option>
                                             <option *ngFor="let position of positions" [value]="position.id">{{
                                                 position.name }}</option>
@@ -41,10 +41,10 @@
                                     <div class="form-floating mb-3">
                                         <select class="form-select" id="SourceOfSalary" formControlName="sourceOfSalary"
                                             aria-label="State">
-    
+
                                             <option value="PROJECT"> PROJECT </option>
                                             <option value="OTHER"> OTHER</option>
-                                            
+
                                         </select>
                                         <label for="SourceOfSalary">Salary Source</label>
                                     </div>
@@ -58,10 +58,10 @@
                                     </div>
                                 </div>
 
-                                
+
                                 <div class="col-md-4">
                                     <div class="form-floating mb-3">
-                                        
+
                                         <select pInputText class="form-select" required="" #country
                                             (change)="getRegions(country.value)" aria-label="State">
                                             <option></option>
@@ -73,7 +73,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-floating mb-3">
-                                        
+
                                         <select pInputText class="form-select" #regionId required=""
                                             (change)="getZones(region.value)" #region id="regionId" aria-label="State">
                                             <option></option>
@@ -81,15 +81,15 @@
                                                 region.name }}</option>
                                         </select>
                                         <label for="countryId">Region</label>
-            
+
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-floating mb-3">
-                                        
+
                                         <select pInputText class="form-select" id="zoneId" #zoneId
-                                            [class]="zoneId ? 'ng-valid'  :'ng-invalid ng-dirty'" formControlName="zoneId"
-                                            aria-label="State">
+                                            [class]="zoneId ? 'ng-valid'  :'ng-invalid ng-dirty'"
+                                            formControlName="zoneId" aria-label="State">
                                             <option></option>
                                             <option *ngFor="let zone of zones" [value]="zone.id">{{
                                                 zone.name }}</option>
@@ -99,31 +99,40 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-floating mb-3">
-                                        
-                                        <input pInputText class="form-control" formControlName="woreda" id="woreda" required />
+
+                                        <input pInputText class="form-control" formControlName="woreda" id="woreda"
+                                            required />
                                         <label for="woreda"> Woreda</label>
                                     </div>
                                 </div>
-                
+
 
                                 <div class="col-md-4">
                                     <div class="form-floating">
-                                        <p-calendar formControlName="startDate"  [required]= "true"
-                                        [readonlyInput]="true"  placeholder="Start Date"></p-calendar>
-                                      
+                                        <p-calendar formControlName="startDate" [required]="true" [readonlyInput]="true"
+                                            placeholder="Start Date" appendTo="body"
+                                            (onSelect)="getminEndDate($event)"></p-calendar>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="form-floating"> 
-                                        <p-calendar formControlName="endDate" 
-                                        [readonlyInput]="true"  placeholder="End date"></p-calendar>
+                                    <div class="form-floating">
+                                        <p-calendar formControlName="endDate" [readonlyInput]="true"
+                                            placeholder="End date" appendTo="body" [minDate]="minDate"></p-calendar>
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
-                                    <div class="form-floating"><textarea  class="form-control"
-                                            formControlName="remark" placeholder="remark" id="remark"
-                                            style="height: 100px;"></textarea><label for="remark">Remark</label>
+                                <div *ngIf="HistoryForm.errors?.['dates']" class="col-12">
+                                    <div class="alert alert-danger p-2 mb-0 mt-2">
+                                        <i class="bi bi-exclamation-triangle me-2"></i>
+                                        {{ HistoryForm.errors?.['dates'] }}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-floating">
+                                        <textarea class="form-control" formControlName="remark" placeholder="remark"
+                                            id="remark" style="height: 100px;"></textarea>
+                                        <label for="remark">Remark</label>
                                     </div>
                                 </div>
 
@@ -134,12 +143,12 @@
                             </div>
                         </div>
                         <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
-                            (click)="closeModal()">Close</button> <button type="button" type="submit"
-                            [disabled]="!HistoryForm.valid" class="btn btn-outline-primary">Save
-                            changes</button></div>
+                                (click)="closeModal()">Close</button> <button type="button" type="submit"
+                                [disabled]="!HistoryForm.valid" class="btn btn-outline-primary">Save
+                                changes</button></div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    </div>
+</div>

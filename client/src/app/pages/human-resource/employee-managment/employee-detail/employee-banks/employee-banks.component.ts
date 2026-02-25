@@ -28,6 +28,8 @@ export class EmployeeBanksComponent implements OnInit {
   bankLists !: BankSelectList[];
 
   position: string = 'center';
+  isUpdate: boolean = false;
+  employeeBankId!: string;
 
   constructor(
     private hrmService: HrmService,
@@ -46,8 +48,8 @@ export class EmployeeBanksComponent implements OnInit {
     this.user = this.userService.getCurrentUser()
     this.employeeBankForm = this.formBuilder.group({
       bankId: [null, Validators.required],
-      bankAccountNo: [null, Validators.required],
-      isSalaryBank : [false,Validators.required]
+      bankAccountNo: [null, [Validators.required, Validators.pattern("[0-9]+")]],
+      isSalaryBank: [false, Validators.required]
     });
   }
 
@@ -72,34 +74,96 @@ export class EmployeeBanksComponent implements OnInit {
     this.bankDigit =  Number(this.bankLists.find(X => X.id == digitNumber.value)?.bankDigit);
  }
 
-  addNew() {
+  submit() {
     if (this.employeeBankForm.valid) {
 
       var employeeBank: AddEmployeeBankDto = {
         bankId: this.employeeBankForm.value.bankId,
         accountNumber: this.employeeBankForm.value.bankAccountNo,
         createdById: this.user.userId,
-        isSalaryBank : this.employeeBankForm.value.isSalaryBank,
+        isSalaryBank: this.employeeBankForm.value.isSalaryBank,
         employeeId: this.employeeId
       }
-      this.hrmService.addEmployeeBank(employeeBank).subscribe(
-        {
+      if (this.isUpdate) {
+        employeeBank.id = this.employeeBankId;
+        this.hrmService.updateEmployeeBank(employeeBank).subscribe(
+          {
+            next: (res) => {
+              if (res.success) {
+                this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });
+                this.getEmployeeBanks();
+                this.employeeBankForm.reset();
+                this.isUpdate = false;
+              }
+              else {
+                this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: res.message });
+              }
+            },
+            error: (err) => {
+              this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: err });
+            }
+          }
+        )
+      } else {
+        this.hrmService.addEmployeeBank(employeeBank).subscribe(
+          {
+            next: (res) => {
+              if (res.success) {
+                this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });
+                this.getEmployeeBanks();
+                this.employeeBankForm.reset();
+              }
+              else {
+                this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: res.message });
+              }
+            },
+            error: (err) => {
+              this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: err });
+            }
+          }
+        )
+      }
+    }
+  }
+
+  onEdit(bank: EmployeeBankListDto) {
+    this.isUpdate = true;
+    this.employeeBankId = bank.id;
+    
+    this.employeeBankForm.patchValue({
+      bankId: bank.bankId,
+      bankAccountNo: bank.accountNumber,
+      isSalaryBank: bank.isSalaryBank
+    });
+
+    const selectedBank = this.bankLists.find(x => x.id === bank.bankId);
+    if (selectedBank) {
+      this.bankDigit = Number(selectedBank.bankDigit);
+    }
+  }
+
+  onDelete(id: string) {
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete this bank account?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.hrmService.deleteEmployeeBank(id).subscribe({
           next: (res) => {
             if (res.success) {
               this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });
               this.getEmployeeBanks();
-              this.employeeBankForm.reset();
-            }
-            else {
-              this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: res.message });
+            } else {
+              this.messageService.add({ severity: 'error', summary: 'Error', detail: res.message });
             }
           },
           error: (err) => {
-            this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: err });
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: err });
           }
-        }
-      )
-    }
+        });
+      },
+      key: 'positionDialog'
+    });
   }
 
   closeModal() {

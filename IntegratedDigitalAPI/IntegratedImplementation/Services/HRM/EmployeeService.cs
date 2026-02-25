@@ -703,6 +703,7 @@ namespace IntegratedImplementation.Services.HRM
                                        Id = x.Id,
                                        AccountNumber = x.BankAccountNo,
                                        BankName = x.Bank.BankName,
+                                       BankId = x.BankId,
                                        IsSalaryBank = x.IsSalaryBank,
                                    }).ToListAsync();
 
@@ -738,6 +739,41 @@ namespace IntegratedImplementation.Services.HRM
             await _dbContext.SaveChangesAsync();
 
             return new ResponseMessage { Success = true, Message = "Added Successfully!!" };
+        }
+
+        public async Task<ResponseMessage> UpdateEmployeeBank(AddEmployeeBankDto employeeBank)
+        {
+            var bank = await _dbContext.EmployeeBanks.FindAsync(employeeBank.Id);
+            if (bank == null)
+                return new ResponseMessage { Success = false, Message = "Employee Bank not found" };
+
+            var currentBank = await _dbContext.BankLists.FirstOrDefaultAsync(x => x.Id == employeeBank.BankId);
+            if (currentBank == null)
+                return new ResponseMessage { Success = false, Message = "Could not find account number" };
+
+            if (employeeBank.AccountNumber.Length != currentBank.BankDigitNumber)
+                return new ResponseMessage { Success = false, Message = "Please correct the digit number" };
+
+
+            bank.BankAccountNo = employeeBank.AccountNumber;
+            bank.BankId = employeeBank.BankId;
+            bank.IsSalaryBank = employeeBank.IsSalaryBank;
+
+            await _dbContext.SaveChangesAsync();
+
+            return new ResponseMessage { Success = true, Message = "Updated Successfully!!" };
+        }
+
+        public async Task<ResponseMessage> DeleteEmployeeBank(Guid employeeBankId)
+        {
+            var bank = await _dbContext.EmployeeBanks.FindAsync(employeeBankId);
+            if (bank == null)
+                return new ResponseMessage { Success = false, Message = "Employee Bank not found" };
+
+            _dbContext.EmployeeBanks.Remove(bank);
+            await _dbContext.SaveChangesAsync();
+
+            return new ResponseMessage { Success = true, Message = "Deleted Successfully!!" };
         }
 
 

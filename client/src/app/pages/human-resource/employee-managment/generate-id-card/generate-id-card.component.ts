@@ -15,7 +15,7 @@ import { EmployeeGetDto } from "src/app/model/HRM/IEmployeeDto";
 })
 export class GenerateIdCardComponent implements OnInit {
   @Input() member: EmployeeGetDto;
-  imagePath: string = "'../../../../../assets/images/profile.jpg'";
+  imagePath: string = "assets/logo2.png";
   isMobile: boolean;
 
   constructor(
@@ -42,18 +42,19 @@ export class GenerateIdCardComponent implements OnInit {
     return this.commonService.createImgPath(url);
   }
   async getImage2() {
-    if (
-      this.member &&
-      this.member.imagePath != "" &&
-      this.member.imagePath != null
-    ) {
-      const imageBlob = await this.http
-        .get(this.getImage(this.member.imagePath!), { responseType: "blob" })
-        .toPromise();
-
-      const imageUrl = URL.createObjectURL(imageBlob);
-
-      this.imagePath = imageUrl;
+    if (this.member && this.member.imagePath) {
+      try {
+        const imageBlob = await this.http
+          .get(this.getImage(this.member.imagePath), { responseType: "blob" })
+          .toPromise();
+        if (imageBlob) {
+          const imageUrl = URL.createObjectURL(imageBlob);
+          this.imagePath = imageUrl;
+        }
+      } catch (error) {
+        console.error("Error loading image", error);
+        this.imagePath = "assets/logo2.png";
+      }
     }
   }
 

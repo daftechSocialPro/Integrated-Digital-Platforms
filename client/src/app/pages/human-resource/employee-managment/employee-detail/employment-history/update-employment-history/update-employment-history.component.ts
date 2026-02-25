@@ -53,22 +53,33 @@ export class UpdateEmploymentHistoryComponent implements OnInit {
     private userService : UserService,
     private messageService : MessageService,
     private  dropService: DropDownService) {
-
-      this.HistoryForm = this.formBuilder.group({        
-       
+      this.HistoryForm = this.formBuilder.group({
         departmentId: [null, Validators.required],
         positionId: [null, Validators.required],
         salary: [null, Validators.required],
         startDate: [null, Validators.required],
         endDate: [null, Validators.required],
-        sourceOfSalary:[null,Validators.required],
-        remark : [null,Validators.required],
+        sourceOfSalary: [null, Validators.required],
+        remark: [null, Validators.required],
         woreda: [null, Validators.required],
         zoneId: [null, Validators.required],
         country: [null, Validators.required],
         region: [null, Validators.required],
-      })
+      }, { validators: this.dateLessThan('startDate', 'endDate') })
      }
+
+     dateLessThan(from: string, to: string) {
+      return (group: FormGroup): { [key: string]: any } | null => {
+        let f = group.controls[from];
+        let t = group.controls[to];
+        if (f.value && t.value && new Date(f.value) > new Date(t.value)) {
+          return {
+            dates: "Start date should be less than end date"
+          };
+        }
+        return null;
+      }
+    }
 
      getCountries() {
 

@@ -1,0 +1,46 @@
+.modal-content {
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.modal-header {
+    background-color: #fff;
+    color: #333;
+}
+
+.modal-body {
+    background-color: #f8fafc;
+    padding: 2rem;
+}
+
+.card {
+    border-radius: 10px;
+}
+
+code {
+    background-color: #f1f5f9;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    color: #475569;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+.badge {
+    padding: 0.5em 0.8em;
+    font-weight: 500;
+}
+
+.form-label {
+    font-size: 0.9rem;
+    color: #475569;
+}
+
+.table th {
+    background-color: #f1f5f9 !important;
+}

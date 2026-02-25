@@ -1,5 +1,7 @@
 <!-- ID Card Component Template -->
-<div class="card-container p-4">
+<div class="card-container p-4 position-relative">
+  <button type="button" class="btn-close position-absolute top-0 end-0 m-3" (click)="closeModal()"
+    aria-label="Close"></button>
   <div class="row" id="card" [hidden]="isMobile">
     <!-- Front Side -->
     <div class="col-12 mb-4">

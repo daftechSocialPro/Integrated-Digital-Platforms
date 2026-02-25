@@ -648,6 +648,14 @@ export class HrmService {
         return this.http.post<ResponseMessage>(this.baseUrl + "/Employee/AddEmployeeBank", addEmployeeBank);
     }
 
+    updateEmployeeBank(updateEmployeeBank: AddEmployeeBankDto) {
+        return this.http.post<ResponseMessage>(this.baseUrl + "/Employee/UpdateEmployeeBank", updateEmployeeBank);
+    }
+
+    deleteEmployeeBank(id: string) {
+        return this.http.delete<ResponseMessage>(this.baseUrl + "/Employee/DeleteEmployeeBank?id=" + id);
+    }
+
     //Dashboard
     getHrmDashboard(){
         return this.http.get<HrmDashboardGetDto>(this.baseUrl + "/HrmDashboard")

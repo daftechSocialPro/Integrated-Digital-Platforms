@@ -21,6 +21,8 @@ namespace IntegratedImplementation.Interfaces.HRM
 
         Task<List<EmployeeBankListDto>> EmployeeBanks(Guid employeeId);
         Task<ResponseMessage> AddEmployeeBank(AddEmployeeBankDto employeeBank);
+        Task<ResponseMessage> UpdateEmployeeBank(AddEmployeeBankDto employeeBank);
+        Task<ResponseMessage> DeleteEmployeeBank(Guid employeeBankId);
 
 
         //history

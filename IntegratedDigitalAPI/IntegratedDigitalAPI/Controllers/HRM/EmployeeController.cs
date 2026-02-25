@@ -180,6 +180,27 @@ namespace IntegratedDigitalAPI.Controllers.HRM
             }
         }
 
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> UpdateEmployeeBank(AddEmployeeBankDto employeeBank)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _employeeService.UpdateEmployeeBank(employeeBank));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpDelete]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> DeleteEmployeeBank(Guid id)
+        {
+            return Ok(await _employeeService.DeleteEmployeeBank(id));
+        }
+
         //history
 
         [HttpGet]

@@ -172,7 +172,7 @@ getSupervisorsByEmployee(){
   }
 
   banks(employeeId: string, employmentStatus: string) {
-    let modalRef = this.modalService.open(EmployeeBanksComponent, { size: 'lg', backdrop: 'static' })
+    let modalRef = this.modalService.open(EmployeeBanksComponent, { size: 'xl', backdrop: 'static' })
     modalRef.componentInstance.employeeId = employeeId
     modalRef.componentInstance.employmentStatus = employmentStatus
     modalRef.result.then(() => {
