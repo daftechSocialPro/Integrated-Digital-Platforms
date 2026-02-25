@@ -15,6 +15,7 @@ export interface SoonTerminateDto{
     remainingDays: number
     employmentType: string
     employmentDate: string
+    projectName: string
 }
 
 

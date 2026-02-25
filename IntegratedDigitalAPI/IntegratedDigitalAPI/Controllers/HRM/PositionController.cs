@@ -56,5 +56,12 @@ namespace IntegratedDigitalAPI.Controllers.HRM
                 return BadRequest();
             }
         }
+
+        [HttpDelete]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> DeletePosition([FromQuery] Guid id)
+        {
+            return Ok(await _PositionService.DeletePosition(id));
+        }
     }
 }

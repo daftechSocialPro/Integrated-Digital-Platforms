@@ -57,6 +57,13 @@ namespace IntegratedDigitalAPI.Controllers.HRM
             }
         }
 
+        [HttpDelete]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> DeleteLeaveType([FromQuery] Guid id)
+        {
+            return Ok(await _LeaveTypeService.DeleteLeaveType(id));
+        }
+
 
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]

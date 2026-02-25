@@ -12,7 +12,7 @@
 
                 <div class="row mb-3">
                     <div class="col-md-3 ">
-                        <img  [src]="getImage2()" alt="Profile"
+                        <img [src]="getImage2()" (error)="$any($event.target).src='assets/logo2.png'" alt="Profile"
                             style="width: 100%;">
                         <input #file (change)="onUpload($event)" type="file" style="display: none;" accept="image/*" />
                         <div class="pt-2">
@@ -105,8 +105,8 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="countryId">Country</label>
-                            <select class="form-select" formControlName="countryId" id="countryId" #country (change)="getRegions(country.value)"
-                                aria-label="State">
+                            <select class="form-select" formControlName="countryId" id="countryId" #country
+                                (change)="getRegions(country.value)" aria-label="State">
                                 <option></option>
                                 <option *ngFor="let country of countries" [value]="country.id">{{
                                     country.name }}</option>
@@ -116,8 +116,8 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="countryId">Region</label>
-                            <select class="form-select" formControlName="regionId" (change)="getZones(region.value)" #region id="regionId"
-                                aria-label="State">
+                            <select class="form-select" formControlName="regionId" (change)="getZones(region.value)"
+                                #region id="regionId" aria-label="State">
                                 <option></option>
                                 <option *ngFor="let region of regions" [value]="region.id">{{
                                     region.name }}</option>
@@ -145,13 +145,13 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="PhoneNumber"> Phone Number</label>
-                            <p-inputMask mask="(999) 999-999999" formControlName="phoneNumber"
-                                placeholder="(999) 999-999999"></p-inputMask>
+                            <p-inputMask mask="+251 (99) 999-9999" formControlName="phoneNumber"
+                                placeholder="+251 (99) 999-9999"></p-inputMask>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="email"> Email</label>
+                            <label for="email"> Personal Email</label>
                             <input type="text" formControlName="email" class="form-control" id="email" required>
                         </div>
                     </div>
@@ -213,7 +213,7 @@
                                 formControlName="tinNumber">
                         </div>
                     </div>
-                   
+
 
                 </div>
 

@@ -3,6 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PerformanceSettingDto } from 'src/app/model/HRM/IPerformanceSettingDto';
 import { HrmService } from 'src/app/services/hrm.service';
 import { AddPerformanceSettingComponent } from './add-performance-setting/add-performance-setting.component';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-performance-setting',
@@ -13,7 +14,7 @@ export class PerformanceSettingComponent implements OnInit  {
 
   filterValue!:string
   performanceSettings!: PerformanceSettingDto[]
-  constructor(private hrmService: HrmService,private modalService: NgbModal){}
+  constructor(private hrmService: HrmService,private modalService: NgbModal, private confirmationService: ConfirmationService, private messageService: MessageService){}
   ngOnInit(): void {
     this.getPerformanceSetting()
   }
@@ -32,6 +33,28 @@ export class PerformanceSettingComponent implements OnInit  {
       this.getPerformanceSetting()
     })
 
+  }
+
+  deletePerformanceSetting(performanceSetting: PerformanceSettingDto) {
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete this setting?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.hrmService.deletePerformanceSetting(performanceSetting.id!).subscribe({
+          next: (res) => {
+            if (res.success) {
+              this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: res.message });
+              this.getPerformanceSetting();
+            } else {
+              this.messageService.add({ severity: 'error', summary: 'Error', detail: res.message });
+            }
+          }, error: (err) => {
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: "Unable to delete setting" });
+          }
+        });
+      }
+    });
   }
 
   get filteredPerformanceSettings(): any[] {

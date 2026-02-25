@@ -272,22 +272,41 @@ export class AddPlansComponent implements OnInit {
 
   }
   update() {
-
-
-
+    // If managers are not set from autocomplete, try to get them from planView
     if (!this.ProjectManagerId || !this.ProjectManagerId.id) {
-
-
-      this.messageService.add({ severity: 'error', summary: 'Network Error', detail: "Project manager Not selected" });
-
-
-
-      return
+      // Try to find the project manager from employeeList using planView data
+      if (this.planView && this.planView.projectManagerId && this.employeeList.length > 0) {
+        const pm = this.employeeList.find(emp => 
+          emp.id.toLowerCase() === this.planView.projectManagerId.toLowerCase()
+        );
+        if (pm) {
+          this.ProjectManagerId = pm;
+        }
+      }
+      
+      // If still not set, show error
+      if (!this.ProjectManagerId || !this.ProjectManagerId.id) {
+        this.messageService.add({ severity: 'error', summary: 'Network Error', detail: "Project manager Not selected" });
+        return
+      }
     }
 
     if (!this.financeManagerId || !this.financeManagerId.id) {
-      this.messageService.add({ severity: 'error', summary: 'Network Error', detail: "Finance manager Not selected" });
-      return
+      // Try to find the finance manager from employeeList using planView data
+      if (this.planView && this.planView.financeManagerId && this.employeeList.length > 0) {
+        const fm = this.employeeList.find(emp => 
+          emp.id.toLowerCase() === this.planView.financeManagerId.toLowerCase()
+        );
+        if (fm) {
+          this.financeManagerId = fm;
+        }
+      }
+      
+      // If still not set, show error
+      if (!this.financeManagerId || !this.financeManagerId.id) {
+        this.messageService.add({ severity: 'error', summary: 'Network Error', detail: "Finance manager Not selected" });
+        return
+      }
     }
 
 

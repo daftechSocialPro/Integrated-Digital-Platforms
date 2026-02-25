@@ -82,5 +82,17 @@ namespace IntegratedImplementation.Services.HRM
             }
             return new ResponseMessage { Success = false, Message = "Unable To Find Position" };
         }
+
+        public async Task<ResponseMessage> DeletePosition(Guid positionId)
+        {
+            var position = await _dbContext.Positions.FirstOrDefaultAsync(x => x.Id == positionId);
+            if (position != null)
+            {
+                _dbContext.Positions.Remove(position);
+                await _dbContext.SaveChangesAsync();
+                return new ResponseMessage { Success = true, Message = "Deleted Successfully" };
+            }
+            return new ResponseMessage { Success = false, Message = "Unable To Find Position" };
+        }
     }
 }

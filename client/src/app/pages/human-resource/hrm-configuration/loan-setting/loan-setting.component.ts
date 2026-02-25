@@ -3,6 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LoanSettingDto } from 'src/app/model/HRM/ILoanSettingDto';
 import { HrmService } from 'src/app/services/hrm.service';
 import { AddLoanSettingComponent } from './add-loan-setting/add-loan-setting.component';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-loan-setting',
@@ -20,7 +21,7 @@ export class LoanSettingComponent implements OnInit {
 
   }
 
-  constructor(private hrmService: HrmService, private modalService: NgbModal) { }
+  constructor(private hrmService: HrmService, private modalService: NgbModal, private confirmationService: ConfirmationService, private messageService: MessageService) { }
 
 
   getSetting() {
@@ -47,6 +48,28 @@ export class LoanSettingComponent implements OnInit {
     modalRef.componentInstance.loanSetting = loanSetting
     modalRef.result.then(() => {
       this.getSetting();
+    });
+  }
+
+  delete(loanSetting: LoanSettingDto) {
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete this loan setting?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.hrmService.deleteLoanSetting(loanSetting.id!).subscribe({
+          next: (res) => {
+            if (res.success) {
+              this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: res.message });
+              this.getSetting();
+            } else {
+              this.messageService.add({ severity: 'error', summary: 'Error', detail: res.message });
+            }
+          }, error: (err) => {
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: "Unable to delete loan setting" });
+          }
+        });
+      }
     });
   }
 

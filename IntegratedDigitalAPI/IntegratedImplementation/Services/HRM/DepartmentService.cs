@@ -87,5 +87,46 @@ namespace IntegratedImplementation.Services.HRM
             }
             return new ResponseMessage { Success = false, Message = "Unable To Find Department" };
         }
+
+        public async Task<IntegratedImplementation.DTOS.Common.DependencyCheckDto> CheckDependency(Guid departmentId)
+        {
+            var empCount = await _dbContext.EmploymentDetails.CountAsync(x => x.DepartmentId == departmentId);
+            var projCount = await _dbContext.Projects.CountAsync(x => x.DepartmentId == departmentId);
+            var vacCount = await _dbContext.VacancyLists.CountAsync(x => x.DepartmentId == departmentId);
+
+            int total = empCount + projCount + vacCount;
+            if (total > 0)
+            {
+                var msg = "This department is linked to ";
+                var lst = new List<string>();
+                if (empCount > 0) lst.Add($"{empCount} Employment Details");
+                if (projCount > 0) lst.Add($"{projCount} Projects");
+                if (vacCount > 0) lst.Add($"{vacCount} Vacancies");
+                
+                return new IntegratedImplementation.DTOS.Common.DependencyCheckDto { HasDependencies = true, Message = msg + string.Join(", ", lst) + "." };
+            }
+            return new IntegratedImplementation.DTOS.Common.DependencyCheckDto { HasDependencies = false, Message = "" };
+        }
+
+        public async Task<ResponseMessage> DeleteDepartment(Guid departmentId)
+        {
+            var department = await _dbContext.Departments.FirstOrDefaultAsync(x => x.Id == departmentId);
+            if (department != null)
+            {
+                var emps = await _dbContext.EmploymentDetails.Where(x => x.DepartmentId == departmentId).ToListAsync();
+                if (emps.Any()) _dbContext.EmploymentDetails.RemoveRange(emps);
+
+                var projs = await _dbContext.Projects.Where(x => x.DepartmentId == departmentId).ToListAsync();
+                if (projs.Any()) _dbContext.Projects.RemoveRange(projs);
+
+                var vacs = await _dbContext.VacancyLists.Where(x => x.DepartmentId == departmentId).ToListAsync();
+                if (vacs.Any()) _dbContext.VacancyLists.RemoveRange(vacs);
+
+                _dbContext.Departments.Remove(department);
+                await _dbContext.SaveChangesAsync();
+                return new ResponseMessage { Success = true, Message = "Deleted Successfully" };
+            }
+            return new ResponseMessage { Success = false, Message = "Unable To Find Department" };
+        }
     }
 }

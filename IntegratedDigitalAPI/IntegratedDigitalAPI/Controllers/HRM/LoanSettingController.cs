@@ -54,6 +54,13 @@ namespace IntegratedDigitalAPI.Controllers.HRM
                 return BadRequest();
             }
         }
+
+        [HttpDelete]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> DeleteLoanSetting([FromQuery] Guid id)
+        {
+            return Ok(await _loanSettingService.DeleteLoanSetting(id));
+        }
     }
 }
 

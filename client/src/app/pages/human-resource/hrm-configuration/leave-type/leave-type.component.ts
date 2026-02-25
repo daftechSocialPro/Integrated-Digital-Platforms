@@ -5,6 +5,7 @@ import { HrmService } from 'src/app/services/hrm.service';
 import { AddLeaveTypeComponent } from './add-leave-type/add-leave-type.component';
 import { UpdateLeaveTypeComponent } from './update-leave-type/update-leave-type.component';
 import { AddLeaveTypeDetailComponent } from './add-leave-type-detail/add-leave-type-detail.component';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-leave-type',
@@ -21,7 +22,7 @@ export class LeaveTypeComponent implements OnInit {
     
   }
 
-  constructor (private hrmService : HrmService,private modalService:NgbModal){}
+  constructor (private hrmService : HrmService,private modalService:NgbModal, private confirmationService: ConfirmationService, private messageService: MessageService){}
 
 
   getLeaveTypes (){
@@ -56,6 +57,28 @@ export class LeaveTypeComponent implements OnInit {
       this.getLeaveTypes()
     })
 
+  }
+
+  deleteLeaveType(leaveType: LeaveTypeGetDto) {
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete this leave type?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.hrmService.deleteLeaveType(leaveType.id!).subscribe({
+          next: (res) => {
+            if (res.success) {
+              this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: res.message });
+              this.getLeaveTypes();
+            } else {
+              this.messageService.add({ severity: 'error', summary: 'Error', detail: res.message });
+            }
+          }, error: (err) => {
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: "Unable to delete leave type" });
+          }
+        });
+      }
+    });
   }
 
   get filteredLeaveTypes(): any[] {

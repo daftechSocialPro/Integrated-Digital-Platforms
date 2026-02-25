@@ -15,6 +15,6 @@ namespace IntegratedImplementation.Interfaces.HRM
         Task<ResponseMessage> AddLoanSetting(AddLoanSettingDto addLoanSetting);
 
         Task<ResponseMessage> UpdateLoanSetting(UpdateLoanSettingDto updateLoanSetting);    
-
+        Task<ResponseMessage> DeleteLoanSetting(Guid loanSettingId);
     }
 }

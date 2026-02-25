@@ -55,6 +55,13 @@ namespace IntegratedDigitalAPI.Controllers.HRM
             }
         }
 
+        [HttpDelete]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> DeleteHrmSetting(Guid id)
+        {
+            return Ok(await _hrmSettingService.DeleteHrmSetting(id));
+        }
+
         [HttpGet]
         [ProducesResponseType(typeof(PerformanceSettingDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetPerformanceSettings()
@@ -74,6 +81,13 @@ namespace IntegratedDigitalAPI.Controllers.HRM
             {
                 return BadRequest();
             }
+        }
+
+        [HttpDelete]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> DeletePerformanceSetting(Guid id)
+        {
+            return Ok(await _hrmSettingService.DeletePerformanceSetting(id));
         }
 
 
@@ -111,6 +125,13 @@ namespace IntegratedDigitalAPI.Controllers.HRM
             {
                 return BadRequest();
             }
+        }
+
+        [HttpDelete]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> DeleteBenefitList(Guid id)
+        {
+            return Ok(await _hrmSettingService.DeleteBenefitList(id));
         }
 
 
@@ -154,6 +175,13 @@ namespace IntegratedDigitalAPI.Controllers.HRM
             {
                 return BadRequest();
             }
+        }
+
+        [HttpDelete]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> DeleteDeviceSetting(Guid id)
+        {
+            return Ok(await _hrmSettingService.DeleteDeviceSetting(id));
         }
 
 

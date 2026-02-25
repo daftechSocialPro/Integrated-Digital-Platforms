@@ -82,7 +82,7 @@ export class PlanDashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.document.body.classList.toggle('toggle-sidebar');
+    //this.document.body.classList.toggle('toggle-sidebar');
     this.user = this.userService.getCurrentUser();
     const currentDate = new Date();
     this.currentYear = currentDate.getFullYear();

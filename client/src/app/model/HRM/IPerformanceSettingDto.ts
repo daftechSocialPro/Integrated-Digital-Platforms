@@ -1,4 +1,5 @@
 export interface PerformanceSettingDto {
+    id?: string;
     createdById?: string;
     performanceMonth: string;
     performanceIndex: number;

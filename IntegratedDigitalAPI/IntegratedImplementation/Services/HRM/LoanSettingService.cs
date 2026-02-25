@@ -83,5 +83,17 @@ namespace IntegratedImplementation.Services.HRM
 
             return new ResponseMessage { Success = true, Message = "Updated Successfully" };
         }
+
+        public async Task<ResponseMessage> DeleteLoanSetting(Guid loanSettingId)
+        {
+            var loanSetting = await _dbContext.LoanSettings.FindAsync(loanSettingId);
+            if (loanSetting != null)
+            {
+                _dbContext.LoanSettings.Remove(loanSetting);
+                await _dbContext.SaveChangesAsync();
+                return new ResponseMessage { Success = true, Message = "Deleted Successfully" };
+            }
+            return new ResponseMessage { Success = false, Message = "Loan Setting Not Found" };
+        }
     }
 }

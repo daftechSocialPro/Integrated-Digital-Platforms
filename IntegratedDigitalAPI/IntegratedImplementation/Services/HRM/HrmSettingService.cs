@@ -68,11 +68,24 @@ namespace IntegratedImplementation.Services.HRM
             return new ResponseMessage { Success = false, Message = "Unable To Find HrmSetting" };
         }
 
+        public async Task<ResponseMessage> DeleteHrmSetting(Guid hrmSettingId)
+        {
+            var hrmSetting = await _dbContext.HrmSettings.FindAsync(hrmSettingId);
+            if (hrmSetting != null)
+            {
+                _dbContext.HrmSettings.Remove(hrmSetting);
+                await _dbContext.SaveChangesAsync();
+                return new ResponseMessage { Success = true, Message = "Deleted Successfully" };
+            }
+            return new ResponseMessage { Success = false, Message = "HrmSetting Not Found" };
+        }
+
         public async Task<List<PerformanceSettingDto>> GetPerformanceSettings()
         {
             return await _dbContext.PerformanceSettings.Select(x =>
                             new PerformanceSettingDto
                             {
+                                Id = x.Id,
                                 PerformanceMonth = x.PerformanceMonth,
                                 PerformanceIndex = x.PerformanceIndex,
                                 PerformanceEndDate = x.PerformanceEndDate,
@@ -99,6 +112,18 @@ namespace IntegratedImplementation.Services.HRM
             await _dbContext.SaveChangesAsync();
 
             return new ResponseMessage { Success = true, Message = "Added SuccessFully" };
+        }
+
+        public async Task<ResponseMessage> DeletePerformanceSetting(Guid performanceSettingId)
+        {
+            var performanceSetting = await _dbContext.PerformanceSettings.FindAsync(performanceSettingId);
+            if (performanceSetting != null)
+            {
+                _dbContext.PerformanceSettings.Remove(performanceSetting);
+                await _dbContext.SaveChangesAsync();
+                return new ResponseMessage { Success = true, Message = "Deleted Successfully" };
+            }
+            return new ResponseMessage { Success = false, Message = "Performance Setting Not Found" };
         }
 
         public async Task<List<BenefitListDto>> GetBenefitLists()
@@ -156,6 +181,18 @@ namespace IntegratedImplementation.Services.HRM
             await _dbContext.SaveChangesAsync();
 
             return new ResponseMessage { Success = true, Message = "Updated Succesfully" };
+        }
+
+        public async Task<ResponseMessage> DeleteBenefitList(Guid benefitListId)
+        {
+            var benefitList = await _dbContext.BenefitLists.FindAsync(benefitListId);
+            if (benefitList != null)
+            {
+                _dbContext.BenefitLists.Remove(benefitList);
+                await _dbContext.SaveChangesAsync();
+                return new ResponseMessage { Success = true, Message = "Deleted Successfully" };
+            }
+            return new ResponseMessage { Success = false, Message = "BenefitList Not Found" };
         }
 
         public async Task<ResponseMessage> AddDeviceSetting(DeviceSettingDto deviceSettingDto)
@@ -225,6 +262,18 @@ namespace IntegratedImplementation.Services.HRM
             }
 
             return new ResponseMessage { Success = false, Message = "Device Setting Could Not be Found" };
+        }
+
+        public async Task<ResponseMessage> DeleteDeviceSetting(Guid deviceSettingId)
+        {
+            var deviceSetting = await _dbContext.DeviceSettings.FindAsync(deviceSettingId);
+            if (deviceSetting != null)
+            {
+                _dbContext.DeviceSettings.Remove(deviceSetting);
+                await _dbContext.SaveChangesAsync();
+                return new ResponseMessage { Success = true, Message = "Deleted Successfully" };
+            }
+            return new ResponseMessage { Success = false, Message = "Device Setting Not Found" };
         }
 
         //    public async Task<ResponseMessage> AddSeveranceSetting(SeveranceSettingDto severanceSetteingDto)

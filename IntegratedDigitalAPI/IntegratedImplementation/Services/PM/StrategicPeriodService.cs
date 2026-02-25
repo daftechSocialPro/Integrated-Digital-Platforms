@@ -23,8 +23,18 @@ namespace IntegratedImplementation.Services.PM
 
         public async Task<ResponseMessage> AddStrategicPeriod(StrategicPeriodPostDto strategicPeriodPost)
         {
-            // Calculate end date (5 years from start date)
-            DateTime endDate = strategicPeriodPost.StartDate.AddYears(5).AddDays(-1);
+            // Validate duration (must be 3 or 5 years)
+            if (strategicPeriodPost.DurationInYears != 3 && strategicPeriodPost.DurationInYears != 5)
+            {
+                return new ResponseMessage
+                {
+                    Message = "Duration must be either 3 or 5 years",
+                    Success = false
+                };
+            }
+
+            // Calculate end date based on duration
+            DateTime endDate = strategicPeriodPost.StartDate.AddYears(strategicPeriodPost.DurationInYears).AddDays(-1);
 
             // Check for overlapping periods
             var overlappingPeriod = await _dbContext.StrategicPeriods
@@ -50,6 +60,7 @@ namespace IntegratedImplementation.Services.PM
                 Description = strategicPeriodPost.Description,
                 StartDate = strategicPeriodPost.StartDate,
                 EndDate = endDate,
+                DurationInYears = strategicPeriodPost.DurationInYears,
                 CreatedById = strategicPeriodPost.CreatedById,
                 Rowstatus = RowStatus.ACTIVE
             };
@@ -77,6 +88,7 @@ namespace IntegratedImplementation.Services.PM
                     Description = x.Description,
                     StartDate = x.StartDate,
                     EndDate = x.EndDate,
+                    DurationInYears = x.DurationInYears,
                     RowStatus = x.Rowstatus == RowStatus.ACTIVE ? true : false,
                 }).ToListAsync();
 
@@ -92,8 +104,18 @@ namespace IntegratedImplementation.Services.PM
                 return new ResponseMessage { Success = false, Message = "Strategic Period not found" };
             }
 
-            // Calculate end date (5 years from start date)
-            DateTime endDate = strategicPeriodGet.StartDate.AddYears(5).AddDays(-1);
+            // Validate duration (must be 3 or 5 years)
+            if (strategicPeriodGet.DurationInYears != 3 && strategicPeriodGet.DurationInYears != 5)
+            {
+                return new ResponseMessage
+                {
+                    Message = "Duration must be either 3 or 5 years",
+                    Success = false
+                };
+            }
+
+            // Calculate end date based on duration
+            DateTime endDate = strategicPeriodGet.StartDate.AddYears(strategicPeriodGet.DurationInYears).AddDays(-1);
 
             // Check for overlapping periods (excluding current period)
             var overlappingPeriod = await _dbContext.StrategicPeriods
@@ -117,6 +139,7 @@ namespace IntegratedImplementation.Services.PM
             currentPeriod.Description = strategicPeriodGet.Description;
             currentPeriod.StartDate = strategicPeriodGet.StartDate;
             currentPeriod.EndDate = endDate;
+            currentPeriod.DurationInYears = strategicPeriodGet.DurationInYears;
             currentPeriod.Rowstatus = strategicPeriodGet.RowStatus ? RowStatus.ACTIVE : RowStatus.INACTIVE;
             
             await _dbContext.SaveChangesAsync();

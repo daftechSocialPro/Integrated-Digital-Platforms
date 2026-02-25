@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -17,7 +18,7 @@ export class PagesLoginComponent implements OnInit {
   loginForm !: FormGroup
   user!: UserView
   constructor(private formBuilder: FormBuilder, private router: Router, private userService: UserService, 
-    
+    @Inject(DOCUMENT) private document: Document,
   private messageService : MessageService) { }
 
   ngOnInit(): void {
@@ -38,6 +39,7 @@ export class PagesLoginComponent implements OnInit {
           if (res.success) {
             this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });        
             sessionStorage.setItem('token', res.data);
+            this.document.body.classList.remove('toggle-sidebar');
             this.router.navigateByUrl('/');
           }
           else {

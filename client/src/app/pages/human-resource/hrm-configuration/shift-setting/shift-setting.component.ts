@@ -4,6 +4,7 @@ import { ShiftListDto } from 'src/app/model/HRM/IShiftSettingDto';
 import { HrmService } from 'src/app/services/hrm.service';
 import { AddShiftSettingComponent } from './add-shift-setting/add-shift-setting.component';
 import { AddShiftDetailComponent } from './add-shift-detail/add-shift-detail.component';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-shift-setting',
@@ -16,7 +17,7 @@ export class ShiftSettingComponent implements OnInit {
   shiftLists!: ShiftListDto[]
 
 
-  constructor(private hrmService: HrmService, private modalService: NgbModal) { }
+  constructor(private hrmService: HrmService, private modalService: NgbModal, private confirmationService: ConfirmationService, private messageService: MessageService) { }
 
 
   ngOnInit(): void {
@@ -55,6 +56,28 @@ export class ShiftSettingComponent implements OnInit {
     modalRef.componentInstance.shiftSetting = shiftSetting
     modalRef.result.then(() => {
       this.getDevices()
+    });
+  }
+
+  delete(shiftSetting: ShiftListDto) {
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete this shift setting?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.hrmService.deleteShift(shiftSetting.id!).subscribe({
+          next: (res) => {
+            if (res.success) {
+              this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: res.message });
+              this.getDevices();
+            } else {
+              this.messageService.add({ severity: 'error', summary: 'Error', detail: res.message });
+            }
+          }, error: (err) => {
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: "Unable to delete shift setting" });
+          }
+        });
+      }
     });
   }
 

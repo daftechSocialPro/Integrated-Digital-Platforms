@@ -37,7 +37,13 @@ namespace IntegratedImplementation.Services.HRM
             }
 
             var tentoday = today.AddDays(-10);
-            var aboutToBeTerminatedEmployees = employees.Where(x => x.EmploymentStatus == EnumList.EmploymentStatus.ACTIVE && (x.ContractEndDate >= tentoday && x.ContractEndDate <= today))
+            var aboutToBeTerminatedEmployeeIds = employees.Where(x => x.EmploymentStatus == EnumList.EmploymentStatus.ACTIVE && (x.ContractEndDate >= tentoday && x.ContractEndDate <= today)).Select(x => x.Id).ToList();
+
+            var aboutToBeTerminatedEmployees = await _dbContext.Employees
+                .Include(x => x.EmployeeDetail)
+                .ThenInclude(x => x.EmployeeSalaries)
+                .ThenInclude(x => x.Project)
+                .Where(x => aboutToBeTerminatedEmployeeIds.Contains(x.Id))
                 .Select(x => new soonTerminateDto
                 {
                     EmployeeName = $"{x.FirstName} {x.MiddleName} {x.LastName}",
@@ -45,9 +51,9 @@ namespace IntegratedImplementation.Services.HRM
                     EmploymentType = x.EmploymentType.ToString(),
                     RemainingDays = x.ContractEndDate.HasValue
                                     ? x.ContractEndDate.Value.Subtract(tentoday).Days
-                                    : 0
-
-                }).ToList();
+                                    : 0,
+                    ProjectName = x.EmployeeDetail.SelectMany(ed => ed.EmployeeSalaries).Select(es => es.Project.ProjectName).FirstOrDefault()
+                }).ToListAsync();
 
             dashboardData.ActiveEmployees = activeEmployees;
             dashboardData.TerminatedEmployees = terminatedEmployees;

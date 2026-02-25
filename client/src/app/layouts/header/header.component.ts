@@ -60,21 +60,40 @@ export class HeaderComponent implements OnInit {
   }
 
   createImagePath(url: string) {
-    return this.commonService.createImgPath(url)
+    if (url && url.trim() !== '') {
+      return this.commonService.createImgPath(url);
+    }
+    return 'assets/logo2.png';
   }
 
   getVacancyList() {
+    const cache = sessionStorage.getItem('vacancies_cache');
+    const timestamp = sessionStorage.getItem('vacancies_time');
+    if (cache && timestamp && (Date.now() - Number(timestamp)) < 120000) {
+      this.vacancies = JSON.parse(cache);
+      return;
+    }
     this.notificationService.getVacanciesNotification().subscribe({
       next: (res) => {
-        this.vacancies = res
+        this.vacancies = res;
+        sessionStorage.setItem('vacancies_cache', JSON.stringify(res));
+        sessionStorage.setItem('vacancies_time', Date.now().toString());
       }
     });
   }
 
   getActivityForApproval() {
+    const cache = sessionStorage.getItem('activites_cache');
+    const timestamp = sessionStorage.getItem('activites_time');
+    if (cache && timestamp && (Date.now() - Number(timestamp)) < 120000) {
+      this.activites = JSON.parse(cache);
+      return;
+    }
     this.pmService.getActivityForApproval(this.user.employeeId).subscribe({
       next: (res) => {
-        this.activites = res
+        this.activites = res;
+        sessionStorage.setItem('activites_cache', JSON.stringify(res));
+        sessionStorage.setItem('activites_time', Date.now().toString());
       }, error: (err) => {
         console.error(err)
       }
@@ -89,9 +108,17 @@ export class HeaderComponent implements OnInit {
   }
 
   getPendingPaymentRequsitions() {
+    const cache = sessionStorage.getItem('pendingPayments_cache');
+    const timestamp = sessionStorage.getItem('pendingPayments_time');
+    if (cache && timestamp && (Date.now() - Number(timestamp)) < 120000) {
+      this.pendingPayments = JSON.parse(cache);
+      return;
+    }
     this.financeService.getPendignRequestsByProjectManager(this.user.employeeId).subscribe({
       next: (res) => {
-        this.pendingPayments = res
+        this.pendingPayments = res;
+        sessionStorage.setItem('pendingPayments_cache', JSON.stringify(res));
+        sessionStorage.setItem('pendingPayments_time', Date.now().toString());
       }, error: (err) => {
         console.error(err)
       }
@@ -108,9 +135,17 @@ export class HeaderComponent implements OnInit {
   }
 
   getContractEndEmp() {
+    const cache = sessionStorage.getItem('contactEndEmp_cache');
+    const timestamp = sessionStorage.getItem('contactEndEmp_time');
+    if (cache && timestamp && (Date.now() - Number(timestamp)) < 120000) {
+      this.contactEndEMployees = JSON.parse(cache);
+      return;
+    }
     this.hrmService.getEmployeeswithContractend().subscribe({
       next: (res) => {
-        this.contactEndEMployees = res
+        this.contactEndEMployees = res;
+        sessionStorage.setItem('contactEndEmp_cache', JSON.stringify(res));
+        sessionStorage.setItem('contactEndEmp_time', Date.now().toString());
       }
     })
   }
@@ -132,6 +167,7 @@ export class HeaderComponent implements OnInit {
             if (res.success) {
               this.messageService.add({ severity: 'success', summary: 'Success', detail: res.message });
               this.pendingPayments =  this.pendingPayments.filter(x => x.id != id);
+              sessionStorage.setItem('pendingPayments_cache', JSON.stringify(this.pendingPayments));
             }
             else {
               this.messageService.add({ severity: 'error', summary: 'Error', detail: res.message });

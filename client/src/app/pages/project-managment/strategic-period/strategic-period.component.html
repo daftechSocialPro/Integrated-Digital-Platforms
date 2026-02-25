@@ -50,7 +50,7 @@
                             <td>{{ period.description }}</td>
                             <td>{{ period.startDate | date: 'dd/MM/yyyy' }}</td>
                             <td>{{ period.endDate | date: 'dd/MM/yyyy' }}</td>
-                            <td>{{ getDuration(period.startDate, period.endDate) }} years</td>
+                            <td>{{ period.durationInYears }} years</td>
                             <td>
                                 <span [class]="period.rowStatus ? 'badge bg-success' : 'badge bg-secondary'">
                                     {{ period.rowStatus ? 'Active' : 'Inactive' }}

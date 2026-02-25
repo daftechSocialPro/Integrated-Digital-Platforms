@@ -20,6 +20,7 @@
         public int RemainingDays { get; set; }
         public string EmploymentType { get; set; }
         public DateTime EmploymentDate { get; set; }
+        public string? ProjectName { get; set; }
 
     }
 }

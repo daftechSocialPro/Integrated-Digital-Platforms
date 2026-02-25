@@ -51,9 +51,11 @@
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-employee>
-                            <tr class="table-row" >
+                            <tr class="table-row">
                                 <td class="employee-details">
-                                    <img [src]="getImagePath(employee.imagePath)" width="40" alt="user png" class="rounded-circle">
+                                    <img [src]="employee.imagePath ? getImagePath(employee.imagePath) : 'assets/logo2.png'"
+                                        (error)="$any($event.target).src='assets/logo2.png'" width="40" alt="user png"
+                                        class="rounded-circle">
                                     <div class="employee-info">
                                         <div class="employee-name">{{ employee.fullName }}</div>
                                         <div class="employee-code">{{ employee.employeeCode.toUpperCase() }}</div>
@@ -65,11 +67,13 @@
                                 <td>{{ employee.employmentType }}</td>
                                 <td>{{ employee.employmentDate | date:"MMM dd, YYY" }}</td>
                                 <td>{{ employee.employmentStatus }}</td>
-                                <td> <button class="btn btn-sm btn-outline-primary" (click)="employeeDetail(employee.id)">
-                                    <i class="bi bi-eye"></i>  Detail
-                                  </button> | <button class="btn btn-sm btn-outline-danger" (click)="DeleteEmployee(employee.id)">
-                                  <i class="bi bi-trash"></i>  Delete
-                                </button> </td>
+                                <td> <button class="btn btn-sm btn-outline-primary"
+                                        (click)="employeeDetail(employee.id)">
+                                        <i class="bi bi-eye"></i> Detail
+                                    </button> | <button class="btn btn-sm btn-outline-danger"
+                                        (click)="DeleteEmployee(employee.id)">
+                                        <i class="bi bi-trash"></i> Delete
+                                    </button> </td>
                             </tr>
                         </ng-template>
 

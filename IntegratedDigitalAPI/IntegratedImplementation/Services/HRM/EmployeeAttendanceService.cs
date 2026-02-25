@@ -145,6 +145,18 @@ namespace IntegratedImplementation.Services.HRM
             return new ResponseMessage { Success = false, Message = "Shift Could Not be found!!" };
         }
 
+        public async Task<ResponseMessage> DeleteShift(Guid shiftId)
+        {
+            var shift = await _dbContext.ShiftLists.FindAsync(shiftId);
+            if (shift != null)
+            {
+                _dbContext.ShiftLists.Remove(shift);
+                await _dbContext.SaveChangesAsync();
+                return new ResponseMessage { Success = true, Message = "Deleted Successfully" };
+            }
+            return new ResponseMessage { Success = false, Message = "Shift Not Found" };
+        }
+
         public async Task<ResponseMessage> AddShiftDetail(AddShiftDetail addShiftDetail)
         {
             var currentShift = await _dbContext.ShiftDetails.AnyAsync(X => X.ShiftId == addShiftDetail.ShiftId && X.WeekDays == addShiftDetail.WeekDays);

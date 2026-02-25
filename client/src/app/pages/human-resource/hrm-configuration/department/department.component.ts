@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HrmService } from 'src/app/services/hrm.service';
 import { AddDepartmentComponent } from './add-department/add-department.component';
 import { UpdateDepartmentComponent } from './update-department/update-department.component';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-department',
@@ -22,7 +23,7 @@ export class DepartmentComponent implements OnInit {
     
   }
 
-  constructor (private hrmService : HrmService,private modalService:NgbModal){}
+  constructor (private hrmService : HrmService,private modalService:NgbModal, private confirmationService: ConfirmationService, private messageService: MessageService){}
 
 
   getDepartments (){
@@ -51,6 +52,50 @@ export class DepartmentComponent implements OnInit {
     modalRef.componentInstance.department = department
     modalRef.result.then(()=>{
       this.getDepartments()
+    });
+  }
+
+  deleteDepartment(department: DepartmentGetDto) {
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete this department?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.hrmService.checkDepartmentDependency(department.id!).subscribe({
+          next: (depRes) => {
+            if (depRes.hasDependencies) {
+              this.confirmationService.confirm({
+                message: `${depRes.message} It will delete those datas also. Are you absolutely sure you want to remove the data?`,
+                header: 'Warning: Linked Data Found',
+                icon: 'pi pi-exclamation-triangle',
+                accept: () => {
+                  this.forceDeleteDepartment(department.id!);
+                }
+              });
+            } else {
+              this.forceDeleteDepartment(department.id!);
+            }
+          },
+          error: (err) => {
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: "Unable to check department dependencies" });
+          }
+        });
+      }
+    });
+  }
+
+  forceDeleteDepartment(id: string) {
+    this.hrmService.deleteDepartment(id).subscribe({
+      next: (res) => {
+        if (res.success) {
+          this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: res.message });
+          this.getDepartments();
+        } else {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: res.message });
+        }
+      }, error: (err) => {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: "Unable to delete department" });
+      }
     });
   }
 

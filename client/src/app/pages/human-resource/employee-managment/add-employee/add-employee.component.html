@@ -12,8 +12,8 @@
 
                 <div class="row mb-3">
                     <div class="col-md-3 ">
-                        <img [src]="imagePath ? imagePath : 'assets/img/profile.jpg'" alt="Profile"
-                            style="width: 100%;">
+                        <img [src]="imagePath ? imagePath : 'assets/logo2.png'"
+                            (error)="$any($event.target).src='assets/logo2.png'" alt="Profile" style="width: 100%;">
                         <input #file (change)="onUpload($event)" type="file" style="display: none;" accept="image/*" />
                         <div class="pt-2">
                             <a (click)="file.click()" style="width: 100%;" class="btn btn-outline-primary btn-sm"
@@ -87,8 +87,8 @@
 
                                 <div class="form-group">
                                     <label for="PhoneNumber"> Phone Number</label>
-                                    <p-inputMask mask="(999) 999-999999" formControlName="phoneNumber"
-                                        placeholder="(999) 999-999999"></p-inputMask>
+                                    <p-inputMask mask="+251 (99) 999-9999" formControlName="phoneNumber"
+                                        placeholder="+251 (99) 999-9999"></p-inputMask>
                                 </div>
                             </div>
                         </div>
@@ -153,14 +153,15 @@
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="email"> Email</label><br />
+                            <label for="email"> Personal Email</label><br />
                             <input pInputText class="form-control" formControlName="email" id="email" required />
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="workEmail">Work Email</label><br />
-                            <input pInputText class="form-control" formControlName="workEmail" id="workEmail" required />
+                            <input pInputText class="form-control" formControlName="workEmail" id="workEmail"
+                                required />
                         </div>
                     </div>
 

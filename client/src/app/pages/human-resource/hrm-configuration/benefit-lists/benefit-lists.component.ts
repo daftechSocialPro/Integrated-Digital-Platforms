@@ -3,6 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BenefitListDto } from 'src/app/model/HRM/IBenefitListDto';
 import { HrmService } from 'src/app/services/hrm.service';
 import { AddBenefitListComponent } from './add-benefit-list/add-benefit-list.component';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-benefit-lists',
@@ -19,7 +20,7 @@ export class BenefitListsComponent implements OnInit {
     
   }
 
-  constructor (private hrmService : HrmService,private modalService:NgbModal){}
+  constructor (private hrmService : HrmService,private modalService:NgbModal, private confirmationService: ConfirmationService, private messageService: MessageService){}
 
   getBenefitLists (){
     this.hrmService.getBenefitLists().subscribe({
@@ -43,6 +44,28 @@ export class BenefitListsComponent implements OnInit {
     modalRef.componentInstance.benefit = updateBenefit
     modalRef.result.then(()=>{
       this.getBenefitLists()
+    });
+  }
+
+  delete(benefitList: BenefitListDto) {
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete this benefit list?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.hrmService.deleteBenefitList(benefitList.id!).subscribe({
+          next: (res) => {
+            if (res.success) {
+              this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: res.message });
+              this.getBenefitLists();
+            } else {
+              this.messageService.add({ severity: 'error', summary: 'Error', detail: res.message });
+            }
+          }, error: (err) => {
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: "Unable to delete benefit list" });
+          }
+        });
+      }
     });
   }
 

@@ -3,8 +3,7 @@
 
         <div class="col-md-3">
             <div class="form-floating">
-                <input type="text" class="form-control" [(ngModel)]="filterValue"  placeholder="Search Here..."
-                    >
+                <input type="text" class="form-control" [(ngModel)]="filterValue" placeholder="Search Here...">
                 <label for="filter">Filter</label>
             </div>
         </div>
@@ -29,16 +28,20 @@
                                 <th>General Settings</th>
                                 <th>Value </th>
                                 <th>Action</th>
-                             
+
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-HrmSetting>
-                            <tr>                                <td>{{ HrmSetting.generalSetting }}</td>
-                                <td>{{ HrmSetting.value }}</td>                             
+                            <tr>
+                                <td>{{ HrmSetting.generalSetting }}</td>
+                                <td>{{ HrmSetting.value }}</td>
                                 <td>
-                                     <button type="button" (click)="updateHrmSetting(HrmSetting)"
-                                        class="btn btn-outline-warning"><i class="bi bi-pencil "></i> 
-                                     </button> 
+                                    <button type="button" (click)="updateHrmSetting(HrmSetting)"
+                                        class="btn btn-outline-warning"><i class="bi bi-pencil "></i>
+                                    </button>
+                                    <button type="button" (click)="deleteHrmSetting(HrmSetting)"
+                                        class="btn btn-outline-danger ms-2"><i class="bi bi-trash "></i>
+                                    </button>
                                 </td>
                             </tr>
                         </ng-template>

@@ -56,5 +56,19 @@ namespace IntegratedDigitalAPI.Controllers.HRM
                 return BadRequest();
             }
         }
+
+        [HttpGet("CheckDependency")]
+        [ProducesResponseType(typeof(IntegratedImplementation.DTOS.Common.DependencyCheckDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> CheckDependency([FromQuery] Guid id)
+        {
+            return Ok(await _departmentService.CheckDependency(id));
+        }
+
+        [HttpDelete]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> DeleteDepartment([FromQuery] Guid id)
+        {
+            return Ok(await _departmentService.DeleteDepartment(id));
+        }
     }
 }

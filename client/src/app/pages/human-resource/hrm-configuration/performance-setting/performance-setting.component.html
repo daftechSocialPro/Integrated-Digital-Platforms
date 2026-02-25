@@ -2,8 +2,7 @@
     <div class="row p-2">
         <div class="col-md-3">
             <div class="form-floating">
-                <input type="text" class="form-control" [(ngModel)]="filterValue"  placeholder="Search Here..."
-                    >
+                <input type="text" class="form-control" [(ngModel)]="filterValue" placeholder="Search Here...">
                 <label for="filter">Filter</label>
             </div>
         </div>
@@ -18,8 +17,8 @@
                 <div class="card-body">
                     <h5 class="card-title">Performance Settings</h5>
 
-                    <p-table [value]="filteredPerformanceSettings" [paginator]="true" [rows]="5" [showCurrentPageReport]="true"
-                        [tableStyle]="{ 'min-width': '50rem' }"
+                    <p-table [value]="filteredPerformanceSettings" [paginator]="true" [rows]="5"
+                        [showCurrentPageReport]="true" [tableStyle]="{ 'min-width': '50rem' }"
                         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                         [rowsPerPageOptions]="[5, 25, 50]" styleClass="p-datatable-sm">
                         <ng-template pTemplate="header">
@@ -28,6 +27,7 @@
                                 <th>Performance Index </th>
                                 <th>Performance Start Date</th>
                                 <th>Performance End Date</th>
+                                <th>Action</th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-performace>
@@ -36,6 +36,11 @@
                                 <td>{{ performace.performanceIndex }}</td>
                                 <td>{{ performace.performanceStartDate }}</td>
                                 <td>{{ performace.performanceEndDate }}</td>
+                                <td>
+                                    <button type="button" (click)="deletePerformanceSetting(performace)"
+                                        class="btn btn-outline-danger"><i class="bi bi-trash "></i>
+                                    </button>
+                                </td>
                             </tr>
                         </ng-template>
                     </p-table>

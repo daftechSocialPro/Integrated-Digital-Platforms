@@ -16,6 +16,8 @@ export class UpdateStrategicPeriodComponent implements OnInit {
 
   strategicPeriodForm!: FormGroup;
   minDate: Date = new Date();
+  durationOptions = [3, 5];
+  calculatedEndDate: string = '';
 
   ngOnInit(): void {
     const startDate = new Date(this.strategicPeriod.startDate);
@@ -23,8 +25,39 @@ export class UpdateStrategicPeriodComponent implements OnInit {
       name: [this.strategicPeriod.name, Validators.required],
       description: [this.strategicPeriod.description, Validators.required],
       startDate: [this.formatDateForInput(startDate), Validators.required],
+      durationInYears: [this.strategicPeriod.durationInYears || 5, Validators.required],
       isActive: [this.strategicPeriod.rowStatus]
     })
+
+    // Calculate initial end date
+    this.calculateEndDate();
+
+    // Watch for start date and duration changes to calculate end date
+    this.strategicPeriodForm.get('startDate')?.valueChanges.subscribe(() => {
+      this.calculateEndDate();
+    });
+    this.strategicPeriodForm.get('durationInYears')?.valueChanges.subscribe(() => {
+      this.calculateEndDate();
+    });
+  }
+
+  calculateEndDate() {
+    const startDate = this.strategicPeriodForm.get('startDate')?.value;
+    const duration = this.strategicPeriodForm.get('durationInYears')?.value || 5;
+    
+    if (startDate) {
+      const start = new Date(startDate);
+      const end = new Date(start);
+      end.setFullYear(end.getFullYear() + duration);
+      end.setDate(end.getDate() - 1); // Subtract 1 day to get the last day of the period
+      
+      const year = end.getFullYear();
+      const month = String(end.getMonth() + 1).padStart(2, '0');
+      const day = String(end.getDate()).padStart(2, '0');
+      this.calculatedEndDate = `${year}-${month}-${day}`;
+    } else {
+      this.calculatedEndDate = '';
+    }
   }
 
   formatDateForInput(date: Date): string {
@@ -56,6 +89,7 @@ export class UpdateStrategicPeriodComponent implements OnInit {
         id: this.strategicPeriod.id,
         startDate: startDate,
         endDate: new Date(), // Will be calculated on backend
+        durationInYears: this.strategicPeriodForm.value.durationInYears,
         rowStatus: this.strategicPeriodForm.value.isActive
       }
 

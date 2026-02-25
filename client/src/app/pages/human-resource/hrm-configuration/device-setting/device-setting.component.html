@@ -2,8 +2,7 @@
     <div class="row p-2">
         <div class="col-md-3">
             <div class="form-floating">
-                <input type="text" class="form-control" [(ngModel)]="filterValue"  placeholder="Search Here..."
-                    >
+                <input type="text" class="form-control" [(ngModel)]="filterValue" placeholder="Search Here...">
                 <label for="filter">Filter</label>
             </div>
         </div>
@@ -18,8 +17,8 @@
                 <div class="card-body">
                     <h5 class="card-title">Device Lists</h5>
 
-                    <p-table [value]="filteredDeviceSettings" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
-                        [tableStyle]="{ 'min-width': '50rem' }"
+                    <p-table [value]="filteredDeviceSettings" [paginator]="true" [rows]="10"
+                        [showCurrentPageReport]="true" [tableStyle]="{ 'min-width': '50rem' }"
                         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                         [rowsPerPageOptions]="[10, 25, 50]" styleClass="p-datatable-sm">
                         <ng-template pTemplate="header">
@@ -29,6 +28,7 @@
                                 <th>Ip</th>
                                 <th>Port</th>
                                 <th>Com</th>
+                                <th>Action</th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-devices>
@@ -39,8 +39,10 @@
                                 <td>{{ devices.port }}</td>
                                 <td>{{ devices.com }}</td>
                                 <td>
-                                    <!-- <button type="button" (click)="update(devices)" class="btn btn-outline-warning"><i
-                                            class="bi bi-pencil "></i> </button> -->
+                                    <button type="button" (click)="update(devices)" class="btn btn-outline-warning"><i
+                                            class="bi bi-pencil "></i> </button>
+                                    <button type="button" (click)="delete(devices)"
+                                        class="btn btn-outline-danger ms-2"><i class="bi bi-trash "></i> </button>
                                 </td>
 
                             </tr>

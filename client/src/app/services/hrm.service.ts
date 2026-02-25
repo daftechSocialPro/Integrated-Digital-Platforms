@@ -48,6 +48,9 @@ export class HrmService {
     constructor(private userService: UserService, private http: HttpClient, private sanitizer: DomSanitizer) { }
 
     //departments
+    checkDepartmentDependency(id: string) {
+        return this.http.get<{hasDependencies: boolean, message: string}>(this.baseUrl + `/Department/CheckDependency?id=${id}`);
+    }
 
     getDepartments() {
         return this.http.get<DepartmentGetDto[]>(this.baseUrl + "/Department")
@@ -57,6 +60,10 @@ export class HrmService {
     }
     updateDepratment(departmentUpdate: DepartmentGetDto) {
         return this.http.put<ResponseMessage>(this.baseUrl + "/Department", departmentUpdate)
+    }
+
+    deleteDepartment(departmentId: string) {
+        return this.http.delete<ResponseMessage>(this.baseUrl + `/Department?id=${departmentId}`)
     }
 
     //position
@@ -72,6 +79,10 @@ export class HrmService {
 
         return this.http.put<ResponseMessage>(this.baseUrl + "/Position", positionUpdate)
     }
+
+    deletePosition(positionId: string) {
+        return this.http.delete<ResponseMessage>(this.baseUrl + `/Position?id=${positionId}`)
+    }
     // Leave type 
     //departments
 
@@ -84,6 +95,10 @@ export class HrmService {
     }
     updateLeaveType(LeaveTypeUpdate: LeaveTypeGetDto) {
         return this.http.put<ResponseMessage>(this.baseUrl + "/LeaveType/UpdateLeaveType", LeaveTypeUpdate)
+    }
+
+    deleteLeaveType(leaveTypeId: string) {
+        return this.http.delete<ResponseMessage>(this.baseUrl + `/LeaveType/DeleteLeaveType?id=${leaveTypeId}`)
     }
 
     addLeaveDetail(leaveDetail: AddLeaveDetailDto) {
@@ -107,6 +122,10 @@ export class HrmService {
         return this.http.put<ResponseMessage>(this.baseUrl + "/HrmSetting/UpdateHrmSetting", hrmSettingDto)
     }
 
+    deleteHrmSetting(hrmSettingId: string) {
+        return this.http.delete<ResponseMessage>(this.baseUrl + `/HrmSetting/DeleteHrmSetting?id=${hrmSettingId}`)
+    }
+
     //Performance Setting
 
     getPerformanceSettings() {
@@ -115,6 +134,10 @@ export class HrmService {
     }
     addPerformanceSetting(performanceSettings: PerformanceSettingDto) {
         return this.http.post<ResponseMessage>(this.baseUrl + "/HrmSetting/AddPerformanceSetting", performanceSettings)
+    }
+
+    deletePerformanceSetting(performanceSettingId: string) {
+        return this.http.delete<ResponseMessage>(this.baseUrl + `/HrmSetting/DeletePerformanceSetting?id=${performanceSettingId}`)
     }
     /// Benefit Lists 
 
@@ -131,6 +154,10 @@ export class HrmService {
         return this.http.put<ResponseMessage>(this.baseUrl + "/HrmSetting/UpdateBenefitList", updateBenefitList)
     }
 
+    deleteBenefitList(benefitListId: string) {
+        return this.http.delete<ResponseMessage>(this.baseUrl + `/HrmSetting/DeleteBenefitList?id=${benefitListId}`)
+    }
+
     /// Device Settings
 
     getDeviceSettingList() {
@@ -141,6 +168,10 @@ export class HrmService {
     }
     updateDeviceSetting(updateDevice: DeviceSettingDto) {
         return this.http.put<ResponseMessage>(this.baseUrl + "/HrmSetting/UpdateDeviceSetting", updateDevice)
+    }
+
+    deleteDeviceSetting(deviceSettingId: string) {
+        return this.http.delete<ResponseMessage>(this.baseUrl + `/HrmSetting/DeleteDeviceSetting?id=${deviceSettingId}`)
     }
 
     //GetEmployeeswithContractend
@@ -486,6 +517,10 @@ export class HrmService {
         return this.http.put<ResponseMessage>(this.baseUrl + "/LoanSetting/UpdateLoanSetting", updateLoanSetting)
     }
 
+    deleteLoanSetting(loanSettingId: string) {
+        return this.http.delete<ResponseMessage>(this.baseUrl + `/LoanSetting/DeleteLoanSetting?id=${loanSettingId}`)
+    }
+
 
     // Loan Management 
     employeesLoanAmmount(employeeId: string) {
@@ -583,6 +618,10 @@ export class HrmService {
 
     updateShift(updateDevice: ShiftListDto) {
         return this.http.put<ResponseMessage>(this.baseUrl + "/EmployeeAttencance/UpdateShift", updateDevice)
+    }
+
+    deleteShift(shiftId: string) {
+        return this.http.delete<ResponseMessage>(this.baseUrl + `/EmployeeAttencance/DeleteShift?id=${shiftId}`)
     }
 
 

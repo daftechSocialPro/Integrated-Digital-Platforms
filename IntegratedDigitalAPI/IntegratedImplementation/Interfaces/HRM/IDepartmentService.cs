@@ -14,6 +14,8 @@ namespace IntegratedImplementation.Interfaces.HRM
         Task<List<DepartmentGetDto>> GetDepartmentList();   
         Task<ResponseMessage> AddDepartment(DepartmentPostDto departmentPost);
         Task<ResponseMessage> UpdateDepartment(DepartmentGetDto departmentUpdate);
+        Task<IntegratedImplementation.DTOS.Common.DependencyCheckDto> CheckDependency(Guid departmentId);
+        Task<ResponseMessage> DeleteDepartment(Guid departmentId);
 
     }
 }

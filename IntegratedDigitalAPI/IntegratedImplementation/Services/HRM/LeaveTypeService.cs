@@ -151,6 +151,18 @@ namespace IntegratedImplementation.Services.HRM
             }
         }
 
+        public async Task<ResponseMessage> DeleteLeaveType(Guid leaveTypeId)
+        {
+            var leaveType = await _dbContext.LeaveTypes.FindAsync(leaveTypeId);
+            if (leaveType != null)
+            {
+                _dbContext.LeaveTypes.Remove(leaveType);
+                await _dbContext.SaveChangesAsync();
+                return new ResponseMessage { Success = true, Message = "Deleted Successfully" };
+            }
+            return new ResponseMessage { Success = false, Message = "Leave Type Not Found" };
+        }
+
 
         public async Task<ResponseMessage> AddLeaveDetail(AddLeaveDetailDto addLeaveDetail)
         {

@@ -13,6 +13,7 @@ export class HrmDashboardComponent implements OnInit {
 
   hrmDashboardData!: HrmDashboardGetDto
   pieChartOption!: EChartsOption;
+  barChartOption!: EChartsOption;
 
 
 
@@ -37,6 +38,7 @@ export class HrmDashboardComponent implements OnInit {
           }
        ]
        this.getPieChart(chartdata)
+       this.getBarChart()
       }
     )
     var s = document.createElement("script");
@@ -100,6 +102,44 @@ export class HrmDashboardComponent implements OnInit {
               }
             }
           };
+  }
+  getBarChart() {
+    this.barChartOption = {
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow'
+        }
+      },
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+      },
+      xAxis: {
+        type: 'category',
+        data: ['Vacancies', 'Applicants'],
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          name: 'Count',
+          type: 'bar',
+          barWidth: '50%',
+          data: [
+            { value: this.hrmDashboardData?.activeVacancies || 0, itemStyle: { color: '#2A3C43' } },
+            { value: this.hrmDashboardData?.applicants || 0, itemStyle: { color: '#520C04' } }
+          ],
+          label: {
+            show: true,
+            position: 'top'
+          }
+        }
+      ]
+    };
   }
 
 }

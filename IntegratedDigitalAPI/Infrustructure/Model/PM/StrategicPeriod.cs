@@ -18,6 +18,7 @@ namespace IntegratedInfrustructure.Model.PM
         public string Description { get; set; } = null!;
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public int DurationInYears { get; set; } = 5; // Default to 5 years for backward compatibility
 
         public virtual ICollection<StrategicPlan> StrategicPlans { get; set; }
     }

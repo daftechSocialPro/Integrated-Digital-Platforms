@@ -2,8 +2,7 @@
     <div class="row p-2">
         <div class="col-md-3">
             <div class="form-floating">
-                <input type="text" class="form-control" [(ngModel)]="filterValue"  placeholder="Search Here..."
-                    >
+                <input type="text" class="form-control" [(ngModel)]="filterValue" placeholder="Search Here...">
                 <label for="filter">Filter</label>
             </div>
         </div>
@@ -46,6 +45,8 @@
                                 <td>
                                     <button type="button" (click)="update(setting)" class="btn btn-outline-warning"><i
                                             class="bi bi-pencil "></i> </button>
+                                    <button type="button" (click)="delete(setting)"
+                                        class="btn btn-outline-danger ms-2"><i class="bi bi-trash "></i> </button>
                                 </td>
                             </tr>
                         </ng-template>

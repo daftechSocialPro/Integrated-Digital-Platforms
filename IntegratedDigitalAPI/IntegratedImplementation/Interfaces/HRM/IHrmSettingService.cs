@@ -9,20 +9,24 @@ namespace IntegratedImplementation.Interfaces.HRM
         Task<List<HrmSettingDto>> GetHrmSettings();
         Task<ResponseMessage> AddHrmSetting(HrmSettingPostDto HrmSettingPost);
         Task<ResponseMessage> UpdateHrmSetting(HrmSettingDto HrmSettingUpdate);
+        Task<ResponseMessage> DeleteHrmSetting(Guid hrmSettingId);
 
         Task<List<BenefitListDto>> GetBenefitLists();
         Task<ResponseMessage> AddBenefitList(AddBenefitListDto addBenefitList);
         Task<ResponseMessage> UpdateBenefitList(UpdateBenefitListDto updateBenefitList);
+        Task<ResponseMessage> DeleteBenefitList(Guid benefitListId);
 
 
         Task<List<DeviceSettingDto>> GetDeviceSettingList();
         Task<List<DeviceLitsDto>> GetDeviceList();
         Task<ResponseMessage> AddDeviceSetting(DeviceSettingDto deviceSettingDto);
         Task<ResponseMessage> UpdateDeviceSetting(DeviceSettingDto deviceSettingDto);
+        Task<ResponseMessage> DeleteDeviceSetting(Guid deviceSettingId);
 
 
         Task<List<PerformanceSettingDto>> GetPerformanceSettings();
         Task<ResponseMessage> AddPerformanceSetting(PerformanceSettingDto performanceSetting);
+        Task<ResponseMessage> DeletePerformanceSetting(Guid performanceSettingId);
 
 
         //Task<ResponseMessage> AddSeveranceSetting(SeveranceSettingDto severanceSetteingDto);

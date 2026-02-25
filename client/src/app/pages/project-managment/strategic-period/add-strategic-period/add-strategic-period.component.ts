@@ -24,12 +24,44 @@ export class AddStrategicPeriodComponent implements OnInit {
     private userService: UserService
   ) { }
 
+  durationOptions = [3, 5];
+  selectedDuration: number = 5;
+  calculatedEndDate: string = '';
+
   ngOnInit(): void {
     this.strategicPeriodForm = this.formBuilder.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
       startDate: ['', Validators.required],
+      durationInYears: [5, Validators.required],
     });
+
+    // Watch for start date and duration changes to calculate end date
+    this.strategicPeriodForm.get('startDate')?.valueChanges.subscribe(() => {
+      this.calculateEndDate();
+    });
+    this.strategicPeriodForm.get('durationInYears')?.valueChanges.subscribe(() => {
+      this.calculateEndDate();
+    });
+  }
+
+  calculateEndDate() {
+    const startDate = this.strategicPeriodForm.get('startDate')?.value;
+    const duration = this.strategicPeriodForm.get('durationInYears')?.value || 5;
+    
+    if (startDate) {
+      const start = new Date(startDate);
+      const end = new Date(start);
+      end.setFullYear(end.getFullYear() + duration);
+      end.setDate(end.getDate() - 1); // Subtract 1 day to get the last day of the period
+      
+      const year = end.getFullYear();
+      const month = String(end.getMonth() + 1).padStart(2, '0');
+      const day = String(end.getDate()).padStart(2, '0');
+      this.calculatedEndDate = `${year}-${month}-${day}`;
+    } else {
+      this.calculatedEndDate = '';
+    }
   }
 
   submit() {
@@ -40,6 +72,7 @@ export class AddStrategicPeriodComponent implements OnInit {
         name: this.strategicPeriodForm.value.name,
         description: this.strategicPeriodForm.value.description,
         startDate: startDate,
+        durationInYears: this.strategicPeriodForm.value.durationInYears,
         createdById: this.userService.getCurrentUser()?.userId
       }
 

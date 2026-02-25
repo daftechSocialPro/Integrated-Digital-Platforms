@@ -23,6 +23,7 @@ export interface StrategicPeriodGetDto {
     description: string
     startDate: Date
     endDate: Date
+    durationInYears: number
     rowStatus: boolean
 }
 
@@ -30,6 +31,7 @@ export interface StrategicPeriodPostDto {
     name: string
     description: string
     startDate: Date
+    durationInYears: number
     createdById?: string
 }
 

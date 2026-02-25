@@ -3,6 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DeviceSettingDto } from 'src/app/model/HRM/IDeviceSettingDto';
 import { HrmService } from 'src/app/services/hrm.service';
 import { AddDeviceSettingsComponent } from './add-device-settings/add-device-settings.component';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-device-setting',
@@ -16,7 +17,7 @@ export class DeviceSettingComponent implements OnInit {
   deviceSettings!: DeviceSettingDto[]
 
 
-  constructor(private hrmService: HrmService, private modalService: NgbModal) { }
+  constructor(private hrmService: HrmService, private modalService: NgbModal, private confirmationService: ConfirmationService, private messageService: MessageService) { }
 
 
   ngOnInit(): void {
@@ -48,6 +49,28 @@ export class DeviceSettingComponent implements OnInit {
     modalRef.componentInstance.deviceSetting = deviceSetting
     modalRef.result.then(() => {
       this.getDevices()
+    });
+  }
+
+  delete(deviceSetting: DeviceSettingDto) {
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete this device setting?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.hrmService.deleteDeviceSetting(deviceSetting.id!).subscribe({
+          next: (res) => {
+            if (res.success) {
+              this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: res.message });
+              this.getDevices();
+            } else {
+              this.messageService.add({ severity: 'error', summary: 'Error', detail: res.message });
+            }
+          }, error: (err) => {
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: "Unable to delete device setting" });
+          }
+        });
+      }
     });
   }
 

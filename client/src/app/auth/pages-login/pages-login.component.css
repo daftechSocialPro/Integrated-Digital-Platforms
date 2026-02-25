@@ -1,0 +1,262 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+.erp-login-container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  font-family: 'Inter', sans-serif;
+  background-color: #f4f7f9;
+}
+
+.erp-login-left {
+  flex: 1.2;
+  background: linear-gradient(135deg, #2A3C43 0%, #1d2c33 100%);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.erp-login-left::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  right: -50%;
+  bottom: -50%;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.05) 0%, transparent 60%);
+}
+
+.brand-info {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  max-width: 500px;
+  animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.main-logo {
+  height: 140px;
+  margin-bottom: 35px;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
+  background: rgba(255, 255, 255, 0.95);
+  padding: 20px;
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.brand-info h1 {
+  font-size: 2.3rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+}
+
+.brand-info p {
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: #B0C4DE;
+}
+
+.erp-login-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  padding: 40px;
+  position: relative;
+}
+
+.login-panel {
+  width: 100%;
+  max-width: 440px;
+  animation: slideIn 0.8s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.login-header {
+  margin-bottom: 45px;
+}
+
+.login-header h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #1B2936;
+  margin-bottom: 10px;
+}
+
+.login-header p {
+  color: #64748B;
+  font-size: 1.05rem;
+}
+
+.form-group {
+  margin-bottom: 28px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #4a5568;
+  margin-bottom: 10px;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrapper i {
+  position: absolute;
+  left: 18px;
+  color: #a0aec0;
+  font-size: 1.2rem;
+  transition: color 0.3s ease;
+}
+
+.input-wrapper input {
+  width: 100%;
+  padding: 16px 16px 16px 50px;
+  border: 2px solid #edf2f7;
+  border-radius: 12px;
+  font-size: 1.05rem;
+  color: #2d3748;
+  transition: all 0.3s ease;
+  background-color: #f7fafc;
+}
+
+.input-wrapper input:focus {
+  outline: none;
+  border-color: #2A3C43;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(42, 60, 67, 0.1);
+}
+
+.input-wrapper input:focus+i,
+.input-wrapper input:not(:placeholder-shown)~i {
+  color: #2A3C43;
+}
+
+.input-wrapper input::placeholder {
+  color: #cbd5e1;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 35px;
+}
+
+.forgot-password {
+  color: #2A3C43;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.forgot-password:hover {
+  color: #1d2c33;
+  text-decoration: underline;
+}
+
+.btn-login {
+  width: 100%;
+  padding: 16px;
+  background: #2A3C43;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.3s ease;
+  box-shadow: none;
+}
+
+.btn-login:hover:not(:disabled) {
+  background: #1d2c33;
+}
+
+.btn-login:disabled {
+  background: #B0C4DE;
+  cursor: not-allowed;
+  color: #F8FAFC;
+  box-shadow: none;
+}
+
+.login-footer {
+  margin-top: 60px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #a0aec0;
+}
+
+.login-footer p {
+  margin: 0;
+}
+
+.login-footer strong {
+  color: #4a5568;
+}
+
+/* Responsive Styles */
+@media (max-width: 900px) {
+  .erp-login-container {
+    flex-direction: column;
+  }
+
+  .erp-login-left {
+    padding: 50px 20px;
+    flex: none;
+  }
+
+  .main-logo {
+    height: 100px;
+    padding: 15px;
+    margin-bottom: 25px;
+  }
+
+  .brand-info h1 {
+    font-size: 1.8rem;
+  }
+
+  .erp-login-right {
+    padding: 40px 20px;
+  }
+}

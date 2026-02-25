@@ -19,20 +19,40 @@
 }
 
 .page-overlay-wrapper {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  z-index: 99999 !important;
-  background: rgba(93, 30, 20, 0.35);
+  position: absolute;
+  /* Bind to content container instead of viewport */
+  top: 60px;
+  /* Below header */
+  left: 300px;
+  /* next to sidebar */
+  width: calc(100% - 300px);
+  height: calc(100vh - 60px);
+  z-index: 994 !important;
+  /* Under the header (997) and sidebar (996) */
+  background: linear-gradient(90deg, #f0f4f8 25%, #e1e7ec 50%, #f0f4f8 75%);
+  background-size: 200% 100%;
+  animation: skeletonPulse 1.5s infinite linear;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @keyframes skeletonPulse {
+    0% {
+      background-position: 200% 0;
+    }
+
+    100% {
+      background-position: -200% 0;
+    }
+  }
 
   .bee-spinner {
     width: 20%;
     height: 50%;
-    position: fixed;
+    position: absolute;
     top: 40%;
     left: calc(50% - 10%);
-    z-index: 99998 !important;
+    z-index: 996 !important;
     background-image: url(../../../assets/logo.png);
     background-repeat: no-repeat;
     background-size: 97%;
@@ -40,39 +60,60 @@
   }
 }
 
+@media (max-width: 1199px) {
+  .page-overlay-wrapper {
+    left: 0;
+    width: 100%;
+  }
+
+  :host-context(.toggle-sidebar) .page-overlay-wrapper {
+    left: 300px;
+    width: calc(100% - 300px);
+  }
+}
+
+@media (min-width: 1200px) {
+  :host-context(.toggle-sidebar) .page-overlay-wrapper {
+    left: 0;
+    width: 100%;
+  }
+}
+
+/* Auth pages / empty layout fix (no sidebar/header) */
+:host-context(body:not(.toggle-sidebar)) .page-overlay-wrapper.full-screen-loader {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+}
+
 .lds-facebook {
   display: inline-block;
   position: relative;
   width: 100px;
   height: 100px;
-    
-    position: fixed;
-    top: 40%;
-    left: calc(50% );
-    z-index: 99998 !important;
- 
-    
 }
+
 .lds-facebook div {
-  display: inline-block;
-  position: absolute;
-  left: 8px;
-  width: 16px;
-  background: rgb(93, 30, 20);
-  animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+  display: none;
+  /* Hide the old animated rectangle spinner since we are using the skeleton pulse now */
 }
+
 .lds-facebook div:nth-child(1) {
   left: 8px;
   animation-delay: -0.36s;
 }
+
 .lds-facebook div:nth-child(2) {
   left: 32px;
   animation-delay: -0.24s;
 }
+
 .lds-facebook div:nth-child(3) {
   left: 56px;
   animation-delay: -0.12s;
 }
+
 .lds-facebook div:nth-child(4) {
   left: 80px;
   animation-delay: 0;
@@ -83,7 +124,9 @@
     top: 8px;
     height: 64px;
   }
-  50%, 100% {
+
+  50%,
+  100% {
     top: 24px;
     height: 32px;
   }

@@ -14,6 +14,7 @@ namespace IntegratedImplementation.Interfaces.HRM
         Task<List<LeaveTypeGetDto>> GetLeaveTypeList();
         Task<ResponseMessage> AddLeaveType(LeaveTypePostDto LeaveTypePost);
         Task<ResponseMessage> UpdateLeaveType(LeaveTypeGetDto LeaveTypeUpdate);
+        Task<ResponseMessage> DeleteLeaveType(Guid leaveTypeId);
 
         Task<ResponseMessage> AddLeaveDetail(AddLeaveDetailDto addLeaveDetail);
         Task<ResponseMessage> UpdateLeaveDetail(UpdateLeaveDetailDto updateLeaveDetail);

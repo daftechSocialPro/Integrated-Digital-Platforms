@@ -30,6 +30,7 @@ namespace IntegratedImplementation.DTOS.PM
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime StartDate { get; set; }
+        public int DurationInYears { get; set; } = 5; // Default to 5 years
         public string? CreatedById { get; set; } = null!;
     }
 
@@ -40,6 +41,7 @@ namespace IntegratedImplementation.DTOS.PM
         public string Description { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public int DurationInYears { get; set; }
         public bool RowStatus { get; set; }
     }
 
