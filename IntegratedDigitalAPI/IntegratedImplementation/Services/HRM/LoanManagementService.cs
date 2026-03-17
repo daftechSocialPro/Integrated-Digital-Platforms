@@ -150,7 +150,7 @@ namespace IntegratedImplementation.Services.HRM
                 LoanStatus = LoanStatus.PENDING,
                 PaymentStartDate = DateTime.Now,
                 PayAmmount = paymentAmmount,
-                // PaymentEndDate = DateTime.Now.AddYears(currentRequest.LoanSetting.PaymentYear),
+                PaymentEndDate = DateTime.Now.AddYears(currentRequest.LoanSetting.PaymentYear ?? 0),
                 Rowstatus = RowStatus.ACTIVE
             };
 

@@ -9,6 +9,8 @@ import { VacancyService } from 'src/app/services/vacancy.service';
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 import { ApplicantFilter } from 'src/app/model/FilterCriteria';
+import { environment } from 'src/environments/environment';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-vacancy-detail',
@@ -56,6 +58,7 @@ export class VacancyDetailComponent implements OnInit {
     private commonService:CommonService,
     private router : Router,
     private vacancyService: VacancyService, 
+    private messageService: MessageService,
     private route: ActivatedRoute) {
 
   }
@@ -116,6 +119,15 @@ getApplicantList(){
 
 goToDetails(applicantId:string){
   this.router.navigate(['/HRM/internalApplicant',this.vacancyId,applicantId])
+}
+
+copyLink() {
+  const link = `${environment.Client_URL}/vaccancy/applicant-form/${this.vacancyId}`;
+  navigator.clipboard.writeText(link).then(() => {
+    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Link copied to clipboard' });
+  }).catch(err => {
+    this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to copy link' });
+  });
 }
 
 }

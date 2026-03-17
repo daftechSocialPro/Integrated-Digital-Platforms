@@ -24,7 +24,8 @@
           <label for="password">Password</label>
           <div class="input-wrapper">
             <i class="pi pi-lock"></i>
-            <input type="password" id="password" formControlName="password" placeholder="Enter your password" />
+            <input [type]="showPassword ? 'text' : 'password'" id="password" formControlName="password" placeholder="Enter your password" />
+            <i [class]="showPassword ? 'pi pi-eye-slash' : 'pi pi-eye'" class="toggle-password" (click)="togglePasswordVisibility()"></i>
           </div>
         </div>
         <div class="form-actions">

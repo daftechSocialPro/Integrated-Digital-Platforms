@@ -19,22 +19,32 @@
 }
 
 .page-overlay-wrapper {
-  position: absolute;
-  /* Bind to content container instead of viewport */
+  position: fixed;
   top: 60px;
-  /* Below header */
   left: 300px;
-  /* next to sidebar */
   width: calc(100% - 300px);
   height: calc(100vh - 60px);
-  z-index: 994 !important;
-  /* Under the header (997) and sidebar (996) */
+  z-index: 1000 !important;
   background: linear-gradient(90deg, #f0f4f8 25%, #e1e7ec 50%, #f0f4f8 75%);
   background-size: 200% 100%;
   animation: skeletonPulse 1.5s infinite linear;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  &.full-screen-loader {
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100vh !important;
+  }
+
+  &.auth-loader {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(8px);
+    animation: none;
+    /* Disable skeleton pulse for auth */
+  }
 
   @keyframes skeletonPulse {
     0% {
@@ -47,16 +57,13 @@
   }
 
   .bee-spinner {
-    width: 20%;
-    height: 50%;
-    position: absolute;
-    top: 40%;
-    left: calc(50% - 10%);
-    z-index: 996 !important;
+    width: 120px;
+    height: 120px;
     background-image: url(../../../assets/logo.png);
     background-repeat: no-repeat;
-    background-size: 97%;
-    animation: bouncing 0.4s cubic-bezier(0.1, 0.25, 0.1, 1) 0s infinite alternate both;
+    background-size: contain;
+    background-position: center;
+    animation: bouncing 0.6s cubic-bezier(0.1, 0.25, 0.1, 1) infinite alternate both;
   }
 }
 
@@ -65,11 +72,6 @@
     left: 0;
     width: 100%;
   }
-
-  :host-context(.toggle-sidebar) .page-overlay-wrapper {
-    left: 300px;
-    width: calc(100% - 300px);
-  }
 }
 
 @media (min-width: 1200px) {
@@ -77,14 +79,6 @@
     left: 0;
     width: 100%;
   }
-}
-
-/* Auth pages / empty layout fix (no sidebar/header) */
-:host-context(body:not(.toggle-sidebar)) .page-overlay-wrapper.full-screen-loader {
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
 }
 
 .lds-facebook {

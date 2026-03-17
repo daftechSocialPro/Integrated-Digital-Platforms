@@ -11,6 +11,7 @@ import { CommonService } from 'src/app/services/common.service';
 import { Router } from '@angular/router';
 import { SelectList } from 'src/app/model/common';
 import { DropDownService } from 'src/app/services/dropDown.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-vacancy-list',
@@ -199,6 +200,15 @@ export class VacancyListComponent implements OnInit {
 
   goToDetails(vacancyId: string){
     this.route.navigate(['/HRM/vacancyDetail',vacancyId])
+  }
+
+  copyLink(vacancyId: string) {
+    const link = `${environment.Client_URL}/vaccancy/applicant-form/${vacancyId}`;
+    navigator.clipboard.writeText(link).then(() => {
+      this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Link copied to clipboard' });
+    }).catch(err => {
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to copy link' });
+    });
   }
 
 }

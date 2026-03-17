@@ -146,7 +146,7 @@
 
 .input-wrapper input {
   width: 100%;
-  padding: 16px 16px 16px 50px;
+  padding: 16px 50px 16px 50px;
   border: 2px solid #edf2f7;
   border-radius: 12px;
   font-size: 1.05rem;
@@ -164,6 +164,17 @@
 
 .input-wrapper input:focus+i,
 .input-wrapper input:not(:placeholder-shown)~i {
+  color: #2A3C43;
+}
+
+.input-wrapper .toggle-password {
+  left: auto;
+  right: 18px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.input-wrapper .toggle-password:hover {
   color: #2A3C43;
 }
 

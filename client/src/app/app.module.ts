@@ -298,7 +298,8 @@ import { AddEmployeeGuaranteeComponent } from './pages/human-resource/employee-m
 import { DocumentTypeComponent } from './pages/configuration/document-type/document-type.component';
 import { DailyAttendanceReportComponent } from './pages/human-resource/attendance-report/daily-attendance-report/daily-attendance-report.component';
 import { OvertimeAttendanceReportComponent } from './pages/human-resource/attendance-report/overtime-attendance-report/overtime-attendance-report.component';
-// import { MonthlyAttendanceReportComponent } from './pages/human-resource/attendance-report/monthly-attendance-report/monthly-attendance-report.component';
+import { MonthlyAttendanceReportComponent } from './pages/human-resource/attendance-report/monthly-attendance-report/monthly-attendance-report.component';
+import { AttendanceReportComponent } from './pages/human-resource/attendance-report/attendance-report.component';
 import { AddDocumentTypeComponent } from './pages/configuration/document-type/add-document-type/add-document-type.component';
 import { ExtendContractComponent } from './pages/human-resource/contract-end-employees/extend-contract/extend-contract.component';
 import { LeaveSettingComponent } from './pages/human-resource/hrm-configuration/leave-setting/leave-setting.component';
@@ -554,7 +555,8 @@ import { AddLeaveSettingComponent } from './pages/human-resource/hrm-configurati
     DocumentTypeComponent,
     DailyAttendanceReportComponent,
     OvertimeAttendanceReportComponent,
-    // MonthlyAttendanceReportComponent,
+    MonthlyAttendanceReportComponent,
+    AttendanceReportComponent,
         AddDocumentTypeComponent,
         ExtendContractComponent,
         ExternalVacancyApplicationComponent,

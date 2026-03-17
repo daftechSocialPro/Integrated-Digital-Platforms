@@ -20,7 +20,6 @@ export class OvertimeAttendanceReportComponent implements OnInit {
   }
 
   generateReport() {
-    debugger;
    const dateStr = this.attendanceDate.toISOString().split('T')[0];
     this.hrmService.getDailyOvertimeReport(dateStr, "PDF").subscribe({
       next: (response: ArrayBuffer) => {
@@ -47,7 +46,7 @@ export class OvertimeAttendanceReportComponent implements OnInit {
         });
 
         // 2. Trigger download using file-saver
-        saveAs(excelBlob, `DailyAttendance_${this.formatDate(dateStr)}.xlsx`);
+        saveAs(excelBlob, `OvertimeAttendance_${this.formatDate(this.attendanceDate)}.xlsx`);
       },
       error: (err) => {
         console.error('Error generating report:', err);

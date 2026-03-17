@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("IntegratedReport")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4e703d41041cdf933c3e277581ff539a1b7810b3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5af4fb3df6cfbdea61e5a65b90ede8e0ddc5421c")]
 [assembly: System.Reflection.AssemblyProductAttribute("IntegratedReport")]
 [assembly: System.Reflection.AssemblyTitleAttribute("IntegratedReport")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

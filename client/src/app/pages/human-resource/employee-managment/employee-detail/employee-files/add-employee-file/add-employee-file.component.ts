@@ -26,6 +26,8 @@ export class AddEmployeeFileComponent implements OnInit {
   isImage = false;
   isPdf = false;
   previewResourceUrl: SafeResourceUrl | null = null;
+  isAddNew: boolean = false;
+  user!: UserView;
   
   constructor(
     private activeModal: NgbActiveModal,
@@ -38,10 +40,29 @@ export class AddEmployeeFileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void { 
+    this.user = this.userService.getCurrentUser();
     this.getDocumentType()
     this.FileForm = this.formBuilder.group({
-      documentTypeId : [null, Validators.required]
+      documentTypeId : [null, Validators.required],
+      newDocumentType: [null],
+      fileExtension: [3] // Default to PDF
     })
+  }
+
+  toggleAddNew() {
+    this.isAddNew = !this.isAddNew;
+    if (this.isAddNew) {
+      this.FileForm.controls['documentTypeId'].clearValidators();
+      this.FileForm.controls['newDocumentType'].setValidators([Validators.required]);
+      this.FileForm.controls['fileExtension'].setValidators([Validators.required]);
+    } else {
+      this.FileForm.controls['documentTypeId'].setValidators([Validators.required]);
+      this.FileForm.controls['newDocumentType'].clearValidators();
+      this.FileForm.controls['fileExtension'].clearValidators();
+    }
+    this.FileForm.controls['documentTypeId'].updateValueAndValidity();
+    this.FileForm.controls['newDocumentType'].updateValueAndValidity();
+    this.FileForm.controls['fileExtension'].updateValueAndValidity();
   }
 
   getDocumentType() {
@@ -87,34 +108,60 @@ export class AddEmployeeFileComponent implements OnInit {
   submit() {
     if (this.FileForm.valid) {
 
+      if (this.isAddNew) {
+        const newDocType = {
+          fileName: this.FileForm.value.newDocumentType,
+          fileExtentions: Number(this.FileForm.value.fileExtension),
+          documentCategory: 0, // HRM/Employee
+          createdById: this.user.userId,
+          rowstatus: 0
+        };
 
-      var formData = new FormData();
-
-      formData.append('document', this.fileGH);
-      formData.append('employeeId',this.employeeId)
-      formData.append('documentTypeId',this.FileForm.value.documentTypeId.toString())
-
-      this.hrmService.addEmployeeFile(formData).subscribe(
-        {
+        this.configService.addDocumentType(newDocType).subscribe({
           next: (res) => {
             if (res.success) {
-              this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });
-
-              this.closeModal();
+              // Extract the new ID from the message or reload list if necessary
+              // Assuming res.data or similar contains the ID, but let's re-fetch or use the name
+              this.configService.getDocumentTypeSelectList(0).subscribe({
+                next: (res2) => {
+                  this.documentTypesSelectList = res2;
+                  const addedType = res2.find(x => x.name === this.FileForm.value.newDocumentType);
+                  if (addedType) {
+                    this.saveEmployeeFile(addedType.id);
+                  }
+                }
+              });
+            } else {
+              this.messageService.add({ severity: 'error', summary: 'Error', detail: res.message });
             }
-            else {
-              this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: res.message });
-
-            }
-          },
-          error: (err) => {
-            this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: err });
           }
-        }
-      )
-
+        });
+      } else {
+        this.saveEmployeeFile(this.FileForm.value.documentTypeId);
+      }
     }
+  }
 
+  saveEmployeeFile(documentTypeId: string) {
+    var formData = new FormData();
+
+    formData.append('document', this.fileGH);
+    formData.append('employeeId', this.employeeId);
+    formData.append('documentTypeId', documentTypeId);
+
+    this.hrmService.addEmployeeFile(formData).subscribe({
+      next: (res) => {
+        if (res.success) {
+          this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });
+          this.closeModal();
+        } else {
+          this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: res.message });
+        }
+      },
+      error: (err) => {
+        this.messageService.add({ severity: 'error', summary: 'Something went Wrong', detail: err });
+      }
+    });
   }
 
 }

@@ -15,31 +15,60 @@
 
 
                                 <div class="col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <select class="form-select" id="Departments" formControlName="documentTypeId"
+                                    <div class="form-floating mb-1" *ngIf="!isAddNew">
+                                        <select class="form-select" id="documentTypeId" formControlName="documentTypeId"
                                             aria-label="State">
-    
                                             <option></option>
-                                            <option *ngFor="let department of documentTypesSelectList" [value]="department.id">{{
-                                                department.name }}</option>
+                                            <option *ngFor="let type of documentTypesSelectList" [value]="type.id">{{
+                                                type.name }}</option>
                                         </select>
-                                        <label for="Departments">Document type</label>
+                                        <label for="documentTypeId">Document Type</label>
                                     </div>
-                                    
+
+                                    <div class="row g-2" *ngIf="isAddNew">
+                                        <div class="col-md-7">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" id="newDocumentType"
+                                                    formControlName="newDocumentType" placeholder="New Document Type">
+                                                <label for="newDocumentType">Type Name</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-floating">
+                                                <select class="form-select" id="fileExtension"
+                                                    formControlName="fileExtension">
+                                                    <option [value]="2">Image</option>
+                                                    <option [value]="3">PDF</option>
+                                                </select>
+                                                <label for="fileExtension">Format</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="text-end">
+                                        <button type="button" class="btn btn-link btn-sm p-0 text-decoration-none"
+                                            (click)="toggleAddNew()">
+                                            <i class="bi" [class.bi-plus-circle]="!isAddNew"
+                                                [class.bi-list-ul]="isAddNew"></i>
+                                            {{ isAddNew ? ' Back to List' : ' Add New Type' }}
+                                        </button>
+                                    </div>
                                 </div>
-                      
 
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="file" class="form-control" (change)="onUpload($event)" id="file" >
+                                        <input type="file" class="form-control" (change)="onUpload($event)" id="file">
+                                        <label for="file">Upload File</label>
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-lg-12" *ngIf="previewUrl || previewResourceUrl">
                                     <div class="mb-3">
                                         <h6>Preview</h6>
-                                        <img *ngIf="isImage && previewUrl" [src]="previewUrl" style="max-width: 100%; max-height: 300px;">
-                                        <iframe *ngIf="isPdf && previewResourceUrl" [src]="previewResourceUrl" style="width: 100%; height: 300px;"></iframe>
+                                        <img *ngIf="isImage && previewUrl" [src]="previewUrl"
+                                            style="max-width: 100%; max-height: 300px;">
+                                        <iframe *ngIf="isPdf && previewResourceUrl" [src]="previewResourceUrl"
+                                            style="width: 100%; height: 300px;"></iframe>
                                     </div>
                                 </div>
 

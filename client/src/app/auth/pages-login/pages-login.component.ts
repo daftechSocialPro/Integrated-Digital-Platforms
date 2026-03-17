@@ -17,9 +17,15 @@ export class PagesLoginComponent implements OnInit {
 
   loginForm !: FormGroup
   user!: UserView
+  showPassword = false;
+
   constructor(private formBuilder: FormBuilder, private router: Router, private userService: UserService, 
     @Inject(DOCUMENT) private document: Document,
   private messageService : MessageService) { }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
 
   ngOnInit(): void {
 
@@ -35,7 +41,6 @@ export class PagesLoginComponent implements OnInit {
     if (this.loginForm.valid) {
       this.userService.login(this.loginForm.value).subscribe({
         next: (res) => {
-              debugger;
           if (res.success) {
             this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });        
             sessionStorage.setItem('token', res.data);

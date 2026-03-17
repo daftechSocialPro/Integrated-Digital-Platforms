@@ -1,9 +1,12 @@
-<div class="page-overlay-wrapper" *ngIf="showSpinner">
-    <div class="lds-facebook">
+<div class="page-overlay-wrapper" *ngIf="showSpinner" [class.full-screen-loader]="isAuthPage()"
+    [class.auth-loader]="isAuthPage()">
+
+    <div class="bee-spinner" *ngIf="isAuthPage()"></div>
+
+    <div class="lds-facebook" *ngIf="!isAuthPage()">
         <div></div>
         <div></div>
         <div></div>
         <div></div>
-   
     </div>
 </div>

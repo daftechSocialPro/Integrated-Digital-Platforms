@@ -108,7 +108,7 @@ export class LeaveSettingComponent implements OnInit {
 
             if (res.success) {
               this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: res.message });
-              this.getLeavePlans()
+              this.selected.id === '2' ? this.getEmployeeLeavePlans() : this.getLeavePlans();
             }
             else {
               this.messageService.add({ severity: 'error', summary: 'Rejected', detail: res.message });
@@ -166,7 +166,7 @@ export class LeaveSettingComponent implements OnInit {
           
                       if(res.success){
                         this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: res.message });
-                       this.getLeavePlans()
+                        this.selected.id === '2' ? this.getEmployeeLeavePlans() : this.getLeavePlans();
                       }
                       else{
                         this.messageService.add({ severity: 'error', summary: 'Rejected', detail: res.message });

@@ -46,7 +46,7 @@ export class DailyAttendanceReportComponent implements OnInit {
         });
 
         // 2. Trigger download using file-saver
-        saveAs(excelBlob, `DailyAttendance_${this.formatDate(dateStr)}.xlsx`);
+        saveAs(excelBlob, `DailyAttendance_${this.formatDate(this.attendanceDate)}.xlsx`);
       },
       error: (err) => {
         console.error('Error generating report:', err);
