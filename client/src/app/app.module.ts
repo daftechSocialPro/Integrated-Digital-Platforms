@@ -304,6 +304,9 @@ import { AddDocumentTypeComponent } from './pages/configuration/document-type/ad
 import { ExtendContractComponent } from './pages/human-resource/contract-end-employees/extend-contract/extend-contract.component';
 import { LeaveSettingComponent } from './pages/human-resource/hrm-configuration/leave-setting/leave-setting.component';
 import { AddLeaveSettingComponent } from './pages/human-resource/hrm-configuration/leave-setting/add-leave-setting/add-leave-setting.component';
+import { EmployeeLeaveComponent } from './pages/users-profile/employee-leave/employee-leave.component';
+import { PurchaseRequisitionComponent } from './pages/users-profile/purchase-requisition/purchase-requisition.component';
+import { StoreRequisitionComponent } from './pages/users-profile/store-requisition/store-requisition.component';
 
 @NgModule({
   declarations: [
@@ -561,6 +564,9 @@ import { AddLeaveSettingComponent } from './pages/human-resource/hrm-configurati
         ExtendContractComponent,
         ExternalVacancyApplicationComponent,
         ExternalApplicantFormComponent,
+        EmployeeLeaveComponent,
+        PurchaseRequisitionComponent,
+        StoreRequisitionComponent,
         //  AddMeasurementComponent,
         //  UpdateMeasurmentComponent
   ],

@@ -82,15 +82,12 @@ export class AddLeaveRequestComponent implements OnInit {
   submit() {
 
     if (this.LeaveRequestForm.valid) {
-
       var leaveRequestPost: LeaveRequestPostDto = {
-
         employeeId: this.selectEmployeee,
         leaveTypeId: this.LeaveRequestForm.value.leaveTypeId,
         fromDate: this.LeaveRequestForm.value.fromDate,
         totalDate: this.LeaveRequestForm.value.totalDate,
         reason: this.LeaveRequestForm.value.reason
-
       }
       
 
@@ -143,12 +140,16 @@ export class AddLeaveRequestComponent implements OnInit {
 
       this.hrmService.getHrmSettings().subscribe({
         next: (res) => {
+          debugger;
           maxDays = res.filter(x => x.generalSetting == "LEAVEREQUESTDAYSBEFORE")![0]!.value
 
           if (daysDifference <= maxDays) {
             this.messageService.add({ severity: 'error', summary: 'Date Selection Error', detail: `You can not request a leave before ${maxDays} days` });
             this.LeaveRequestForm.controls['fromDate'].setValue(null)
           }
+          let leaveTypeId = this.LeaveRequestForm.value.leaveTypeId;
+          let leaveName = this.LeaveTypes.find(x => x.id == leaveTypeId).name
+          if(leaveName.toUpperCase() == "ANNUAL") {
           this.hrmService.getEmployeeLeavePlan(this.userService.getCurrentUser().employeeId).subscribe({
             next: (res) => {
               
@@ -170,7 +171,7 @@ export class AddLeaveRequestComponent implements OnInit {
 
             }
           })
-
+        }
         }
       })
     }

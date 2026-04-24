@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
 import { CategoryListDto } from 'src/app/model/Inventory/CategoryDto';
-import { AddItemDto } from 'src/app/model/Inventory/ItemDto';
+import { AddItemDto, ItemListDto } from 'src/app/model/Inventory/ItemDto';
 import { InventoryService } from 'src/app/services/inventory.service';
 
 @Component({
@@ -11,7 +11,7 @@ import { InventoryService } from 'src/app/services/inventory.service';
   styleUrls: ['./add-item.component.css']
 })
 export class AddItemComponent implements OnInit{
- 
+  @Input() item :ItemListDto;
   category: CategoryListDto[] = [];
   measurementType: any[] = [
     { value: 0, name: "LENGTH" },
@@ -35,25 +35,39 @@ export class AddItemComponent implements OnInit{
  
   ngOnInit(): void {
     this.getCategoryDropDown();
+  
   }
 
   getCategoryDropDown(){
     this.inventoryService.getCategoryList().subscribe({
       next: (res) => {
          this.category = res;
-         
+           if(this.item && this.item.id){
+        this.addItem = {
+          id: this.item.id,
+          name: this.item.name,
+          categoryId: this.category.find(x => x.name == this.item.categoryName)?.id || "",
+          measurementType: this.measurementType.find(x => x.name == this.item.measurementType)?.value,
+          isExpirable: this.item.isExpirable,
+          reorderPoint: this.item.reorderPoint,
+          remark: this.item.remark,
+          stateType: this.stateType.find(x => x.name == this.item.stateType)?.value,
+          createdById: ""
+        }
+      }
       }
     });
   }
 
   
   saveItem() {
-    if (this.addItem.id) {
+    if (this.item.id) {
       this.inventoryService.updateItem(this.addItem).subscribe({
         next: (res) => {
           if(res.success){
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Item Updated', life: 3000 });
-          }
+                this.closeModal();
+        }
           else{
             this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error please check your fields', life: 3000 });
           }

@@ -12,30 +12,29 @@
                     <form class="" [formGroup]="leaveSettingForm" (ngSubmit)="submit()">
                         <div class="modal-body">
                             <div class="row g-3">
-                             
+
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="date" class="form-control" id="fromDate" placeholder="value"
-                                        formControlName="fromDate">
-                                    <label for="fromDate">From Date</label>
+                                        <input type="date" class="form-control" id="fromDate" formControlName="fromDate"
+                                            [min]="minFromDate">
+                                        <label for="fromDate">From Date</label>
                                     </div>
-                                </div>   
-                                
-                                
+                                </div>
+
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="date" class="form-control" id="toDate" placeholder="value"
-                                        formControlName="toDate">
-                                    <label for="toDate">TO Date</label>
+                                        <input type="date" class="form-control" id="toDate" formControlName="toDate"
+                                            [min]="minToDate">
+                                        <label for="toDate">To Date</label>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer"> <button type="button" class="btn btn-outline-secondary"
-                            (click)="closeModal()">Close</button>
-                        <button type="button" type="submit"  [disabled]="!leaveSettingForm.valid"
-                            class="btn btn-outline-primary">Create</button>
-                    </div>
+                                (click)="closeModal()">Close</button>
+                            <button type="button" type="submit" [disabled]="!leaveSettingForm.valid"
+                                class="btn btn-outline-primary">Create</button>
+                        </div>
                     </form>
                 </div>
             </div>

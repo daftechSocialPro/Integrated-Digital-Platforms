@@ -45,19 +45,35 @@ export class PagesLoginComponent implements OnInit {
             this.messageService.add({ severity: 'success', summary: 'Successfull', detail: res.message });        
             sessionStorage.setItem('token', res.data);
             this.document.body.classList.remove('toggle-sidebar');
-            this.router.navigateByUrl('/');
+            const user = this.userService.getCurrentUser();
+            console.log(user);
+            debugger;
+            if(user.userType == "ADMIN"){
+              this.router.navigateByUrl('/');
+            }
+           else if(user.userType == "MONITORING"){
+              this.router.navigateByUrl('/');
+            }
+             else if(user.userType == "PERFORMANCE"){
+              this.router.navigateByUrl('/');
+            }
+            else if(user.userType == "HUMANRESOURCE"){
+              this.router.navigateByUrl('/HRM/dashboard');
+            }
+             else if(user.userType == "INVENTORY"){
+              this.router.navigateByUrl('/inventory/dashboard');
+            }
+             else if(user.userType == "FINANCE"){
+              this.router.navigateByUrl('/finance/dashboard');
+            }
+
           }
           else {
-
-            this.messageService.add({ severity: 'error', summary: 'Authentication failed.', detail: res.message });
-           
+            this.messageService.add({ severity: 'error', summary: 'Authentication failed.', detail: res.message });  
           }
-
         },
         error: (err) => {
-
-    
-
+          this.messageService.add({ severity: 'error', summary: 'Error.', detail: err.message });  
         }
       })
     }

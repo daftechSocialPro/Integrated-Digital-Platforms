@@ -8,6 +8,7 @@ export interface UserView {
     userId : string ;
     employeeId:string;
     photo:string;
+    userType: string;
 }
 
 export interface Token {
@@ -36,6 +37,7 @@ export interface UserList {
 export interface UserPost {
     employeeId:string,
     userName :string,
-    password:string
+    password:string,
+    userType: number,
  
 }

@@ -139,7 +139,7 @@
       </ul>
    </nav>
 
-   <p-sidebar *ngIf="false" [(visible)]="visibleSidebar2" position="right" appendTo="body">
+   <p-sidebar  [(visible)]="visibleSidebar2" position="right" appendTo="body">
       <h3>Payment Requsitions for approval</h3>
       <div class="grid grid-nogutter">
          <div class="col-12" *ngFor="let item of pendingPayments; let first = first" class="col-12">

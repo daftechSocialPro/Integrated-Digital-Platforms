@@ -42,7 +42,6 @@ export class HeaderComponent implements OnInit {
     private confirmationService: ConfirmationService,) { }
 
   ngOnInit(): void {
-    this.visibleSidebar2 = true;
     this.user = this.userService.getCurrentUser();
     this.getVacancyList();
     this.getContractEndEmp();
@@ -92,6 +91,7 @@ export class HeaderComponent implements OnInit {
     this.pmService.getActivityForApproval(this.user.employeeId).subscribe({
       next: (res) => {
         this.activites = res;
+         this.visibleSidebar2 = this.user.userType == 'MONITORING'  && this.activites.length > 0;
         sessionStorage.setItem('activites_cache', JSON.stringify(res));
         sessionStorage.setItem('activites_time', Date.now().toString());
       }, error: (err) => {

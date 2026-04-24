@@ -32,7 +32,7 @@ export class AddItemCategoryComponent implements OnInit {
           name: this.category.name,
           description: this.category.description,
           rowStatus: 0,
-          categoryType: this.category.categoryType == "RAW_MATERIAL" ? 0 : this.category.categoryType == "ASSET" ? 1 : 2,
+          categoryType: this.category.categoryType == "Consumable" ? 0 : this.category.categoryType == "Asset" ? 1 : this.category.categoryType == "Reusable" ? 2 : 3,
           createdById: ""
         }
       }

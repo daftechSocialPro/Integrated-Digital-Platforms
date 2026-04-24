@@ -1,9 +1,11 @@
 ﻿using IntegratedInfrustructure.Model.HRM;
+using Microsoft.SqlServer.Server;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static IntegratedInfrustructure.Data.EnumList;
 
 namespace Implementation.DTOS.Authentication
 {
@@ -39,6 +41,7 @@ namespace Implementation.DTOS.Authentication
         public Guid EmployeeId { get; set; }
         public string UserName { get; set; } = null!;
         public string Password { get; set; } = null!;
+        public UserType UserType { get; set; } 
     }
 
     public class UserRoleDto

@@ -6,8 +6,11 @@
         public enum UserType
         {
             ADMIN,
-            USER,
-            PERFORMANCE
+            MONITORING,
+            PERFORMANCE,
+            HUMANRESOURCE,
+            INVENTORY,
+            FINANCE,
         }
         public enum RowStatus
         {
@@ -261,9 +264,10 @@
 
         public enum CategoryType
         {
-            RAW_MATERIAL,
-            ASSET,
-            OTHER
+            Consumable,
+            Asset,
+            Reusable,
+            Other
         }
 
         public enum StateType

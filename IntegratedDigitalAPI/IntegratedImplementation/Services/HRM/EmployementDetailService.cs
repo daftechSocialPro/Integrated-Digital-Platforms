@@ -410,46 +410,53 @@ namespace IntegratedImplementation.Services.HRM
 
         public async Task<ResponseMessage> RehireEmployee(RehireEmployeeDto rehireEmployee)
         {
-            var curEmployee = await _dbContext.Employees.FirstOrDefaultAsync(x => x.Id == rehireEmployee.EmployeeId);
-
-            if (curEmployee == null)
-                return new ResponseMessage { Success = false, Message = "Employee Could not be found" };
-
-            var currentHistories = await _dbContext.EmploymentDetails.Where(x => x.EmployeeId == rehireEmployee.EmployeeId && x.Rowstatus == RowStatus.ACTIVE).ToListAsync();
-
-            currentHistories.ForEach(x =>
+            try
             {
-                x.Rowstatus = RowStatus.INACTIVE;
-            });
+                var curEmployee = await _dbContext.Employees.FirstOrDefaultAsync(x => x.Id == rehireEmployee.EmployeeId);
 
-            await _dbContext.SaveChangesAsync();
+                if (curEmployee == null)
+                    return new ResponseMessage { Success = false, Message = "Employee Could not be found" };
 
-            curEmployee.IsApproved = false;
-            curEmployee.EmploymentStatus = EmploymentStatus.ACTIVE;
-            curEmployee.ContractEndDate = curEmployee.ContractEndDate;
-            curEmployee.EmploymentType = rehireEmployee.EmploymentType;
+                var currentHistories = await _dbContext.EmploymentDetails.Where(x => x.EmployeeId == rehireEmployee.EmployeeId && x.Rowstatus == RowStatus.ACTIVE).ToListAsync();
 
-            EmploymentDetail newDetail = new EmploymentDetail()
+                currentHistories.ForEach(x =>
+                {
+                    x.Rowstatus = RowStatus.INACTIVE;
+                });
+
+                await _dbContext.SaveChangesAsync();
+
+                curEmployee.IsApproved = false;
+                curEmployee.EmploymentStatus = EmploymentStatus.ACTIVE;
+                curEmployee.ContractEndDate = curEmployee.ContractEndDate;
+                curEmployee.EmploymentType = rehireEmployee.EmploymentType;
+
+                EmploymentDetail newDetail = new EmploymentDetail()
+                {
+                    Id = Guid.NewGuid(),
+                    EmploymentStatus = curEmployee.EmploymentStatus,
+                    CreatedById = rehireEmployee.CreatedById,
+                    CreatedDate = DateTime.Now,
+                    DepartmentId = rehireEmployee.DepartmentId,
+                    EmployeeId = rehireEmployee.EmployeeId,
+                    PositionId = rehireEmployee.PositionId,
+                    Remark = rehireEmployee.Remark,
+                    Salary = rehireEmployee.Salary,
+                    SourceOfSalary = rehireEmployee.SourceOfSalary,
+                    EndDate = rehireEmployee.ContractEndDate,
+                    StartDate = rehireEmployee.EmploymentDate,
+                    Rowstatus = RowStatus.ACTIVE
+                };
+
+                await _dbContext.EmploymentDetails.AddAsync(newDetail);
+                await _dbContext.SaveChangesAsync();
+
+                return new ResponseMessage { Success = true, Message = "Employee Added Succesfully" };
+            }
+            catch (Exception ex)
             {
-                Id = Guid.NewGuid(),
-                EmploymentStatus = curEmployee.EmploymentStatus,
-                CreatedById = rehireEmployee.CreatedById,
-                CreatedDate = DateTime.Now,
-                DepartmentId = rehireEmployee.DepartmentId,
-                EmployeeId = rehireEmployee.EmployeeId,
-                PositionId = rehireEmployee.PositionId,
-                Remark = rehireEmployee.Remark,
-                Salary = rehireEmployee.Salary,
-                SourceOfSalary = rehireEmployee.SourceOfSalary,
-                EndDate = rehireEmployee.ContractEndDate,
-                StartDate = rehireEmployee.EmploymentDate,
-                Rowstatus = RowStatus.ACTIVE
-            };
-
-            await _dbContext.EmploymentDetails.AddAsync(newDetail);
-            await _dbContext.SaveChangesAsync();
-
-            return new ResponseMessage { Success = true, Message = "Employee Added Succesfully" };
+                return new ResponseMessage { Success = false, Message = ex.Message };
+            }
 
         }
 

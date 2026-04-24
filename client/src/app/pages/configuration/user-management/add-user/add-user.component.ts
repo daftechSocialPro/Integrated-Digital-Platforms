@@ -22,6 +22,15 @@ export class AddUserComponent implements OnInit {
   employeeList: SelectList[] = [];
 
   employee !: string;
+   userType =[
+      {code:0, name:"Admin"},
+      {code:1, name:"Monitoring"},
+      {code:2, name:"PERFORMANCE"},
+      {code:3, name:"HUMANRESOURCE"},
+      {code:4, name:"INVENTORY"},
+      {code:5, name:"MONITORING"},
+    ]
+
   constructor(
     private hrmService: HrmService,
     private userService: UserService,
@@ -34,6 +43,7 @@ export class AddUserComponent implements OnInit {
     this.userForm = this.formBuilder.group({
       Password: ['', Validators.required],
       ConfirmPassword: ['', Validators.required],
+      userType:[0,Validators.required]
     });
 
 
@@ -64,10 +74,10 @@ export class AddUserComponent implements OnInit {
         let user: UserPost = {
           employeeId: this.employee,
           password: this.userForm.value.Password,
+          userType:Number(this.userForm.value.userType),
           userName: '' // Will be auto-generated from WorkEmail on backend
         }
 
-        
         this.userService.createUser(user).subscribe({
           next: (res) => {
             if(res.success){

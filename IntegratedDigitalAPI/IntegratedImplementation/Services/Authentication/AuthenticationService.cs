@@ -45,8 +45,6 @@ namespace Implementation.Services.Authentication
             try
             {
                 var user = await _userManager.FindByEmailAsync(login.UserName);
-             
-
                 if (user != null && await _userManager.CheckPasswordAsync(user, login.Password))
                 {
                     if (user.RowStatus == RowStatus.INACTIVE)
@@ -73,6 +71,7 @@ namespace Implementation.Services.Authentication
                         new Claim("fullName", $"{employee.FirstName} {employee.MiddleName}"),
                         new Claim("photo",employee?.ImagePath),
                         new Claim("ChangePassword",user.PasswordChanged.ToString()),
+                        new Claim("userType",user.UserType.ToString()),
                         new Claim(_options.ClaimsIdentity.RoleClaimType, str),
 
                             }),
@@ -238,7 +237,8 @@ namespace Implementation.Services.Authentication
                 Email = employee.WorkEmail,
                 UserName = userName,
                 RowStatus = RowStatus.ACTIVE,
-                PasswordChanged = false
+                PasswordChanged = false,
+                UserType = addUSer.UserType
             };
 
             var result = await _userManager.CreateAsync(applicationUser, addUSer.Password);

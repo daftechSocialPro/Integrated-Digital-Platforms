@@ -11,27 +11,18 @@
                 <div class="modal-body">
                     <div class="row g-3">
 
-
-                        <div class="col-md-12">
-                            
-
+                        <div class="col-md-6">
                             <app-autocomplete *ngIf="employeeList.length>0" [data]="employeeList"
                                 (selectedItem)="selectEmployee($event)"></app-autocomplete>
-
-
-
-                            <!-- <p-autoComplete [dropdown]="true" [suggestions]="employeeList"
-                                (completeMethod)="filterCountry($event)" field="name"></p-autoComplete> -->
-
-
-
                         </div>
-<!-- 
-                        <div class="col-md-6"> <label for="inputName5" class="form-label">User Name</label>
-
-                            <input type="text" class="form-control" id="UserName" placeholder="User Name"
-                                formControlName="UserName">
-                        </div> -->
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <select class="form-select" id="userType" formControlName="userType">
+                                    <option *ngFor="let userType of userType" [value]="userType.code">{{ userType.name }}</option>
+                                </select>
+                                <label for="userType">User Type</label>
+                            </div>
+                        </div>
 
                         <div class="col-md-6"> <label for="inputName5" class="form-label">Password</label>
 
@@ -44,14 +35,6 @@
                             <input type="password" class="form-control" id="Password" placeholder="Confirm Password"
                                 formControlName="ConfirmPassword">
                         </div>
-
-
-
-
-
-
-
-
                     </div>
 
                 </div>

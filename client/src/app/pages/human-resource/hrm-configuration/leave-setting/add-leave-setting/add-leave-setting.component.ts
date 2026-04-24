@@ -20,9 +20,22 @@ export class AddLeaveSettingComponent implements OnInit {
 
   leaveSettingForm!: FormGroup;
   user !: UserView
+  minFromDate: string = new Date().toISOString().split('T')[0];
+minToDate: string | null = null;
   ngOnInit(): void {
     this.user = this.userService.getCurrentUser();
+ this.leaveSettingForm.get('fromDate')?.valueChanges.subscribe((value) => {
+    if (value) {
+      this.minToDate = value; // toDate cannot be before fromDate
+      this.leaveSettingForm.get('toDate')?.enable();
+    } else {
+      this.leaveSettingForm.get('toDate')?.disable();
+      this.minToDate = null;
+    }
+  });
 
+  // initially disable toDate
+  this.leaveSettingForm.get('toDate')?.disable();
   }
 
   constructor(
